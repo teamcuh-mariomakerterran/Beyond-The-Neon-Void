@@ -1,0 +1,12 @@
+# Cutscene Builder (Black Doctrine)
+
+Open `cutscene-builder.html` in a browser.
+
+Scenes live in `cutscenes/` (`.parallax.json`).
+Open → pick a file, or Proj → Import scene pack (multi JSON).
+
+Docs: PLAYBOOK.md, STATUS.md, cutscene-builder-guide.html
+Templates: templates/
+
+Asset library is not bundled here — scenes embed what they need.
+Working asset copies stay on the box under /workspace/bd-tools/cutscene/assets/.
