@@ -183,6 +183,12 @@ func _show_detail(path: String) -> void:
 		status.emit("Renamed to %s" % np.get_file(), NeonTheme.GREEN)
 		refresh())
 	_detail.add_child(name_edit)
+	var intake := Button.new()
+	var known := not AssetIndex.find_by_path(path).is_empty()
+	intake.text = "EDIT INTAKE…" if known else "RUN INTAKE…"
+	intake.tooltip_text = "Re-open the intake wizard for this file: type, name, role, animation, linked content."
+	intake.pressed.connect(func() -> void: _open_intake(path))
+	_detail.add_child(intake)
 	if category == "tiles":
 		_tile_register_ui(path)
 	elif category == "units" and ext in ForgeStore.IMAGE_EXT:
@@ -209,6 +215,23 @@ func _tile_register_ui(path: String) -> void:
 		var out := ForgeStore.save_dict_file("terrain", ContentDB.terrain)
 		status.emit("Terrain '%s' saved ▸ %s" % [tid, out], NeonTheme.GREEN))
 	_detail.add_child(save)
+
+
+## Asks the hosting Neon Forge to open the intake wizard in edit mode (falls
+## back to a standalone dialog when the library runs on its own).
+func _open_intake(path: String) -> void:
+	var host: Node = get_parent()
+	while host and not host.has_method("open_intake"):
+		host = host.get_parent()
+	var dlg: ForgeIntake
+	if host:
+		dlg = host.open_intake(PackedStringArray(), path)
+	else:
+		dlg = ForgeIntake.new()
+		dlg.status.connect(status.emit)
+		get_tree().root.add_child(dlg)
+		dlg.start_edit(path)
+	dlg.finished.connect(func(_n: int) -> void: refresh())
 
 
 func _open_slicer(path: String) -> void:

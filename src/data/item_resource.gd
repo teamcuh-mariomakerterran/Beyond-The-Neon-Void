@@ -39,6 +39,11 @@ enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 
 @export_group("Discovery")
 @export var lore_text: String = ""
+## Data disks: the ability this key item unlocks for learning (Daemon Caller summons).
+@export var teaches_ability_id: String = ""
+## Free-form markers, e.g. "intake_pending" for items created by the Forge intake
+## wizard whose type is still undecided.
+@export var tags: Array[String] = []
 
 
 func is_equipment() -> bool:

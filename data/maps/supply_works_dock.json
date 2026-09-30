@@ -941,6 +941,17 @@
 			"loot_item_id": "chip_microchip",
 			"found_text": "A microchip taped under the lid. 'FOR EMERGENCIES — G.'",
 			"empty_text": "Packing foam. It squeaks."
+		},
+		{
+			"id": "prop_rubble_disk",
+			"cell": [
+				10,
+				8
+			],
+			"asset": "",
+			"loot_item_id": "dsk_the_landlord",
+			"found_text": "Under the rubble, in a ziplock bag: a beige data disk with a rent sticker. The daemon inside is already knocking.",
+			"empty_text": "Rubble. Load-bearing, emotionally."
 		}
 	]
 }

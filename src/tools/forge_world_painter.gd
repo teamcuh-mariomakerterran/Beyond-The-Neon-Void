@@ -1,0 +1,1668 @@
+class_name ForgeWorldPainter
+extends HSplitContainer
+## WORLD PAINTER — the live, stacked-tile level builder.
+##
+## What you see here is the game renderer (WorldRenderer), so the map looks
+## exactly like it will in play. Maps are sorted by kind (world / city / hub /
+## interior / encounter / event) with tabs along the top.
+##
+## Layers you paint on:
+##   TILES      stacked tiles; brush, rectangle, fill, eyedropper, erase.
+##              Stack layer can go negative (below ground). Brush height
+##              paints several layers at once. Shift-click tiles in the
+##              palette to cycle through a set as you paint.
+##   DETAILS    decals laid ON tiles (craters, debris, rivers) — free placed,
+##              drag to move.
+##   PARTICLES  rain, fog, storm clouds... painted per cell at any layer.
+##   OBJECTS    structures, props, characters, loot and location links
+##              (double-click an object to make it a city / point of interest).
+##   GAMEPLAY   player spawns, enemies, walkability, cover, line of sight.
+##
+## Keys: B brush · R rectangle · G fill · I eyedropper · V select/move · H pan ·
+## E erase · [ ] brush size · PgUp/PgDn stack layer · Ctrl+click stack on top ·
+## Ctrl+Z / Ctrl+Y undo/redo · Ctrl+S save · Del delete selection · Ctrl+D
+## duplicate selection · F5 play here.
+
+signal status(text: String, color: Color)
+
+enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY }
+enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE }
+enum Play { SPAWN, ENEMY, BLOCK, COVER, SIGHT }
+
+const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY"]
+const TOOL_INFO := [
+	["✎", "Brush [B]", "Left-click / drag to paint."],
+	["▭", "Rectangle [R]", "Drag a rectangle; it fills when you let go."],
+	["◈", "Fill [G]", "Flood-fill the matching area on this layer."],
+	["⌖", "Eyedropper [I]", "Pick the tile (and its layer) under the cursor."],
+	["➚", "Select / move [V]", "Click an object or detail to edit it; drag to move. Double-click an object to set up a location."],
+	["✋", "Pan [H]", "Drag to move the view (middle / right mouse always pans)."],
+	["⌫", "Erase [E]", "Remove what this layer holds under the brush."],
+]
+const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I: Tool.PICK, KEY_V: Tool.SELECT, KEY_H: Tool.PAN, KEY_E: Tool.ERASE}
+const PLAY_NAMES := ["PLAYER SPAWN", "ENEMY", "BLOCK WALK", "COVER", "SIGHT"]
+const OBJECT_SOURCES := ["structures", "props", "units", "items", "vfx", "portraits"]
+const GHOST := Color(0.25, 1.9, 0.75)
+
+var world: WorldMap = WorldMap.new()
+var mode: Mode = Mode.TILES
+var tool: Tool = Tool.BRUSH
+var play_tool: Play = Play.SPAWN
+var layer: int = 0
+var brush_size: int = 1
+var brush_height: int = 1
+var dim_above: bool = false
+var kind_filter: String = "all"
+var dirty: bool = false
+var dirty_missions: bool = false
+
+## Palette selections (several = cycle while painting).
+var sel_tiles: Array[String] = []
+var sel_detail: String = ""
+var sel_particle: String = "fog"
+var sel_object: String = ""
+var object_source: String = "structures"
+var mission_id: String = ""
+var enemy_id: String = "doctrine_warden"
+var enemy_level: int = 2
+
+var selected: Dictionary = {}
+var _cycle: int = 0
+var _renderer: WorldRenderer
+var _ghost: GhostLayer
+var _vp: SubViewport
+var _vpc: SubViewportContainer
+var _cam: Camera2D
+var _map_pick: OptionButton
+var _kind_tabs: HFlowContainer
+var _mode_buttons: Array[Button] = []
+var _tool_buttons: Array[Button] = []
+var _layer_spin: SpinBox
+var _size_slider: HSlider
+var _height_slider: HSlider
+var _palette: VBoxContainer
+var _inspector: VBoxContainer
+var _objects_list: VBoxContainer
+var _hint: Label
+var _undo: Array[Dictionary] = []
+var _redo: Array[Dictionary] = []
+
+# pointer state
+var _down: bool = false
+var _panning: bool = false
+var _space: bool = false
+var _drag_start: Vector2i = Vector2i(-9999, -9999)
+var _hover_cell: Vector2i = Vector2i(-9999, -9999)
+var _hover_z: int = 0
+var _hover_world: Vector2 = Vector2.ZERO
+var _last_applied: Dictionary = {}
+var _moving: Dictionary = {}
+var _move_grab: Vector2 = Vector2.ZERO
+
+
+## Draws the green ghost preview, hover read-out and gameplay markers.
+class GhostLayer extends Node2D:
+	var p: ForgeWorldPainter
+
+	func _process(_d: float) -> void:
+		queue_redraw()
+
+	func _draw() -> void:
+		if p == null:
+			return
+		var w := p.world
+		var font := NeonTheme.mono()
+		# Map bounds.
+		var corners := PackedVector2Array([w.to_screen(Vector2(-0.5, -0.5), 0), w.to_screen(Vector2(w.width - 0.5, -0.5), 0),
+			w.to_screen(Vector2(w.width - 0.5, w.depth - 0.5), 0), w.to_screen(Vector2(-0.5, w.depth - 0.5), 0)])
+		corners.append(corners[0])
+		draw_polyline(corners, Color(0.55, 0.35, 0.9, 0.45), 2.0)
+		if p.mode == Mode.GAMEPLAY or p.mode == Mode.OBJECTS:
+			_draw_gameplay(font)
+		if not w.in_bounds(p._hover_cell) and p.tool != Tool.SELECT:
+			return
+		var cells := p.target_cells()
+		var erase := p.tool == Tool.ERASE
+		var col := Color(2.0, 0.3, 0.4) if erase else GHOST
+		match p.mode:
+			Mode.TILES:
+				var zs := p.target_layers()
+				var n := 0
+				for cell: Vector2i in cells:
+					for z: int in zs:
+						var c := w.to_screen(Vector2(cell), z)
+						if not erase and not p.sel_tiles.is_empty():
+							WorldRenderer.draw_tile(self, w, p.sel_tiles[(p._cycle + n) % p.sel_tiles.size()], c, 0.55)
+							n += 1
+						_prism(w, cell, z, col)
+			Mode.PARTICLES:
+				for cell: Vector2i in cells:
+					var d := WorldRenderer.diamond(w, Vector2(cell), p.layer)
+					draw_colored_polygon(d, Color(col, 0.18))
+					d.append(d[0])
+					draw_polyline(d, col, 1.5)
+			Mode.OBJECTS, Mode.DETAILS:
+				if p.tool in [Tool.BRUSH, Tool.RECT]:
+					var asset := p.sel_object if p.mode == Mode.OBJECTS else p.sel_detail
+					var tex := ForgeStore.load_texture(asset)
+					var at := p._placement_point()
+					if tex:
+						if p.mode == Mode.DETAILS:
+							var fit := tex.get_size() * (w.tile_width / maxf(tex.get_width(), 1.0))
+							draw_texture_rect(tex, Rect2(at - fit * 0.5, fit), false, Color(1, 1, 1, 0.6))
+						else:
+							var kind := "structure" if p.sel_object.contains("/structures/") else "prop"
+							var used := WorldRenderer.fit_rect(tex)
+							var sz := used.size * WorldRenderer.default_scale(w, p.sel_object, kind)
+							draw_texture_rect_region(tex, Rect2(at + Vector2(-sz.x * 0.5, -sz.y + w.tile_height * 0.25), sz), used, Color(1, 1, 1, 0.6))
+				for cell: Vector2i in cells:
+					_prism(w, cell, p._hover_z, Color(col, 0.7))
+			Mode.GAMEPLAY:
+				for cell: Vector2i in cells:
+					_prism(w, cell, w.top_z(cell, p.layer), col)
+		var hc := w.to_screen(Vector2(p._hover_cell), p._hover_z)
+		var info := "%d,%d  ·  layer %d" % [p._hover_cell.x, p._hover_cell.y, p._hover_z]
+		if p.mode == Mode.TILES and p.tool == Tool.RECT and p._down:
+			var r := p._rect_cells()
+			info += "  ·  %d tiles" % (r.size() * p.target_layers().size())
+		draw_string(font, hc + Vector2(w.tile_width * 0.45, -w.tile_height * 0.6), info, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, NeonTheme.CYAN)
+
+	func _prism(w: WorldMap, cell: Vector2i, z: int, col: Color) -> void:
+		var d := WorldRenderer.diamond(w, Vector2(cell), z)
+		var drop := Vector2(0, w.height_step)
+		draw_colored_polygon(d, Color(col.r * 0.2, col.g * 0.25, col.b * 0.2, 0.22))
+		draw_colored_polygon(PackedVector2Array([d[3], d[2], d[2] + drop, d[3] + drop]), Color(col.r * 0.1, col.g * 0.2, col.b * 0.12, 0.35))
+		draw_colored_polygon(PackedVector2Array([d[2], d[1], d[1] + drop, d[2] + drop]), Color(col.r * 0.08, col.g * 0.15, col.b * 0.1, 0.35))
+		var outline := d.duplicate()
+		outline.append(d[0])
+		draw_polyline(outline, col, 1.6)
+		draw_line(d[3], d[3] + drop, col, 1.6)
+		draw_line(d[2], d[2] + drop, col, 1.6)
+		draw_line(d[1], d[1] + drop, col, 1.6)
+		draw_polyline(PackedVector2Array([d[3] + drop, d[2] + drop, d[1] + drop]), col, 1.6)
+
+	func _draw_gameplay(font: Font) -> void:
+		var w := p.world
+		var sp: Array = w.spawns.get("player", [])
+		for i in sp.size():
+			var c := Vector2i(int(sp[i][0]), int(sp[i][1]))
+			var at := w.to_screen(Vector2(c), w.top_z(c))
+			draw_circle(at, 12, Color(0.2, 1.6, 0.9, 0.85))
+			draw_string(font, at + Vector2(-4, 5), str(i + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, NeonTheme.BG)
+		for e: Dictionary in p.mission_enemies():
+			var c2 := Vector2i(int(e["cell"][0]), int(e["cell"][1]))
+			var at2 := w.to_screen(Vector2(c2), w.top_z(c2))
+			draw_circle(at2, 13, Color(2.0, 0.3, 0.8, 0.9))
+			draw_string(font, at2 + Vector2(-10, 5), str(e.get("character_id", "?")).left(2).to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+		for cell: Vector2i in w.gameplay:
+			var g: Dictionary = w.gameplay[cell]
+			var at3 := w.to_screen(Vector2(cell), w.top_z(cell))
+			var tag := ""
+			if g.has("walkable") and not bool(g["walkable"]): tag += "✕"
+			if int(g.get("cover", 0)) > 0: tag += "◐" if int(g["cover"]) == 1 else "●"
+			if bool(g.get("blocks_los", false)): tag += "◉"
+			if tag != "":
+				draw_string(font, at3 + Vector2(-10, 5), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, NeonTheme.AMBER)
+		for o: Dictionary in w.locations():
+			var loc: Dictionary = o["location"]
+			var c3 := Vector2i(int(o["cell"][0]), int(o["cell"][1]))
+			var at4 := w.to_screen(Vector2(c3), float(o.get("z", 0))) + Vector2(0, -90)
+			var label := str(loc.get("name", "?")) + ("" if str(loc.get("target_map", "")) != "" else "  (no link)")
+			draw_string(font, at4 - Vector2(label.length() * 3.5, 0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, NeonTheme.GREEN)
+
+
+# --- Build UI --------------------------------------------------------------
+
+func _ready() -> void:
+	split_offset = 300
+	add_child(_build_left())
+	var mid_right := HBoxContainer.new()
+	mid_right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	add_child(mid_right)
+	var center := VBoxContainer.new()
+	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mid_right.add_child(center)
+	center.add_child(_build_topbar())
+	_vpc = SubViewportContainer.new()
+	_vpc.stretch = true
+	_vpc.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_vpc.mouse_filter = Control.MOUSE_FILTER_STOP
+	_vpc.gui_input.connect(_on_view_input)
+	center.add_child(_vpc)
+	_vp = SubViewport.new()
+	_vp.handle_input_locally = false
+	_vp.use_hdr_2d = true
+	_vpc.add_child(_vp)
+	var bg := ColorRect.new()
+	bg.color = Color(0.02, 0.01, 0.05)
+	bg.size = Vector2(40000, 40000)
+	bg.position = Vector2(-20000, -20000)
+	bg.z_index = -4096
+	_vp.add_child(bg)
+	_renderer = WorldRenderer.new()
+	_vp.add_child(_renderer)
+	_ghost = GhostLayer.new()
+	_ghost.p = self
+	_ghost.z_as_relative = false
+	_ghost.z_index = 4090
+	_vp.add_child(_ghost)
+	_cam = Camera2D.new()
+	_vp.add_child(_cam)
+	_cam.make_current()
+	_hint = NeonTheme.label("", 12, NeonTheme.TEXT_DIM)
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint.custom_minimum_size.x = 100
+	center.add_child(_hint)
+	var right := VBoxContainer.new()
+	right.custom_minimum_size.x = 380
+	mid_right.add_child(right)
+	var insp := _scroll_panel(func(v: VBoxContainer) -> void: _inspector = v)
+	insp.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	insp.size_flags_stretch_ratio = 1.6
+	right.add_child(insp)
+	var objs := _scroll_panel(func(v: VBoxContainer) -> void: _objects_list = v)
+	objs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	right.add_child(objs)
+	var first := ""
+	for id: String in ContentDB.maps:
+		if int(ContentDB.maps[id].get("format", 1)) >= 2:
+			first = id
+			break
+	if first != "":
+		load_map(first)
+	else:
+		new_map("new_world", "world", 24, 24)
+	set_mode(Mode.TILES)
+	set_tool(Tool.BRUSH)
+
+
+func _scroll_panel(assign: Callable) -> Control:
+	var panel := PanelContainer.new()
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	panel.add_child(scroll)
+	var v := VBoxContainer.new()
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_theme_constant_override("separation", 6)
+	scroll.add_child(v)
+	assign.call(v)
+	return panel
+
+
+func _section(text: String, color: Color = NeonTheme.VIOLET) -> Label:
+	var l := NeonTheme.label("●  " + text, 12, color)
+	l.add_theme_font_override("font", NeonTheme.mono())
+	return l
+
+
+func _build_left() -> Control:
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size.x = 300
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	panel.add_child(scroll)
+	var v := VBoxContainer.new()
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_theme_constant_override("separation", 8)
+	scroll.add_child(v)
+	v.add_child(_section("LAYER"))
+	var modes := GridContainer.new()
+	modes.columns = 3
+	for i in MODE_NAMES.size():
+		var b := Button.new()
+		b.text = MODE_NAMES[i]
+		b.toggle_mode = true
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var idx := i
+		b.pressed.connect(func() -> void: set_mode(idx))
+		_mode_buttons.append(b)
+		modes.add_child(b)
+	v.add_child(modes)
+	# Tool card, like the reference: icon row + stack layer + brush sliders.
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", NeonTheme.panel_box(Color(NeonTheme.CYAN, 0.5)))
+	var cv := VBoxContainer.new()
+	cv.add_theme_constant_override("separation", 8)
+	card.add_child(cv)
+	var tools := HBoxContainer.new()
+	for i in TOOL_INFO.size():
+		var tb := Button.new()
+		tb.text = TOOL_INFO[i][0]
+		tb.tooltip_text = "%s\n%s" % [TOOL_INFO[i][1], TOOL_INFO[i][2]]
+		tb.custom_minimum_size = Vector2(34, 34)
+		tb.toggle_mode = true
+		var ti := i
+		tb.pressed.connect(func() -> void: set_tool(ti))
+		_tool_buttons.append(tb)
+		tools.add_child(tb)
+	cv.add_child(tools)
+	var lh := HBoxContainer.new()
+	lh.add_child(NeonTheme.label("Stack layer", 14))
+	var sp := Control.new()
+	sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lh.add_child(sp)
+	var minus := Button.new()
+	minus.text = "−"
+	minus.pressed.connect(func() -> void: set_layer(layer - 1))
+	lh.add_child(minus)
+	_layer_spin = SpinBox.new()
+	_layer_spin.min_value = WorldMap.MIN_Z
+	_layer_spin.max_value = WorldMap.MAX_Z
+	_layer_spin.value = 0
+	_layer_spin.value_changed.connect(func(n: float) -> void: set_layer(int(n)))
+	lh.add_child(_layer_spin)
+	var plus := Button.new()
+	plus.text = "+"
+	plus.pressed.connect(func() -> void: set_layer(layer + 1))
+	lh.add_child(plus)
+	cv.add_child(lh)
+	var tip := NeonTheme.label("Ctrl + click: stack on the tile under the cursor. Negative layers dig below ground.", 11, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	cv.add_child(tip)
+	_size_slider = _slider(cv, "Brush Size", 1, 12, 1, func(n: int) -> void: brush_size = n)
+	_height_slider = _slider(cv, "Brush Height", 1, 12, 1, func(n: int) -> void: brush_height = n)
+	var dim := CheckBox.new()
+	dim.text = "Fade layers above the stack layer"
+	dim.toggled.connect(func(on: bool) -> void:
+		dim_above = on
+		_renderer.dim_above = layer if on else 999
+		_renderer.redraw_all_columns())
+	cv.add_child(dim)
+	v.add_child(card)
+	_palette = VBoxContainer.new()
+	_palette.add_theme_constant_override("separation", 6)
+	v.add_child(_palette)
+	return panel
+
+
+func _slider(parent: Control, text: String, lo: int, hi: int, value: int, cb: Callable) -> HSlider:
+	var h := HBoxContainer.new()
+	h.add_child(NeonTheme.label(text, 14))
+	var sp := Control.new()
+	sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(sp)
+	var num := NeonTheme.label(str(value), 14, NeonTheme.CYAN)
+	h.add_child(num)
+	parent.add_child(h)
+	var s := HSlider.new()
+	s.min_value = lo
+	s.max_value = hi
+	s.step = 1
+	s.value = value
+	s.value_changed.connect(func(n: float) -> void:
+		num.text = str(int(n))
+		cb.call(int(n)))
+	parent.add_child(s)
+	return s
+
+
+func _build_topbar() -> Control:
+	var v := VBoxContainer.new()
+	_kind_tabs = HFlowContainer.new()
+	for k: String in ["all"] + WorldMap.KINDS:
+		var b := Button.new()
+		b.text = k.to_upper()
+		b.toggle_mode = true
+		b.button_pressed = k == kind_filter
+		var kk := k
+		b.pressed.connect(func() -> void:
+			kind_filter = kk
+			for c: Button in _kind_tabs.get_children():
+				c.button_pressed = c.text == kk.to_upper()
+			_refresh_map_pick())
+		_kind_tabs.add_child(b)
+	v.add_child(_kind_tabs)
+	var h := HFlowContainer.new()
+	h.add_theme_constant_override("h_separation", 6)
+	_map_pick = OptionButton.new()
+	_map_pick.custom_minimum_size.x = 220
+	_map_pick.clip_text = true
+	_map_pick.item_selected.connect(func(i: int) -> void: load_map(str(_map_pick.get_item_metadata(i))))
+	h.add_child(_map_pick)
+	var nw := Button.new()
+	nw.text = "+ NEW"
+	nw.pressed.connect(_new_map_dialog)
+	h.add_child(nw)
+	for pair: Array in [["↶", "Undo (Ctrl+Z)", undo_last], ["↷", "Redo (Ctrl+Y)", redo_last],
+			["⊕", "Zoom in", func() -> void: _zoom(1.25)], ["⊖", "Zoom out", func() -> void: _zoom(0.8)], ["⌂", "Frame the map", frame_map]]:
+		var b2 := Button.new()
+		b2.text = pair[0]
+		b2.tooltip_text = pair[1]
+		b2.pressed.connect(pair[2])
+		h.add_child(b2)
+	var play := Button.new()
+	play.text = "▶ PLAY HERE"
+	play.tooltip_text = "F5 — save, then walk this map (world/city/hub/interior) or fight on it (encounter)."
+	play.pressed.connect(play_here)
+	h.add_child(play)
+	var save := Button.new()
+	save.text = "SAVE"
+	save.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(NeonTheme.GREEN, 0.15), NeonTheme.GREEN))
+	save.pressed.connect(save_map)
+	h.add_child(save)
+	v.add_child(h)
+	return v
+
+
+func _refresh_map_pick() -> void:
+	_map_pick.clear()
+	var ids: Array = ContentDB.maps.keys()
+	if not ids.has(world.id):
+		ids.append(world.id)
+	ids.sort()
+	for id: String in ids:
+		var d: Dictionary = ContentDB.maps.get(id, {})
+		var k := world.kind if id == world.id else str(d.get("kind", "encounter"))
+		if kind_filter != "all" and k != kind_filter and id != world.id:
+			continue
+		var fmt := 2 if id == world.id else int(d.get("format", 1))
+		_map_pick.add_item("%s   [%s%s]" % [id, k, "" if fmt >= 2 else " · classic"])
+		_map_pick.set_item_metadata(_map_pick.item_count - 1, id)
+		if id == world.id:
+			_map_pick.selected = _map_pick.item_count - 1
+
+
+# --- Mode / tool ------------------------------------------------------------
+
+func _style_toggle(b: Button, on: bool) -> void:
+	b.button_pressed = on
+	b.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(NeonTheme.CYAN, 0.28), NeonTheme.CYAN) if on else NeonTheme.button_box(Color(0.1, 0.06, 0.17, 0.95), Color(NeonTheme.VIOLET, 0.55)))
+
+
+func set_mode(m: int) -> void:
+	mode = m as Mode
+	for i in _mode_buttons.size():
+		_style_toggle(_mode_buttons[i], i == m)
+	_build_palette()
+	_hint_text()
+
+
+func set_tool(t: int) -> void:
+	tool = t as Tool
+	for i in _tool_buttons.size():
+		_style_toggle(_tool_buttons[i], i == t)
+	_hint_text()
+
+
+func set_layer(z: int) -> void:
+	layer = clampi(z, WorldMap.MIN_Z, WorldMap.MAX_Z)
+	if _layer_spin and int(_layer_spin.value) != layer:
+		_layer_spin.set_value_no_signal(layer)
+	if dim_above:
+		_renderer.dim_above = layer
+		_renderer.redraw_all_columns()
+
+
+func _hint_text() -> void:
+	if _hint:
+		_hint.text = "  %s · %s — %s    [wheel zoom · middle/right drag pan · Ctrl+click stack on top · Shift+click palette to cycle]" % [MODE_NAMES[mode], TOOL_INFO[tool][1], TOOL_INFO[tool][2]]
+
+
+# --- Palette ---------------------------------------------------------------
+
+func _build_palette() -> void:
+	if _palette == null:
+		return
+	for c in _palette.get_children():
+		c.queue_free()
+	match mode:
+		Mode.TILES: _palette_tiles()
+		Mode.DETAILS: _palette_assets("details", func(p: String) -> void: sel_detail = p, func() -> String: return sel_detail)
+		Mode.PARTICLES: _palette_particles()
+		Mode.OBJECTS: _palette_objects()
+		Mode.GAMEPLAY: _palette_gameplay()
+
+
+func _tile_groups() -> Dictionary:
+	var groups := {}
+	var tdb: Dictionary = ContentDB.get("tiles") if ContentDB.get("tiles") is Dictionary else {}
+	for id: String in tdb:
+		var g := str(tdb[id].get("group", id.get_base_dir()))
+		if not groups.has(g):
+			groups[g] = []
+		groups[g].append(id)
+	var terr: Array = []
+	for t: String in ContentDB.terrain:
+		terr.append("terrain:" + t)
+	groups["~ flat colour terrain"] = terr
+	return groups
+
+
+func _palette_tiles() -> void:
+	var top := HBoxContainer.new()
+	var info := NeonTheme.label(_sel_text(), 12, NeonTheme.CYAN)
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	top.add_child(info)
+	var rescan := Button.new()
+	rescan.text = "⟳ RESCAN"
+	rescan.tooltip_text = "Re-index assets/tiles (new files, animated water/river sets)."
+	rescan.pressed.connect(func() -> void:
+		var idx: Dictionary = TileIndex.scan()
+		TileIndex.save(idx)
+		ContentDB.set("tiles", idx)
+		_build_palette()
+		status.emit("Tile index rebuilt: %d tiles." % idx.size(), NeonTheme.GREEN))
+	top.add_child(rescan)
+	_palette.add_child(top)
+	var groups := _tile_groups()
+	var names: Array = groups.keys()
+	names.sort()
+	for g: String in names:
+		var ids: Array = groups[g]
+		ids.sort()
+		_palette.add_child(_section("%s (%d)" % [g.to_upper(), ids.size()], NeonTheme.TEXT_DIM))
+		var grid := GridContainer.new()
+		grid.columns = 5
+		for id: String in ids:
+			var b := Button.new()
+			b.custom_minimum_size = Vector2(50, 50)
+			b.tooltip_text = "%s\nclick: select · shift+click: add to cycle" % id
+			var frames := WorldRenderer.tile_frames(id)
+			if frames.is_empty():
+				var img := Image.create(40, 40, false, Image.FORMAT_RGBA8)
+				img.fill(Color(str(ContentDB.terrain.get(WorldMap.terrain_of(id), {}).get("color", "#333333"))))
+				b.icon = ImageTexture.create_from_image(img)
+			else:
+				b.icon = frames[0]
+				if frames.size() > 1:
+					b.text = "≈"
+			b.expand_icon = true
+			b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			_style_toggle(b, sel_tiles.has(id))
+			var tid := id
+			b.pressed.connect(func() -> void:
+				if Input.is_key_pressed(KEY_SHIFT):
+					if sel_tiles.has(tid):
+						sel_tiles.erase(tid)
+					else:
+						sel_tiles.append(tid)
+				else:
+					sel_tiles = [tid]
+				_cycle = 0
+				if tool in [Tool.PICK, Tool.SELECT, Tool.PAN, Tool.ERASE]:
+					set_tool(Tool.BRUSH)
+				_build_palette())
+			grid.add_child(b)
+		_palette.add_child(grid)
+	if ContentDB.get("tiles") == null or (ContentDB.get("tiles") as Dictionary).is_empty():
+		var t := NeonTheme.label("No tile art indexed yet. Drop tiles into assets/tiles (the sync bot does this) and press RESCAN. Flat colour terrain works meanwhile.", 12, NeonTheme.AMBER)
+		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_palette.add_child(t)
+
+
+func _sel_text() -> String:
+	if sel_tiles.is_empty():
+		return "Pick a tile. Shift+click more to cycle them."
+	if sel_tiles.size() == 1:
+		return "Painting: " + sel_tiles[0]
+	return "Cycling %d tiles as you paint" % sel_tiles.size()
+
+
+func _asset_paths(category: String) -> Array[String]:
+	if ForgeStore.ASSET_CATEGORIES.has(category):
+		return ForgeStore.list_assets(category)
+	var out: Array[String] = []
+	var dir := "res://assets/" + category
+	if DirAccess.dir_exists_absolute(dir):
+		for f in DirAccess.get_files_at(dir):
+			if f.get_extension().to_lower() in ForgeStore.IMAGE_EXT:
+				out.append(dir.path_join(f))
+	return out
+
+
+func _palette_assets(category: String, pick: Callable, current: Callable) -> void:
+	var paths := _asset_paths(category)
+	var filter := LineEdit.new()
+	filter.placeholder_text = "filter %d %s…" % [paths.size(), category]
+	_palette.add_child(filter)
+	var grid := GridContainer.new()
+	grid.columns = 4
+	_palette.add_child(grid)
+	var fill := func(q: String) -> void:
+		for c in grid.get_children():
+			c.queue_free()
+		for p: String in paths:
+			if q != "" and not p.to_lower().contains(q.to_lower()):
+				continue
+			var b := Button.new()
+			b.custom_minimum_size = Vector2(62, 62)
+			b.icon = ForgeStore.load_texture(p)
+			b.expand_icon = true
+			b.tooltip_text = p.trim_prefix("res://assets/")
+			_style_toggle(b, current.call() == p)
+			var pp := p
+			b.pressed.connect(func() -> void:
+				pick.call(pp)
+				if tool in [Tool.PICK, Tool.PAN, Tool.ERASE, Tool.FILL]:
+					set_tool(Tool.BRUSH)
+				for c2: Button in grid.get_children():
+					_style_toggle(c2, c2.tooltip_text == pp.trim_prefix("res://assets/")))
+			grid.add_child(b)
+	filter.text_changed.connect(fill)
+	fill.call("")
+	if paths.is_empty():
+		var t := NeonTheme.label("Nothing in assets/%s yet — drop files onto the Forge window to add some." % category, 12, NeonTheme.AMBER)
+		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_palette.add_child(t)
+
+
+func _palette_particles() -> void:
+	var presets: Dictionary = ParticleFactory.presets()
+	var tip := NeonTheme.label("Paint weather and atmosphere on any stack layer: fog on 1–3 hugs mountain tops, storm clouds on 15 roll over everything.", 12, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_palette.add_child(tip)
+	var grid := GridContainer.new()
+	grid.columns = 2
+	for id: String in presets:
+		var b := Button.new()
+		b.text = str(presets[id].get("name", id))
+		b.icon = ParticleFactory.preview_icon(id)
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_style_toggle(b, sel_particle == id)
+		var pid := id
+		b.pressed.connect(func() -> void:
+			sel_particle = pid
+			if tool in [Tool.PICK, Tool.SELECT, Tool.PAN]:
+				set_tool(Tool.BRUSH)
+			_build_palette())
+		grid.add_child(b)
+	_palette.add_child(grid)
+	var show := CheckBox.new()
+	show.text = "Show particles in the editor"
+	show.button_pressed = _renderer.show_particles
+	show.toggled.connect(func(on: bool) -> void:
+		_renderer.show_particles = on
+		_renderer.rebuild_particles())
+	_palette.add_child(show)
+
+
+func _palette_objects() -> void:
+	var src := ForgeForm._option(OBJECT_SOURCES, object_source, func(s: String) -> void:
+		object_source = s
+		_build_palette())
+	_palette.add_child(src)
+	_palette_assets(object_source, func(p: String) -> void: sel_object = p, func() -> String: return sel_object)
+
+
+func _palette_gameplay() -> void:
+	var grid := GridContainer.new()
+	grid.columns = 2
+	for i in PLAY_NAMES.size():
+		var b := Button.new()
+		b.text = PLAY_NAMES[i]
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_style_toggle(b, play_tool == i)
+		var pi := i
+		b.pressed.connect(func() -> void:
+			play_tool = pi as Play
+			set_tool(Tool.BRUSH)
+			_build_palette())
+		grid.add_child(b)
+	_palette.add_child(grid)
+	_palette.add_child(_section("ENCOUNTER"))
+	_palette.add_child(NeonTheme.label("Mission (enemies are saved into it)", 12, NeonTheme.TEXT_DIM))
+	var mids: Array = ContentDB.get_ids("missions")
+	_palette.add_child(ForgeForm._option([""] + mids, mission_id, func(m: String) -> void: mission_id = m))
+	_palette.add_child(NeonTheme.label("Enemy", 12, NeonTheme.TEXT_DIM))
+	_palette.add_child(ForgeForm._ref_picker("characters", enemy_id, func(c: String) -> void:
+		enemy_id = c
+		play_tool = Play.ENEMY))
+	_palette.add_child(NeonTheme.label("Level", 12, NeonTheme.TEXT_DIM))
+	_palette.add_child(ForgeForm._spin(enemy_level, true, func(n: float) -> void: enemy_level = int(n)))
+	var t := NeonTheme.label("Spawns and enemies stand on top of each column. BLOCK / COVER / SIGHT override the tile's terrain rules.", 12, NeonTheme.TEXT_DIM)
+	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_palette.add_child(t)
+
+
+# --- Map lifecycle ---------------------------------------------------------
+
+func load_map(id: String) -> void:
+	var src: Dictionary = ContentDB.get_map(id)
+	if src.is_empty():
+		return
+	world = WorldMap.from_dict(src)
+	if int(src.get("format", 1)) < 2:
+		status.emit("Opened a classic map — it is converted to stacks and saved as format 2.", NeonTheme.AMBER)
+	_after_load()
+	for m: MissionResource in ContentDB.get_all("missions"):
+		if m.map_id == id:
+			mission_id = m.id
+			break
+
+
+func new_map(id: String, kind: String, w: int, d: int) -> void:
+	world = WorldMap.new()
+	world.id = ForgeStore.slugify(id)
+	world.name = id.capitalize()
+	world.kind = kind
+	world.width = w
+	world.depth = d
+	if kind == "world":
+		world.tile_width = 128
+	dirty = true
+	_after_load()
+
+
+func _after_load() -> void:
+	_undo.clear()
+	_redo.clear()
+	selected = {}
+	_renderer.set_world(world)
+	frame_map()
+	# The viewport has no size until layout runs; frame again once it does.
+	get_tree().process_frame.connect(frame_map, CONNECT_ONE_SHOT)
+	_refresh_map_pick()
+	_show_inspector()
+	_refresh_objects_list()
+
+
+func frame_map() -> void:
+	_cam.position = world.to_screen(Vector2(world.width, world.depth) * 0.5, 0)
+	var span := (world.width + world.depth) * world.tile_width * 0.5
+	var vw := maxf(_vpc.size.x, 800.0)
+	var z := clampf(vw / maxf(span, 1.0) * 0.9, 0.08, 2.0)
+	_cam.zoom = Vector2(z, z)
+
+
+func _zoom(f: float) -> void:
+	_cam.zoom = (_cam.zoom * f).clamp(Vector2(0.05, 0.05), Vector2(6, 6))
+
+
+func save_map() -> void:
+	var path := ForgeStore.save_map(world.to_dict())
+	var msg := "SAVED ▸ %s" % path
+	if dirty_missions:
+		msg += "  +  " + ForgeStore.save_bucket("missions")
+		dirty_missions = false
+	dirty = false
+	status.emit(msg, NeonTheme.GREEN)
+	_refresh_map_pick()
+
+
+func play_here() -> void:
+	save_map()
+	if world.kind == "encounter":
+		var mission := ContentDB.get_mission(mission_id)
+		if mission == null or mission.map_id != world.id:
+			var test := MissionResource.new()
+			var sp: Array = world.spawns.get("player", [])
+			var foe_cell := [world.width - 2, 1]
+			test.apply_dict({"id": "__playtest", "display_name": "Playtest: " + world.name, "map_id": world.id,
+				"briefing": "Neon Forge playtest.", "enemies": [{"character_id": "doctrine_warden", "cell": foe_cell, "level": 2}]})
+			ForgeStore.put_entry("missions", test)
+			mission = test
+			if sp.is_empty():
+				status.emit("Tip: add PLAYER SPAWN points in the GAMEPLAY layer.", NeonTheme.AMBER)
+		GameManager.new_game()
+		CampaignManager.start_mission(mission.id)
+	else:
+		var at := _hover_cell if world.in_bounds(_hover_cell) and world.tiles.has(_hover_cell) else Vector2i(-1, -1)
+		CampaignManager.explore(world.id, -1, at, true)
+
+
+func _new_map_dialog() -> void:
+	var dlg := ConfirmationDialog.new()
+	dlg.title = "NEW MAP"
+	var v := VBoxContainer.new()
+	v.theme = NeonTheme.get_theme()
+	var name_e := LineEdit.new()
+	name_e.placeholder_text = "map id, e.g. neo_kowloon_hub"
+	v.add_child(name_e)
+	var st := {"kind": kind_filter if kind_filter != "all" else "encounter"}
+	var kind_pick := ForgeForm._option(WorldMap.KINDS, st["kind"], func(k: String) -> void: st["kind"] = k)
+	v.add_child(kind_pick)
+	var h := HBoxContainer.new()
+	var ww := ForgeForm._spin(24, true, func(_n: float) -> void: pass)
+	var dd := ForgeForm._spin(24, true, func(_n: float) -> void: pass)
+	h.add_child(NeonTheme.label("W", 12))
+	h.add_child(ww)
+	h.add_child(NeonTheme.label("D", 12))
+	h.add_child(dd)
+	v.add_child(h)
+	dlg.add_child(v)
+	dlg.confirmed.connect(func() -> void:
+		var id := name_e.text if name_e.text != "" else "new_" + str(st["kind"])
+		if ContentDB.maps.has(ForgeStore.slugify(id)):
+			id += "_2"
+		new_map(id, str(st["kind"]), clampi(int(ww.value), 3, 160), clampi(int(dd.value), 3, 160))
+		dlg.queue_free())
+	add_child(dlg)
+	dlg.popup_centered(Vector2i(440, 200))
+
+
+# --- Undo --------------------------------------------------------------------
+
+func _push_undo() -> void:
+	_undo.append(world.to_dict())
+	if _undo.size() > 40:
+		_undo.pop_front()
+	_redo.clear()
+	dirty = true
+
+
+func _restore(d: Dictionary) -> void:
+	var cam := _cam.position
+	var zoom := _cam.zoom
+	world.load_dict(d)
+	selected = {}
+	_renderer.rebuild()
+	_cam.position = cam
+	_cam.zoom = zoom
+	_show_inspector()
+	_refresh_objects_list()
+
+
+func undo_last() -> void:
+	if _undo.is_empty():
+		return
+	_redo.append(world.to_dict())
+	_restore(_undo.pop_back())
+	status.emit("Undone.", NeonTheme.AMBER)
+
+
+func redo_last() -> void:
+	if _redo.is_empty():
+		return
+	_undo.append(world.to_dict())
+	_restore(_redo.pop_back())
+	status.emit("Redone.", NeonTheme.AMBER)
+
+
+# --- Input -------------------------------------------------------------------
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not is_visible_in_tree():
+		return
+	var k := event as InputEventKey
+	if k == null:
+		return
+	if k.keycode == KEY_SPACE:
+		_space = k.pressed
+		return
+	if not k.pressed or k.echo:
+		return
+	var focus := get_viewport().gui_get_focus_owner()
+	if focus is LineEdit or focus is TextEdit or focus is SpinBox:
+		return
+	var handled := true
+	if k.ctrl_pressed and k.keycode == KEY_Z:
+		if k.shift_pressed: redo_last()
+		else: undo_last()
+	elif k.ctrl_pressed and k.keycode == KEY_Y:
+		redo_last()
+	elif k.ctrl_pressed and k.keycode == KEY_S:
+		save_map()
+	elif k.ctrl_pressed and k.keycode == KEY_D:
+		duplicate_selected()
+	elif k.keycode == KEY_F5:
+		play_here()
+	elif k.keycode in [KEY_DELETE, KEY_BACKSPACE]:
+		delete_selected()
+	elif k.keycode == KEY_BRACKETLEFT:
+		_size_slider.value = brush_size - 1
+	elif k.keycode == KEY_BRACKETRIGHT:
+		_size_slider.value = brush_size + 1
+	elif k.keycode == KEY_PAGEUP:
+		set_layer(layer + 1)
+	elif k.keycode == KEY_PAGEDOWN:
+		set_layer(layer - 1)
+	elif TOOL_KEYS.has(k.keycode) and not k.ctrl_pressed:
+		set_tool(TOOL_KEYS[k.keycode])
+	elif k.keycode >= KEY_1 and k.keycode <= KEY_5 and k.alt_pressed:
+		set_mode(k.keycode - KEY_1)
+	else:
+		handled = false
+	if handled:
+		get_viewport().set_input_as_handled()
+
+
+func _view_to_world(local: Vector2) -> Vector2:
+	return _vp.get_canvas_transform().affine_inverse() * local
+
+
+func _update_hover(local: Vector2) -> void:
+	_hover_world = _view_to_world(local)
+	if Input.is_key_pressed(KEY_CTRL):
+		var hit := world.pick_top(_hover_world)
+		if not hit.is_empty():
+			_hover_cell = hit[0]
+			_hover_z = int(hit[1]) + (1 if mode == Mode.TILES else 0)
+			return
+	if mode in [Mode.OBJECTS, Mode.DETAILS, Mode.GAMEPLAY]:
+		var hit2 := world.pick_top(_hover_world)
+		if not hit2.is_empty():
+			_hover_cell = hit2[0]
+			_hover_z = int(hit2[1])
+			return
+	_hover_cell = world.pick_plane(_hover_world, layer)
+	_hover_z = layer
+
+
+func _on_view_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.pressed:
+			if mb.shift_pressed: set_layer(layer + 1)
+			else: _zoom_at(mb.position, 1.1)
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
+			if mb.shift_pressed: set_layer(layer - 1)
+			else: _zoom_at(mb.position, 1.0 / 1.1)
+		elif mb.button_index in [MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_RIGHT]:
+			_panning = mb.pressed
+		elif mb.button_index == MOUSE_BUTTON_LEFT:
+			_update_hover(mb.position)
+			if tool == Tool.PAN or _space:
+				_panning = mb.pressed
+				return
+			if mb.pressed:
+				if mb.double_click and mode == Mode.OBJECTS:
+					var o := _renderer.pick_sprite(_hover_world)
+					if not o.is_empty():
+						_select(o)
+						_location_dialog(o)
+					return
+				_down = true
+				_drag_start = _hover_cell
+				_last_applied.clear()
+				_press()
+			else:
+				if _down:
+					_release()
+				_down = false
+				_moving = {}
+	elif event is InputEventMouseMotion:
+		var mm := event as InputEventMouseMotion
+		if _panning:
+			_cam.position -= mm.relative / _cam.zoom.x
+			return
+		var prev := _hover_cell
+		_update_hover(mm.position)
+		if _down:
+			_drag()
+		elif prev != _hover_cell:
+			pass
+
+
+func _zoom_at(local: Vector2, f: float) -> void:
+	var before := _view_to_world(local)
+	_zoom(f)
+	var after := _view_to_world(local)
+	_cam.position += before - after
+
+
+# --- Targets -------------------------------------------------------------------
+
+## Cells the current tool would affect (brush footprint, or the rectangle).
+func target_cells() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if tool == Tool.RECT and _down:
+		return _rect_cells()
+	var single := mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]
+	if single or tool in [Tool.PICK, Tool.SELECT, Tool.PAN, Tool.FILL] or mode in [Mode.OBJECTS, Mode.DETAILS] and tool != Tool.ERASE:
+		if world.in_bounds(_hover_cell):
+			out.append(_hover_cell)
+		return out
+	var r := brush_size - 1
+	var lo := -(r / 2)
+	for dx in range(lo, lo + brush_size):
+		for dy in range(lo, lo + brush_size):
+			var c := _hover_cell + Vector2i(dx, dy)
+			if world.in_bounds(c):
+				out.append(c)
+	return out
+
+
+func _rect_cells() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if not world.in_bounds(_drag_start) and not world.in_bounds(_hover_cell):
+		return out
+	var a := Vector2i(clampi(_drag_start.x, 0, world.width - 1), clampi(_drag_start.y, 0, world.depth - 1))
+	var b := Vector2i(clampi(_hover_cell.x, 0, world.width - 1), clampi(_hover_cell.y, 0, world.depth - 1))
+	for x in range(mini(a.x, b.x), maxi(a.x, b.x) + 1):
+		for y in range(mini(a.y, b.y), maxi(a.y, b.y) + 1):
+			out.append(Vector2i(x, y))
+	return out
+
+
+## Layers the tile brush fills: the hover layer and brush_height-1 above it.
+func target_layers() -> Array[int]:
+	var out: Array[int] = []
+	var base := _hover_z if tool != Tool.RECT or not _down else layer
+	for i in brush_height:
+		out.append(base + i)
+	return out
+
+
+func _placement_point() -> Vector2:
+	if mode == Mode.DETAILS:
+		var f := world.from_screen(_hover_world, _hover_z)
+		if Input.is_key_pressed(KEY_SHIFT):
+			f = f.round()
+		return world.to_screen(f, _hover_z)
+	return world.to_screen(Vector2(_hover_cell), _hover_z)
+
+
+# --- Applying ------------------------------------------------------------------
+
+func _press() -> void:
+	match tool:
+		Tool.PICK:
+			_eyedrop()
+		Tool.SELECT:
+			var o := _renderer.pick_sprite(_hover_world, true)
+			_select(o)
+			if not o.is_empty():
+				_push_undo()
+				_moving = o
+				_move_grab = _hover_world
+		Tool.FILL:
+			_push_undo()
+			_flood_fill()
+		Tool.RECT:
+			pass
+		_:
+			_push_undo()
+			_apply(target_cells())
+
+
+func _drag() -> void:
+	if tool == Tool.SELECT and not _moving.is_empty():
+		_move_selected()
+	elif tool in [Tool.BRUSH, Tool.ERASE] and mode in [Mode.TILES, Mode.PARTICLES, Mode.GAMEPLAY] and not (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]):
+		_apply(target_cells())
+
+
+func _release() -> void:
+	if tool == Tool.RECT:
+		_push_undo()
+		_apply(_rect_cells())
+
+
+func _next_tile() -> String:
+	if sel_tiles.is_empty():
+		return ""
+	var t := sel_tiles[_cycle % sel_tiles.size()]
+	_cycle += 1
+	return t
+
+
+func _apply(cells: Array[Vector2i]) -> void:
+	var erase := tool == Tool.ERASE
+	var changed: Array = []
+	match mode:
+		Mode.TILES:
+			if not erase and sel_tiles.is_empty():
+				status.emit("Pick a tile in the palette first.", NeonTheme.MAGENTA)
+				return
+			var zs := target_layers()
+			for c: Vector2i in cells:
+				for z: int in zs:
+					var k := "%d,%d,%d" % [c.x, c.y, z]
+					if _last_applied.has(k):
+						continue
+					_last_applied[k] = true
+					if erase:
+						world.remove_tile(c, z)
+					else:
+						world.set_tile(c, z, _next_tile())
+				changed.append(c)
+			_renderer.refresh_columns(changed)
+		Mode.PARTICLES:
+			for c: Vector2i in cells:
+				if erase:
+					world.remove_particle(c, layer)
+				else:
+					world.set_particle(c, layer, sel_particle)
+			_renderer.rebuild_particles()
+		Mode.DETAILS:
+			if erase:
+				var d := _renderer.pick_sprite(_hover_world, true)
+				if not d.is_empty() and world.details.has(d):
+					world.details.erase(d)
+					_renderer.remove_detail(d)
+			elif sel_detail != "":
+				var f := world.from_screen(_hover_world, _hover_z)
+				if Input.is_key_pressed(KEY_SHIFT):
+					f = f.round()
+				var nd := world.add_detail(sel_detail, f, _hover_z)
+				_apply_default_anim(nd, sel_detail)
+				_renderer.refresh_detail(nd)
+				_select(nd)
+			else:
+				status.emit("Pick a detail in the palette first.", NeonTheme.MAGENTA)
+		Mode.OBJECTS:
+			if erase:
+				for c: Vector2i in cells:
+					for o: Dictionary in world.objects_at(c):
+						world.objects.erase(o)
+						_renderer.remove_object(o)
+				_refresh_objects_list()
+			elif sel_object != "" and world.in_bounds(_hover_cell):
+				var kind := "structure" if sel_object.contains("/structures/") else ("character" if sel_object.contains("/units/") else ("loot" if sel_object.contains("/items/") else "prop"))
+				var no := world.add_object(sel_object, _hover_cell, world.top_z(_hover_cell, layer), kind)
+				no["scale"] = WorldRenderer.default_scale(world, sel_object, kind)
+				_apply_default_anim(no, sel_object)
+				_renderer.refresh_object(no)
+				_select(no)
+				_refresh_objects_list()
+			else:
+				status.emit("Pick an asset in the palette first.", NeonTheme.MAGENTA)
+		Mode.GAMEPLAY:
+			for c: Vector2i in cells:
+				var k2 := "%d,%d" % [c.x, c.y]
+				if _last_applied.has(k2):
+					continue
+				_last_applied[k2] = true
+				_apply_gameplay(c, erase)
+	dirty = true
+
+
+func _apply_default_anim(entry: Dictionary, asset: String) -> void:
+	var idx_entry: Dictionary = AssetIndex.find_by_path(asset)
+	if idx_entry.get("anim") is Dictionary:
+		entry["anim"] = idx_entry["anim"].duplicate(true)
+
+
+func _apply_gameplay(c: Vector2i, erase: bool) -> void:
+	var g: Dictionary = world.gameplay.get(c, {})
+	match play_tool:
+		Play.SPAWN:
+			var sp: Array = world.spawns["player"]
+			var idx := _index_of_cell(sp, c)
+			if idx >= 0:
+				sp.remove_at(idx)
+			elif not erase:
+				sp.append([c.x, c.y])
+		Play.ENEMY:
+			var m := ContentDB.get_mission(mission_id)
+			if m == null:
+				status.emit("Pick a mission under ENCOUNTER first (or create one in MISSIONS).", NeonTheme.MAGENTA)
+				return
+			m.map_id = world.id
+			var ei := _index_of_cell(m.enemies, c)
+			if ei >= 0:
+				m.enemies.remove_at(ei)
+			if not erase:
+				m.enemies.append({"character_id": enemy_id, "cell": [c.x, c.y], "level": enemy_level})
+			dirty_missions = true
+		Play.BLOCK:
+			if erase: g.erase("walkable")
+			else: g["walkable"] = false
+		Play.COVER:
+			if erase: g.erase("cover")
+			else: g["cover"] = (int(g.get("cover", 0)) + 1) % 3
+		Play.SIGHT:
+			if erase: g.erase("blocks_los")
+			else: g["blocks_los"] = not bool(g.get("blocks_los", false))
+	if g.is_empty():
+		world.gameplay.erase(c)
+	else:
+		world.gameplay[c] = g
+
+
+func _index_of_cell(list: Array, cell: Vector2i) -> int:
+	for i in list.size():
+		var e: Variant = list[i]
+		var cc: Array = e["cell"] if e is Dictionary else e
+		if int(cc[0]) == cell.x and int(cc[1]) == cell.y:
+			return i
+	return -1
+
+
+func mission_enemies() -> Array:
+	var m := ContentDB.get_mission(mission_id)
+	if m == null or m.map_id != world.id:
+		return []
+	return m.enemies
+
+
+func _eyedrop() -> void:
+	var hit := world.pick_top(_hover_world)
+	if hit.is_empty():
+		return
+	var c: Vector2i = hit[0]
+	match mode:
+		Mode.TILES:
+			sel_tiles = [world.top_tile(c)]
+			set_layer(int(hit[1]))
+			set_tool(Tool.BRUSH)
+			_build_palette()
+			status.emit("Picked %s at layer %d" % [sel_tiles[0], layer], NeonTheme.CYAN)
+		Mode.PARTICLES:
+			for e: Array in world.particles.get(c, []):
+				sel_particle = str(e[1])
+				set_layer(int(e[0]))
+			set_tool(Tool.BRUSH)
+			_build_palette()
+
+
+func _flood_fill() -> void:
+	if mode not in [Mode.TILES, Mode.PARTICLES]:
+		return
+	var start := _hover_cell
+	if not world.in_bounds(start):
+		return
+	var match_id := world.tile_at(start, layer) if mode == Mode.TILES else _particle_at(start, layer)
+	var seen := {start: true}
+	var queue: Array[Vector2i] = [start]
+	var cells: Array[Vector2i] = []
+	while not queue.is_empty() and cells.size() < 25000:
+		var c: Vector2i = queue.pop_back()
+		cells.append(c)
+		for d in IsometricGrid.DIRECTIONS:
+			var n: Vector2i = c + d
+			if world.in_bounds(n) and not seen.has(n):
+				seen[n] = true
+				var here := world.tile_at(n, layer) if mode == Mode.TILES else _particle_at(n, layer)
+				if here == match_id:
+					queue.append(n)
+	var keep_height := brush_height
+	brush_height = 1
+	var keep_z := _hover_z
+	_hover_z = layer
+	_apply(cells)
+	brush_height = keep_height
+	_hover_z = keep_z
+	status.emit("Filled %d cells." % cells.size(), NeonTheme.GREEN)
+
+
+func _particle_at(c: Vector2i, z: int) -> String:
+	for e: Array in world.particles.get(c, []):
+		if int(e[0]) == z:
+			return str(e[1])
+	return ""
+
+
+# --- Selection -------------------------------------------------------------------
+
+func _select(o: Dictionary) -> void:
+	for n in _renderer.get_children():
+		for s in n.get_children():
+			if s is WorldRenderer.WorldSprite:
+				var ws := s as WorldRenderer.WorldSprite
+				if ws.selected:
+					ws.selected = false
+					ws.queue_redraw()
+	selected = o
+	if not o.is_empty():
+		for n in _renderer.get_children():
+			for s in n.get_children():
+				if s is WorldRenderer.WorldSprite and (s as WorldRenderer.WorldSprite).data == o:
+					(s as WorldRenderer.WorldSprite).selected = true
+					s.queue_redraw()
+	_show_inspector()
+
+
+func _is_detail(o: Dictionary) -> bool:
+	return o.has("pos")
+
+
+func _move_selected() -> void:
+	if _is_detail(_moving):
+		var f := world.from_screen(_hover_world, float(_moving.get("z", 0)))
+		if Input.is_key_pressed(KEY_SHIFT):
+			f = f.round()
+		_moving["pos"] = [snappedf(f.x, 0.01), snappedf(f.y, 0.01)]
+		_renderer.refresh_detail(_moving)
+	else:
+		var hit := world.pick_top(_hover_world)
+		if hit.is_empty():
+			return
+		var c: Vector2i = hit[0]
+		_moving["cell"] = [c.x, c.y]
+		_moving["z"] = int(hit[1])
+		_renderer.refresh_object(_moving)
+	dirty = true
+
+
+func delete_selected() -> void:
+	if selected.is_empty():
+		return
+	_push_undo()
+	if _is_detail(selected):
+		world.details.erase(selected)
+		_renderer.remove_detail(selected)
+	else:
+		world.objects.erase(selected)
+		_renderer.remove_object(selected)
+	selected = {}
+	_show_inspector()
+	_refresh_objects_list()
+
+
+func duplicate_selected() -> void:
+	if selected.is_empty():
+		return
+	_push_undo()
+	var copy: Dictionary = selected.duplicate(true)
+	if _is_detail(copy):
+		copy["id"] = world.next_id("dtl")
+		copy["pos"] = [float(copy["pos"][0]) + 1.0, float(copy["pos"][1])]
+		world.details.append(copy)
+		_renderer.refresh_detail(copy)
+	else:
+		copy["id"] = world.next_id("obj")
+		copy["cell"] = [mini(int(copy["cell"][0]) + 1, world.width - 1), int(copy["cell"][1])]
+		world.objects.append(copy)
+		_renderer.refresh_object(copy)
+	_select(copy)
+	_refresh_objects_list()
+
+
+# --- Inspector --------------------------------------------------------------------
+
+func _clear(box: Control) -> void:
+	for c in box.get_children():
+		c.queue_free()
+
+
+func _show_inspector() -> void:
+	if _inspector == null:
+		return
+	_clear(_inspector)
+	if selected.is_empty():
+		_map_inspector()
+	elif _is_detail(selected):
+		_sprite_inspector(selected, true)
+	else:
+		_sprite_inspector(selected, false)
+
+
+func _map_inspector() -> void:
+	_inspector.add_child(NeonTheme.label(world.name.to_upper(), 20, NeonTheme.GREEN))
+	var form := ForgeForm.new()
+	form.build_dict({"id": world.id, "name": world.name, "kind": world.kind, "width": world.width, "depth": world.depth,
+		"tile_width": world.tile_width, "height_step": world.height_step, "music": world.music}, "world_map", true)
+	form.changed.connect(func(k: String) -> void:
+		var d := form.get_data()
+		match k:
+			"id": world.id = ForgeStore.slugify(str(d["id"]))
+			"name": world.name = str(d["name"])
+			"kind":
+				if str(d["kind"]) in WorldMap.KINDS:
+					world.kind = str(d["kind"])
+			"width": world.width = clampi(int(d["width"]), 3, 160)
+			"depth": world.depth = clampi(int(d["depth"]), 3, 160)
+			"tile_width":
+				world.tile_width = clampf(float(d["tile_width"]), 16, 512)
+				world.tile_height = world.tile_width * 0.5
+				_renderer.rebuild()
+			"height_step":
+				world.height_step = clampf(float(d["height_step"]), 2, 256)
+				_renderer.rebuild()
+			"music": world.music = str(d["music"])
+		dirty = true)
+	_inspector.add_child(form)
+	var stats := "%d columns · %d details · %d objects · %d particle cells · %d spawns" % [world.tiles.size(), world.details.size(), world.objects.size(), world.particles.size(), world.spawns.get("player", []).size()]
+	var sl := NeonTheme.label(stats, 12, NeonTheme.TEXT_DIM)
+	sl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_inspector.add_child(sl)
+	var kinds := NeonTheme.label("Travel order: WORLD (cities, points of interest) → HUB (districts) → INTERIOR (buildings) / EVENT sets. ENCOUNTER maps are battles. Double-click an object to link it as a location.", 12, NeonTheme.TEXT_DIM)
+	kinds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_inspector.add_child(kinds)
+
+
+func _sprite_inspector(o: Dictionary, detail: bool) -> void:
+	var title := "DETAIL" if detail else str(o.get("kind", "object")).to_upper()
+	_inspector.add_child(NeonTheme.label(title + "  ·  " + str(o.get("id", "")), 16, NeonTheme.AMBER))
+	var prev := TextureRect.new()
+	prev.texture = ForgeStore.load_texture(str(o.get("asset", "")))
+	prev.custom_minimum_size = Vector2(0, 120)
+	prev.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	prev.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_inspector.add_child(prev)
+	var fields := {}
+	var keys: Array = ["asset", "z", "scale", "flip"]
+	keys += ["pos", "rot", "tint"] if detail else ["cell", "offset", "layer", "kind", "loot_item_id", "found_text", "empty_text", "dialog_npc", "character_id"]
+	for k: String in keys:
+		if o.has(k) or k in ["character_id"]:
+			fields[k] = o.get(k, "")
+	var form := ForgeForm.new()
+	form.build_dict(fields, "details" if detail else "world_object", true)
+	form.changed.connect(func(_k: String) -> void:
+		var d := form.get_data()
+		for k2: String in d:
+			o[k2] = d[k2]
+		if detail: _renderer.refresh_detail(o)
+		else: _renderer.refresh_object(o)
+		_refresh_objects_list()
+		dirty = true)
+	_inspector.add_child(form)
+	_inspector.add_child(_anim_editor(o, detail))
+	if not detail:
+		var loc := Button.new()
+		loc.text = "⌖ LOCATION LINK…" if not (o.get("location") is Dictionary) else "⌖ EDIT LOCATION: " + str(o["location"].get("name", ""))
+		loc.tooltip_text = "Make this a city / point of interest / door that leads to another map."
+		loc.pressed.connect(func() -> void: _location_dialog(o))
+		_inspector.add_child(loc)
+	var row := HBoxContainer.new()
+	for pair: Array in [["DUPLICATE", duplicate_selected], ["DELETE", delete_selected], ["DESELECT", func() -> void: _select({})]]:
+		var b := Button.new()
+		b.text = pair[0]
+		b.pressed.connect(pair[1])
+		row.add_child(b)
+	_inspector.add_child(row)
+
+
+## Speed / loop mode / sheet layout for animated props, items and decals.
+func _anim_editor(o: Dictionary, detail: bool) -> Control:
+	var box := VBoxContainer.new()
+	box.add_child(_section("ANIMATION", NeonTheme.CYAN))
+	var anim: Dictionary = o.get("anim") if o.get("anim") is Dictionary else {}
+	var on := CheckBox.new()
+	on.text = "Animated"
+	on.button_pressed = not anim.is_empty()
+	box.add_child(on)
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.visible = on.button_pressed
+	box.add_child(grid)
+	var refresh := func() -> void:
+		if detail: _renderer.refresh_detail(o)
+		else: _renderer.refresh_object(o)
+		dirty = true
+	on.toggled.connect(func(v: bool) -> void:
+		grid.visible = v
+		if v:
+			o["anim"] = {"hframes": 4, "vframes": 1, "fps": 8, "mode": "loop", "frames": _numbered_siblings(str(o.get("asset", "")))}
+			if not (o["anim"]["frames"] as Array).is_empty():
+				o["anim"]["hframes"] = 1
+		else:
+			o["anim"] = null
+		refresh.call()
+		_show_inspector())
+	if anim.is_empty():
+		return box
+	var add := func(label: String, ctl: Control) -> void:
+		grid.add_child(NeonTheme.label(label, 12, NeonTheme.TEXT_DIM))
+		ctl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(ctl)
+	add.call("Columns (hframes)", ForgeForm._spin(float(anim.get("hframes", 1)), true, func(n: float) -> void:
+		anim["hframes"] = maxi(int(n), 1)
+		refresh.call()))
+	add.call("Rows (vframes)", ForgeForm._spin(float(anim.get("vframes", 1)), true, func(n: float) -> void:
+		anim["vframes"] = maxi(int(n), 1)
+		refresh.call()))
+	add.call("Speed (fps)", ForgeForm._spin(float(anim.get("fps", 8)), false, func(n: float) -> void:
+		anim["fps"] = clampf(n, 0.1, 60.0)
+		refresh.call()))
+	add.call("Mode", ForgeForm._option(["loop", "pingpong", "once", "random_start"], str(anim.get("mode", "loop")), func(m: String) -> void:
+		anim["mode"] = m
+		refresh.call()))
+	var frames: Array = anim.get("frames", [])
+	var fl := NeonTheme.label("%d separate frame files" % frames.size() if frames.size() > 1 else "Uses the sheet: columns × rows", 11, NeonTheme.TEXT_DIM)
+	box.add_child(fl)
+	return box
+
+
+## asset_1.png → [asset_1.png, asset_2.png, …] when numbered siblings exist.
+func _numbered_siblings(path: String) -> Array:
+	var base := path.get_basename()
+	var rx := RegEx.create_from_string("^(.*?)([_\\- ]?(?:f|frame)?)(\\d+)$")
+	var m := rx.search(base.get_file())
+	if m == null:
+		return []
+	var stem := m.get_string(1) + m.get_string(2)
+	var dir := path.get_base_dir()
+	if not DirAccess.dir_exists_absolute(dir):
+		return []
+	var found := {}
+	for f in DirAccess.get_files_at(dir):
+		if f.get_extension() != path.get_extension():
+			continue
+		var m2 := rx.search(f.get_basename())
+		if m2 and m2.get_string(1) + m2.get_string(2) == stem:
+			found[int(m2.get_string(3))] = dir.path_join(f)
+	if found.size() < 2:
+		return []
+	var nums: Array = found.keys()
+	nums.sort()
+	return nums.map(func(n: int) -> String: return found[n])
+
+
+# --- Location links ------------------------------------------------------------------
+
+func _location_dialog(o: Dictionary) -> void:
+	var loc: Dictionary = o.get("location") if o.get("location") is Dictionary else {}
+	var dlg := ConfirmationDialog.new()
+	dlg.title = "LOCATION LINK"
+	dlg.ok_button_text = "SAVE LINK"
+	var v := VBoxContainer.new()
+	v.theme = NeonTheme.get_theme()
+	v.custom_minimum_size = Vector2(460, 0)
+	var is_loc := CheckBox.new()
+	is_loc.text = "This object is an enterable location"
+	is_loc.button_pressed = not loc.is_empty() or world.kind == "world"
+	v.add_child(is_loc)
+	var types := ["city", "poi", "hub", "building", "event"] if world.kind == "world" else ["hub", "building", "poi", "event", "city"]
+	# Lambdas capture locals by value, so dialog state lives in a dictionary.
+	var st := {"type": str(loc.get("type", types[0])), "target": str(loc.get("target_map", "")), "cut": str(loc.get("intro_cutscene", ""))}
+	v.add_child(NeonTheme.label("Type", 12, NeonTheme.TEXT_DIM))
+	v.add_child(ForgeForm._option(types, st["type"], func(t: String) -> void: st["type"] = t))
+	v.add_child(NeonTheme.label("Name shown above it in-game", 12, NeonTheme.TEXT_DIM))
+	var name_e := LineEdit.new()
+	name_e.text = str(loc.get("name", ""))
+	name_e.placeholder_text = "e.g. Neo Kowloon Sprawl"
+	v.add_child(name_e)
+	v.add_child(NeonTheme.label("Connects to map (its inner hub / interior)", 12, NeonTheme.TEXT_DIM))
+	var targets: Array = [""]
+	for id: String in ContentDB.maps:
+		if id != world.id:
+			targets.append(id)
+	targets.sort()
+	var labels: Array = targets.map(func(id: String) -> String:
+		return "(none yet)" if id == "" else "%s  [%s]" % [id, ContentDB.maps[id].get("kind", "encounter")])
+	var tpick := OptionButton.new()
+	for i in targets.size():
+		tpick.add_item(labels[i])
+		if targets[i] == st["target"]:
+			tpick.selected = i
+	tpick.item_selected.connect(func(i: int) -> void: st["target"] = targets[i])
+	v.add_child(tpick)
+	var mk := Button.new()
+	mk.text = "+ CREATE THAT MAP NOW"
+	mk.tooltip_text = "Makes an empty map of the next kind down (world → hub → interior) and links it."
+	v.add_child(mk)
+	v.add_child(NeonTheme.label("Arrive at spawn #", 12, NeonTheme.TEXT_DIM))
+	var spawn := ForgeForm._spin(float(loc.get("target_spawn", 0)), true, func(_n: float) -> void: pass)
+	v.add_child(spawn)
+	v.add_child(NeonTheme.label("First-visit cutscene" + (" (always plays for world-map places)" if world.kind == "world" else " (optional — major places only)"), 12, NeonTheme.TEXT_DIM))
+	v.add_child(ForgeForm._option([""] + ForgeStore.list_cutscenes(), st["cut"], func(c: String) -> void: st["cut"] = c))
+	var disc := CheckBox.new()
+	disc.text = "Known from the start (otherwise shows ? until first visit)"
+	disc.button_pressed = bool(loc.get("discovered", false))
+	v.add_child(disc)
+	v.add_child(NeonTheme.label("Interact radius (cells)", 12, NeonTheme.TEXT_DIM))
+	var radius := ForgeForm._spin(float(loc.get("radius", 1.5)), false, func(_n: float) -> void: pass)
+	v.add_child(radius)
+	mk.pressed.connect(func() -> void:
+		var child_kind: String = {"world": "hub", "city": "hub", "hub": "interior", "interior": "interior", "event": "event", "encounter": "interior"}.get(world.kind, "hub")
+		var base := ForgeStore.slugify(name_e.text if name_e.text != "" else "new_" + child_kind)
+		var nid := base + ("_hub" if child_kind == "hub" and not base.ends_with("_hub") else "")
+		var n := 2
+		while ContentDB.maps.has(nid):
+			nid = "%s_%d" % [base, n]
+			n += 1
+		var nm := WorldMap.new()
+		nm.id = nid
+		nm.name = name_e.text if name_e.text != "" else nid.capitalize()
+		nm.kind = child_kind
+		nm.width = 24
+		nm.depth = 24
+		nm.tile_width = world.tile_width
+		nm.tile_height = world.tile_height
+		nm.height_step = world.height_step
+		ForgeStore.save_map(nm.to_dict())
+		st["target"] = nid
+		tpick.add_item("%s  [%s]" % [nid, child_kind])
+		targets.append(nid)
+		tpick.selected = tpick.item_count - 1
+		status.emit("Created %s — open it from the map list to build it." % nid, NeonTheme.GREEN))
+	dlg.add_child(v)
+	dlg.confirmed.connect(func() -> void:
+		_push_undo()
+		if is_loc.button_pressed:
+			o["kind"] = "location"
+			o["location"] = {"type": st["type"], "name": name_e.text, "target_map": st["target"], "target_spawn": int(spawn.value),
+				"intro_cutscene": st["cut"], "discovered": disc.button_pressed, "radius": radius.value}
+		else:
+			o["location"] = null
+			if str(o.get("kind", "")) == "location":
+				o["kind"] = "structure"
+		_renderer.refresh_object(o)
+		_show_inspector()
+		_refresh_objects_list()
+		dlg.queue_free())
+	dlg.canceled.connect(dlg.queue_free)
+	add_child(dlg)
+	dlg.popup_centered()
+
+
+# --- Objects manager -------------------------------------------------------------------
+
+func _refresh_objects_list() -> void:
+	if _objects_list == null:
+		return
+	_clear(_objects_list)
+	_objects_list.add_child(NeonTheme.label("OBJECTS MANAGER  ·  %d" % world.objects.size(), 14, NeonTheme.CYAN))
+	for o: Dictionary in world.objects:
+		var row := HBoxContainer.new()
+		var icon := TextureRect.new()
+		icon.texture = ForgeStore.load_texture(str(o.get("asset", "")))
+		icon.custom_minimum_size = Vector2(36, 36)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		row.add_child(icon)
+		var name_s := str(o.get("asset", "")).get_file().get_basename()
+		if o.get("location") is Dictionary:
+			name_s = "⌖ " + str(o["location"].get("name", name_s))
+		var b := Button.new()
+		b.custom_minimum_size.x = 60
+		b.text = "%s  ·  %s  L%d" % [name_s, str(o.get("kind", "")), int(o.get("z", 0))]
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.clip_text = true
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var oo := o
+		b.pressed.connect(func() -> void:
+			_select(oo)
+			_cam.position = world.to_screen(Vector2(int(oo["cell"][0]), int(oo["cell"][1])), float(oo.get("z", 0))))
+		row.add_child(b)
+		var eye := Button.new()
+		eye.text = "◌" if bool(o.get("hidden", false)) else "◉"
+		eye.tooltip_text = "Hide / show in the editor"
+		eye.pressed.connect(func() -> void:
+			oo["hidden"] = not bool(oo.get("hidden", false))
+			if not oo["hidden"]:
+				oo.erase("hidden")
+			_renderer.refresh_object(oo)
+			_refresh_objects_list())
+		row.add_child(eye)
+		var del := Button.new()
+		del.text = "🗑"
+		del.pressed.connect(func() -> void:
+			_select(oo)
+			delete_selected())
+		row.add_child(del)
+		_objects_list.add_child(row)

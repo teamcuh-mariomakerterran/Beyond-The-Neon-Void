@@ -121,12 +121,26 @@ void fragment() {
 
 
 func _build_grid() -> void:
+	var stacked := int(map_data.get("format", 1)) >= 2
 	if map_data.is_empty():
 		grid.setup(10, 10)
+	elif stacked:
+		# Format 2 (World Painter): the renderer draws the stacked tiles, details,
+		# objects and particles; the battle grid is the top of every column.
+		var wm := WorldMap.from_dict(map_data)
+		grid.load_dict(wm.to_grid().to_dict(), ContentDB.terrain)
+		var renderer := WorldRenderer.new()
+		renderer.world = wm
+		world.add_child(renderer)
+		for o: Dictionary in wm.objects:
+			if str(o.get("loot_item_id", "")) != "" or str(o.get("found_text", "")) != "":
+				_spawn_prop({"id": o["id"], "cell": o["cell"], "loot_item_id": o.get("loot_item_id", ""),
+					"found_text": o.get("found_text", ""), "empty_text": o.get("empty_text", ""), "asset": ""})
 	else:
 		grid.load_dict(map_data, ContentDB.terrain)
 	for c in grid.all_cells():
 		var tv := TileView.new()
+		tv.overlay_only = stacked
 		tv.setup(grid, c)
 		world.add_child(tv)
 		tiles[c] = tv

@@ -7,6 +7,8 @@ signal mission_completed(mission_id: String, victory: bool)
 
 const HUB_SCENE := "res://scenes/hub/hub.tscn"
 const BATTLE_SCENE := "res://scenes/battle/battle.tscn"
+const EXPLORE_SCENE := "res://scenes/world/explore.tscn"
+const FORGE_SCENE := "res://scenes/editor/neon_forge.tscn"
 
 var unlocked_missions: Array[String] = ["m01_the_brew_plan"]
 var completed_missions: Array[String] = []
@@ -14,6 +16,8 @@ var current_mission_id: String = ""
 ## In-world hours passed (drives dispatch flavour, vendor restocks, news cycle).
 var world_clock: int = 0
 var last_battle_report: Dictionary = {}
+## Where exploration drops the party: {map_id, spawn, at, from_forge}.
+var current_explore: Dictionary = {}
 
 
 func current_mission() -> MissionResource:
@@ -36,6 +40,16 @@ func start_mission(mission_id: String) -> void:
 		return
 	current_mission_id = mission_id
 	SceneManager.change_scene(BATTLE_SCENE)
+
+
+## Walk a world / city / hub / interior map. `spawn` indexes the map's player
+## spawns (-1 = first); `at` overrides with an exact cell (Forge "play here").
+func explore(map_id: String, spawn: int = -1, at: Vector2i = Vector2i(-1, -1), from_forge: bool = false) -> void:
+	if ContentDB.get_map(map_id).is_empty():
+		push_error("CampaignManager: unknown map " + map_id)
+		return
+	current_explore = {"map_id": map_id, "spawn": spawn, "at": at, "from_forge": from_forge or bool(current_explore.get("from_forge", false))}
+	SceneManager.change_scene(EXPLORE_SCENE)
 
 
 func advance_clock(hours: int = 1) -> void:

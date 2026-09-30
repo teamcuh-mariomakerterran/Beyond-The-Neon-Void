@@ -67,13 +67,35 @@ static func learn_ability(character: CharacterData, ability_id: String) -> Strin
 		return "Already learned."
 	if ability.absorb_only:
 		return "This can only be learned by taking the hit."
-	if ability.class_id != "" and character.get_class_level(ability.class_id) == 0:
-		return "Class not unlocked."
+	var blocked := learn_block_reason(character, ability_id)
+	if blocked != "":
+		return blocked
 	if GameManager.microchips < ability.chip_cost:
 		return "Need %d microchips." % ability.chip_cost
 	GameManager.add_microchips(-ability.chip_cost)
 	character.learned_ability_ids.append(ability_id)
 	EventBus.ability_unlocked.emit(character.id, ability_id)
+	return ""
+
+
+static func _class_name(class_id: String) -> String:
+	var cls := ContentDB.get_class_res(class_id)
+	return cls.display_name if cls else class_id
+
+
+## Why `ability_id` can't be learned yet ("" = learnable now, chips permitting).
+## Checks class unlock, class level and data-disk gates, but not chip cost.
+static func learn_block_reason(character: CharacterData, ability_id: String) -> String:
+	var ability := ContentDB.get_ability(ability_id)
+	if ability == null:
+		return "Unknown ability."
+	if ability.class_id != "" and character.get_class_level(ability.class_id) == 0:
+		return "Class not unlocked."
+	if ability.required_class_level > 0 and character.get_class_level(ability.class_id) < ability.required_class_level:
+		return "Needs %s level %d." % [_class_name(ability.class_id), ability.required_class_level]
+	if ability.requires_item_id != "" and GameManager.get_stack_count(ability.requires_item_id) <= 0:
+		var disk := ContentDB.get_item(ability.requires_item_id)
+		return "Needs the %s. Check everywhere." % (disk.display_name if disk else ability.requires_item_id)
 	return ""
 
 

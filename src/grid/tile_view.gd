@@ -17,6 +17,8 @@ var terrain_def: Dictionary = {}
 var highlight: Color = Color.TRANSPARENT
 var outline: Color = Color.TRANSPARENT
 var hovered: bool = false
+## Format-2 maps: WorldRenderer draws the tiles; this only draws highlights.
+var overlay_only: bool = false
 var _texture: Texture2D
 var _time: float = 0.0
 
@@ -65,6 +67,9 @@ func _draw() -> void:
 	var w := top + Vector2(-hw, 0)
 	var top_col := Color(str(terrain_def.get("color", "#2a2438")))
 	var side_col := Color(str(terrain_def.get("side", "#1a1626")))
+	if overlay_only:
+		_draw_overlays(c, PackedVector2Array([n, e, s, w]), top, n, e, s, w)
+		return
 	# Side faces (always drawn down to ground level, plus a small base lip).
 	var base := lift + 6.0
 	draw_colored_polygon(PackedVector2Array([w, s, s + Vector2(0, base), w + Vector2(0, base)]), side_col)
@@ -82,6 +87,10 @@ func _draw() -> void:
 		var g := Color(str(terrain_def["glow"]))
 		rim = Color(g.r * 1.8, g.g * 1.8, g.b * 1.8, 0.7 + 0.3 * sin(_time * 3.0 + cell.x))
 	draw_polyline(PackedVector2Array([n, e, s, w, n]), rim, 1.0)
+	_draw_overlays(c, diamond, top, n, e, s, w)
+
+
+func _draw_overlays(c: IsometricGrid.Cell, diamond: PackedVector2Array, top: Vector2, n: Vector2, e: Vector2, s: Vector2, w: Vector2) -> void:
 	if c.hazard != "":
 		var hz: Color = HAZARD_COLORS.get(c.hazard, Color(1, 1, 1, 0.3))
 		hz.a *= 0.7 + 0.3 * sin(_time * 5.0 + cell.y)

@@ -25,19 +25,27 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
 
 ### Neon Forge (the editor)
 - Edits land in `data/*.json` and `assets/`, so every change is a git diff.
-- Drop files **anywhere on the window** to *copy* them into `assets/`. Your originals are never moved.
+- Drop files **anywhere on the window** and the **intake wizard** asks what each one is (tile, detail, structure, prop, character, item...), what to call it, and its role. It then *copies* the file into the right `assets/` folder and indexes it in `data/asset_index.json`. Your originals are never moved.
+- **World Painter** (the live level builder, [format](docs/design/WORLD_FORMAT.md)):
+  - Tabs for **world / city / hub / interior / encounter / event** maps.
+  - **Tiles** stack at any layer, including negative (below ground). Tools: brush **B**, rectangle **R**, fill **G**, eyedropper **I**, select **V**, pan **H**, erase **E**. Brush size and height sliders. Shift-click tiles in the palette to cycle through them while you paint. A green ghost shows where tiles will land.
+  - Tile art auto-fits to the world angle. Numbered water/river frames play as animations.
+  - Other layers: **Details** (craters, debris, rivers laid on top of tiles), **Particles** (rain, storm clouds, fog... on any layer), **Objects** (with animation speed and loop/ping-pong), **Gameplay** (spawns, enemies, cover).
+  - Double-click an object to make it a **location**: a city or point of interest that links to another map, with a first-visit cutscene.
+  - **▶ Play here** (F5) walks the map, or fights on it if it's an encounter.
 - **Characters:**
   - Drop a portrait or an animation sheet on the character's drop zone.
   - The slicer turns sheet rows into idle/walk/attack/hurt/death animations.
   - **▶ Playtest** puts that character straight into a fight.
-- **Map Painter:**
+- **Maps (classic):** the older flat painter, still works for old maps.
   - Paint terrain (including your own registered tile art) and sculpt height.
   - Set cover, spawns and enemy encounters.
   - Place props with hidden loot and popup text (FF8/FF9-style).
 - **Every other content type** is edited with forms: classes, abilities, cards, items, statuses, NPCs & dialog (with voice lines), quests, missions and win conditions, loot, dispatch, vendors, recipes, terrain and rumours.
 - **Shortcuts:** Ctrl+S saves · Ctrl+N new · Ctrl+D duplicate · Ctrl+F search · Ctrl+Enter playtest.
 
-![Neon Forge](docs/screenshots/shot_forge_maps.png)
+![World Painter](docs/screenshots/world_painter_particles.png)
+![Exploring a world map](docs/screenshots/world_explore.png)
 
 ## Where things are
 ```

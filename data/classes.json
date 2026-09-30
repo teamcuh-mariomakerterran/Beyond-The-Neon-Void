@@ -1770,6 +1770,63 @@
 		"playable": true
 	},
 	{
+		"id": "daemon_caller",
+		"display_name": "Daemon Caller",
+		"role": "SPECIAL",
+		"tier": 2,
+		"description": "Runs pirated daemons off a stack of cracked data disks. The daemons are loyal, enormous and, legally speaking, malware. Collects disks from every crate, vent and toilet tank in the city.",
+		"base_hp": 72,
+		"base_mp": 105,
+		"hp_growth": 7,
+		"mp_growth": 9,
+		"base_speed": 7,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.5,
+			"agility": 0.9,
+			"intelligence": 1.5,
+			"vitality": 0.85
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"rod",
+			"codex"
+		],
+		"specialty_weapon_types": [
+			"codex"
+		],
+		"innate_ability_ids": [
+			"call_ember_exe",
+			"call_frostbyte"
+		],
+		"learnable_ability_ids": [
+			"call_nurse_bak",
+			"call_goodboy_dll",
+			"call_lullaby_scr",
+			"call_leviathan_null",
+			"call_the_landlord",
+			"call_saint_uptime"
+		],
+		"unlock_requirements": {
+			"blackcode_mage": 3,
+			"signal_thief": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"void": 1.25
+		},
+		"playable": true
+	},
+	{
 		"id": "droid_assault_chassis",
 		"display_name": "Assault Droid",
 		"role": "MELEE",

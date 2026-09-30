@@ -1,5 +1,5 @@
 # Classes
-35 playable classes. Cyberpunk takes on Final Fantasy Tactics jobs, plus originals. Source of truth: `data/classes.json` + `data/abilities.json` (the Neon Forge editor will edit these).
+36 playable classes. Cyberpunk takes on Final Fantasy Tactics jobs, plus originals. Source of truth: `data/classes.json` + `data/abilities.json` (the Neon Forge editor will edit these).
 Unlocking works like FFT: reach class levels in prerequisite classes (class XP comes from battles). Secret classes also need a story flag. Abilities are learned at terminals with **microchips** — except Blue Magic, which the Bluescreen Mage only learns by getting hit by it.
 | FFT inspiration | Our class |
 |---|---|
@@ -19,7 +19,7 @@ Unlocking works like FFT: reach class levels in prerequisite classes (class XP c
 | Tinker | Scrap Tinker |
 | Time Mage | Timeslip Mage |
 | Geomancer | Grid Geomancer |
-| Summoner | Holo Summoner |
+| Summoner | Holo Summoner, Daemon Caller (FF-style summons + hidden data disks) |
 | Bard / Dancer | Synth Bard / Holo Dancer |
 | Dragoon | Jumpjet Dragoon |
 | Dark Knight | Void Knight |
@@ -165,6 +165,18 @@ Pirates the city's billboard feeds and turns ads into gods.
 - **Weapons:** rod, staff (specialty: rod)
 - **Innate:** Summon: Leviathan Feed
 - **Learnable:** Summon: Seraph Ad (3 chips), Summon: Iron Titan (4 chips), Summon: Static Wyrm (4 chips)
+### Daemon Caller — Special
+Runs pirated daemons off a stack of cracked data disks. The daemons are loyal, enormous and, legally speaking, malware. Collects disks from every crate, vent and toilet tank in the city.
+
+- **Unlock:** Blackcode Mage 3, Signal Thief 2
+- **Weapons:** rod, codex (specialty: codex)
+- **Innate:** Call: EMBER.EXE (plasma, every enemy), Call: FROSTBYTE (cryo, one target, huge)
+- **Learnable by class level:** Call: NURSE.BAK (Lv 2, 2 chips — crew heal + cleanse), Call: GOODBOY.DLL (Lv 3, 3 chips — electric, every enemy), Call: LULLABY.SCR (Lv 4, 3 chips — sleep / blind / poison on the enemy party)
+- **Data-disk summons (0 chips, need the disk in your inventory):** Call: LEVIATHAN_NULL (void, one target), Call: THE LANDLORD (kinetic, every enemy), Call: SAINT UPTIME (big crew heal + cleanse + regen)
+
+Summons are expensive (22–50 MP) charged casts. "Every enemy" calls target the caster's own tile with a
+map-wide diamond, so they hit the whole enemy party and never friendlies; party calls hit the whole crew.
+
 ### Synth Bard — Support
 Plays unregistered hymns on a keytar. Technically a crime.
 
@@ -288,3 +300,17 @@ The villain's own art, stolen back. Raises the fallen as echoes — 'those who n
 - **Volt Droid** — electric Arc Lash / Chain Lightning, resists electric, weak to cryo.
 
 Max 2 active droids per Droid Master. All droids take 1.5x electric damage except the Volt.
+
+## Data disks (Daemon Caller)
+FF8/FF9-style hidden loot: disk-gated summons are only learnable once the matching **KEY** item is in the
+inventory (`Ability.requires_item_id`; the disk item carries `teaches_ability_id`). Class-level gates use
+`Ability.required_class_level`. Both are enforced in `ProgressionSystem.learn_ability`.
+
+| Disk | Teaches | Where |
+|---|---|---|
+| `dsk_leviathan_null` | Call: LEVIATHAN_NULL | Neon Gutter back alley — behind the neon sign (prop `prop_neon_sign_disk`) |
+| `dsk_the_landlord` | Call: THE LANDLORD | Supply Works dock — under the rubble (prop `prop_rubble_disk`) |
+| `dsk_saint_uptime` | Call: SAINT UPTIME | Rare roll in the `loot_dispatch_salvage` table |
+
+New statuses for the summons: **Malware Poisoning** (`poisoned`, 6% max HP per turn) and **Screensaver Mode**
+(`asleep`, can't act or move for 2 turns). Any `cleanse` summon removes them.

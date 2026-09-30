@@ -10,7 +10,9 @@ const DIRECTIONS: Array[Vector2i] = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1
 const COVER_NONE := 0
 const COVER_HALF := 1
 const COVER_FULL := 2
-const MAX_HEIGHT := 12
+const MAX_HEIGHT := 32
+## Stack layers may go below world ground (pits, canals, basements).
+const MIN_HEIGHT := -16
 ## Height (in levels) of a standing unit's eyes, used for line of sight.
 const EYE_HEIGHT := 1.5
 
@@ -89,7 +91,7 @@ func get_height(cell: Vector2i) -> int:
 func set_height(cell: Vector2i, h: int) -> void:
 	var c := get_cell(cell)
 	if c:
-		c.height = clampi(h, 0, MAX_HEIGHT)
+		c.height = clampi(h, MIN_HEIGHT, MAX_HEIGHT)
 
 
 func is_walkable(cell: Vector2i) -> bool:
@@ -414,7 +416,7 @@ func load_dict(data: Dictionary, terrain_defs: Dictionary = {}) -> void:
 		var c := get_cell(coords)
 		if c == null:
 			continue
-		c.height = clampi(int(entry.get("h", 0)), 0, MAX_HEIGHT)
+		c.height = clampi(int(entry.get("h", 0)), MIN_HEIGHT, MAX_HEIGHT)
 		c.terrain = str(entry.get("t", c.terrain))
 		apply_terrain_defaults(c, terrain_defs)
 		c.tile_id = str(entry.get("tile", ""))

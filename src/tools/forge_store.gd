@@ -18,6 +18,9 @@ const ASSET_CATEGORIES := {
 	"music": {"dir": "res://assets/music", "label": "MUSIC", "ext": ["ogg", "mp3", "wav"]},
 	"sfx": {"dir": "res://assets/sfx", "label": "SFX", "ext": ["ogg", "mp3", "wav"]},
 	"voice": {"dir": "res://assets/voice", "label": "VOICE LINES", "ext": ["ogg", "mp3", "wav"]},
+	"details": {"dir": "res://assets/details", "label": "DETAILS / DECALS", "ext": ["png", "webp", "jpg", "jpeg"]},
+	"items": {"dir": "res://assets/items", "label": "ITEMS", "ext": ["png", "webp", "jpg", "jpeg", "svg"]},
+	"backgrounds": {"dir": "res://assets/backgrounds", "label": "BACKGROUNDS", "ext": ["png", "webp", "jpg", "jpeg"]},
 }
 const IMAGE_EXT := ["png", "webp", "jpg", "jpeg", "svg"]
 const AUDIO_EXT := ["ogg", "mp3", "wav"]

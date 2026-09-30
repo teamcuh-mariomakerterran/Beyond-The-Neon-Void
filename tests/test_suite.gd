@@ -26,6 +26,9 @@ func run(p_tree: SceneTree) -> int:
 	test_dialog_graph()
 	test_dialogue_box()
 	test_editor()
+	test_summoner()
+	test_asset_intake()
+	test_vfx_and_tiles()
 	await test_cutscenes()
 	await test_battles()
 	print("\n=== %d passed, %d failed ===" % [_passes, _fails])
@@ -46,7 +49,7 @@ func test_content() -> void:
 		printerr("  content: ", p)
 	check(problems.is_empty(), "content cross-references valid (%d problems)" % problems.size())
 	check(ContentDB.load_errors.is_empty(), "no JSON load errors")
-	check(ClassLibrary.get_all_classes().size() == 35, "35 playable classes (got %d)" % ClassLibrary.get_all_classes().size())
+	check(ClassLibrary.get_all_classes().size() == 36, "36 playable classes (got %d)" % ClassLibrary.get_all_classes().size())
 	var secret := ClassLibrary.get_all_classes().filter(func(c: ClassResource) -> bool: return c.is_hidden)
 	check(secret.size() == 6, "6 secret classes")
 	for c in ClassLibrary.get_all_classes():
@@ -368,6 +371,139 @@ func test_editor() -> void:
 	check(not ForgeStore._clean({"id": "x", "a": "", "b": [], "c": 0}).has("a"), "clean drops empty strings")
 
 
+# --- Daemon Caller: summons, class-level + data-disk gates ------------------
+
+func test_summoner() -> void:
+	var dc := ContentDB.get_class_res("daemon_caller")
+	check(dc != null and dc.playable and dc.innate_ability_ids.size() == 2, "Daemon Caller is a playable class with 2 innate calls")
+	var calls: Array[String] = dc.innate_ability_ids + dc.learnable_ability_ids
+	check(calls.size() == 8, "Daemon Caller has 8 summons (got %d)" % calls.size())
+	var disks := 0
+	for aid in calls:
+		var a := ContentDB.get_ability(aid)
+		check(a != null and a.class_id == "daemon_caller" and a.mp_cost >= 20, "summon %s costs real MP" % aid)
+		if a and a.requires_item_id != "":
+			disks += 1
+			var disk := ContentDB.get_item(a.requires_item_id)
+			check(disk != null and disk.category == ItemResource.Category.KEY and disk.teaches_ability_id == aid, "data disk %s is a key item teaching %s" % [a.requires_item_id, aid])
+	check(disks == 3, "3 summons are data-disk gated")
+	var hidden := 0
+	for m: Dictionary in ContentDB.maps.values():
+		for p: Variant in m.get("props", []):
+			if p is Dictionary and str(p.get("loot_item_id", "")).begins_with("dsk_"):
+				hidden += 1
+	check(hidden >= 2, "2+ data disks hidden in map props (%d)" % hidden)
+	# "Every enemy" calls cover the whole map from the caster's own tile.
+	var g := IsometricGrid.new()
+	g.setup(14, 14)
+	var ember := ContentDB.get_ability("call_ember_exe")
+	check(ember.get_affected_cells(g, Vector2i(0, 0), Vector2i(0, 0)).size() == 14 * 14, "EMBER.EXE reaches every cell")
+	var nurse := ContentDB.get_ability("call_nurse_bak")
+	check(nurse.is_healing() and nurse.special == "cleanse", "NURSE.BAK heals and cleanses")
+	var lullaby := ContentDB.get_ability("call_lullaby_scr")
+	check(Array(lullaby.status_ids) == ["asleep", "blinded", "poisoned"] and ContentDB.get_status("asleep").prevents_action, "LULLABY.SCR inflicts sleep / blind / poison")
+	# Learning gates.
+	GameManager.new_game()
+	var c := GameManager.get_character("rook")
+	GameManager.microchips = 20
+	check(ProgressionSystem.learn_ability(c, "call_nurse_bak") == "Class not unlocked.", "class must be unlocked")
+	c.class_levels["daemon_caller"] = 1
+	check(ProgressionSystem.learn_ability(c, "call_goodboy_dll").begins_with("Needs Daemon Caller level 3"), "class-level gate")
+	c.class_levels["daemon_caller"] = 3
+	check(ProgressionSystem.learn_ability(c, "call_goodboy_dll") == "" and c.learned_ability_ids.has("call_goodboy_dll"), "learn at class level 3")
+	check(ProgressionSystem.learn_ability(c, "call_leviathan_null").contains("LEVIATHAN_NULL"), "data-disk gate names the disk")
+	GameManager.give_item("dsk_leviathan_null")
+	check(GameManager.get_stack_count("dsk_leviathan_null") == 1, "data disk stacks as a key item")
+	check(ProgressionSystem.learn_ability(c, "call_leviathan_null") == "", "disk unlocks the summon")
+	GameManager.new_game()
+
+
+# --- Forge asset intake wizard -------------------------------------------------
+
+const INTAKE_FIXTURE := "user://intake_fixture"
+const INTAKE_INDEX := "user://test_asset_index.json"
+
+
+func test_asset_intake() -> void:
+	AssetIndex.path_override = INTAKE_INDEX
+	if FileAccess.file_exists(INTAKE_INDEX):
+		DirAccess.remove_absolute(INTAKE_INDEX)
+	# Ids and sequence names.
+	check(AssetIndex.sequence_key("ocean_anim_3") == ["ocean_anim", 3], "sequence key _3")
+	check(AssetIndex.sequence_key("river_a_f4") == ["river_a", 4] and AssetIndex.sequence_key("leaf5") == ["leaf", 5], "sequence key _f4 / bare")
+	check(AssetIndex.sequence_key("sign").is_empty(), "no number, no sequence")
+	check(AssetIndex.unique_id("Neon Crate!") == "neon_crate", "unique_id slugifies")
+	check(AssetIndex.unique_id("Chrome Warrior", "classes") == "chrome_warrior_2", "unique_id avoids ContentDB ids")
+	check(AssetIndex.unique_id("Rook", "characters") == "rook_2", "unique_id avoids character ids")
+	check(AssetIndex.add("neon_crate", {"path": "res://x/neon_crate.png", "type": "prop"}), "index add")
+	check(AssetIndex.unique_id("Neon Crate") == "neon_crate_2", "unique_id avoids index ids")
+	check(AssetIndex.find_by_path("res://x/neon_crate.png").get("id") == "neon_crate", "find_by_path")
+	AssetIndex.add("neon_crate", {"placement": "indoor"})
+	check(AssetIndex.get_entry("neon_crate").get("type") == "prop" and AssetIndex.get_entry("neon_crate").get("placement") == "indoor", "index add merges")
+	# Fixture files standing in for the user's desktop.
+	DirAccess.make_dir_recursive_absolute(INTAKE_FIXTURE)
+	var names := ["barrel.png", "spark_1.png", "spark_2.png"]
+	var os_files := PackedStringArray()
+	for n: String in names:
+		var img := Image.create(64, 32, false, Image.FORMAT_RGBA8)
+		img.fill(Color(0.2, 1, 0.6, 1))
+		img.save_png(INTAKE_FIXTURE.path_join(n))
+		os_files.append(ProjectSettings.globalize_path(INTAKE_FIXTURE.path_join(n)))
+	var q := ForgeIntake.build_queue(os_files)
+	check(q.size() == 2 and not q[0]["sequence"] and q[1]["sequence"] and (q[1]["files"] as Array).size() == 2, "numbered files group into one sequence")
+	var intake := ForgeIntake.new()
+	var f := ForgeIntake.default_fields(q[0])
+	check(intake.commit(q[0], f).has("error"), "type is required")
+	f["type"] = "prop"
+	f["name"] = "  "
+	check(intake.commit(q[0], f).has("error"), "name is required")
+	f["name"] = "Zz Intake Test Barrel"
+	f["placement"] = "outdoor"
+	f["animated"] = true
+	f["hframes"] = 2
+	f["fps"] = 6
+	f["mode"] = "pingpong"
+	var rec := intake.commit(q[0], f)
+	var barrel := "res://assets/props/outdoor/zz_intake_test_barrel.png"
+	check(str(rec.get("path", "")) == barrel and FileAccess.file_exists(barrel), "prop copied into assets/props/outdoor (%s)" % rec.get("path", rec.get("error")))
+	check(FileAccess.file_exists(os_files[0]), "original file left in place")
+	var entry := AssetIndex.get_entry("zz_intake_test_barrel")
+	check(entry.get("type") == "prop" and entry.get("placement") == "outdoor" and entry["anim"]["hframes"] == 2 and entry["anim"]["mode"] == "pingpong", "index entry with placement + anim")
+	var f2 := ForgeIntake.default_fields(q[1])
+	check(f2["name"] == "Spark" and f2["animated"], "sequence defaults: stem name, animated")
+	f2["type"] = "detail"
+	f2["name"] = "Zz Intake Test Spark"
+	var rec2 := intake.commit(q[1], f2)
+	var frames: Array = rec2.get("anim", {}).get("frames", [])
+	check(frames.size() == 2 and str(frames[1]) == "res://assets/details/zz_intake_test_spark_2.png" and FileAccess.file_exists(str(frames[1])), "sequence combined into one animated detail")
+	var again := ForgeIntake.default_fields(q[0])
+	again["type"] = "prop"
+	again["placement"] = "outdoor"
+	again["name"] = "Zz Intake Test Barrel"
+	var rec3 := intake.commit(q[0], again)
+	check(str(rec3.get("id", "")) == "zz_intake_test_barrel_2", "second import gets a unique id")
+	var bad := ForgeIntake.default_fields(q[0])
+	bad["type"] = "character"
+	bad["name"] = "Nobody"
+	bad["role"] = "playable"
+	check(str(intake.commit(q[0], bad).get("error", "")).contains("CLASS"), "playable character needs a class")
+	check(ForgeIntake.class_stats("daemon_caller")["intelligence"] == 15, "class stats seed the character sheet")
+	check(ForgeIntake.items_for_slot("weapon", "daemon_caller").all(func(i: String) -> bool: return ContentDB.get_item(i).equip_type in ["rod", "codex"]), "loadout weapons filtered by class")
+	intake.free()
+	# Cleanup: only the files this test made.
+	for p: String in [barrel, "res://assets/props/outdoor/zz_intake_test_barrel_2.png", "res://assets/details/zz_intake_test_spark_1.png", "res://assets/details/zz_intake_test_spark_2.png"]:
+		if FileAccess.file_exists(p):
+			DirAccess.remove_absolute(p)
+	for d in ["res://assets/props/outdoor", "res://assets/details"]:
+		if DirAccess.dir_exists_absolute(d) and DirAccess.get_files_at(d).is_empty() and DirAccess.get_directories_at(d).is_empty():
+			DirAccess.remove_absolute(d)
+	for n: String in names:
+		DirAccess.remove_absolute(INTAKE_FIXTURE.path_join(n))
+	DirAccess.remove_absolute(INTAKE_FIXTURE)
+	DirAccess.remove_absolute(INTAKE_INDEX)
+	AssetIndex.path_override = ""
+
+
 ## PARALLAX cutscene player: loading, timing, hit-stops, keys, branches, render.
 func test_cutscenes() -> void:
 	var doc := CutsceneDoc.load_file("res://data/cutscenes/demo_supply_works.parallax.json")
@@ -410,3 +546,124 @@ func test_cutscenes() -> void:
 	check(Array(fired) == ["impact"], "shot events fire exactly once")
 	cs.queue_free()
 	await process_frame
+
+
+# --- VFX: particle presets, sheet sprites, tile index ------------------------
+
+const TILE_FIXTURE := "user://test_tile_fixture"
+
+
+func test_vfx_and_tiles() -> void:
+	# Shared animation clock.
+	var loop := range(6).map(func(i: int) -> int: return SheetSprite.frame_at(i / 4.0 + 0.01, 4, 4.0, "loop"))
+	check(Array(loop) == [0, 1, 2, 3, 0, 1], "frame_at loop wraps (%s)" % [loop])
+	var pp := range(8).map(func(i: int) -> int: return SheetSprite.frame_at(i / 4.0 + 0.01, 4, 4.0, "pingpong"))
+	check(Array(pp) == [0, 1, 2, 3, 2, 1, 0, 1], "frame_at pingpong bounces (%s)" % [pp])
+	var once := range(6).map(func(i: int) -> int: return SheetSprite.frame_at(i / 4.0 + 0.01, 4, 4.0, "once"))
+	check(Array(once) == [0, 1, 2, 3, 3, 3], "frame_at once holds last frame (%s)" % [once])
+	check(SheetSprite.frame_at(0.01, 4, 4.0, "loop", 0.5) == 2, "frame_at phase offsets the clock")
+	check(SheetSprite.frame_at(9.0, 1, 4.0, "loop") == 0, "single frame never advances")
+	# SheetSprite: frame list and sheet modes.
+	var texs: Array[Texture2D] = []
+	for i in 4:
+		var im := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+		im.fill(Color(i / 4.0, 0, 0, 1))
+		texs.append(ImageTexture.create_from_image(im))
+	var ss := SheetSprite.from_anim(texs, {"fps": 6, "mode": "random_start"})
+	check(ss.frame_count() == 4 and ss.frame_texture(2) == texs[2] and ss.mode == "random_start", "SheetSprite from frame list")
+	ss.free()
+	var sheet := ImageTexture.create_from_image(Image.create(64, 32, false, Image.FORMAT_RGBA8))
+	var sh := SheetSprite.from_anim(sheet, {"hframes": 4, "vframes": 2, "fps": 8})
+	var at := sh.frame_texture(5) as AtlasTexture
+	check(sh.frame_count() == 8 and at != null and at.region == Rect2(16, 16, 16, 16), "SheetSprite sheet frame regions")
+	sh.free()
+	# Sequence names.
+	check(TileIndex.split_number("river_a_f2") == ["river_a", 2], "split _f2 frame suffix")
+	check(TileIndex.split_number("water-anim-01") == ["water-anim", 1], "split -01 suffix")
+	check(TileIndex.split_number("tile (3)") == ["tile", 3], "split (3) suffix")
+	check(TileIndex.split_number("leaf1") == ["leaf", 1], "split bare number")
+	check(TileIndex.split_number("frame_7").size() == 2 and TileIndex.split_number("sign").is_empty(), "split edge cases")
+	var seq_paths: Array[String] = ["res://x/ocean_2.png", "res://x/ocean_10.png", "res://x/ocean_1.png", "res://x/sign.png"]
+	var seqs := TileIndex.collapse_sequences(seq_paths)
+	check(seqs.size() == 2 and str(seqs[0]["id"]) == "res://x/ocean" and Array(seqs[0]["frames"]) == ["res://x/ocean_1.png", "res://x/ocean_2.png", "res://x/ocean_10.png"], "collapse sorts frames numerically")
+	check(TileIndex.guess_terrain("god_tiles/water/ocean_anim") == "water" and TileIndex.guess_terrain("set/mountain_03") == "rock"
+		and TileIndex.guess_terrain("set/grass/grass_01") == "grass" and TileIndex.guess_terrain("misc/lava_flow") == "lava"
+		and TileIndex.guess_terrain("x/stone_02") == "concrete", "terrain guessed from names")
+	# Fixture tiles on disk.
+	_make_tile_fixture()
+	var prev := {"water/ocean": {"texture": "stale", "terrain": "lava", "fps": 12, "fit": {"top": 3, "width": 0}}}
+	var idx := TileIndex.scan(TILE_FIXTURE, prev)
+	var ocean: Dictionary = idx.get("water/ocean", {})
+	check(ocean.get("frames", []).size() == 4 and str(ocean["frames"][0]).ends_with("ocean_1.png") and str(ocean["frames"][3]).ends_with("ocean_4.png"), "ocean_1..4 collapse into one animated tile")
+	check(ocean.get("group") == "water" and str(ocean.get("texture", "")).ends_with("ocean_1.png"), "animated tile group + texture")
+	check(ocean.get("terrain") == "lava" and int(ocean.get("fps", 0)) == 12 and int(ocean["fit"]["top"]) == 3, "rescan keeps user-edited terrain/fps/fit")
+	check(idx.has("grass/grass_01") and idx.has("grass/grass_02") and idx.has("grass/grass_03") and not idx.has("grass/grass"), "numbered grass variants stay separate")
+	check(idx.get("grass/grass_02", {}).get("frames", [1]).is_empty() and idx["grass/grass_02"]["terrain"] == "grass", "variant entry is static with grass terrain")
+	check(idx.get("misc/blink", {}).get("frames", []).size() == 4, "unnamed 4-frame loop with tiny changes is animated")
+	check(idx.has("misc/crate_1") and idx.has("misc/crate_4") and not idx.has("misc/crate"), "4 very different images stay variants")
+	check(idx.has("misc/sign") and idx.size() == 1 + 3 + 1 + 4 + 1, "scan finds every tile (%d)" % idx.size())
+	# Auto-fit.
+	var fit_tex := ForgeStore.load_texture(TILE_FIXTURE.path_join("misc/sign.png"))
+	check(TileIndex.fit_rect(fit_tex) == Rect2(10, 20, 100, 90), "fit_rect is the opaque bounding box (%s)" % TileIndex.fit_rect(fit_tex))
+	# Particles.
+	var ids := ParticleFactory.presets().keys()
+	check(ids.size() >= 14 and ContentDB.particles.has("fog"), "particle presets load via ContentDB (%d)" % ids.size())
+	var diamonds: Array[PackedVector2Array] = []
+	for c in [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1)]:
+		var ctr := Vector2((c.x - c.y) * 64, (c.x + c.y) * 32)
+		diamonds.append(PackedVector2Array([ctr + Vector2(0, -32), ctr + Vector2(64, 0), ctr + Vector2(0, 32), ctr + Vector2(-64, 0)]))
+	for id: String in ids:
+		var node := ParticleFactory.make_for_cells(id, diamonds)
+		var em := node.get_node_or_null("Emitter") as CPUParticles2D
+		check(em != null and em.amount > 0 and em.emission_points.size() > 0 and em.texture != null, "preset %s builds an emitter" % id)
+		check(ParticleFactory.preview_icon(id).get_size() == Vector2(32, 32), "preset %s has a palette icon" % id)
+		node.free()
+	var storm := ParticleFactory.make_for_cells("storm_clouds", diamonds)
+	check(storm.get_node_or_null("Lightning") != null, "storm clouds carry a lightning flasher")
+	storm.free()
+	var big := ParticleFactory.make("rain", Rect2(0, 0, 2000, 1000), 500, 128.0)
+	check((big.get_node("Emitter") as CPUParticles2D).amount == ParticleFactory.MAX_AMOUNT, "particle amount capped")
+	big.free()
+
+
+func _make_tile_fixture() -> void:
+	_wipe_dir(TILE_FIXTURE)
+	for sub in ["water", "grass", "misc"]:
+		DirAccess.make_dir_recursive_absolute(TILE_FIXTURE.path_join(sub))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7
+	for i in 4:  # ocean: a moving stripe (named, so animated regardless)
+		var im := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+		im.fill(Color(0.1, 0.3, 0.8, 1))
+		im.fill_rect(Rect2i(i * 4, 0, 2, 16), Color(0.8, 0.9, 1, 1))
+		im.save_png(TILE_FIXTURE.path_join("water/ocean_%d.png" % (i + 1)))
+	for i in 3:  # grass variants: different noise each
+		_noise_image(rng, 16).save_png(TILE_FIXTURE.path_join("grass/grass_%02d.png" % (i + 1)))
+	for i in 4:  # blink: same art, one pixel changes
+		var im := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+		im.fill(Color(0.3, 0.3, 0.35, 1))
+		im.set_pixel(i, 0, Color(1, 0.2, 0.6, 1))
+		im.save_png(TILE_FIXTURE.path_join("misc/blink_%d.png" % (i + 1)))
+	for i in 4:  # crates: unrelated art
+		_noise_image(rng, 16).save_png(TILE_FIXTURE.path_join("misc/crate_%d.png" % (i + 1)))
+	var sign := Image.create(128, 128, false, Image.FORMAT_RGBA8)
+	sign.fill_rect(Rect2i(10, 20, 100, 90), Color(1, 0.2, 0.6, 1))
+	sign.save_png(TILE_FIXTURE.path_join("misc/sign.png"))
+
+
+func _noise_image(rng: RandomNumberGenerator, n: int) -> Image:
+	var im := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	for y in n:
+		for x in n:
+			im.set_pixel(x, y, Color(rng.randf(), rng.randf(), rng.randf(), 1))
+	return im
+
+
+func _wipe_dir(dir: String) -> void:
+	if not DirAccess.dir_exists_absolute(dir):
+		return
+	for f in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir.path_join(f))
+	for sub in DirAccess.get_directories_at(dir):
+		_wipe_dir(dir.path_join(sub))
+		DirAccess.remove_absolute(dir.path_join(sub))

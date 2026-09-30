@@ -13,7 +13,8 @@ extends Control
 const SECTIONS := [
 	# [id, label, kind, bucket/file]
 	["assets", "ASSETS", "assets", ""],
-	["maps", "MAPS & ENCOUNTERS", "maps", ""],
+	["world", "WORLD PAINTER", "world", ""],
+	["maps", "MAPS (CLASSIC)", "maps", ""],
 	["cutscenes", "CUTSCENES", "cutscenes", ""],
 	["characters", "CHARACTERS", "bucket", "characters"],
 	["npcs", "NPCS & DIALOG", "bucket", "npcs"],
@@ -53,6 +54,9 @@ var _search: LineEdit
 var _inspector: VBoxContainer
 var _selected_id: String = ""
 var _painter: ForgeMapPainter
+var _world: ForgeWorldPainter
+## Section to reopen when coming back (e.g. from a World Painter play-test).
+static var last_section: String = "characters"
 var _assets: ForgeAssetLibrary
 
 
@@ -83,7 +87,7 @@ func _ready() -> void:
 	root.add_child(_build_statusbar())
 	get_window().files_dropped.connect(_on_files_dropped)
 	_refresh_validation()
-	show_section("characters")
+	show_section(last_section)
 	flash("NEON FORGE online. Drop files anywhere. Ctrl+S saves. Edits land in %s." % ForgeStore.data_dir(), NeonTheme.CYAN)
 
 
@@ -144,6 +148,7 @@ func _count_for(s: Array) -> int:
 		"bucket": return ContentDB.get_ids(s[3]).size()
 		"dict": return (ContentDB.get(s[3]) as Dictionary).size()
 		"maps": return ContentDB.maps.size()
+		"world": return ContentDB.maps.values().filter(func(m: Dictionary) -> bool: return int(m.get("format", 1)) >= 2).size()
 		"cutscenes": return ForgeStore.list_cutscenes().size()
 		"assets":
 			var n := 0
@@ -158,7 +163,7 @@ func _refresh_rail() -> void:
 		var b: Button = _rail_buttons.get(s[0])
 		if b == null:
 			continue
-		var dirty_mark := " •" if _dirty.has(s[3]) or (s[0] == "maps" and _painter and _painter.dirty) else ""
+		var dirty_mark := " •" if _dirty.has(s[3]) or (s[0] == "maps" and _painter and _painter.dirty) or (s[0] == "world" and _world and _world.dirty) else ""
 		b.text = "%s%s   %d" % [s[1], dirty_mark, _count_for(s)]
 		var active: bool = s[0] == _section
 		b.add_theme_stylebox_override("normal", NeonTheme.select_box() if active else NeonTheme.button_box(Color.TRANSPARENT, Color.TRANSPARENT))
@@ -192,10 +197,12 @@ func _section_def(id: String) -> Array:
 
 func show_section(id: String) -> void:
 	_section = id
+	last_section = id
 	_selected_id = ""
 	for c in _body.get_children():
 		c.queue_free()
 	_painter = null
+	_world = null
 	_assets = null
 	var def := _section_def(id)
 	match def[2]:
@@ -207,6 +214,10 @@ func show_section(id: String) -> void:
 			var cs := ForgeCutscenes.new()
 			cs.status.connect(flash)
 			_body.add_child(cs)
+		"world":
+			_world = ForgeWorldPainter.new()
+			_world.status.connect(func(t: String, c: Color) -> void: flash(t, c); _refresh_rail())
+			_body.add_child(_world)
 		"maps":
 			_painter = ForgeMapPainter.new()
 			_painter.status.connect(func(t: String, c: Color) -> void: flash(t, c); _refresh_rail())
@@ -537,6 +548,9 @@ func save_all() -> void:
 		if path != "":
 			written.append(path.get_file())
 	_dirty.clear()
+	if _world and _world.dirty:
+		_world.save_map()
+		written.append(_world.world.id + ".json")
 	if _painter and _painter.dirty:
 		_painter.save_map()
 		written.append("map")
@@ -590,15 +604,39 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 		if node.has_meta("character_drop"):
 			_handle_character_drop(str(node.get_meta("character_drop")), files)
 			return
-		if node.has_method("accept_os_files"):
+		# The asset library counts as "anywhere else": it gets the intake wizard too.
+		if node.has_method("accept_os_files") and not node is ForgeAssetLibrary:
 			if node.accept_os_files(files):
 				flash("Imported %s" % files[0].get_file(), NeonTheme.GREEN)
 				return
 		node = node.get_parent()
-	# Anywhere else: into the asset library.
-	if _section != "assets":
-		show_section("assets")
-	_assets.accept_os_files(files)
+	# Anywhere else: the intake wizard asks what each file is, then copies it.
+	open_intake(files)
+
+
+## Opens the asset intake wizard for OS files (or `edit_path`, a res:// file
+## that is already in the project).
+func open_intake(files: PackedStringArray, edit_path: String = "") -> ForgeIntake:
+	var dlg := ForgeIntake.new()
+	dlg.status.connect(flash)
+	dlg.imported.connect(func(_record: Dictionary) -> void: _after_intake())
+	add_child(dlg)
+	if edit_path != "":
+		dlg.start_edit(edit_path)
+	else:
+		dlg.start(files)
+	return dlg
+
+
+## The wizard saves content files itself; refresh whatever is on screen.
+func _after_intake() -> void:
+	ClassLibrary._rebuild()
+	_refresh_validation()
+	_refresh_rail()
+	if _assets:
+		_assets.refresh()
+	if _list:
+		_fill_list()
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -616,7 +654,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	elif k.ctrl_pressed and k.keycode == KEY_F and _search:
 		_search.grab_focus()
 	elif k.ctrl_pressed and k.keycode == KEY_ENTER:
-		if _painter:
+		if _world:
+			_world.play_here()
+		elif _painter:
 			_painter.playtest()
 		elif _section == "characters" and _selected_id != "":
 			_playtest_character(ContentDB.get_character(_selected_id))

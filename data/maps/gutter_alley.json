@@ -895,5 +895,17 @@
 			]
 		]
 	},
-	"props": []
+	"props": [
+		{
+			"id": "prop_neon_sign_disk",
+			"cell": [
+				8,
+				2
+			],
+			"asset": "",
+			"loot_item_id": "dsk_leviathan_null",
+			"found_text": "Taped behind the flickering sign: a data disk labelled DO NOT RUN. So, naturally.",
+			"empty_text": "Just a sign. It buzzes judgmentally."
+		}
+	]
 }

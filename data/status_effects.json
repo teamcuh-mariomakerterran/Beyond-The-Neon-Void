@@ -257,5 +257,22 @@
 			"crit": 10,
 			"accuracy": -10
 		}
+	},
+	{
+		"id": "poisoned",
+		"display_name": "Malware Poisoning",
+		"type": "DEBUFF",
+		"duration_turns": 3,
+		"description": "Bad code in the bloodstream. Loses 6% max HP each turn.",
+		"damage_per_turn_pct": 0.06
+	},
+	{
+		"id": "asleep",
+		"display_name": "Screensaver Mode",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Dozes off mid-fight, flying toasters and all. Can't act or move until it wears off.",
+		"prevents_action": true,
+		"prevents_move": true
 	}
 ]

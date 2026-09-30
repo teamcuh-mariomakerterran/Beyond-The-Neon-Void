@@ -24,6 +24,10 @@ enum Shape { SINGLE, DIAMOND, LINE, CROSS }
 @export var chip_cost: int = 0
 ## Delayed casting (FFT-style): number of clock ticks before it resolves. 0 = instant.
 @export var charge_ticks: int = 0
+## Class level (in `class_id`) needed before this can be learned at a terminal. 0 = any.
+@export var required_class_level: int = 0
+## Key item (e.g. a Daemon Caller data disk) that must be in the inventory to learn this.
+@export var requires_item_id: String = ""
 
 @export_group("Targeting")
 @export var range_min: int = 1

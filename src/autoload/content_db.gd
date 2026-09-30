@@ -41,6 +41,10 @@ var vendors: Dictionary = {}
 var rumors: Dictionary = {}
 var recipes: Dictionary = {}
 var maps: Dictionary = {}
+## Particle presets painted onto map cells (data/particles.json, see ParticleFactory).
+var particles: Dictionary = {}
+## Tile index built by TileIndex.scan() (data/tiles.json); may be empty.
+var tiles: Dictionary = {}
 var load_errors: Array[String] = []
 
 
@@ -60,6 +64,8 @@ func reload() -> void:
 		vendors.merge(_read_dict(dir.path_join("vendors.json")), true)
 		rumors.merge(_read_dict(dir.path_join("rumors.json")), true)
 		recipes.merge(_read_dict(dir.path_join("recipes.json")), true)
+		particles.merge(_read_dict(dir.path_join("particles.json")), true)
+		tiles.merge(_read_dict(dir.path_join("tiles.json")), true)
 		_load_maps(dir.path_join("maps"))
 	for e in load_errors:
 		push_warning("ContentDB: " + e)
