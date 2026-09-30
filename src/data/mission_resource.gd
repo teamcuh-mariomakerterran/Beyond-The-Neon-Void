@@ -6,6 +6,9 @@ extends GameResource
 @export var chapter: int = 1
 @export var music_id: String = ""
 @export var briefing: String = ""
+## PARALLAX cutscenes (tools/cutscene_builder) played before / after the fight.
+@export var intro_cutscene: String = ""
+@export var outro_cutscene: String = ""
 
 @export_group("Encounter")
 ## [{"character_id": "doctrine_grunt", "cell": [x, y], "level": 3, "ai": "aggressive"}, ...]

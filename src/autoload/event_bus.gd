@@ -53,6 +53,10 @@ signal quest_objective_progress(quest_id: String, index: int, count: int)
 signal dispatch_started(assignment: Dictionary)
 signal dispatch_resolved(assignment: Dictionary, success: bool, rewards: Dictionary)
 
+# --- Cutscenes ---
+## Fired by CutscenePlayer for each shot event (e.g. "impact") so gameplay can react.
+signal cutscene_event(event_name: String, data: Variant)
+
 # --- Misc ---
 signal play_sfx(sfx_id: String)
 signal camera_shake(intensity: float, duration: float)

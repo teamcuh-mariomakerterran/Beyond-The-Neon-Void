@@ -14,6 +14,7 @@ const SECTIONS := [
 	# [id, label, kind, bucket/file]
 	["assets", "ASSETS", "assets", ""],
 	["maps", "MAPS & ENCOUNTERS", "maps", ""],
+	["cutscenes", "CUTSCENES", "cutscenes", ""],
 	["characters", "CHARACTERS", "bucket", "characters"],
 	["npcs", "NPCS & DIALOG", "bucket", "npcs"],
 	["quests", "QUESTS", "bucket", "quests"],
@@ -143,6 +144,7 @@ func _count_for(s: Array) -> int:
 		"bucket": return ContentDB.get_ids(s[3]).size()
 		"dict": return (ContentDB.get(s[3]) as Dictionary).size()
 		"maps": return ContentDB.maps.size()
+		"cutscenes": return ForgeStore.list_cutscenes().size()
 		"assets":
 			var n := 0
 			for cat: String in ForgeStore.ASSET_CATEGORIES:
@@ -201,6 +203,10 @@ func show_section(id: String) -> void:
 			_assets = ForgeAssetLibrary.new()
 			_assets.status.connect(flash)
 			_body.add_child(_assets)
+		"cutscenes":
+			var cs := ForgeCutscenes.new()
+			cs.status.connect(flash)
+			_body.add_child(cs)
 		"maps":
 			_painter = ForgeMapPainter.new()
 			_painter.status.connect(func(t: String, c: Color) -> void: flash(t, c); _refresh_rail())

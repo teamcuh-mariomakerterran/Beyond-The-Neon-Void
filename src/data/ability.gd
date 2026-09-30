@@ -60,6 +60,9 @@ enum Shape { SINGLE, DIAMOND, LINE, CROSS }
 
 @export_group("Presentation")
 @export var vfx_id: String = ""
+## Optional PARALLAX close-up played when this ability is used (vars: ATTACKER,
+## TARGET, ABILITY, DAMAGE; slot ATTACKER is bound to the caster's name).
+@export var cutscene: String = ""
 @export var sfx_id: String = ""
 @export var flavor_text: String = ""
 

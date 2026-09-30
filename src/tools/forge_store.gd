@@ -158,6 +158,19 @@ static func import_file(os_path: String, category: String, new_name: String = ""
 	return dest
 
 
+const CUTSCENE_DIR := "res://data/cutscenes"
+
+
+static func list_cutscenes() -> Array[String]:
+	var out: Array[String] = []
+	if DirAccess.dir_exists_absolute(CUTSCENE_DIR):
+		for f in DirAccess.get_files_at(CUTSCENE_DIR):
+			if f.ends_with(".parallax.json") or f.ends_with(".cutscene.json"):
+				out.append(CUTSCENE_DIR.path_join(f))
+	out.sort()
+	return out
+
+
 static func list_assets(category: String) -> Array[String]:
 	var out: Array[String] = []
 	var cat: Dictionary = ASSET_CATEGORIES.get(category, {})

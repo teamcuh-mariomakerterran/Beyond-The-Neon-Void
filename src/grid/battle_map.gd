@@ -63,7 +63,8 @@ func _ready() -> void:
 	hud.add_log("[color=#8f84ad]%s[/color]" % mission.briefing)
 	CombatManager.animate = true
 	CombatManager.autobattle = false
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(0.4).timeout
+	await play_cutscene(mission.intro_cutscene, {"PLACE": str(map_data.get("name", mission.display_name)).to_upper(), "MISSION": mission.display_name})
 	CombatManager.start_battle(grid, units, mission, self)
 
 
@@ -453,10 +454,26 @@ func _after_action() -> void:
 
 # --- FX --------------------------------------------------------------------
 
+## Plays a PARALLAX cutscene if `path` is set; awaitable. Missing files are skipped.
+func play_cutscene(path: String, vars: Dictionary = {}, slots: Dictionary = {}) -> void:
+	if path == "" or not FileAccess.file_exists(path):
+		return
+	hud.visible = false
+	var cs := CutscenePlayer.play(self, path, vars, slots)
+	await cs.finished
+	hud.visible = true
+
+
 ## Awaited by CombatManager before an ability resolves.
 func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	if not is_instance_valid(unit):
 		return
+	if ability.cutscene != "":
+		var target: Node = grid.get_occupant(cell)
+		var dmg := ""
+		if target and target != unit and ability.kind in [Ability.Kind.ATTACK, Ability.Kind.MAGIC]:
+			dmg = str(DamageCalculator.forecast(unit, target, ability, grid)["damage"])
+		await play_cutscene(ability.cutscene, {"ATTACKER": unit.display_name(), "TARGET": target.display_name() if target else "", "ABILITY": ability.display_name, "DAMAGE": dmg}, {"ATTACKER": unit.display_name()})
 	var from: Vector2 = unit.position + Vector2(0, -30)
 	var to := grid.grid_to_world(cell) + Vector2(0, -20)
 	var color := _fx_color(ability)
@@ -509,6 +526,8 @@ func _on_battle_finished(victory: bool) -> void:
 	hud.show_banner("VICTORY" if victory else "DEFEAT", NeonTheme.GREEN if victory else NeonTheme.MAGENTA, 1.4)
 	var report := CombatManager.conclude_battle()
 	await get_tree().create_timer(1.8).timeout
+	if victory:
+		await play_cutscene(mission.outro_cutscene, {"MISSION": mission.display_name})
 	hud.show_results(victory, report)
 
 

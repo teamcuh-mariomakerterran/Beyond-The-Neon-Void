@@ -25,6 +25,7 @@ const REFS := {
 	"weapon_types": "weapon_types", "specialty_weapon_types": "weapon_types", "weapon_specialties": "weapon_types",
 	"stock.id": "items_and_cards", "from": "items", "to": "items",
 	"loot_item_id": "items_and_cards", "terrain": "terrain",
+	"intro_cutscene": "cutscenes", "outro_cutscene": "cutscenes", "cutscene": "cutscenes",
 }
 ## Dictionary fields: key source / value source.
 const DICT_KEYS := {
@@ -305,6 +306,7 @@ static func _ref_picker(ref: String, current: String, cb: Callable) -> OptionBut
 static func ref_options(ref: String) -> Array:
 	match ref:
 		"maps": return ContentDB.maps.keys()
+		"cutscenes": return ForgeStore.list_cutscenes()
 		"vendors": return ContentDB.vendors.keys()
 		"rumors": return ContentDB.rumors.keys()
 		"terrain": return ContentDB.terrain.keys()
@@ -331,6 +333,8 @@ static func ref_options(ref: String) -> Array:
 static func ref_label(ref: String, id: String) -> String:
 	if id == "":
 		return "(none)"
+	if ref == "cutscenes":
+		return id.get_file().trim_suffix(".json")
 	var bucket := ref
 	if ref == "items_and_cards":
 		bucket = "items" if ContentDB.get_item(id) else "cards"

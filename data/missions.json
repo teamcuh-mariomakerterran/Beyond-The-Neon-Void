@@ -50,7 +50,8 @@
 		],
 		"unlocks_mission_ids": [
 			"m02_shift_change"
-		]
+		],
+		"intro_cutscene": "res://data/cutscenes/demo_supply_works.parallax.json"
 	},
 	{
 		"id": "m02_shift_change",

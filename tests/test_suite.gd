@@ -26,6 +26,7 @@ func run(p_tree: SceneTree) -> int:
 	test_dialog_graph()
 	test_dialogue_box()
 	test_editor()
+	await test_cutscenes()
 	await test_battles()
 	print("\n=== %d passed, %d failed ===" % [_passes, _fails])
 	return _fails
@@ -365,3 +366,47 @@ func test_editor() -> void:
 	check(ForgeStore.slugify("Essence Factory — Floor 2!") == "essence_factory_floor_2", "slugify")
 	check(ForgeStore.unique_id("classes", "chrome_warrior") == "chrome_warrior_2", "unique id avoids collisions")
 	check(not ForgeStore._clean({"id": "x", "a": "", "b": [], "c": 0}).has("a"), "clean drops empty strings")
+
+
+## PARALLAX cutscene player: loading, timing, hit-stops, keys, branches, render.
+func test_cutscenes() -> void:
+	var doc := CutsceneDoc.load_file("res://data/cutscenes/demo_supply_works.parallax.json")
+	check(doc != null and doc.shots.size() == 3, "demo cutscene loads with 3 shots")
+	check(doc.warnings.is_empty(), "demo cutscene has no warnings")
+	check(doc.textures.size() == 6, "embedded data-URL images decode")
+	check(is_equal_approx(doc.total_time(), 4.0 + 2.4 + 0.25 + 3.0), "total time includes hit-stops")
+	var impact: Dictionary = doc.shots[1]
+	check(is_equal_approx(CutsceneDoc.warp(impact, 1.1), 1.0), "hit-stop freezes content time")
+	check(is_equal_approx(CutsceneDoc.warp(impact, 1.5), 1.25), "content time resumes after stop")
+	var title: Dictionary = doc.shots[0]["layers"][0]
+	check(is_equal_approx(CutsceneDoc.pvf(title, "y", 1.0), 40.0 + (34.0 - 40.0) * CutsceneDoc.ease_fn(0.5, "out")), "keyframe easing matches builder")
+	check(doc.subst("{PLACE}") == "VANTABLACK MORROW", "variables substitute")
+	# Branching: shot 0 jumps to "Line" when MOOD == grim.
+	var bdoc := CutsceneDoc.new()
+	bdoc.load_dict({"project": {"name": "b", "w": 320, "h": 180, "vars": {"MOOD": "grim"}, "shots": [
+		{"name": "A", "dur": 1, "branch": [{"cond": "MOOD == grim", "to": "C"}], "layers": []},
+		{"name": "B", "dur": 1, "layers": []}, {"name": "C", "dur": 1, "layers": []}]}, "assets": []})
+	check(Array(bdoc.play_order()) == [0, 2], "branch follows variables")
+	bdoc.vars["MOOD"] = "ok"
+	check(Array(bdoc.play_order()) == [0, 1, 2], "branch falls through")
+	# Engine recipe format (.cutscene.json) normalizes the same way.
+	var edoc := CutsceneDoc.new()
+	edoc.load_dict({"format": "parallax-cutscene", "name": "e", "width": 240, "height": 160, "fps": 30, "assets": [], "variables": ["SPEAKER"],
+		"shots": [{"name": "S", "duration": 1.5, "background": "#000000", "transition_in": {"type": "fade", "dur": 0.2},
+			"audio": [{"t": 0.1, "sound": "boom", "volume": 0.5}], "layers": [{"kind": "text", "text": "{SPEAKER}"}]}]})
+	check(edoc.w == 240 and is_equal_approx(edoc.total_time(), 1.5), "engine recipe loads")
+	check(str(edoc.shots[0]["audio"][0]["key"]) == "boom", "engine audio cues normalize")
+	# Headless render smoke test: every frame of the demo renders without errors.
+	var cs := CutscenePlayer.new()
+	root.add_child(cs)
+	cs.start(doc)
+	cs.playing = false
+	var fired: Array[String] = []
+	cs.event_fired.connect(func(n: String, _d: Variant) -> void: fired.append(n))
+	var t := 0.0
+	while t < doc.total_time():
+		cs.render(t)
+		t += 1.0 / 30.0
+	check(Array(fired) == ["impact"], "shot events fire exactly once")
+	cs.queue_free()
+	await process_frame
