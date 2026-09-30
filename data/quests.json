@@ -1,0 +1,137 @@
+[
+	{
+		"id": "q_otto_the_tab",
+		"display_name": "The Tab",
+		"description": "Otto will forgive the crew's tab — all of it — if the Brew Plan actually happens. She's seen a lot of plans. She'd like to see one work.",
+		"giver_npc_id": "otto",
+		"objectives": [
+			{
+				"type": "complete_mission",
+				"target": "m01_the_brew_plan",
+				"count": 1,
+				"text": "Pull off the Brew Plan at the Supply Works"
+			}
+		],
+		"reward_soul_coins": 150,
+		"reward_xp": 60,
+		"reward_items": {
+			"con_void_vodka": 1
+		},
+		"reward_flags": [
+			"otto_tab_cleared"
+		],
+		"accept_text": "Blow up a loading dock, get a day off, and I'll wipe the slate. Not literally. The slate's load-bearing.",
+		"progress_text": "Still here? The Supply Works isn't going to accidentally explode itself. Well. It might. Don't count on it.",
+		"complete_text": "Tab's cleared. Forty-one coins and one apology, gone. Here — on the house. Don't tell anyone the house has things."
+	},
+	{
+		"id": "q_hic_spare_parts",
+		"display_name": "Spare Parts",
+		"description": "Hic needs scrap wire and a dead battery to keep his duffel-bag armoury running. The Doctrine's bins are full of both.",
+		"giver_npc_id": "hic",
+		"objectives": [
+			{
+				"type": "collect_item",
+				"target": "mat_scrap_wire",
+				"count": 3,
+				"text": "Bring Hic 3 Scrap Wire"
+			},
+			{
+				"type": "collect_item",
+				"target": "mat_dead_battery",
+				"count": 1,
+				"text": "Bring Hic 1 Dead Battery"
+			}
+		],
+		"reward_soul_coins": 120,
+		"reward_microchips": 1,
+		"reward_items": {
+			"acc_bottle_cap_charm": 1
+		},
+		"repeatable": false,
+		"accept_text": "Three wires. One battery. And if you find a bottle opener, that's not for the guns, that's for me.",
+		"progress_text": "*hic* The parts. Where are the... you don't have the parts. Okay. I'll wait. I'm very good at waiting. I'm at a bar.",
+		"complete_text": "Beautiful. Look at this wire. It's got character. Take this charm — it's lucky. It's been lucky for me. Look how lucky I am."
+	},
+	{
+		"id": "q_benno_grisks_stash",
+		"display_name": "For Emergencies",
+		"description": "Benno says Foreman Grisk hides something in the squeaky crate on the Supply Works loading dock. Every day is an emergency.",
+		"giver_npc_id": "benno",
+		"objectives": [
+			{
+				"type": "find_loot",
+				"target": "prop_crate_b",
+				"count": 1,
+				"text": "Search the squeaky crate on the Supply Works dock"
+			}
+		],
+		"reward_soul_coins": 80,
+		"reward_xp": 40,
+		"reward_microchips": 1,
+		"reward_flags": [
+			"benno_trusts_crew"
+		],
+		"accept_text": "Second crate from the water. It squeaks. If it doesn't squeak, it's a Warden. Run.",
+		"progress_text": "Still haven't checked the crate? It squeaks. You can't miss it. Unless you're deaf. Are you deaf? Blink twice.",
+		"complete_text": "A chip taped under the lid? 'FOR EMERGENCIES — G.' Ha! Grisk's emergency is now our emergency. Keep it. I'll buy the next round. No I won't."
+	},
+	{
+		"id": "q_sly_friendly_game",
+		"display_name": "A Friendly Game",
+		"description": "Sly wants to know if the Drunken Oracle can really call cards before they're dealt. He's too proud to ask her himself.",
+		"giver_npc_id": "sly",
+		"chain_id": "sly_card_chain",
+		"objectives": [
+			{
+				"type": "talk_to",
+				"target": "drunken_oracle",
+				"count": 1,
+				"text": "Ask the Drunken Oracle what card Sly is holding"
+			}
+		],
+		"reward_soul_coins": 60,
+		"reward_items": {
+			"card_ace_of_sparks": 1
+		},
+		"next_quest_id": "q_sly_stack_the_deck",
+		"accept_text": "Go ask the old lady what's in my hand. Don't tell her I sent you. She knows I sent you. Don't tell her anyway.",
+		"progress_text": "Well? What did she say? You didn't ask. I can tell. Your face has one shadow. That's a tell.",
+		"complete_text": "The Queen of Nothing, she said? ...That's not even a card. That's exactly the card. Here, take an Ace. I've got spares. I've got a *lot* of spares."
+	},
+	{
+		"id": "q_sly_stack_the_deck",
+		"display_name": "Stack the Deck",
+		"description": "Sly will teach the crew his trade if they prove they can play dirty where it counts: against a Doctrine Warden, in the field.",
+		"giver_npc_id": "sly",
+		"chain_id": "sly_card_chain",
+		"prerequisite_quest_ids": [
+			"q_sly_friendly_game"
+		],
+		"objectives": [
+			{
+				"type": "defeat_character",
+				"target": "doctrine_warden",
+				"count": 2,
+				"text": "Take down 2 Doctrine Wardens"
+			},
+			{
+				"type": "talk_to",
+				"target": "sly",
+				"count": 1,
+				"text": "Report back to Sly"
+			}
+		],
+		"reward_soul_coins": 200,
+		"reward_xp": 120,
+		"reward_items": {
+			"card_joker_static": 1
+		},
+		"reward_flags": [
+			"secret_deck_stacker"
+		],
+		"accept_text": "Two Wardens. Doesn't matter how. The deck doesn't care how. The deck only cares that you came back to shuffle it.",
+		"progress_text": "Wardens don't knock themselves over. Mostly. There was one time. He was drunker than Hic.",
+		"complete_text": "Here. The Static Joker. It picks its own table. Looks like it picked yours. Welcome to the back table, cheat."
+	}
+]

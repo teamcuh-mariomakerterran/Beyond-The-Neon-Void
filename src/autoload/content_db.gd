@@ -24,6 +24,8 @@ var CATALOG := {
 	"missions": MissionResource,
 	"loot_tables": LootTable,
 	"dispatch_missions": DispatchMission,
+	"quests": QuestResource,
+	"npcs": NPCResource,
 }
 
 var ABILITY_SCRIPTS := {
@@ -162,6 +164,14 @@ func get_dispatch_mission(id: String) -> DispatchMission:
 	return get_entry("dispatch_missions", id) as DispatchMission
 
 
+func get_quest(id: String) -> QuestResource:
+	return get_entry("quests", id) as QuestResource
+
+
+func get_npc(id: String) -> NPCResource:
+	return get_entry("npcs", id) as NPCResource
+
+
 func get_map(id: String) -> Dictionary:
 	return maps.get(id, {})
 
@@ -249,4 +259,73 @@ func validate() -> Array[String]:
 			var sid := str(entry.get("id", ""))
 			if get_item(sid) == null and get_card(sid) == null:
 				problems.append("vendor %s -> unknown stock %s" % [vid, sid])
+	_validate_quests(problems)
+	_validate_npcs(problems)
 	return problems
+
+
+func _validate_quests(problems: Array[String]) -> void:
+	for q: QuestResource in get_all("quests"):
+		if q.giver_npc_id != "" and get_npc(q.giver_npc_id) == null:
+			problems.append("quest %s -> unknown giver %s" % [q.id, q.giver_npc_id])
+		for pid in q.prerequisite_quest_ids:
+			if get_quest(pid) == null:
+				problems.append("quest %s -> unknown prerequisite quest %s" % [q.id, pid])
+		for iid: String in q.reward_items:
+			if get_item(iid) == null and get_card(iid) == null:
+				problems.append("quest %s -> unknown reward item %s" % [q.id, iid])
+		if q.next_quest_id != "" and get_quest(q.next_quest_id) == null:
+			problems.append("quest %s -> unknown next quest %s" % [q.id, q.next_quest_id])
+		for mid in q.unlocks_mission_ids:
+			if get_mission(mid) == null:
+				problems.append("quest %s -> unlocks unknown mission %s" % [q.id, mid])
+		for o: Dictionary in q.objectives:
+			var type := str(o.get("type", ""))
+			var target := str(o.get("target", ""))
+			if not QuestResource.OBJECTIVE_TYPES.has(type):
+				problems.append("quest %s -> unknown objective type '%s'" % [q.id, type])
+			elif type == "complete_mission" and get_mission(target) == null:
+				problems.append("quest %s -> objective mission %s missing" % [q.id, target])
+			elif type == "collect_item" and get_item(target) == null and get_card(target) == null:
+				problems.append("quest %s -> objective item %s missing" % [q.id, target])
+			elif type == "talk_to" and get_npc(target) == null:
+				problems.append("quest %s -> objective npc %s missing" % [q.id, target])
+			elif type == "defeat_character" and get_character(target) == null:
+				problems.append("quest %s -> objective character %s missing" % [q.id, target])
+			elif type == "find_loot" and not _map_prop_exists(target):
+				problems.append("quest %s -> objective loot spot %s not on any map" % [q.id, target])
+
+
+func _validate_npcs(problems: Array[String]) -> void:
+	for n: NPCResource in get_all("npcs"):
+		if n.vendor_id != "" and not vendors.has(n.vendor_id):
+			problems.append("npc %s -> unknown vendor %s" % [n.id, n.vendor_id])
+		if n.is_vendor and n.vendor_id == "":
+			problems.append("npc %s -> is_vendor but no vendor_id" % n.id)
+		if n.character_id != "" and get_character(n.character_id) == null:
+			problems.append("npc %s -> unknown character %s" % [n.id, n.character_id])
+		if n.fight_mission_id != "" and get_mission(n.fight_mission_id) == null:
+			problems.append("npc %s -> unknown fight mission %s" % [n.id, n.fight_mission_id])
+		for qid in n.quest_ids:
+			if get_quest(qid) == null:
+				problems.append("npc %s -> unknown quest %s" % [n.id, qid])
+		var node_ids := {}
+		for node: Dictionary in n.dialog:
+			node_ids[str(node.get("id", ""))] = true
+		for node: Dictionary in n.dialog:
+			var nxt := str(node.get("next", ""))
+			if nxt != "" and not node_ids.has(nxt):
+				problems.append("npc %s dialog %s -> missing next %s" % [n.id, node.get("id"), nxt])
+			for ch: Dictionary in node.get("choices", []):
+				var cn := str(ch.get("next", ""))
+				if cn != "" and not node_ids.has(cn):
+					problems.append("npc %s dialog %s -> choice to missing %s" % [n.id, node.get("id"), cn])
+
+
+## find_loot targets are InteractionTrigger ids, i.e. prop ids in data/maps.
+func _map_prop_exists(prop_id: String) -> bool:
+	for m: Dictionary in maps.values():
+		for p: Variant in m.get("props", []):
+			if p is Dictionary and str(p.get("id", "")) == prop_id:
+				return true
+	return false

@@ -21,6 +21,11 @@ func run(p_tree: SceneTree) -> int:
 	test_progression_and_forge()
 	test_dispatch()
 	test_save_roundtrip()
+	test_quests()
+	test_quest_save_roundtrip()
+	test_dialog_graph()
+	test_dialogue_box()
+	test_editor()
 	await test_battles()
 	print("\n=== %d passed, %d failed ===" % [_passes, _fails])
 	return _fails
@@ -134,6 +139,148 @@ func test_save_roundtrip() -> void:
 	SaveManager.delete_slot(7)
 
 
+# --- Quests / NPCs / dialogue ------------------------------------------------
+
+func test_quests() -> void:
+	check(ContentDB.validate().is_empty(), "validate() clean with quests + npcs")
+	check(ContentDB.get_all("npcs").size() >= 6 and ContentDB.get_all("quests").size() >= 4, "npcs and quests loaded")
+	for npc: NPCResource in ContentDB.get_all("npcs"):
+		check(npc.dialog.size() >= 3 and npc.eavesdrop_lines.size() >= 3, "npc %s has 3+ dialog nodes and eavesdrops" % npc.id)
+	GameManager.new_game()
+	var saved_done := CampaignManager.completed_missions.duplicate()
+	CampaignManager.completed_missions.clear()
+	# Chain: A Friendly Game -> Stack the Deck.
+	check(QuestManager.get_state("q_sly_stack_the_deck") == "locked", "chain part 2 starts locked")
+	check(QuestManager.available_quests_for("sly").size() == 1, "sly offers one quest at first")
+	check(QuestManager.accept("q_sly_friendly_game") == "", "accept quest")
+	check(QuestManager.accept("q_sly_friendly_game") != "", "can't accept twice")
+	check(not QuestManager.try_complete("q_sly_friendly_game"), "can't turn in unfinished quest")
+	QuestManager.notify_talk("drunken_oracle")
+	check(QuestManager.is_objective_done("q_sly_friendly_game", 0), "talk_to objective tracked")
+	var coins := GameManager.soul_coins
+	check(QuestManager.try_complete("q_sly_friendly_game"), "turn in quest")
+	check(GameManager.soul_coins == coins + 60 and int(GameManager.cards.get("card_ace_of_sparks", 0)) == 1, "coin + card rewards paid")
+	check(QuestManager.get_state("q_sly_friendly_game") == "complete", "quest marked complete")
+	check(QuestManager.is_available("q_sly_stack_the_deck"), "next_quest_id becomes available")
+	check(QuestManager.accept("q_sly_stack_the_deck") == "", "accept chain part 2")
+	var warden := Unit.new()
+	warden.data = CharacterData.new()
+	warden.data.id = "doctrine_warden"
+	EventBus.unit_died.emit(warden)
+	EventBus.unit_died.emit(warden)
+	warden.free()
+	QuestManager.notify_talk("sly")
+	check(QuestManager.get_progress("q_sly_stack_the_deck") == [2, 1], "defeat_character + talk_to tracked")
+	var rook := GameManager.get_character("rook")
+	var before := [rook.get_stats().level, rook.experience]
+	check(QuestManager.try_complete("q_sly_stack_the_deck"), "turn in chain part 2")
+	check(GameManager.check_story_flag("secret_deck_stacker") and GameManager.cards.has("card_joker_static"), "chain rewards flag + joker")
+	check([rook.get_stats().level, rook.experience] != before, "quest XP reaches the party")
+	# collect_item consumes on turn-in.
+	check(QuestManager.accept("q_hic_spare_parts") == "", "accept collect quest")
+	GameManager.give_item("mat_scrap_wire", 3)
+	check(not QuestManager.is_ready_to_complete("q_hic_spare_parts"), "partial collection not ready")
+	GameManager.give_item("mat_dead_battery", 2)
+	check(QuestManager.get_progress("q_hic_spare_parts") == [3, 1], "collect progress follows inventory")
+	var chips := GameManager.microchips
+	check(QuestManager.try_complete("q_hic_spare_parts"), "turn in collect quest")
+	check(GameManager.get_stack_count("mat_scrap_wire") == 0 and GameManager.get_stack_count("mat_dead_battery") == 1, "collect quest consumes exactly what it asked for")
+	check(GameManager.microchips == chips + 1, "microchip reward")
+	# complete_mission + find_loot.
+	QuestManager.accept("q_otto_the_tab")
+	EventBus.battle_ended.emit(false, "m01_the_brew_plan")
+	check(not QuestManager.is_objective_done("q_otto_the_tab", 0), "lost battle doesn't count")
+	EventBus.battle_ended.emit(true, "m01_the_brew_plan")
+	check(QuestManager.is_objective_done("q_otto_the_tab", 0), "won mission counts")
+	QuestManager.accept("q_benno_grisks_stash")
+	EventBus.loot_discovered.emit("prop_crate_z", "chip_microchip", "")
+	check(not QuestManager.is_objective_done("q_benno_grisks_stash", 0), "other loot spot doesn't count")
+	EventBus.loot_discovered.emit("prop_crate_b", "chip_microchip", "")
+	check(QuestManager.try_complete("q_benno_grisks_stash") and GameManager.check_story_flag("benno_trusts_crew"), "find_loot quest completes")
+	CampaignManager.completed_missions.assign(saved_done)
+	GameManager.new_game()
+	check(QuestManager.get_state("q_sly_friendly_game") == "available", "new_game resets quests")
+
+
+func test_quest_save_roundtrip() -> void:
+	GameManager.new_game()
+	QuestManager.accept("q_sly_friendly_game")
+	QuestManager.notify_talk("drunken_oracle")
+	QuestManager.try_complete("q_sly_friendly_game")
+	QuestManager.accept("q_hic_spare_parts")
+	GameManager.give_item("mat_scrap_wire", 2)
+	check(SaveManager.save_game(7), "save with quests")
+	GameManager.new_game()
+	check(QuestManager.get_state("q_hic_spare_parts") == "available", "state cleared before load")
+	check(SaveManager.load_game(7), "load with quests")
+	check(QuestManager.get_state("q_sly_friendly_game") == "complete", "complete quest restored")
+	check(QuestManager.get_state("q_hic_spare_parts") == "active" and QuestManager.get_progress("q_hic_spare_parts") == [2, 0], "active quest + progress restored")
+	check(QuestManager.is_available("q_sly_stack_the_deck"), "chain unlock restored")
+	SaveManager.delete_slot(7)
+	QuestManager.load_state_data({})
+	check(QuestManager.active_quests().is_empty(), "old saves without quests load clean")
+	GameManager.new_game()
+
+
+func test_dialog_graph() -> void:
+	GameManager.new_game()
+	var otto := ContentDB.get_npc("otto")
+	var g := DialogGraph.new(otto.dialog)
+	g.start()
+	while not g.has_choices() and not g.is_finished():
+		g.advance()
+	check(g.current.get("id") == "choice" and not g.visited.has("after_m01"), "requires_flag node skipped")
+	GameManager.set_story_flag("m01_done")
+	g.start()
+	g.advance(); g.advance()
+	check(g.current.get("id") == "after_m01", "requires_flag node shown once flag set")
+	g.advance()
+	g.choose(1)
+	check(g.current.get("id") == "water", "choice follows next")
+	g.advance()
+	check(g.is_finished(), "empty next ends conversation")
+	# The Oracle: five right answers in a row unlock her.
+	var oracle := ContentDB.get_npc("drunken_oracle")
+	var wrong := DialogGraph.new(oracle.dialog)
+	wrong.start(); wrong.advance(); wrong.choose(0)
+	wrong.choose(1)  # wrong answer to q1
+	check(wrong.current.get("id") == "wrong" and GameManager.correct_dialog_streak == 0, "wrong answer ends quiz, resets streak")
+	var q := DialogGraph.new(oracle.dialog)
+	q.start(); q.advance(); q.choose(0)
+	for _i in 5:
+		var right := -1
+		for ci in q.get_choices().size():
+			if q.get_choices()[ci].get("correct", false):
+				right = ci
+		q.choose(right)
+	check(q.current.get("id") == "passed" and GameManager.check_story_flag("oracle_quiz_passed"), "five correct answers reach the end, sets_flag applied")
+	check(GameManager.secret_characters_unlocked.has("drunken_oracle") and GameManager.roster.has("drunken_oracle"), "Oracle unlocked via record_hub_visit streak")
+	GameManager.new_game()
+
+
+func test_dialogue_box() -> void:
+	GameManager.new_game()
+	var box := DialogueBox.new()
+	box.free_on_finish = false
+	root.add_child(box)
+	var ended := [0]
+	box.finished.connect(func() -> void: ended[0] += 1)
+	box.play_npc(ContentDB.get_npc("vesk"))
+	for _i in 20:
+		box.advance()  # first press skips typing, second advances
+		box.choose(0)
+		if ended[0] > 0:
+			break
+	check(ended[0] == 1 and not box.is_open(), "DialogueBox walks an NPC graph to the end")
+	box.say("Otto", "Last call.")
+	box.say("Otto", "I lied. It's never last call.")
+	for _i in 4:
+		box.advance()
+	check(ended[0] == 2, "say() queues one-off lines")
+	check(DialogueBox.load_texture("res://nope.png") == null and DialogueBox.load_audio("res://nope.ogg") == null, "missing portrait / voice skipped silently")
+	box.free()
+
+
 func _spawn(g: IsometricGrid, data: CharacterData, team: int, cell: Vector2i, level: int, units: Array[Node]) -> Unit:
 	var u := Unit.new()
 	u.setup(data, team, level)
@@ -194,3 +341,27 @@ func test_battles() -> void:
 					wins += 1
 				print("  %s roster %d seed %d: %s in %d turns" % [m, r, s, "WIN " if res["victory"] else "loss", res["turns"]])
 	print("AI-vs-AI battles: player side won %d / %d" % [wins, total])
+
+
+## Neon Forge: every content type must produce a form, and helpers behave.
+func test_editor() -> void:
+	for bucket: String in ContentDB.CATALOG:
+		for res: GameResource in ContentDB.get_all(bucket).slice(0, 3):
+			var form := ForgeForm.new()
+			form.build_resource(res)
+			check(form.get_child_count() > 0, "forge form builds for %s/%s" % [bucket, res.id])
+			# Round-trip: form data applied back must not change the resource.
+			var before := JSON.stringify(res.to_dict())
+			res.apply_dict(form.get_data())
+			check(JSON.stringify(res.to_dict()) == before, "form round-trip is lossless for %s/%s" % [bucket, res.id])
+			form.free()
+	for file in ["vendors", "terrain", "recipes", "rumors"]:
+		var d: Dictionary = ContentDB.get(file)
+		var key: String = d.keys()[0]
+		var f := ForgeForm.new()
+		f.build_dict(d[key].duplicate(true), file)
+		check(f.get_child_count() > 0, "forge dict form builds for %s" % file)
+		f.free()
+	check(ForgeStore.slugify("Essence Factory — Floor 2!") == "essence_factory_floor_2", "slugify")
+	check(ForgeStore.unique_id("classes", "chrome_warrior") == "chrome_warrior_2", "unique id avoids collisions")
+	check(not ForgeStore._clean({"id": "x", "a": "", "b": [], "c": 0}).has("a"), "clean drops empty strings")

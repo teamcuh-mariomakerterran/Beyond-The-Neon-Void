@@ -1,0 +1,501 @@
+[
+	{
+		"id": "otto",
+		"display_name": "Ottoline 'Otto' Brask",
+		"description": "Runs the Neon Gutter. Has poured drinks through three curfews, two riots and one very quiet funeral. Remembers every tab and none of your names.",
+		"portrait_path": "res://assets/portraits/otto.png",
+		"sprite_path": "",
+		"location_id": "neon_gutter",
+		"is_vendor": true,
+		"vendor_id": "neon_gutter_bar",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "You're dripping on my floor. Sit down, drip on the stool, it's used to it.",
+				"next": "tab"
+			},
+			{
+				"id": "tab",
+				"text": "Your tab's up to forty-one coins and one apology. I'll take the coins first.",
+				"next": "after_m01"
+			},
+			{
+				"id": "after_m01",
+				"text": "Supply Works blew a loading dock last night. News says Kestral Omen-Six. Funny — Omen-Six never smelled like my gin before.",
+				"requires_flag": "m01_done",
+				"next": "choice"
+			},
+			{
+				"id": "choice",
+				"text": "What'll it be? And don't say 'the usual.' Nobody here has a usual. Usuals are for people with futures.",
+				"choices": [
+					{
+						"text": "Something that makes the shift horn quieter.",
+						"next": "horn"
+					},
+					{
+						"text": "Water. Just water.",
+						"next": "water"
+					},
+					{
+						"text": "Whatever Rook's having. Then his, too.",
+						"next": "rook"
+					}
+				]
+			},
+			{
+				"id": "horn",
+				"text": "Nothing's that strong. But the gin makes you care less that it isn't."
+			},
+			{
+				"id": "water",
+				"text": "Water's two coins. The gin is one coin. I don't make the rules. I do, actually. Two coins."
+			},
+			{
+				"id": "rook",
+				"text": "Rook's having regret with a lime. Coming right up."
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Otto, to a Warden in off-duty clothes: 'You can drink here or you can report here. Pick one, the stools are wobbly either way.'"
+			},
+			{
+				"text": "Otto, polishing a glass that will never be clean: 'The Library remembers. The heart misfiles. The bartender forgets. That's the job.'"
+			},
+			{
+				"text": "Otto, to nobody: 'Mourning Days cut again. Grief is a shared resource. So's my tip jar, apparently.'"
+			},
+			{
+				"text": "Otto, flipping the TV to the Mael Rho sermon: 'Sleep well, children of the Choir. Report at the fifth bell. Pay your tab at the sixth.'"
+			}
+		],
+		"quest_ids": [
+			"q_otto_the_tab"
+		],
+		"required_flag": ""
+	},
+	{
+		"id": "hic",
+		"display_name": "Hic the Gear Guy",
+		"description": "Sells weapons out of a duffel bag under table six. Has never once been fully sober or fully wrong about a firing pin.",
+		"portrait_path": "res://assets/portraits/hic.png",
+		"location_id": "neon_gutter",
+		"is_vendor": true,
+		"vendor_id": "drunk_gear_vendor",
+		"fight_mission_id": "",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "*hic* You. You're the ones with the... the plan. The brew plan. I don't know anything about it. I sold you nothing.",
+				"next": "pitch"
+			},
+			{
+				"id": "pitch",
+				"text": "Listen. Listen. This rifle? Pulls left. So you aim right. That's called engineering.",
+				"next": "ask"
+			},
+			{
+				"id": "ask",
+				"text": "You want gear, I need parts. Scrap wire. Dead batteries. The Doctrine throws 'em out, I throw 'em back in. Circle of life.",
+				"choices": [
+					{
+						"text": "We'll bring you parts.",
+						"next": "deal"
+					},
+					{
+						"text": "Are you okay, Hic?",
+						"next": "okay"
+					}
+				]
+			},
+			{
+				"id": "deal",
+				"text": "Beautiful. Beautiful people. I'd hug you but I'd fall over and take the table with me."
+			},
+			{
+				"id": "okay",
+				"text": "I'm... I worked the line eleven years. Now I sell the stuff we made to the people it's meant for. So. Mostly okay. *hic*"
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Hic, to a potted plant: 'You're a good listener. Better than my foreman. He listens with a clipboard.'"
+			},
+			{
+				"text": "Hic, loudly: 'Munitions output up four percent! Four! I made one of those percents! Where's MY day off?'"
+			},
+			{
+				"text": "Hic, muttering over a disassembled pistol: 'Veil's got new Blade-pattern guns, they say. Bet they pull left too.'"
+			},
+			{
+				"text": "Hic, after the dock blew: 'Omen-Six, they're saying. I'd buy that man a drink. Woman. Twelve people. I'd buy 'em all a drink.'",
+				"requires_flag": "m01_done"
+			}
+		],
+		"quest_ids": [
+			"q_hic_spare_parts"
+		]
+	},
+	{
+		"id": "vesk",
+		"display_name": "Vesk the Tailor",
+		"description": "Patches armor in the back booth with a needle, a soldering iron and total contempt. Has measured three generals and liked none of them.",
+		"portrait_path": "res://assets/portraits/vesk.png",
+		"location_id": "neon_gutter",
+		"is_vendor": true,
+		"vendor_id": "armor_vendor",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "Arms up. No — the other up. You're built like a question nobody asked.",
+				"next": "work"
+			},
+			{
+				"id": "work",
+				"text": "This jacket stopped a riot baton once. The man wearing it didn't stop anything. Fabric's honest. People aren't.",
+				"next": "bleed"
+			},
+			{
+				"id": "bleed",
+				"text": "If you're going to bleed, bleed on the Riot Plate. It's already seen worse.",
+				"next": "after"
+			},
+			{
+				"id": "after",
+				"text": "And tell Hic if he sells you another left-pulling rifle I'm sewing his pockets shut.",
+				"choices": [
+					{
+						"text": "Noted. Is the armor any good?",
+						"next": "good"
+					},
+					{
+						"text": "You seem nice.",
+						"next": "nice"
+					}
+				]
+			},
+			{
+				"id": "good",
+				"text": "It's better than skin. That's the whole pitch. That's the only pitch anyone's ever needed."
+			},
+			{
+				"id": "nice",
+				"text": "I seem tired. You're confusing the two. Everyone does."
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Vesk, re-stitching a Cantor robe: 'Every face casts two shadows. This one's also got a gravy stain.'"
+			},
+			{
+				"text": "Vesk, to a customer: 'The Iron Choir pays me to take in their dress uniforms. They're all getting thinner. Nobody asks why.'"
+			},
+			{
+				"text": "Vesk, reading the ticker: 'Veil's Soul-Accountant wants to meter souls. Mine would cost them. Mine has fees.'"
+			}
+		],
+		"quest_ids": []
+	},
+	{
+		"id": "sly",
+		"display_name": "Sly Cassivar",
+		"description": "Runs the back table. Cheats openly, which somehow makes it fair. Says the deck talks to him. It probably does.",
+		"character_id": "sly_deck",
+		"portrait_path": "res://assets/portraits/sly.png",
+		"location_id": "neon_gutter",
+		"is_vendor": true,
+		"vendor_id": "card_dealer",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "Cut the deck. Go on. I already know which card you'll pick. It's the one I let you pick.",
+				"next": "philosophy"
+			},
+			{
+				"id": "philosophy",
+				"text": "Cards are honest. Fifty-two faces, each one only pretending to be one thing. That's more than you can say for the Cantors.",
+				"next": "offer"
+			},
+			{
+				"id": "offer",
+				"text": "You want to learn the trade, I need a favour or two. Nothing illegal. Nothing *very* illegal.",
+				"choices": [
+					{
+						"text": "Deal us in.",
+						"next": "in"
+					},
+					{
+						"text": "You cheat.",
+						"next": "cheat"
+					}
+				]
+			},
+			{
+				"id": "in",
+				"text": "Good. First lesson: never trust a person with only one reason. I've got four. You'll learn them all eventually.",
+				"next": "joker"
+			},
+			{
+				"id": "cheat",
+				"text": "Everyone cheats. I just do it where you can see. That's called customer service.",
+				"next": "joker"
+			},
+			{
+				"id": "joker",
+				"text": "You kept the Joker. Good. It likes you. That's a bad sign for you, but a good sign for the Joker.",
+				"requires_flag": "secret_deck_stacker"
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Sly, shuffling for a table of dockhands: 'Heard a Choir android asked a Cantor \"Who made us?\" out loud. Nobody's seen it since. Or everybody has. Ante up.'"
+			},
+			{
+				"text": "Sly, to a loser: 'The Mourning Prince isn't dead. He's out past the Verge, deleting people who read too much. So you're safe, friend.'"
+			},
+			{
+				"text": "Sly, dealing: 'Quartermaster down the depot loses whole crates of coffins. Full ones. Nobody audits a coffin. Nobody audits me either. Coincidence.'"
+			},
+			{
+				"text": "Sly, grinning at the Joker card: 'If your enemy has a lullaby, you have not understood the war. If your dealer has a lullaby, check his sleeves.'",
+				"requires_flag": "secret_deck_stacker"
+			}
+		],
+		"quest_ids": [
+			"q_sly_friendly_game",
+			"q_sly_stack_the_deck"
+		]
+	},
+	{
+		"id": "drunken_oracle",
+		"display_name": "The Drunken Oracle",
+		"description": "Sits at the end of the bar. Knows things. Never pays. Claims to have been sober once, briefly, in the pre-Library Age.",
+		"character_id": "drunken_oracle",
+		"portrait_path": "res://assets/portraits/drunken_oracle.png",
+		"location_id": "neon_gutter",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "You're sitting in my future. It's the stool on the left. The right one is my past. It wobbles.",
+				"next": "offer"
+			},
+			{
+				"id": "offer",
+				"text": "Five questions. Answer all five straight and I'll tell you something true. Miss one and I'll tell you something expensive.",
+				"choices": [
+					{
+						"text": "Ask away.",
+						"next": "q1"
+					},
+					{
+						"text": "Maybe after another drink.",
+						"next": "later"
+					}
+				]
+			},
+			{
+				"id": "later",
+				"text": "That's what the last three prophets said. I drank them under the table. They're still under it. Check."
+			},
+			{
+				"id": "q1",
+				"text": "Question one. Every face casts... what?",
+				"choices": [
+					{
+						"text": "Two shadows.",
+						"next": "q2",
+						"correct": true
+					},
+					{
+						"text": "A bar tab.",
+						"next": "wrong",
+						"correct": false
+					},
+					{
+						"text": "Doubt, mostly.",
+						"next": "wrong",
+						"correct": false
+					}
+				]
+			},
+			{
+				"id": "q2",
+				"text": "Two. The Library remembers. The heart...?",
+				"choices": [
+					{
+						"text": "Forgets.",
+						"next": "wrong",
+						"correct": false
+					},
+					{
+						"text": "Misfiles.",
+						"next": "q3",
+						"correct": true
+					},
+					{
+						"text": "Pays extra.",
+						"next": "wrong",
+						"correct": false
+					}
+				]
+			},
+			{
+				"id": "q3",
+				"text": "Three. The truth does not free you. It...?",
+				"choices": [
+					{
+						"text": "Drafts you.",
+						"next": "q4",
+						"correct": true
+					},
+					{
+						"text": "Bills you.",
+						"next": "wrong",
+						"correct": false
+					},
+					{
+						"text": "Leaves early.",
+						"next": "wrong",
+						"correct": false
+					}
+				]
+			},
+			{
+				"id": "q4",
+				"text": "Four. Why does the Queen dream in black?",
+				"choices": [
+					{
+						"text": "She's mourning.",
+						"next": "wrong",
+						"correct": false
+					},
+					{
+						"text": "Power's cheaper at night.",
+						"next": "wrong",
+						"correct": false
+					},
+					{
+						"text": "Because light kept lying to her.",
+						"next": "q5",
+						"correct": true
+					}
+				]
+			},
+			{
+				"id": "q5",
+				"text": "Five. Never trust a person with only one...?",
+				"choices": [
+					{
+						"text": "Shoe.",
+						"next": "wrong",
+						"correct": false
+					},
+					{
+						"text": "Reason.",
+						"next": "passed",
+						"correct": true
+					},
+					{
+						"text": "Drink. Oh. Wait.",
+						"next": "wrong",
+						"correct": false
+					}
+				]
+			},
+			{
+				"id": "wrong",
+				"text": "Wrong. Beautifully wrong. Come back when you're drunker or wiser. Either works. Neither has ever worked on me."
+			},
+			{
+				"id": "passed",
+				"text": "...Huh. All five. Nobody does all five. Fine. I'll walk with you a while. The stool can wait. It always does.",
+				"sets_flag": "oracle_quiz_passed"
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "The Oracle, to her glass: 'Old Quill says we're the second draft of humanity. I say this beer is the second draft of beer. We're both right. That's the problem.'"
+			},
+			{
+				"text": "The Oracle, eyes shut: 'There's a ghost at the front. Tallow-something. Carries the dying off and never asks which side. I'd like to be carried like that.'"
+			},
+			{
+				"text": "The Oracle, to the TV: 'A GOD WHO FEARS QUESTIONS IS ONLY A KING. Somebody wrote that on the bathroom stall. I'm not saying it was me. I'm saying the handwriting is excellent.'"
+			},
+			{
+				"text": "The Oracle, to you, suddenly: 'Drank from the Weeping Circuit once. Woke up remembering someone else's wedding. Better than mine. Better cake.'"
+			}
+		],
+		"quest_ids": []
+	},
+	{
+		"id": "benno",
+		"display_name": "Benno Krait",
+		"description": "Doctrine munitions line worker, shift seven. Fifteen hours a day, three days off a month, one stool at the Gutter he'd fight a Choir legion for.",
+		"portrait_path": "res://assets/portraits/benno.png",
+		"location_id": "neon_gutter",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "Don't sit there. That's where I put my feelings. Sit there, that's where I put my feet.",
+				"next": "shift"
+			},
+			{
+				"id": "shift",
+				"text": "Fifteen-hour shift. Hymn at the start, hymn at the end, hymn at lunch if you can call soy paste lunch. I know every word. I hate every word.",
+				"next": "grisk"
+			},
+			{
+				"id": "grisk",
+				"text": "Foreman Grisk keeps an emergency stash in a crate on the loading dock. 'For emergencies,' he says. Every day is an emergency, Grisk.",
+				"choices": [
+					{
+						"text": "Which crate?",
+						"next": "crate"
+					},
+					{
+						"text": "Why tell us?",
+						"next": "why"
+					}
+				]
+			},
+			{
+				"id": "crate",
+				"text": "The one that squeaks. Second from the water. If the Wardens ask, I was on shift. I'm always on shift. It's a great alibi and a terrible life.",
+				"next": "after"
+			},
+			{
+				"id": "why",
+				"text": "Because you've got the look. The 'going to do something stupid on purpose' look. I had it once. Then they gave me a pension plan.",
+				"next": "after"
+			},
+			{
+				"id": "after",
+				"text": "The dock went up and they gave us a day off to 'mourn the equipment.' I mourned it so hard. I mourned it in bed until noon.",
+				"requires_flag": "m01_done"
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Benno, to another worker: 'Kid in my brother's legion can't sing. They make him march at the back and mouth it. Kid's a hero, far as I'm concerned.'"
+			},
+			{
+				"text": "Benno, reading the ticker: 'Border \"held with song.\" Casualty figures being \"reconciled.\" You know what they reconcile? Coffins. With paperwork.'"
+			},
+			{
+				"text": "Benno, half asleep: 'My cousin swears a Veil medic stitched her up at the border. Ruen something. Then shot the guy next to her. Or didn't. Two stories.'"
+			},
+			{
+				"text": "Benno, very quietly: 'Reminder, lads: unregistered hymns are not hymns. So if I'm humming, I'm not humming. I'm leaking.'"
+			},
+			{
+				"text": "Benno, raising a glass: 'Explosion at the Supply Works. Omen-Six suspected. Again. To Omen-Six! Best coworker I never had!'",
+				"requires_flag": "m01_done"
+			}
+		],
+		"quest_ids": [
+			"q_benno_grisks_stash"
+		]
+	}
+]

@@ -1,7 +1,8 @@
 extends Control
 ## The Neon Gutter — the crew's dive bar and the game's hub (menu version).
 ##
-## Tabs: Missions, Crew (jobs + terminal), Bar & Shops, Dispatch, Forge, Save.
+## Tabs: Missions, Regulars (NPCs, quests, gossip), Crew (jobs + terminal),
+## Bar & Shops, Dispatch, Forge, Save.
 ## A walkable hub (the old HubWorld.gd idea) can replace this later; every tab
 ## just calls the same systems, so nothing here is throwaway logic.
 
@@ -11,6 +12,10 @@ var _ticker: Label
 var _ticker_lines: Array[String] = []
 var _selected_char: String = ""
 var _tab: String = "missions"
+## Regulars tab: NPC whose quest list is expanded.
+var _open_npc: String = ""
+## Shops tab: show only this vendor (set by a regular's SHOP button).
+var _shop_focus: String = ""
 
 
 func _ready() -> void:
@@ -38,13 +43,13 @@ func _ready() -> void:
 	nav.custom_minimum_size.x = 250
 	nav.add_theme_constant_override("separation", 8)
 	body.add_child(nav)
-	for entry in [["missions", "MISSIONS"], ["crew", "CREW & TERMINAL"], ["shops", "BAR & SHOPS"], ["dispatch", "DISPATCH"], ["forge", "FORGE"], ["system", "SAVE / QUIT"]]:
+	for entry in [["missions", "MISSIONS"], ["regulars", "REGULARS"], ["crew", "CREW & TERMINAL"], ["shops", "BAR & SHOPS"], ["dispatch", "DISPATCH"], ["forge", "FORGE"], ["system", "SAVE / QUIT"]]:
 		var b := Button.new()
 		b.text = entry[1]
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size.y = 46
 		var id: String = entry[0]
-		b.pressed.connect(func() -> void: _show(id))
+		b.pressed.connect(func() -> void: _shop_focus = ""; _show(id))
 		nav.add_child(b)
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -160,6 +165,7 @@ func _show(tab: String) -> void:
 	_refresh_top()
 	match tab:
 		"missions": _tab_missions()
+		"regulars": _tab_regulars()
 		"crew": _tab_crew()
 		"shops": _tab_shops()
 		"dispatch": _tab_dispatch()
@@ -186,6 +192,122 @@ func _tab_missions() -> void:
 		v.add_child(brief)
 		v.add_child(NeonTheme.label("%s   //   Win: %s" % [m.get_total_reward_text(), m.win_condition.replace("_", " ")], 13, NeonTheme.AMBER))
 		_btn(v, "DEPLOY THE CREW", func() -> void: CampaignManager.start_mission(mid), GameManager.get_party_members().is_empty())
+
+
+func _tab_regulars() -> void:
+	_h("THE REGULARS")
+	_p("Same stools, same faces, same tabs. Listen long enough and you'll hear the whole war — just never the true version.")
+	for npc: NPCResource in ContentDB.get_all("npcs"):
+		if npc.location_id != "neon_gutter" or not npc.is_present():
+			continue
+		var panel := PanelContainer.new()
+		_content.add_child(panel)
+		var v := VBoxContainer.new()
+		v.add_theme_constant_override("separation", 6)
+		panel.add_child(v)
+		v.add_child(NeonTheme.label(npc.display_name.to_upper(), 20, NeonTheme.GREEN))
+		var desc := NeonTheme.label(npc.description, 14, NeonTheme.TEXT_DIM)
+		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		v.add_child(desc)
+		var r := HBoxContainer.new()
+		r.add_theme_constant_override("separation", 8)
+		v.add_child(r)
+		_btn(r, "TALK", func() -> void: _talk(npc), npc.dialog.is_empty())
+		_btn(r, "EAVESDROP", func() -> void: _eavesdrop(npc), npc.eligible_eavesdrops().is_empty())
+		var quests := _visible_quests(npc.id)
+		var turn_ins := quests.filter(func(q: QuestResource) -> bool: return QuestManager.is_ready_to_complete(q.id))
+		if not quests.is_empty():
+			var label := "QUESTS (%d)%s" % [quests.size(), "  ✔ TURN IN" if not turn_ins.is_empty() else ""]
+			_btn(r, ("▼ " if _open_npc == npc.id else "") + label, func() -> void:
+				_open_npc = "" if _open_npc == npc.id else npc.id
+				_show("regulars"))
+		if npc.vendor_id != "" and ContentDB.vendors.has(npc.vendor_id):
+			_btn(r, "SHOP", func() -> void: _shop_focus = npc.vendor_id; _show("shops"))
+		if _open_npc == npc.id:
+			for q in quests:
+				_quest_panel(v, npc, q)
+
+
+## Quests of an NPC worth listing: available, active, or done (not locked).
+func _visible_quests(npc_id: String) -> Array[QuestResource]:
+	var out: Array[QuestResource] = []
+	for q in QuestManager.quests_of(npc_id):
+		if QuestManager.get_state(q.id) != QuestManager.LOCKED:
+			out.append(q)
+	return out
+
+
+func _quest_panel(parent: Control, npc: NPCResource, q: QuestResource) -> void:
+	var state := QuestManager.get_state(q.id)
+	var box := PanelContainer.new()
+	box.add_theme_stylebox_override("panel", NeonTheme.panel_box(NeonTheme.AMBER if state == QuestManager.ACTIVE else Color(NeonTheme.VIOLET, 0.5), NeonTheme.PANEL_HI))
+	parent.add_child(box)
+	var v := VBoxContainer.new()
+	box.add_child(v)
+	var tag: String = {"available": "NEW", "active": "ACTIVE", "complete": "DONE"}.get(state, "")
+	v.add_child(NeonTheme.label("%s  [%s]" % [q.display_name.to_upper(), tag], 17, NeonTheme.AMBER if state != QuestManager.COMPLETE else NeonTheme.TEXT_DIM))
+	if state == QuestManager.COMPLETE:
+		return
+	var d := NeonTheme.label(q.description, 14, NeonTheme.TEXT_DIM)
+	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(d)
+	var prog := QuestManager.get_progress(q.id)
+	for i in q.objectives.size():
+		var o: Dictionary = q.objectives[i]
+		var have := int(prog[i]) if i < prog.size() else 0
+		var done := state == QuestManager.ACTIVE and QuestManager.is_objective_done(q.id, i)
+		var line := "%s %s" % ["☑" if done else "☐", str(o.get("text", o.get("type", "")))]
+		if state == QuestManager.ACTIVE:
+			line += "  (%d/%d)" % [have, q.objective_count(i)]
+		v.add_child(NeonTheme.label(line, 14, NeonTheme.GREEN if done else NeonTheme.TEXT))
+	v.add_child(NeonTheme.label(q.get_reward_text(), 13, NeonTheme.CYAN))
+	var r := HBoxContainer.new()
+	v.add_child(r)
+	if state == QuestManager.AVAILABLE:
+		_btn(r, "ACCEPT", func() -> void: _accept_quest(npc, q))
+	elif state == QuestManager.ACTIVE:
+		var can_turn_in := QuestManager.is_ready_to_complete(q.id)
+		_btn(r, "TURN IN", func() -> void: _turn_in_quest(npc, q), not can_turn_in)
+		if not can_turn_in and q.progress_text != "":
+			_btn(r, "ASK ABOUT IT", func() -> void: UIManager.get_dialogue_box().say(npc.display_name, q.progress_text))
+
+
+func _accept_quest(npc: NPCResource, q: QuestResource) -> void:
+	var err := QuestManager.accept(q.id)
+	_show("regulars")
+	if err != "":
+		_toast(err)
+	elif q.accept_text != "":
+		UIManager.get_dialogue_box().say(npc.display_name, q.accept_text)
+
+
+func _turn_in_quest(npc: NPCResource, q: QuestResource) -> void:
+	if not QuestManager.try_complete(q.id):
+		return
+	_show("regulars")
+	_toast("Quest complete: %s. %s" % [q.display_name, q.get_reward_text()])
+	if q.complete_text != "":
+		UIManager.get_dialogue_box().say(npc.display_name, q.complete_text)
+
+
+func _talk(npc: NPCResource) -> void:
+	QuestManager.notify_talk(npc.id)
+	var box := UIManager.play_npc_dialog(npc)
+	if not box.finished.is_connected(_on_talk_finished):
+		box.finished.connect(_on_talk_finished)
+
+
+func _on_talk_finished() -> void:
+	if _tab == "regulars":
+		_show("regulars")
+
+
+func _eavesdrop(npc: NPCResource) -> void:
+	var lines := npc.eligible_eavesdrops()
+	if lines.is_empty():
+		return
+	var line: Dictionary = lines.pick_random()
+	UIManager.get_dialogue_box().say("Overheard — " + npc.display_name, str(line.get("text", "")), str(line.get("voice_path", "")))
 
 
 func _tab_crew() -> void:
@@ -252,7 +374,11 @@ func _tab_crew() -> void:
 
 func _tab_shops() -> void:
 	_h("BAR & SHOPS")
+	if _shop_focus != "":
+		_btn(_content, "◂ ALL SHOPS", func() -> void: _shop_focus = ""; _show("shops"))
 	for vid: String in ContentDB.vendors:
+		if _shop_focus != "" and vid != _shop_focus:
+			continue
 		var v: Dictionary = ContentDB.vendors[vid]
 		_p(str(v.get("name", vid)).to_upper(), NeonTheme.GREEN, 19)
 		_p("\"%s\"" % v.get("greeting", ""))

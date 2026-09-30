@@ -1,6 +1,8 @@
 extends Control
 ## Title screen.
 
+const FORGE_SCENE := "res://scenes/editor/neon_forge.tscn"
+
 
 func _ready() -> void:
 	theme = NeonTheme.get_theme()
@@ -32,6 +34,8 @@ func _ready() -> void:
 	var cont := _button(center, "CONTINUE", _continue)
 	cont.disabled = not SaveManager.has_save_file()
 	_button(center, "QUICK BATTLE — THE BREW PLAN", func() -> void: _quick_battle("m01_the_brew_plan"))
+	var forge := _button(center, "NEON FORGE  ·  EDITOR  (F1)", func() -> void: SceneManager.change_scene(FORGE_SCENE))
+	forge.add_theme_color_override("font_color", NeonTheme.AMBER)
 	_button(center, "QUIT", func() -> void: get_tree().quit())
 	var ver := NeonTheme.label("v%s  //  Godot %s" % [ProjectSettings.get_setting("application/config/version", "0.1"), Engine.get_version_info()["string"]], 11, NeonTheme.TEXT_DIM)
 	ver.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
@@ -67,3 +71,8 @@ func _continue() -> void:
 func _quick_battle(mission_id: String) -> void:
 	GameManager.new_game()
 	CampaignManager.start_mission(mission_id)
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_editor"):
+		SceneManager.change_scene(FORGE_SCENE)

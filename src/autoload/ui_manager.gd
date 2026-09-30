@@ -4,6 +4,8 @@ extends Node
 ## screen is up (battle HUD, hub HUD, editor).
 
 var active_hud: Node = null
+## Fallback dialogue panel for screens whose HUD has no show_dialog().
+var _dialogue_box: DialogueBox = null
 
 
 func register_hud(hud: Node) -> void:
@@ -33,8 +35,28 @@ func hide_interaction_prompt() -> void:
 
 
 func show_dialog(speaker: String, text: String) -> void:
-	_call("show_dialog", [speaker, text])
+	if active_hud and is_instance_valid(active_hud) and active_hud.has_method("show_dialog"):
+		active_hud.show_dialog(speaker, text)
+	else:
+		get_dialogue_box().say(speaker, text)
 	EventBus.dialog_requested.emit(speaker, text)
+
+
+## Returns the open DialogueBox, spawning one on the current scene if needed.
+func get_dialogue_box() -> DialogueBox:
+	if _dialogue_box and is_instance_valid(_dialogue_box) and not _dialogue_box.is_queued_for_deletion():
+		return _dialogue_box
+	_dialogue_box = DialogueBox.new()
+	var host: Node = get_tree().current_scene if get_tree().current_scene else get_tree().root
+	host.add_child(_dialogue_box)
+	return _dialogue_box
+
+
+## Runs an NPC conversation in the shared DialogueBox.
+func play_npc_dialog(npc: NPCResource, start_id: String = "") -> DialogueBox:
+	var box := get_dialogue_box()
+	box.play_npc(npc, start_id)
+	return box
 
 
 func open_vendor_menu(vendor_id: String) -> void:

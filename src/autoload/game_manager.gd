@@ -64,6 +64,10 @@ func new_game() -> void:
 	active_party = STARTING_ROSTER.slice(0, MAX_PARTY_SIZE).filter(func(id: String) -> bool: return roster.has(id))
 	add_stack_item("con_neon_gin", 3)
 	add_stack_item("con_synth_stew", 2)
+	# QuestManager loads after us, so it doesn't exist during our own _ready().
+	var quests := get_node_or_null("/root/QuestManager")
+	if quests:
+		quests.reset()
 	party_changed.emit()
 
 

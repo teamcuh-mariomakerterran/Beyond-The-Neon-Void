@@ -44,6 +44,11 @@ signal loot_discovered(source_id: String, item_id: String, message: String)
 signal dialog_requested(speaker: String, text: String)
 signal broadcast_line(channel: String, text: String)  # news ticker / eavesdrop chatter
 
+# --- Quests ---
+## state: "locked" | "available" | "active" | "complete"
+signal quest_state_changed(quest_id: String, state: String)
+signal quest_objective_progress(quest_id: String, index: int, count: int)
+
 # --- Dispatch ---
 signal dispatch_started(assignment: Dictionary)
 signal dispatch_resolved(assignment: Dictionary, success: bool, rewards: Dictionary)

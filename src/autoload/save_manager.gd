@@ -37,6 +37,7 @@ func save_game(slot: int = QUICK_SLOT) -> bool:
 		"game": GameManager.get_state_data(),
 		"campaign": CampaignManager.get_campaign_data(),
 		"dispatch": DispatchManager.get_state_data(),
+		"quests": QuestManager.get_state_data(),
 		"scene": SceneManager.current_scene_path,
 	}
 	var tmp_path := slot_path(slot) + ".tmp"
@@ -63,6 +64,7 @@ func load_game(slot: int = QUICK_SLOT) -> bool:
 	GameManager.load_state_data(data.get("game", {}))
 	CampaignManager.load_campaign_data(data.get("campaign", {}))
 	DispatchManager.load_state_data(data.get("dispatch", {}))
+	QuestManager.load_state_data(data.get("quests", {}))  # older saves: no key -> fresh quest log
 	SceneManager.current_scene_path = str(data.get("scene", ""))
 	game_loaded.emit(slot)
 	return true
