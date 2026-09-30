@@ -53,6 +53,8 @@ src/tools/               Neon Forge editor
 data/                    ALL game content as JSON (edited by Neon Forge)
 assets/                  tiles/ structures/ props/ units/ portraits/ ui/ music/ sfx/ voice/ vfx/ fonts/
 tests/                   Headless test suite + screenshot renderer
+tools/cutscene_builder/  Parallax cutscene builder (open cutscene-builder.html in a browser)
+data/cutscenes/          Exported .parallax.json cutscenes
 docs/                    Lore digest, research, design (classes, big ideas), migration notes
 legacy/original_gd/      The original prototype scripts (ignored by Godot)
 ```
