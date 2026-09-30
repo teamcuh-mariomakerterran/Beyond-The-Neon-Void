@@ -176,11 +176,19 @@ static func list_assets(category: String) -> Array[String]:
 	var cat: Dictionary = ASSET_CATEGORIES.get(category, {})
 	if cat.is_empty() or not DirAccess.dir_exists_absolute(cat["dir"]):
 		return out
-	for f in DirAccess.get_files_at(cat["dir"]):
-		if f.get_extension().to_lower() in cat["ext"]:
-			out.append(str(cat["dir"]).path_join(f))
+	_collect(str(cat["dir"]), cat["ext"], out)
 	out.sort()
 	return out
+
+
+## Recursive, so synced subfolders (structures/interior, tiles/<set>/...) show up.
+static func _collect(dir: String, exts: Array, out: Array[String]) -> void:
+	for f in DirAccess.get_files_at(dir):
+		if f.get_extension().to_lower() in exts:
+			out.append(dir.path_join(f))
+	for sub in DirAccess.get_directories_at(dir):
+		if not sub.begins_with("."):
+			_collect(dir.path_join(sub), exts, out)
 
 
 static func rename_asset(path: String, new_base: String) -> String:

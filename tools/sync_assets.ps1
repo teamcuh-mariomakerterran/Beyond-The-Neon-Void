@@ -26,6 +26,16 @@ param(
 $ErrorActionPreference = "Continue"
 function Say($msg, $color = "Cyan") { Write-Host $msg -ForegroundColor $color }
 
+# Splits whatever was dragged into a prompt: "a""b", "a" "b", a, b  ->  @(a, b)
+function Split-DroppedPaths([string]$raw) {
+    $out = @()
+    if (-not $raw) { return ,$out }
+    foreach ($m in [regex]::Matches($raw, '"([^"]+)"')) { $out += $m.Groups[1].Value.Trim() }
+    $rest = [regex]::Replace($raw, '"[^"]*"', ',')
+    foreach ($part in ($rest -split '[,;]')) { $t = $part.Trim(); if ($t) { $out += $t } }
+    return ,$out
+}
+
 # Black Doctrine folder -> folder in our repo.  Edit freely.
 $Map = [ordered]@{
     "all_structures"           = "assets\structures"
@@ -76,11 +86,23 @@ try {
         else { Say "  (not found, skipping) $src" "DarkGray" }
     }
     if (-not $NoPrompt) {
+        Say ""
+        Say "Optional extras. Drag one or more FOLDERS into this window (commas are fine)," "Cyan"
+        Say "or just press Enter to skip. Folders already listed above are copied automatically." "Cyan"
+        $autoSrcs = @($jobs | ForEach-Object { $_.Src.TrimEnd('\') + '\' })
         foreach ($label in $Extras.Keys) {
-            $p = Read-Host "$label - folder path (drag it here, or Enter to skip)"
-            $p = $p.Trim('"', ' ')
-            if ($p -and (Test-Path $p)) { $jobs += [pscustomobject]@{ Src = $p; Dst = $Extras[$label]; Label = $label } }
-            elseif ($p) { Say "  Not found: $p" "Yellow" }
+            $raw = Read-Host "$label"
+            foreach ($p in (Split-DroppedPaths $raw)) {
+                $p = $p.TrimEnd('\')
+                $covered = @($autoSrcs | Where-Object { ($p + '\').StartsWith($_, [StringComparison]::OrdinalIgnoreCase) })
+                if ($covered) { Say "  Already copied automatically (it's inside $($covered[0].TrimEnd('\'))) - skipping." "DarkGray"; continue }
+                $isDir = $false
+                try { $isDir = Test-Path -LiteralPath $p -PathType Container -ErrorAction Stop } catch { $isDir = $false }
+                if ($isDir) {
+                    $jobs += [pscustomobject]@{ Src = $p; Dst = $Extras[$label]; Label = $label }
+                    Say "  + $p" "Green"
+                } else { Say "  Not a folder, skipped: $p" "Yellow" }
+            }
         }
     }
     if ($jobs.Count -eq 0) { Say "Nothing to copy." "Yellow"; Read-Host "Enter to close"; exit 0 }

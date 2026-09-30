@@ -101,6 +101,9 @@ func refresh() -> void:
 		var ext := p.get_extension().to_lower()
 		var icon: Texture2D = ForgeStore.load_texture(p) if ext in ForgeStore.IMAGE_EXT else null
 		var label := p.get_file().get_basename()
+		var sub := p.get_base_dir().trim_prefix(str(ForgeStore.ASSET_CATEGORIES[category]["dir"])).trim_prefix("/")
+		if sub != "":
+			label = sub + "/" + label
 		if ext in ForgeStore.AUDIO_EXT:
 			label = "♪ " + label
 		elif ext == "tres":
