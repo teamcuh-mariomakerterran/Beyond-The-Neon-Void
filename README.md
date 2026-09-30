@@ -18,17 +18,17 @@ Notes to Claude before starting.
 3. Current Project Status
 •	Completed: The structural blueprint, the 19-class hierarchy, the stat-scaling bridge, and the core combat orchestration logic.
 •	Pending: Fine-tuning of individual ability values, expanded AI behavior trees (beyond the basic Cautious/Aggressive scripts), and final UI polish for the UnitHUD.
-4. Directives for Grok
+4. Directives for claude
 •	"Review the UnitStats scaling logic to ensure no overflow or rounding errors."
 •	"Expand the AIBehavior system to include tactical positioning based on the IsometricGrid."
 •	"Verify that all Ability resources are correctly mapped to the 19 classes in the ClassLibrary."
 
- "I have a Godot game structure with these .gd files. I want to build [describe your game idea]. Help me set up the Godot project and flesh out these scripts."
+Help me set up the Godot project and flesh out these scripts."
 Claude will handle creating the actual Godot project file and integrating your existing code.
-Does that make sense? Need help with any of these steps?
-i think that makes sense. one more question, it was wrote for godot 4.2 and i think godot is at 4.7 now. is there anything i can do beforehand or need to do to be able to use the code and get it working for the updated godot?
+is there anything i can do beforehand or need to do to be able to use the code and get it working for the updated godot?
 Good question! Godot 4.2 to 4.7 is a fairly minor version bump, so your code will likely work with minimal or no changes. Here's what you should know:
 Before You Start
 The safest approach: Just upload your code as-is and let Claude handle the compatibility check. He can:
 1.	Identify any breaking changes between 4.2 and 4.7
 2.	Update deprecated syntax or APIs
+quick last note. the story pages i think there were three of them are for reference to the world and setting, this game is based in that world but that is strucutred in a way that it may seem like we are using those characters but in our game here they are merely referenced or are over heard or spoken about as if we are just hearing the eaves dropping of rumors or are referenced in a way to make the entire series feel like a whole but this really is a self contained story in the same world and only possibly will there be one or two cameos in the form of npc's that come from the black doctrine game. the war is in full swing and isnt even resolved by the time our story here will end. so its like hearing the news station on tv talk about an overseas war going on while the citizens here are dealing with their day to day harsh lives and really most with the exception of a few even pay any attenion to whats happening.
