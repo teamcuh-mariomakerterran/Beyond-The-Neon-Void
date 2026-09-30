@@ -29,14 +29,14 @@ function Say($msg, $color = "Cyan") { Write-Host $msg -ForegroundColor $color }
 # Black Doctrine folder -> folder in our repo.  Edit freely.
 $Map = [ordered]@{
     "all_structures"           = "assets\structures"
-    "tiles\god_tiles"          = "assets\tiles"
+    "bg"                       = "assets\backgrounds"
+    "tiles\god_tiles"          = "assets\tiles"          # includes all subfolders
     "ui"                       = "assets\ui"
     "ui\doctrine\green-purple" = "assets\ui\hud"
     "music"                    = "assets\music"
 }
 # Extra folders you'll be asked for (drag a folder into the window, or Enter to skip).
 $Extras = [ordered]@{
-    "Backgrounds (cutscene / battle backdrops)" = "assets\backgrounds"
     "Character models / sprite sheets"          = "assets\units"
     "Props"                                     = "assets\props"
     "Your SFX"                                  = "assets\sfx"
