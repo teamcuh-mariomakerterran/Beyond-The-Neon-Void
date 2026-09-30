@@ -1,0 +1,262 @@
+{
+	"evo_sword": {
+		"from": "wpn_sword_1",
+		"to": "wpn_sword_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_knuckles": {
+		"from": "wpn_knuckles_1",
+		"to": "wpn_knuckles_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_rod": {
+		"from": "wpn_rod_1",
+		"to": "wpn_rod_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_staff": {
+		"from": "wpn_staff_1",
+		"to": "wpn_staff_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_knife": {
+		"from": "wpn_knife_1",
+		"to": "wpn_knife_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_laser_gun": {
+		"from": "wpn_laser_gun_1",
+		"to": "wpn_laser_gun_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_injector": {
+		"from": "wpn_injector_1",
+		"to": "wpn_injector_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_katana": {
+		"from": "wpn_katana_1",
+		"to": "wpn_katana_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_pistol": {
+		"from": "wpn_pistol_1",
+		"to": "wpn_pistol_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_cyberdeck": {
+		"from": "wpn_cyberdeck_1",
+		"to": "wpn_cyberdeck_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_wrench": {
+		"from": "wpn_wrench_1",
+		"to": "wpn_wrench_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_controller": {
+		"from": "wpn_controller_1",
+		"to": "wpn_controller_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_lance": {
+		"from": "wpn_lance_1",
+		"to": "wpn_lance_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_heavy_blade": {
+		"from": "wpn_heavy_blade_1",
+		"to": "wpn_heavy_blade_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_synth": {
+		"from": "wpn_synth_1",
+		"to": "wpn_synth_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_ribbon": {
+		"from": "wpn_ribbon_1",
+		"to": "wpn_ribbon_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_rifle": {
+		"from": "wpn_rifle_1",
+		"to": "wpn_rifle_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_codex": {
+		"from": "wpn_codex_1",
+		"to": "wpn_codex_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_shield": {
+		"from": "wpn_shield_1",
+		"to": "wpn_shield_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"evo_baton": {
+		"from": "wpn_baton_1",
+		"to": "wpn_baton_2",
+		"min_level": 10,
+		"soul_coins": 300,
+		"materials": {
+			"mat_memory_core": 3,
+			"mat_archive_fragment": 1
+		}
+	},
+	"craft_neon_ink": {
+		"result": "mat_neon_ink",
+		"qty": 1,
+		"materials": {
+			"mat_dream_battery": 1,
+			"mat_corrupted_wafer": 2
+		}
+	},
+	"craft_neon_gin": {
+		"result": "con_neon_gin",
+		"qty": 2,
+		"materials": {
+			"mat_dead_battery": 1,
+			"mat_scrap_wire": 1
+		}
+	},
+	"craft_card_mirror_gospel": {
+		"result": "card_mirror_gospel",
+		"qty": 1,
+		"materials": {
+			"mat_null_wafer": 1,
+			"mat_nyx_crystal": 2,
+			"mat_neon_ink": 3
+		}
+	},
+	"craft_card_first_checksum": {
+		"result": "card_first_checksum",
+		"qty": 1,
+		"materials": {
+			"mat_pioneer_shell": 1,
+			"mat_archive_fragment": 4,
+			"mat_neon_ink": 3
+		}
+	},
+	"craft_card_mercy_cache": {
+		"result": "card_mercy_cache",
+		"qty": 1,
+		"materials": {
+			"mat_essence_shard": 3,
+			"mat_nyx_crystal": 1,
+			"mat_neon_ink": 3
+		}
+	},
+	"craft_card_crown_error": {
+		"result": "card_crown_error",
+		"qty": 1,
+		"materials": {
+			"mat_null_wafer": 2,
+			"mat_neon_ink": 3
+		}
+	},
+	"craft_card_blank_census": {
+		"result": "card_blank_census",
+		"qty": 1,
+		"materials": {
+			"mat_pioneer_shell": 1,
+			"mat_null_wafer": 1,
+			"mat_neon_ink": 3
+		}
+	}
+}

@@ -18,6 +18,8 @@ enum Shape { SINGLE, DIAMOND, LINE, CROSS }
 @export_group("Costs")
 @export var ap_cost: int = 1
 @export var mp_cost: int = 0
+## Percent of the caster's max HP paid to use this (Void Knight darkness).
+@export var hp_cost_pct: float = 0.0
 ## Microchips needed to unlock this ability at a terminal.
 @export var chip_cost: int = 0
 ## Delayed casting (FFT-style): number of clock ticks before it resolves. 0 = instant.
@@ -49,6 +51,10 @@ enum Shape { SINGLE, DIAMOND, LINE, CROSS }
 @export var status_chance: float = 1.0
 ## Key for subclass logic, e.g. "kinetic.gravitational_pull".
 @export var special: String = ""
+## A Bluescreen Mage hit by this ability learns it.
+@export var blue_learnable: bool = false
+## Can only be learned by absorbing it (blue magic) — not sold at terminals.
+@export var absorb_only: bool = false
 ## Free-form numbers the special logic can read (pull distance, height delta...).
 @export var params: Dictionary = {}
 
@@ -80,6 +86,16 @@ func is_healing() -> bool:
 	return kind == Kind.HEAL
 
 
+func _valid_corpse(grid: IsometricGrid, cell: Vector2i, caster: Node) -> bool:
+	var corpse := grid.get_corpse(cell)
+	if corpse == null or grid.get_occupant(cell) != null:
+		return false
+	if caster == null:
+		return true
+	# Revive = fallen allies; Reanimate = anyone fallen (echoes of enemies hit hardest).
+	return corpse.team == caster.team if special == "revive" else true
+
+
 func effective_range_max(caster: Node = null) -> int:
 	if uses_weapon_range and caster != null:
 		return maxi(caster.equipment.weapon_range(), range_max)
@@ -100,7 +116,9 @@ func get_targetable_cells(grid: IsometricGrid, caster_cell: Vector2i, caster: No
 			continue
 		if needs_los and not grid.has_line_of_sight(caster_cell, cell):
 			continue
-		if target == Target.TILE and special in ["blink", "summon"] and (grid.get_occupant(cell) != null or not grid.is_walkable(cell)):
+		if target == Target.TILE and special in ["blink", "summon", "summon_droid"] and (grid.get_occupant(cell) != null or not grid.is_walkable(cell)):
+			continue
+		if special in ["reanimate", "revive"] and not _valid_corpse(grid, cell, caster):
 			continue
 		out.append(cell)
 	return out
@@ -211,16 +229,67 @@ func _resolve_special(ctx: Context) -> void:
 				ctx.caster.force_move(ctx.target_cell, ctx.battle.animate)
 				ctx.log_result(ctx.caster, "blink")
 		"summon":
-			if ctx.grid.get_occupant(ctx.target_cell) == null:
-				var spawned: Node = ctx.battle.spawn_unit(str(params.get("character_id", "")), ctx.target_cell, ctx.caster.team, ctx.caster.get_stat("level"))
-				if spawned:
-					ctx.log_result(spawned, "summoned")
+			_summon(ctx, str(params.get("character_id", "")), int(params.get("max_active", 3)))
+		"summon_droid":
+			_summon(ctx, str(params.get("character_id", "")), int(params.get("max_active", 2)))
+		"revive":
+			var fallen: Node = ctx.grid.get_corpse(ctx.target_cell)
+			if fallen and fallen.team == ctx.caster.team:
+				fallen.revive(roundi(fallen.get_stat("max_hp") * float(params.get("hp_pct", 0.3))))
+				ctx.battle.readd_unit(fallen)
+				ctx.log_result(fallen, "revived")
+		"reanimate":
+			var body: Node = ctx.grid.get_corpse(ctx.target_cell)
+			if body and body.data:
+				ctx.grid.remove_corpse(ctx.target_cell)
+				var echo: Node = ctx.battle.spawn_unit(body.data.id, ctx.target_cell, ctx.caster.team, body.get_stat("level"), true)
+				if echo:
+					echo.current_hp = maxi(roundi(echo.get_stat("max_hp") * float(params.get("hp_pct", 0.5))), 1)
+					echo.summoner = ctx.caster
+					echo.is_echo = true
+					echo.apply_status("fading", ctx.caster)
+					echo.refresh_stats()
+					ctx.log_result(echo, "reanimated")
+		"echo":
+			var last: Dictionary = ctx.battle.last_action_for(ctx.caster)
+			if not last.is_empty():
+				var copied: Ability = last["ability"]
+				var sub := Context.new()
+				sub.caster = ctx.caster
+				sub.target_cell = last["cell"]
+				sub.grid = ctx.grid
+				sub.battle = ctx.battle
+				sub.rng = ctx.rng
+				copied.resolve(sub)
+				ctx.results.append_array(sub.results)
+				ctx.log_result(ctx.caster, "echoed:" + copied.id)
+		"steal_chip":
+			var mark: Node = ctx.grid.get_occupant(ctx.target_cell)
+			if mark and mark.team != ctx.caster.team and ctx.caster.team == 0 and ctx.rng.randf() < float(params.get("chance", 0.5)):
+				GameManager.add_microchips(1)
+				ctx.log_result(mark, "chip_stolen", 1)
 		"steal_coins":
 			var victim: Node = ctx.grid.get_occupant(ctx.target_cell)
 			if victim and victim.team != ctx.caster.team and ctx.caster.team == 0:
 				var coins := int(params.get("coins", 40))
 				GameManager.add_soul_coins(coins)
 				ctx.log_result(victim, "stolen", coins)
+
+
+func _summon(ctx: Context, character_id: String, max_active: int) -> void:
+	if ctx.grid.get_occupant(ctx.target_cell) != null:
+		return
+	var mine := 0
+	for u: Node in ctx.battle.get_units():
+		if u.summoner == ctx.caster and not u.is_echo:
+			mine += 1
+	if mine >= max_active:
+		EventBus.log_message.emit("Too many active builds.")
+		return
+	var spawned: Node = ctx.battle.spawn_unit(character_id, ctx.target_cell, ctx.caster.team, ctx.caster.get_stat("level"), true)
+	if spawned:
+		spawned.summoner = ctx.caster
+		ctx.log_result(spawned, "summoned")
 
 
 ## Situational power scaling (e.g. Kinetic Charge). Read by DamageCalculator,

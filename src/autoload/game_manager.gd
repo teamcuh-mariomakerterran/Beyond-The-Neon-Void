@@ -10,7 +10,7 @@ signal currency_changed
 
 const MAX_PARTY_SIZE := 5
 const STARTING_SOUL_COINS := 500
-const STARTING_ROSTER: Array[String] = ["rook", "mags", "dizzy", "tallow", "patch"]
+const STARTING_ROSTER: Array[String] = ["rook", "mags", "dizzy", "brannoc", "patch"]
 
 # --- Currency & counters ---
 var soul_coins: int = STARTING_SOUL_COINS

@@ -4,15 +4,18 @@ extends Node
 ## Classes are authored in res://data/classes.json and loaded by ContentDB.
 ## This autoload answers class questions: lookups, roles, FFT-style unlocks.
 
-## The 19 playable classes, in menu order. See docs/design/CLASSES.md.
+## The 35 playable classes, in menu order. See docs/design/CLASSES.md.
+## Tier 1 starters -> tier 2 -> tier 3 elite -> secret (unlock_flag + requirements).
 const CLASS_ORDER: Array[String] = [
-	"street_samurai", "gunslinger", "hacker", "digital_healer", "riot_guard", "smuggler",
-	"corporate_enforcer", "cyber_sniper", "drone_pilot", "grapple_specialist", "neural_saboteur", "void_technician", "synapse_weaver",
-	"plasma_vanguard", "droid_master",
-	"vector_knight", "chrono_stitcher", "cartographer", "deck_stacker",
+	"chrome_warrior", "whitelight_medic", "blackcode_mage", "signal_thief", "laser_archer", "stim_chemist",
+	"iron_monk", "neon_ninja", "street_samurai", "digital_knight", "redline_mage", "bluescreen_mage",
+	"gunslinger", "net_hacker", "scrap_tinker", "droid_master", "timeslip_mage", "grid_geomancer",
+	"holo_summoner", "synth_bard", "holo_dancer", "jumpjet_dragoon", "void_knight", "stim_berserker",
+	"cyber_sniper", "ghost_assassin", "plasma_vanguard", "static_oracle", "void_technician",
+	"vector_knight", "chrono_stitcher", "cartographer", "deck_stacker", "echo_mime", "digimancer",
 ]
 
-const DEFAULT_CLASS := "street_samurai"
+const DEFAULT_CLASS := "chrome_warrior"
 
 var role_map: Dictionary = {}  # Role name -> Array[String] of class ids
 
@@ -46,7 +49,7 @@ func get_all_classes() -> Array[ClassResource]:
 		if c:
 			out.append(c)
 	for c: ClassResource in ContentDB.get_all("classes"):  # editor-added classes
-		if not out.has(c):
+		if not out.has(c) and c.playable:
 			out.append(c)
 	return out
 

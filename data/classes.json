@@ -1,0 +1,2285 @@
+[
+	{
+		"id": "chrome_warrior",
+		"display_name": "Chrome Warrior",
+		"role": "MELEE",
+		"tier": 1,
+		"description": "Shift-line muscle with chrome-plated forearms. Every crew starts with one.",
+		"base_hp": 115,
+		"base_mp": 20,
+		"hp_growth": 11,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.25,
+			"agility": 1.0,
+			"intelligence": 0.7,
+			"vitality": 1.2
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"sword",
+			"knuckles"
+		],
+		"specialty_weapon_types": [
+			"sword"
+		],
+		"innate_ability_ids": [
+			"rally_cry",
+			"chrome_cleave"
+		],
+		"learnable_ability_ids": [
+			"throw_scrap",
+			"brace",
+			"second_wind",
+			"gutbuster"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "whitelight_medic",
+		"display_name": "Whitelight Medic",
+		"role": "SUPPORT",
+		"tier": 1,
+		"description": "Tender Circuit dropout with a glowing rod and a steady hand.",
+		"base_hp": 80,
+		"base_mp": 70,
+		"hp_growth": 8,
+		"mp_growth": 5,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.6,
+			"agility": 0.9,
+			"intelligence": 1.4,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"rod",
+			"injector"
+		],
+		"specialty_weapon_types": [
+			"rod"
+		],
+		"innate_ability_ids": [
+			"mend_light",
+			"purge_code"
+		],
+		"learnable_ability_ids": [
+			"mend_field",
+			"regen_patch",
+			"aegis_light",
+			"holy_static"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "blackcode_mage",
+		"display_name": "Blackcode Mage",
+		"role": "RANGED",
+		"tier": 1,
+		"description": "Writes spells in forbidden syntax. Black-market coder with a pyromaniac streak.",
+		"base_hp": 70,
+		"base_mp": 80,
+		"hp_growth": 7,
+		"mp_growth": 6,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.5,
+			"agility": 0.9,
+			"intelligence": 1.5,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"rod",
+			"staff"
+		],
+		"specialty_weapon_types": [
+			"staff"
+		],
+		"innate_ability_ids": [
+			"plasma_bolt",
+			"cryo_bolt"
+		],
+		"learnable_ability_ids": [
+			"volt_bolt",
+			"plasma_storm",
+			"cryo_lattice",
+			"thunderhead"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "signal_thief",
+		"display_name": "Signal Thief",
+		"role": "UTILITY",
+		"tier": 1,
+		"description": "Everyone in the district has lost something to a Signal Thief. Usually twice.",
+		"base_hp": 85,
+		"base_mp": 30,
+		"hp_growth": 8,
+		"mp_growth": 2,
+		"base_speed": 11,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.0,
+			"agility": 1.35,
+			"intelligence": 0.9,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 2,
+			"intelligence": 1,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"knife"
+		],
+		"specialty_weapon_types": [
+			"knife"
+		],
+		"innate_ability_ids": [
+			"lift_coins",
+			"shadow_step"
+		],
+		"learnable_ability_ids": [
+			"steal_chip",
+			"backstab",
+			"inventory_loss",
+			"smoke_jammer"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "laser_archer",
+		"display_name": "Laser Archer",
+		"role": "RANGED",
+		"tier": 1,
+		"description": "Salvaged mining lasers, re-tuned for people. Stay high, stay far.",
+		"base_hp": 85,
+		"base_mp": 30,
+		"hp_growth": 8,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.1,
+			"agility": 1.3,
+			"intelligence": 0.8,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 2,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"laser_gun"
+		],
+		"specialty_weapon_types": [
+			"laser_gun"
+		],
+		"innate_ability_ids": [
+			"charge_shot",
+			"aim_assist"
+		],
+		"learnable_ability_ids": [
+			"pinning_beam",
+			"lance_beam",
+			"scatter_prism"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "stim_chemist",
+		"display_name": "Stim Chemist",
+		"role": "SUPPORT",
+		"tier": 1,
+		"description": "Brews stims in the bar's back room. Half medicine, half moonshine.",
+		"base_hp": 85,
+		"base_mp": 40,
+		"hp_growth": 8,
+		"mp_growth": 3,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 1.1,
+			"intelligence": 1.1,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 1,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"injector",
+			"knife"
+		],
+		"specialty_weapon_types": [
+			"injector"
+		],
+		"innate_ability_ids": [
+			"throw_stim",
+			"detox_dart"
+		],
+		"learnable_ability_ids": [
+			"phoenix_stim",
+			"ether_shot",
+			"brew_bomb",
+			"liquid_courage"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "iron_monk",
+		"display_name": "Iron Monk",
+		"role": "MELEE",
+		"tier": 2,
+		"description": "Meditates in the boiler room between 15-hour shifts. Hands like pistons.",
+		"base_hp": 120,
+		"base_mp": 30,
+		"hp_growth": 12,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.3,
+			"agility": 1.15,
+			"intelligence": 0.8,
+			"vitality": 1.2
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"knuckles"
+		],
+		"specialty_weapon_types": [
+			"knuckles"
+		],
+		"innate_ability_ids": [
+			"piston_palm",
+			"chakra_reboot"
+		],
+		"learnable_ability_ids": [
+			"shockwave_fist",
+			"earth_slam",
+			"wave_fist"
+		],
+		"unlock_requirements": {
+			"chrome_warrior": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "neon_ninja",
+		"display_name": "Neon Ninja",
+		"role": "UTILITY",
+		"tier": 2,
+		"description": "Moves between the neon signs like a glitch in the feed.",
+		"base_hp": 90,
+		"base_mp": 30,
+		"hp_growth": 9,
+		"mp_growth": 2,
+		"base_speed": 12,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.15,
+			"agility": 1.45,
+			"intelligence": 0.8,
+			"vitality": 0.85
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 3,
+			"intelligence": 0,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"knife",
+			"katana"
+		],
+		"specialty_weapon_types": [
+			"knife"
+		],
+		"innate_ability_ids": [
+			"twin_strike",
+			"throw_shuriken"
+		],
+		"learnable_ability_ids": [
+			"shadow_clone",
+			"smoke_vault",
+			"neon_lotus"
+		],
+		"unlock_requirements": {
+			"signal_thief": 3,
+			"laser_archer": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "street_samurai",
+		"display_name": "Street Samurai",
+		"role": "MELEE",
+		"tier": 2,
+		"description": "Honor is expensive. The katana was cheaper.",
+		"base_hp": 110,
+		"base_mp": 30,
+		"hp_growth": 11,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.35,
+			"agility": 1.15,
+			"intelligence": 0.7,
+			"vitality": 1.05
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 2,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"katana"
+		],
+		"specialty_weapon_types": [
+			"katana"
+		],
+		"innate_ability_ids": [
+			"neon_slash",
+			"iai_strike"
+		],
+		"learnable_ability_ids": [
+			"ion_edge",
+			"blade_dance",
+			"bushido_code"
+		],
+		"unlock_requirements": {
+			"chrome_warrior": 3,
+			"iron_monk": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "digital_knight",
+		"display_name": "Digital Knight",
+		"role": "TANK",
+		"tier": 2,
+		"description": "A knight's oath burned into firmware. Nobody remembers who wrote it.",
+		"base_hp": 150,
+		"base_mp": 30,
+		"hp_growth": 15,
+		"mp_growth": 2,
+		"base_speed": 7,
+		"move": 3,
+		"jump": 2,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.2,
+			"agility": 0.85,
+			"intelligence": 0.8,
+			"vitality": 1.45
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 0,
+			"intelligence": 0,
+			"vitality": 3
+		},
+		"weapon_types": [
+			"sword",
+			"shield"
+		],
+		"specialty_weapon_types": [
+			"sword"
+		],
+		"innate_ability_ids": [
+			"firewall_guard",
+			"shield_bash"
+		],
+		"learnable_ability_ids": [
+			"armor_break",
+			"power_break",
+			"hold_the_line"
+		],
+		"unlock_requirements": {
+			"chrome_warrior": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "redline_mage",
+		"display_name": "Redline Mage",
+		"role": "SPECIAL",
+		"tier": 2,
+		"description": "Jack of both codes, master of redlining the hardware.",
+		"base_hp": 90,
+		"base_mp": 70,
+		"hp_growth": 9,
+		"mp_growth": 5,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.0,
+			"agility": 1.0,
+			"intelligence": 1.25,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"sword",
+			"rod"
+		],
+		"specialty_weapon_types": [
+			"sword"
+		],
+		"innate_ability_ids": [
+			"dualcast",
+			"red_spark"
+		],
+		"learnable_ability_ids": [
+			"red_mend",
+			"red_frost",
+			"spellblade"
+		],
+		"unlock_requirements": {
+			"whitelight_medic": 2,
+			"blackcode_mage": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "bluescreen_mage",
+		"display_name": "Bluescreen Mage",
+		"role": "SPECIAL",
+		"tier": 2,
+		"description": "Lets enemy code crash into them — and keeps a copy. Learns abilities by getting hit.",
+		"base_hp": 90,
+		"base_mp": 80,
+		"hp_growth": 9,
+		"mp_growth": 6,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 1.0,
+			"intelligence": 1.35,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"rod",
+			"sword"
+		],
+		"specialty_weapon_types": [
+			"rod"
+		],
+		"innate_ability_ids": [
+			"scan_signature"
+		],
+		"learnable_ability_ids": [
+			"bl_arc_lash",
+			"bl_bad_sector",
+			"bl_essence_leech",
+			"bl_sonic_screech",
+			"bl_self_repair",
+			"bl_crown_hymn"
+		],
+		"unlock_requirements": {
+			"redline_mage": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "gunslinger",
+		"display_name": "Gunslinger",
+		"role": "RANGED",
+		"tier": 2,
+		"description": "Chrome revolver, bad attitude, great hat.",
+		"base_hp": 95,
+		"base_mp": 30,
+		"hp_growth": 9,
+		"mp_growth": 2,
+		"base_speed": 10,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.1,
+			"agility": 1.35,
+			"intelligence": 0.8,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 2,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"pistol"
+		],
+		"specialty_weapon_types": [
+			"pistol"
+		],
+		"innate_ability_ids": [
+			"quick_draw",
+			"plasma_burst"
+		],
+		"learnable_ability_ids": [
+			"ricochet",
+			"leg_shot",
+			"fan_the_hammer"
+		],
+		"unlock_requirements": {
+			"laser_archer": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "net_hacker",
+		"display_name": "Net Hacker",
+		"role": "SUPPORT",
+		"tier": 2,
+		"description": "Lives in the wires under the bar. Pays rent in stolen bandwidth.",
+		"base_hp": 75,
+		"base_mp": 70,
+		"hp_growth": 7,
+		"mp_growth": 5,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.7,
+			"agility": 1.0,
+			"intelligence": 1.4,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"cyberdeck"
+		],
+		"specialty_weapon_types": [
+			"cyberdeck"
+		],
+		"innate_ability_ids": [
+			"data_spike",
+			"system_override"
+		],
+		"learnable_ability_ids": [
+			"backdoor",
+			"clarity_edit",
+			"firewall_up"
+		],
+		"unlock_requirements": {
+			"blackcode_mage": 2,
+			"stim_chemist": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "scrap_tinker",
+		"display_name": "Scrap Tinker",
+		"role": "UTILITY",
+		"tier": 2,
+		"description": "Can fix anything with parts from the bar's jukebox. Has fixed the jukebox 11 times.",
+		"base_hp": 95,
+		"base_mp": 40,
+		"hp_growth": 9,
+		"mp_growth": 3,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.05,
+			"agility": 1.0,
+			"intelligence": 1.25,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"wrench"
+		],
+		"specialty_weapon_types": [
+			"wrench"
+		],
+		"innate_ability_ids": [
+			"shock_mine",
+			"patch_job"
+		],
+		"learnable_ability_ids": [
+			"scrap_grenade",
+			"jury_rig",
+			"deploy_turret"
+		],
+		"unlock_requirements": {
+			"stim_chemist": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "droid_master",
+		"display_name": "Droid Master",
+		"role": "SPECIAL",
+		"tier": 2,
+		"description": "The Beast Master of the Neon Void: builds a menagerie of droids, each with its own job.",
+		"base_hp": 90,
+		"base_mp": 60,
+		"hp_growth": 9,
+		"mp_growth": 5,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 1.0,
+			"intelligence": 1.3,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"wrench",
+			"controller"
+		],
+		"specialty_weapon_types": [
+			"controller"
+		],
+		"innate_ability_ids": [
+			"build_assault_droid",
+			"build_medic_droid"
+		],
+		"learnable_ability_ids": [
+			"build_bulwark_droid",
+			"build_volt_droid",
+			"overclock"
+		],
+		"unlock_requirements": {
+			"scrap_tinker": 3,
+			"net_hacker": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "timeslip_mage",
+		"display_name": "Timeslip Mage",
+		"role": "SUPPORT",
+		"tier": 2,
+		"description": "Swears the bar's clock is four minutes fast. It is.",
+		"base_hp": 70,
+		"base_mp": 90,
+		"hp_growth": 7,
+		"mp_growth": 7,
+		"base_speed": 10,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.6,
+			"agility": 1.05,
+			"intelligence": 1.45,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"staff",
+			"rod"
+		],
+		"specialty_weapon_types": [
+			"staff"
+		],
+		"innate_ability_ids": [
+			"haste",
+			"slow"
+		],
+		"learnable_ability_ids": [
+			"stop",
+			"quicken",
+			"gravity_crush"
+		],
+		"unlock_requirements": {
+			"blackcode_mage": 3,
+			"whitelight_medic": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "grid_geomancer",
+		"display_name": "Grid Geomancer",
+		"role": "SPECIAL",
+		"tier": 2,
+		"description": "Reads the city's ley-lines: power cables, coolant pipes, old blood.",
+		"base_hp": 100,
+		"base_mp": 50,
+		"hp_growth": 10,
+		"mp_growth": 4,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.1,
+			"agility": 1.0,
+			"intelligence": 1.2,
+			"vitality": 1.05
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"sword",
+			"staff"
+		],
+		"specialty_weapon_types": [
+			"sword"
+		],
+		"innate_ability_ids": [
+			"geomancy"
+		],
+		"learnable_ability_ids": [
+			"terraform_pulse",
+			"fault_tremor",
+			"ley_feedback"
+		],
+		"unlock_requirements": {
+			"iron_monk": 2,
+			"blackcode_mage": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "holo_summoner",
+		"display_name": "Holo Summoner",
+		"role": "SUPPORT",
+		"tier": 2,
+		"description": "Pirates the city's billboard feeds and turns ads into gods.",
+		"base_hp": 70,
+		"base_mp": 110,
+		"hp_growth": 7,
+		"mp_growth": 9,
+		"base_speed": 7,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.5,
+			"agility": 0.9,
+			"intelligence": 1.55,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"rod",
+			"staff"
+		],
+		"specialty_weapon_types": [
+			"rod"
+		],
+		"innate_ability_ids": [
+			"summon_leviathan_feed"
+		],
+		"learnable_ability_ids": [
+			"summon_seraph_ad",
+			"summon_iron_titan",
+			"summon_static_wyrm"
+		],
+		"unlock_requirements": {
+			"timeslip_mage": 2,
+			"whitelight_medic": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "synth_bard",
+		"display_name": "Synth Bard",
+		"role": "SUPPORT",
+		"tier": 2,
+		"description": "Plays unregistered hymns on a keytar. Technically a crime.",
+		"base_hp": 85,
+		"base_mp": 60,
+		"hp_growth": 8,
+		"mp_growth": 5,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.8,
+			"agility": 1.1,
+			"intelligence": 1.2,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"synth"
+		],
+		"specialty_weapon_types": [
+			"synth"
+		],
+		"innate_ability_ids": [
+			"anthem_of_the_off_key"
+		],
+		"learnable_ability_ids": [
+			"last_call_ballad",
+			"tempo_riff",
+			"feedback_squeal"
+		],
+		"unlock_requirements": {
+			"whitelight_medic": 3,
+			"signal_thief": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "holo_dancer",
+		"display_name": "Holo Dancer",
+		"role": "UTILITY",
+		"tier": 2,
+		"description": "Headlines the only club the Doctrine hasn't shut down. Yet.",
+		"base_hp": 85,
+		"base_mp": 60,
+		"hp_growth": 8,
+		"mp_growth": 5,
+		"base_speed": 11,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 1.3,
+			"intelligence": 1.1,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 2,
+			"intelligence": 1,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"ribbon",
+			"knife"
+		],
+		"specialty_weapon_types": [
+			"ribbon"
+		],
+		"innate_ability_ids": [
+			"strobe_step"
+		],
+		"learnable_ability_ids": [
+			"heartbreak_waltz",
+			"slow_dance",
+			"ribbon_lash"
+		],
+		"unlock_requirements": {
+			"signal_thief": 3,
+			"iron_monk": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "jumpjet_dragoon",
+		"display_name": "Jumpjet Dragoon",
+		"role": "MELEE",
+		"tier": 2,
+		"description": "Jump pack stolen from an Iron Choir air-drop crate.",
+		"base_hp": 115,
+		"base_mp": 30,
+		"hp_growth": 11,
+		"mp_growth": 2,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 6,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.3,
+			"agility": 1.05,
+			"intelligence": 0.7,
+			"vitality": 1.2
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"lance"
+		],
+		"specialty_weapon_types": [
+			"lance"
+		],
+		"innate_ability_ids": [
+			"jet_jump"
+		],
+		"learnable_ability_ids": [
+			"grapple_line",
+			"high_ground",
+			"lance_thrust"
+		],
+		"unlock_requirements": {
+			"digital_knight": 2,
+			"laser_archer": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "void_knight",
+		"display_name": "Void Knight",
+		"role": "TANK",
+		"tier": 2,
+		"description": "A Digital Knight whose firmware got corrupted. Hits harder for it.",
+		"base_hp": 140,
+		"base_mp": 40,
+		"hp_growth": 14,
+		"mp_growth": 3,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.35,
+			"agility": 0.9,
+			"intelligence": 0.9,
+			"vitality": 1.3
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 0,
+			"intelligence": 1,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"heavy_blade"
+		],
+		"specialty_weapon_types": [
+			"heavy_blade"
+		],
+		"innate_ability_ids": [
+			"void_wave"
+		],
+		"learnable_ability_ids": [
+			"abyssal_aegis",
+			"sanguine_edge",
+			"dread_mark"
+		],
+		"unlock_requirements": {
+			"digital_knight": 4,
+			"blackcode_mage": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "stim_berserker",
+		"display_name": "Stim Berserker",
+		"role": "MELEE",
+		"tier": 2,
+		"description": "Chemist's worst customer.",
+		"base_hp": 130,
+		"base_mp": 10,
+		"hp_growth": 13,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.45,
+			"agility": 1.0,
+			"intelligence": 0.5,
+			"vitality": 1.15
+		},
+		"growth": {
+			"strength": 3,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"knuckles",
+			"heavy_blade"
+		],
+		"specialty_weapon_types": [
+			"heavy_blade"
+		],
+		"innate_ability_ids": [
+			"red_mist"
+		],
+		"learnable_ability_ids": [
+			"frenzy_slash",
+			"rampage",
+			"pain_dampener"
+		],
+		"unlock_requirements": {
+			"iron_monk": 3,
+			"stim_chemist": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "cyber_sniper",
+		"display_name": "Cyber Sniper",
+		"role": "RANGED",
+		"tier": 3,
+		"description": "Rooftop-to-rooftop. Never misses twice.",
+		"base_hp": 80,
+		"base_mp": 35,
+		"hp_growth": 8,
+		"mp_growth": 2,
+		"base_speed": 8,
+		"move": 3,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.05,
+			"agility": 1.45,
+			"intelligence": 1.0,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 3,
+			"intelligence": 1,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"rifle"
+		],
+		"specialty_weapon_types": [
+			"rifle"
+		],
+		"innate_ability_ids": [
+			"neural_link_shot",
+			"steady_aim"
+		],
+		"learnable_ability_ids": [
+			"piercing_round",
+			"suppressive_fire",
+			"headhunter"
+		],
+		"unlock_requirements": {
+			"gunslinger": 4,
+			"neon_ninja": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "ghost_assassin",
+		"display_name": "Ghost Assassin",
+		"role": "MELEE",
+		"tier": 3,
+		"description": "Nobody hires a Ghost. The Ghost finds you.",
+		"base_hp": 90,
+		"base_mp": 40,
+		"hp_growth": 9,
+		"mp_growth": 3,
+		"base_speed": 12,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.3,
+			"agility": 1.45,
+			"intelligence": 0.9,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 3,
+			"intelligence": 0,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"knife",
+			"katana"
+		],
+		"specialty_weapon_types": [
+			"knife"
+		],
+		"innate_ability_ids": [
+			"death_mark",
+			"ghost_cut"
+		],
+		"learnable_ability_ids": [
+			"nerve_toxin",
+			"vanishing_act",
+			"final_invoice"
+		],
+		"unlock_requirements": {
+			"neon_ninja": 4,
+			"net_hacker": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "plasma_vanguard",
+		"display_name": "Plasma Vanguard",
+		"role": "TANK",
+		"tier": 3,
+		"description": "A walking reactor with a grudge.",
+		"base_hp": 175,
+		"base_mp": 40,
+		"hp_growth": 17,
+		"mp_growth": 3,
+		"base_speed": 7,
+		"move": 3,
+		"jump": 2,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.2,
+			"agility": 0.8,
+			"intelligence": 0.9,
+			"vitality": 1.55
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 0,
+			"intelligence": 1,
+			"vitality": 3
+		},
+		"weapon_types": [
+			"heavy_blade",
+			"shield"
+		],
+		"specialty_weapon_types": [
+			"shield"
+		],
+		"innate_ability_ids": [
+			"thermal_shield",
+			"plasma_ram"
+		],
+		"learnable_ability_ids": [
+			"meltdown",
+			"bastion"
+		],
+		"unlock_requirements": {
+			"digital_knight": 5,
+			"scrap_tinker": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "static_oracle",
+		"display_name": "Static Oracle",
+		"role": "SUPPORT",
+		"tier": 3,
+		"description": "Hears the Psalter Spires' hymns backwards. Won't say what they say.",
+		"base_hp": 80,
+		"base_mp": 90,
+		"hp_growth": 8,
+		"mp_growth": 7,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.6,
+			"agility": 1.0,
+			"intelligence": 1.5,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"codex",
+			"rod"
+		],
+		"specialty_weapon_types": [
+			"codex"
+		],
+		"innate_ability_ids": [
+			"dead_channel",
+			"crown_dream"
+		],
+		"learnable_ability_ids": [
+			"archive_blindness",
+			"prophecy_static"
+		],
+		"unlock_requirements": {
+			"timeslip_mage": 3,
+			"net_hacker": 3
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "void_technician",
+		"display_name": "Void Technician",
+		"role": "UTILITY",
+		"tier": 3,
+		"description": "Services the machines nobody admits exist.",
+		"base_hp": 85,
+		"base_mp": 80,
+		"hp_growth": 8,
+		"mp_growth": 6,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.8,
+			"agility": 0.95,
+			"intelligence": 1.45,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"controller",
+			"staff"
+		],
+		"specialty_weapon_types": [
+			"controller"
+		],
+		"innate_ability_ids": [
+			"gravity_well",
+			"void_rift"
+		],
+		"learnable_ability_ids": [
+			"event_horizon",
+			"null_field"
+		],
+		"unlock_requirements": {
+			"grid_geomancer": 3,
+			"holo_summoner": 2
+		},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "vector_knight",
+		"display_name": "Vector Knight",
+		"role": "MELEE",
+		"tier": 4,
+		"description": "Momentum is a weapon. Physics is a suggestion.",
+		"base_hp": 120,
+		"base_mp": 40,
+		"hp_growth": 12,
+		"mp_growth": 3,
+		"base_speed": 10,
+		"move": 5,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.35,
+			"agility": 1.2,
+			"intelligence": 0.8,
+			"vitality": 1.1
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 2,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"lance",
+			"sword"
+		],
+		"specialty_weapon_types": [
+			"lance"
+		],
+		"innate_ability_ids": [
+			"kinetic_charge",
+			"gravitational_pull"
+		],
+		"learnable_ability_ids": [
+			"elastic_inertia",
+			"repulsor_strike"
+		],
+		"unlock_requirements": {
+			"jumpjet_dragoon": 4,
+			"street_samurai": 3
+		},
+		"unlock_flag": "secret_vector_knight",
+		"is_hidden": true,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "chrono_stitcher",
+		"display_name": "Chrono-Stitcher",
+		"role": "SPECIAL",
+		"tier": 4,
+		"description": "Sews the seven-second gap shut. Or open.",
+		"base_hp": 75,
+		"base_mp": 100,
+		"hp_growth": 7,
+		"mp_growth": 8,
+		"base_speed": 11,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.6,
+			"agility": 1.1,
+			"intelligence": 1.55,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"staff",
+			"codex"
+		],
+		"specialty_weapon_types": [
+			"staff"
+		],
+		"innate_ability_ids": [
+			"delay_thread",
+			"stitch_turn"
+		],
+		"learnable_ability_ids": [
+			"rewind_position",
+			"seven_stolen_seconds"
+		],
+		"unlock_requirements": {
+			"timeslip_mage": 5,
+			"static_oracle": 2
+		},
+		"unlock_flag": "secret_chrono_stitcher",
+		"is_hidden": true,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "cartographer",
+		"display_name": "Cartographer",
+		"role": "SPECIAL",
+		"tier": 4,
+		"description": "Redraws the map. The map agrees.",
+		"base_hp": 90,
+		"base_mp": 90,
+		"hp_growth": 9,
+		"mp_growth": 7,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 1.0,
+			"intelligence": 1.45,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"staff",
+			"controller"
+		],
+		"specialty_weapon_types": [
+			"staff"
+		],
+		"innate_ability_ids": [
+			"draw_fault_line",
+			"isolate_elevation"
+		],
+		"learnable_ability_ids": [
+			"sink_ground",
+			"warp_coordinates",
+			"neon_fire_trace"
+		],
+		"unlock_requirements": {
+			"grid_geomancer": 5,
+			"void_technician": 2
+		},
+		"unlock_flag": "secret_cartographer",
+		"is_hidden": true,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "deck_stacker",
+		"display_name": "Deck Stacker",
+		"role": "UTILITY",
+		"tier": 4,
+		"description": "Fights with a deck instead of a weapon. Every card: once per battle. Build the deck, not the gun.",
+		"base_hp": 90,
+		"base_mp": 60,
+		"hp_growth": 9,
+		"mp_growth": 5,
+		"base_speed": 10,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.0,
+			"agility": 1.2,
+			"intelligence": 1.2,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 2,
+			"intelligence": 2,
+			"vitality": 0
+		},
+		"weapon_types": [
+			"deck"
+		],
+		"specialty_weapon_types": [
+			"deck"
+		],
+		"innate_ability_ids": [
+			"shuffle_up"
+		],
+		"learnable_ability_ids": [
+			"house_edge",
+			"fifty_two_pickup"
+		],
+		"unlock_requirements": {
+			"signal_thief": 4,
+			"synth_bard": 2
+		},
+		"unlock_flag": "secret_deck_stacker",
+		"is_hidden": true,
+		"uses_deck": true,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "echo_mime",
+		"display_name": "Echo Mime",
+		"role": "SPECIAL",
+		"tier": 4,
+		"description": "Never speaks. Never needs to. Copies whatever the crew just did.",
+		"base_hp": 100,
+		"base_mp": 50,
+		"hp_growth": 10,
+		"mp_growth": 4,
+		"base_speed": 10,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.1,
+			"agility": 1.1,
+			"intelligence": 1.1,
+			"vitality": 1.1
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 1,
+			"vitality": 1
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"echo"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {
+			"chrome_warrior": 5,
+			"whitelight_medic": 5,
+			"blackcode_mage": 5,
+			"laser_archer": 5
+		},
+		"unlock_flag": "secret_echo_mime",
+		"is_hidden": true,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "digimancer",
+		"display_name": "Digimancer",
+		"role": "SPECIAL",
+		"tier": 4,
+		"description": "The villain's own art, stolen back. Raises the fallen as echoes — 'those who never arrived'.",
+		"base_hp": 90,
+		"base_mp": 110,
+		"hp_growth": 9,
+		"mp_growth": 9,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.8,
+			"agility": 1.0,
+			"intelligence": 1.6,
+			"vitality": 0.95
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 3,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"codex",
+			"staff"
+		],
+		"specialty_weapon_types": [
+			"codex"
+		],
+		"innate_ability_ids": [
+			"raise_echo",
+			"essence_siphon"
+		],
+		"learnable_ability_ids": [
+			"grave_protocol",
+			"soul_tax",
+			"crown_of_the_dead"
+		],
+		"unlock_requirements": {
+			"void_knight": 4,
+			"static_oracle": 3
+		},
+		"unlock_flag": "secret_digimancer",
+		"is_hidden": true,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
+		"id": "droid_assault_chassis",
+		"display_name": "Assault Droid",
+		"role": "MELEE",
+		"tier": 1,
+		"description": "Built by a Droid Master.",
+		"base_hp": 70,
+		"base_mp": 0,
+		"hp_growth": 7,
+		"mp_growth": 2,
+		"base_speed": 10,
+		"move": 5,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.3,
+			"agility": 1.1,
+			"intelligence": 0.5,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"buzzsaw"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"electric": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "droid_bulwark_chassis",
+		"display_name": "Bulwark Droid",
+		"role": "TANK",
+		"tier": 1,
+		"description": "Built by a Droid Master.",
+		"base_hp": 120,
+		"base_mp": 20,
+		"hp_growth": 12,
+		"mp_growth": 2,
+		"base_speed": 7,
+		"move": 3,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 0.7,
+			"intelligence": 0.6,
+			"vitality": 1.6
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 0,
+			"intelligence": 0,
+			"vitality": 2
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"shield_projector",
+			"slam_plate"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"electric": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "droid_medic_chassis",
+		"display_name": "Medic Droid",
+		"role": "SUPPORT",
+		"tier": 1,
+		"description": "Built by a Droid Master.",
+		"base_hp": 60,
+		"base_mp": 60,
+		"hp_growth": 6,
+		"mp_growth": 5,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 5,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.5,
+			"agility": 1.0,
+			"intelligence": 1.3,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 1,
+			"vitality": 1
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"nanite_spray",
+			"triage_pulse"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"electric": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "droid_volt_chassis",
+		"display_name": "Volt Droid",
+		"role": "RANGED",
+		"tier": 1,
+		"description": "Built by a Droid Master.",
+		"base_hp": 65,
+		"base_mp": 50,
+		"hp_growth": 6,
+		"mp_growth": 4,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.6,
+			"agility": 1.0,
+			"intelligence": 1.35,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"arc_lash",
+			"chain_lightning"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"electric": 0.25,
+			"cryo": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "turret_chassis",
+		"display_name": "Sentry Turret",
+		"role": "RANGED",
+		"tier": 1,
+		"description": "Stationary.",
+		"base_hp": 60,
+		"base_mp": 0,
+		"hp_growth": 6,
+		"mp_growth": 2,
+		"base_speed": 8,
+		"move": 0,
+		"jump": 0,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.0,
+			"agility": 1.1,
+			"intelligence": 0.5,
+			"vitality": 1.2
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"turret_burst"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"electric": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "doctrine_warden",
+		"display_name": "Shift Warden",
+		"role": "TANK",
+		"tier": 1,
+		"description": "Doctrine floor security. Counts your breaks.",
+		"base_hp": 120,
+		"base_mp": 20,
+		"hp_growth": 12,
+		"mp_growth": 2,
+		"base_speed": 8,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.15,
+			"agility": 0.9,
+			"intelligence": 0.7,
+			"vitality": 1.3
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 0,
+			"intelligence": 0,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"baton"
+		],
+		"specialty_weapon_types": [
+			"baton"
+		],
+		"innate_ability_ids": [
+			"stun_baton",
+			"shift_whistle"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": false
+	},
+	{
+		"id": "choir_enforcer",
+		"display_name": "Choir Enforcer",
+		"role": "MELEE",
+		"tier": 2,
+		"description": "Iron Choir soldier on factory duty. Sings through the helmet.",
+		"base_hp": 130,
+		"base_mp": 30,
+		"hp_growth": 13,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.3,
+			"agility": 1.0,
+			"intelligence": 0.8,
+			"vitality": 1.2
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 1,
+			"intelligence": 0,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"sword"
+		],
+		"specialty_weapon_types": [
+			"sword"
+		],
+		"innate_ability_ids": [
+			"hymn_cleave",
+			"bl_crown_hymn"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": false
+	},
+	{
+		"id": "cantor_adept",
+		"display_name": "Cantor Adept",
+		"role": "SUPPORT",
+		"tier": 2,
+		"description": "Junior Dream Cantor. Knows the words to everything.",
+		"base_hp": 85,
+		"base_mp": 80,
+		"hp_growth": 8,
+		"mp_growth": 6,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.6,
+			"agility": 1.0,
+			"intelligence": 1.4,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 0,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"codex"
+		],
+		"specialty_weapon_types": [
+			"codex"
+		],
+		"innate_ability_ids": [
+			"hymnal_mend",
+			"bl_sonic_screech"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": false
+	},
+	{
+		"id": "factory_marksman",
+		"display_name": "Factory Marksman",
+		"role": "RANGED",
+		"tier": 1,
+		"description": "Watches the floor from the catwalks.",
+		"base_hp": 85,
+		"base_mp": 20,
+		"hp_growth": 8,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.1,
+			"agility": 1.3,
+			"intelligence": 0.7,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 2,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"rifle"
+		],
+		"specialty_weapon_types": [
+			"rifle"
+		],
+		"innate_ability_ids": [
+			"rail_shot"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": false
+	},
+	{
+		"id": "munitions_drone_chassis",
+		"display_name": "Munitions Drone",
+		"role": "RANGED",
+		"tier": 1,
+		"description": "Hovers over the munitions line.",
+		"base_hp": 55,
+		"base_mp": 30,
+		"hp_growth": 6,
+		"mp_growth": 2,
+		"base_speed": 11,
+		"move": 4,
+		"jump": 8,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 0.9,
+			"agility": 1.3,
+			"intelligence": 1.0,
+			"vitality": 0.8
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 2,
+			"intelligence": 1,
+			"vitality": 0
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"bl_arc_lash",
+			"bl_self_repair"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"electric": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "essence_wraith_chassis",
+		"display_name": "Essence Wraith",
+		"role": "SPECIAL",
+		"tier": 2,
+		"description": "One of 'those who never arrived' — factory runoff given shape.",
+		"base_hp": 90,
+		"base_mp": 60,
+		"hp_growth": 9,
+		"mp_growth": 5,
+		"base_speed": 10,
+		"move": 5,
+		"jump": 6,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.0,
+			"agility": 1.2,
+			"intelligence": 1.3,
+			"vitality": 0.9
+		},
+		"growth": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 2,
+			"vitality": 1
+		},
+		"weapon_types": [],
+		"specialty_weapon_types": [],
+		"innate_ability_ids": [
+			"bl_essence_leech",
+			"bl_bad_sector"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {
+			"essence": 0.25,
+			"plasma": 1.5
+		},
+		"playable": false
+	},
+	{
+		"id": "foreman_chassis",
+		"display_name": "Foreman",
+		"role": "TANK",
+		"tier": 3,
+		"description": "Supply Works foreman. The whistle is surgically attached.",
+		"base_hp": 200,
+		"base_mp": 40,
+		"hp_growth": 20,
+		"mp_growth": 3,
+		"base_speed": 8,
+		"move": 3,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.3,
+			"agility": 0.9,
+			"intelligence": 0.9,
+			"vitality": 1.4
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 0,
+			"intelligence": 1,
+			"vitality": 2
+		},
+		"weapon_types": [
+			"heavy_blade"
+		],
+		"specialty_weapon_types": [
+			"heavy_blade"
+		],
+		"innate_ability_ids": [
+			"quota_crusher",
+			"overtime"
+		],
+		"learnable_ability_ids": [],
+		"unlock_requirements": {},
+		"unlock_flag": "",
+		"is_hidden": false,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": false
+	}
+]

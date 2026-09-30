@@ -1,0 +1,2687 @@
+[
+	{
+		"id": "basic_attack",
+		"display_name": "Attack",
+		"class_id": "",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Hit it with whatever you're holding.",
+		"power": 1.4,
+		"uses_weapon_range": true,
+		"ap_cost": 1
+	},
+	{
+		"id": "rally_cry",
+		"display_name": "Rally Cry",
+		"class_id": "chrome_warrior",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Chest-thump. Attack up.",
+		"ap_cost": 1,
+		"status_ids": [
+			"inspired"
+		],
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "chrome_cleave",
+		"display_name": "Chrome Cleave",
+		"class_id": "chrome_warrior",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "A heavy two-handed swing.",
+		"power": 1.9,
+		"ap_cost": 2
+	},
+	{
+		"id": "throw_scrap",
+		"display_name": "Throw Scrap",
+		"class_id": "chrome_warrior",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Lob a hunk of rebar. Surprisingly effective.",
+		"power": 1.1,
+		"range_min": 2,
+		"range_max": 4,
+		"chip_cost": 1
+	},
+	{
+		"id": "brace",
+		"display_name": "Brace",
+		"class_id": "chrome_warrior",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Plant feet. Defense up.",
+		"status_ids": [
+			"fortified"
+		],
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 1
+	},
+	{
+		"id": "second_wind",
+		"display_name": "Second Wind",
+		"class_id": "chrome_warrior",
+		"kind": "HEAL",
+		"target": "SELF",
+		"description": "Spit, breathe, keep going.",
+		"power": 1.2,
+		"scaling_stat": "vitality",
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 2
+	},
+	{
+		"id": "gutbuster",
+		"display_name": "Gutbuster",
+		"class_id": "chrome_warrior",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Low blow. Leaves them winded.",
+		"power": 1.3,
+		"status_ids": [
+			"slow"
+		],
+		"status_chance": 0.5,
+		"chip_cost": 2
+	},
+	{
+		"id": "mend_light",
+		"display_name": "Mend Light",
+		"class_id": "whitelight_medic",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Nanite glow knits flesh and wiring.",
+		"power": 1.0,
+		"scaling_stat": "magic",
+		"mp_cost": 6,
+		"range_min": 0,
+		"range_max": 4,
+		"damage_type": "tech"
+	},
+	{
+		"id": "purge_code",
+		"display_name": "Purge Code",
+		"class_id": "whitelight_medic",
+		"kind": "UTILITY",
+		"target": "ALLY",
+		"description": "Scrubs debuffs out of an ally's system.",
+		"special": "cleanse",
+		"mp_cost": 8,
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "mend_field",
+		"display_name": "Mend Field",
+		"class_id": "whitelight_medic",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Radiant heal in a small area.",
+		"power": 0.8,
+		"scaling_stat": "magic",
+		"mp_cost": 14,
+		"range_min": 0,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 2,
+		"chip_cost": 2
+	},
+	{
+		"id": "regen_patch",
+		"display_name": "Regen Patch",
+		"class_id": "whitelight_medic",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Slow-release nanites.",
+		"status_ids": [
+			"regen"
+		],
+		"mp_cost": 8,
+		"range_min": 0,
+		"range_max": 4,
+		"chip_cost": 1
+	},
+	{
+		"id": "aegis_light",
+		"display_name": "Aegis Light",
+		"class_id": "whitelight_medic",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Hard-light barrier.",
+		"status_ids": [
+			"fortified"
+		],
+		"mp_cost": 8,
+		"range_min": 0,
+		"range_max": 4,
+		"chip_cost": 1
+	},
+	{
+		"id": "holy_static",
+		"display_name": "Holy Static",
+		"class_id": "whitelight_medic",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "The only offensive prayer the Medic knows.",
+		"power": 1.6,
+		"scaling_stat": "magic",
+		"damage_type": "tech",
+		"mp_cost": 16,
+		"range_min": 1,
+		"range_max": 4,
+		"charge_ticks": 3,
+		"chip_cost": 3
+	},
+	{
+		"id": "plasma_bolt",
+		"display_name": "Plasma Bolt",
+		"class_id": "blackcode_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Compiles fire out of nothing.",
+		"power": 1.5,
+		"scaling_stat": "magic",
+		"damage_type": "plasma",
+		"mp_cost": 6,
+		"range_min": 1,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 1,
+		"status_ids": [
+			"burning"
+		],
+		"status_chance": 0.25
+	},
+	{
+		"id": "cryo_bolt",
+		"display_name": "Cryo Bolt",
+		"class_id": "blackcode_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Coolant-cold code.",
+		"power": 1.4,
+		"scaling_stat": "magic",
+		"damage_type": "cryo",
+		"mp_cost": 6,
+		"range_min": 1,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 1,
+		"status_ids": [
+			"slow"
+		],
+		"status_chance": 0.3
+	},
+	{
+		"id": "volt_bolt",
+		"display_name": "Volt Bolt",
+		"class_id": "blackcode_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Arc lightning from the ceiling cables.",
+		"power": 1.45,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"mp_cost": 6,
+		"range_min": 1,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 1,
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.25,
+		"chip_cost": 1
+	},
+	{
+		"id": "plasma_storm",
+		"display_name": "Plasma Storm",
+		"class_id": "blackcode_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Tier-2 fire compile.",
+		"power": 2.1,
+		"scaling_stat": "magic",
+		"damage_type": "plasma",
+		"mp_cost": 18,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 3,
+		"chip_cost": 3
+	},
+	{
+		"id": "cryo_lattice",
+		"display_name": "Cryo Lattice",
+		"class_id": "blackcode_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Freezes the grid itself.",
+		"power": 2.0,
+		"scaling_stat": "magic",
+		"damage_type": "cryo",
+		"mp_cost": 18,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 3,
+		"status_ids": [
+			"slow"
+		],
+		"chip_cost": 3
+	},
+	{
+		"id": "thunderhead",
+		"display_name": "Thunderhead",
+		"class_id": "blackcode_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Overloads every cable in the block.",
+		"power": 2.0,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"mp_cost": 18,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 3,
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.4,
+		"chip_cost": 3
+	},
+	{
+		"id": "lift_coins",
+		"display_name": "Lift Coins",
+		"class_id": "signal_thief",
+		"kind": "UTILITY",
+		"target": "ENEMY",
+		"description": "Picks a pocket mid-fight.",
+		"special": "steal_coins",
+		"params": {
+			"coins": 40
+		},
+		"range_min": 1,
+		"range_max": 1
+	},
+	{
+		"id": "shadow_step",
+		"display_name": "Shadow Step",
+		"class_id": "signal_thief",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Blink through a blind spot.",
+		"special": "blink",
+		"range_min": 1,
+		"range_max": 4,
+		"vertical_tolerance": 4
+	},
+	{
+		"id": "steal_chip",
+		"display_name": "Steal Chip",
+		"class_id": "signal_thief",
+		"kind": "UTILITY",
+		"target": "ENEMY",
+		"description": "Pry a microchip out of their neck port.",
+		"special": "steal_chip",
+		"params": {
+			"chance": 0.45
+		},
+		"range_min": 1,
+		"range_max": 1,
+		"chip_cost": 2
+	},
+	{
+		"id": "backstab",
+		"display_name": "Backstab",
+		"class_id": "signal_thief",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Twice as nasty from behind.",
+		"power": 1.5,
+		"crit_bonus": 0.25,
+		"chip_cost": 1
+	},
+	{
+		"id": "inventory_loss",
+		"display_name": "Inventory Loss",
+		"class_id": "signal_thief",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Vanish like a crate off the manifest.",
+		"status_ids": [
+			"hidden"
+		],
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 1
+	},
+	{
+		"id": "smoke_jammer",
+		"display_name": "Smoke Jammer",
+		"class_id": "signal_thief",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Chaff and smoke. Accuracy down.",
+		"status_ids": [
+			"blinded"
+		],
+		"range_min": 1,
+		"range_max": 3,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"chip_cost": 2
+	},
+	{
+		"id": "charge_shot",
+		"display_name": "Charge Shot",
+		"class_id": "laser_archer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Hold the trigger, let it hum, let it go.",
+		"power": 1.9,
+		"range_min": 2,
+		"range_max": 6,
+		"requires_los": true,
+		"charge_ticks": 2,
+		"damage_type": "plasma"
+	},
+	{
+		"id": "aim_assist",
+		"display_name": "Aim Assist",
+		"class_id": "laser_archer",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Smart-scope lock.",
+		"status_ids": [
+			"focused"
+		],
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "pinning_beam",
+		"display_name": "Pinning Beam",
+		"class_id": "laser_archer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Melts a boot to the floor.",
+		"power": 1.1,
+		"range_min": 2,
+		"range_max": 5,
+		"requires_los": true,
+		"status_ids": [
+			"slow"
+		],
+		"status_chance": 0.6,
+		"damage_type": "plasma",
+		"chip_cost": 1
+	},
+	{
+		"id": "lance_beam",
+		"display_name": "Lance Beam",
+		"class_id": "laser_archer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Punches through everyone in a line.",
+		"power": 1.3,
+		"shape": "LINE",
+		"aoe_radius": 5,
+		"range_min": 1,
+		"range_max": 1,
+		"ignores_cover": true,
+		"damage_type": "plasma",
+		"ap_cost": 2,
+		"chip_cost": 2
+	},
+	{
+		"id": "scatter_prism",
+		"display_name": "Scatter Prism",
+		"class_id": "laser_archer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Split beam across a cluster.",
+		"power": 1.0,
+		"range_min": 2,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"damage_type": "plasma",
+		"chip_cost": 2
+	},
+	{
+		"id": "throw_stim",
+		"display_name": "Throw Stim",
+		"class_id": "stim_chemist",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Hurl a hypo. Works every time. Mostly.",
+		"power": 1.3,
+		"scaling_stat": "intelligence",
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "detox_dart",
+		"display_name": "Detox Dart",
+		"class_id": "stim_chemist",
+		"kind": "UTILITY",
+		"target": "ALLY",
+		"description": "Flushes toxins, glitches and bad decisions.",
+		"special": "cleanse",
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "phoenix_stim",
+		"display_name": "Phoenix Stim",
+		"class_id": "stim_chemist",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Jumpstart a fallen ally's heart.",
+		"special": "revive",
+		"params": {
+			"hp_pct": 0.3
+		},
+		"range_min": 0,
+		"range_max": 3,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "ether_shot",
+		"display_name": "Ether Shot",
+		"class_id": "stim_chemist",
+		"kind": "UTILITY",
+		"target": "ALLY",
+		"description": "Refills MP. Tastes like battery.",
+		"special": "restore_mp",
+		"params": {
+			"mp": 25
+		},
+		"range_min": 0,
+		"range_max": 4,
+		"chip_cost": 1
+	},
+	{
+		"id": "brew_bomb",
+		"display_name": "Brew Bomb",
+		"class_id": "stim_chemist",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Fermented something in a bottle. Lit.",
+		"power": 1.1,
+		"range_min": 2,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"damage_type": "plasma",
+		"status_ids": [
+			"burning"
+		],
+		"status_chance": 0.4,
+		"chip_cost": 2
+	},
+	{
+		"id": "liquid_courage",
+		"display_name": "Liquid Courage",
+		"class_id": "stim_chemist",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "One for the road. Attack up, aim down.",
+		"status_ids": [
+			"buzzed"
+		],
+		"range_min": 0,
+		"range_max": 3,
+		"chip_cost": 1
+	},
+	{
+		"id": "piston_palm",
+		"display_name": "Piston Palm",
+		"class_id": "iron_monk",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Hydraulic palm strike.",
+		"power": 1.7
+	},
+	{
+		"id": "chakra_reboot",
+		"display_name": "Chakra Reboot",
+		"class_id": "iron_monk",
+		"kind": "HEAL",
+		"target": "SELF",
+		"description": "Breathe. Recalibrate.",
+		"power": 1.1,
+		"scaling_stat": "vitality",
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "shockwave_fist",
+		"display_name": "Shockwave Fist",
+		"class_id": "iron_monk",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Punch the ground, hit the line.",
+		"power": 1.2,
+		"shape": "LINE",
+		"aoe_radius": 3,
+		"range_min": 1,
+		"range_max": 1,
+		"chip_cost": 2
+	},
+	{
+		"id": "earth_slam",
+		"display_name": "Earth Slam",
+		"class_id": "iron_monk",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Everyone adjacent eats floor.",
+		"power": 1.1,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 2
+	},
+	{
+		"id": "wave_fist",
+		"display_name": "Wave Fist",
+		"class_id": "iron_monk",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Chi projected two tiles.",
+		"power": 1.3,
+		"range_min": 1,
+		"range_max": 3,
+		"chip_cost": 1
+	},
+	{
+		"id": "twin_strike",
+		"display_name": "Twin Strike",
+		"class_id": "neon_ninja",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Two blades, one blink.",
+		"power": 1.1,
+		"ap_cost": 1,
+		"crit_bonus": 0.1
+	},
+	{
+		"id": "throw_shuriken",
+		"display_name": "Throw Star",
+		"class_id": "neon_ninja",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Glowing throwing stars.",
+		"power": 1.1,
+		"range_min": 2,
+		"range_max": 5
+	},
+	{
+		"id": "shadow_clone",
+		"display_name": "Shadow Clone",
+		"class_id": "neon_ninja",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "A hologram decoy soaks the next hit.",
+		"status_ids": [
+			"hidden"
+		],
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 2
+	},
+	{
+		"id": "smoke_vault",
+		"display_name": "Smoke Vault",
+		"class_id": "neon_ninja",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Vanish, reappear up high.",
+		"special": "blink",
+		"range_min": 1,
+		"range_max": 5,
+		"vertical_tolerance": 6,
+		"chip_cost": 2
+	},
+	{
+		"id": "neon_lotus",
+		"display_name": "Neon Lotus",
+		"class_id": "neon_ninja",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "A spinning barrage around the ninja.",
+		"power": 1.0,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "neon_slash",
+		"display_name": "Neon Slash",
+		"class_id": "street_samurai",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Bright arc, clean cut.",
+		"power": 1.7
+	},
+	{
+		"id": "iai_strike",
+		"display_name": "Iai Strike",
+		"class_id": "street_samurai",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Draw, cut, sheathe. One breath.",
+		"power": 2.2,
+		"crit_bonus": 0.2,
+		"ap_cost": 2
+	},
+	{
+		"id": "ion_edge",
+		"display_name": "Ion Edge",
+		"class_id": "street_samurai",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Charged blade, tech damage.",
+		"power": 1.6,
+		"scaling_stat": "attack",
+		"damage_type": "electric",
+		"mp_cost": 8,
+		"chip_cost": 2
+	},
+	{
+		"id": "blade_dance",
+		"display_name": "Blade Dance",
+		"class_id": "street_samurai",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Cut everything adjacent.",
+		"power": 1.2,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "bushido_code",
+		"display_name": "Bushido Code",
+		"class_id": "street_samurai",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Crit and accuracy up.",
+		"status_ids": [
+			"focused"
+		],
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 1
+	},
+	{
+		"id": "firewall_guard",
+		"display_name": "Firewall Guard",
+		"class_id": "digital_knight",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Projects a hard-light shield onto an ally.",
+		"status_ids": [
+			"fortified"
+		],
+		"range_min": 0,
+		"range_max": 2
+	},
+	{
+		"id": "shield_bash",
+		"display_name": "Shield Bash",
+		"class_id": "digital_knight",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Stagger with the aegis.",
+		"power": 1.2,
+		"status_ids": [
+			"stun"
+		],
+		"status_chance": 0.25
+	},
+	{
+		"id": "armor_break",
+		"display_name": "Armor Break",
+		"class_id": "digital_knight",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Corrupts their plating. Defense down.",
+		"power": 1.2,
+		"status_ids": [
+			"short_circuit"
+		],
+		"chip_cost": 2
+	},
+	{
+		"id": "power_break",
+		"display_name": "Power Break",
+		"class_id": "digital_knight",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Scrambles servo output. Attack down.",
+		"power": 1.2,
+		"status_ids": [
+			"demoralized"
+		],
+		"chip_cost": 2
+	},
+	{
+		"id": "hold_the_line",
+		"display_name": "Hold the Line",
+		"class_id": "digital_knight",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Every ally adjacent to the knight braces.",
+		"status_ids": [
+			"fortified"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 3
+	},
+	{
+		"id": "dualcast",
+		"display_name": "Dualcast",
+		"class_id": "redline_mage",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Redline the processor: +1 AP for two turns.",
+		"status_ids": [
+			"dualcast"
+		],
+		"mp_cost": 10,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "red_spark",
+		"display_name": "Red Spark",
+		"class_id": "redline_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Quick plasma flick, no charge.",
+		"power": 1.2,
+		"scaling_stat": "magic",
+		"damage_type": "plasma",
+		"mp_cost": 5,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "red_mend",
+		"display_name": "Red Mend",
+		"class_id": "redline_mage",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Instant patch-up.",
+		"power": 0.8,
+		"scaling_stat": "magic",
+		"mp_cost": 6,
+		"range_min": 0,
+		"range_max": 3,
+		"chip_cost": 1
+	},
+	{
+		"id": "red_frost",
+		"display_name": "Red Frost",
+		"class_id": "redline_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Instant cryo, no charge.",
+		"power": 1.2,
+		"scaling_stat": "magic",
+		"damage_type": "cryo",
+		"mp_cost": 5,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 1
+	},
+	{
+		"id": "spellblade",
+		"display_name": "Spellblade",
+		"class_id": "redline_mage",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Channel a volt into the blade.",
+		"power": 1.5,
+		"damage_type": "electric",
+		"mp_cost": 6,
+		"chip_cost": 2
+	},
+	{
+		"id": "scan_signature",
+		"display_name": "Scan Signature",
+		"class_id": "bluescreen_mage",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Profile the target; exposes weak points.",
+		"status_ids": [
+			"exposed"
+		],
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "quick_draw",
+		"display_name": "Quick Draw",
+		"class_id": "gunslinger",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Fast shot, no warning.",
+		"power": 1.3,
+		"range_min": 1,
+		"range_max": 5,
+		"requires_los": true
+	},
+	{
+		"id": "plasma_burst",
+		"display_name": "Plasma Burst",
+		"class_id": "gunslinger",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Overcharged cylinder.",
+		"power": 1.1,
+		"damage_type": "plasma",
+		"mp_cost": 8,
+		"range_min": 2,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1
+	},
+	{
+		"id": "ricochet",
+		"display_name": "Ricochet",
+		"class_id": "gunslinger",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Bounces around cover.",
+		"power": 1.2,
+		"range_min": 2,
+		"range_max": 5,
+		"ignores_cover": true,
+		"chip_cost": 2
+	},
+	{
+		"id": "leg_shot",
+		"display_name": "Leg Shot",
+		"class_id": "gunslinger",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Kneecap special.",
+		"power": 0.9,
+		"range_min": 1,
+		"range_max": 5,
+		"requires_los": true,
+		"status_ids": [
+			"slow"
+		],
+		"chip_cost": 1
+	},
+	{
+		"id": "fan_the_hammer",
+		"display_name": "Fan the Hammer",
+		"class_id": "gunslinger",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Empty the cylinder.",
+		"power": 2.4,
+		"accuracy_bonus": -0.15,
+		"range_min": 1,
+		"range_max": 3,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "data_spike",
+		"display_name": "Data Spike",
+		"class_id": "net_hacker",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Spike their neural port.",
+		"power": 1.35,
+		"scaling_stat": "magic",
+		"damage_type": "tech",
+		"mp_cost": 5,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "system_override",
+		"display_name": "System Override",
+		"class_id": "net_hacker",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Drops their firewall.",
+		"status_ids": [
+			"short_circuit"
+		],
+		"mp_cost": 8,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "backdoor",
+		"display_name": "Backdoor",
+		"class_id": "net_hacker",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Lock them out of their own limbs.",
+		"status_ids": [
+			"stun"
+		],
+		"status_chance": 0.5,
+		"mp_cost": 14,
+		"range_min": 1,
+		"range_max": 3,
+		"chip_cost": 3
+	},
+	{
+		"id": "clarity_edit",
+		"display_name": "Clarity Edit",
+		"class_id": "net_hacker",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Veil's favourite trick: delete their confidence.",
+		"status_ids": [
+			"demoralized",
+			"exposed"
+		],
+		"mp_cost": 12,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 2
+	},
+	{
+		"id": "firewall_up",
+		"display_name": "Firewall Up",
+		"class_id": "net_hacker",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Harden an ally's systems.",
+		"status_ids": [
+			"fortified"
+		],
+		"mp_cost": 8,
+		"range_min": 0,
+		"range_max": 4,
+		"chip_cost": 1
+	},
+	{
+		"id": "shock_mine",
+		"display_name": "Shock Mine",
+		"class_id": "scrap_tinker",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Drops a static trap on the grid.",
+		"script": "terrain",
+		"special": "terrain.hazard",
+		"params": {
+			"hazard": "static",
+			"turns": 4
+		},
+		"range_min": 1,
+		"range_max": 3
+	},
+	{
+		"id": "patch_job",
+		"display_name": "Patch Job",
+		"class_id": "scrap_tinker",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Duct tape and optimism. Great on droids.",
+		"power": 1.1,
+		"scaling_stat": "intelligence",
+		"range_min": 0,
+		"range_max": 1
+	},
+	{
+		"id": "scrap_grenade",
+		"display_name": "Scrap Grenade",
+		"class_id": "scrap_tinker",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Nails, bolts, regret.",
+		"power": 1.1,
+		"range_min": 2,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"chip_cost": 2
+	},
+	{
+		"id": "jury_rig",
+		"display_name": "Jury Rig",
+		"class_id": "scrap_tinker",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Overclock an ally's gear.",
+		"status_ids": [
+			"inspired"
+		],
+		"range_min": 0,
+		"range_max": 2,
+		"chip_cost": 1
+	},
+	{
+		"id": "deploy_turret",
+		"display_name": "Deploy Turret",
+		"class_id": "scrap_tinker",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Bolt a sentry turret to the floor.",
+		"special": "summon",
+		"params": {
+			"character_id": "sentry_turret",
+			"max_active": 1
+		},
+		"range_min": 1,
+		"range_max": 2,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "build_assault_droid",
+		"display_name": "Build: Assault Droid",
+		"class_id": "droid_master",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Bolts together a buzzsaw attack droid.",
+		"special": "summon_droid",
+		"params": {
+			"character_id": "droid_assault",
+			"max_active": 2
+		},
+		"mp_cost": 12,
+		"range_min": 1,
+		"range_max": 2,
+		"ap_cost": 2
+	},
+	{
+		"id": "build_medic_droid",
+		"display_name": "Build: Medic Droid",
+		"class_id": "droid_master",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "A hover-droid full of nanite gel.",
+		"special": "summon_droid",
+		"params": {
+			"character_id": "droid_medic",
+			"max_active": 2
+		},
+		"mp_cost": 12,
+		"range_min": 1,
+		"range_max": 2,
+		"ap_cost": 2
+	},
+	{
+		"id": "build_bulwark_droid",
+		"display_name": "Build: Bulwark Droid",
+		"class_id": "droid_master",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "A walking shield wall that buffs allies.",
+		"special": "summon_droid",
+		"params": {
+			"character_id": "droid_bulwark",
+			"max_active": 2
+		},
+		"mp_cost": 14,
+		"range_min": 1,
+		"range_max": 2,
+		"ap_cost": 2,
+		"chip_cost": 2
+	},
+	{
+		"id": "build_volt_droid",
+		"display_name": "Build: Volt Droid",
+		"class_id": "droid_master",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "A tesla-coil droid that throws lightning.",
+		"special": "summon_droid",
+		"params": {
+			"character_id": "droid_volt",
+			"max_active": 2
+		},
+		"mp_cost": 16,
+		"range_min": 1,
+		"range_max": 2,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "overclock",
+		"display_name": "Overclock",
+		"class_id": "droid_master",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Haste a droid (or a friend).",
+		"status_ids": [
+			"haste"
+		],
+		"mp_cost": 10,
+		"range_min": 0,
+		"range_max": 4,
+		"chip_cost": 2
+	},
+	{
+		"id": "haste",
+		"display_name": "Haste",
+		"class_id": "timeslip_mage",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Steal a few seconds for a friend.",
+		"status_ids": [
+			"haste"
+		],
+		"mp_cost": 10,
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "slow",
+		"display_name": "Slow",
+		"class_id": "timeslip_mage",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Drag their clock.",
+		"status_ids": [
+			"slow"
+		],
+		"mp_cost": 8,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "stop",
+		"display_name": "Stop",
+		"class_id": "timeslip_mage",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Freeze them in the seven-second gap.",
+		"status_ids": [
+			"stop"
+		],
+		"status_chance": 0.55,
+		"mp_cost": 18,
+		"range_min": 1,
+		"range_max": 4,
+		"charge_ticks": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "quicken",
+		"display_name": "Quicken",
+		"class_id": "timeslip_mage",
+		"kind": "UTILITY",
+		"target": "ALLY",
+		"description": "Shove an ally to the front of the clock.",
+		"script": "time",
+		"special": "time.ct_shift",
+		"params": {
+			"ct": 60
+		},
+		"mp_cost": 20,
+		"range_min": 0,
+		"range_max": 3,
+		"chip_cost": 3
+	},
+	{
+		"id": "gravity_crush",
+		"display_name": "Gravity Crush",
+		"class_id": "timeslip_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Time-weight crushes a group.",
+		"power": 1.4,
+		"scaling_stat": "magic",
+		"damage_type": "void",
+		"mp_cost": 16,
+		"range_min": 1,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"charge_ticks": 3,
+		"chip_cost": 2
+	},
+	{
+		"id": "geomancy",
+		"display_name": "Geomancy",
+		"class_id": "grid_geomancer",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "The floor fights for you — effect depends on the target's terrain.",
+		"script": "terrain",
+		"special": "terrain.geomancy",
+		"power": 1.6,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "terraform_pulse",
+		"display_name": "Terraform Pulse",
+		"class_id": "grid_geomancer",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Raise a tile by one.",
+		"script": "terrain",
+		"special": "terrain.elevate",
+		"params": {
+			"height_delta": 1
+		},
+		"range_min": 1,
+		"range_max": 3,
+		"chip_cost": 2
+	},
+	{
+		"id": "fault_tremor",
+		"display_name": "Fault Tremor",
+		"class_id": "grid_geomancer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Quake a small area.",
+		"power": 1.1,
+		"range_min": 1,
+		"range_max": 3,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"status_ids": [
+			"knockdown"
+		],
+		"status_chance": 0.2,
+		"chip_cost": 2
+	},
+	{
+		"id": "ley_feedback",
+		"display_name": "Ley Feedback",
+		"class_id": "grid_geomancer",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Power grid backflow.",
+		"power": 1.5,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 2
+	},
+	{
+		"id": "summon_leviathan_feed",
+		"display_name": "Summon: Leviathan Feed",
+		"class_id": "holo_summoner",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "A colossal hologram serpent crashes through the block.",
+		"power": 1.9,
+		"scaling_stat": "magic",
+		"damage_type": "cryo",
+		"mp_cost": 24,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"charge_ticks": 4
+	},
+	{
+		"id": "summon_seraph_ad",
+		"display_name": "Summon: Seraph Ad",
+		"class_id": "holo_summoner",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "A billboard angel heals everyone in range.",
+		"power": 1.0,
+		"scaling_stat": "magic",
+		"mp_cost": 22,
+		"range_min": 0,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"charge_ticks": 4,
+		"chip_cost": 3
+	},
+	{
+		"id": "summon_iron_titan",
+		"display_name": "Summon: Iron Titan",
+		"class_id": "holo_summoner",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "A war-frame projection stomps the area.",
+		"power": 2.2,
+		"scaling_stat": "magic",
+		"damage_type": "kinetic",
+		"mp_cost": 30,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"charge_ticks": 5,
+		"chip_cost": 4
+	},
+	{
+		"id": "summon_static_wyrm",
+		"display_name": "Summon: Static Wyrm",
+		"class_id": "holo_summoner",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "A dragon made of dead-channel noise.",
+		"power": 2.0,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"mp_cost": 28,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"charge_ticks": 4,
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.3,
+		"chip_cost": 4
+	},
+	{
+		"id": "anthem_of_the_off_key",
+		"display_name": "Anthem of the Off-Key",
+		"class_id": "synth_bard",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Every ally nearby: attack up. The Choir would hate it.",
+		"status_ids": [
+			"inspired"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 3,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 10
+	},
+	{
+		"id": "last_call_ballad",
+		"display_name": "Last Call Ballad",
+		"class_id": "synth_bard",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Regen to everyone in earshot.",
+		"status_ids": [
+			"regen"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 3,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 14,
+		"chip_cost": 2
+	},
+	{
+		"id": "tempo_riff",
+		"display_name": "Tempo Riff",
+		"class_id": "synth_bard",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Haste the band.",
+		"status_ids": [
+			"haste"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 20,
+		"chip_cost": 3
+	},
+	{
+		"id": "feedback_squeal",
+		"display_name": "Feedback Squeal",
+		"class_id": "synth_bard",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Amp feedback hurts everyone in front.",
+		"power": 1.0,
+		"scaling_stat": "magic",
+		"damage_type": "tech",
+		"shape": "LINE",
+		"aoe_radius": 4,
+		"range_min": 1,
+		"range_max": 1,
+		"mp_cost": 8,
+		"chip_cost": 1
+	},
+	{
+		"id": "strobe_step",
+		"display_name": "Strobe Step",
+		"class_id": "holo_dancer",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Blinding strobes: every nearby enemy's accuracy drops.",
+		"status_ids": [
+			"blinded"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 3,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 10
+	},
+	{
+		"id": "heartbreak_waltz",
+		"display_name": "Heartbreak Waltz",
+		"class_id": "holo_dancer",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Nearby enemies lose the will to fight.",
+		"status_ids": [
+			"demoralized"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 3,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 14,
+		"chip_cost": 2
+	},
+	{
+		"id": "slow_dance",
+		"display_name": "Slow Dance",
+		"class_id": "holo_dancer",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Nearby enemies slow down.",
+		"status_ids": [
+			"slow"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 16,
+		"chip_cost": 3
+	},
+	{
+		"id": "ribbon_lash",
+		"display_name": "Ribbon Lash",
+		"class_id": "holo_dancer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Hard-light ribbon whip.",
+		"power": 1.3,
+		"range_min": 1,
+		"range_max": 2,
+		"chip_cost": 1
+	},
+	{
+		"id": "jet_jump",
+		"display_name": "Jet Jump",
+		"class_id": "jumpjet_dragoon",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Rocket up, come down lance-first.",
+		"power": 2.1,
+		"range_min": 1,
+		"range_max": 4,
+		"vertical_tolerance": 10,
+		"charge_ticks": 2
+	},
+	{
+		"id": "grapple_line",
+		"display_name": "Grapple Line",
+		"class_id": "jumpjet_dragoon",
+		"kind": "SPECIAL",
+		"target": "ENEMY",
+		"description": "Hook and yank.",
+		"script": "kinetic",
+		"special": "kinetic.pull",
+		"params": {
+			"reach": 4,
+			"pull": 3
+		},
+		"power": 0.8,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 2
+	},
+	{
+		"id": "high_ground",
+		"display_name": "High Ground",
+		"class_id": "jumpjet_dragoon",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Jet onto the tallest perch in reach.",
+		"special": "blink",
+		"range_min": 1,
+		"range_max": 4,
+		"vertical_tolerance": 10,
+		"chip_cost": 2
+	},
+	{
+		"id": "lance_thrust",
+		"display_name": "Lance Thrust",
+		"class_id": "jumpjet_dragoon",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Two tiles of reach.",
+		"power": 1.4,
+		"shape": "LINE",
+		"aoe_radius": 2,
+		"range_min": 1,
+		"range_max": 1,
+		"chip_cost": 1
+	},
+	{
+		"id": "void_wave",
+		"display_name": "Void Wave",
+		"class_id": "void_knight",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Pay in blood; hit everyone around you.",
+		"power": 1.5,
+		"scaling_stat": "attack",
+		"damage_type": "void",
+		"hp_cost_pct": 0.12,
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "abyssal_aegis",
+		"display_name": "Abyssal Aegis",
+		"class_id": "void_knight",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Wear the dark like armor.",
+		"status_ids": [
+			"fortified",
+			"inspired"
+		],
+		"hp_cost_pct": 0.08,
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 2
+	},
+	{
+		"id": "sanguine_edge",
+		"display_name": "Sanguine Edge",
+		"class_id": "void_knight",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Huge hit, huge price.",
+		"power": 2.8,
+		"hp_cost_pct": 0.15,
+		"chip_cost": 3
+	},
+	{
+		"id": "dread_mark",
+		"display_name": "Dread Mark",
+		"class_id": "void_knight",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "They feel the void looking back.",
+		"status_ids": [
+			"demoralized",
+			"exposed"
+		],
+		"range_min": 1,
+		"range_max": 3,
+		"chip_cost": 2
+	},
+	{
+		"id": "red_mist",
+		"display_name": "Red Mist",
+		"class_id": "stim_berserker",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Inject the red vial. Attack way up, defense way down.",
+		"status_ids": [
+			"berserk"
+		],
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "frenzy_slash",
+		"display_name": "Frenzy Slash",
+		"class_id": "stim_berserker",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Reckless, brutal.",
+		"power": 2.3,
+		"accuracy_bonus": -0.1,
+		"chip_cost": 2
+	},
+	{
+		"id": "rampage",
+		"display_name": "Rampage",
+		"class_id": "stim_berserker",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Hit everything adjacent, friend or foe.",
+		"power": 1.5,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0,
+		"friendly_fire": true,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "pain_dampener",
+		"display_name": "Pain Dampener",
+		"class_id": "stim_berserker",
+		"kind": "HEAL",
+		"target": "SELF",
+		"description": "Another vial. What could go wrong.",
+		"power": 1.4,
+		"scaling_stat": "vitality",
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 1
+	},
+	{
+		"id": "neural_link_shot",
+		"display_name": "Neural Link Shot",
+		"class_id": "cyber_sniper",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Eye to scope to brain.",
+		"power": 1.8,
+		"accuracy_bonus": 0.1,
+		"range_min": 3,
+		"range_max": 8,
+		"requires_los": true
+	},
+	{
+		"id": "steady_aim",
+		"display_name": "Steady Aim",
+		"class_id": "cyber_sniper",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Lock in.",
+		"status_ids": [
+			"focused"
+		],
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "piercing_round",
+		"display_name": "Piercing Round",
+		"class_id": "cyber_sniper",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Through cover, through people.",
+		"power": 1.4,
+		"shape": "LINE",
+		"aoe_radius": 7,
+		"range_min": 1,
+		"range_max": 1,
+		"ignores_cover": true,
+		"ap_cost": 2,
+		"chip_cost": 3
+	},
+	{
+		"id": "suppressive_fire",
+		"display_name": "Suppressive Fire",
+		"class_id": "cyber_sniper",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Keep their heads down.",
+		"power": 0.7,
+		"range_min": 3,
+		"range_max": 7,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"status_ids": [
+			"slow"
+		],
+		"chip_cost": 2
+	},
+	{
+		"id": "headhunter",
+		"display_name": "Headhunter",
+		"class_id": "cyber_sniper",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "One shot, one soul coin bounty.",
+		"power": 3.0,
+		"crit_bonus": 0.2,
+		"range_min": 3,
+		"range_max": 8,
+		"requires_los": true,
+		"ap_cost": 2,
+		"charge_ticks": 2,
+		"chip_cost": 4
+	},
+	{
+		"id": "death_mark",
+		"display_name": "Death Mark",
+		"class_id": "ghost_assassin",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Tag the target. Everything hurts more.",
+		"status_ids": [
+			"exposed"
+		],
+		"range_min": 1,
+		"range_max": 5
+	},
+	{
+		"id": "ghost_cut",
+		"display_name": "Ghost Cut",
+		"class_id": "ghost_assassin",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "You never see it.",
+		"power": 2.0,
+		"crit_bonus": 0.3
+	},
+	{
+		"id": "nerve_toxin",
+		"display_name": "Nerve Toxin",
+		"class_id": "ghost_assassin",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Poisoned edge.",
+		"power": 1.2,
+		"status_ids": [
+			"essence_bleed",
+			"slow"
+		],
+		"chip_cost": 2
+	},
+	{
+		"id": "vanishing_act",
+		"display_name": "Vanishing Act",
+		"class_id": "ghost_assassin",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "There, then gone.",
+		"special": "blink",
+		"range_min": 1,
+		"range_max": 6,
+		"vertical_tolerance": 6,
+		"chip_cost": 2
+	},
+	{
+		"id": "final_invoice",
+		"display_name": "Final Invoice",
+		"class_id": "ghost_assassin",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Execute a wounded mark.",
+		"power": 3.2,
+		"accuracy_bonus": -0.1,
+		"ap_cost": 2,
+		"chip_cost": 4
+	},
+	{
+		"id": "thermal_shield",
+		"display_name": "Thermal Shield",
+		"class_id": "plasma_vanguard",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Plasma skin. Defense and resist up.",
+		"status_ids": [
+			"fortified"
+		],
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "plasma_ram",
+		"display_name": "Plasma Ram",
+		"class_id": "plasma_vanguard",
+		"kind": "SPECIAL",
+		"target": "ENEMY",
+		"description": "Shoulder-charge, send them flying.",
+		"script": "kinetic",
+		"special": "kinetic.repulse",
+		"params": {
+			"distance": 2,
+			"impact": 16
+		},
+		"power": 1.4
+	},
+	{
+		"id": "meltdown",
+		"display_name": "Meltdown",
+		"class_id": "plasma_vanguard",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Vent the core. Everything adjacent burns.",
+		"power": 1.4,
+		"scaling_stat": "attack",
+		"damage_type": "plasma",
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0,
+		"status_ids": [
+			"burning"
+		],
+		"status_chance": 0.5,
+		"chip_cost": 3
+	},
+	{
+		"id": "bastion",
+		"display_name": "Bastion",
+		"class_id": "plasma_vanguard",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Every adjacent ally fortifies.",
+		"status_ids": [
+			"fortified"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 3
+	},
+	{
+		"id": "dead_channel",
+		"display_name": "Dead Channel",
+		"class_id": "static_oracle",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Fill their head with static. Identity slips.",
+		"status_ids": [
+			"identity_loss"
+		],
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 5
+	},
+	{
+		"id": "crown_dream",
+		"display_name": "Crown Dream",
+		"class_id": "static_oracle",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Show them the black crown. They freeze.",
+		"status_ids": [
+			"stun"
+		],
+		"status_chance": 0.45,
+		"mp_cost": 16,
+		"range_min": 1,
+		"range_max": 4,
+		"charge_ticks": 2
+	},
+	{
+		"id": "archive_blindness",
+		"display_name": "Archive Blindness",
+		"class_id": "static_oracle",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Wipe their targeting memory.",
+		"status_ids": [
+			"blinded"
+		],
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"chip_cost": 2
+	},
+	{
+		"id": "prophecy_static",
+		"display_name": "Prophecy Static",
+		"class_id": "static_oracle",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Future-noise hits now.",
+		"power": 1.8,
+		"scaling_stat": "magic",
+		"damage_type": "tech",
+		"mp_cost": 18,
+		"range_min": 1,
+		"range_max": 5,
+		"chip_cost": 3
+	},
+	{
+		"id": "gravity_well",
+		"display_name": "Gravity Well",
+		"class_id": "void_technician",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Micro-singularity.",
+		"power": 1.1,
+		"scaling_stat": "magic",
+		"damage_type": "void",
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"status_ids": [
+			"slow"
+		],
+		"status_chance": 0.6
+	},
+	{
+		"id": "void_rift",
+		"display_name": "Void Rift",
+		"class_id": "void_technician",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Tear an essence leak into the floor.",
+		"script": "terrain",
+		"special": "terrain.hazard",
+		"params": {
+			"hazard": "essence_leak",
+			"turns": 3
+		},
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"mp_cost": 12,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "event_horizon",
+		"display_name": "Event Horizon",
+		"class_id": "void_technician",
+		"kind": "SPECIAL",
+		"target": "ENEMY",
+		"description": "Drags a line of enemies in.",
+		"script": "kinetic",
+		"special": "kinetic.pull",
+		"params": {
+			"reach": 5,
+			"pull": 3
+		},
+		"power": 0.8,
+		"range_min": 1,
+		"range_max": 5,
+		"mp_cost": 14,
+		"chip_cost": 3
+	},
+	{
+		"id": "null_field",
+		"display_name": "Null Field",
+		"class_id": "void_technician",
+		"kind": "UTILITY",
+		"target": "ALLY",
+		"description": "Wipes debuffs in an area.",
+		"special": "cleanse",
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 3,
+		"mp_cost": 12,
+		"chip_cost": 2
+	},
+	{
+		"id": "kinetic_charge",
+		"display_name": "Kinetic Charge",
+		"class_id": "vector_knight",
+		"kind": "SPECIAL",
+		"target": "ENEMY",
+		"description": "+20% damage per straight tile moved this turn (max x2).",
+		"script": "kinetic",
+		"special": "kinetic.charge",
+		"power": 1.5
+	},
+	{
+		"id": "gravitational_pull",
+		"display_name": "Gravitational Pull",
+		"class_id": "vector_knight",
+		"kind": "SPECIAL",
+		"target": "ENEMY",
+		"description": "Drags everyone in a 3-tile line two tiles closer.",
+		"script": "kinetic",
+		"special": "kinetic.pull",
+		"params": {
+			"reach": 3,
+			"pull": 2
+		},
+		"power": 0.7,
+		"range_min": 1,
+		"range_max": 3
+	},
+	{
+		"id": "elastic_inertia",
+		"display_name": "Elastic Inertia",
+		"class_id": "vector_knight",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Marks them unstable: walls hit twice as hard.",
+		"status_ids": [
+			"unstable"
+		],
+		"range_min": 1,
+		"range_max": 3,
+		"chip_cost": 2
+	},
+	{
+		"id": "repulsor_strike",
+		"display_name": "Repulsor Strike",
+		"class_id": "vector_knight",
+		"kind": "SPECIAL",
+		"target": "ENEMY",
+		"description": "Launch them into the scenery.",
+		"script": "kinetic",
+		"special": "kinetic.repulse",
+		"params": {
+			"distance": 3,
+			"impact": 14
+		},
+		"power": 1.2,
+		"chip_cost": 3
+	},
+	{
+		"id": "delay_thread",
+		"display_name": "Delay Thread",
+		"class_id": "chrono_stitcher",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Damage is stitched into their future: it lands when their next turn starts, with knockdown.",
+		"script": "time",
+		"special": "time.delay_thread",
+		"params": {
+			"mult": 1.6
+		},
+		"mp_cost": 12,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "stitch_turn",
+		"display_name": "Stitch Turn",
+		"class_id": "chrono_stitcher",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Link an enemy to your ally: every enemy turn gives your ally 50 CT.",
+		"script": "time",
+		"special": "time.stitch_turn",
+		"params": {
+			"ct_gain": 50
+		},
+		"mp_cost": 16,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "rewind_position",
+		"display_name": "Rewind Position",
+		"class_id": "chrono_stitcher",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Save point. If you'd die (or when it expires), snap back.",
+		"script": "time",
+		"special": "time.rewind",
+		"mp_cost": 20,
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 3
+	},
+	{
+		"id": "seven_stolen_seconds",
+		"display_name": "Seven Stolen Seconds",
+		"class_id": "chrono_stitcher",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Rip 60 CT out of an enemy.",
+		"script": "time",
+		"special": "time.ct_shift",
+		"params": {
+			"ct": -60
+		},
+		"mp_cost": 18,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 3
+	},
+	{
+		"id": "draw_fault_line",
+		"display_name": "Draw Fault Line",
+		"class_id": "cartographer",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "A rock wall erupts along a 3-tile line.",
+		"script": "terrain",
+		"special": "terrain.fault_line",
+		"shape": "LINE",
+		"aoe_radius": 3,
+		"mp_cost": 14,
+		"range_min": 1,
+		"range_max": 1
+	},
+	{
+		"id": "isolate_elevation",
+		"display_name": "Isolate Elevation",
+		"class_id": "cartographer",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Raise a tile two levels (occupant rides along).",
+		"script": "terrain",
+		"special": "terrain.elevate",
+		"params": {
+			"height_delta": 2
+		},
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "sink_ground",
+		"display_name": "Sink Ground",
+		"class_id": "cartographer",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Drop a tile two levels.",
+		"script": "terrain",
+		"special": "terrain.elevate",
+		"params": {
+			"height_delta": -2
+		},
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 2
+	},
+	{
+		"id": "warp_coordinates",
+		"display_name": "Warp Coordinates",
+		"class_id": "cartographer",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Swap your tile — and whoever stands on it — with another.",
+		"script": "terrain",
+		"special": "terrain.warp",
+		"mp_cost": 18,
+		"range_min": 2,
+		"range_max": 5,
+		"chip_cost": 4
+	},
+	{
+		"id": "neon_fire_trace",
+		"display_name": "Neon Fire Trace",
+		"class_id": "cartographer",
+		"kind": "UTILITY",
+		"target": "TILE",
+		"description": "Ink burning neon onto the map.",
+		"script": "terrain",
+		"special": "terrain.hazard",
+		"params": {
+			"hazard": "neon_fire",
+			"turns": 3
+		},
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"mp_cost": 14,
+		"range_min": 1,
+		"range_max": 4,
+		"chip_cost": 3
+	},
+	{
+		"id": "shuffle_up",
+		"display_name": "Shuffle Up",
+		"class_id": "deck_stacker",
+		"kind": "UTILITY",
+		"target": "SELF",
+		"description": "Riffle, breathe, restore MP.",
+		"special": "restore_mp",
+		"params": {
+			"mp": 20
+		},
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "house_edge",
+		"display_name": "House Edge",
+		"class_id": "deck_stacker",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "The house always wins. Crit and aim up.",
+		"status_ids": [
+			"focused"
+		],
+		"range_min": 0,
+		"range_max": 0,
+		"chip_cost": 2
+	},
+	{
+		"id": "fifty_two_pickup",
+		"display_name": "52-Card Pickup",
+		"class_id": "deck_stacker",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Hard-light cards everywhere.",
+		"power": 0.9,
+		"range_min": 1,
+		"range_max": 3,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"chip_cost": 2
+	},
+	{
+		"id": "echo",
+		"display_name": "Echo",
+		"class_id": "echo_mime",
+		"kind": "SPECIAL",
+		"target": "SELF",
+		"description": "Silently repeats the last ability an ally used, on the same spot, for free.",
+		"special": "echo",
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "raise_echo",
+		"display_name": "Raise Echo",
+		"class_id": "digimancer",
+		"kind": "SPECIAL",
+		"target": "TILE",
+		"description": "Pull a fallen body's essence back into a glitching echo that fights for you, then fades.",
+		"special": "reanimate",
+		"params": {
+			"hp_pct": 0.5
+		},
+		"mp_cost": 24,
+		"range_min": 1,
+		"range_max": 4,
+		"ap_cost": 2
+	},
+	{
+		"id": "essence_siphon",
+		"display_name": "Essence Siphon",
+		"class_id": "digimancer",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Drink their essence.",
+		"power": 1.5,
+		"scaling_stat": "magic",
+		"damage_type": "essence",
+		"mp_cost": 10,
+		"range_min": 1,
+		"range_max": 4,
+		"status_ids": [
+			"essence_bleed"
+		],
+		"status_chance": 0.5
+	},
+	{
+		"id": "grave_protocol",
+		"display_name": "Grave Protocol",
+		"class_id": "digimancer",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Every enemy nearby hears the dead whisper.",
+		"status_ids": [
+			"demoralized",
+			"identity_loss"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 1,
+		"range_max": 4,
+		"mp_cost": 20,
+		"chip_cost": 3
+	},
+	{
+		"id": "soul_tax",
+		"display_name": "Soul Tax",
+		"class_id": "digimancer",
+		"kind": "UTILITY",
+		"target": "ENEMY",
+		"description": "Collect what they owe in soul coins.",
+		"special": "steal_coins",
+		"params": {
+			"coins": 90
+		},
+		"range_min": 1,
+		"range_max": 3,
+		"mp_cost": 8,
+		"chip_cost": 2
+	},
+	{
+		"id": "crown_of_the_dead",
+		"display_name": "Crown of the Dead",
+		"class_id": "digimancer",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "A black crown of essence detonates.",
+		"power": 2.4,
+		"scaling_stat": "magic",
+		"damage_type": "essence",
+		"mp_cost": 36,
+		"range_min": 1,
+		"range_max": 5,
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"charge_ticks": 4,
+		"chip_cost": 5
+	},
+	{
+		"id": "buzzsaw",
+		"display_name": "Buzzsaw",
+		"class_id": "droid_assault_chassis",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Spinning blade.",
+		"power": 1.6
+	},
+	{
+		"id": "shield_projector",
+		"display_name": "Shield Projector",
+		"class_id": "droid_bulwark_chassis",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Fortifies every adjacent ally.",
+		"status_ids": [
+			"fortified"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "slam_plate",
+		"display_name": "Slam Plate",
+		"class_id": "droid_bulwark_chassis",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Body check.",
+		"power": 1.1,
+		"status_ids": [
+			"stun"
+		],
+		"status_chance": 0.2
+	},
+	{
+		"id": "nanite_spray",
+		"display_name": "Nanite Spray",
+		"class_id": "droid_medic_chassis",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Heals an ally.",
+		"power": 1.0,
+		"scaling_stat": "magic",
+		"range_min": 0,
+		"range_max": 3
+	},
+	{
+		"id": "triage_pulse",
+		"display_name": "Triage Pulse",
+		"class_id": "droid_medic_chassis",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Heals everyone around the droid.",
+		"power": 0.6,
+		"scaling_stat": "magic",
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 12
+	},
+	{
+		"id": "arc_lash",
+		"display_name": "Arc Lash",
+		"class_id": "droid_volt_chassis",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Tesla arc.",
+		"power": 1.4,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"range_min": 1,
+		"range_max": 4,
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.3
+	},
+	{
+		"id": "chain_lightning",
+		"display_name": "Chain Lightning",
+		"class_id": "droid_volt_chassis",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Arcs through a cluster.",
+		"power": 1.1,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"range_min": 1,
+		"range_max": 4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"mp_cost": 12
+	},
+	{
+		"id": "turret_burst",
+		"display_name": "Turret Burst",
+		"class_id": "turret_chassis",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Rattle of automatic fire.",
+		"power": 1.3,
+		"range_min": 1,
+		"range_max": 5,
+		"requires_los": true
+	},
+	{
+		"id": "stun_baton",
+		"display_name": "Stun Baton",
+		"class_id": "doctrine_warden",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Standard issue.",
+		"power": 1.3,
+		"damage_type": "physical",
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.2
+	},
+	{
+		"id": "shift_whistle",
+		"display_name": "Shift Whistle",
+		"class_id": "doctrine_warden",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Back to work! Nearby allies attack up.",
+		"status_ids": [
+			"inspired"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "hymn_cleave",
+		"display_name": "Hymn Cleave",
+		"class_id": "choir_enforcer",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Sung while swung.",
+		"power": 1.7
+	},
+	{
+		"id": "bl_crown_hymn",
+		"display_name": "Crown Hymn",
+		"class_id": "bluescreen_mage",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "A Queen-hymn that rattles the skull.",
+		"status_ids": [
+			"demoralized"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 1,
+		"range_max": 3,
+		"blue_learnable": true,
+		"absorb_only": true
+	},
+	{
+		"id": "hymnal_mend",
+		"display_name": "Hymnal Mend",
+		"class_id": "cantor_adept",
+		"kind": "HEAL",
+		"target": "ALLY",
+		"description": "Heals a devout ally.",
+		"power": 1.0,
+		"scaling_stat": "magic",
+		"mp_cost": 6,
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "bl_sonic_screech",
+		"display_name": "Sonic Screech",
+		"class_id": "bluescreen_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "A hymn at a frequency that hurts.",
+		"power": 1.2,
+		"scaling_stat": "magic",
+		"damage_type": "tech",
+		"range_min": 1,
+		"range_max": 4,
+		"status_ids": [
+			"blinded"
+		],
+		"status_chance": 0.3,
+		"mp_cost": 8,
+		"blue_learnable": true,
+		"absorb_only": true
+	},
+	{
+		"id": "rail_shot",
+		"display_name": "Rail Shot",
+		"class_id": "factory_marksman",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Catwalk sniper.",
+		"power": 1.5,
+		"range_min": 2,
+		"range_max": 7,
+		"requires_los": true
+	},
+	{
+		"id": "bl_arc_lash",
+		"display_name": "Arc Lash",
+		"class_id": "bluescreen_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Discharges its battery at you.",
+		"power": 1.3,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"range_min": 1,
+		"range_max": 4,
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.25,
+		"mp_cost": 6,
+		"blue_learnable": true,
+		"absorb_only": true
+	},
+	{
+		"id": "bl_self_repair",
+		"display_name": "Self Repair",
+		"class_id": "bluescreen_mage",
+		"kind": "HEAL",
+		"target": "SELF",
+		"description": "Reroutes power to its hull.",
+		"power": 1.2,
+		"scaling_stat": "magic",
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 8,
+		"blue_learnable": true,
+		"absorb_only": true
+	},
+	{
+		"id": "bl_essence_leech",
+		"display_name": "Essence Leech",
+		"class_id": "bluescreen_mage",
+		"kind": "MAGIC",
+		"target": "ENEMY",
+		"description": "Feeds on what makes you, you.",
+		"power": 1.3,
+		"scaling_stat": "magic",
+		"damage_type": "essence",
+		"range_min": 1,
+		"range_max": 2,
+		"status_ids": [
+			"essence_bleed"
+		],
+		"status_chance": 0.5,
+		"mp_cost": 6,
+		"blue_learnable": true,
+		"absorb_only": true
+	},
+	{
+		"id": "bl_bad_sector",
+		"display_name": "Bad Sector",
+		"class_id": "bluescreen_mage",
+		"kind": "DEBUFF",
+		"target": "ENEMY",
+		"description": "Corrupts a chunk of your memory.",
+		"status_ids": [
+			"identity_loss"
+		],
+		"range_min": 1,
+		"range_max": 3,
+		"mp_cost": 8,
+		"blue_learnable": true,
+		"absorb_only": true
+	},
+	{
+		"id": "quota_crusher",
+		"display_name": "Quota Crusher",
+		"class_id": "foreman_chassis",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Meets quota. On you.",
+		"power": 2.0
+	},
+	{
+		"id": "overtime",
+		"display_name": "Overtime",
+		"class_id": "foreman_chassis",
+		"kind": "BUFF",
+		"target": "ALLY",
+		"description": "Nearby workers get haste. They don't get paid for it.",
+		"status_ids": [
+			"haste"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 0,
+		"range_max": 0,
+		"mp_cost": 12
+	}
+]

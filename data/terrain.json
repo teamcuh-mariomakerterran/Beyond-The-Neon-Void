@@ -1,0 +1,84 @@
+{
+	"concrete": {
+		"name": "Concrete",
+		"color": "#2a2438",
+		"side": "#1a1626",
+		"move_cost": 1
+	},
+	"metal_grate": {
+		"name": "Metal Grate",
+		"color": "#39414f",
+		"side": "#20252e",
+		"move_cost": 1
+	},
+	"catwalk": {
+		"name": "Catwalk",
+		"color": "#3b3350",
+		"side": "#241f33",
+		"move_cost": 1
+	},
+	"crate": {
+		"name": "Munitions Crate",
+		"color": "#5c4a2a",
+		"side": "#3b2f1a",
+		"walkable": false,
+		"cover": 2,
+		"blocks_los": true
+	},
+	"low_wall": {
+		"name": "Low Wall",
+		"color": "#4a4458",
+		"side": "#2c2838",
+		"walkable": false,
+		"cover": 1
+	},
+	"rubble": {
+		"name": "Rubble",
+		"color": "#4b4040",
+		"side": "#2e2727",
+		"move_cost": 2,
+		"cover": 1
+	},
+	"coolant": {
+		"name": "Coolant Spill",
+		"color": "#1d4a5c",
+		"side": "#0f2a36",
+		"move_cost": 2
+	},
+	"neon_sign": {
+		"name": "Fallen Neon Sign",
+		"color": "#7a1f5c",
+		"side": "#4a1238",
+		"move_cost": 1,
+		"glow": "#ff2e88"
+	},
+	"essence_pool": {
+		"name": "Essence Runoff",
+		"color": "#3a1f6e",
+		"side": "#221245",
+		"move_cost": 2,
+		"glow": "#b14dff"
+	},
+	"glass": {
+		"name": "Fused Glass",
+		"color": "#4d6b7a",
+		"side": "#2c3f48",
+		"move_cost": 1
+	},
+	"rock_wall": {
+		"name": "Fault Wall",
+		"color": "#3d3530",
+		"side": "#241f1c",
+		"walkable": false,
+		"cover": 2,
+		"blocks_los": true
+	},
+	"pillar": {
+		"name": "Support Pillar",
+		"color": "#302a40",
+		"side": "#1c1828",
+		"walkable": false,
+		"cover": 2,
+		"blocks_los": true
+	}
+}

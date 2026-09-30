@@ -46,11 +46,15 @@ static func _enum_index(hint: String, name: String) -> int:
 	for part in hint.split(","):
 		var bits := part.split(":")
 		var value := int(bits[1]) if bits.size() > 1 else i
-		if bits[0].strip_edges().to_upper() == name.strip_edges().to_upper():
+		if _norm(bits[0]) == _norm(name):
 			return value
 		i = value + 1
 	push_warning("Unknown enum value '%s' (options: %s)" % [name, hint])
 	return 0
+
+
+static func _norm(s: String) -> String:
+	return s.strip_edges().to_upper().replace(" ", "_")
 
 
 static func _enum_name(hint: String, value: int) -> String:
@@ -59,7 +63,7 @@ static func _enum_name(hint: String, value: int) -> String:
 		var bits := part.split(":")
 		var v := int(bits[1]) if bits.size() > 1 else i
 		if v == value:
-			return bits[0].strip_edges()
+			return _norm(bits[0])
 		i = v + 1
 	return str(value)
 

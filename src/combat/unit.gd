@@ -35,6 +35,10 @@ var battle_mults: Dictionary = {}
 var kills: int = 0
 ## Tiles moved this turn in one straight line (Kinetic Charge).
 var move_streak: int = 0
+## Who built / raised this unit (droids, echoes). Null for normal units.
+var summoner: Node = null
+## Reanimated by a Digimancer: fades over time, can't be revived.
+var is_echo: bool = false
 
 var job_handler: JobHandler
 var equipment: EquipmentManager
@@ -66,7 +70,7 @@ func setup(p_data: CharacterData, p_team: int, level_override: int = 0) -> void:
 	data = p_data
 	name = p_data.id if p_data.id != "" else "Unit"
 	team = p_team
-	is_player_controlled = p_team == Team.PLAYER
+	is_player_controlled = p_team == Team.PLAYER and not p_data.ai_controlled
 	stats = p_data.get_stats()
 	if level_override > 0:
 		stats.level = level_override
@@ -160,13 +164,19 @@ func can_act() -> bool:
 	return is_alive() and current_ap > 0 and not is_disabled()
 
 
+func hp_cost_of(ability: Ability) -> int:
+	return roundi(get_stat("max_hp") * ability.hp_cost_pct)
+
+
 func can_afford(ability: Ability) -> bool:
-	return current_ap >= ability.ap_cost and current_mp >= ability.mp_cost
+	return current_ap >= ability.ap_cost and current_mp >= ability.mp_cost and (ability.hp_cost_pct <= 0.0 or current_hp > hp_cost_of(ability))
 
 
 func spend_for(ability: Ability) -> void:
 	current_ap = maxi(current_ap - ability.ap_cost, 0)
 	current_mp = maxi(current_mp - ability.mp_cost, 0)
+	if ability.hp_cost_pct > 0.0:
+		current_hp = maxi(current_hp - hp_cost_of(ability), 1)
 	has_acted = true
 	_update_hud()
 
@@ -231,6 +241,29 @@ func heal(amount: int) -> int:
 	return healed
 
 
+func element_mult(damage_type: String) -> float:
+	var m := 1.0
+	var cls := class_res()
+	if cls:
+		m *= float(cls.element_modifiers.get(damage_type, 1.0))
+	if data:
+		m *= float(data.element_modifiers.get(damage_type, 1.0))
+	return m
+
+
+## Brings a fallen unit back (Phoenix Stim). Caller re-adds it to the turn queue.
+func revive(hp: int) -> void:
+	if is_alive() or grid == null or grid.get_occupant(cell) != null:
+		return
+	current_hp = clampi(hp, 1, get_stat("max_hp"))
+	grid.remove_corpse(cell)
+	grid.set_occupant(cell, self)
+	ct = 0
+	modulate.a = 1.0
+	_update_hud()
+	EventBus.unit_healed.emit(self, current_hp)
+
+
 func restore_mp(amount: int) -> void:
 	current_mp = mini(current_mp + maxi(amount, 0), get_stat("max_mp"))
 	_update_hud()
@@ -241,6 +274,8 @@ func die() -> void:
 	statuses.clear()
 	if grid:
 		grid.clear_occupant(cell, self)
+		if not is_echo and (data == null or not data.ai_controlled or team != Team.PLAYER):
+			grid.add_corpse(cell, self)
 	died.emit()
 	EventBus.unit_died.emit(self)
 	var t := create_tween() if is_inside_tree() else null

@@ -1,0 +1,152 @@
+[
+	{
+		"id": "loot_supply_works",
+		"rolls": 3,
+		"soul_coins_min": 20,
+		"soul_coins_max": 80,
+		"entries": [
+			{
+				"item_id": "mat_scrap_wire",
+				"weight": 30,
+				"min": 1,
+				"max": 3
+			},
+			{
+				"item_id": "mat_dead_battery",
+				"weight": 25,
+				"min": 1,
+				"max": 2
+			},
+			{
+				"item_id": "mat_memory_core",
+				"weight": 20,
+				"min": 1,
+				"max": 2
+			},
+			{
+				"item_id": "con_neon_gin",
+				"weight": 12,
+				"min": 1,
+				"max": 2
+			},
+			{
+				"item_id": "chip_microchip",
+				"weight": 8,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "mat_warframe_plating",
+				"weight": 4,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "wpn_baton_1",
+				"weight": 1,
+				"min": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "loot_dispatch_salvage",
+		"rolls": 3,
+		"soul_coins_min": 30,
+		"soul_coins_max": 120,
+		"entries": [
+			{
+				"item_id": "mat_scrap_wire",
+				"weight": 30,
+				"min": 2,
+				"max": 4
+			},
+			{
+				"item_id": "mat_corrupted_wafer",
+				"weight": 20,
+				"min": 1,
+				"max": 2
+			},
+			{
+				"item_id": "mat_dream_battery",
+				"weight": 18,
+				"min": 1,
+				"max": 2
+			},
+			{
+				"item_id": "con_cyber_sake",
+				"weight": 10,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "mat_archive_fragment",
+				"weight": 8,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "mat_essence_shard",
+				"weight": 5,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "wpn_knife_1",
+				"weight": 3,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "mat_nyx_crystal",
+				"weight": 1,
+				"min": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "loot_dispatch_black_market",
+		"rolls": 2,
+		"soul_coins_min": 80,
+		"soul_coins_max": 250,
+		"entries": [
+			{
+				"item_id": "mat_neon_ink",
+				"weight": 30,
+				"min": 1,
+				"max": 3
+			},
+			{
+				"item_id": "con_void_vodka",
+				"weight": 10,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "acc_bottle_cap_charm",
+				"weight": 10,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "card_nine_of_embers",
+				"weight": 8,
+				"min": 1,
+				"max": 1
+			},
+			{
+				"item_id": "mat_archive_fragment",
+				"weight": 12,
+				"min": 1,
+				"max": 2
+			},
+			{
+				"item_id": "mat_null_wafer",
+				"weight": 1,
+				"min": 1,
+				"max": 1
+			}
+		]
+	}
+]

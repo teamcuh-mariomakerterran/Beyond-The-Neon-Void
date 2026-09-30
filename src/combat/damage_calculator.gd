@@ -15,7 +15,7 @@ const BACK_HIT_BONUS := 0.20
 const SIDE_HIT_BONUS := 0.10
 const COVER_HIT_PENALTY := [0.0, 0.15, 0.30]
 const COVER_DMG_MULT := [1.0, 0.8, 0.6]
-const MAGICAL_TYPES := ["tech", "void", "essence"]
+const MAGICAL_TYPES := ["tech", "void", "essence", "electric", "plasma", "cryo"]
 
 
 static func is_magical(ability: Ability) -> bool:
@@ -73,6 +73,8 @@ static func damage(attacker: Node, target: Node, ability: Ability, grid: Isometr
 	if attack_angle(attacker.cell, target.cell, target.facing) == "back":
 		raw *= 1.15
 	raw *= COVER_DMG_MULT[_cover(target, attacker, ability, grid)]
+	if target.has_method("element_mult"):
+		raw *= target.element_mult(ability.damage_type)
 	if crit:
 		raw *= CRIT_MULT
 	return clampi(roundi(raw), 1, UnitStats.HP_MAX)

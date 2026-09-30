@@ -14,6 +14,10 @@ enum Role { MELEE, RANGED, SUPPORT, UTILITY, TANK, SPECIAL }
 @export var tier: int = 1
 @export var icon_path: String = ""
 @export var is_hidden: bool = false
+## False for non-player chassis classes (droids, echoes, turrets).
+@export var playable: bool = true
+## Elemental damage taken multipliers, e.g. {"electric": 1.5, "cryo": 0.5}.
+@export var element_modifiers: Dictionary = {}
 ## Card classes (Deck Stacker) fight with a deck instead of a weapon.
 @export var uses_deck: bool = false
 

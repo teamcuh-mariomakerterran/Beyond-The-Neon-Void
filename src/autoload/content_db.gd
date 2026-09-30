@@ -235,7 +235,7 @@ func validate() -> Array[String]:
 			problems.append("mission %s -> missing loot table %s" % [m.id, m.loot_table_id])
 	for lt: LootTable in get_all("loot_tables"):
 		for e: Dictionary in lt.entries:
-			if get_item(str(e.get("item_id", ""))) == null:
+			if get_item(str(e.get("item_id", ""))) == null and get_card(str(e.get("item_id", ""))) == null:
 				problems.append("loot table %s -> unknown item %s" % [lt.id, e.get("item_id")])
 	for dm: DispatchMission in get_all("dispatch_missions"):
 		if dm.loot_table_id != "" and get_loot_table(dm.loot_table_id) == null:

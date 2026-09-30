@@ -41,6 +41,10 @@ func start_battle(p_grid: IsometricGrid, p_units: Array[Node], p_mission: Missio
 	turn_number = 0
 	victory = false
 	active_unit = null
+	state = State.IDLE
+	_player_done = false
+	_last_hazard_round = 0
+	_last_team_action.clear()
 	if seed_value >= 0:
 		rng.seed = seed_value
 	else:
@@ -103,12 +107,14 @@ func is_player_turn() -> bool:
 
 
 ## Spawns a unit mid-battle (summons, reinforcements). Returns the Unit or null.
-func spawn_unit(character_id: String, cell: Vector2i, team: int, level: int = 1) -> Node:
+func spawn_unit(character_id: String, cell: Vector2i, team: int, level: int = 1, ai_driven: bool = false) -> Node:
 	var template := ContentDB.get_character(character_id)
 	if template == null or grid == null or grid.get_occupant(cell) != null:
 		return null
 	var u := Unit.new()
 	u.setup(template, team, level)
+	if ai_driven:
+		u.is_player_controlled = false
 	u.grid = grid
 	if map_node and map_node.has_method("add_unit_node"):
 		map_node.add_unit_node(u)
@@ -119,6 +125,25 @@ func spawn_unit(character_id: String, cell: Vector2i, team: int, level: int = 1)
 	u.died.connect(_on_unit_died.bind(u))
 	EventBus.turn_order_changed.emit(turn_forecast())
 	return u
+
+
+## Puts a revived unit back on the clock.
+func readd_unit(u: Node) -> void:
+	if not units.has(u):
+		units.append(u)
+	turn_queue.add_unit(u)
+	EventBus.turn_order_changed.emit(turn_forecast())
+
+
+## Last ability an ally of `unit` used (Echo Mime copies it). {} if none.
+var _last_team_action: Dictionary = {}  # team -> {"ability", "cell", "caster"}
+
+
+func last_action_for(unit: Node) -> Dictionary:
+	var a: Dictionary = _last_team_action.get(unit.team, {})
+	if a.is_empty() or a["caster"] == unit or a["ability"].special == "echo":
+		return {}
+	return a
 
 
 # --- Main loop -------------------------------------------------------------
@@ -282,8 +307,12 @@ func _execute(unit: Node, ability: Ability, cell: Vector2i, extra_cells: Array[V
 	if animate and map_node and map_node.has_method("play_ability_fx"):
 		await map_node.play_ability_fx(unit, ability, cell)
 	var results: Array[Dictionary] = unit.job_handler.execute_ability(ability, ctx)
+	if ability.special != "echo":
+		_last_team_action[unit.team] = {"ability": ability, "cell": cell, "caster": unit}
 	for r in results:
 		var target: Node = r["unit"]
+		if ability.blue_learnable and target != unit and target.is_alive():
+			_try_blue_learn(target, ability)
 		match r["kind"]:
 			"damage":
 				EventBus.log_message.emit("%s -> %s: %d%s" % [ability.display_name, target.display_name(), r["amount"], " CRIT" if r["crit"] else ""])
@@ -295,6 +324,22 @@ func _execute(unit: Node, ability: Ability, cell: Vector2i, extra_cells: Array[V
 				EventBus.log_message.emit("%s misses %s" % [ability.display_name, target.display_name()])
 	if animate and is_inside_tree():
 		await get_tree().create_timer(0.25).timeout
+
+
+## Bluescreen Mage: getting hit by blue-learnable tech teaches it (FFT Blue Mage).
+func _try_blue_learn(target: Node, ability: Ability) -> void:
+	var job: ClassResource = target.class_res()
+	if job == null or not job.learnable_ability_ids.has(ability.id):
+		return
+	if target.job_handler.learned_ability_ids.has(ability.id):
+		return
+	target.job_handler.learned_ability_ids.append(ability.id)
+	if target.data:
+		var roster_entry := GameManager.get_character(target.data.id)
+		if roster_entry and not roster_entry.learned_ability_ids.has(ability.id):
+			roster_entry.learned_ability_ids.append(ability.id)
+	EventBus.ability_unlocked.emit(target.data.id if target.data else "", ability.id)
+	EventBus.log_message.emit("%s absorbed %s!" % [target.display_name(), ability.display_name])
 
 
 func _resolve_charged_cast(cast: Dictionary) -> void:

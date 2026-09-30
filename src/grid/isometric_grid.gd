@@ -23,6 +23,8 @@ var height_step: float = 16.0
 var origin: Vector2 = Vector2.ZERO
 
 var _cells: Dictionary = {}  # Vector2i -> Cell
+## Fallen units by cell — targets for revive / reanimate.
+var _corpses: Dictionary = {}
 
 
 class Cell extends RefCounted:
@@ -120,6 +122,25 @@ func move_occupant(from_cell: Vector2i, to_cell: Vector2i) -> void:
 	var unit := get_occupant(from_cell)
 	clear_occupant(from_cell)
 	set_occupant(to_cell, unit)
+
+
+func add_corpse(cell: Vector2i, unit: Node) -> void:
+	_corpses[cell] = unit
+
+
+func get_corpse(cell: Vector2i) -> Node:
+	var u: Node = _corpses.get(cell)
+	return u if u != null and is_instance_valid(u) else null
+
+
+func remove_corpse(cell: Vector2i) -> void:
+	_corpses.erase(cell)
+
+
+func corpse_cells() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	out.assign(_corpses.keys())
+	return out
 
 
 # --- Projection ------------------------------------------------------------

@@ -5,7 +5,7 @@ extends SceneTree
 
 func _initialize() -> void:
 	var failures := 0
-	var files := _collect("res://src") + _collect("res://scenes")
+	var files := _collect("res://src") + _collect("res://scenes") + _collect("res://tests")
 	for path in files:
 		var res := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
 		if res == null:

@@ -1,0 +1,74 @@
+{
+	"r_hymn_extended": {
+		"channel": "news",
+		"text": "PSALTER SPIRES: Tonight's Crown Hymn broadcast extended one hour. Attendance is devotion. Devotion is recorded."
+	},
+	"r_border_held": {
+		"channel": "news",
+		"text": "Iron Choir legions report the border 'held with song.' Casualty figures are being reconciled with the Libraries."
+	},
+	"r_splitter": {
+		"channel": "news",
+		"text": "Veil's so-called Circuit-Splitter sighted near the eastern salvage belt. Citizens reminded: the Doctrine has a hymn."
+	},
+	"r_memory_hygiene": {
+		"channel": "news",
+		"text": "Veil's Ministry of Clear History calls erased cities 'memory hygiene.' The Doctrine remembers what Veil forgets."
+	},
+	"r_output_up": {
+		"channel": "news",
+		"text": "Munitions output up 4% this cycle. Mourning Days reduced accordingly. Grief is a shared resource."
+	},
+	"r_omen_six": {
+		"channel": "news",
+		"text": "Explosion at a supply works: Greywrithe saboteur Kestral Omen-Six suspected. Again."
+	},
+	"r_humane_infra": {
+		"channel": "news",
+		"text": "Veil unveils 'humane infrastructure.' Cantors warn: they want to meter your soul."
+	},
+	"r_off_key": {
+		"channel": "news",
+		"text": "Reminder: unregistered hymns are not hymns. Report off-key neighbours to your Cantor."
+	},
+	"r_casualty_count": {
+		"channel": "gossip",
+		"text": "My cousin swears a Veil medic stitched her up at the border. Then shot the guy next to her. Or didn't. Two stories."
+	},
+	"r_cant_sing": {
+		"channel": "gossip",
+		"text": "Kid in my brother's legion can't sing. They make him march at the back and mouth it."
+	},
+	"r_who_made_us": {
+		"channel": "gossip",
+		"text": "Heard a Choir android asked a Cantor 'Who made us?' out loud. Nobody's seen it since. Or everybody has."
+	},
+	"r_coffins": {
+		"channel": "gossip",
+		"text": "Quartermaster down the depot loses whole crates of coffins. Full ones. Nobody audits a coffin."
+	},
+	"r_weeping_circuit": {
+		"channel": "gossip",
+		"text": "Drank from the Weeping Circuit once. Woke up remembering someone else's wedding. Better than mine."
+	},
+	"r_second_draft": {
+		"channel": "gossip",
+		"text": "Old-timer says we're the second draft of humanity. I say this beer is the second draft of beer."
+	},
+	"r_god_questions": {
+		"channel": "graffiti",
+		"text": "A GOD WHO FEARS QUESTIONS IS ONLY A KING."
+	},
+	"r_two_shadows": {
+		"channel": "graffiti",
+		"text": "Every face casts two shadows. Hers has a pension."
+	},
+	"r_tip_him": {
+		"channel": "graffiti",
+		"text": "The Library remembers. The heart misfiles. The bartender forgets. — tip him."
+	},
+	"r_still_waiting": {
+		"channel": "graffiti",
+		"text": "We are still here. We are still waiting."
+	}
+}

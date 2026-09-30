@@ -1,0 +1,144 @@
+[
+	{
+		"id": "dsp_salvage_belt",
+		"display_name": "Salvage Run: Eastern Belt",
+		"description": "Pick the border battlefield clean before the Libraries count the bodies.",
+		"duration_minutes": 20,
+		"difficulty": 25,
+		"stat_weights": {
+			"strength": 1.0,
+			"vitality": 1.0
+		},
+		"class_affinity": {
+			"chrome_warrior": 10,
+			"scrap_tinker": 15
+		},
+		"loot_table_id": "loot_dispatch_salvage",
+		"soul_coin_reward": 120,
+		"xp_reward": 50,
+		"success_text": "Came back with a sack of scrap and only a slight limp.",
+		"failure_text": "Came back with a sack. The sack is empty. The limp is not slight.",
+		"rumor_ids": [
+			"r_splitter",
+			"r_casualty_count"
+		]
+	},
+	{
+		"id": "dsp_pilgrim_escort",
+		"display_name": "Escort: Pilgrim Convoy",
+		"description": "Walk a line of hymn-singing pilgrims to the Psalter Spires. Try not to learn the words.",
+		"duration_minutes": 45,
+		"difficulty": 40,
+		"stat_weights": {
+			"vitality": 1.0,
+			"intelligence": 0.5
+		},
+		"class_affinity": {
+			"digital_knight": 15,
+			"whitelight_medic": 10
+		},
+		"loot_table_id": "loot_dispatch_salvage",
+		"soul_coin_reward": 220,
+		"xp_reward": 90,
+		"success_text": "The pilgrims arrived. One of them tipped in soul coins and a blessing.",
+		"failure_text": "The convoy got rerouted by an Iron Choir muster. Walked 40 miles for nothing.",
+		"rumor_ids": [
+			"r_cant_sing",
+			"r_hymn_extended"
+		]
+	},
+	{
+		"id": "dsp_driftmarket_deal",
+		"display_name": "Driftmarket Handoff",
+		"description": "Carry a sealed crate to Driftmarket. Don't open it. Don't let anyone else open it.",
+		"duration_minutes": 60,
+		"difficulty": 50,
+		"stat_weights": {
+			"agility": 1.0,
+			"intelligence": 0.7
+		},
+		"class_affinity": {
+			"signal_thief": 20,
+			"neon_ninja": 15,
+			"deck_stacker": 15
+		},
+		"loot_table_id": "loot_dispatch_black_market",
+		"soul_coin_reward": 400,
+		"xp_reward": 120,
+		"success_text": "Deal done. The crate was full of left shoes. Nobody asked why.",
+		"failure_text": "Opened the crate. Regretted it. Came home empty-handed and quiet.",
+		"rumor_ids": [
+			"r_coffins",
+			"r_omen_six"
+		]
+	},
+	{
+		"id": "dsp_coffin_audit",
+		"display_name": "Inventory Loss",
+		"description": "A depot quartermaster needs someone to not count some coffins.",
+		"duration_minutes": 30,
+		"difficulty": 35,
+		"stat_weights": {
+			"agility": 1.0
+		},
+		"class_affinity": {
+			"signal_thief": 15,
+			"net_hacker": 10
+		},
+		"loot_table_id": "loot_dispatch_salvage",
+		"soul_coin_reward": 180,
+		"xp_reward": 70,
+		"success_text": "Didn't count them. Very carefully. Got paid.",
+		"failure_text": "Counted them by accident. Had to pretend to be drunk. Wasn't pretending.",
+		"rumor_ids": [
+			"r_coffins"
+		]
+	},
+	{
+		"id": "dsp_weeping_circuit",
+		"display_name": "Drink from the Weeping Circuit",
+		"description": "Somebody bet somebody they wouldn't. Somebody will.",
+		"duration_minutes": 15,
+		"difficulty": 20,
+		"stat_weights": {
+			"vitality": 1.5
+		},
+		"class_affinity": {
+			"stim_berserker": 20
+		},
+		"loot_table_id": "loot_dispatch_salvage",
+		"soul_coin_reward": 60,
+		"xp_reward": 40,
+		"success_text": "Remembers someone else's wedding now. Says it was nicer than theirs.",
+		"failure_text": "Remembers someone else's tax audit now. Won't stop talking about it.",
+		"rumor_ids": [
+			"r_weeping_circuit"
+		]
+	},
+	{
+		"id": "dsp_relic_market",
+		"display_name": "Kharrowdeep Relic Market",
+		"description": "Haggle for Library salvage in the pyramid markets.",
+		"duration_minutes": 90,
+		"difficulty": 60,
+		"stat_weights": {
+			"intelligence": 1.0,
+			"agility": 0.5
+		},
+		"class_affinity": {
+			"static_oracle": 15,
+			"net_hacker": 10,
+			"deck_stacker": 20
+		},
+		"min_level": 5,
+		"loot_table_id": "loot_dispatch_black_market",
+		"soul_coin_reward": 500,
+		"xp_reward": 160,
+		"success_text": "Came back with a wafer that hums and a story about a heretic with nice teeth.",
+		"failure_text": "Got out-haggled by a child. The child was a Null Heretic. Probably.",
+		"rumor_ids": [
+			"r_god_questions",
+			"r_second_draft"
+		]
+	}
+]

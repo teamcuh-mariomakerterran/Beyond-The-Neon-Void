@@ -23,6 +23,8 @@ extends Resource
 @export var hazard_penalty: float = 15.0
 ## Bonus per % of the target's HP missing — focus fire on the wounded.
 @export var focus_fire: float = 0.15
+## How hard to close distance when nothing is in reach this turn.
+@export var approach_weight: float = 3.0
 ## Plan B (act, then move) is allowed.
 @export var hit_and_run: bool = true
 
@@ -69,8 +71,18 @@ func plan_turn(unit: Node, battle: Node) -> Dictionary:
 	var best := {"move_to": origin, "ability": null, "target_cell": origin, "act_first": false, "score": -INF}
 
 	# Plan A: move, then act.
+	var acts := {}
+	var any_action := false
 	for c in moves:
-		var act := _best_action_from(unit, c, abilities, grid)
+		acts[c] = _best_action_from(unit, c, abilities, grid)
+		if acts[c]["ability"] != null and acts[c]["score"] > 1.0:
+			any_action = true
+	# Nothing in reach anywhere: march toward the enemy instead of idling in cover.
+	if not any_action and not foes.is_empty():
+		for c in moves:
+			pos_scores[c] -= approach_weight * _nearest_dist(c, foes)
+	for c in moves:
+		var act: Dictionary = acts[c]
 		var total: float = pos_scores[c] + act["score"]
 		if total > best["score"]:
 			best = {"move_to": c, "ability": act["ability"], "target_cell": act["cell"], "act_first": false, "score": total}
@@ -131,6 +143,17 @@ func score_action(unit: Node, ability: Ability, from_cell: Vector2i, target_cell
 			continue
 		if not ability.affects_unit(unit, u):
 			continue
+		var damaging := ability.kind in [Ability.Kind.ATTACK, Ability.Kind.MAGIC]
+		if not damaging:
+			# Buffs on friends / debuffs on foes are good; the reverse is bad.
+			var helpful := same_team != ability.is_offensive()
+			var sv := status_value * ability.status_chance * maxi(ability.status_ids.size(), 1)
+			if ability.special != "":
+				sv += status_value
+			if same_team and not ability.status_ids.is_empty() and _already_has_all(u, ability.status_ids):
+				sv = 0.0  # don't re-buff
+			score += sv if helpful else -sv
+			continue
 		var f := DamageCalculator.forecast(unit, u, ability, grid)
 		var value := float(f["hit"]) * float(f["damage"]) * aggression
 		if f["kill"]:
@@ -140,8 +163,8 @@ func score_action(unit: Node, ability: Ability, from_cell: Vector2i, target_cell
 		if not ability.status_ids.is_empty():
 			value += status_value * ability.status_chance * float(f["hit"]) * ability.status_ids.size()
 		score += -value * 1.5 if same_team else value
-	if ability.kind in [Ability.Kind.BUFF, Ability.Kind.UTILITY, Ability.Kind.SPECIAL] and score == 0.0 and not ability.status_ids.is_empty():
-		score = status_value * 0.5
+	if ability.special in ["summon", "summon_droid", "reanimate", "revive"]:
+		score += status_value * 2.5  # extra bodies on the field are worth a lot
 	# Cheap actions are preferred when values tie.
 	score -= ability.mp_cost * 0.05 + ability.charge_ticks * 0.3
 	return score
@@ -200,6 +223,13 @@ func grid_units(grid: IsometricGrid) -> Array[Node]:
 		if u:
 			out.append(u)
 	return out
+
+
+static func _already_has_all(u: Node, ids: Array[String]) -> bool:
+	for id in ids:
+		if not u.has_status(id):
+			return false
+	return true
 
 
 static func _any_unit_near(cell: Vector2i, radius: int, units: Array[Node]) -> bool:

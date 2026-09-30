@@ -1,0 +1,307 @@
+[
+	{
+		"id": "card_ace_of_sparks",
+		"display_name": "Ace of Sparks",
+		"rarity": "COMMON",
+		"description": "Electric bolt.",
+		"price": 120,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "MAGIC",
+		"power": 1.5,
+		"scaling_stat": "magic",
+		"damage_type": "electric",
+		"range_min": 1,
+		"range_max": 4,
+		"status_ids": [
+			"shocked"
+		],
+		"status_chance": 0.3
+	},
+	{
+		"id": "card_two_of_knives",
+		"display_name": "Two of Knives",
+		"rarity": "COMMON",
+		"description": "Twin hard-light blades.",
+		"price": 100,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"power": 1.6,
+		"range_min": 1,
+		"range_max": 3
+	},
+	{
+		"id": "card_queen_of_mending",
+		"display_name": "Queen of Mending",
+		"rarity": "UNCOMMON",
+		"description": "Big single heal.",
+		"price": 220,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "HEAL",
+		"target": "ALLY",
+		"power": 1.8,
+		"scaling_stat": "magic",
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "card_king_of_walls",
+		"display_name": "King of Walls",
+		"rarity": "UNCOMMON",
+		"description": "Fortify an ally.",
+		"price": 180,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "BUFF",
+		"target": "ALLY",
+		"status_ids": [
+			"fortified"
+		],
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "card_jack_of_haste",
+		"display_name": "Jack of Haste",
+		"rarity": "UNCOMMON",
+		"description": "Haste an ally.",
+		"price": 200,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "BUFF",
+		"target": "ALLY",
+		"status_ids": [
+			"haste"
+		],
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "card_joker_static",
+		"display_name": "The Static Joker",
+		"rarity": "RARE",
+		"description": "Stuns a cluster, maybe.",
+		"price": 400,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "DEBUFF",
+		"status_ids": [
+			"stun"
+		],
+		"status_chance": 0.4,
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 1,
+		"range_max": 4
+	},
+	{
+		"id": "card_nine_of_embers",
+		"display_name": "Nine of Embers",
+		"rarity": "COMMON",
+		"description": "Plasma burst.",
+		"price": 140,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "MAGIC",
+		"power": 1.3,
+		"scaling_stat": "magic",
+		"damage_type": "plasma",
+		"shape": "DIAMOND",
+		"aoe_radius": 1,
+		"range_min": 1,
+		"range_max": 4,
+		"status_ids": [
+			"burning"
+		],
+		"status_chance": 0.3
+	},
+	{
+		"id": "card_last_call",
+		"display_name": "Last Call",
+		"rarity": "RARE",
+		"description": "Full party regen.",
+		"price": 420,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "BUFF",
+		"target": "ALLY",
+		"status_ids": [
+			"regen"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 3,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "card_dead_mans_hand",
+		"display_name": "Dead Man's Hand",
+		"rarity": "EPIC",
+		"description": "Revive a fallen ally at 50%.",
+		"price": 900,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "UTILITY",
+		"target": "TILE",
+		"special": "revive",
+		"params": {
+			"hp_pct": 0.5
+		},
+		"range_min": 0,
+		"range_max": 4
+	},
+	{
+		"id": "card_house_of_cards",
+		"display_name": "House of Cards",
+		"rarity": "EPIC",
+		"description": "Huge AoE, deals itself in.",
+		"price": 800,
+		"is_late_game": false,
+		"crafting_materials": {},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "MAGIC",
+		"power": 2.2,
+		"scaling_stat": "magic",
+		"damage_type": "tech",
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 1,
+		"range_max": 5
+	},
+	{
+		"id": "card_mirror_gospel",
+		"display_name": "The Mirror Gospel",
+		"rarity": "LEGENDARY",
+		"description": "Every face casts two shadows: hits the target and everyone who looks like them (all enemies of its class... in spirit). Massive essence blast.",
+		"price": 0,
+		"is_late_game": true,
+		"crafting_materials": {
+			"mat_null_wafer": 1,
+			"mat_nyx_crystal": 2,
+			"mat_neon_ink": 3
+		},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "MAGIC",
+		"power": 2.8,
+		"scaling_stat": "magic",
+		"damage_type": "essence",
+		"shape": "DIAMOND",
+		"aoe_radius": 2,
+		"range_min": 1,
+		"range_max": 6
+	},
+	{
+		"id": "card_first_checksum",
+		"display_name": "The First Checksum",
+		"rarity": "LEGENDARY",
+		"description": "Cleanses and fully fortifies the whole party.",
+		"price": 0,
+		"is_late_game": true,
+		"crafting_materials": {
+			"mat_pioneer_shell": 1,
+			"mat_archive_fragment": 4,
+			"mat_neon_ink": 3
+		},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "BUFF",
+		"target": "ALLY",
+		"status_ids": [
+			"fortified",
+			"inspired",
+			"haste"
+		],
+		"shape": "DIAMOND",
+		"aoe_radius": 4,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "card_mercy_cache",
+		"display_name": "The Mercy Cache",
+		"rarity": "LEGENDARY",
+		"description": "Heals everyone on the field. Everyone.",
+		"price": 0,
+		"is_late_game": true,
+		"crafting_materials": {
+			"mat_essence_shard": 3,
+			"mat_nyx_crystal": 1,
+			"mat_neon_ink": 3
+		},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "HEAL",
+		"target": "ALLY",
+		"power": 2.5,
+		"scaling_stat": "magic",
+		"shape": "DIAMOND",
+		"aoe_radius": 5,
+		"range_min": 0,
+		"range_max": 0
+	},
+	{
+		"id": "card_crown_error",
+		"display_name": "The Crown Error",
+		"rarity": "LEGENDARY",
+		"description": "Stops every enemy in a wide area.",
+		"price": 0,
+		"is_late_game": true,
+		"crafting_materials": {
+			"mat_null_wafer": 2,
+			"mat_neon_ink": 3
+		},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "DEBUFF",
+		"status_ids": [
+			"stop"
+		],
+		"status_chance": 0.7,
+		"shape": "DIAMOND",
+		"aoe_radius": 3,
+		"range_min": 1,
+		"range_max": 5
+	},
+	{
+		"id": "card_blank_census",
+		"display_name": "The Blank Census",
+		"rarity": "LEGENDARY",
+		"description": "Erases a target from the record. Enormous single-target damage.",
+		"price": 0,
+		"is_late_game": true,
+		"crafting_materials": {
+			"mat_pioneer_shell": 1,
+			"mat_null_wafer": 1,
+			"mat_neon_ink": 3
+		},
+		"class_id": "",
+		"ap_cost": 1,
+		"kind": "MAGIC",
+		"power": 4.5,
+		"scaling_stat": "magic",
+		"damage_type": "void",
+		"range_min": 1,
+		"range_max": 6
+	}
+]

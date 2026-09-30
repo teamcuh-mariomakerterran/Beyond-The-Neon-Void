@@ -16,6 +16,7 @@ func _init() -> void:
 	preferred_distance = ideal_distance
 	distance_weight = 2.0
 	hit_and_run = true
+	approach_weight = 1.5
 
 
 func score_position(unit: Node, c: Vector2i, grid: IsometricGrid, foes: Array[Node], friends: Array[Node], threat: Dictionary) -> float:

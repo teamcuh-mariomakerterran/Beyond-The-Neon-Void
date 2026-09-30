@@ -22,6 +22,8 @@ func _resolve_special(ctx: Context) -> void:
 			changed = _warp(ctx)
 		"terrain.hazard":
 			changed = _hazard(ctx)
+		"terrain.geomancy":
+			_geomancy(ctx)
 	if not changed.is_empty():
 		EventBus.grid_changed.emit(changed)
 		EventBus.camera_shake.emit(4.0, 0.25)
@@ -70,6 +72,30 @@ func _warp(ctx: Context) -> Array[Vector2i]:
 		ub.force_move(a, ctx.battle.animate)
 	EventBus.play_sfx.emit("warp")
 	return [a, b] as Array[Vector2i]
+
+
+## Grid Geomancer: the ground under the TARGET decides the extra effect.
+const GEOMANCY := {
+	"metal_grate": ["electric", "shocked"],
+	"coolant": ["cryo", "slow"],
+	"neon_sign": ["plasma", "burning"],
+	"essence_pool": ["essence", "essence_bleed"],
+	"rubble": ["kinetic", "knockdown"],
+	"glass": ["plasma", "blinded"],
+}
+
+
+func _geomancy(ctx: Context) -> void:
+	var cell := ctx.grid.get_cell(ctx.target_cell)
+	var target: Node = ctx.grid.get_occupant(ctx.target_cell)
+	if cell == null or target == null or not target.is_alive():
+		return
+	var entry: Array = GEOMANCY.get(cell.terrain, ["kinetic", ""])
+	var dmg := roundi(ctx.caster.get_stat("magic") * power * 0.6 * target.element_mult(entry[0]))
+	var dealt: int = target.take_damage(maxi(dmg, 1))
+	ctx.log_result(target, "damage", dealt)
+	if entry[1] != "" and ctx.rng.randf() < 0.4:
+		target.apply_status(entry[1], ctx.caster)
 
 
 func _hazard(ctx: Context) -> Array[Vector2i]:

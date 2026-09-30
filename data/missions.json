@@ -1,0 +1,114 @@
+[
+	{
+		"id": "m01_the_brew_plan",
+		"display_name": "The Brew Plan",
+		"chapter": 1,
+		"map_id": "supply_works_dock",
+		"music_id": "battle_supply_works",
+		"briefing": "Step one: get into the Supply Works. Step two: something something explosion. Step three: two days off. The Wardens on the loading dock didn't get the memo.",
+		"enemies": [
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					10,
+					2
+				],
+				"level": 2
+			},
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					8,
+					9
+				],
+				"level": 2
+			},
+			{
+				"character_id": "factory_marksman",
+				"cell": [
+					11,
+					4
+				],
+				"level": 2
+			},
+			{
+				"character_id": "munitions_drone",
+				"cell": [
+					10,
+					10
+				],
+				"level": 2
+			}
+		],
+		"win_condition": "defeat_all",
+		"soul_coin_reward": 250,
+		"xp_reward": 140,
+		"loot_table_id": "loot_supply_works",
+		"microchip_reward": 2,
+		"story_flags_on_win": [
+			"m01_done"
+		],
+		"unlocks_mission_ids": [
+			"m02_shift_change"
+		]
+	},
+	{
+		"id": "m02_shift_change",
+		"display_name": "Shift Change",
+		"chapter": 1,
+		"map_id": "gutter_alley",
+		"music_id": "battle_alley",
+		"briefing": "The Foreman followed the crew home. He wants his crate back. He wants his quota back. He mostly wants someone to yell at.",
+		"enemies": [
+			{
+				"character_id": "foreman_grisk",
+				"cell": [
+					4,
+					1
+				],
+				"level": 5
+			},
+			{
+				"character_id": "choir_enforcer",
+				"cell": [
+					6,
+					0
+				],
+				"level": 3
+			},
+			{
+				"character_id": "cantor_adept",
+				"cell": [
+					3,
+					0
+				],
+				"level": 3
+			},
+			{
+				"character_id": "essence_wraith",
+				"cell": [
+					7,
+					2
+				],
+				"level": 3
+			},
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					1,
+					1
+				],
+				"level": 3
+			}
+		],
+		"win_condition": "defeat_target",
+		"win_param": "foreman_grisk",
+		"soul_coin_reward": 400,
+		"xp_reward": 220,
+		"loot_table_id": "loot_supply_works",
+		"microchip_reward": 3,
+		"story_flags_on_win": [
+			"m02_done"
+		]
+	}
+]

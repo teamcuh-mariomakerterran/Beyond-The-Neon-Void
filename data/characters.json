@@ -1,0 +1,427 @@
+[
+	{
+		"id": "rook",
+		"display_name": "Rook Dannick",
+		"class_id": "chrome_warrior",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Ringleader. Talks like he planned it. He didn't plan it.",
+		"base_stats": {
+			"strength": 13,
+			"agility": 10,
+			"intelligence": 8,
+			"vitality": 13,
+			"level": 2
+		},
+		"weapon_specialties": [
+			"sword"
+		],
+		"equipment": {
+			"weapon": "wpn_sword_1",
+			"armor": "arm_work_jacket"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "mags",
+		"display_name": "Mags Orrowin",
+		"class_id": "laser_archer",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Munitions-line lifer. Knows every blind spot in the Supply Works.",
+		"base_stats": {
+			"strength": 10,
+			"agility": 13,
+			"intelligence": 9,
+			"vitality": 10,
+			"level": 2
+		},
+		"weapon_specialties": [
+			"laser_gun"
+		],
+		"equipment": {
+			"weapon": "wpn_laser_gun_1",
+			"armor": "arm_work_jacket"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "dizzy",
+		"display_name": "Dez 'Dizzy' Kettleby",
+		"class_id": "blackcode_mage",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Writes forbidden code on bar napkins. Allergic to consequences.",
+		"base_stats": {
+			"strength": 7,
+			"agility": 10,
+			"intelligence": 14,
+			"vitality": 8,
+			"level": 2
+		},
+		"weapon_specialties": [
+			"staff"
+		],
+		"equipment": {
+			"weapon": "wpn_staff_1",
+			"armor": "arm_work_jacket"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "brannoc",
+		"display_name": "Brannoc 'Tap' Hollis",
+		"class_id": "chrome_warrior",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Enormous. Gentle. Cries at the jukebox. Punches very hard.",
+		"base_stats": {
+			"strength": 14,
+			"agility": 8,
+			"intelligence": 7,
+			"vitality": 14,
+			"level": 2
+		},
+		"weapon_specialties": [
+			"knuckles"
+		],
+		"equipment": {
+			"weapon": "wpn_knuckles_1",
+			"armor": "arm_work_jacket"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "patch",
+		"display_name": "Juniper 'Patch' Oyelaran",
+		"class_id": "whitelight_medic",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Patches the crew up in the back room. The only one who reads labels.",
+		"base_stats": {
+			"strength": 8,
+			"agility": 10,
+			"intelligence": 13,
+			"vitality": 10,
+			"level": 2
+		},
+		"weapon_specialties": [
+			"rod"
+		],
+		"equipment": {
+			"weapon": "wpn_rod_1",
+			"armor": "arm_work_jacket"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "drunken_oracle",
+		"display_name": "The Drunken Oracle",
+		"class_id": "static_oracle",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Sits at the end of the bar. Knows things. Never pays.",
+		"base_stats": {
+			"strength": 9,
+			"agility": 11,
+			"intelligence": 16,
+			"vitality": 10,
+			"level": 8
+		},
+		"weapon_specialties": [
+			"codex"
+		],
+		"equipment": {
+			"weapon": "wpn_codex_2"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": [
+			"archive_blindness"
+		]
+	},
+	{
+		"id": "sly_deck",
+		"display_name": "Sly Cassivar",
+		"class_id": "deck_stacker",
+		"team": 0,
+		"is_unique": true,
+		"bio": "Card dealer at the back table. Cheats. Admits it.",
+		"base_stats": {
+			"strength": 10,
+			"agility": 13,
+			"intelligence": 13,
+			"vitality": 9,
+			"level": 6
+		},
+		"weapon_specialties": [
+			"deck"
+		],
+		"equipment": {},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": [],
+		"deck": {
+			"pool": [
+				"card_ace_of_sparks",
+				"card_two_of_knives",
+				"card_queen_of_mending",
+				"card_jack_of_haste",
+				"card_nine_of_embers"
+			],
+			"active": [
+				"card_ace_of_sparks",
+				"card_two_of_knives",
+				"card_queen_of_mending",
+				"card_jack_of_haste",
+				"card_nine_of_embers"
+			]
+		}
+	},
+	{
+		"id": "droid_assault",
+		"display_name": "Droid Assault",
+		"class_id": "droid_assault_chassis",
+		"team": 0,
+		"is_unique": false,
+		"bio": "Built on the field.",
+		"base_stats": {
+			"strength": 12,
+			"agility": 11,
+			"intelligence": 6,
+			"vitality": 11,
+			"level": 1
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "aggressive",
+		"learned_ability_ids": [],
+		"ai_controlled": true
+	},
+	{
+		"id": "droid_bulwark",
+		"display_name": "Droid Bulwark",
+		"class_id": "droid_bulwark_chassis",
+		"team": 0,
+		"is_unique": false,
+		"bio": "Built on the field.",
+		"base_stats": {
+			"strength": 9,
+			"agility": 7,
+			"intelligence": 6,
+			"vitality": 15,
+			"level": 1
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "support",
+		"learned_ability_ids": [],
+		"ai_controlled": true
+	},
+	{
+		"id": "droid_medic",
+		"display_name": "Droid Medic",
+		"class_id": "droid_medic_chassis",
+		"team": 0,
+		"is_unique": false,
+		"bio": "Built on the field.",
+		"base_stats": {
+			"strength": 6,
+			"agility": 10,
+			"intelligence": 12,
+			"vitality": 9,
+			"level": 1
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "support",
+		"learned_ability_ids": [],
+		"ai_controlled": true
+	},
+	{
+		"id": "droid_volt",
+		"display_name": "Droid Volt",
+		"class_id": "droid_volt_chassis",
+		"team": 0,
+		"is_unique": false,
+		"bio": "Built on the field.",
+		"base_stats": {
+			"strength": 6,
+			"agility": 10,
+			"intelligence": 13,
+			"vitality": 9,
+			"level": 1
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "cautious",
+		"learned_ability_ids": [],
+		"ai_controlled": true
+	},
+	{
+		"id": "sentry_turret",
+		"display_name": "Turret",
+		"class_id": "turret_chassis",
+		"team": 0,
+		"is_unique": false,
+		"bio": "Built on the field.",
+		"base_stats": {
+			"strength": 10,
+			"agility": 10,
+			"intelligence": 5,
+			"vitality": 11,
+			"level": 1
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "cautious",
+		"learned_ability_ids": [],
+		"ai_controlled": true
+	},
+	{
+		"id": "doctrine_warden",
+		"display_name": "Shift Warden",
+		"class_id": "doctrine_warden",
+		"team": 1,
+		"is_unique": false,
+		"bio": "",
+		"base_stats": {
+			"strength": 12,
+			"agility": 9,
+			"intelligence": 7,
+			"vitality": 13,
+			"level": 2
+		},
+		"weapon_specialties": [],
+		"equipment": {
+			"weapon": "wpn_baton_1"
+		},
+		"ai_behavior": "aggressive",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "choir_enforcer",
+		"display_name": "Choir Enforcer",
+		"class_id": "choir_enforcer",
+		"team": 1,
+		"is_unique": false,
+		"bio": "",
+		"base_stats": {
+			"strength": 14,
+			"agility": 10,
+			"intelligence": 8,
+			"vitality": 13,
+			"level": 4
+		},
+		"weapon_specialties": [],
+		"equipment": {
+			"weapon": "wpn_sword_1"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "cantor_adept",
+		"display_name": "Cantor Adept",
+		"class_id": "cantor_adept",
+		"team": 1,
+		"is_unique": false,
+		"bio": "",
+		"base_stats": {
+			"strength": 7,
+			"agility": 10,
+			"intelligence": 13,
+			"vitality": 9,
+			"level": 3
+		},
+		"weapon_specialties": [],
+		"equipment": {
+			"weapon": "wpn_codex_1"
+		},
+		"ai_behavior": "support",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "factory_marksman",
+		"display_name": "Factory Marksman",
+		"class_id": "factory_marksman",
+		"team": 1,
+		"is_unique": false,
+		"bio": "",
+		"base_stats": {
+			"strength": 11,
+			"agility": 12,
+			"intelligence": 7,
+			"vitality": 9,
+			"level": 3
+		},
+		"weapon_specialties": [],
+		"equipment": {
+			"weapon": "wpn_rifle_1"
+		},
+		"ai_behavior": "cautious",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "munitions_drone",
+		"display_name": "Munitions Drone",
+		"class_id": "munitions_drone_chassis",
+		"team": 1,
+		"is_unique": false,
+		"bio": "",
+		"base_stats": {
+			"strength": 8,
+			"agility": 12,
+			"intelligence": 11,
+			"vitality": 8,
+			"level": 2
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "cautious",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "essence_wraith",
+		"display_name": "Essence Wraith",
+		"class_id": "essence_wraith_chassis",
+		"team": 1,
+		"is_unique": false,
+		"bio": "",
+		"base_stats": {
+			"strength": 10,
+			"agility": 12,
+			"intelligence": 13,
+			"vitality": 9,
+			"level": 5
+		},
+		"weapon_specialties": [],
+		"equipment": {},
+		"ai_behavior": "aggressive",
+		"learned_ability_ids": []
+	},
+	{
+		"id": "foreman_grisk",
+		"display_name": "Foreman Grisk Harrowby",
+		"class_id": "foreman_chassis",
+		"team": 1,
+		"is_unique": true,
+		"bio": "Runs the Supply Works floor. Believes in the quota the way others believe in the Queen.",
+		"base_stats": {
+			"strength": 16,
+			"agility": 9,
+			"intelligence": 9,
+			"vitality": 16,
+			"level": 6
+		},
+		"weapon_specialties": [],
+		"equipment": {
+			"weapon": "wpn_heavy_blade_1"
+		},
+		"ai_behavior": "tactical",
+		"learned_ability_ids": []
+	}
+]

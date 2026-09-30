@@ -1,0 +1,946 @@
+{
+	"id": "supply_works_dock",
+	"name": "Supply Works — Loading Dock",
+	"width": 12,
+	"depth": 12,
+	"default_terrain": "concrete",
+	"tile_width": 64,
+	"tile_height": 32,
+	"height_step": 16,
+	"cells": [
+		{
+			"x": 0,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 2,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 4,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 0,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 0,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 0,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 1,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 2,
+			"h": 0,
+			"t": "low_wall"
+		},
+		{
+			"x": 1,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 4,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 1,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 1,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 1,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 2,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 2,
+			"h": 0,
+			"t": "low_wall"
+		},
+		{
+			"x": 2,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 4,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 2,
+			"y": 9,
+			"h": 0,
+			"t": "neon_sign"
+		},
+		{
+			"x": 2,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 2,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 3,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 2,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 4,
+			"h": 1,
+			"t": "crate"
+		},
+		{
+			"x": 3,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 7,
+			"h": 1,
+			"t": "crate"
+		},
+		{
+			"x": 3,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 3,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 3,
+			"y": 10,
+			"h": 0,
+			"t": "neon_sign"
+		},
+		{
+			"x": 3,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 4,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 2,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 4,
+			"h": 1,
+			"t": "crate"
+		},
+		{
+			"x": 4,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 4,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 4,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 4,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 5,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 2,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 4,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 5,
+			"h": 0,
+			"t": "low_wall"
+		},
+		{
+			"x": 5,
+			"y": 6,
+			"h": 0,
+			"t": "low_wall"
+		},
+		{
+			"x": 5,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 5,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 5,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 5,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 6,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 6,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 6,
+			"y": 2,
+			"h": 1,
+			"t": "crate"
+		},
+		{
+			"x": 6,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 6,
+			"y": 4,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 6,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 6,
+			"y": 6,
+			"h": 0,
+			"t": "coolant"
+		},
+		{
+			"x": 6,
+			"y": 7,
+			"h": 0,
+			"t": "coolant"
+		},
+		{
+			"x": 6,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 6,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 6,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 6,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 7,
+			"y": 0,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 1,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 2,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 3,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 4,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 5,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 6,
+			"h": 0,
+			"t": "coolant"
+		},
+		{
+			"x": 7,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 7,
+			"y": 8,
+			"h": 1,
+			"t": "crate"
+		},
+		{
+			"x": 7,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 7,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 7,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 0,
+			"h": 1,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 1,
+			"h": 1,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 2,
+			"h": 1,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 3,
+			"h": 1,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 4,
+			"h": 1,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 5,
+			"h": 1,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 8,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 8,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 8,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 8,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 9,
+			"y": 0,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 9,
+			"y": 1,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 9,
+			"y": 2,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 9,
+			"y": 3,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 9,
+			"y": 4,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 9,
+			"y": 5,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 9,
+			"y": 6,
+			"h": 3,
+			"t": "pillar"
+		},
+		{
+			"x": 9,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 9,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 9,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 9,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 9,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 10,
+			"y": 0,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 10,
+			"y": 1,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 10,
+			"y": 2,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 10,
+			"y": 3,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 10,
+			"y": 4,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 10,
+			"y": 5,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 10,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 10,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 10,
+			"y": 8,
+			"h": 0,
+			"t": "rubble"
+		},
+		{
+			"x": 10,
+			"y": 9,
+			"h": 0,
+			"t": "rubble"
+		},
+		{
+			"x": 10,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 10,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 11,
+			"y": 0,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 11,
+			"y": 1,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 11,
+			"y": 2,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 11,
+			"y": 3,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 11,
+			"y": 4,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 11,
+			"y": 5,
+			"h": 3,
+			"t": "catwalk"
+		},
+		{
+			"x": 11,
+			"y": 6,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 11,
+			"y": 7,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 11,
+			"y": 8,
+			"h": 0,
+			"t": "concrete"
+		},
+		{
+			"x": 11,
+			"y": 9,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 11,
+			"y": 10,
+			"h": 0,
+			"t": "metal_grate"
+		},
+		{
+			"x": 11,
+			"y": 11,
+			"h": 0,
+			"t": "metal_grate"
+		}
+	],
+	"spawns": {
+		"player": [
+			[
+				1,
+				10
+			],
+			[
+				2,
+				11
+			],
+			[
+				0,
+				9
+			],
+			[
+				1,
+				11
+			],
+			[
+				0,
+				11
+			]
+		],
+		"enemy": [
+			[
+				10,
+				2
+			],
+			[
+				11,
+				4
+			],
+			[
+				9,
+				1
+			],
+			[
+				8,
+				9
+			],
+			[
+				10,
+				10
+			]
+		]
+	},
+	"props": [
+		{
+			"id": "prop_crate_a",
+			"cell": [
+				4,
+				4
+			],
+			"asset": "",
+			"loot_item_id": "con_neon_gin",
+			"found_text": "Wedged between shells: a bottle of Neon Gin. Somebody's shift stash.",
+			"empty_text": "Just shells. Live ones. Better not."
+		},
+		{
+			"id": "prop_crate_b",
+			"cell": [
+				7,
+				8
+			],
+			"asset": "",
+			"loot_item_id": "chip_microchip",
+			"found_text": "A microchip taped under the lid. 'FOR EMERGENCIES — G.'",
+			"empty_text": "Packing foam. It squeaks."
+		}
+	]
+}

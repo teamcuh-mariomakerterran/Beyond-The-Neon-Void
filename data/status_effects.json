@@ -1,0 +1,261 @@
+[
+	{
+		"id": "stun",
+		"display_name": "Stun",
+		"type": "DEBUFF",
+		"duration_turns": 1,
+		"description": "Loses their next action.",
+		"prevents_action": true
+	},
+	{
+		"id": "knockdown",
+		"display_name": "Knockdown",
+		"type": "DEBUFF",
+		"duration_turns": 1,
+		"description": "On the floor. Skips a turn.",
+		"prevents_action": true
+	},
+	{
+		"id": "stop",
+		"display_name": "Stop",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Frozen in the seven-second gap.",
+		"prevents_action": true,
+		"prevents_move": true
+	},
+	{
+		"id": "slow",
+		"display_name": "Slow",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Speed down.",
+		"stat_multipliers": {
+			"speed": 0.6
+		}
+	},
+	{
+		"id": "haste",
+		"display_name": "Haste",
+		"type": "BUFF",
+		"duration_turns": 3,
+		"description": "Speed up.",
+		"stat_multipliers": {
+			"speed": 1.5
+		}
+	},
+	{
+		"id": "fortified",
+		"display_name": "Fortified",
+		"type": "BUFF",
+		"duration_turns": 2,
+		"description": "Defense and resistance up.",
+		"stat_multipliers": {
+			"defense": 1.4,
+			"resistance": 1.25
+		}
+	},
+	{
+		"id": "inspired",
+		"display_name": "Inspired",
+		"type": "BUFF",
+		"duration_turns": 2,
+		"description": "Attack and magic up.",
+		"stat_multipliers": {
+			"attack": 1.25,
+			"magic": 1.25
+		}
+	},
+	{
+		"id": "focused",
+		"display_name": "Focused",
+		"type": "BUFF",
+		"duration_turns": 2,
+		"description": "Accuracy and crit up.",
+		"stat_flat": {
+			"accuracy": 15,
+			"crit": 15
+		}
+	},
+	{
+		"id": "exposed",
+		"display_name": "Exposed",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Evasion and defense down.",
+		"stat_multipliers": {
+			"evasion": 0.5,
+			"defense": 0.8
+		}
+	},
+	{
+		"id": "short_circuit",
+		"display_name": "Short Circuit",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Defense and resistance down.",
+		"stat_multipliers": {
+			"defense": 0.7,
+			"resistance": 0.7
+		}
+	},
+	{
+		"id": "demoralized",
+		"display_name": "Demoralized",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Attack and magic down.",
+		"stat_multipliers": {
+			"attack": 0.75,
+			"magic": 0.75
+		}
+	},
+	{
+		"id": "blinded",
+		"display_name": "Archive Blindness",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Targeting memory wiped. Accuracy down.",
+		"stat_flat": {
+			"accuracy": -25
+		}
+	},
+	{
+		"id": "identity_loss",
+		"display_name": "Identity Loss",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Forgets why they're fighting. Accuracy and evasion down.",
+		"stat_flat": {
+			"accuracy": -15,
+			"evasion": -10
+		}
+	},
+	{
+		"id": "shocked",
+		"display_name": "Shocked",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Twitching servos. Speed and evasion down.",
+		"stat_multipliers": {
+			"speed": 0.75
+		},
+		"stat_flat": {
+			"evasion": -10
+		}
+	},
+	{
+		"id": "regen",
+		"display_name": "Regen",
+		"type": "BUFF",
+		"duration_turns": 3,
+		"description": "Heals 10% max HP each turn.",
+		"damage_per_turn_pct": -0.1
+	},
+	{
+		"id": "burning",
+		"display_name": "Burning",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Takes 6% max HP each turn.",
+		"damage_per_turn_pct": 0.06
+	},
+	{
+		"id": "essence_bleed",
+		"display_name": "Essence Bleed",
+		"type": "DEBUFF",
+		"duration_turns": 3,
+		"description": "Loses 5% max HP each turn.",
+		"damage_per_turn_pct": 0.05
+	},
+	{
+		"id": "fading",
+		"display_name": "Fading Echo",
+		"type": "NEUTRAL",
+		"duration_turns": 1,
+		"description": "A reanimated echo loses 12% max HP each turn until it's gone.",
+		"is_permanent": true,
+		"damage_per_turn_pct": 0.12
+	},
+	{
+		"id": "unstable",
+		"display_name": "Unstable",
+		"type": "DEBUFF",
+		"duration_turns": 3,
+		"description": "Walls and slams deal double damage."
+	},
+	{
+		"id": "delay_thread",
+		"display_name": "Delay Thread",
+		"type": "DEBUFF",
+		"duration_turns": 1,
+		"description": "Stitched damage lands when this turn begins."
+	},
+	{
+		"id": "stitched",
+		"display_name": "Stitched",
+		"type": "DEBUFF",
+		"duration_turns": 3,
+		"description": "Each of their turns gives the linked ally CT."
+	},
+	{
+		"id": "rewind_anchor",
+		"display_name": "Rewind Anchor",
+		"type": "BUFF",
+		"duration_turns": 2,
+		"description": "Snap back to the anchor point when this ends, or instead of dying."
+	},
+	{
+		"id": "charging",
+		"display_name": "Charging",
+		"type": "NEUTRAL",
+		"duration_turns": 1,
+		"description": "Channeling a charged ability.",
+		"is_permanent": true
+	},
+	{
+		"id": "hidden",
+		"display_name": "Hidden",
+		"type": "BUFF",
+		"duration_turns": 1,
+		"description": "Evasion way up.",
+		"stat_flat": {
+			"evasion": 40
+		}
+	},
+	{
+		"id": "dualcast",
+		"display_name": "Dualcast",
+		"type": "BUFF",
+		"duration_turns": 2,
+		"description": "+1 AP.",
+		"stat_flat": {
+			"max_ap": 1
+		}
+	},
+	{
+		"id": "berserk",
+		"display_name": "Berserk",
+		"type": "BUFF",
+		"duration_turns": 3,
+		"description": "Attack way up, defense way down.",
+		"stat_multipliers": {
+			"attack": 1.5,
+			"defense": 0.7
+		}
+	},
+	{
+		"id": "buzzed",
+		"display_name": "Buzzed",
+		"type": "BUFF",
+		"duration_turns": 2,
+		"description": "Liquid courage: attack and crit up, aim down.",
+		"stat_multipliers": {
+			"attack": 1.15
+		},
+		"stat_flat": {
+			"crit": 10,
+			"accuracy": -10
+		}
+	}
+]

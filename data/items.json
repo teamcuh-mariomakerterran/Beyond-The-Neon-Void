@@ -1,0 +1,1001 @@
+[
+	{
+		"id": "wpn_sword_1",
+		"display_name": "Rebar Sword",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "sword",
+		"stat_modifiers": {
+			"attack": 6
+		},
+		"stat_growth": {
+			"attack": 1.5
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_sword_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_sword_2",
+		"display_name": "Chrome Longsword",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "sword",
+		"stat_modifiers": {
+			"attack": 12
+		},
+		"stat_growth": {
+			"attack": 2.25
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_knuckles_1",
+		"display_name": "Brass Pistons",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "knuckles",
+		"stat_modifiers": {
+			"attack": 5,
+			"speed": 1
+		},
+		"stat_growth": {
+			"attack": 1.25,
+			"speed": 0.25
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_knuckles_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_knuckles_2",
+		"display_name": "Hydraulic Gauntlets",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "knuckles",
+		"stat_modifiers": {
+			"attack": 10,
+			"speed": 2
+		},
+		"stat_growth": {
+			"attack": 1.875,
+			"speed": 0.375
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_rod_1",
+		"display_name": "Glowrod",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "rod",
+		"stat_modifiers": {
+			"magic": 5
+		},
+		"stat_growth": {
+			"magic": 1.25
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_rod_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_rod_2",
+		"display_name": "Whitelight Scepter",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "rod",
+		"stat_modifiers": {
+			"magic": 10
+		},
+		"stat_growth": {
+			"magic": 1.875
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_staff_1",
+		"display_name": "Cable Staff",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "staff",
+		"stat_modifiers": {
+			"magic": 7
+		},
+		"stat_growth": {
+			"magic": 1.75
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_staff_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_staff_2",
+		"display_name": "Blackcode Staff",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "staff",
+		"stat_modifiers": {
+			"magic": 14
+		},
+		"stat_growth": {
+			"magic": 2.625
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_knife_1",
+		"display_name": "Box Cutter",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "knife",
+		"stat_modifiers": {
+			"attack": 4,
+			"crit": 5
+		},
+		"stat_growth": {
+			"attack": 1.0,
+			"crit": 1.25
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_knife_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_knife_2",
+		"display_name": "Monofilament Knife",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "knife",
+		"stat_modifiers": {
+			"attack": 8,
+			"crit": 10
+		},
+		"stat_growth": {
+			"attack": 1.5,
+			"crit": 1.875
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_laser_gun_1",
+		"display_name": "Mining Laser",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "laser_gun",
+		"stat_modifiers": {
+			"attack": 5
+		},
+		"stat_growth": {
+			"attack": 1.25
+		},
+		"weapon_range": 5,
+		"evolves_into": [
+			"wpn_laser_gun_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_laser_gun_2",
+		"display_name": "Photon Longbow",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "laser_gun",
+		"stat_modifiers": {
+			"attack": 10
+		},
+		"stat_growth": {
+			"attack": 1.875
+		},
+		"weapon_range": 5,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_injector_1",
+		"display_name": "Stim Pistol",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "injector",
+		"stat_modifiers": {
+			"attack": 3,
+			"magic": 3
+		},
+		"stat_growth": {
+			"attack": 0.75,
+			"magic": 0.75
+		},
+		"weapon_range": 3,
+		"evolves_into": [
+			"wpn_injector_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_injector_2",
+		"display_name": "Pneumatic Injector",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "injector",
+		"stat_modifiers": {
+			"attack": 6,
+			"magic": 6
+		},
+		"stat_growth": {
+			"attack": 1.125,
+			"magic": 1.125
+		},
+		"weapon_range": 3,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_katana_1",
+		"display_name": "Neon Katana",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "katana",
+		"stat_modifiers": {
+			"attack": 7,
+			"crit": 5
+		},
+		"stat_growth": {
+			"attack": 1.75,
+			"crit": 1.25
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_katana_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_katana_2",
+		"display_name": "Ion Nodachi",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "katana",
+		"stat_modifiers": {
+			"attack": 14,
+			"crit": 10
+		},
+		"stat_growth": {
+			"attack": 2.625,
+			"crit": 1.875
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_pistol_1",
+		"display_name": "Scrap Revolver",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "pistol",
+		"stat_modifiers": {
+			"attack": 6
+		},
+		"stat_growth": {
+			"attack": 1.5
+		},
+		"weapon_range": 5,
+		"evolves_into": [
+			"wpn_pistol_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_pistol_2",
+		"display_name": "Chrome Six",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "pistol",
+		"stat_modifiers": {
+			"attack": 12
+		},
+		"stat_growth": {
+			"attack": 2.25
+		},
+		"weapon_range": 5,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_cyberdeck_1",
+		"display_name": "Busted Cyberdeck",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "cyberdeck",
+		"stat_modifiers": {
+			"magic": 6
+		},
+		"stat_growth": {
+			"magic": 1.5
+		},
+		"weapon_range": 3,
+		"evolves_into": [
+			"wpn_cyberdeck_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_cyberdeck_2",
+		"display_name": "Blacklist Deck",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "cyberdeck",
+		"stat_modifiers": {
+			"magic": 12
+		},
+		"stat_growth": {
+			"magic": 2.25
+		},
+		"weapon_range": 3,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_wrench_1",
+		"display_name": "Pipe Wrench",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "wrench",
+		"stat_modifiers": {
+			"attack": 4,
+			"magic": 3
+		},
+		"stat_growth": {
+			"attack": 1.0,
+			"magic": 0.75
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_wrench_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_wrench_2",
+		"display_name": "Torque Driver",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "wrench",
+		"stat_modifiers": {
+			"attack": 8,
+			"magic": 6
+		},
+		"stat_growth": {
+			"attack": 1.5,
+			"magic": 1.125
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_controller_1",
+		"display_name": "Remote Controller",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "controller",
+		"stat_modifiers": {
+			"magic": 6
+		},
+		"stat_growth": {
+			"magic": 1.5
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_controller_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_controller_2",
+		"display_name": "Swarm Uplink",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "controller",
+		"stat_modifiers": {
+			"magic": 12
+		},
+		"stat_growth": {
+			"magic": 2.25
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_lance_1",
+		"display_name": "Rebar Pike",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "lance",
+		"stat_modifiers": {
+			"attack": 7
+		},
+		"stat_growth": {
+			"attack": 1.75
+		},
+		"weapon_range": 2,
+		"evolves_into": [
+			"wpn_lance_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_lance_2",
+		"display_name": "Jumpjet Lance",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "lance",
+		"stat_modifiers": {
+			"attack": 14
+		},
+		"stat_growth": {
+			"attack": 2.625
+		},
+		"weapon_range": 2,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_heavy_blade_1",
+		"display_name": "Scrap Cleaver",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "heavy_blade",
+		"stat_modifiers": {
+			"attack": 9,
+			"speed": -1
+		},
+		"stat_growth": {
+			"attack": 2.25
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_heavy_blade_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_heavy_blade_2",
+		"display_name": "Void Greatsword",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "heavy_blade",
+		"stat_modifiers": {
+			"attack": 18,
+			"speed": -2
+		},
+		"stat_growth": {
+			"attack": 3.375
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_synth_1",
+		"display_name": "Pawnshop Keytar",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "synth",
+		"stat_modifiers": {
+			"magic": 5
+		},
+		"stat_growth": {
+			"magic": 1.25
+		},
+		"weapon_range": 3,
+		"evolves_into": [
+			"wpn_synth_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_synth_2",
+		"display_name": "Anthem Synth",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "synth",
+		"stat_modifiers": {
+			"magic": 10
+		},
+		"stat_growth": {
+			"magic": 1.875
+		},
+		"weapon_range": 3,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_ribbon_1",
+		"display_name": "Holo Ribbon",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "ribbon",
+		"stat_modifiers": {
+			"magic": 4,
+			"evasion": 5
+		},
+		"stat_growth": {
+			"magic": 1.0,
+			"evasion": 1.25
+		},
+		"weapon_range": 2,
+		"evolves_into": [
+			"wpn_ribbon_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_ribbon_2",
+		"display_name": "Strobe Ribbon",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "ribbon",
+		"stat_modifiers": {
+			"magic": 8,
+			"evasion": 10
+		},
+		"stat_growth": {
+			"magic": 1.5,
+			"evasion": 1.875
+		},
+		"weapon_range": 2,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_rifle_1",
+		"display_name": "Catwalk Rifle",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "rifle",
+		"stat_modifiers": {
+			"attack": 7
+		},
+		"stat_growth": {
+			"attack": 1.75
+		},
+		"weapon_range": 7,
+		"evolves_into": [
+			"wpn_rifle_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_rifle_2",
+		"display_name": "Rail Rifle",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "rifle",
+		"stat_modifiers": {
+			"attack": 14
+		},
+		"stat_growth": {
+			"attack": 2.625
+		},
+		"weapon_range": 7,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_codex_1",
+		"display_name": "Cracked Codex",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "codex",
+		"stat_modifiers": {
+			"magic": 7
+		},
+		"stat_growth": {
+			"magic": 1.75
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_codex_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_codex_2",
+		"display_name": "Dead-Channel Codex",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "codex",
+		"stat_modifiers": {
+			"magic": 14
+		},
+		"stat_growth": {
+			"magic": 2.625
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_shield_1",
+		"display_name": "Riot Shield",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "shield",
+		"stat_modifiers": {
+			"defense": 6
+		},
+		"stat_growth": {
+			"defense": 1.5
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_shield_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_shield_2",
+		"display_name": "Hard-Light Aegis",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "shield",
+		"stat_modifiers": {
+			"defense": 12
+		},
+		"stat_growth": {
+			"defense": 2.25
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "wpn_baton_1",
+		"display_name": "Stun Baton",
+		"category": "WEAPON",
+		"value": 150,
+		"description": "",
+		"equip_type": "baton",
+		"stat_modifiers": {
+			"attack": 5
+		},
+		"stat_growth": {
+			"attack": 1.25
+		},
+		"weapon_range": 1,
+		"evolves_into": [
+			"wpn_baton_2"
+		],
+		"rarity": "COMMON"
+	},
+	{
+		"id": "wpn_baton_2",
+		"display_name": "Warden's Maul",
+		"category": "WEAPON",
+		"value": 900,
+		"description": "",
+		"equip_type": "baton",
+		"stat_modifiers": {
+			"attack": 10
+		},
+		"stat_growth": {
+			"attack": 1.875
+		},
+		"weapon_range": 1,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "arm_work_jacket",
+		"display_name": "Work Jacket",
+		"category": "ARMOR",
+		"value": 100,
+		"description": "Factory issue. Smells like the line.",
+		"equip_type": "light",
+		"stat_modifiers": {
+			"defense": 3,
+			"max_hp": 10
+		},
+		"stat_growth": {
+			"defense": 0.3,
+			"max_hp": 2
+		}
+	},
+	{
+		"id": "arm_riot_plate",
+		"display_name": "Riot Plate",
+		"category": "ARMOR",
+		"value": 400,
+		"description": "",
+		"equip_type": "heavy",
+		"stat_modifiers": {
+			"defense": 8,
+			"max_hp": 25,
+			"speed": -1
+		},
+		"stat_growth": {
+			"defense": 0.6,
+			"max_hp": 4
+		}
+	},
+	{
+		"id": "arm_signal_cloak",
+		"display_name": "Signal Cloak",
+		"category": "ARMOR",
+		"value": 350,
+		"description": "",
+		"equip_type": "light",
+		"stat_modifiers": {
+			"defense": 3,
+			"evasion": 8
+		},
+		"stat_growth": {
+			"evasion": 0.3
+		}
+	},
+	{
+		"id": "arm_cantor_robe",
+		"display_name": "Stolen Cantor Robe",
+		"category": "ARMOR",
+		"value": 380,
+		"description": "",
+		"equip_type": "light",
+		"stat_modifiers": {
+			"resistance": 6,
+			"max_mp": 15
+		},
+		"stat_growth": {
+			"resistance": 0.4,
+			"max_mp": 2
+		}
+	},
+	{
+		"id": "acc_bottle_cap_charm",
+		"display_name": "Bottle-Cap Charm",
+		"category": "ACCESSORY",
+		"value": 80,
+		"description": "Lucky. Allegedly.",
+		"stat_modifiers": {
+			"crit": 5
+		}
+	},
+	{
+		"id": "acc_jump_boots",
+		"display_name": "Jump Boots",
+		"category": "ACCESSORY",
+		"value": 500,
+		"description": "",
+		"stat_modifiers": {
+			"jump": 2,
+			"move": 1
+		}
+	},
+	{
+		"id": "acc_neural_shunt",
+		"display_name": "Neural Shunt",
+		"category": "ACCESSORY",
+		"value": 450,
+		"description": "",
+		"stat_modifiers": {
+			"magic": 4,
+			"max_mp": 10
+		}
+	},
+	{
+		"id": "acc_shift_badge",
+		"display_name": "Stolen Shift Badge",
+		"category": "TRINKET",
+		"value": 60,
+		"description": "Opens some doors. Closes others.",
+		"stat_modifiers": {
+			"speed": 1
+		}
+	},
+	{
+		"id": "con_neon_gin",
+		"display_name": "Neon Gin",
+		"category": "CONSUMABLE",
+		"value": 50,
+		"description": "Glows going down. Heals 40 HP.",
+		"heal_hp": 40
+	},
+	{
+		"id": "con_cyber_sake",
+		"display_name": "Cyber-Sake",
+		"category": "CONSUMABLE",
+		"value": 120,
+		"description": "Traditional brew, digital aftertaste. Heals 120 HP.",
+		"heal_hp": 120
+	},
+	{
+		"id": "con_void_vodka",
+		"display_name": "Void Vodka",
+		"category": "CONSUMABLE",
+		"value": 400,
+		"description": "Erases all pain and several memories. Full heal, cures all.",
+		"heal_hp": 9999,
+		"cure_status_ids": [
+			"burning",
+			"essence_bleed",
+			"slow",
+			"shocked",
+			"blinded",
+			"identity_loss"
+		]
+	},
+	{
+		"id": "con_synth_stew",
+		"display_name": "Synth Stew",
+		"category": "CONSUMABLE",
+		"value": 60,
+		"description": "Restores 30 MP. Don't ask what's in it.",
+		"heal_mp": 30
+	},
+	{
+		"id": "con_detox_patch",
+		"display_name": "Detox Patch",
+		"category": "CONSUMABLE",
+		"value": 40,
+		"description": "Cures burning, bleed and blindness.",
+		"cure_status_ids": [
+			"burning",
+			"essence_bleed",
+			"blinded"
+		]
+	},
+	{
+		"id": "mat_scrap_wire",
+		"display_name": "Scrap Wire",
+		"category": "MATERIAL",
+		"value": 5,
+		"description": "Junk. Sells for pennies.",
+		"material_grade": 0,
+		"rarity": "COMMON"
+	},
+	{
+		"id": "mat_dead_battery",
+		"display_name": "Dead Battery",
+		"category": "MATERIAL",
+		"value": 5,
+		"description": "Junk. Still tingles.",
+		"material_grade": 0,
+		"rarity": "COMMON"
+	},
+	{
+		"id": "mat_corrupted_wafer",
+		"display_name": "Corrupted Wafer",
+		"category": "MATERIAL",
+		"value": 8,
+		"description": "Junk. Somebody's memory, unreadable.",
+		"material_grade": 0,
+		"rarity": "COMMON"
+	},
+	{
+		"id": "mat_memory_core",
+		"display_name": "Memory Core",
+		"category": "MATERIAL",
+		"value": 40,
+		"description": "Common salvage. Good for gear XP.",
+		"material_grade": 1,
+		"rarity": "COMMON"
+	},
+	{
+		"id": "mat_dream_battery",
+		"display_name": "Dream Battery",
+		"category": "MATERIAL",
+		"value": 45,
+		"description": "Common. Hums a hymn when charged.",
+		"material_grade": 1,
+		"rarity": "COMMON"
+	},
+	{
+		"id": "mat_neon_ink",
+		"display_name": "Neon Ink",
+		"category": "MATERIAL",
+		"value": 60,
+		"description": "For card crafting.",
+		"material_grade": 1,
+		"rarity": "COMMON"
+	},
+	{
+		"id": "mat_archive_fragment",
+		"display_name": "Archive Fragment",
+		"category": "MATERIAL",
+		"value": 150,
+		"description": "Uncommon. Library-grade data shard.",
+		"material_grade": 2,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "mat_warframe_plating",
+		"display_name": "War-Frame Plating",
+		"category": "MATERIAL",
+		"value": 180,
+		"description": "Uncommon. Pried off an Iron Choir walker.",
+		"material_grade": 2,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "mat_essence_shard",
+		"display_name": "Essence Shard",
+		"category": "MATERIAL",
+		"value": 200,
+		"description": "Uncommon. Warm. Someone's. You feel bad holding it.",
+		"material_grade": 2,
+		"rarity": "UNCOMMON"
+	},
+	{
+		"id": "mat_nyx_crystal",
+		"display_name": "Nyx Crystal",
+		"category": "MATERIAL",
+		"value": 800,
+		"description": "Rare. Black-purple memory crystal from the Thorn of Nyx.",
+		"material_grade": 3,
+		"rarity": "RARE"
+	},
+	{
+		"id": "mat_pioneer_shell",
+		"display_name": "Pioneer Shell Part",
+		"category": "MATERIAL",
+		"value": 3000,
+		"description": "Super rare. From a body older than the war.",
+		"material_grade": 4,
+		"rarity": "LEGENDARY"
+	},
+	{
+		"id": "mat_null_wafer",
+		"display_name": "Null-Touched Wafer",
+		"category": "MATERIAL",
+		"value": 3500,
+		"description": "Super rare. Reading it makes you forget reading it.",
+		"material_grade": 4,
+		"rarity": "LEGENDARY"
+	},
+	{
+		"id": "chip_microchip",
+		"display_name": "Microchip",
+		"category": "MICROCHIP",
+		"value": 100,
+		"description": "Pried from a fallen fighter's neck port. Slot it at a terminal to learn an ability."
+	}
+]

@@ -33,6 +33,10 @@ extends GameResource
 
 @export_group("AI (enemies / guests)")
 @export var ai_behavior: String = "aggressive"
+## Fights on its team but is driven by the AI (droids, summons, guests).
+@export var ai_controlled: bool = false
+## Per-character elemental modifiers, layered over the class's.
+@export var element_modifiers: Dictionary = {}
 
 @export_group("Status")
 @export var is_dispatched: bool = false

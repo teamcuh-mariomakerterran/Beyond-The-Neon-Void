@@ -65,6 +65,8 @@ static func learn_ability(character: CharacterData, ability_id: String) -> Strin
 		return "Unknown ability."
 	if character.learned_ability_ids.has(ability_id):
 		return "Already learned."
+	if ability.absorb_only:
+		return "This can only be learned by taking the hit."
 	if ability.class_id != "" and character.get_class_level(ability.class_id) == 0:
 		return "Class not unlocked."
 	if GameManager.microchips < ability.chip_cost:

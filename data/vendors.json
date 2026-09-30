@@ -1,0 +1,132 @@
+{
+	"neon_gutter_bar": {
+		"name": "Neon Gutter Bartender",
+		"greeting": "What's your poison? Keep it simple, I've had a long day.",
+		"price_mult": 1.0,
+		"stock": [
+			{
+				"id": "con_neon_gin"
+			},
+			{
+				"id": "con_cyber_sake"
+			},
+			{
+				"id": "con_synth_stew"
+			},
+			{
+				"id": "con_void_vodka",
+				"qty": 3
+			},
+			{
+				"id": "con_detox_patch"
+			}
+		]
+	},
+	"drunk_gear_vendor": {
+		"name": "Hic the Gear Guy",
+		"greeting": "*hiccup* ...you want a laser rifle? I got a laser rifle. Maybe.",
+		"price_mult": 0.9,
+		"stock": [
+			{
+				"id": "wpn_sword_1"
+			},
+			{
+				"id": "wpn_knuckles_1"
+			},
+			{
+				"id": "wpn_laser_gun_1"
+			},
+			{
+				"id": "wpn_staff_1"
+			},
+			{
+				"id": "wpn_rod_1"
+			},
+			{
+				"id": "wpn_knife_1"
+			},
+			{
+				"id": "wpn_injector_1"
+			},
+			{
+				"id": "wpn_pistol_1",
+				"required_flag": "m01_done"
+			},
+			{
+				"id": "wpn_katana_1",
+				"required_flag": "m01_done"
+			},
+			{
+				"id": "wpn_wrench_1"
+			},
+			{
+				"id": "wpn_controller_1",
+				"required_flag": "m01_done"
+			}
+		]
+	},
+	"armor_vendor": {
+		"name": "Vesk the Tailor",
+		"greeting": "Stand still. No, stiller. You're bleeding on the merchandise.",
+		"price_mult": 1.0,
+		"stock": [
+			{
+				"id": "arm_work_jacket"
+			},
+			{
+				"id": "arm_signal_cloak"
+			},
+			{
+				"id": "arm_riot_plate"
+			},
+			{
+				"id": "arm_cantor_robe",
+				"required_flag": "m01_done"
+			},
+			{
+				"id": "acc_bottle_cap_charm"
+			},
+			{
+				"id": "acc_jump_boots",
+				"qty": 2
+			}
+		]
+	},
+	"card_dealer": {
+		"name": "Sly Cassivar",
+		"greeting": "Cut the deck. Go on. I already know which card you'll pick.",
+		"price_mult": 1.0,
+		"character_id": "sly_deck",
+		"stock": [
+			{
+				"id": "card_ace_of_sparks"
+			},
+			{
+				"id": "card_two_of_knives"
+			},
+			{
+				"id": "card_nine_of_embers"
+			},
+			{
+				"id": "card_queen_of_mending"
+			},
+			{
+				"id": "card_king_of_walls"
+			},
+			{
+				"id": "card_jack_of_haste"
+			},
+			{
+				"id": "card_joker_static",
+				"qty": 1
+			},
+			{
+				"id": "card_last_call",
+				"qty": 1
+			},
+			{
+				"id": "mat_neon_ink"
+			}
+		]
+	}
+}
