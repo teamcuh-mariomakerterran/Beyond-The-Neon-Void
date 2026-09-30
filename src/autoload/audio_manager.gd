@@ -45,10 +45,10 @@ func play_music(music_id: String, fade: float = 1.2) -> void:
 	var stream := _find(MUSIC_DIR, music_id) if music_id != "" else null
 	var old := _music_a if _music_a.playing else _music_b
 	var nxt := _music_b if old == _music_a else _music_a
-	var t := create_tween().set_parallel(true)
 	if old.playing:
+		var t := create_tween()
 		t.tween_property(old, "volume_db", -40.0, fade)
-		t.chain().tween_callback(old.stop)
+		t.tween_callback(old.stop)
 	if stream:
 		nxt.stream = stream
 		nxt.volume_db = -40.0

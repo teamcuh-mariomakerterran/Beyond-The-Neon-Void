@@ -23,7 +23,7 @@ func _collect(dir: String) -> Array[String]:
 	if not DirAccess.dir_exists_absolute(dir):
 		return out
 	for f in DirAccess.get_files_at(dir):
-		if f.ends_with(".gd") or f.ends_with(".tscn"):
+		if (f.ends_with(".gd") or f.ends_with(".tscn")) and f != "compile_all.gd" and f != "run_tests.gd":
 			out.append(dir.path_join(f))
 	for d in DirAccess.get_directories_at(dir):
 		out.append_array(_collect(dir.path_join(d)))
