@@ -36,8 +36,8 @@ func refresh() -> void:
 	var tex_path := str(terrain_def.get("texture", ""))
 	if c.tile_id != "":
 		tex_path = str(ContentDB.terrain.get(c.tile_id, {}).get("texture", tex_path))
-	if tex_path != "" and ResourceLoader.exists(tex_path):
-		_texture = load(tex_path)
+	if tex_path != "":
+		_texture = ForgeStore.load_texture(tex_path)  # works before the editor imports new files
 	set_process(c.hazard != "" or terrain_def.has("glow"))
 	queue_redraw()
 

@@ -454,9 +454,9 @@ func hit_flash(color: Color = Color(2.0, 0.4, 0.6)) -> void:
 
 
 func _try_load_sprite() -> void:
-	if data == null or data.sprite_frames_path == "" or not ResourceLoader.exists(data.sprite_frames_path):
+	if data == null or data.sprite_frames_path == "" or not FileAccess.file_exists(data.sprite_frames_path):
 		return
-	var frames := load(data.sprite_frames_path) as SpriteFrames
+	var frames := ResourceLoader.load(data.sprite_frames_path, "SpriteFrames") as SpriteFrames
 	if frames:
 		sprite = AnimatedSprite2D.new()
 		sprite.sprite_frames = frames

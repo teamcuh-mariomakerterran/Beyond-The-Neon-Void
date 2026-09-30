@@ -1,4 +1,93 @@
-# Beyond-The-Neon-Void
+# Beyond: The Neon Void
+
+A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tactics*, set in the world of **The Black Doctrine**. Built with **Godot 4.7.2** and GDScript.
+
+![Battle](docs/screenshots/shot_battle.png)
+
+## Start here
+
+1. Install **Godot 4.7.x** (standard build, not .NET).
+2. Clone this repo, open Godot, then **Import** and pick `project.godot`. The first open imports assets, which takes a minute.
+3. Press **F5**. From the title screen you can pick:
+   - **New Shift**: the campaign loop (bar hub → job board → battle → rewards).
+   - **Quick Battle**: jump straight into *The Brew Plan*.
+   - **Neon Forge (F1)**: the in-game asset & campaign editor.
+
+### Battle controls
+| Input | Action |
+|---|---|
+| Left-click | Move / target / search scenery next to your unit |
+| Right-click / Esc | Cancel |
+| Command bar | Move, abilities (costs shown), End Turn |
+| T / M / Tab | End turn / move mode / threat map |
+| WASD, middle-drag, wheel | Camera |
+| F5 / F9 | Quick save / quick load |
+
+### Neon Forge (the editor)
+- Edits land in `data/*.json` and `assets/`, so every change is a git diff.
+- Drop files **anywhere on the window** to *copy* them into `assets/`. Your originals are never moved.
+- **Characters:**
+  - Drop a portrait or an animation sheet on the character's drop zone.
+  - The slicer turns sheet rows into idle/walk/attack/hurt/death animations.
+  - **▶ Playtest** puts that character straight into a fight.
+- **Map Painter:**
+  - Paint terrain (including your own registered tile art) and sculpt height.
+  - Set cover, spawns and enemy encounters.
+  - Place props with hidden loot and popup text (FF8/FF9-style).
+- **Every other content type** is edited with forms: classes, abilities, cards, items, statuses, NPCs & dialog (with voice lines), quests, missions and win conditions, loot, dispatch, vendors, recipes, terrain and rumours.
+- **Shortcuts:** Ctrl+S saves · Ctrl+N new · Ctrl+D duplicate · Ctrl+F search · Ctrl+Enter playtest.
+
+![Neon Forge](docs/screenshots/shot_forge_maps.png)
+
+## Where things are
+```
+project.godot            Godot 4.7 project (Forward+, HDR 2D glow)
+src/autoload/            Singletons: EventBus, ContentDB, ClassLibrary, GameManager,
+                         CombatManager, CampaignManager, QuestManager, SaveManager, ...
+src/combat/              Unit, UnitStats, TurnQueue (FFT CT), DamageCalculator,
+                         JobHandler, EquipmentManager, abilities/, ai/
+src/grid/                IsometricGrid (data), BattleMap (scene), TileView, highlights
+src/data/                Content Resource classes (JSON <-> Resource)
+src/ui/  src/world/      HUDs, menus, hub, dialogue
+src/tools/               Neon Forge editor
+data/                    ALL game content as JSON (edited by Neon Forge)
+assets/                  tiles/ structures/ props/ units/ portraits/ ui/ music/ sfx/ voice/ vfx/ fonts/
+tests/                   Headless test suite + screenshot renderer
+docs/                    Lore digest, research, design (classes, big ideas), migration notes
+legacy/original_gd/      The original prototype scripts (ignored by Godot)
+```
+
+## Docs
+- `docs/design/CLASSES.md`: all 35 classes, unlock tree and abilities.
+- `docs/design/BIG_IDEAS.md`: genre-pushing mechanics, ranked, with build status.
+- `docs/lore/LORE_DIGEST.md`: world reference, canon usage tags, contradictions to resolve.
+- `docs/research/GODOT_AND_TRPG_RESEARCH.md`: Godot 4.2→4.7 notes and the tactics-genre survey.
+- `docs/MIGRATION.md`: where every original script went, and what was fixed.
+
+## Tests
+```
+godot --headless --path . --import
+godot --headless --path . -s res://tests/compile_all.gd    # every script compiles
+godot --headless --path . -s res://tests/run_tests.gd      # 270+ checks + 36 AI-vs-AI battles
+```
+
+## Adding your assets
+Put files in the matching `assets/` folder, or drop them onto the Neon Forge window:
+
+| Asset | Folder |
+|---|---|
+| Black Doctrine structures | `assets/structures/` |
+| Ground tiles (`god_tiles`) | `assets/tiles/` (then **Register as terrain** in Forge → Assets) |
+| UI | `assets/ui/` |
+| HUD (`doctrine/green-purple`) | `assets/ui/hud/` |
+| Music | `assets/music/` |
+| Your SFX | `assets/sfx/` |
+
+Music is referenced by file name (without extension) in a mission's `music_id`, for example `battle_supply_works.ogg`.
+
+---
+
+## Original brief
 A turn based tactics RPG akin to FF Tactics in a cyberpunk world. Set in the same world of Black Doctrine, a place where everything has two truths... and both are likely wrong. I truly want it to feel like a spirital successor to 
 final fantasy tactics but with its own charm and moments to stand out as something more. this is a very dark and mature toned game but at the same time the awkward humor is the linchpin to keep it from a completely 
 depressing venture. a group of friends of whom only found freindship in a gluttonous amount of brew consumption and mutal disdain for the strict Iron fisted rule of the totalitarian ruling power known as the black doctrine. a Gov't power that has little pity towards its people and so life is truly grueling existence for some. the lucky ones die at an early enough age that they arent tainted and turned fowl from the mental slavery that comes from 15 hour work days and only having 3 days off a month. the montley cast of fowl mouthed wishful thinkers and iron belly drinkers devise a plan to break into a black doctrine munitions supply factory and perhaps accidentally cause an explosion thats perhaps just big enough that if successful not only would it leave a little scratch on the doctrines warmachine and its pride but also give them an extra day or two to drink as the chaos and dust clears. think the show "cheers" mixed with cyberpunk and a hint of fight club. but what was supposed to be a self made 2 day hopeful vaction takes a huge turn when the would be drunken heroes stumble or better said, fall into what can only be decribed as a human essence factory. where the essence of humans are extracted in a gruesome manner to feed and empower a little known at the time, black doctrine digimancer. havng existed in a world curated by the doctrine he has convinced himself and those around him that he could truly awaken the digital queen and rule with a digital fist by her side and herolded as the leader of the new age of humans. an age where a culling of the population would become common place and eventually would allow this digimancer infinite power. 

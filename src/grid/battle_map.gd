@@ -143,7 +143,16 @@ func _spawn_prop(prop: Dictionary) -> void:
 	trig.empty_text = str(prop.get("empty_text", ""))
 	trig.cell = cell
 	trig.position = grid.grid_to_world(cell)
+	trig.z_index = IsometricGrid.draw_order(cell) * 2 + 1
 	world.add_child(trig)
+	var tex := ForgeStore.load_texture(str(prop.get("asset", "")))
+	if tex:
+		# Props stand on their tile, bottom-centre anchored, sorted like units.
+		var spr := Sprite2D.new()
+		spr.texture = tex
+		spr.centered = false
+		spr.offset = Vector2(-tex.get_width() * 0.5, -tex.get_height() + grid.tile_height * 0.25)
+		trig.add_child(spr)
 
 
 func _spawn_units() -> Array[Node]:

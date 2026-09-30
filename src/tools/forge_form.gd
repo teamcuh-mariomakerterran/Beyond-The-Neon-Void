@@ -166,8 +166,7 @@ func _add_field(key: String) -> void:
 		var h := NeonTheme.label("  — " + HELP[key], 12, Color(NeonTheme.TEXT_DIM, 0.7))
 		head.add_child(h)
 	box.add_child(head)
-	if not widget is CheckButton:
-		widget.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	widget.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if widget is CheckButton else Control.SIZE_EXPAND_FILL
 	box.add_child(widget)
 	add_child(box)
 
@@ -190,6 +189,8 @@ func _make_widget(key: String, value: Variant, meta: Dictionary) -> Control:
 	if value is bool:
 		var cb := CheckButton.new()
 		cb.button_pressed = value
+		cb.text = "ON" if value else "OFF"
+		cb.toggled.connect(func(v: bool) -> void: cb.text = "ON" if v else "OFF")
 		cb.toggled.connect(func(v: bool) -> void: _commit(key, v))
 		return cb
 	if meta.get("type", -1) == TYPE_INT and hint == PROPERTY_HINT_ENUM:
