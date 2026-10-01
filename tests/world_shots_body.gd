@@ -17,6 +17,11 @@ func run(tree: SceneTree) -> void:
 	var painter: ForgeWorldPainter = tree.current_scene.get("_world")
 	painter.load_map(map_id)
 	painter.set_mode(ForgeWorldPainter.Mode.OBJECTS)
+	if args.size() > 2 and args[2] == "tactics":
+		painter.set_mode(ForgeWorldPainter.Mode.GAMEPLAY)
+		painter.tactics_view = true
+		painter._hover_cell = Vector2i(painter.world.width / 2, painter.world.depth / 2)
+		painter._hover_z = painter.world.top_z(painter._hover_cell)
 	await _wait(tree, 90)
 	tree.root.get_texture().get_image().save_png(out + "_painter.png")
 	var cm: Node = tree.root.get_node("CampaignManager")

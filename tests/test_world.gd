@@ -13,6 +13,7 @@ func run(p_tree: SceneTree) -> int:
 	test_projection()
 	test_roundtrip_and_v1()
 	test_to_grid()
+	test_validator()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -118,6 +119,37 @@ func test_to_grid() -> void:
 	check(w.objects_at(Vector2i(5, 3)).has(big) and is_equal_approx(WorldMap.distance_to(big, Vector2i(7, 3)), 1.0), "objects_at / distance use the footprint")
 	big["footprint"] = 1
 	check(w.to_grid().is_walkable(Vector2i(5, 2)), "footprint override 1")
+
+
+func test_validator() -> void:
+	var w := _map()
+	w.kind = "encounter"
+	for x in 8:
+		for y in 8:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	w.remove_tile(Vector2i(4, 4), 0)
+	w.set_tile(Vector2i(7, 7), 9, "terrain:concrete")  # a pillar top nobody can climb
+	for y in 8:
+		w.remove_tile(Vector2i(6, y), 0)  # a chasm cuts the enemy off
+	w.set_tile(Vector2i(0, 0), 1, "god_tiles/nope/missing")
+	w.spawns["player"] = [[4, 4]]
+	var o := w.add_object("res://assets/does_not_exist.png", Vector2i(1, 1), 0, "location")
+	o["location"] = {"name": "Nowhere", "target_map": "no_such_map"}
+	o["loot_item_id"] = "no_such_item"
+	w.set_particle(Vector2i(2, 2), 3, "no_such_preset")
+	var issues := MapValidator.validate(w, [{"character_id": "doctrine_warden", "cell": [7, 7], "level": 1}])
+	var text := "\n".join(issues.map(func(i: Dictionary) -> String: return str(i["text"])))
+	check(text.contains("spawn 4,4"), "validator: spawn on a hole")
+	check(text.contains("missing map 'no_such_map'"), "validator: broken location link")
+	check(text.contains("art file missing"), "validator: missing art")
+	check(text.contains("no_such_item"), "validator: unknown loot")
+	check(text.contains("no_such_preset"), "validator: unknown particle")
+	check(text.contains("god_tiles/nope/missing"), "validator: unknown tile")
+	w.spawns["player"] = [[0, 4]]
+	var issues2 := MapValidator.validate(w, [{"character_id": "doctrine_warden", "cell": [7, 7], "level": 1}])
+	check(issues2.any(func(i: Dictionary) -> bool: return str(i["text"]).contains("can't be reached")), "validator: unreachable enemy")
+	check(issues2[0]["level"] == MapValidator.ERROR, "errors sort first")
+	check(MapValidator.validate(WorldMap.from_dict(ContentDB.get_map("neon_expanse"))).filter(func(i: Dictionary) -> bool: return i["level"] == MapValidator.ERROR).is_empty(), "demo world has no errors")
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:

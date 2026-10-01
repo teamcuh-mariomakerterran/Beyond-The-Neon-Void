@@ -82,6 +82,14 @@ var _cam_goal: Vector2 = Vector2.ZERO
 var _zoom_goal: float = 1.0
 var _minimap: Minimap
 var _rng := RandomNumberGenerator.new()
+## Tactics view: battle-grid read-out (blocked, cover, move range from the cursor).
+var tactics_view: bool = false
+var tactics_move: int = 4
+var tactics_jump: int = 2
+var _tgrid: IsometricGrid
+var _tgrid_stamp: int = -1
+var _edit_count: int = 0
+var _check_btn: Button
 var _cycle: int = 0
 var _renderer: WorldRenderer
 var _ghost: GhostLayer
@@ -132,6 +140,8 @@ class GhostLayer extends Node2D:
 			w.to_screen(Vector2(w.width - 0.5, w.depth - 0.5), 0), w.to_screen(Vector2(-0.5, w.depth - 0.5), 0)])
 		corners.append(corners[0])
 		draw_polyline(corners, Color(0.55, 0.35, 0.9, 0.45), 2.0)
+		if p.tactics_view:
+			_draw_tactics(font)
 		if p.mode == Mode.GAMEPLAY or p.mode == Mode.OBJECTS:
 			_draw_gameplay(font)
 		if not w.in_bounds(p._hover_cell) and p.tool != Tool.SELECT:
@@ -218,6 +228,34 @@ class GhostLayer extends Node2D:
 		draw_line(d[2], d[2] + drop, col, 1.6)
 		draw_line(d[1], d[1] + drop, col, 1.6)
 		draw_polyline(PackedVector2Array([d[3] + drop, d[2] + drop, d[1] + drop]), col, 1.6)
+
+	func _draw_tactics(font: Font) -> void:
+		var w := p.world
+		var g := p.tactics_grid()
+		for cell: Vector2i in w.tiles:
+			if not g.in_bounds(cell):
+				continue
+			var c := g.get_cell(cell)
+			var d := WorldRenderer.diamond(w, Vector2(cell), w.top_z(cell))
+			if not c.walkable:
+				draw_colored_polygon(d, Color(2.0, 0.2, 0.35, 0.28))
+			elif c.cover > 0:
+				var at := w.to_screen(Vector2(cell), w.top_z(cell))
+				draw_string(font, at + Vector2(-6, 6), "◐" if c.cover == 1 else "●", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, NeonTheme.AMBER)
+		var from := p._hover_cell
+		if g.in_bounds(from) and g.is_walkable(from):
+			var flood := g.flood(from, p.tactics_move, p.tactics_jump, 0, true)
+			for cell2: Vector2i in flood:
+				var d2 := WorldRenderer.diamond(w, Vector2(cell2), w.top_z(cell2))
+				draw_colored_polygon(d2, Color(0.2, 1.4, 2.2, 0.22))
+				d2.append(d2[0])
+				draw_polyline(d2, Color(0.3, 1.6, 2.2, 0.8), 1.2)
+			# Height steps around the cursor (what blocks a jump).
+			for n in g.neighbors(from):
+				var dh := g.get_height(n) - g.get_height(from)
+				if dh != 0 and g.is_walkable(n):
+					var at2 := w.to_screen(Vector2(n), w.top_z(n))
+					draw_string(font, at2 + Vector2(-10, 5), "%+d" % dh, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(2.0, 0.4, 0.5) if absi(dh) > p.tactics_jump else Color(1.6, 1.6, 1.6))
 
 	func _draw_gameplay(font: Font) -> void:
 		var w := p.world
@@ -499,6 +537,19 @@ func _build_topbar() -> Control:
 		b2.tooltip_text = pair[1]
 		b2.pressed.connect(pair[2])
 		h.add_child(b2)
+	var tac := Button.new()
+	tac.text = "◇ TACTICS"
+	tac.toggle_mode = true
+	tac.tooltip_text = "Tactics view: red = blocked, cover marks, and the move range (move %d / jump %d) from the cursor." % [tactics_move, tactics_jump]
+	tac.toggled.connect(func(on: bool) -> void:
+		tactics_view = on
+		_style_toggle(tac, on))
+	h.add_child(tac)
+	_check_btn = Button.new()
+	_check_btn.text = "⚠ CHECK"
+	_check_btn.tooltip_text = "Find broken links, missing art, bad spawns and unreachable enemies."
+	_check_btn.pressed.connect(show_issues)
+	h.add_child(_check_btn)
 	var play := Button.new()
 	play.text = "▶ PLAY HERE"
 	play.tooltip_text = "F5 — save, then walk this map (world/city/hub/interior) or fight on it (encounter)."
@@ -797,6 +848,13 @@ func _palette_gameplay() -> void:
 		play_tool = Play.ENEMY))
 	_palette.add_child(NeonTheme.label("Level", 12, NeonTheme.TEXT_DIM))
 	_palette.add_child(ForgeForm._spin(enemy_level, true, func(n: float) -> void: enemy_level = int(n)))
+	_palette.add_child(_section("TACTICS VIEW (◇ in the top bar)"))
+	var mj := HBoxContainer.new()
+	mj.add_child(NeonTheme.label("Move", 12, NeonTheme.TEXT_DIM))
+	mj.add_child(ForgeForm._spin(tactics_move, true, func(n: float) -> void: tactics_move = clampi(int(n), 1, 12)))
+	mj.add_child(NeonTheme.label("Jump", 12, NeonTheme.TEXT_DIM))
+	mj.add_child(ForgeForm._spin(tactics_jump, true, func(n: float) -> void: tactics_jump = clampi(int(n), 0, 8)))
+	_palette.add_child(mj)
 	var t := NeonTheme.label("Spawns and enemies stand on top of each column. BLOCK / COVER / SIGHT override the tile's terrain rules.", 12, NeonTheme.TEXT_DIM)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_palette.add_child(t)
@@ -897,6 +955,12 @@ func save_map() -> void:
 		DirAccess.remove_absolute(_autosave_path())
 	var path := ForgeStore.save_map(world.to_dict())
 	var msg := "SAVED ▸ %s" % path
+	var issues := MapValidator.validate(world, mission_enemies())
+	var errors := issues.filter(func(i: Dictionary) -> bool: return i["level"] == MapValidator.ERROR).size()
+	if _check_btn:
+		_check_btn.text = "⚠ CHECK (%d)" % issues.size() if not issues.is_empty() else "✔ CHECK"
+	if errors > 0:
+		msg += "   ·   ⚠ %d problem(s) — press CHECK" % errors
 	if dirty_missions:
 		msg += "  +  " + ForgeStore.save_bucket("missions")
 		dirty_missions = false
@@ -970,6 +1034,7 @@ func _restore(d: Dictionary) -> void:
 	var cam := _cam.position
 	var zoom := _cam.zoom
 	world.load_dict(d)
+	_edit_count += 1
 	selected = {}
 	_renderer.rebuild()
 	_minimap.mark_dirty()
@@ -1284,6 +1349,7 @@ func _skip_for_density() -> bool:
 
 
 func _apply(cells: Array[Vector2i]) -> void:
+	_edit_count += 1
 	var erase := tool == Tool.ERASE
 	var changed: Array = []
 	match mode:
@@ -1574,6 +1640,43 @@ func duplicate_selected() -> void:
 
 
 # --- Inspector --------------------------------------------------------------------
+
+## Lists every problem MapValidator finds; click one to fly to it.
+func show_issues() -> void:
+	var issues := MapValidator.validate(world, mission_enemies())
+	_check_btn.text = "⚠ CHECK (%d)" % issues.size() if not issues.is_empty() else "✔ CHECK"
+	_clear(_inspector)
+	_inspector.add_child(NeonTheme.label("MAP CHECK", 20, NeonTheme.AMBER if not issues.is_empty() else NeonTheme.GREEN))
+	if issues.is_empty():
+		_inspector.add_child(NeonTheme.label("No problems found. Ship it.", 14, NeonTheme.GREEN))
+	for i: Dictionary in issues:
+		var b := Button.new()
+		var err: bool = i["level"] == MapValidator.ERROR
+		b.text = ("✖ " if err else "△ ") + str(i["text"])
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		b.add_theme_color_override("font_color", NeonTheme.MAGENTA if err else NeonTheme.AMBER)
+		var c: Vector2i = i["cell"]
+		if world.in_bounds(c):
+			b.tooltip_text = "Fly to %d,%d" % [c.x, c.y]
+			b.pressed.connect(func() -> void:
+				focus(world.to_screen(Vector2(c), world.top_z(c)))
+				_hover_cell = c
+				_hover_z = world.top_z(c))
+		_inspector.add_child(b)
+	var back := Button.new()
+	back.text = "← MAP SETTINGS"
+	back.pressed.connect(_show_inspector)
+	_inspector.add_child(back)
+
+
+## Battle grid for the tactics view, rebuilt only after edits.
+func tactics_grid() -> IsometricGrid:
+	if _tgrid == null or _tgrid_stamp != _edit_count:
+		_tgrid = world.to_grid()
+		_tgrid_stamp = _edit_count
+	return _tgrid
+
 
 func _clear(box: Control) -> void:
 	for c in box.get_children():
@@ -1995,6 +2098,7 @@ class Minimap extends Control:
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_STOP
+		clip_contents = true
 		tooltip_text = "Minimap — click or drag to fly there"
 
 	func mark_dirty() -> void:

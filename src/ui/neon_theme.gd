@@ -98,6 +98,9 @@ static func get_theme() -> Theme:
 		t.set_stylebox("pressed", cls, button_box(Color(0.1, 0.06, 0.17, 1.0), GREEN))
 		t.set_stylebox("focus", cls, button_box(Color(0.1, 0.06, 0.17, 1.0), CYAN))
 		t.set_color("font_color", cls, TEXT)
+		# Their pressed box is dark (unlike Button's bright one), so keep text light.
+		t.set_color("font_pressed_color", cls, TEXT)
+		t.set_color("font_hover_pressed_color", cls, Color.WHITE)
 		t.set_font_size("font_size", cls, 14)
 	var popup := panel_box(CYAN, Color(0.05, 0.03, 0.09, 0.98))
 	popup.set_content_margin_all(6)
