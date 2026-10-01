@@ -35,6 +35,9 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
   - **▶ Play here** (F5) walks the map, or fights on it if it's an encounter.
   - **Juice and speed:** tiles drop in with a ring flash, the camera glides, and a minimap (bottom right) shows the whole map; click it to fly there. **Copy area (C)** and **Stamp (T)** clone a chunk with all its layers. **Scatter** paints randomly from your selected tiles at a chosen density.
   - **Lighting:** neon light presets (pink, cyan, sodium, toxic, fire, broken tube, moonlight) with flicker, plus a per-map ambient tint for day, dusk, night and so on.
+  - **Stamps:** save a copied chunk as a stamp (it lands in `data/stamps/`). Reuse it from the STAMPS list; Shift+R rotates it and Shift+F flips it before placing.
+  - **⛰ Generate:** select tiles from low to high (e.g. water, sand, grass, forest, rock, snow) and sculpt the whole map, or 16×16 around the cursor, from noise. Change the seed and go again.
+  - **⚠ Check** finds broken links, missing art, bad spawns and unreachable enemies; click a problem to fly to it. **◇ Tactics** shows blocked tiles, cover and move range from the cursor.
   - **Footprints:** big structures claim an N×N area for sorting and blocking.
   - **Autosave:** every 90 seconds to `user://forge_autosave`, with a restore button in the map panel.
   - More ideas, ranked: [docs/research/EDITOR_IDEAS.md](docs/research/EDITOR_IDEAS.md).

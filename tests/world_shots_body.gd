@@ -17,6 +17,10 @@ func run(tree: SceneTree) -> void:
 	var painter: ForgeWorldPainter = tree.current_scene.get("_world")
 	painter.load_map(map_id)
 	painter.set_mode(ForgeWorldPainter.Mode.OBJECTS)
+	if args.size() > 2 and args[2] == "generate":
+		painter.set_mode(ForgeWorldPainter.Mode.TILES)
+		painter.sel_tiles = ["terrain:water", "terrain:sand", "terrain:grass", "terrain:forest", "terrain:rock", "terrain:snow"]
+		painter.generate_terrain(Rect2i(), 9, 0.07, 0.32, 7)
 	if args.size() > 2 and args[2] == "tactics":
 		painter.set_mode(ForgeWorldPainter.Mode.GAMEPLAY)
 		painter.tactics_view = true

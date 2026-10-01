@@ -690,6 +690,11 @@ func _palette_tiles() -> void:
 	var rescan := Button.new()
 	rescan.text = "⟳ RESCAN"
 	rescan.tooltip_text = "Re-index assets/tiles (new files, animated water/river sets)."
+	var gen := Button.new()
+	gen.text = "⛰ GENERATE"
+	gen.tooltip_text = "Sculpt terrain from noise. Select tiles low → high first (e.g. water, sand, grass, forest, rock, snow)."
+	gen.pressed.connect(_generate_dialog)
+	top.add_child(gen)
 	rescan.pressed.connect(func() -> void:
 		var idx: Dictionary = TileIndex.scan()
 		TileIndex.save(idx)
@@ -2317,3 +2322,90 @@ class Minimap extends Control:
 			var cell := _xf().affine_inverse() * at - Vector2(0.5, 0.5)
 			p.focus(p.world.to_screen(cell, 0))
 			accept_event()
+
+
+
+# --- Terrain generator -------------------------------------------------------------
+
+## Noise heightfield painted with the selected tiles as height bands (first =
+## lowest, e.g. water; last = peaks). `region` empty = whole map. Columns are
+## solid (filled from the ground up) so cliffs read as real terrain.
+func generate_terrain(region: Rect2i, max_height: int, roughness: float, water: float, seed_value: int, replace: bool = true) -> int:
+	if sel_tiles.is_empty():
+		status.emit("Select tiles in the palette first: lowest band first (shift+click to add more).", NeonTheme.MAGENTA)
+		return 0
+	if region.size == Vector2i.ZERO:
+		region = Rect2i(0, 0, world.width, world.depth)
+	var noise := FastNoiseLite.new()
+	noise.seed = seed_value
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.fractal_octaves = 4
+	noise.frequency = clampf(roughness, 0.005, 0.5)
+	var changed: Array = []
+	var bands := sel_tiles.size()
+	for x in range(region.position.x, region.end.x):
+		for y in range(region.position.y, region.end.y):
+			var c := Vector2i(x, y)
+			if not world.in_bounds(c):
+				continue
+			var v := (noise.get_noise_2d(x, y) + 1.0) * 0.5  # 0..1
+			if replace:
+				world.tiles.erase(c)
+			if v < water:
+				world.set_tile(c, 0, sel_tiles[0])
+			else:
+				var t := (v - water) / maxf(1.0 - water, 0.001)
+				var h := int(round(t * max_height))
+				var band := clampi(1 + int(t * (bands - 1)), 1, bands - 1) if bands > 1 else 0
+				var top_tile := sel_tiles[band]
+				var under := sel_tiles[maxi(band - 1, 0)] if band > 0 else top_tile
+				for z in range(0, h):
+					world.set_tile(c, z, under)
+				world.set_tile(c, h, top_tile)
+			changed.append(c)
+	_renderer.refresh_columns(changed)
+	_minimap.mark_dirty()
+	_edit_count += 1
+	dirty = true
+	return changed.size()
+
+
+func _generate_dialog() -> void:
+	var dlg := ConfirmationDialog.new()
+	dlg.title = "GENERATE TERRAIN"
+	dlg.ok_button_text = "GENERATE"
+	var v := VBoxContainer.new()
+	v.theme = NeonTheme.get_theme()
+	v.custom_minimum_size = Vector2(420, 0)
+	var info := NeonTheme.label("Uses your selected tiles as bands, low → high:\n%s" % (" → ".join(PackedStringArray(sel_tiles.map(func(t: String) -> String: return t.get_file()))) if not sel_tiles.is_empty() else "(nothing selected — shift+click tiles first)"), 12, NeonTheme.CYAN)
+	info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(info)
+	var st := {"h": 6, "rough": 0.06, "water": 0.3, "seed": randi() % 99999, "area": "whole map"}
+	var grid := GridContainer.new()
+	grid.columns = 2
+	v.add_child(grid)
+	var add := func(label: String, ctl: Control) -> void:
+		grid.add_child(NeonTheme.label(label, 12, NeonTheme.TEXT_DIM))
+		ctl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(ctl)
+	add.call("Max height (layers)", ForgeForm._spin(6, true, func(n: float) -> void: st["h"] = clampi(int(n), 0, 40)))
+	add.call("Roughness", ForgeForm._spin(0.06, false, func(n: float) -> void: st["rough"] = n))
+	add.call("Water / lowest band 0–1", ForgeForm._spin(0.3, false, func(n: float) -> void: st["water"] = clampf(n, 0.0, 0.95)))
+	add.call("Seed", ForgeForm._spin(st["seed"], true, func(n: float) -> void: st["seed"] = int(n)))
+	add.call("Area", ForgeForm._option(["whole map", "around the cursor (16×16)"], "whole map", func(a: String) -> void: st["area"] = a))
+	var tip := NeonTheme.label("Low roughness = rolling hills, high = jagged peaks. Undo (Ctrl+Z) if you don't like it, change the seed and go again.", 11, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(tip)
+	dlg.add_child(v)
+	var anchor := _hover_cell
+	dlg.confirmed.connect(func() -> void:
+		_push_undo()
+		var region := Rect2i()
+		if str(st["area"]) != "whole map" and world.in_bounds(anchor):
+			region = Rect2i(anchor - Vector2i(8, 8), Vector2i(16, 16))
+		var n := generate_terrain(region, int(st["h"]), float(st["rough"]), float(st["water"]), int(st["seed"]))
+		status.emit("Generated %d columns. Ctrl+Z to undo, or tweak the seed and go again." % n, NeonTheme.GREEN)
+		dlg.queue_free())
+	dlg.canceled.connect(dlg.queue_free)
+	add_child(dlg)
+	dlg.popup_centered()

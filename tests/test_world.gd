@@ -238,6 +238,18 @@ func test_painter() -> void:
 	_press(p, Vector2i(5, 6), 0)
 	check((p.world.spawns["player"] as Array).size() == 1, "spawn placed")
 	check(p._numbered_siblings("res://nothing/here_1.png").is_empty(), "no siblings → no frames")
+	# Terrain generator: bands by height, deterministic per seed, region-limited.
+	p.sel_tiles = ["terrain:water", "terrain:grass", "terrain:rock"]
+	var gn := p.generate_terrain(Rect2i(0, 0, 12, 12), 6, 0.08, 0.3, 42)
+	var top_ids := {}
+	var max_h := 0
+	for c: Vector2i in p.world.tiles:
+		top_ids[p.world.top_tile(c)] = true
+		max_h = maxi(max_h, p.world.top_z(c))
+	check(gn == 144 and top_ids.size() >= 2 and max_h > 0 and max_h <= 6, "generator: %d cols, tops %s, max h %d" % [gn, top_ids.keys(), max_h])
+	var snap: Dictionary = (p.world.to_dict()["tiles"] as Dictionary).duplicate(true)
+	p.generate_terrain(Rect2i(0, 0, 12, 12), 6, 0.08, 0.3, 42)
+	check(p.world.to_dict()["tiles"] == snap, "generator deterministic for a seed")
 	# Copy an area (all layers) and stamp it elsewhere, lifted to the stack layer.
 	p.set_mode(ForgeWorldPainter.Mode.TILES)
 	p.world.tiles.clear()
