@@ -28,8 +28,34 @@ var _columns_root: Node2D
 var _details_root: Node2D
 var _objects_root: Node2D
 var _particles_root: Node2D
+var _lights_root: Node2D
+var _fx: FxLayer
+var _ambient: CanvasModulate
+## Preview the map's ambient tint + neon lights (on in game, toggleable in the editor).
+var show_lighting: bool = true
+## Draw editor-only markers (light bulbs) — the painter turns this on.
+var editor_markers: bool = false
+## cell -> {z: time placed}, for the drop-in animation.
+var _pops: Dictionary = {}
+
+const POP_TIME := 0.22
+const LIGHT_PRESETS := {
+	"neon_pink": {"color": "#ff3fb4", "energy": 1.4, "radius": 3.0, "flicker": 0.1},
+	"neon_cyan": {"color": "#3ff6ff", "energy": 1.3, "radius": 3.0, "flicker": 0.05},
+	"sodium_lamp": {"color": "#ffb347", "energy": 1.1, "radius": 4.0, "flicker": 0.0},
+	"toxic_glow": {"color": "#8dff3f", "energy": 1.2, "radius": 2.5, "flicker": 0.15},
+	"fire": {"color": "#ff7a2f", "energy": 1.6, "radius": 2.5, "flicker": 0.45},
+	"broken_tube": {"color": "#d9e8ff", "energy": 1.0, "radius": 2.0, "flicker": 0.9},
+	"moonlight": {"color": "#8ea6ff", "energy": 0.7, "radius": 8.0, "flicker": 0.0},
+}
+## Ambient presets for the whole map (CanvasModulate tint).
+const AMBIENT_PRESETS := {
+	"day": "#ffffff", "dusk": "#e0a8c8", "neon_noir": "#7a6aa8", "night": "#4a4f86",
+	"toxic_haze": "#9fb88a", "blackout": "#2a2840", "blood_moon": "#a8586a",
+}
 
 static var _fit_cache: Dictionary = {}
+static var _light_tex: Texture2D
 
 
 func _ready() -> void:
@@ -37,8 +63,16 @@ func _ready() -> void:
 	_details_root = Node2D.new()
 	_objects_root = Node2D.new()
 	_particles_root = Node2D.new()
-	for n: Node2D in [_columns_root, _details_root, _objects_root, _particles_root]:
+	_lights_root = Node2D.new()
+	for n: Node2D in [_columns_root, _details_root, _objects_root, _particles_root, _lights_root]:
 		add_child(n)
+	_fx = FxLayer.new()
+	_fx.renderer = self
+	_fx.z_as_relative = false
+	_fx.z_index = 4085
+	add_child(_fx)
+	_ambient = CanvasModulate.new()
+	add_child(_ambient)
 	if world:
 		rebuild()
 
@@ -57,7 +91,7 @@ func set_world(w: WorldMap) -> void:
 func rebuild() -> void:
 	if _columns_root == null:
 		return
-	for root: Node2D in [_columns_root, _details_root, _objects_root, _particles_root]:
+	for root: Node2D in [_columns_root, _details_root, _objects_root, _particles_root, _lights_root]:
 		for c in root.get_children():
 			c.queue_free()
 	_columns.clear()
@@ -69,6 +103,7 @@ func rebuild() -> void:
 	rebuild_details()
 	rebuild_objects()
 	rebuild_particles()
+	rebuild_lighting()
 
 
 func refresh_column(cell: Vector2i) -> void:
@@ -90,6 +125,42 @@ func refresh_column(cell: Vector2i) -> void:
 func refresh_columns(cells: Array) -> void:
 	for c: Vector2i in cells:
 		refresh_column(c)
+
+
+## Editor juice: the tile at (cell, z) drops in and a ring flashes.
+func pop(cell: Vector2i, z: int, erase: bool = false, ring: bool = true) -> void:
+	if not erase:
+		if not _pops.has(cell):
+			_pops[cell] = {}
+		_pops[cell][z] = now()
+		var cv: ColumnView = _columns.get(cell)
+		if cv:
+			cv.set_process(true)
+	if _fx and ring:
+		_fx.add_ring(world.to_screen(Vector2(cell), z), Color(2.2, 0.35, 0.5) if erase else Color(0.3, 2.0, 1.2))
+
+
+func is_popping(cell: Vector2i) -> bool:
+	var d: Dictionary = _pops.get(cell, {})
+	for z: int in d.keys():
+		if now() - float(d[z]) >= POP_TIME:
+			d.erase(z)
+	if d.is_empty():
+		_pops.erase(cell)
+		return false
+	return true
+
+
+func pop_progress(cell: Vector2i, z: int) -> float:
+	var d: Dictionary = _pops.get(cell, {})
+	if not d.has(z):
+		return 1.0
+	return clampf((now() - float(d[z])) / POP_TIME, 0.0, 1.0)
+
+
+func flash_text(at: Vector2, text: String, color: Color) -> void:
+	if _fx:
+		_fx.add_text(at, text, color)
 
 
 func redraw_all_columns() -> void:
@@ -320,6 +391,8 @@ class ColumnView extends Node2D:
 
 	func _process(_d: float) -> void:
 		queue_redraw()
+		if not _animated and not renderer.is_popping(cell):
+			set_process(false)
 
 	func _draw() -> void:
 		var w := renderer.world
@@ -327,7 +400,14 @@ class ColumnView extends Node2D:
 		for e: Array in w.stack_at(cell):
 			var z := int(e[0])
 			var a := 1.0 if z <= renderer.dim_above else 0.18
-			WorldRenderer.draw_tile(self, w, str(e[1]), w.to_screen(Vector2(cell), z), a, phase)
+			var at := w.to_screen(Vector2(cell), z)
+			var t := renderer.pop_progress(cell, z)
+			if t < 1.0:
+				# Drop in from above with a little overshoot.
+				var k := 1.0 - t
+				at.y -= w.height_step * 1.4 * k * k - sin(t * PI) * 3.0
+				a *= 0.35 + 0.65 * t
+			WorldRenderer.draw_tile(self, w, str(e[1]), at, a, phase)
 
 
 ## A detail decal or an object sprite (static, sheet-animated or frame list).
@@ -339,6 +419,7 @@ class WorldSprite extends Node2D:
 	var _frames: Array = []  # Texture2D or AtlasTexture
 	var _anim: Dictionary = {}
 	var _rect: Rect2
+	var _foot: int = 1
 
 	func refresh() -> void:
 		var w := renderer.world
@@ -373,9 +454,13 @@ class WorldSprite extends Node2D:
 		else:
 			var c: Array = data.get("cell", [0, 0])
 			cell_f = Vector2(float(c[0]), float(c[1]))
+		# Sort by the front corner; centre the art on the whole footprint.
+		var order := int(floor(cell_f.x + 0.5)) + int(floor(cell_f.y + 0.5))
+		_foot = 1 if is_detail else WorldMap.footprint(data)
+		if _foot > 1:
+			cell_f -= Vector2(_foot - 1, _foot - 1) * 0.5
 		var off: Array = data.get("offset", [0, 0])
 		position = w.to_screen(cell_f, z) + Vector2(float(off[0]), float(off[1]))
-		var order := int(floor(cell_f.x + 0.5)) + int(floor(cell_f.y + 0.5))
 		z_index = order * 2 + 1
 		set_process(_frames.size() > 1)
 		queue_redraw()
@@ -397,6 +482,20 @@ class WorldSprite extends Node2D:
 		var sc := float(data.get("scale", 1.0))
 		var flip := bool(data.get("flip", false))
 		var tint := Color(str(data.get("tint", "#ffffff")))
+		if tex == null and data.get("light") is Dictionary and not renderer.editor_markers:
+			_rect = Rect2()
+			return
+		if tex == null and data.get("light") is Dictionary:
+			# Lights have no art: a glowing bulb in their colour (editor marker).
+			var lc := Color(str(data["light"].get("color", "#ffffff")))
+			var lift := Vector2(0, -w.height_step * float(data["light"].get("height", 1.0)))
+			_rect = Rect2(lift - Vector2(14, 14), Vector2(28, 28))
+			draw_line(Vector2.ZERO, lift, Color(lc, 0.5), 1.5)
+			draw_circle(lift, 11, Color(lc.r * 2.0, lc.g * 2.0, lc.b * 2.0, 0.35))
+			draw_circle(lift, 6, Color(lc.r * 2.5, lc.g * 2.5, lc.b * 2.5))
+			if selected:
+				draw_rect(_rect.grow(3), Color(0.3, 2.0, 1.0), false, 2.0)
+			return
 		if tex == null:
 			# Missing art: a readable placeholder instead of nothing.
 			_rect = Rect2(-16, -40, 32, 40)
@@ -416,7 +515,7 @@ class WorldSprite extends Node2D:
 			# pixels (transparent margins ignored) sits on the tile centre.
 			var used := WorldRenderer.fit_rect(tex)
 			var vis := used.size * sc
-			_rect = Rect2(Vector2(-vis.x * 0.5, -vis.y + w.tile_height * 0.25), vis)
+			_rect = Rect2(Vector2(-vis.x * 0.5, -vis.y + w.tile_height * (0.5 * _foot - 0.25)), vis)
 			draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1 if flip else 1, 1))
 			draw_texture_rect_region(tex, _rect, used, tint)
 			draw_set_transform(Vector2.ZERO)
@@ -425,3 +524,112 @@ class WorldSprite extends Node2D:
 
 	func hit(p: Vector2) -> bool:
 		return _rect.has_point(p - position)
+
+
+# --- Lighting ------------------------------------------------------------------
+
+static func light_texture() -> Texture2D:
+	if _light_tex == null:
+		var g := Gradient.new()
+		g.set_color(0, Color(1, 1, 1, 1))
+		g.set_color(1, Color(1, 1, 1, 0))
+		g.add_point(0.35, Color(1, 1, 1, 0.55))
+		var gt := GradientTexture2D.new()
+		gt.gradient = g
+		gt.fill = GradientTexture2D.FILL_RADIAL
+		gt.fill_from = Vector2(0.5, 0.5)
+		gt.fill_to = Vector2(1.0, 0.5)
+		gt.width = 256
+		gt.height = 256
+		_light_tex = gt
+	return _light_tex
+
+
+func rebuild_lighting() -> void:
+	if _lights_root == null:
+		return
+	for c in _lights_root.get_children():
+		_lights_root.remove_child(c)
+		c.queue_free()
+	var amb := Color(world.ambient) if world.ambient != "" else Color.WHITE
+	_ambient.color = amb if show_lighting else Color.WHITE
+	_ambient.visible = show_lighting
+	if not show_lighting:
+		return
+	for o: Dictionary in world.objects:
+		if not (o.get("light") is Dictionary):
+			continue
+		var l: Dictionary = o["light"]
+		var pl := NeonLight.new()
+		pl.texture = light_texture()
+		pl.color = Color(str(l.get("color", "#ff3fb4")))
+		pl.base_energy = float(l.get("energy", 1.2))
+		pl.energy = pl.base_energy
+		pl.flicker = float(l.get("flicker", 0.0))
+		# A 256px texture: scale so its radius covers `radius` tiles on screen.
+		pl.texture_scale = float(l.get("radius", 3.0)) * world.tile_width / 128.0
+		pl.blend_mode = Light2D.BLEND_MODE_ADD
+		var c: Array = o.get("cell", [0, 0])
+		var off: Array = o.get("offset", [0, 0])
+		pl.position = world.to_screen(Vector2(float(c[0]), float(c[1])), float(o.get("z", 0)) + float(l.get("height", 1.0))) + Vector2(float(off[0]), float(off[1]))
+		pl.seed_phase = float(hash(str(o.get("id", ""))) % 1000) / 100.0
+		_lights_root.add_child(pl)
+
+
+## Point light with optional neon flicker (buzzing tubes, fires).
+class NeonLight extends PointLight2D:
+	var base_energy: float = 1.2
+	var flicker: float = 0.0
+	var seed_phase: float = 0.0
+
+	func _ready() -> void:
+		set_process(flicker > 0.0)
+
+	func _process(_d: float) -> void:
+		var t := WorldRenderer.now() + seed_phase
+		var wobble := sin(t * 13.0) * 0.5 + sin(t * 31.0) * 0.3 + sin(t * 3.0) * 0.2
+		var dropout := 1.0
+		if flicker > 0.6 and fmod(t * 1.7, 2.3) < flicker * 0.25:
+			dropout = 0.15  # a dying tube cuts out now and then
+		energy = maxf(base_energy * (1.0 + wobble * flicker * 0.35) * dropout, 0.0)
+
+
+## Short-lived editor feedback: rings when tiles land or vanish, floating text.
+class FxLayer extends Node2D:
+	var renderer: WorldRenderer
+	var _items: Array = []  # {kind, at, color, t0, text}
+
+	func add_ring(at: Vector2, color: Color) -> void:
+		_items.append({"kind": "ring", "at": at, "color": color, "t0": WorldRenderer.now()})
+		if _items.size() > 160:
+			_items.pop_front()
+		set_process(true)
+
+	func add_text(at: Vector2, text: String, color: Color) -> void:
+		_items.append({"kind": "text", "at": at, "color": color, "t0": WorldRenderer.now(), "text": text})
+		set_process(true)
+
+	func _process(_d: float) -> void:
+		var now := WorldRenderer.now()
+		_items = _items.filter(func(i: Dictionary) -> bool: return now - float(i["t0"]) < (0.9 if i["kind"] == "text" else 0.35))
+		queue_redraw()
+		if _items.is_empty():
+			set_process(false)
+
+	func _draw() -> void:
+		var w := renderer.world
+		var now := WorldRenderer.now()
+		for i: Dictionary in _items:
+			var t := (now - float(i["t0"]))
+			var col: Color = i["color"]
+			if i["kind"] == "ring":
+				var k := t / 0.35
+				var r := 0.55 + k * 0.6
+				var at: Vector2 = i["at"]
+				var hw := w.tile_width * 0.5 * r
+				var hh := w.tile_height * 0.5 * r
+				var pts := PackedVector2Array([at + Vector2(0, -hh), at + Vector2(hw, 0), at + Vector2(0, hh), at + Vector2(-hw, 0), at + Vector2(0, -hh)])
+				draw_polyline(pts, Color(col, 1.0 - k), 2.5 * (1.0 - k) + 0.5)
+			else:
+				var k2 := t / 0.9
+				draw_string(NeonTheme.mono(), (i["at"] as Vector2) + Vector2(0, -30 * k2), str(i["text"]), HORIZONTAL_ALIGNMENT_CENTER, 220, 18, Color(col, 1.0 - k2 * k2))

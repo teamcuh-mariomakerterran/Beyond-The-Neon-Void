@@ -26,7 +26,7 @@ extends HSplitContainer
 signal status(text: String, color: Color)
 
 enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY }
-enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE }
+enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE, COPY, STAMP }
 enum Play { SPAWN, ENEMY, BLOCK, COVER, SIGHT }
 
 const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY"]
@@ -38,8 +38,10 @@ const TOOL_INFO := [
 	["➚", "Select / move [V]", "Click an object or detail to edit it; drag to move. Double-click an object to set up a location."],
 	["✋", "Pan [H]", "Drag to move the view (middle / right mouse always pans)."],
 	["⌫", "Erase [E]", "Remove what this layer holds under the brush."],
+	["⧉", "Copy area [C]", "Drag over an area to copy all of its layers (tiles + particles)."],
+	["⎘", "Stamp [T]", "Click to paste the copied area; its lowest layer lands on the stack layer."],
 ]
-const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I: Tool.PICK, KEY_V: Tool.SELECT, KEY_H: Tool.PAN, KEY_E: Tool.ERASE}
+const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I: Tool.PICK, KEY_V: Tool.SELECT, KEY_H: Tool.PAN, KEY_E: Tool.ERASE, KEY_C: Tool.COPY, KEY_T: Tool.STAMP}
 const PLAY_NAMES := ["PLAYER SPAWN", "ENEMY", "BLOCK WALK", "COVER", "SIGHT"]
 const OBJECT_SOURCES := ["structures", "props", "units", "items", "vfx", "portraits"]
 const GHOST := Color(0.25, 1.9, 0.75)
@@ -69,6 +71,17 @@ var enemy_id: String = "doctrine_warden"
 var enemy_level: int = 2
 
 var selected: Dictionary = {}
+## Scatter: pick randomly from the selected tiles instead of cycling, and only
+## paint `density`% of the cells the brush touches (forests, rubble, flowers).
+var paint_random: bool = false
+var density: int = 100
+## Copied area: {"tiles": [[dx, dy, z, id]], "particles": [[dx, dy, z, preset]], "base_z": int}.
+var clipboard: Dictionary = {}
+const AUTOSAVE_DIR := "user://forge_autosave"
+var _cam_goal: Vector2 = Vector2.ZERO
+var _zoom_goal: float = 1.0
+var _minimap: Minimap
+var _rng := RandomNumberGenerator.new()
 var _cycle: int = 0
 var _renderer: WorldRenderer
 var _ghost: GhostLayer
@@ -126,6 +139,18 @@ class GhostLayer extends Node2D:
 		var cells := p.target_cells()
 		var erase := p.tool == Tool.ERASE
 		var col := Color(2.0, 0.3, 0.4) if erase else GHOST
+		if p.tool == Tool.COPY:
+			for cell: Vector2i in cells:
+				_prism(w, cell, w.top_z(cell, p.layer), Color(0.4, 1.2, 2.2))
+			_hover_info(font, w)
+			return
+		if p.tool == Tool.STAMP and not p.clipboard.is_empty():
+			var shift := p.layer - int(p.clipboard["base_z"])
+			for t: Array in p.clipboard["tiles"]:
+				var c2 := p._hover_cell + Vector2i(int(t[0]), int(t[1]))
+				WorldRenderer.draw_tile(self, w, str(t[3]), w.to_screen(Vector2(c2), int(t[2]) + shift), 0.5)
+			_hover_info(font, w)
+			return
 		match p.mode:
 			Mode.TILES:
 				var tz := p.target_layer()
@@ -162,12 +187,23 @@ class GhostLayer extends Node2D:
 			Mode.GAMEPLAY:
 				for cell: Vector2i in cells:
 					_prism(w, cell, w.top_z(cell, p.layer), col)
+		_hover_info(font, w)
+
+	func _hover_info(font: Font, w: WorldMap) -> void:
 		var hc := w.to_screen(Vector2(p._hover_cell), p._hover_z)
 		var info := "%d,%d  ·  layer %d" % [p._hover_cell.x, p._hover_cell.y, p._hover_z]
-		if p.mode == Mode.TILES and p.tool == Tool.RECT and p._down:
+		if p.tool in [Tool.RECT, Tool.COPY] and p._down:
 			var r := p._rect_cells()
-			info += "  ·  %d tiles" % r.size()
-		draw_string(font, hc + Vector2(w.tile_width * 0.45, -w.tile_height * 0.6), info, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, NeonTheme.CYAN)
+			info += "  ·  %d×%d" % [absi(p._hover_cell.x - p._drag_start.x) + 1, absi(p._hover_cell.y - p._drag_start.y) + 1] if not r.is_empty() else ""
+		var top := w.top_tile(p._hover_cell)
+		if top != "":
+			info += "  ·  " + top.get_file()
+		# Scale the read-out so it stays legible at any zoom.
+		var s := 1.0 / maxf(p._cam.zoom.x, 0.05)
+		draw_set_transform(hc + Vector2(w.tile_width * 0.45, -w.tile_height * 0.6), 0.0, Vector2(s, s))
+		draw_string(font, Vector2(1, 1), info, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(0, 0, 0, 0.8))
+		draw_string(font, Vector2.ZERO, info, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, NeonTheme.CYAN)
+		draw_set_transform(Vector2.ZERO)
 
 	func _prism(w: WorldMap, cell: Vector2i, z: int, col: Color) -> void:
 		var d := WorldRenderer.diamond(w, Vector2(cell), z)
@@ -230,7 +266,21 @@ func _ready() -> void:
 	_vpc.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_vpc.mouse_filter = Control.MOUSE_FILTER_STOP
 	_vpc.gui_input.connect(_on_view_input)
-	center.add_child(_vpc)
+	var view_stack := Control.new()
+	view_stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	view_stack.clip_contents = true
+	center.add_child(view_stack)
+	_vpc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	view_stack.add_child(_vpc)
+	_minimap = Minimap.new()
+	_minimap.p = self
+	_minimap.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	_minimap.custom_minimum_size = Vector2(240, 150)
+	_minimap.offset_left = -252
+	_minimap.offset_top = -162
+	_minimap.offset_right = -12
+	_minimap.offset_bottom = -12
+	view_stack.add_child(_minimap)
 	_vp = SubViewport.new()
 	_vp.handle_input_locally = false
 	_vp.use_hdr_2d = true
@@ -242,6 +292,7 @@ func _ready() -> void:
 	bg.z_index = -4096
 	_vp.add_child(bg)
 	_renderer = WorldRenderer.new()
+	_renderer.editor_markers = true
 	_vp.add_child(_renderer)
 	_ghost = GhostLayer.new()
 	_ghost.p = self
@@ -276,6 +327,12 @@ func _ready() -> void:
 		new_map("new_world", "world", 24, 24)
 	set_mode(Mode.TILES)
 	set_tool(Tool.BRUSH)
+	_rng.randomize()
+	var autosave := Timer.new()
+	autosave.wait_time = 90.0
+	autosave.autostart = true
+	autosave.timeout.connect(_autosave)
+	add_child(autosave)
 
 
 func _scroll_panel(assign: Callable) -> Control:
@@ -367,6 +424,12 @@ func _build_left() -> Control:
 	_solid_check.tooltip_text = "Off: paint only on the stack layer.\nOn: fill down to the next tile or the ground — quick cliffs and towers."
 	_solid_check.toggled.connect(func(on: bool) -> void: solid_column = on)
 	cv.add_child(_solid_check)
+	var rnd := CheckBox.new()
+	rnd.text = "Scatter: random pick from selected tiles"
+	rnd.tooltip_text = "Off: cycle through the selected tiles in order. On: random — great for forests, rubble, flowers."
+	rnd.toggled.connect(func(on: bool) -> void: paint_random = on)
+	cv.add_child(rnd)
+	_slider(cv, "Density %", 5, 100, 100, func(n: int) -> void: density = n)
 	var dim := CheckBox.new()
 	dim.text = "Fade layers above the stack layer"
 	dim.toggled.connect(func(on: bool) -> void:
@@ -689,6 +752,23 @@ func _palette_objects() -> void:
 		object_source = s
 		_build_palette())
 	_palette.add_child(src)
+	_palette.add_child(_section("NEON LIGHTS", NeonTheme.MAGENTA))
+	var lights := HFlowContainer.new()
+	for preset: String in WorldRenderer.LIGHT_PRESETS:
+		var b := Button.new()
+		b.text = preset.replace("_", " ")
+		var col := Color(str(WorldRenderer.LIGHT_PRESETS[preset]["color"]))
+		b.add_theme_color_override("font_color", col.lightened(0.2))
+		_style_toggle(b, sel_object == "light:" + preset)
+		var pr := preset
+		b.pressed.connect(func() -> void:
+			sel_object = "light:" + pr
+			set_tool(Tool.BRUSH)
+			_build_palette()
+			status.emit("Click a tile to hang a %s light. Toggle the lighting preview in the map panel." % pr.replace("_", " "), col))
+		lights.add_child(b)
+	_palette.add_child(lights)
+	_palette.add_child(_section("ASSETS"))
 	_palette_assets(object_source, func(p: String) -> void: sel_object = p, func() -> String: return sel_object)
 
 
@@ -756,6 +836,8 @@ func _after_load() -> void:
 	_redo.clear()
 	selected = {}
 	_renderer.set_world(world)
+	if _minimap:
+		_minimap.mark_dirty()
 	frame_map()
 	# The viewport has no size until layout runs; frame again once it does.
 	get_tree().process_frame.connect(frame_map, CONNECT_ONE_SHOT)
@@ -765,18 +847,54 @@ func _after_load() -> void:
 
 
 func frame_map() -> void:
-	_cam.position = world.to_screen(Vector2(world.width, world.depth) * 0.5, 0)
 	var span := (world.width + world.depth) * world.tile_width * 0.5
 	var vw := maxf(_vpc.size.x, 800.0)
-	var z := clampf(vw / maxf(span, 1.0) * 0.9, 0.08, 2.0)
-	_cam.zoom = Vector2(z, z)
+	_snap_cam(world.to_screen(Vector2(world.width, world.depth) * 0.5, 0), clampf(vw / maxf(span, 1.0) * 0.9, 0.08, 2.0))
+
+
+func _snap_cam(pos: Vector2, zoom: float) -> void:
+	_cam_goal = pos
+	_zoom_goal = zoom
+	_cam.position = pos
+	_cam.zoom = Vector2(zoom, zoom)
+
+
+## Smooth glide to a point (minimap clicks, objects list).
+func focus(pos: Vector2) -> void:
+	_cam_goal = pos
 
 
 func _zoom(f: float) -> void:
-	_cam.zoom = (_cam.zoom * f).clamp(Vector2(0.05, 0.05), Vector2(6, 6))
+	_zoom_goal = clampf(_zoom_goal * f, 0.05, 6.0)
+
+
+func _process(delta: float) -> void:
+	if _cam == null:
+		return
+	var k := 1.0 - exp(-delta * 14.0)
+	_cam.position = _cam.position.lerp(_cam_goal, k)
+	var z := lerpf(_cam.zoom.x, _zoom_goal, k)
+	_cam.zoom = Vector2(z, z)
+
+
+func _autosave_path() -> String:
+	return AUTOSAVE_DIR.path_join(world.id + ".json")
+
+
+func _autosave() -> void:
+	if not dirty or not is_visible_in_tree():
+		return
+	DirAccess.make_dir_recursive_absolute(AUTOSAVE_DIR)
+	var f := FileAccess.open(_autosave_path(), FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify(world.to_dict()))
+		f.close()
+		status.emit("Autosaved %s (unsaved work is safe)." % world.id, NeonTheme.TEXT_DIM)
 
 
 func save_map() -> void:
+	if FileAccess.file_exists(_autosave_path()):
+		DirAccess.remove_absolute(_autosave_path())
 	var path := ForgeStore.save_map(world.to_dict())
 	var msg := "SAVED ▸ %s" % path
 	if dirty_missions:
@@ -854,8 +972,8 @@ func _restore(d: Dictionary) -> void:
 	world.load_dict(d)
 	selected = {}
 	_renderer.rebuild()
-	_cam.position = cam
-	_cam.zoom = zoom
+	_minimap.mark_dirty()
+	_snap_cam(cam, zoom.x)
 	_show_inspector()
 	_refresh_objects_list()
 
@@ -981,6 +1099,7 @@ func _on_view_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion:
 		var mm := event as InputEventMouseMotion
 		if _panning:
+			_cam_goal -= mm.relative / _cam.zoom.x
 			_cam.position -= mm.relative / _cam.zoom.x
 			return
 		var prev := _hover_cell
@@ -992,10 +1111,11 @@ func _on_view_input(event: InputEvent) -> void:
 
 
 func _zoom_at(local: Vector2, f: float) -> void:
-	var before := _view_to_world(local)
+	# Keep the point under the cursor fixed while the zoom glides.
+	var half := _vpc.size * 0.5
+	var before := _cam_goal + (local - half) / _zoom_goal
 	_zoom(f)
-	var after := _view_to_world(local)
-	_cam.position += before - after
+	_cam_goal = before - (local - half) / _zoom_goal
 
 
 # --- Targets -------------------------------------------------------------------
@@ -1003,10 +1123,10 @@ func _zoom_at(local: Vector2, f: float) -> void:
 ## Cells the current tool would affect (brush footprint, or the rectangle).
 func target_cells() -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
-	if tool == Tool.RECT and _down:
+	if tool in [Tool.RECT, Tool.COPY] and _down:
 		return _rect_cells()
 	var single := mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]
-	if single or tool in [Tool.PICK, Tool.SELECT, Tool.PAN, Tool.FILL] or mode in [Mode.OBJECTS, Mode.DETAILS] and tool != Tool.ERASE:
+	if single or tool in [Tool.PICK, Tool.SELECT, Tool.PAN, Tool.FILL, Tool.STAMP] or mode in [Mode.OBJECTS, Mode.DETAILS] and tool != Tool.ERASE:
 		if world.in_bounds(_hover_cell):
 			out.append(_hover_cell)
 		return out
@@ -1078,8 +1198,11 @@ func _press() -> void:
 		Tool.FILL:
 			_push_undo()
 			_flood_fill()
-		Tool.RECT:
+		Tool.RECT, Tool.COPY:
 			pass
+		Tool.STAMP:
+			_push_undo()
+			_stamp(_hover_cell)
 		_:
 			_push_undo()
 			_apply(target_cells())
@@ -1096,14 +1219,68 @@ func _release() -> void:
 	if tool == Tool.RECT:
 		_push_undo()
 		_apply(_rect_cells())
+	elif tool == Tool.COPY:
+		_copy_area(_rect_cells())
+
+
+## Copies every tile + particle layer of the rectangle, relative to its corner.
+func _copy_area(cells: Array[Vector2i]) -> void:
+	if cells.is_empty():
+		return
+	var origin := cells[0]
+	for c in cells:
+		origin = Vector2i(mini(origin.x, c.x), mini(origin.y, c.y))
+	var tiles: Array = []
+	var parts: Array = []
+	var base := 1 << 20
+	for c in cells:
+		for e: Array in world.stack_at(c):
+			tiles.append([c.x - origin.x, c.y - origin.y, int(e[0]), str(e[1])])
+			base = mini(base, int(e[0]))
+		for e2: Array in world.particles.get(c, []):
+			parts.append([c.x - origin.x, c.y - origin.y, int(e2[0]), str(e2[1])])
+	if tiles.is_empty() and parts.is_empty():
+		status.emit("Nothing to copy there.", NeonTheme.AMBER)
+		return
+	clipboard = {"tiles": tiles, "particles": parts, "base_z": base if base != 1 << 20 else 0}
+	set_tool(Tool.STAMP)
+	status.emit("Copied %d tiles — click to stamp (T). Its lowest layer lands on the stack layer." % tiles.size(), NeonTheme.CYAN)
+
+
+func _stamp(at: Vector2i) -> void:
+	if clipboard.is_empty():
+		status.emit("Copy an area first (C, then drag).", NeonTheme.MAGENTA)
+		return
+	var shift := layer - int(clipboard["base_z"])
+	var changed: Array = []
+	for t: Array in clipboard["tiles"]:
+		var c := at + Vector2i(int(t[0]), int(t[1]))
+		if world.in_bounds(c):
+			world.set_tile(c, int(t[2]) + shift, str(t[3]))
+			_renderer.pop(c, int(t[2]) + shift, false, changed.size() < 60)
+			changed.append(c)
+	for pt: Array in clipboard["particles"]:
+		world.set_particle(at + Vector2i(int(pt[0]), int(pt[1])), int(pt[2]) + shift, str(pt[3]))
+	_renderer.refresh_columns(changed)
+	if not (clipboard["particles"] as Array).is_empty():
+		_renderer.rebuild_particles()
+	_minimap.mark_dirty()
+	dirty = true
 
 
 func _next_tile() -> String:
 	if sel_tiles.is_empty():
 		return ""
+	if paint_random:
+		return sel_tiles[_rng.randi() % sel_tiles.size()]
 	var t := sel_tiles[_cycle % sel_tiles.size()]
 	_cycle += 1
 	return t
+
+
+## Scatter density: brush / rectangle strokes skip some cells.
+func _skip_for_density() -> bool:
+	return density < 100 and tool in [Tool.BRUSH, Tool.RECT] and _rng.randi() % 100 >= density
 
 
 func _apply(cells: Array[Vector2i]) -> void:
@@ -1115,20 +1292,30 @@ func _apply(cells: Array[Vector2i]) -> void:
 				status.emit("Pick a tile in the palette first.", NeonTheme.MAGENTA)
 				return
 			var tz := target_layer()
+			var rings := 0
 			for c: Vector2i in cells:
+				var ck := "%d,%d" % [c.x, c.y]
+				if _last_applied.has(ck):
+					continue
+				_last_applied[ck] = true
+				if not erase and _skip_for_density():
+					continue
 				for z: int in layers_for(c, tz):
-					var k := "%d,%d,%d" % [c.x, c.y, z]
-					if _last_applied.has(k):
-						continue
-					_last_applied[k] = true
 					if erase:
-						world.remove_tile(c, z)
+						if world.remove_tile(c, z):
+							_renderer.pop(c, z, true, rings < 40)
+							rings += 1
 					else:
 						world.set_tile(c, z, _next_tile())
+						_renderer.pop(c, z, false, rings < 40)
+						rings += 1
 				changed.append(c)
 			_renderer.refresh_columns(changed)
+			_minimap.mark_dirty()
 		Mode.PARTICLES:
 			for c: Vector2i in cells:
+				if not erase and _skip_for_density():
+					continue
 				if erase:
 					world.remove_particle(c, layer)
 				else:
@@ -1156,6 +1343,17 @@ func _apply(cells: Array[Vector2i]) -> void:
 					for o: Dictionary in world.objects_at(c):
 						world.objects.erase(o)
 						_renderer.remove_object(o)
+				_refresh_objects_list()
+			elif sel_object.begins_with("light:") and world.in_bounds(_hover_cell):
+				var preset := sel_object.substr(6)
+				var lo := world.add_object("", _hover_cell, world.top_z(_hover_cell, layer), "light")
+				lo["light"] = (WorldRenderer.LIGHT_PRESETS.get(preset, WorldRenderer.LIGHT_PRESETS["neon_pink"]) as Dictionary).duplicate()
+				lo["light"]["preset"] = preset
+				lo["light"]["height"] = 1.0
+				_renderer.refresh_object(lo)
+				_renderer.rebuild_lighting()
+				_renderer.pop(_hover_cell, world.top_z(_hover_cell, layer))
+				_select(lo)
 				_refresh_objects_list()
 			elif sel_object != "" and world.in_bounds(_hover_cell):
 				var kind := "structure" if sel_object.contains("/structures/") else ("character" if sel_object.contains("/units/") else ("loot" if sel_object.contains("/items/") else "prop"))
@@ -1332,6 +1530,8 @@ func _move_selected() -> void:
 		_moving["cell"] = [c.x, c.y]
 		_moving["z"] = int(hit[1])
 		_renderer.refresh_object(_moving)
+		if _moving.get("light") is Dictionary:
+			_renderer.rebuild_lighting()
 	dirty = true
 
 
@@ -1345,6 +1545,8 @@ func delete_selected() -> void:
 	else:
 		world.objects.erase(selected)
 		_renderer.remove_object(selected)
+		if selected.get("light") is Dictionary:
+			_renderer.rebuild_lighting()
 	selected = {}
 	_show_inspector()
 	_refresh_objects_list()
@@ -1365,6 +1567,8 @@ func duplicate_selected() -> void:
 		copy["cell"] = [mini(int(copy["cell"][0]) + 1, world.width - 1), int(copy["cell"][1])]
 		world.objects.append(copy)
 		_renderer.refresh_object(copy)
+		if copy.get("light") is Dictionary:
+			_renderer.rebuild_lighting()
 	_select(copy)
 	_refresh_objects_list()
 
@@ -1417,6 +1621,51 @@ func _map_inspector() -> void:
 	var sl := NeonTheme.label(stats, 12, NeonTheme.TEXT_DIM)
 	sl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_inspector.add_child(sl)
+	_inspector.add_child(_section("LIGHTING", NeonTheme.MAGENTA))
+	var lit := CheckBox.new()
+	lit.text = "Preview lighting (ambient tint + neon lights)"
+	lit.button_pressed = _renderer.show_lighting
+	lit.toggled.connect(func(on: bool) -> void:
+		_renderer.show_lighting = on
+		_renderer.rebuild_lighting())
+	_inspector.add_child(lit)
+	var presets: Array = ["(none)"] + WorldRenderer.AMBIENT_PRESETS.keys() + ["(custom)"]
+	var cur := "(none)" if world.ambient == "" else "(custom)"
+	for k2: String in WorldRenderer.AMBIENT_PRESETS:
+		if WorldRenderer.AMBIENT_PRESETS[k2] == world.ambient:
+			cur = k2
+	var amb_row := HBoxContainer.new()
+	amb_row.add_child(NeonTheme.label("Ambient", 12, NeonTheme.TEXT_DIM))
+	var amb_pick := ForgeForm._option(presets, cur, func(k3: String) -> void:
+		if k3 == "(custom)":
+			return
+		world.ambient = "" if k3 == "(none)" else str(WorldRenderer.AMBIENT_PRESETS[k3])
+		_renderer.rebuild_lighting()
+		dirty = true)
+	amb_pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	amb_row.add_child(amb_pick)
+	var amb_col := ColorPickerButton.new()
+	amb_col.color = Color(world.ambient) if world.ambient != "" else Color.WHITE
+	amb_col.custom_minimum_size = Vector2(44, 28)
+	amb_col.color_changed.connect(func(c: Color) -> void:
+		world.ambient = "#" + c.to_html(false)
+		_renderer.rebuild_lighting()
+		dirty = true)
+	amb_row.add_child(amb_col)
+	_inspector.add_child(amb_row)
+	var auto := _autosave_path()
+	if FileAccess.file_exists(auto):
+		var restore := Button.new()
+		var when := Time.get_datetime_string_from_unix_time(FileAccess.get_modified_time(auto), true)
+		restore.text = "↺ RESTORE AUTOSAVE (%s)" % when
+		restore.tooltip_text = "The Forge autosaves unsaved work every 90 s. This loads that copy (undo works)."
+		restore.pressed.connect(func() -> void:
+			var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(auto))
+			if d is Dictionary:
+				_push_undo()
+				_restore(d)
+				status.emit("Autosave restored — SAVE to keep it.", NeonTheme.AMBER))
+		_inspector.add_child(restore)
 	var kinds := NeonTheme.label("Travel order: WORLD (cities, points of interest) → HUB (districts) → INTERIOR (buildings) / EVENT sets. ENCOUNTER maps are battles. Double-click an object to link it as a location.", 12, NeonTheme.TEXT_DIM)
 	kinds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_inspector.add_child(kinds)
@@ -1433,7 +1682,9 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 	_inspector.add_child(prev)
 	var fields := {}
 	var keys: Array = ["asset", "z", "scale", "flip"]
-	keys += ["pos", "rot", "tint"] if detail else ["cell", "offset", "layer", "kind", "loot_item_id", "found_text", "empty_text", "dialog_npc", "character_id"]
+	if not detail:
+		o["footprint"] = WorldMap.footprint(o)
+	keys += ["pos", "rot", "tint"] if detail else ["cell", "footprint", "offset", "layer", "kind", "loot_item_id", "found_text", "empty_text", "dialog_npc", "character_id"]
 	for k: String in keys:
 		if o.has(k) or k in ["character_id"]:
 			fields[k] = o.get(k, "")
@@ -1448,7 +1699,10 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 		_refresh_objects_list()
 		dirty = true)
 	_inspector.add_child(form)
-	_inspector.add_child(_anim_editor(o, detail))
+	if o.get("light") is Dictionary:
+		_inspector.add_child(_light_editor(o))
+	else:
+		_inspector.add_child(_anim_editor(o, detail))
 	if not detail:
 		var loc := Button.new()
 		loc.text = "⌖ LOCATION LINK…" if not (o.get("location") is Dictionary) else "⌖ EDIT LOCATION: " + str(o["location"].get("name", ""))
@@ -1462,6 +1716,47 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 		b.pressed.connect(pair[1])
 		row.add_child(b)
 	_inspector.add_child(row)
+
+
+## Colour / strength / reach / flicker for a neon light object.
+func _light_editor(o: Dictionary) -> Control:
+	var l: Dictionary = o["light"]
+	var box := VBoxContainer.new()
+	box.add_child(_section("LIGHT", NeonTheme.MAGENTA))
+	var grid := GridContainer.new()
+	grid.columns = 2
+	box.add_child(grid)
+	var apply := func() -> void:
+		_renderer.refresh_object(o)
+		_renderer.rebuild_lighting()
+		dirty = true
+	var add := func(label: String, ctl: Control) -> void:
+		grid.add_child(NeonTheme.label(label, 12, NeonTheme.TEXT_DIM))
+		ctl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(ctl)
+	var col := ColorPickerButton.new()
+	col.color = Color(str(l.get("color", "#ff3fb4")))
+	col.custom_minimum_size.y = 28
+	col.color_changed.connect(func(c: Color) -> void:
+		l["color"] = "#" + c.to_html(false)
+		apply.call())
+	add.call("Colour", col)
+	add.call("Strength", ForgeForm._spin(float(l.get("energy", 1.2)), false, func(n: float) -> void:
+		l["energy"] = clampf(n, 0.0, 8.0)
+		apply.call()))
+	add.call("Reach (tiles)", ForgeForm._spin(float(l.get("radius", 3.0)), false, func(n: float) -> void:
+		l["radius"] = clampf(n, 0.5, 30.0)
+		apply.call()))
+	add.call("Flicker 0–1", ForgeForm._spin(float(l.get("flicker", 0.0)), false, func(n: float) -> void:
+		l["flicker"] = clampf(n, 0.0, 1.0)
+		apply.call()))
+	add.call("Height (layers)", ForgeForm._spin(float(l.get("height", 1.0)), false, func(n: float) -> void:
+		l["height"] = clampf(n, 0.0, 40.0)
+		apply.call()))
+	var tip := NeonTheme.label("Flicker above 0.6 makes a dying tube that cuts out now and then.", 11, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(tip)
+	return box
 
 
 ## Speed / loop mode / sheet layout for animated props, items and decals.
@@ -1654,6 +1949,8 @@ func _refresh_objects_list() -> void:
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		row.add_child(icon)
 		var name_s := str(o.get("asset", "")).get_file().get_basename()
+		if o.get("light") is Dictionary:
+			name_s = "✸ " + str(o["light"].get("preset", "light")).replace("_", " ")
 		if o.get("location") is Dictionary:
 			name_s = "⌖ " + str(o["location"].get("name", name_s))
 		var b := Button.new()
@@ -1665,7 +1962,7 @@ func _refresh_objects_list() -> void:
 		var oo := o
 		b.pressed.connect(func() -> void:
 			_select(oo)
-			_cam.position = world.to_screen(Vector2(int(oo["cell"][0]), int(oo["cell"][1])), float(oo.get("z", 0))))
+			focus(world.to_screen(Vector2(int(oo["cell"][0]), int(oo["cell"][1])), float(oo.get("z", 0)))))
 		row.add_child(b)
 		var eye := Button.new()
 		eye.text = "◌" if bool(o.get("hidden", false)) else "◉"
@@ -1684,3 +1981,110 @@ func _refresh_objects_list() -> void:
 			delete_selected())
 		row.add_child(del)
 		_objects_list.add_child(row)
+
+
+
+## Bottom-right overview: the whole map in miniature (top tile colours, height
+## shading), the camera's view as a box. Click or drag to fly there.
+class Minimap extends Control:
+	var p: ForgeWorldPainter
+	var _tex: ImageTexture
+	var _dirty: bool = true
+	var _last_build: float = 0.0
+	static var _tile_colors: Dictionary = {}
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_STOP
+		tooltip_text = "Minimap — click or drag to fly there"
+
+	func mark_dirty() -> void:
+		_dirty = true
+
+	static func tile_color(tile_id: String) -> Color:
+		if _tile_colors.has(tile_id):
+			return _tile_colors[tile_id]
+		var col := Color(str(ContentDB.terrain.get(WorldMap.terrain_of(tile_id), {}).get("color", "#444455")))
+		var frames := WorldRenderer.tile_frames(tile_id)
+		if not frames.is_empty():
+			var img: Image = (frames[0] as Texture2D).get_image()
+			if img:
+				if img.is_compressed():
+					img = img.duplicate()
+					img.decompress()
+				# Average a few points across the top face.
+				var r := WorldRenderer.fit_rect(frames[0])
+				var acc := Color(0, 0, 0, 0)
+				var n := 0
+				for pt: Vector2 in [Vector2(0.5, 0.25), Vector2(0.3, 0.25), Vector2(0.7, 0.25), Vector2(0.5, 0.12), Vector2(0.5, 0.38)]:
+					var px := Vector2i(int(r.position.x + r.size.x * pt.x), int(r.position.y + r.size.x * 0.5 * pt.y * 2.0))
+					px = px.clamp(Vector2i.ZERO, img.get_size() - Vector2i.ONE)
+					var c := img.get_pixelv(px)
+					if c.a > 0.3:
+						acc += c
+						n += 1
+				if n > 0:
+					col = Color(acc.r / n, acc.g / n, acc.b / n)
+		_tile_colors[tile_id] = col
+		return col
+
+	func _rebuild() -> void:
+		var w := p.world
+		var img := Image.create(maxi(w.width, 1), maxi(w.depth, 1), false, Image.FORMAT_RGBA8)
+		img.fill(Color(0, 0, 0, 0))
+		for cell: Vector2i in w.tiles:
+			if not w.in_bounds(cell):
+				continue
+			var c := tile_color(w.top_tile(cell))
+			var h := w.top_z(cell)
+			c = c.lightened(clampf(h * 0.04, 0.0, 0.5)) if h >= 0 else c.darkened(clampf(-h * 0.08, 0.0, 0.6))
+			img.set_pixel(cell.x, cell.y, c)
+		_tex = ImageTexture.create_from_image(img)
+		_dirty = false
+		_last_build = WorldRenderer.now()
+
+	func _process(_d: float) -> void:
+		if _dirty and WorldRenderer.now() - _last_build > 0.25:
+			_rebuild()
+		queue_redraw()
+
+	## Iso transform: map cell (x, y) → minimap pixels.
+	func _xf() -> Transform2D:
+		var w := p.world
+		var s := minf(size.x / float(w.width + w.depth), size.y * 2.0 / float(w.width + w.depth)) * 0.95
+		var origin := Vector2(size.x * 0.5 - (w.width - w.depth) * s * 0.5, (size.y - (w.width + w.depth) * s * 0.5) * 0.5)
+		return Transform2D(Vector2(s, s * 0.5), Vector2(-s, s * 0.5), origin)
+
+	func _draw() -> void:
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.03, 0.01, 0.07, 0.85))
+		draw_rect(Rect2(Vector2.ZERO, size), Color(NeonTheme.CYAN, 0.6), false, 1.5)
+		if p == null or _tex == null:
+			return
+		var xf := _xf()
+		draw_set_transform_matrix(xf)
+		draw_texture(_tex, Vector2.ZERO)
+		draw_set_transform_matrix(Transform2D.IDENTITY)
+		# Camera view box (ground plane).
+		var vp_size := p._vpc.size / p._cam.zoom.x
+		var corners := [p._cam.position + Vector2(-vp_size.x, -vp_size.y) * 0.5, p._cam.position + Vector2(vp_size.x, -vp_size.y) * 0.5,
+			p._cam.position + Vector2(vp_size.x, vp_size.y) * 0.5, p._cam.position + Vector2(-vp_size.x, vp_size.y) * 0.5]
+		var pts := PackedVector2Array()
+		for c: Vector2 in corners:
+			pts.append(xf * (p.world.from_screen(c, 0) + Vector2(0.5, 0.5)))
+		pts.append(pts[0])
+		draw_polyline(pts, Color(1.8, 1.8, 1.8, 0.9), 1.5)
+		var hov := xf * (Vector2(p._hover_cell) + Vector2(0.5, 0.5))
+		draw_circle(hov, 2.5, NeonTheme.MAGENTA)
+
+	func _gui_input(event: InputEvent) -> void:
+		var go := false
+		var at := Vector2.ZERO
+		if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+			go = true
+			at = (event as InputEventMouseButton).position
+		elif event is InputEventMouseMotion and ((event as InputEventMouseMotion).button_mask & MOUSE_BUTTON_MASK_LEFT):
+			go = true
+			at = (event as InputEventMouseMotion).position
+		if go:
+			var cell := _xf().affine_inverse() * at - Vector2(0.5, 0.5)
+			p.focus(p.world.to_screen(cell, 0))
+			accept_event()

@@ -21,6 +21,8 @@ var tile_width: float = 128.0
 var tile_height: float = 64.0
 var height_step: float = 32.0
 var music: String = ""
+## Ambient tint for the whole map (CanvasModulate), e.g. "#4a4f86" for night.
+var ambient: String = ""
 ## Vector2i -> Array of [z:int, tile_id:String], sorted by z ascending.
 var tiles: Dictionary = {}
 ## Vector2i -> Array of [z:int, preset_id:String].
@@ -200,8 +202,35 @@ func add_detail(asset: String, pos: Vector2, z: int) -> Dictionary:
 	return d
 
 
+## Side length (cells) of the square an object stands on. Its `cell` is the
+## FRONT corner; the footprint extends back (-x, -y). Structures and locations
+## with art default to 2, everything else to 1.
+static func footprint(o: Dictionary) -> int:
+	if o.has("footprint"):
+		return clampi(int(o["footprint"]), 1, 8)
+	return 2 if str(o.get("kind", "")) in ["structure", "location"] and str(o.get("asset", "")) != "" else 1
+
+
+static func footprint_cells(o: Dictionary) -> Array[Vector2i]:
+	var a := Vector2i(int(o["cell"][0]), int(o["cell"][1]))
+	var n := footprint(o)
+	var out: Array[Vector2i] = []
+	for i in n:
+		for j in n:
+			out.append(a - Vector2i(i, j))
+	return out
+
+
+## Distance (cells) from `cell` to the nearest tile of an object's footprint.
+static func distance_to(o: Dictionary, cell: Vector2i) -> float:
+	var best := INF
+	for c in footprint_cells(o):
+		best = minf(best, Vector2(c - cell).length())
+	return best
+
+
 func objects_at(cell: Vector2i) -> Array:
-	return objects.filter(func(o: Dictionary) -> bool: return int(o["cell"][0]) == cell.x and int(o["cell"][1]) == cell.y)
+	return objects.filter(func(o: Dictionary) -> bool: return footprint_cells(o).has(cell))
 
 
 func locations() -> Array:
@@ -217,6 +246,7 @@ func load_dict(d: Dictionary) -> void:
 	width = int(d.get("width", 24))
 	depth = int(d.get("depth", 24))
 	music = str(d.get("music", ""))
+	ambient = str(d.get("ambient", ""))
 	spawns = d.get("spawns", {"player": [], "enemy": []}).duplicate(true)
 	if not spawns.has("player"):
 		spawns["player"] = []
@@ -287,6 +317,8 @@ func to_dict() -> Dictionary:
 		"spawns": spawns, "gameplay": g}
 	if music != "":
 		out["music"] = music
+	if ambient != "":
+		out["ambient"] = ambient
 	if not legacy_props.is_empty():
 		out["props"] = legacy_props
 	return out
@@ -329,14 +361,17 @@ func to_grid() -> IsometricGrid:
 		if over.has("cost"): c.move_cost = int(over["cost"])
 		if over.has("hazard"): c.hazard = str(over["hazard"])
 	for o: Dictionary in objects:
-		var oc := Vector2i(int(o["cell"][0]), int(o["cell"][1]))
-		var cell_o := g.get_cell(oc)
-		if cell_o and str(o.get("kind", "")) == "structure":
-			cell_o.walkable = false
-			cell_o.blocks_los = true
-			cell_o.cover = IsometricGrid.COVER_FULL
-		elif cell_o and str(o.get("kind", "")) in ["prop", "loot"]:
-			cell_o.prop_id = str(o["id"])
+		var kind_o := str(o.get("kind", ""))
+		for oc in footprint_cells(o):
+			var cell_o := g.get_cell(oc)
+			if cell_o == null:
+				continue
+			if kind_o in ["structure", "location"]:
+				cell_o.walkable = false
+				cell_o.blocks_los = true
+				cell_o.cover = IsometricGrid.COVER_FULL
+			elif kind_o in ["prop", "loot"]:
+				cell_o.prop_id = str(o["id"])
 	return g
 
 

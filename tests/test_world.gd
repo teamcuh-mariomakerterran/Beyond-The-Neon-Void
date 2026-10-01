@@ -110,6 +110,14 @@ func test_to_grid() -> void:
 	check(not g.is_walkable(Vector2i(1, 1)), "gameplay override")
 	check(not g.is_walkable(Vector2i(3, 3)) and g.get_cell(Vector2i(3, 3)).blocks_los, "structure blocks")
 	check(g.tile_width == w.tile_width, "grid uses map tile size")
+	# A 2×2 building claims its footprint (front corner = its cell).
+	var big := w.add_object("res://assets/structures/27_neon_bar.png", Vector2i(6, 3), 0, "structure")
+	check(WorldMap.footprint(big) == 2 and WorldMap.footprint_cells(big).size() == 4, "structures default to a 2×2 footprint")
+	var g2 := w.to_grid()
+	check(not g2.is_walkable(Vector2i(5, 2)) and not g2.is_walkable(Vector2i(6, 3)) and g2.is_walkable(Vector2i(7, 3)), "footprint blocks its cells only")
+	check(w.objects_at(Vector2i(5, 3)).has(big) and is_equal_approx(WorldMap.distance_to(big, Vector2i(7, 3)), 1.0), "objects_at / distance use the footprint")
+	big["footprint"] = 1
+	check(w.to_grid().is_walkable(Vector2i(5, 2)), "footprint override 1")
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:
@@ -198,6 +206,61 @@ func test_painter() -> void:
 	_press(p, Vector2i(5, 6), 0)
 	check((p.world.spawns["player"] as Array).size() == 1, "spawn placed")
 	check(p._numbered_siblings("res://nothing/here_1.png").is_empty(), "no siblings → no frames")
+	# Copy an area (all layers) and stamp it elsewhere, lifted to the stack layer.
+	p.set_mode(ForgeWorldPainter.Mode.TILES)
+	p.world.tiles.clear()
+	p.world.set_tile(Vector2i(0, 0), 0, "terrain:concrete")
+	p.world.set_tile(Vector2i(1, 0), 0, "terrain:concrete")
+	p.world.set_tile(Vector2i(1, 0), 1, "terrain:crate")
+	p.set_tool(ForgeWorldPainter.Tool.COPY)
+	_press(p, Vector2i(0, 0), 0)
+	p._hover_cell = Vector2i(1, 0)
+	p._release()
+	check(p.tool == ForgeWorldPainter.Tool.STAMP and (p.clipboard["tiles"] as Array).size() == 3, "copy area → stamp tool armed")
+	p.set_layer(4)
+	_press(p, Vector2i(6, 6), 4)
+	check(p.world.tile_at(Vector2i(6, 6), 4) == "terrain:concrete" and p.world.tile_at(Vector2i(7, 6), 5) == "terrain:crate", "stamp lands lifted to layer 4")
+	# Scatter: random pick + density.
+	p.world.tiles.clear()
+	p.set_tool(ForgeWorldPainter.Tool.RECT)
+	p.sel_tiles = ["terrain:grass", "terrain:forest", "terrain:rock"]
+	p.paint_random = true
+	p.density = 40
+	p.set_layer(0)
+	_press(p, Vector2i(0, 0), 0)
+	p._hover_cell = Vector2i(9, 9)
+	p._release()
+	var n := p.world.tiles.size()
+	check(n > 15 and n < 70, "density 40%% paints a partial rectangle (%d / 100)" % n)
+	var kinds := {}
+	for c: Vector2i in p.world.tiles:
+		kinds[p.world.top_tile(c)] = true
+	check(kinds.size() == 3, "random pick uses every selected tile")
+	p.paint_random = false
+	p.density = 100
+	# Neon lights + ambient survive a save round-trip and build PointLight2Ds.
+	p.set_mode(ForgeWorldPainter.Mode.OBJECTS)
+	p.set_tool(ForgeWorldPainter.Tool.BRUSH)
+	p.sel_object = "light:neon_pink"
+	p.world.set_tile(Vector2i(3, 3), 0, "terrain:concrete")
+	_press(p, Vector2i(3, 3), 0)
+	var lights := p.world.objects.filter(func(o: Dictionary) -> bool: return o.get("light") is Dictionary)
+	check(lights.size() == 1 and str(lights[0]["light"]["preset"]) == "neon_pink", "place neon light")
+	p.world.ambient = "#4a4f86"
+	p._renderer.rebuild_lighting()
+	check(p._renderer._lights_root.get_child_count() == 1 and p._renderer._ambient.color == Color("#4a4f86"), "renderer builds light + ambient")
+	var rt := WorldMap.from_dict(JSON.parse_string(JSON.stringify(p.world.to_dict())))
+	check(rt.ambient == "#4a4f86" and rt.objects.filter(func(o: Dictionary) -> bool: return o.get("light") is Dictionary).size() == 1, "lights + ambient round-trip")
+	# Autosave writes only when dirty, and SAVE clears it.
+	p.world.id = "t_autosave"
+	p.dirty = true
+	p._autosave()
+	check(FileAccess.file_exists(p._autosave_path()), "autosave written")
+	DirAccess.remove_absolute(p._autosave_path())
+	# Juice: a fresh tile is mid-drop, then settles.
+	p._renderer.pop(Vector2i(3, 3), 0)
+	check(p._renderer.pop_progress(Vector2i(3, 3), 0) < 1.0 and p._renderer.is_popping(Vector2i(3, 3)), "tile pop animating")
+	check(p._renderer.pop_progress(Vector2i(40, 40), 0) == 1.0, "untouched tile not popping")
 	p.queue_free()
 	await tree.process_frame
 

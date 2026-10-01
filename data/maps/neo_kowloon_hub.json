@@ -8,6 +8,7 @@
 	"tile_width": 128,
 	"tile_height": 64,
 	"height_step": 32,
+	"ambient": "#5a5294",
 	"tiles": {
 		"0,0": [
 			[
@@ -3053,6 +3054,192 @@
 				"intro_cutscene": "",
 				"discovered": true,
 				"radius": 1.5
+			}
+		},
+		{
+			"id": "obj_neo_kowloon_hub_light_0",
+			"asset": "",
+			"cell": [
+				5,
+				7
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "light",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null,
+			"light": {
+				"preset": "neon_pink",
+				"color": "#ff3fb4",
+				"energy": 1.4,
+				"radius": 3.0,
+				"flicker": 0.1,
+				"height": 1.0
+			}
+		},
+		{
+			"id": "obj_neo_kowloon_hub_light_1",
+			"asset": "",
+			"cell": [
+				12,
+				7
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "light",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null,
+			"light": {
+				"preset": "neon_cyan",
+				"color": "#3ff6ff",
+				"energy": 1.3,
+				"radius": 3.0,
+				"flicker": 0.05,
+				"height": 1.0
+			}
+		},
+		{
+			"id": "obj_neo_kowloon_hub_light_2",
+			"asset": "",
+			"cell": [
+				7,
+				12
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "light",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null,
+			"light": {
+				"preset": "toxic_glow",
+				"color": "#8dff3f",
+				"energy": 1.2,
+				"radius": 2.5,
+				"flicker": 0.15,
+				"height": 1.0
+			}
+		},
+		{
+			"id": "obj_neo_kowloon_hub_light_3",
+			"asset": "",
+			"cell": [
+				9,
+				9
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "light",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null,
+			"light": {
+				"preset": "sodium_lamp",
+				"color": "#ffb347",
+				"energy": 1.1,
+				"radius": 4.0,
+				"flicker": 0.0,
+				"height": 1.0
+			}
+		},
+		{
+			"id": "obj_neo_kowloon_hub_light_4",
+			"asset": "",
+			"cell": [
+				14,
+				14
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "light",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null,
+			"light": {
+				"preset": "broken_tube",
+				"color": "#d9e8ff",
+				"energy": 1.0,
+				"radius": 2.0,
+				"flicker": 0.9,
+				"height": 1.0
+			}
+		},
+		{
+			"id": "obj_neo_kowloon_hub_light_5",
+			"asset": "",
+			"cell": [
+				3,
+				15
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "light",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null,
+			"light": {
+				"preset": "fire",
+				"color": "#ff7a2f",
+				"energy": 1.6,
+				"radius": 2.5,
+				"flicker": 0.45,
+				"height": 1.0
 			}
 		}
 	],

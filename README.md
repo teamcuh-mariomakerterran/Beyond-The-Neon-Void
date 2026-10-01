@@ -33,6 +33,11 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
   - Other layers: **Details** (craters, debris, rivers laid on top of tiles), **Particles** (rain, storm clouds, fog... on any layer), **Objects** (with animation speed and loop/ping-pong), **Gameplay** (spawns, enemies, cover).
   - Double-click an object to make it a **location**: a city or point of interest that links to another map, with a first-visit cutscene.
   - **▶ Play here** (F5) walks the map, or fights on it if it's an encounter.
+  - **Juice and speed:** tiles drop in with a ring flash, the camera glides, and a minimap (bottom right) shows the whole map; click it to fly there. **Copy area (C)** and **Stamp (T)** clone a chunk with all its layers. **Scatter** paints randomly from your selected tiles at a chosen density.
+  - **Lighting:** neon light presets (pink, cyan, sodium, toxic, fire, broken tube, moonlight) with flicker, plus a per-map ambient tint for day, dusk, night and so on.
+  - **Footprints:** big structures claim an N×N area for sorting and blocking.
+  - **Autosave:** every 90 seconds to `user://forge_autosave`, with a restore button in the map panel.
+  - More ideas, ranked: [docs/research/EDITOR_IDEAS.md](docs/research/EDITOR_IDEAS.md).
 - **Characters:**
   - Drop a portrait or an animation sheet on the character's drop zone.
   - The slicer turns sheet rows into idle/walk/attack/hurt/death animations.
@@ -46,6 +51,7 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
 
 ![World Painter](docs/screenshots/world_painter_particles.png)
 ![Exploring a world map](docs/screenshots/world_explore.png)
+![Neon lighting](docs/screenshots/world_lighting.png)
 
 ## Where things are
 ```

@@ -180,7 +180,7 @@ func _update_labels() -> void:
 		if l == null:
 			continue
 		var oc := Vector2i(int(o["cell"][0]), int(o["cell"][1]))
-		var near := Vector2(oc - cell).length() <= float(o["location"].get("radius", 1.5)) + 0.01
+		var near := WorldMap.distance_to(o, cell) <= float(o["location"].get("radius", 1.5)) + 0.01
 		l.text = str(o["location"].get("name", "?")) if is_known(o) else "?"
 		var node := _renderer.object_node(str(o["id"]))
 		var top := world.to_screen(Vector2(oc), float(o.get("z", 0))) + Vector2(0, -world.tile_height * 2.2)
@@ -197,8 +197,7 @@ func _interactable() -> Dictionary:
 	var best: Dictionary = {}
 	var best_d := INF
 	for o: Dictionary in world.objects:
-		var oc := Vector2i(int(o["cell"][0]), int(o["cell"][1]))
-		var dist := Vector2(oc - cell).length()
+		var dist := WorldMap.distance_to(o, cell)
 		var reach := float(o["location"].get("radius", 1.5)) if o.get("location") is Dictionary else 1.01
 		var useful: bool = o.get("location") is Dictionary or str(o.get("loot_item_id", "")) != "" or str(o.get("dialog_npc", "")) != "" or str(o.get("found_text", "")) != ""
 		if useful and dist <= reach + 0.01 and dist < best_d:

@@ -94,10 +94,22 @@ def hub():
                         "anim": None, "loot_item_id": "", "found_text": "", "empty_text": "", "dialog_npc": "",
                         "location": {"type": "building", "name": name, "target_map": "", "target_spawn": 0,
                                      "intro_cutscene": "", "discovered": True, "radius": 1.5}})
+    lights = [([5, 7], "neon_pink"), ([12, 7], "neon_cyan"), ([7, 12], "toxic_glow"), ([9, 9], "sodium_lamp"),
+              ([14, 14], "broken_tube"), ([3, 15], "fire")]
+    presets = {"neon_pink": ("#ff3fb4", 1.4, 3.0, 0.1), "neon_cyan": ("#3ff6ff", 1.3, 3.0, 0.05),
+               "toxic_glow": ("#8dff3f", 1.2, 2.5, 0.15), "sodium_lamp": ("#ffb347", 1.1, 4.0, 0.0),
+               "broken_tube": ("#d9e8ff", 1.0, 2.0, 0.9), "fire": ("#ff7a2f", 1.6, 2.5, 0.45)}
+    for i, (cell, preset) in enumerate(lights):
+        col, en, rad, fl = presets[preset]
+        objects.append({"id": f"obj_neo_kowloon_hub_light_{i}", "asset": "", "cell": cell, "z": 0, "offset": [0, 0],
+                        "scale": 1.0, "flip": False, "layer": 0, "kind": "light", "anim": None, "loot_item_id": "",
+                        "found_text": "", "empty_text": "", "dialog_npc": "", "location": None,
+                        "light": {"preset": preset, "color": col, "energy": en, "radius": rad, "flicker": fl, "height": 1.0}})
     particles = {f"{x},{y}": [[6, "neon_rain"]] for x in range(W) for y in range(D) if (x + y) % 2 == 0}
     return {"format": 2, "id": "neo_kowloon_hub", "name": "Neo Kowloon — Street Level", "kind": "hub", "width": W,
-            "depth": D, "tile_width": 128, "tile_height": 64, "height_step": 32, "tiles": tiles, "details": [],
-            "particles": particles, "objects": objects, "spawns": {"player": [[9, 16]], "enemy": []}, "gameplay": {}}
+            "depth": D, "tile_width": 128, "tile_height": 64, "height_step": 32, "ambient": "#5a5294", "tiles": tiles,
+            "details": [], "particles": particles, "objects": objects, "spawns": {"player": [[9, 16]], "enemy": []},
+            "gameplay": {}}
 
 
 for m in (world(), hub()):

@@ -16,7 +16,7 @@ func run(tree: SceneTree) -> void:
 	await _wait(tree, 5)
 	var painter: ForgeWorldPainter = tree.current_scene.get("_world")
 	painter.load_map(map_id)
-	painter.set_mode(ForgeWorldPainter.Mode.PARTICLES)
+	painter.set_mode(ForgeWorldPainter.Mode.OBJECTS)
 	await _wait(tree, 90)
 	tree.root.get_texture().get_image().save_png(out + "_painter.png")
 	var cm: Node = tree.root.get_node("CampaignManager")
