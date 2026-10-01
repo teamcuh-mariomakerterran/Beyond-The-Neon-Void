@@ -50,7 +50,9 @@ var tool: Tool = Tool.BRUSH
 var play_tool: Play = Play.SPAWN
 var layer: int = 0
 var brush_size: int = 1
-var brush_height: int = 1
+## Off: tiles land only on the stack layer. On: the column below is filled
+## too (down to the next tile or the ground) for solid cliffs and towers.
+var solid_column: bool = false
 var dim_above: bool = false
 var kind_filter: String = "all"
 var dirty: bool = false
@@ -79,7 +81,7 @@ var _mode_buttons: Array[Button] = []
 var _tool_buttons: Array[Button] = []
 var _layer_spin: SpinBox
 var _size_slider: HSlider
-var _height_slider: HSlider
+var _solid_check: CheckBox
 var _palette: VBoxContainer
 var _inspector: VBoxContainer
 var _objects_list: VBoxContainer
@@ -126,10 +128,10 @@ class GhostLayer extends Node2D:
 		var col := Color(2.0, 0.3, 0.4) if erase else GHOST
 		match p.mode:
 			Mode.TILES:
-				var zs := p.target_layers()
+				var tz := p.target_layer()
 				var n := 0
 				for cell: Vector2i in cells:
-					for z: int in zs:
+					for z: int in p.layers_for(cell, tz):
 						var c := w.to_screen(Vector2(cell), z)
 						if not erase and not p.sel_tiles.is_empty():
 							WorldRenderer.draw_tile(self, w, p.sel_tiles[(p._cycle + n) % p.sel_tiles.size()], c, 0.55)
@@ -164,7 +166,7 @@ class GhostLayer extends Node2D:
 		var info := "%d,%d  ·  layer %d" % [p._hover_cell.x, p._hover_cell.y, p._hover_z]
 		if p.mode == Mode.TILES and p.tool == Tool.RECT and p._down:
 			var r := p._rect_cells()
-			info += "  ·  %d tiles" % (r.size() * p.target_layers().size())
+			info += "  ·  %d tiles" % r.size()
 		draw_string(font, hc + Vector2(w.tile_width * 0.45, -w.tile_height * 0.6), info, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, NeonTheme.CYAN)
 
 	func _prism(w: WorldMap, cell: Vector2i, z: int, col: Color) -> void:
@@ -360,7 +362,11 @@ func _build_left() -> Control:
 	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	cv.add_child(tip)
 	_size_slider = _slider(cv, "Brush Size", 1, 12, 1, func(n: int) -> void: brush_size = n)
-	_height_slider = _slider(cv, "Brush Height", 1, 12, 1, func(n: int) -> void: brush_height = n)
+	_solid_check = CheckBox.new()
+	_solid_check.text = "Solid column (also fill the layers below)"
+	_solid_check.tooltip_text = "Off: paint only on the stack layer.\nOn: fill down to the next tile or the ground — quick cliffs and towers."
+	_solid_check.toggled.connect(func(on: bool) -> void: solid_column = on)
+	cv.add_child(_solid_check)
 	var dim := CheckBox.new()
 	dim.text = "Fade layers above the stack layer"
 	dim.toggled.connect(func(on: bool) -> void:
@@ -551,7 +557,7 @@ func _palette_tiles() -> void:
 	for g: String in names:
 		var ids: Array = groups[g]
 		ids.sort()
-		_palette.add_child(_section("%s (%d)" % [g.to_upper(), ids.size()], NeonTheme.TEXT_DIM))
+		_palette.add_child(_section("%s (%d)" % [g.to_upper() if g != "" else "TILES", ids.size()], NeonTheme.TEXT_DIM))
 		var grid := GridContainer.new()
 		grid.columns = 5
 		for id: String in ids:
@@ -1026,12 +1032,24 @@ func _rect_cells() -> Array[Vector2i]:
 	return out
 
 
-## Layers the tile brush fills: the hover layer and brush_height-1 above it.
-func target_layers() -> Array[int]:
-	var out: Array[int] = []
-	var base := _hover_z if tool != Tool.RECT or not _down else layer
-	for i in brush_height:
-		out.append(base + i)
+## The layer the tile brush paints on (the rectangle always uses the stack layer).
+func target_layer() -> int:
+	return _hover_z if tool != Tool.RECT or not _down else layer
+
+
+## Layers to fill in one column: just `z`, or with "solid column" on, everything
+## from just above the next tile below (or the ground) up to `z`.
+func layers_for(cell: Vector2i, z: int) -> Array[int]:
+	var out: Array[int] = [z]
+	if not solid_column or tool == Tool.ERASE:
+		return out
+	var floor_z := 0 if z > 0 else z
+	for e: Array in world.stack_at(cell):
+		if int(e[0]) < z:
+			floor_z = int(e[0]) + 1  # stack is sorted: the last hit is the nearest below
+	out.clear()
+	for i in range(floor_z, z + 1):
+		out.append(i)
 	return out
 
 
@@ -1096,9 +1114,9 @@ func _apply(cells: Array[Vector2i]) -> void:
 			if not erase and sel_tiles.is_empty():
 				status.emit("Pick a tile in the palette first.", NeonTheme.MAGENTA)
 				return
-			var zs := target_layers()
+			var tz := target_layer()
 			for c: Vector2i in cells:
-				for z: int in zs:
+				for z: int in layers_for(c, tz):
 					var k := "%d,%d,%d" % [c.x, c.y, z]
 					if _last_applied.has(k):
 						continue
@@ -1258,12 +1276,12 @@ func _flood_fill() -> void:
 				var here := world.tile_at(n, layer) if mode == Mode.TILES else _particle_at(n, layer)
 				if here == match_id:
 					queue.append(n)
-	var keep_height := brush_height
-	brush_height = 1
+	var keep_solid := solid_column
+	solid_column = false
 	var keep_z := _hover_z
 	_hover_z = layer
 	_apply(cells)
-	brush_height = keep_height
+	solid_column = keep_solid
 	_hover_z = keep_z
 	status.emit("Filled %d cells." % cells.size(), NeonTheme.GREEN)
 

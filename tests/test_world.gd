@@ -130,11 +130,18 @@ func test_painter() -> void:
 	p.set_tool(ForgeWorldPainter.Tool.BRUSH)
 	p.sel_tiles = ["terrain:concrete", "terrain:catwalk"]
 	p.brush_size = 3
-	p.brush_height = 2
-	p.set_layer(1)
-	_press(p, Vector2i(5, 5), 1)
+	p.set_layer(2)
+	_press(p, Vector2i(5, 5), 2)
 	check(p.world.tiles.size() == 9, "3×3 brush paints 9 columns (%d)" % p.world.tiles.size())
-	check(p.world.stack_at(Vector2i(5, 5)).size() == 2 and p.world.top_z(Vector2i(5, 5)) == 2, "brush height fills 2 layers")
+	check(p.world.stack_at(Vector2i(5, 5)).size() == 1 and p.world.top_z(Vector2i(5, 5)) == 2, "brush paints only the chosen layer")
+	p.solid_column = true
+	_press(p, Vector2i(9, 9), 3)
+	check(p.world.stack_at(Vector2i(9, 9)).size() == 4, "solid column fills layers 0..3 on empty ground")
+	p.set_layer(5)
+	_press(p, Vector2i(5, 5), 5)
+	var zs5: Array = p.world.stack_at(Vector2i(5, 5)).map(func(e: Array) -> int: return int(e[0]))
+	check(zs5 == [2, 3, 4, 5], "solid column fills down to the tile below: %s" % [zs5])
+	p.solid_column = false
 	var ids := {}
 	for c: Vector2i in p.world.tiles:
 		for e: Array in p.world.tiles[c]:
@@ -142,7 +149,6 @@ func test_painter() -> void:
 	check(ids.size() == 2, "multi-select cycles tiles")
 	# Rectangle: fills on release only.
 	p.set_tool(ForgeWorldPainter.Tool.RECT)
-	p.brush_height = 1
 	p.set_layer(-2)
 	_press(p, Vector2i(0, 0), -2)
 	p._hover_cell = Vector2i(3, 2)
@@ -163,7 +169,6 @@ func test_painter() -> void:
 	# Erase with the brush.
 	p.set_tool(ForgeWorldPainter.Tool.ERASE)
 	p.brush_size = 1
-	p.brush_height = 1
 	_press(p, Vector2i(11, 11), 0)
 	check(p.world.tile_at(Vector2i(11, 11), 0) == "", "erase")
 	# Particles.

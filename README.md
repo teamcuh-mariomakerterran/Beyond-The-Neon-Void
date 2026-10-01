@@ -28,7 +28,7 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
 - Drop files **anywhere on the window** and the **intake wizard** asks what each one is (tile, detail, structure, prop, character, item...), what to call it, and its role. It then *copies* the file into the right `assets/` folder and indexes it in `data/asset_index.json`. Your originals are never moved.
 - **World Painter** (the live level builder, [format](docs/design/WORLD_FORMAT.md)):
   - Tabs for **world / city / hub / interior / encounter / event** maps.
-  - **Tiles** stack at any layer, including negative (below ground). Tools: brush **B**, rectangle **R**, fill **G**, eyedropper **I**, select **V**, pan **H**, erase **E**. Brush size and height sliders. Shift-click tiles in the palette to cycle through them while you paint. A green ghost shows where tiles will land.
+  - **Tiles** stack at any layer, including negative (below ground). Tools: brush **B**, rectangle **R**, fill **G**, eyedropper **I**, select **V**, pan **H**, erase **E**. Brush size slider; tiles land only on the chosen stack layer ("Solid column" fills below for cliffs). Shift-click tiles in the palette to cycle through them while you paint. A green ghost shows where tiles will land.
   - Tile art auto-fits to the world angle. Numbered water/river frames play as animations.
   - Other layers: **Details** (craters, debris, rivers laid on top of tiles), **Particles** (rain, storm clouds, fog... on any layer), **Objects** (with animation speed and loop/ping-pong), **Gameplay** (spawns, enemies, cover).
   - Double-click an object to make it a **location**: a city or point of interest that links to another map, with a first-visit cutscene.
