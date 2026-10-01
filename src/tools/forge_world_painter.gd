@@ -648,7 +648,40 @@ func _tile_groups() -> Dictionary:
 	return groups
 
 
+func _palette_stamps() -> void:
+	var stamps := list_stamps()
+	_palette.add_child(_section("STAMPS (%d)" % stamps.size(), NeonTheme.CYAN))
+	var row := HFlowContainer.new()
+	for path: String in stamps:
+		var b := Button.new()
+		b.text = "⎘ " + path.get_file().get_basename().replace("_", " ")
+		b.tooltip_text = "Load this stamp, then click the map to place it."
+		var pp := path
+		b.pressed.connect(func() -> void: load_stamp(pp))
+		row.add_child(b)
+	var save := Button.new()
+	save.text = "＋ SAVE STAMP"
+	save.tooltip_text = "Save what you copied (C) as a reusable stamp."
+	save.disabled = clipboard.is_empty()
+	save.pressed.connect(func() -> void:
+		var dlg := ConfirmationDialog.new()
+		dlg.title = "SAVE STAMP"
+		var e := LineEdit.new()
+		e.placeholder_text = "e.g. neon bar front, ruined car, stair run"
+		e.custom_minimum_size.x = 360
+		dlg.add_child(e)
+		dlg.confirmed.connect(func() -> void:
+			save_stamp(e.text if e.text != "" else "stamp")
+			_build_palette()
+			dlg.queue_free())
+		add_child(dlg)
+		dlg.popup_centered())
+	row.add_child(save)
+	_palette.add_child(row)
+
+
 func _palette_tiles() -> void:
+	_palette_stamps()
 	var top := HBoxContainer.new()
 	var info := NeonTheme.label(_sel_text(), 12, NeonTheme.CYAN)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1087,6 +1120,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		duplicate_selected()
 	elif k.keycode == KEY_F5:
 		play_here()
+	elif k.shift_pressed and k.keycode == KEY_R and tool == Tool.STAMP:
+		transform_clipboard(true)
+	elif k.shift_pressed and k.keycode == KEY_F and tool == Tool.STAMP:
+		transform_clipboard(false)
 	elif k.keycode in [KEY_DELETE, KEY_BACKSPACE]:
 		delete_selected()
 	elif k.keycode == KEY_BRACKETLEFT:
@@ -1304,12 +1341,87 @@ func _copy_area(cells: Array[Vector2i]) -> void:
 			base = mini(base, int(e[0]))
 		for e2: Array in world.particles.get(c, []):
 			parts.append([c.x - origin.x, c.y - origin.y, int(e2[0]), str(e2[1])])
-	if tiles.is_empty() and parts.is_empty():
+	# Objects whose anchor cell is inside the area come along (lights, props...).
+	var objs: Array = []
+	for o: Dictionary in world.objects:
+		var oc := Vector2i(int(o["cell"][0]), int(o["cell"][1]))
+		if cells.has(oc):
+			var copy: Dictionary = o.duplicate(true)
+			copy["cell"] = [oc.x - origin.x, oc.y - origin.y]
+			objs.append(copy)
+	if tiles.is_empty() and parts.is_empty() and objs.is_empty():
 		status.emit("Nothing to copy there.", NeonTheme.AMBER)
 		return
-	clipboard = {"tiles": tiles, "particles": parts, "base_z": base if base != 1 << 20 else 0}
+	clipboard = {"tiles": tiles, "particles": parts, "objects": objs, "base_z": base if base != 1 << 20 else 0}
 	set_tool(Tool.STAMP)
-	status.emit("Copied %d tiles — click to stamp (T). Its lowest layer lands on the stack layer." % tiles.size(), NeonTheme.CYAN)
+	status.emit("Copied %d tiles, %d objects — click to stamp (T). Shift+R rotates, Shift+F flips; SAVE STAMP in the TILES palette keeps it." % [tiles.size(), objs.size()], NeonTheme.CYAN)
+
+
+## Rotates the clipboard 90° (iso quarter turn) or mirrors it; re-anchors at 0,0.
+func transform_clipboard(rotate: bool) -> void:
+	if clipboard.is_empty():
+		return
+	var xf := func(x: int, y: int) -> Vector2i: return Vector2i(y, -x) if rotate else Vector2i(-x, y)
+	var lo := Vector2i(1 << 20, 1 << 20)
+	for key: String in ["tiles", "particles"]:
+		for e: Array in clipboard.get(key, []):
+			var v: Vector2i = xf.call(int(e[0]), int(e[1]))
+			e[0] = v.x
+			e[1] = v.y
+			lo = Vector2i(mini(lo.x, v.x), mini(lo.y, v.y))
+	for o: Dictionary in clipboard.get("objects", []):
+		var v2: Vector2i = xf.call(int(o["cell"][0]), int(o["cell"][1]))
+		o["cell"] = [v2.x, v2.y]
+		lo = Vector2i(mini(lo.x, v2.x), mini(lo.y, v2.y))
+		if not rotate:
+			o["flip"] = not bool(o.get("flip", false))
+	for key2: String in ["tiles", "particles"]:
+		for e2: Array in clipboard.get(key2, []):
+			e2[0] = int(e2[0]) - lo.x
+			e2[1] = int(e2[1]) - lo.y
+	for o2: Dictionary in clipboard.get("objects", []):
+		o2["cell"] = [int(o2["cell"][0]) - lo.x, int(o2["cell"][1]) - lo.y]
+	status.emit("Stamp %s." % ("rotated" if rotate else "flipped"), NeonTheme.CYAN)
+
+
+const STAMP_DIR := "res://data/stamps"
+
+
+func save_stamp(stamp_name: String) -> String:
+	if clipboard.is_empty():
+		return ""
+	var id := ForgeStore.slugify(stamp_name)
+	if id == "":
+		id = "stamp"
+	var dir := STAMP_DIR if ForgeStore.writable_res() else "user://content/stamps"
+	DirAccess.make_dir_recursive_absolute(dir)
+	var path := dir.path_join(id + ".json")
+	var data: Dictionary = clipboard.duplicate(true)
+	data["name"] = stamp_name
+	ForgeStore._write_json(path, data)
+	status.emit("Stamp saved ▸ %s" % path, NeonTheme.GREEN)
+	return path
+
+
+static func list_stamps() -> Array[String]:
+	var out: Array[String] = []
+	for dir: String in [STAMP_DIR, "user://content/stamps"]:
+		if DirAccess.dir_exists_absolute(dir):
+			for f in DirAccess.get_files_at(dir):
+				if f.ends_with(".json"):
+					out.append(dir.path_join(f))
+	out.sort()
+	return out
+
+
+func load_stamp(path: String) -> void:
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if d is Dictionary:
+		clipboard = d
+		if not clipboard.has("objects"):
+			clipboard["objects"] = []
+		set_tool(Tool.STAMP)
+		status.emit("Stamp '%s' ready — click to place (Shift+R rotate, Shift+F flip)." % d.get("name", path.get_file()), NeonTheme.CYAN)
 
 
 func _stamp(at: Vector2i) -> void:
@@ -1326,6 +1438,19 @@ func _stamp(at: Vector2i) -> void:
 			changed.append(c)
 	for pt: Array in clipboard["particles"]:
 		world.set_particle(at + Vector2i(int(pt[0]), int(pt[1])), int(pt[2]) + shift, str(pt[3]))
+	for src: Dictionary in clipboard.get("objects", []):
+		var o: Dictionary = src.duplicate(true)
+		var oc := at + Vector2i(int(o["cell"][0]), int(o["cell"][1]))
+		if not world.in_bounds(oc):
+			continue
+		o["cell"] = [oc.x, oc.y]
+		o["z"] = int(o.get("z", 0)) + shift
+		o["id"] = world.next_id("obj")
+		world.objects.append(o)
+		_renderer.refresh_object(o)
+	if not (clipboard.get("objects", []) as Array).is_empty():
+		_renderer.rebuild_lighting()
+		_refresh_objects_list()
 	_renderer.refresh_columns(changed)
 	if not (clipboard["particles"] as Array).is_empty():
 		_renderer.rebuild_particles()

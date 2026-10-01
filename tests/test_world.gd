@@ -252,6 +252,19 @@ func test_painter() -> void:
 	p.set_layer(4)
 	_press(p, Vector2i(6, 6), 4)
 	check(p.world.tile_at(Vector2i(6, 6), 4) == "terrain:concrete" and p.world.tile_at(Vector2i(7, 6), 5) == "terrain:crate", "stamp lands lifted to layer 4")
+	# Rotate a quarter turn: the 2×1 strip becomes 1×2.
+	p.transform_clipboard(true)
+	var spots := {}
+	for t: Array in p.clipboard["tiles"]:
+		spots[Vector2i(int(t[0]), int(t[1]))] = true
+	check(spots.has(Vector2i(0, 0)) and spots.has(Vector2i(0, 1)) and spots.size() == 2, "rotate stamp: %s" % [spots.keys()])
+	# Save + reload through data/stamps.
+	var sp := p.save_stamp("test stamp zz")
+	check(FileAccess.file_exists(sp) and ForgeWorldPainter.list_stamps().has(sp), "stamp saved + listed")
+	p.clipboard = {}
+	p.load_stamp(sp)
+	check((p.clipboard["tiles"] as Array).size() == 3 and p.tool == ForgeWorldPainter.Tool.STAMP, "stamp reloaded")
+	DirAccess.remove_absolute(sp)
 	# Scatter: random pick + density.
 	p.world.tiles.clear()
 	p.set_tool(ForgeWorldPainter.Tool.RECT)
