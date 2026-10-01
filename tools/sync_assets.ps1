@@ -74,7 +74,7 @@ Push-Location $Repo
 try {
     git fetch origin $Branch 2>$null
     git checkout $Branch 2>$null
-    git pull --no-rebase origin $Branch
+    git pull --no-rebase --no-edit origin $Branch
     if (-not (git config user.email)) { git config user.email "teamcuh@gmail.com" }
     if (-not (git config user.name))  { git config user.name  "brian moore" }
 
