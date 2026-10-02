@@ -139,3 +139,42 @@ Comedy as a system, not just in dialogue.
 - **Cartographer**: rewrite the battlefield (walls, elevation, swapping tiles *and whoever stands on them*).
 - **Evolve-late-for-potential crafting**, which rewards patience with a permanent multiplier.
 - **Hidden loot with no markers**: you learn to click everything, exactly like FF8/FF9.
+
+---
+
+## Noted 2026-10-02 (from Brian)
+
+### Sync Blade: a melee class with Legend of Dragoon "Additions"
+- **The idea:** a sword class whose basic attack is a timed button-press chain, like the Additions in Legend of Dragoon.
+  - A ring (or neon blade-light) closes in, and you press on the beat.
+  - Every hit you land adds a strike and more damage. Miss and the chain ends.
+- **Progression:** class levels unlock new chains. Each one changes the number of presses, the rhythm (even, syncopated, a long hold, a fast double tap) and the finisher.
+  - Chains level up with use (more damage, a wider timing window), so there's a reason to stick with one or switch.
+- **Ideas for chains:**
+  - *Two-Step* (2 presses)
+  - *Neon Rondo* (4, even beat)
+  - *Backbeat* (5, off-beat)
+  - *Overclock* (7, speeds up)
+  - *Dead Air* (3 with a long silent gap: the timing trap)
+  - *Final Cut* (8, needs every press, huge finisher)
+- **Tactics fit:** attacks still use the grid (range, facing, height). The chain only plays when the attack is made, as a close-up using the cutscene player we already have. An "auto" option gives about 70% damage, so it's accessibility-friendly.
+- **Effort:** medium. It needs a timing widget, a chain data format in abilities.json, and a close-up hook in BattleMap.play_ability_fx. The pieces already exist, so this is doable now, not just "someday".
+
+### More enemy types (proposed, waiting on approval of names)
+Current: Shift Warden, Choir Enforcer, Cantor Adept, Factory Marksman, Foreman (boss-ish), Essence Wraith, Munitions Drone, plus the player-side droid chassis and Sentry Turret.
+
+| Proposed | Role | Hook |
+|---|---|---|
+| Gutter Punk | early melee | cheap trash mob; runs when it's losing |
+| Chrome Hound | fast melee | pack beast, flanks, bonus from behind |
+| Riot Mech | heavy tank | knockback shield charge, slow |
+| Signal Jammer | support drone | silences abilities in a radius until destroyed |
+| Static Leech | debuffer | latches on, drains MP each turn |
+| Repo Man | thief | steals an item or coins, then tries to escape the map |
+| Corpo Netrunner | hacker | hijacks your droids and turrets for 2 turns |
+| Bomb Crawler | kamikaze | walks up and explodes, leaving burning tiles |
+| Sump Thing | brute | leaves toxic hazard tiles where it walks |
+| Mourner | necro support | raises fallen enemies (mirror of the Digimancer) |
+| Mirror Unit | mimic | copies the last ability used against it |
+| **The Auditor** (boss) | boss | rewrites the win condition mid-fight |
+| **Choir Cardinal** (boss) | boss | phases: sermon (buffs), hymn (AoE), silence |
