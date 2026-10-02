@@ -93,6 +93,26 @@ static func validate(w: WorldMap, enemies: Array = []) -> Array[Dictionary]:
 		if not _asset_ok(str(d.get("asset", ""))):
 			var p: Array = d.get("pos", [0, 0])
 			out.append(_issue(ERROR, "Detail %s: art file missing." % d.get("id", ""), Vector2i(roundi(float(p[0])), roundi(float(p[1])))))
+	for r: Dictionary in w.regions:
+		var rn := str(r.get("name", "region"))
+		var first := WorldMap.parse_key(str((r.get("cells", ["-1,-1"]) as Array)[0])) if not (r.get("cells", []) as Array).is_empty() else Vector2i(-1, -1)
+		if (r.get("cells", []) as Array).is_empty():
+			out.append(_issue(WARN, "Region '%s' has no painted cells." % rn))
+		for t: Dictionary in r.get("triggers", []):
+			var arg := str(t.get("arg", ""))
+			match str(t.get("do", "")):
+				"cutscene":
+					if not FileAccess.file_exists(arg):
+						out.append(_issue(ERROR, "Region '%s': cutscene '%s' not found." % [rn, arg], first))
+				"battle":
+					if ContentDB.get_mission(arg) == null:
+						out.append(_issue(ERROR, "Region '%s': unknown mission '%s'." % [rn, arg], first))
+				"teleport":
+					if ContentDB.get_map(arg.split(":")[0]).is_empty():
+						out.append(_issue(ERROR, "Region '%s': teleport to missing map '%s'." % [rn, arg], first))
+		for m: String in (r.get("encounter", {}) as Dictionary).get("missions", []):
+			if ContentDB.get_mission(m) == null:
+				out.append(_issue(ERROR, "Region '%s': encounter mission '%s' does not exist." % [rn, m], first))
 	if w.tiles.is_empty():
 		out.append(_issue(WARN, "The map has no tiles yet."))
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["level"] == ERROR and b["level"] != ERROR)

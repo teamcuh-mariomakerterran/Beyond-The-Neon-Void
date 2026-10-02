@@ -17,6 +17,7 @@ func run(p_tree: SceneTree) -> int:
 	test_sync_blade()
 	await test_strips_and_cutaway()
 	await test_sculpt_ramps_mirror()
+	await test_regions_and_links()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -272,6 +273,79 @@ func test_sculpt_ramps_mirror() -> void:
 	check(p.sel_tiles == ["terrain:rock"], "recent tile 2 = rock")
 	p.queue_free()
 	await tree.process_frame
+
+
+func test_regions_and_links() -> void:
+	# Regions: paint + triggers fire on enter, once.
+	var w := _map()
+	w.id = "t_regions"
+	w.kind = "hub"
+	for x in 8:
+		for y in 8:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	var r := w.add_region("Alley Mouth")
+	r["cells"] = ["3,3", "3,4"]
+	r["triggers"] = [{"on": "enter", "do": "flag", "arg": "t_seen_alley", "once": true}, {"on": "exit", "do": "flag", "arg": "t_left_alley"}]
+	check(w.regions_at(Vector2i(3, 4)).size() == 1 and w.regions_at(Vector2i(5, 5)).is_empty(), "regions_at")
+	var rt := WorldMap.from_dict(JSON.parse_string(JSON.stringify(w.to_dict())))
+	check(rt.regions.size() == 1 and (rt.regions[0]["triggers"] as Array).size() == 2, "regions round-trip")
+	w.spawns["player"] = [[2, 3]]
+	ContentDB.maps[w.id] = w.to_dict()
+	CampaignManager.current_explore = {"map_id": w.id, "spawn": 0}
+	for f in ["t_seen_alley", "t_left_alley"]:
+		GameManager.story_flags.erase(f)
+	var ex := ExploreScene.new()
+	tree.root.add_child(ex)
+	await tree.process_frame
+	ex.cell = Vector2i(3, 3)
+	await ex._update_regions()
+	check(GameManager.check_story_flag("t_seen_alley"), "enter trigger fired")
+	ex.cell = Vector2i(5, 5)
+	await ex._update_regions()
+	check(GameManager.check_story_flag("t_left_alley"), "exit trigger fired")
+	var reg: Dictionary = ex.world.regions[0]
+	check(GameManager.check_story_flag(ExploreScene.trigger_flag(w.id, reg, 0)), "once-trigger remembered")
+	reg["encounter"] = {"rate": 1.0, "missions": ["m01_the_brew_plan"]}
+	ex.cell = Vector2i(3, 3)
+	check(ex.roll_encounter() == "m01_the_brew_plan", "encounter roll at 100%")
+	ex.queue_free()
+	ContentDB.maps.erase(w.id)
+	for f in ["t_seen_alley", "t_left_alley", ExploreScene.trigger_flag(w.id, reg, 0)]:
+		GameManager.story_flags.erase(f)
+	# Painter: paint a region with the brush.
+	var p := ForgeWorldPainter.new()
+	tree.root.add_child(p)
+	await tree.process_frame
+	p.new_map("t_rgn_paint", "hub", 8, 8)
+	p.set_mode(ForgeWorldPainter.Mode.REGIONS)
+	p.sel_region = p.world.add_region("Market")
+	p.set_tool(ForgeWorldPainter.Tool.BRUSH)
+	p.brush_size = 2
+	_press(p, Vector2i(4, 4), 0)
+	check((p.sel_region["cells"] as Array).size() == 4, "brush paints region cells")
+	p.queue_free()
+	await tree.process_frame
+	# Asset links: rename rewrites references; repair finds moved files.
+	DirAccess.make_dir_recursive_absolute("res://assets/_t_refs/a")
+	var img := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	img.save_png("res://assets/_t_refs/a/thing_one.png")
+	var jf := FileAccess.open("res://data/_t_refs.json", FileAccess.WRITE)
+	jf.store_string('{"x": "res://assets/_t_refs/a/thing_one.png"}')
+	jf.close()
+	var n := AssetRefs.rename("res://assets/_t_refs/a/thing_one.png", "res://assets/_t_refs/b/thing_one.png", false)
+	check(n == 1 and FileAccess.get_file_as_string("res://data/_t_refs.json").contains("_t_refs/b/thing_one.png"), "rename rewrites links")
+	# Simulate an outside move: file moved, link left behind → repair finds it.
+	DirAccess.make_dir_recursive_absolute("res://assets/_t_refs/c")
+	DirAccess.rename_absolute("res://assets/_t_refs/b/thing_one.png", "res://assets/_t_refs/c/thing_one.png")
+	check(AssetRefs.broken().any(func(b: Dictionary) -> bool: return str(b["path"]).contains("_t_refs/b/thing_one")), "broken link detected")
+	var fix := AssetRefs.repair_all(false)
+	check(int(fix["fixed"]) >= 1 and FileAccess.get_file_as_string("res://data/_t_refs.json").contains("_t_refs/c/thing_one.png"), "repair re-links moved file")
+	DirAccess.remove_absolute("res://data/_t_refs.json")
+	DirAccess.remove_absolute("res://assets/_t_refs/c/thing_one.png")
+	for d in ["c", "b", "a"]:
+		DirAccess.remove_absolute("res://assets/_t_refs/" + d)
+	DirAccess.remove_absolute("res://assets/_t_refs")
+	AssetRefs.reindex()
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:

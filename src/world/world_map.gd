@@ -36,6 +36,11 @@ var spawns: Dictionary = {"player": [], "enemy": []}
 var gameplay: Dictionary = {}
 ## Legacy v1 hidden-loot props, kept so old maps round-trip.
 var legacy_props: Array = []
+## Painted areas with triggers: [{id, name, color, cells: ["x,y"...],
+##   triggers: [{on: "enter"|"exit"|"interact", do: "cutscene"|"dialog"|
+##   "battle"|"flag"|"music"|"toast"|"teleport", arg: "...", once: bool,
+##   requires_flag: "", blocks_flag: ""}], encounter: {rate, missions: []}}]
+var regions: Array = []
 var _uid: int = 0
 
 
@@ -193,7 +198,7 @@ func particle_groups() -> Dictionary:
 
 func next_id(prefix: String) -> String:
 	var taken := {}
-	for o: Dictionary in objects + details:
+	for o: Dictionary in objects + details + regions:
 		taken[str(o.get("id", ""))] = true
 	while true:
 		_uid += 1
@@ -249,6 +254,19 @@ func objects_at(cell: Vector2i) -> Array:
 	return objects.filter(func(o: Dictionary) -> bool: return footprint_cells(o).has(cell))
 
 
+## Regions covering a cell.
+func regions_at(cell: Vector2i) -> Array:
+	var k := key(cell)
+	return regions.filter(func(r: Dictionary) -> bool: return (r.get("cells", []) as Array).has(k))
+
+
+func add_region(region_name: String) -> Dictionary:
+	var cols := ["#ff3fb4", "#3ff6ff", "#ffd23f", "#8dff3f", "#b48cff", "#ff7a2f"]
+	var r := {"id": next_id("rgn"), "name": region_name, "color": cols[regions.size() % cols.size()], "cells": [], "triggers": []}
+	regions.append(r)
+	return r
+
+
 func locations() -> Array:
 	return objects.filter(func(o: Dictionary) -> bool: return o.get("location") is Dictionary)
 
@@ -268,6 +286,7 @@ func load_dict(d: Dictionary) -> void:
 	if not spawns.has("player"):
 		spawns["player"] = []
 	legacy_props = d.get("props", []).duplicate(true)
+	regions = d.get("regions", []).duplicate(true)
 	tiles.clear()
 	particles.clear()
 	gameplay.clear()
@@ -343,6 +362,8 @@ func to_dict() -> Dictionary:
 		out["post"] = post
 	if not legacy_props.is_empty():
 		out["props"] = legacy_props
+	if not regions.is_empty():
+		out["regions"] = regions
 	return out
 
 

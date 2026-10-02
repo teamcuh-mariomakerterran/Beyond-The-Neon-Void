@@ -26,6 +26,9 @@ var _toast: Label
 var _hud: CanvasLayer
 var _prompt: Label
 var _post: HD2DPost
+## Region ids the player currently stands in (enter / exit triggers).
+var _inside: Dictionary = {}
+var _rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
@@ -68,6 +71,9 @@ func _ready() -> void:
 		if stream and AudioManager.has_method("play_music"):
 			AudioManager.call("play_music", stream)
 	_toast_text(world.name.to_upper(), NeonTheme.CYAN)
+	_rng.randomize()
+	for r: Dictionary in world.regions_at(cell):
+		_inside[str(r["id"])] = r
 
 
 func _start_cell(info: Dictionary) -> Vector2i:
@@ -214,6 +220,8 @@ func _interactable() -> Dictionary:
 func _interact() -> void:
 	var o := _interactable()
 	if o.is_empty():
+		for r: Dictionary in world.regions_at(cell):
+			await fire_triggers(r, "interact")
 		return
 	if o.get("location") is Dictionary:
 		_enter(o)
@@ -252,6 +260,95 @@ func _enter(o: Dictionary) -> void:
 		_toast_text(str(loc.get("name", "")).to_upper(), NeonTheme.GREEN)
 		await get_tree().create_timer(1.2).timeout
 	CampaignManager.explore(target, int(loc.get("target_spawn", 0)))
+
+
+# --- Regions & triggers ---------------------------------------------------------
+
+## Fires enter / exit triggers as the player crosses region borders, then rolls
+## that region's random encounter.
+func _update_regions() -> void:
+	var now_in := {}
+	for r: Dictionary in world.regions_at(cell):
+		now_in[str(r["id"])] = r
+	for id: String in _inside.keys():
+		if not now_in.has(id):
+			await fire_triggers(_inside[id], "exit")
+	for id2: String in now_in:
+		if not _inside.has(id2):
+			await fire_triggers(now_in[id2], "enter")
+	_inside = now_in
+	var m := roll_encounter()
+	if m != "":
+		_toast_text("AMBUSH!", NeonTheme.MAGENTA)
+		CampaignManager.start_mission(m)
+
+
+## Mission id if a random encounter triggers on this step, else "".
+func roll_encounter() -> String:
+	for r: Dictionary in world.regions_at(cell):
+		var enc: Dictionary = r.get("encounter", {})
+		var ms: Array = enc.get("missions", [])
+		if not ms.is_empty() and _rng.randf() < float(enc.get("rate", 0.0)):
+			var mid := str(ms[_rng.randi() % ms.size()])
+			if ContentDB.get_mission(mid):
+				return mid
+	return ""
+
+
+static func trigger_flag(map_id: String, region: Dictionary, index: int) -> String:
+	return "trig:%s:%s:%d" % [map_id, region.get("id", ""), index]
+
+
+func fire_triggers(region: Dictionary, on: String) -> void:
+	var trigs: Array = region.get("triggers", [])
+	for i in trigs.size():
+		var t: Dictionary = trigs[i]
+		if str(t.get("on", "enter")) != on:
+			continue
+		var req := str(t.get("requires_flag", ""))
+		if req != "" and not GameManager.check_story_flag(req):
+			continue
+		var blk := str(t.get("blocks_flag", ""))
+		if blk != "" and GameManager.check_story_flag(blk):
+			continue
+		var once_flag := trigger_flag(world.id, region, i)
+		if bool(t.get("once", false)):
+			if GameManager.check_story_flag(once_flag):
+				continue
+			GameManager.set_story_flag(once_flag)
+		await run_trigger(str(t.get("do", "toast")), str(t.get("arg", "")))
+
+
+func run_trigger(action: String, arg: String) -> void:
+	match action:
+		"toast":
+			_toast_text(arg, NeonTheme.CYAN)
+		"flag":
+			GameManager.set_story_flag(arg)
+		"dialog":
+			var npc := ContentDB.get_npc(arg)
+			if npc:
+				UIManager.get_dialogue_box().play_npc(npc)
+			else:
+				UIManager.get_dialogue_box().say("", arg)
+		"cutscene":
+			if FileAccess.file_exists(arg):
+				_busy = true
+				var player := CutscenePlayer.play(get_tree().root, arg, {"PLACE": world.name})
+				if player:
+					await player.finished
+				_busy = false
+		"battle":
+			if ContentDB.get_mission(arg):
+				CampaignManager.start_mission(arg)
+		"music":
+			var stream := ForgeStore.load_audio(arg)
+			if stream and AudioManager.has_method("play_music"):
+				AudioManager.call("play_music", stream)
+		"teleport":
+			var parts := arg.split(":")
+			if parts.size() > 0 and not ContentDB.get_map(parts[0]).is_empty():
+				CampaignManager.explore(parts[0], int(parts[1]) if parts.size() > 1 else 0)
 
 
 # --- Movement ------------------------------------------------------------------
@@ -295,6 +392,7 @@ func _step(dir: Vector2i) -> void:
 	await tw.finished
 	_avatar.z_index = (cell.x + cell.y) * 2 + 1
 	_moving = false
+	await _update_regions()
 
 
 func _process(_delta: float) -> void:

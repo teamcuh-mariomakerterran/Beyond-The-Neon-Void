@@ -37,9 +37,9 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
 - ✅ **Cutaway / x-ray** (almost a must, since there's no camera turn): fade or slice anything that hides the player or the cursor.
 - ✅ Tactical overlay (built)
 - ⬜ Typed entity fields and references
-- ⬜ Regions and triggers
+- ✅ Regions and triggers (enter / exit / interact → toast, dialog, cutscene, battle, flag, music, teleport; random encounters)
 - ⬜ Location graph view (world → hub → interior links as a node graph)
-- ⬜ Asset-reference repair (fix links after renames or moves)
+- ✅ Asset-reference repair (⚕ LINKS in Assets; renames update every link) (fix links after renames or moves)
 
 ## Art pipeline
 - Battle facings: **4 diagonals** (2 + mirror allowed per character). The other 4 facings are for cutscenes and menus.

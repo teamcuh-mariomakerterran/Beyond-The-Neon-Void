@@ -89,6 +89,18 @@ func _build_categories() -> void:
 		var id := cat
 		b.pressed.connect(func() -> void: category = id; _build_categories(); refresh())
 		_cat_bar.add_child(b)
+	var links := Button.new()
+	var broken := AssetRefs.broken()
+	links.text = "⚕ LINKS OK" if broken.is_empty() else "⚕ %d BROKEN LINKS" % broken.size()
+	links.tooltip_text = "Finds data that points at missing art (renamed or moved files) and re-links what it can."
+	if not broken.is_empty():
+		links.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(NeonTheme.MAGENTA, 0.15), NeonTheme.MAGENTA))
+	links.pressed.connect(func() -> void:
+		var r := AssetRefs.repair_all()
+		var left: Array = r["left"]
+		status.emit("Re-linked %d reference(s).%s" % [r["fixed"], "" if left.is_empty() else "  Still missing: " + ", ".join(PackedStringArray(left.slice(0, 4).map(func(x: String) -> String: return x.get_file())))], NeonTheme.GREEN if left.is_empty() else NeonTheme.AMBER)
+		_build_categories())
+	_cat_bar.add_child(links)
 
 
 func refresh() -> void:

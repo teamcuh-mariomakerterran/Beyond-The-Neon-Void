@@ -203,6 +203,9 @@ static func rename_asset(path: String, new_base: String) -> String:
 	var import_file_path := path + ".import"
 	if FileAccess.file_exists(import_file_path):
 		DirAccess.remove_absolute(import_file_path)
+	# Keep maps / items / characters pointing at the renamed file.
+	if AssetRefs._rewrite(path, dest) > 0:
+		ContentDB.reload()
 	return dest
 
 

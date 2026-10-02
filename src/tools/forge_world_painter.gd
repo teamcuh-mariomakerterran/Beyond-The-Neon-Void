@@ -25,11 +25,15 @@ extends HSplitContainer
 
 signal status(text: String, color: Color)
 
-enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY }
+enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY, REGIONS }
 enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE, COPY, STAMP, SCULPT, RAMP }
 enum Play { SPAWN, ENEMY, BLOCK, COVER, SIGHT }
 
-const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY"]
+const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY", "REGIONS"]
+const TRIGGER_ON := ["enter", "exit", "interact"]
+const TRIGGER_DO := ["toast", "dialog", "cutscene", "battle", "flag", "music", "teleport"]
+const TRIGGER_HINT := {"toast": "text to show", "dialog": "NPC id", "cutscene": "res://data/cutscenes/….json",
+	"battle": "mission id", "flag": "story flag to set", "music": "res://assets/music/….ogg", "teleport": "map_id or map_id:spawn#"}
 const TOOL_INFO := [
 	["✎", "Brush [B]", "Left-click / drag to paint."],
 	["▭", "Rectangle [R]", "Drag a rectangle; it fills when you let go."],
@@ -75,6 +79,7 @@ var enemy_id: String = "doctrine_warden"
 var enemy_level: int = 2
 
 var selected: Dictionary = {}
+var sel_region: Dictionary = {}
 ## Scatter: pick randomly from the selected tiles instead of cycling, and only
 ## paint `density`% of the cells the brush touches (forests, rubble, flowers).
 var paint_random: bool = false
@@ -158,6 +163,8 @@ class GhostLayer extends Node2D:
 		draw_polyline(corners, Color(0.55, 0.35, 0.9, 0.45), 2.0)
 		if p.tactics_view:
 			_draw_tactics(font)
+		if p.mode == Mode.REGIONS:
+			_draw_regions(font)
 		if p.mode == Mode.GAMEPLAY or p.mode == Mode.OBJECTS:
 			_draw_gameplay(font)
 		if not w.in_bounds(p._hover_cell) and p.tool != Tool.SELECT:
@@ -220,7 +227,7 @@ class GhostLayer extends Node2D:
 							draw_texture_rect_region(tex, Rect2(at + Vector2(-sz.x * 0.5, -sz.y + w.tile_height * 0.25), sz), used, Color(1, 1, 1, 0.6))
 				for cell: Vector2i in cells:
 					_prism(w, cell, p._hover_z, Color(col, 0.7))
-			Mode.GAMEPLAY:
+			Mode.GAMEPLAY, Mode.REGIONS:
 				for cell: Vector2i in cells:
 					_prism(w, cell, w.top_z(cell, p.layer), col)
 		_hover_info(font, w)
@@ -254,6 +261,23 @@ class GhostLayer extends Node2D:
 		draw_line(d[2], d[2] + drop, col, 1.6)
 		draw_line(d[1], d[1] + drop, col, 1.6)
 		draw_polyline(PackedVector2Array([d[3] + drop, d[2] + drop, d[1] + drop]), col, 1.6)
+
+	func _draw_regions(font: Font) -> void:
+		var w := p.world
+		for r: Dictionary in w.regions:
+			var col := Color(str(r.get("color", "#ff3fb4")))
+			var strong := r == p.sel_region
+			var sum := Vector2.ZERO
+			var n := 0
+			for k: String in r.get("cells", []):
+				var c := WorldMap.parse_key(k)
+				var d := WorldRenderer.diamond(w, Vector2(c), w.top_z(c))
+				draw_colored_polygon(d, Color(col, 0.35 if strong else 0.15))
+				sum += w.to_screen(Vector2(c), w.top_z(c))
+				n += 1
+			if n > 0:
+				var label := "%s  ·  %d trigger(s)" % [r.get("name", "?"), (r.get("triggers", []) as Array).size()]
+				draw_string(font, sum / n - Vector2(label.length() * 4, 0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, col.lightened(0.3))
 
 	func _draw_tactics(font: Font) -> void:
 		var w := p.world
@@ -696,6 +720,7 @@ func _build_palette() -> void:
 		Mode.PARTICLES: _palette_particles()
 		Mode.OBJECTS: _palette_objects()
 		Mode.GAMEPLAY: _palette_gameplay()
+		Mode.REGIONS: _palette_regions()
 
 
 func _tile_groups() -> Dictionary:
@@ -963,6 +988,128 @@ func _palette_objects() -> void:
 	_palette_assets(object_source, func(p: String) -> void: sel_object = p, func() -> String: return sel_object)
 
 
+func _palette_regions() -> void:
+	var tip := NeonTheme.label("Paint an area with the brush or rectangle, then give it triggers: walk in / out / press E → toast, dialogue, cutscene, battle, flag, music, teleport. Add random encounters too.", 12, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_palette.add_child(tip)
+	var row := HBoxContainer.new()
+	var name_e := LineEdit.new()
+	name_e.placeholder_text = "new region name…"
+	name_e.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(name_e)
+	var add := Button.new()
+	add.text = "＋ REGION"
+	add.pressed.connect(func() -> void:
+		_push_undo()
+		sel_region = world.add_region(name_e.text if name_e.text != "" else "Region %d" % (world.regions.size() + 1))
+		set_tool(Tool.BRUSH)
+		_build_palette())
+	row.add_child(add)
+	_palette.add_child(row)
+	for r: Dictionary in world.regions:
+		var b := Button.new()
+		b.text = "■ %s  (%d cells, %d triggers)" % [r.get("name", "?"), (r.get("cells", []) as Array).size(), (r.get("triggers", []) as Array).size()]
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.add_theme_color_override("font_color", Color(str(r.get("color", "#ffffff"))))
+		_style_toggle(b, r == sel_region)
+		var rr := r
+		b.pressed.connect(func() -> void:
+			sel_region = rr
+			_build_palette())
+		_palette.add_child(b)
+	if not sel_region.is_empty() and world.regions.has(sel_region):
+		_palette.add_child(_region_editor(sel_region))
+
+
+func _region_editor(r: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_child(_section("REGION: " + str(r.get("name", "")).to_upper(), Color(str(r.get("color", "#ffffff")))))
+	var nm := LineEdit.new()
+	nm.text = str(r.get("name", ""))
+	nm.text_changed.connect(func(t: String) -> void:
+		r["name"] = t
+		dirty = true)
+	box.add_child(nm)
+	var trigs: Array = r.get("triggers", [])
+	r["triggers"] = trigs
+	for i in trigs.size():
+		var t: Dictionary = trigs[i]
+		var tb := VBoxContainer.new()
+		var line := HBoxContainer.new()
+		line.add_child(ForgeForm._option(TRIGGER_ON, str(t.get("on", "enter")), func(v: String) -> void:
+			t["on"] = v
+			dirty = true))
+		line.add_child(NeonTheme.label("→", 13))
+		line.add_child(ForgeForm._option(TRIGGER_DO, str(t.get("do", "toast")), func(v: String) -> void:
+			t["do"] = v
+			dirty = true
+			_build_palette()))
+		var once := CheckBox.new()
+		once.text = "once"
+		once.button_pressed = bool(t.get("once", false))
+		once.toggled.connect(func(on: bool) -> void:
+			t["once"] = on
+			dirty = true)
+		line.add_child(once)
+		var del := Button.new()
+		del.text = "✕"
+		var ii := i
+		del.pressed.connect(func() -> void:
+			trigs.remove_at(ii)
+			dirty = true
+			_build_palette())
+		line.add_child(del)
+		tb.add_child(line)
+		var arg := LineEdit.new()
+		arg.text = str(t.get("arg", ""))
+		arg.placeholder_text = str(TRIGGER_HINT.get(str(t.get("do", "toast")), ""))
+		arg.text_changed.connect(func(v: String) -> void:
+			t["arg"] = v
+			dirty = true)
+		tb.add_child(arg)
+		var req := LineEdit.new()
+		req.text = str(t.get("requires_flag", ""))
+		req.placeholder_text = "only if story flag is set (optional)"
+		req.text_changed.connect(func(v: String) -> void:
+			t["requires_flag"] = v
+			dirty = true)
+		tb.add_child(req)
+		box.add_child(tb)
+	var addt := Button.new()
+	addt.text = "＋ TRIGGER"
+	addt.pressed.connect(func() -> void:
+		trigs.append({"on": "enter", "do": "toast", "arg": "", "once": true})
+		dirty = true
+		_build_palette())
+	box.add_child(addt)
+	var enc: Dictionary = r.get("encounter", {})
+	box.add_child(_section("RANDOM ENCOUNTERS"))
+	var er := HBoxContainer.new()
+	er.add_child(NeonTheme.label("Chance / step %", 12, NeonTheme.TEXT_DIM))
+	er.add_child(ForgeForm._spin(float(enc.get("rate", 0.0)) * 100.0, false, func(n: float) -> void:
+		enc["rate"] = clampf(n / 100.0, 0.0, 1.0)
+		r["encounter"] = enc
+		dirty = true))
+	box.add_child(er)
+	var ms := LineEdit.new()
+	ms.text = ", ".join(PackedStringArray(enc.get("missions", [])))
+	ms.placeholder_text = "mission ids, comma separated"
+	ms.text_changed.connect(func(v: String) -> void:
+		enc["missions"] = Array(v.split(",", false)).map(func(x: String) -> String: return x.strip_edges())
+		r["encounter"] = enc
+		dirty = true)
+	box.add_child(ms)
+	var delr := Button.new()
+	delr.text = "DELETE REGION"
+	delr.pressed.connect(func() -> void:
+		_push_undo()
+		world.regions.erase(r)
+		sel_region = {}
+		_build_palette())
+	box.add_child(delr)
+	return box
+
+
 func _palette_gameplay() -> void:
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -1217,6 +1364,7 @@ func _restore(d: Dictionary) -> void:
 	world.load_dict(d)
 	_edit_count += 1
 	selected = {}
+	sel_region = {}
 	_renderer.rebuild()
 	_minimap.mark_dirty()
 	_snap_cam(cam, zoom.x)
@@ -1289,7 +1437,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		set_layer(layer - 1)
 	elif TOOL_KEYS.has(k.keycode) and not k.ctrl_pressed:
 		set_tool(TOOL_KEYS[k.keycode])
-	elif k.keycode >= KEY_1 and k.keycode <= KEY_5 and k.alt_pressed:
+	elif k.keycode >= KEY_1 and k.keycode <= KEY_6 and k.alt_pressed:
 		set_mode(k.keycode - KEY_1)
 	else:
 		handled = false
@@ -1476,7 +1624,7 @@ func _drag() -> void:
 		sculpt(target_cells())
 	elif tool == Tool.RAMP:
 		place_ramps(target_cells())
-	elif tool in [Tool.BRUSH, Tool.ERASE] and mode in [Mode.TILES, Mode.PARTICLES, Mode.GAMEPLAY] and not (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]):
+	elif tool in [Tool.BRUSH, Tool.ERASE] and mode in [Mode.TILES, Mode.PARTICLES, Mode.GAMEPLAY, Mode.REGIONS] and not (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]):
 		_apply(target_cells())
 
 
@@ -1841,6 +1989,17 @@ func _apply(cells: Array[Vector2i]) -> void:
 				_refresh_objects_list()
 			else:
 				status.emit("Pick an asset in the palette first.", NeonTheme.MAGENTA)
+		Mode.REGIONS:
+			if sel_region.is_empty():
+				status.emit("Create or pick a region first (left panel).", NeonTheme.MAGENTA)
+				return
+			var rc: Array = sel_region["cells"]
+			for c: Vector2i in with_mirrors(cells):
+				var rk := WorldMap.key(c)
+				if erase:
+					rc.erase(rk)
+				elif not rc.has(rk) and world.in_bounds(c):
+					rc.append(rk)
 		Mode.GAMEPLAY:
 			for c: Vector2i in cells:
 				var k2 := "%d,%d" % [c.x, c.y]
