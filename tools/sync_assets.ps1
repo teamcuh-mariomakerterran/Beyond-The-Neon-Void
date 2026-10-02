@@ -16,7 +16,7 @@ param(
     [string]$Repo          = "C:\godot and game projects\Beyond-The-Neon-Void",
     [string]$RepoUrl       = "https://github.com/teamcuh-mariomakerterran/Beyond-The-Neon-Void.git",
     [string]$Branch        = "claude/optimistic-fermat-pie49w",
-    [int]$ChunkMB          = 300,
+    [int]$ChunkMB          = 90,
     # Dump mode: copy this whole folder (all subfolders, names as-is) into
     # assets\incoming\<folder name>; Claude sorts/renames/indexes from there.
     [string]$Dump          = "",
@@ -149,14 +149,17 @@ try {
                 $size = (Get-Item -LiteralPath $f).Length
                 $batch += $f; $bytes += $size
             }
-            if ((-not $f -and $batch.Count) -or $bytes -ge ($ChunkMB * 1MB) -or $batch.Count -ge 400) {
+            if ((-not $f -and $batch.Count) -or $bytes -ge ($ChunkMB * 1MB) -or $batch.Count -ge 150) {
                 $list = Join-Path $env:TEMP "bnv_batch.txt"
                 [IO.File]::WriteAllLines($list, [string[]]$batch)
                 git add --pathspec-from-file="$list"
                 git commit -q -m ("Add assets: {0} (part {1})" -f $j.Dst.Replace('\', '/'), $n)
                 $ok = $false
-                foreach ($try in 1..4) {
-                    git push -q origin $Branch
+                foreach ($try in 1..5) {
+                    # Later tries fall back to HTTP/1.1 + OpenSSL: Windows' schannel
+                    # sometimes drops big uploads (SEC_E_MESSAGE_ALTERED).
+                    if ($try -ge 3) { git -c http.version=HTTP/1.1 -c http.sslBackend=openssl -c http.postBuffer=524288000 push -q origin $Branch }
+                    else { git -c http.postBuffer=524288000 push -q origin $Branch }
                     if ($LASTEXITCODE -eq 0) { $ok = $true; break }
                     Say "  push failed, retrying in $([math]::Pow(2,$try)) s..." "Yellow"
                     Start-Sleep -Seconds ([math]::Pow(2, $try))
