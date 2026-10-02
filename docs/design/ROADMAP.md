@@ -1,0 +1,46 @@
+# Roadmap: Brian's calls (2026-10-02)
+
+Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the world-map research.
+
+## Story / systems
+- **Lying HUD:** **only in one warped zone**, not the whole game. It ties into the code-layer sight mechanic.
+- **Propaganda:** works through NPCs. Find enough **evidence** and new dialogue unlocks, which gives a reason to go back to early areas. It can lead to new side quests and items.
+- **Hangover morning:** yes.
+- **Voice barks:** yes. Brian is recording voices for the other characters; lines get written when we reach that point.
+- **Sync Blade:** BUILT (Stardust unlock, Additions).
+
+## World map (see `docs/research/WORLD_MAP_FF8_FF9.md`)
+- Huge map with an FF8/FF9 "go around the world" feel.
+- **Vehicles:**
+  - **submarine** (shown half out of the water, 8-direction sheet, 4 diagonals used)
+  - **land** vehicle (later)
+  - **air** vehicle (later)
+- **Must come first:** a chunked renderer and chunk streaming (today it's one node per column, which can't handle 512² maps).
+
+## Editor: approved
+- ✅ Scatter brush (built)
+- ⬜ Height sculpt brushes
+- ⬜ Line / stairs / ramp tool: slope a ground texture 2:1 up to the next elevation
+- ⬜ Mirror / symmetry painting
+- ✅ Procedural fill (terrain generator built; more modes later)
+- ⬜ Quick palette (recent and favourite tiles, number keys)
+- ✅ Editor juice pack (built)
+- ⬜ Instant playtest round trip (return to the same camera, tool and selection)
+- ⬜ Preview animated tiles, particles and lights at game speed while sculpting
+- ✅ Painted lights and ambient (built)
+- ⬜ **Animated props and buildings at different timings:**
+  - Grok is animating almost every building (window lights, chimney smoke) and doing an indoor-prop pass.
+  - Every instance needs its own phase and speed so they don't pulse in sync. `random_start` exists; add a per-object phase/speed jitter.
+  - The flickering computer consoles live in "animated items and props and busts".
+- ⬜ Per-tile variation: tint, flip, hue jitter
+- ❌ **View rotation:** too much art to redraw. NOT doing.
+- ⬜ **Cutaway / x-ray** (almost a must, since there's no camera turn): fade or slice anything that hides the player or the cursor.
+- ✅ Tactical overlay (built)
+- ⬜ Typed entity fields and references
+- ⬜ Regions and triggers
+- ⬜ Location graph view (world → hub → interior links as a node graph)
+- ⬜ Asset-reference repair (fix links after renames or moves)
+
+## Art pipeline
+- Battle facings: **4 diagonals** (2 + mirror allowed per character). The other 4 facings are for cutscenes and menus.
+- The first big asset dump is arriving in `assets/incoming/`. Claude sorts, renames and indexes it.
