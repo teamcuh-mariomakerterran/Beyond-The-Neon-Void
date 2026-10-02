@@ -216,6 +216,7 @@ func add_unit_node(u: Node) -> void:
 # --- Events ----------------------------------------------------------------
 
 func _connect_events() -> void:
+	_ensure_vfx_hooks()  # crit / death / landing effects from the first turn on
 	CombatManager.player_input_needed.connect(_on_player_input_needed)
 	CombatManager.battle_finished.connect(_on_battle_finished)
 	EventBus.turn_started.connect(_on_turn_started)
@@ -487,46 +488,127 @@ func play_cutscene(path: String, vars: Dictionary = {}, slots: Dictionary = {}) 
 	hud.visible = true
 
 
-## Awaited by CombatManager before an ability resolves.
+## Awaited by CombatManager before an ability resolves. Picks a layered VFX
+## (src/vfx/vfx.gd, data/vfx.json) from the ability's vfx_id / id / special /
+## kind / damage_type: cast flourish → projectile travel → impact (or a
+## caster→target arc, chain or drain stream), then the hit resolves.
 func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	if not is_instance_valid(unit):
 		return
+	_ensure_vfx_hooks()
 	if ability.cutscene != "":
 		var target: Node = grid.get_occupant(cell)
 		var dmg := ""
 		if target and target != unit and ability.kind in [Ability.Kind.ATTACK, Ability.Kind.MAGIC]:
 			dmg = str(DamageCalculator.forecast(unit, target, ability, grid)["damage"])
 		await play_cutscene(ability.cutscene, {"ATTACKER": unit.display_name(), "TARGET": target.display_name() if target else "", "ABILITY": ability.display_name, "DAMAGE": dmg}, {"ATTACKER": unit.display_name()})
-	var from: Vector2 = unit.position + Vector2(0, -30)
-	var to := grid.grid_to_world(cell) + Vector2(0, -20)
+		if not is_instance_valid(unit):
+			return
+	var from: Vector2 = grid.grid_to_world(unit.cell)
+	var to := grid.grid_to_world(cell)
 	var color := _fx_color(ability)
+	var self_cast: bool = ability.target == Ability.Target.SELF or cell == unit.cell
+	var ranged: bool = IsometricGrid.distance(unit.cell, cell) > 1 and not self_cast
+	var plan := VFX.plan_for_ability(ability, ranged)
+	var cells := ability.get_affected_cells(grid, unit.cell, cell)
 	unit.play_animation("attack")
-	if IsometricGrid.distance(unit.cell, cell) > 1 and ability.target != Ability.Target.SELF:
-		var bolt := Line2D.new()
-		bolt.width = 4.0
-		bolt.default_color = color
-		bolt.z_as_relative = false
-		bolt.z_index = 4080
-		bolt.points = PackedVector2Array([from, from])
-		world.add_child(bolt)
-		var t := create_tween()
-		t.tween_method(func(p: float) -> void: bolt.points = PackedVector2Array([from.lerp(to, maxf(p - 0.35, 0.0)), from.lerp(to, p)]), 0.0, 1.0, 0.22)
-		await t.finished
-		bolt.queue_free()
-	else:
+	if plan["cast"] != "" and not self_cast:
+		VFX.spawn(world, plan["cast"], from, _vfx_params(unit.cell))
+	if plan["travel"] != "" and ranged and plan["mode"] == "point":
+		VFX.spawn(world, plan["travel"], from, {"to": to})
+		await get_tree().create_timer(maxf(VFX.impact_time(plan["travel"]), 0.05)).timeout
+	elif not ranged and not self_cast and ability.is_offensive():
 		var lunge := create_tween()
 		var dir: Vector2 = (to - from).normalized() * 10.0
 		lunge.tween_property(unit, "position", unit.position + dir, 0.07)
 		lunge.tween_property(unit, "position", grid.grid_to_world(unit.cell), 0.1)
 		await lunge.finished
-	for c in ability.get_affected_cells(grid, unit.cell, cell):
+	_spawn_impact_vfx(unit, plan, cell, cells)
+	for c in cells:
 		if tiles.has(c):
 			var tv: TileView = tiles[c]
 			var flash := create_tween()
 			tv.modulate = Color(color.r, color.g, color.b, 1.0)
 			flash.tween_property(tv, "modulate", Color.WHITE, 0.3)
-	if ability.aoe_radius >= 2 or ability.charge_ticks >= 3:
-		EventBus.camera_shake.emit(5.0, 0.25)
+	# Let the impact peak before damage numbers pop.
+	await get_tree().create_timer(0.12).timeout
+
+
+## Spawns the plan's impact effect in the shape its mode asks for.
+func _spawn_impact_vfx(unit: Node, plan: Dictionary, cell: Vector2i, cells: Array[Vector2i]) -> void:
+	var impact: String = plan["impact"]
+	var from: Vector2 = grid.grid_to_world(unit.cell)
+	var to := grid.grid_to_world(cell)
+	match str(plan["mode"]):
+		"arc", "stream":
+			if cell == unit.cell:
+				VFX.spawn(world, impact, to, _vfx_params(cell))
+			else:
+				var p := _vfx_params(cell)
+				p["to"] = to
+				VFX.spawn(world, impact, from, p)
+		"chain":
+			var hit: Array[Node] = []
+			for c in cells:
+				var occ := grid.get_occupant(c)
+				if occ and occ != unit:
+					hit.append(occ)
+			hit.sort_custom(func(a: Node, b: Node) -> bool: return IsometricGrid.distance(unit.cell, a.cell) < IsometricGrid.distance(unit.cell, b.cell))
+			var targets: Array = []
+			for occ in hit.slice(0, 6):
+				targets.append(grid.grid_to_world(occ.cell))
+			if targets.is_empty():
+				targets.append(to)
+			var p := _vfx_params(cell)
+			p["targets"] = targets
+			VFX.spawn(world, impact, from, p)
+		_:
+			var spots: Array[Vector2i] = []
+			if bool(plan["multi"]):
+				for c in cells:
+					if grid.get_occupant(c) != null and spots.size() < 6:
+						spots.append(c)
+			if spots.is_empty():
+				spots.append(cell)
+			for c in spots:
+				VFX.spawn(world, impact, grid.grid_to_world(c), _vfx_params(c))
+
+
+func _vfx_params(cell: Vector2i) -> Dictionary:
+	# Decals sit on the floor of their cell, under the units standing there.
+	return {"floor_z": IsometricGrid.draw_order(cell) * 2}
+
+
+var _vfx_hooked := false
+
+
+## Crits, deaths and landings get their own juice (connected on first use so
+## the battle setup above stays untouched).
+func _ensure_vfx_hooks() -> void:
+	if _vfx_hooked:
+		return
+	_vfx_hooked = true
+	EventBus.unit_damaged.connect(_on_vfx_unit_damaged)
+	EventBus.unit_died.connect(_on_vfx_unit_died)
+	EventBus.unit_moved.connect(_on_vfx_unit_moved)
+
+
+func _on_vfx_unit_damaged(u: Node, _amount: int, crit: bool) -> void:
+	if crit and is_instance_valid(u) and u.is_inside_tree():
+		VFX.spawn(world, "crit_hit", u.position, _vfx_params(u.cell))
+
+
+func _on_vfx_unit_died(u: Node) -> void:
+	if is_instance_valid(u) and u.is_inside_tree():
+		var c := NeonTheme.team_color(u.team)
+		VFX.spawn(world, "death_dissolve", u.position, {"color": Color(c.r * 1.6, c.g * 1.6, c.b * 1.6), "floor_z": IsometricGrid.draw_order(u.cell) * 2})
+
+
+func _on_vfx_unit_moved(u: Node, _from: Vector2i, to_cell: Vector2i) -> void:
+	if not is_instance_valid(u) or not u.is_inside_tree() or not grid.in_bounds(to_cell):
+		return
+	var water := str(grid.get_cell(to_cell).terrain).contains("water")
+	VFX.spawn(world, "water_splash" if water else "landing_dust", grid.grid_to_world(to_cell), _vfx_params(to_cell))
 
 
 static func _fx_color(ability: Ability) -> Color:
@@ -536,8 +618,12 @@ static func _fx_color(ability: Ability) -> Color:
 		"electric": return Color(1.6, 1.6, 2.6)
 		"void", "essence": return Color(1.4, 0.5, 2.4)
 		"tech": return Color(0.5, 2.2, 1.4)
+		"kinetic": return Color(1.0, 1.1, 2.4)
 	if ability.is_healing():
 		return Color(0.6, 2.4, 1.2)
+	match ability.kind:
+		Ability.Kind.BUFF: return Color(2.2, 1.8, 0.6)
+		Ability.Kind.DEBUFF: return Color(1.5, 0.6, 2.2)
 	return Color(2.0, 2.0, 2.0)
 
 

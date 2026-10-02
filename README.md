@@ -58,6 +58,7 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
 ![Exploring a world map](docs/screenshots/world_explore.png)
 ![Neon lighting](docs/screenshots/world_lighting.png)
 ![HD-2D tilt-shift](docs/screenshots/hd2d_world.png)
+![VFX library](docs/screenshots/vfx_showcase.png)
 
 ## Where things are
 ```

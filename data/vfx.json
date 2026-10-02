@@ -1,0 +1,365 @@
+{
+	"_readme": "VFX library (see src/vfx/vfx.gd). effects: id -> {palette, parts[], shake [i,s], hit_stop s}. Part types: sim, burst, lightning, flash, streaks, ring, pillar, decal, tear, scan, shockwave, glitch, light, trail. Colours: #hex, #hex*k (HDR glow), [r,g,b,a], $palette*k. abilities/specials/kinds/types map battle abilities to effects.",
+	"effects": {
+		"impact_physical": {
+			"palette": {"main": "#ffc070", "core": "#ffffff*2.2"},
+			"shake": [2.0, 0.12],
+			"parts": [
+				{"type": "flash", "pos": [0, -22], "life": 0.16, "size": 24, "colors": ["$main*1.6", "$core"], "rays": 4, "ray_len": 34, "ray_width": 2},
+				{"type": "streaks", "pos": [0, -22], "life": 0.16, "count": 9, "len": [10, 24], "width": 2.5, "travel": 26, "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "sim", "pos": [0, -22], "count": 18, "render": "line", "width": 1.6, "stretch": 0.035, "size": [2, 5], "speed": [120, 280], "dir": -90, "spread": 220, "gravity": 650, "floor": true, "bounce": 0.35, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$main*1.7", "#ff5020*1.4"]},
+				{"type": "sim", "pos": [0, -4], "blend": "mix", "count": 7, "tex": "puff", "shape": "ring", "radius": 6, "radial": 1, "speed": [25, 55], "drag": 3, "gravity": -20, "plife": [0.4, 0.7], "size": [10, 18], "size_curve": [0.6, 1.4], "fade": "in_out", "colors": ["#a89478c0", "#6e604c00"]},
+				{"type": "ring", "pos": [0, -2], "life": 0.25, "r0": 4, "r1": 28, "width": 2.5, "colors": ["#ffffff*2", "$main"]},
+				{"type": "light", "pos": [0, -20], "life": 0.25, "radius": 90, "energy": 1.4}
+			]
+		},
+		"impact_kinetic": {
+			"palette": {"main": "#7f8cff", "alt": "#c87fff", "core": "#ffffff*2.2"},
+			"shake": [4.0, 0.2],
+			"parts": [
+				{"type": "flash", "pos": [0, -22], "life": 0.2, "size": 32, "colors": ["$main*1.7", "$core"]},
+				{"type": "shockwave", "pos": [0, -10], "life": 0.42, "radius": 80, "squash": 0.55, "strength": 0.035, "thickness": 0.22, "rim": "$main*1.6"},
+				{"type": "ring", "pos": [0, -2], "life": 0.35, "count": 2, "stagger": 0.07, "r0": 6, "r1": 52, "width": 4, "colors": ["#ffffff*2.4", "$main*1.7", "$alt"]},
+				{"type": "sim", "pos": [0, -16], "blend": "mix", "render": "poly", "count": 11, "speed": [140, 270], "dir": -90, "spread": 160, "gravity": 720, "floor": true, "floor_jitter": 8, "bounce": 0.3, "spin": [360, 900], "plife": [0.7, 1.1], "size": [4, 8], "fade": "late", "colors": ["#4a4260", "#2a2438"]},
+				{"type": "sim", "pos": [0, -22], "count": 22, "render": "line", "width": 1.8, "stretch": 0.04, "size": [3, 6], "speed": [160, 320], "spread": 360, "gravity": 500, "floor": true, "bounce": 0.4, "plife": [0.25, 0.5], "colors": ["#ffffff*2.4", "$main*1.7", "$alt*1.2"]},
+				{"type": "sim", "pos": [0, -2], "blend": "mix", "count": 10, "tex": "puff", "shape": "ring", "radius": 10, "radial": 1, "speed": [60, 110], "drag": 3.5, "plife": [0.5, 0.8], "size": [12, 20], "size_curve": [0.6, 1.5], "fade": "in_out", "colors": ["#8c88a8b0", "#5a567000"]},
+				{"type": "light", "pos": [0, -20], "life": 0.3, "radius": 120, "energy": 1.8}
+			]
+		},
+		"impact_tech": {
+			"palette": {"main": "#39ff9f", "alt": "#3fd2ff", "core": "#ffffff*2.2"},
+			"shake": [2.5, 0.14],
+			"parts": [
+				{"type": "flash", "pos": [0, -22], "life": 0.2, "size": 28, "colors": ["$main*1.7", "$core"], "rays": 4},
+				{"type": "glitch", "pos": [0, 10], "life": 0.3, "size": [70, 70], "slices": 10, "amount": 0.02, "tint": "$alt"},
+				{"type": "sim", "pos": [0, -22], "count": 28, "tex": "chip", "size": [3, 6], "speed": [60, 200], "spread": 360, "drag": 2.5, "gravity": 60, "plife": [0.4, 0.8], "fade": "strobe", "palette": ["$main*1.7", "$alt*1.7", "#ffffff*2"]},
+				{"type": "ring", "pos": [0, -2], "life": 0.32, "r0": 6, "r1": 40, "width": 3, "dashes": 10, "rotate": 4, "colors": ["$main*1.7", "$alt"]},
+				{"type": "light", "pos": [0, -20], "life": 0.3, "radius": 100, "energy": 1.6}
+			]
+		},
+		"plasma_burst": {
+			"palette": {"main": "#ff2e88", "alt": "#ff8a3d", "core": "#ffffff*2.2"},
+			"shake": [3.0, 0.15],
+			"parts": [
+				{"type": "flash", "pos": [0, -22], "life": 0.24, "size": 40, "colors": ["$main*1.7", "$alt*1.7", "$core"], "rays": 6, "ray_len": 56, "ray_width": 3},
+				{"type": "sim", "pos": [0, -22], "count": 30, "tex": "core", "size": [10, 20], "size_curve": [1.2, 0.2], "speed": [70, 210], "spread": 360, "drag": 4, "gravity": -30, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$main*1.7", "#a01060*1.2"]},
+				{"type": "sim", "pos": [0, -22], "count": 22, "render": "line", "width": 1.8, "stretch": 0.04, "size": [3, 6], "speed": [160, 340], "dir": -90, "spread": 240, "gravity": 620, "floor": true, "bounce": 0.4, "plife": [0.35, 0.7], "colors": ["#ffffff*2.4", "$alt*1.7", "$main*1.5"]},
+				{"type": "sim", "pos": [0, -18], "count": 16, "emit": 0.35, "tex": "core", "size": [3, 6], "speed": [20, 60], "dir": -90, "spread": 140, "gravity": -70, "turbulence": 140, "plife": [0.7, 1.3], "fade": "flicker", "colors": ["$alt*1.7", "$main*1.7", "$main*0.6"]},
+				{"type": "ring", "pos": [0, -2], "life": 0.3, "r0": 8, "r1": 48, "width": 4, "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "decal", "pos": [0, 0], "life": 2.2, "radius": 26, "fade": 1.0, "ember": "$alt*1.7", "ember_time": 0.9},
+				{"type": "light", "pos": [0, -20], "life": 0.45, "radius": 150, "energy": 2.2}
+			]
+		},
+		"plasma_explosion": {
+			"palette": {"main": "#ff2e88", "alt": "#ff9a2e", "hot": "#ffe27a", "core": "#ffffff*2.2"},
+			"shake": [9.0, 0.4],
+			"hit_stop": 0.06,
+			"parts": [
+				{"type": "flash", "pos": [0, -30], "life": 0.42, "size": 70, "squash": 0.75, "colors": ["$main*1.6", "$alt*1.7", "$hot*1.7", "$core"], "rays": 10, "ray_len": 130, "ray_width": 3.5, "power": 2.4},
+				{"type": "shockwave", "pos": [0, -6], "life": 0.6, "radius": 190, "squash": 0.55, "strength": 0.05, "thickness": 0.2, "rim": "$alt*1.7", "chroma": 0.9},
+				{"type": "ring", "pos": [0, -2], "life": 0.55, "count": 2, "stagger": 0.08, "r0": 10, "r1": 110, "width": 4, "colors": ["#ffffff*2.4", "$alt*1.7", "$main*1.5"]},
+				{"type": "sim", "pos": [0, -30], "count": 36, "tex": "core", "size": [10, 22], "size_curve": [0.6, 1.3, 0.3], "speed": [60, 260], "spread": 360, "drag": 3.2, "gravity": -60, "plife": [0.4, 0.9], "colors": ["#ffffff*2.4", "$hot*1.7", "$alt*1.7", "$main*1.7", "#300818*0.5"]},
+				{"type": "sim", "pos": [0, -26], "count": 16, "emit": 0.25, "shape": "disc", "radius": 16, "tex": "core", "size": [18, 34], "size_curve": [0.7, 1.2, 0.5], "speed": [15, 45], "dir": -90, "spread": 50, "gravity": -70, "turbulence": 60, "plife": [0.6, 1.1], "fade": "in_out", "colors": ["$hot*1.7", "$alt*1.6", "$main*1.3", "#400818*0.5"]},
+				{"type": "sim", "pos": [0, -30], "blend": "mix", "delay": 0.1, "count": 18, "tex": "puff", "size": [30, 60], "size_curve": [0.5, 1.6], "speed": [20, 70], "dir": -90, "spread": 200, "drag": 1.2, "gravity": -34, "turbulence": 40, "spin": [10, 40], "plife": [1.5, 2.4], "fade": "in_out", "colors": ["#8a6a88e8", "#5a4060c8", "#2a1e2c00"]},
+				{"type": "sim", "pos": [0, -28], "count": 60, "render": "line", "width": 2.0, "stretch": 0.04, "size": [3, 7], "speed": [220, 520], "dir": -90, "spread": 300, "gravity": 700, "floor": true, "floor_jitter": 14, "bounce": 0.45, "plife": [0.5, 1.1], "colors": ["#ffffff*2.4", "$hot*1.7", "$alt*1.7", "$main"]},
+				{"type": "sim", "pos": [0, -24], "blend": "mix", "render": "poly", "count": 14, "speed": [160, 320], "dir": -90, "spread": 150, "gravity": 760, "floor": true, "floor_jitter": 14, "bounce": 0.3, "spin": [360, 1000], "plife": [0.8, 1.3], "size": [5, 10], "fade": "late", "colors": ["#3a2a36", "#1a1218"]},
+				{"type": "sim", "pos": [0, -20], "delay": 0.08, "count": 36, "emit": 0.9, "shape": "disc", "radius": 40, "tex": "core", "size": [3, 6], "speed": [20, 70], "dir": -90, "spread": 120, "gravity": -60, "turbulence": 160, "plife": [0.8, 1.6], "fade": "flicker", "colors": ["$hot*1.7", "$alt*1.7", "$main*0.8"]},
+				{"type": "decal", "pos": [0, 0], "life": 3.6, "radius": 72, "fade": 1.6, "ember": "$alt*1.7", "ember_time": 1.6},
+				{"type": "light", "pos": [0, -30], "life": 0.9, "radius": 300, "energy": 3.2, "power": 1.4},
+				{"type": "light", "pos": [0, -10], "delay": 0.05, "life": 1.6, "radius": 160, "energy": 1.2, "color": "$alt", "flicker": 0.3}
+			]
+		},
+		"plasma_bolt": {
+			"palette": {"main": "#ff2e88", "alt": "#ff9a2e"},
+			"parts": [
+				{"type": "flash", "pos": [0, -30], "life": 0.12, "size": 26, "colors": ["$main*1.7", "#ffffff*2.4"]},
+				{"type": "trail", "pos": [0, -30], "to_offset": [0, -22], "travel": 0.24, "arc": 14, "width": 10, "ribbon": 16, "fade": 0.18, "head": 13, "spin_ribbon": 7, "colors": ["$main*0", "$main*1.7", "#ffffff*2.4"], "colors2": ["$alt*0", "$alt*1.7", "#ffffff*2"], "head_colors": ["$main*1.7", "$alt*1.7", "#ffffff*2.4"]}
+			]
+		},
+		"cryo_bolt": {
+			"palette": {"main": "#7fe8ff", "alt": "#ffffff"},
+			"parts": [
+				{"type": "trail", "pos": [0, -30], "to_offset": [0, -22], "travel": 0.28, "arc": 8, "width": 6, "ribbon": 18, "fade": 0.25, "head": 10, "colors": ["$main*0", "$main*1.5", "#ffffff*2.4"], "head_colors": ["$main*1.6", "#ffffff*2.4"]}
+			]
+		},
+		"void_bolt": {
+			"palette": {"main": "#b14dff", "alt": "#ff2e88"},
+			"parts": [
+				{"type": "trail", "pos": [0, -30], "to_offset": [0, -22], "travel": 0.32, "arc": 20, "wiggle": 10, "wiggle_freq": 4, "width": 9, "ribbon": 18, "fade": 0.25, "head": 12, "spin_ribbon": 9, "colors": ["$main*0", "$main*1.7", "#ffffff*2"], "colors2": ["$alt*0", "$alt*1.7", "#ffffff*2"], "head_colors": ["#1a0028", "$main*1.7", "#ffffff*2"]}
+			]
+		},
+		"tech_bolt": {
+			"palette": {"main": "#39ff9f", "alt": "#3fd2ff"},
+			"parts": [
+				{"type": "trail", "pos": [0, -30], "to_offset": [0, -22], "travel": 0.22, "width": 4, "ribbon": 14, "fade": 0.15, "head": 8, "spin_ribbon": 5, "colors": ["$main*0", "$main*1.7", "#ffffff*2.4"], "colors2": ["$alt*0", "$alt*1.7", "#ffffff*2"], "head_colors": ["$alt*1.7", "#ffffff*2.4"]}
+			]
+		},
+		"tracer": {
+			"palette": {"main": "#ffd23f"},
+			"parts": [
+				{"type": "flash", "pos": [0, -30], "life": 0.08, "size": 22, "colors": ["$main*1.7", "#ffffff*2.4"], "rays": 4, "ray_len": 30},
+				{"type": "trail", "pos": [0, -30], "to_offset": [0, -22], "travel": 0.09, "width": 3, "ribbon": 10, "fade": 0.1, "head": 6, "colors": ["$main*0", "$main*1.7", "#ffffff*2.4"], "head_colors": ["#ffffff*2.4"]}
+			]
+		},
+		"electric_arc": {
+			"palette": {"main": "#7fd8ff", "alt": "#b07fff", "core": "#ffffff*2.2"},
+			"shake": [2.5, 0.15],
+			"parts": [
+				{"type": "lightning", "pos": [0, -30], "to": "to", "to_offset": [0, -22], "life": 0.5, "jag": 0.2, "detail": 5, "branches": 3, "branch_len": 0.35, "refresh": 0.04, "widths": [10, 4, 1.6], "colors": ["$alt*0.55", "$main*1.6", "$core"], "end_glow": 24},
+				{"type": "lightning", "pos": [0, -30], "to": "to", "to_offset": [0, -22], "life": 0.42, "delay": 0.05, "jag": 0.28, "detail": 4, "branches": 1, "refresh": 0.06, "widths": [8, 3, 1.2], "colors": ["$main*0.5", "$alt*1.6", "#ffffff*2"], "end_glow": 0},
+				{"type": "flash", "anchor": "to", "pos": [0, -22], "life": 0.3, "size": 32, "colors": ["$main*1.7", "$core"], "rays": 6, "ray_len": 46, "ray_width": 2},
+				{"type": "sim", "anchor": "to", "pos": [0, -22], "count": 26, "render": "line", "width": 1.6, "stretch": 0.05, "size": [3, 6], "speed": [150, 320], "spread": 360, "gravity": 560, "floor": true, "bounce": 0.45, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$main*1.7", "$alt*1.5"]},
+				{"type": "ring", "anchor": "to", "pos": [0, -2], "life": 0.3, "r0": 6, "r1": 36, "width": 2.5, "dashes": 7, "rotate": 8, "colors": ["$main*1.7", "$alt*1.5"]},
+				{"type": "light", "anchor": "to", "pos": [0, -22], "life": 0.5, "radius": 140, "energy": 2.4, "flicker": 0.5},
+				{"type": "light", "pos": [0, -30], "life": 0.45, "radius": 100, "energy": 1.6, "flicker": 0.5}
+			]
+		},
+		"chain_lightning": {
+			"palette": {"main": "#a8e6ff", "alt": "#7f6bff", "core": "#ffffff*2.2"},
+			"shake": [4.0, 0.3],
+			"parts": [
+				{"type": "lightning", "pos": [0, -30], "to": "chain", "to_offset": [0, -22], "life": 0.75, "hop_delay": 0.09, "jag": 0.22, "detail": 5, "branches": 2, "branch_len": 0.3, "refresh": 0.045, "widths": [11, 4, 1.8], "colors": ["$alt*0.6", "$main*1.6", "$core"], "end_glow": 30},
+				{"type": "flash", "anchor": "t0", "pos": [0, -22], "life": 0.32, "size": 30, "colors": ["$main*1.7", "$core"], "rays": 5},
+				{"type": "flash", "anchor": "t1", "pos": [0, -22], "delay": 0.09, "life": 0.32, "size": 30, "colors": ["$main*1.7", "$core"], "rays": 5},
+				{"type": "flash", "anchor": "t2", "pos": [0, -22], "delay": 0.18, "life": 0.32, "size": 30, "colors": ["$main*1.7", "$core"], "rays": 5},
+				{"type": "flash", "anchor": "t3", "pos": [0, -22], "delay": 0.27, "life": 0.32, "size": 30, "colors": ["$main*1.7", "$core"], "rays": 5},
+				{"type": "sim", "anchor": "t0", "pos": [0, -22], "count": 16, "render": "line", "width": 1.5, "stretch": 0.05, "size": [3, 5], "speed": [140, 300], "spread": 360, "gravity": 560, "floor": true, "bounce": 0.4, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "sim", "anchor": "t1", "delay": 0.09, "pos": [0, -22], "count": 16, "render": "line", "width": 1.5, "stretch": 0.05, "size": [3, 5], "speed": [140, 300], "spread": 360, "gravity": 560, "floor": true, "bounce": 0.4, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "sim", "anchor": "t2", "delay": 0.18, "pos": [0, -22], "count": 16, "render": "line", "width": 1.5, "stretch": 0.05, "size": [3, 5], "speed": [140, 300], "spread": 360, "gravity": 560, "floor": true, "bounce": 0.4, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "light", "anchor": "t0", "pos": [0, -22], "life": 0.7, "radius": 130, "energy": 2.2, "flicker": 0.6},
+				{"type": "light", "anchor": "t1", "pos": [0, -22], "delay": 0.09, "life": 0.6, "radius": 130, "energy": 2.2, "flicker": 0.6},
+				{"type": "light", "anchor": "t2", "pos": [0, -22], "delay": 0.18, "life": 0.55, "radius": 130, "energy": 2.2, "flicker": 0.6},
+				{"type": "light", "pos": [0, -30], "life": 0.6, "radius": 110, "energy": 1.8, "flicker": 0.6}
+			]
+		},
+		"cryo_shatter": {
+			"palette": {"main": "#7fe8ff", "alt": "#3a8cff", "core": "#ffffff*2.2"},
+			"shake": [3.0, 0.18],
+			"parts": [
+				{"type": "flash", "pos": [0, -22], "life": 0.24, "size": 28, "colors": ["$alt*1.6", "$main*1.7", "$core"], "rays": 6, "ray_len": 50, "ray_width": 2},
+				{"type": "decal", "pos": [0, 0], "blend": "add", "life": 2.4, "radius": 44, "fade": 1.2, "color": "#7fd8ff*0.9", "alpha": 0.4, "ember": "#ffffff*1.5", "ember_time": 0.8},
+				{"type": "sim", "pos": [0, -22], "count": 26, "tex": "shard", "align": true, "size": [5, 9], "aspect": 3.4, "speed": [130, 300], "dir": -90, "spread": 300, "gravity": 560, "floor": true, "floor_jitter": 10, "bounce": 0.25, "friction": 0.5, "plife": [0.7, 1.2], "fade": "late", "colors": ["#e8ffff*1.4", "$main*1.25", "$alt*1.1"], "blend": "mix"},
+				{"type": "sim", "pos": [0, -10], "blend": "mix", "count": 14, "tex": "puff", "shape": "disc", "radius": 18, "radial": 1, "speed": [12, 40], "drag": 1.2, "gravity": -10, "plife": [0.9, 1.6], "size": [18, 34], "size_curve": [0.6, 1.5], "fade": "in_out", "colors": ["#9fd8ff58", "#7fb8ff00"]},
+				{"type": "sim", "pos": [0, -22], "count": 10, "tex": "star", "shape": "disc", "radius": 34, "size": [5, 10], "speed": [5, 25], "spread": 360, "plife": [0.3, 0.9], "emit": 0.4, "fade": "strobe", "colors": ["#ffffff*1.6", "$main*1.4"]},
+				{"type": "ring", "pos": [0, -2], "life": 0.4, "r0": 8, "r1": 50, "width": 3, "dashes": 12, "dash_fill": 0.4, "rotate": 1.5, "colors": ["#ffffff*2.4", "$main*1.6"]},
+				{"type": "light", "pos": [0, -22], "life": 0.6, "radius": 150, "energy": 2.0}
+			]
+		},
+		"void_implosion": {
+			"palette": {"main": "#b14dff", "alt": "#ff2e88", "dark": "#05000a", "core": "#ffffff*2.2"},
+			"shake": [6.0, 0.3],
+			"shake_delay": 0.55,
+			"parts": [
+				{"type": "light", "pos": [0, -24], "life": 0.65, "radius": 170, "energy": 1.3, "mode": "sub", "color": "#ffffff", "attack": 0.25, "power": 0.6},
+				{"type": "flash", "blend": "mix", "pos": [0, -24], "life": 0.65, "size": 46, "squash": 0.9, "attack": 0.35, "power": 0.5, "colors": ["#05000ad8", "#000000f0"]},
+				{"type": "shockwave", "pos": [0, -24], "life": 0.6, "radius": 120, "squash": 0.8, "strength": 0.04, "thickness": 0.25, "dark": 0.7, "rim": "$main*1.4", "reverse": true, "ease": 1.6},
+				{"type": "ring", "pos": [0, -24], "life": 0.55, "count": 3, "stagger": 0.1, "r0": 90, "r1": 4, "width": 3, "squash": 0.8, "ease": 1.5, "power": 0.4, "colors": ["$main*1.2", "$alt*1.7", "#ffffff*2"]},
+				{"type": "sim", "pos": [0, -24], "count": 80, "emit": 0.45, "shape": "ring", "radius": 95, "iso": false, "radial": -0.6, "speed": [10, 40], "attract": 700, "kill_radius": 7, "swirl": 420, "render": "trail", "trail": 7, "width": 2, "tex": "core", "size": [4, 7], "plife": [0.6, 0.9], "fade": "in_out", "colors": ["$alt*1.6", "$main*1.7", "#ffffff*2.4"]},
+				{"type": "flash", "pos": [0, -24], "delay": 0.55, "life": 0.3, "size": 70, "colors": ["$main*1.7", "$alt*1.7", "$core"], "rays": 8, "ray_len": 110},
+				{"type": "ring", "pos": [0, -2], "delay": 0.55, "life": 0.4, "r0": 10, "r1": 80, "width": 5, "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "sim", "pos": [0, -24], "delay": 0.55, "count": 30, "tex": "core", "size": [3, 6], "speed": [120, 300], "spread": 360, "drag": 2, "plife": [0.3, 0.6], "render": "trail", "trail": 5, "width": 2, "colors": ["#ffffff*2.4", "$main*1.7", "$alt"]},
+				{"type": "light", "pos": [0, -24], "delay": 0.55, "life": 0.45, "radius": 170, "energy": 2.6}
+			]
+		},
+		"essence_drain": {
+			"palette": {"main": "#ff3f6c", "alt": "#b14dff", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "flash", "anchor": "to", "pos": [0, -24], "life": 0.9, "size": 34, "attack": 0.15, "power": 1.0, "colors": ["$main*1.6", "$core"]},
+				{"type": "sim", "anchor": "to", "pos": [0, -24], "count": 56, "emit": 0.65, "path": "curve", "path_from": "to", "path_to": "at", "path_offset": [0, -30], "arc": 55, "lift": 40, "wobble": 7, "render": "trail", "trail": 8, "width": 2.2, "tex": "core", "size": [5, 9], "size_curve": [0.6, 1.2, 0.5], "plife": [0.45, 0.7], "fade": "in_out", "colors": ["$main*1.7", "$alt*1.7", "#ffffff*2.4"]},
+				{"type": "ring", "anchor": "to", "pos": [0, -2], "life": 0.6, "r0": 36, "r1": 6, "width": 2, "dashes": 9, "rotate": -6, "ease": 1.5, "power": 0.5, "colors": ["$main*1.7", "$alt"]},
+				{"type": "flash", "pos": [0, -30], "delay": 0.45, "life": 0.55, "size": 40, "attack": 0.1, "colors": ["$alt*1.7", "$core"]},
+				{"type": "sim", "pos": [0, -10], "delay": 0.5, "count": 18, "emit": 0.3, "shape": "disc", "radius": 16, "tex": "core", "size": [3, 6], "speed": [30, 60], "dir": -90, "spread": 30, "gravity": -50, "plife": [0.5, 0.9], "fade": "in_out", "colors": ["$main*1.7", "$alt*1.6"]},
+				{"type": "light", "anchor": "to", "pos": [0, -24], "life": 0.8, "radius": 110, "energy": 1.6, "flicker": 0.3},
+				{"type": "light", "pos": [0, -30], "delay": 0.45, "life": 0.6, "radius": 120, "energy": 1.8, "color": "$alt"}
+			]
+		},
+		"heal_bloom": {
+			"palette": {"main": "#39ff9f", "alt": "#bfffe0", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "ring", "pos": [0, -1], "life": 1.1, "r0": 30, "r1": 34, "width": 2.5, "dashes": 16, "rotate": 1.6, "power": 0.6, "ease": 1.0, "fill": true, "colors": ["$main*1.7", "$alt*1.5"]},
+				{"type": "pillar", "pos": [0, 0], "life": 0.9, "width": 30, "height": 110, "attack": 0.15, "colors": ["$main*1.2", "$alt*1.7"]},
+				{"type": "sim", "pos": [0, -4], "count": 44, "emit": 0.7, "shape": "disc", "radius": 24, "tex": "core", "size": [5, 9], "size_curve": [0.5, 1, 0.3], "speed": [30, 80], "dir": -90, "spread": 20, "gravity": -40, "turbulence": 60, "plife": [0.7, 1.3], "fade": "in_out", "colors": ["$core", "$main*1.7", "$main*1.2"]},
+				{"type": "sim", "pos": [0, -10], "count": 10, "emit": 0.6, "shape": "disc", "radius": 20, "tex": "star", "size": [9, 16], "speed": [15, 40], "dir": -90, "spread": 30, "plife": [0.4, 0.8], "fade": "strobe", "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "light", "pos": [0, -24], "life": 1.1, "radius": 140, "energy": 1.6, "attack": 0.2, "power": 1.2}
+			]
+		},
+		"buff_aura": {
+			"palette": {"main": "#ffd23f", "alt": "#3fd2ff", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "ring", "pos": [0, -1], "life": 1.1, "r0": 28, "r1": 30, "width": 2, "dashes": 8, "dash_fill": 0.6, "rotate": 3, "power": 0.6, "ease": 1.0, "fill": true, "colors": ["$main*1.7", "$main"]},
+				{"type": "sim", "pos": [0, -4], "count": 12, "emit": 0.12, "orbit": {"radius": 26, "speed": 150, "rise": 34, "even": true}, "tex": "glyph", "size": [7, 8], "plife": 1.0, "fade": "in_out", "colors": ["$main*1.7", "$core"]},
+				{"type": "sim", "pos": [0, -10], "delay": 0.15, "count": 8, "emit": 0.1, "orbit": {"radius": 18, "speed": -200, "rise": 46, "even": true}, "tex": "glyph", "size": [5, 6], "plife": 0.9, "fade": "in_out", "colors": ["$alt*1.7", "$core"]},
+				{"type": "pillar", "pos": [0, 0], "life": 0.9, "width": 16, "height": 90, "attack": 0.12, "colors": ["$main*0.7", "$core"]},
+				{"type": "sim", "pos": [0, -6], "count": 16, "emit": 0.6, "shape": "disc", "radius": 22, "tex": "chip", "size": [2, 3], "speed": [40, 80], "dir": -90, "spread": 10, "plife": [0.5, 0.9], "fade": "strobe", "palette": ["$main*1.7", "$alt*1.7"]},
+				{"type": "light", "pos": [0, -24], "life": 1.0, "radius": 120, "energy": 1.4, "attack": 0.15}
+			]
+		},
+		"debuff_curse": {
+			"palette": {"main": "#b14dff", "alt": "#5a1a8a", "core": "#ff7fff*1.7"},
+			"parts": [
+				{"type": "light", "pos": [0, -30], "life": 1.2, "radius": 110, "energy": 0.8, "mode": "sub", "color": "#c0ff60", "attack": 0.2},
+				{"type": "sim", "pos": [0, -56], "blend": "mix", "count": 10, "tex": "puff", "shape": "disc", "radius": 14, "speed": [4, 14], "spread": 360, "plife": [0.9, 1.3], "size": [22, 34], "size_curve": [0.6, 1.3], "fade": "in_out", "colors": ["#5a2a78e0", "#3a1650c0", "#1a0a2400"]},
+				{"type": "flash", "pos": [0, -56], "life": 1.1, "size": 40, "squash": 0.6, "attack": 0.2, "power": 1.0, "colors": ["$main*1.2"]},
+				{"type": "sim", "pos": [0, -54], "count": 22, "emit": 0.8, "shape": "box", "box": [26, 4], "tex": "droplet", "stretch": 0.03, "size": [3, 5], "speed": [0, 15], "dir": 90, "spread": 20, "gravity": 420, "floor": true, "floor_kill": true, "floor_jitter": 4, "plife": [0.6, 1.0], "fade": "none", "colors": ["$core", "$main*1.7", "$alt*1.5"]},
+				{"type": "sim", "pos": [0, -2], "count": 14, "emit": 0.9, "shape": "disc", "radius": 14, "tex": "core", "size": [5, 9], "speed": [0, 4], "plife": [0.3, 0.5], "fade": "pop", "colors": ["$main*1.7", "$alt"]},
+				{"type": "ring", "pos": [0, -2], "life": 0.9, "r0": 40, "r1": 14, "width": 2.5, "dashes": 6, "rotate": -3, "ease": 2.0, "power": 0.7, "colors": ["$main*1.7", "$alt*1.5"]},
+				{"type": "sim", "pos": [0, -40], "count": 8, "emit": 0.5, "shape": "disc", "radius": 18, "tex": "glyph", "size": [6, 7], "speed": [8, 20], "dir": 90, "spread": 20, "gravity": 20, "plife": [0.6, 1.0], "fade": "strobe", "colors": ["$main*1.7", "$alt"]}
+			]
+		},
+		"summon_portal": {
+			"palette": {"main": "#ff2e88", "alt": "#3fd2ff", "core": "#ffffff*2.2"},
+			"shake": [2.5, 0.25],
+			"parts": [
+				{"type": "glitch", "pos": [0, 10], "life": 1.1, "size": [110, 140], "slices": 16, "amount": 0.025, "split": 0.008, "tint": "$alt", "rate": 18},
+				{"type": "tear", "pos": [0, -4], "life": 1.3, "size": [46, 100], "colors": ["$main*1.7", "$alt*1.7", "#05000c"]},
+				{"type": "sim", "pos": [0, -4], "count": 46, "emit": 1.0, "shape": "box", "box": [34, 96], "tex": "chip", "size": [3, 6], "speed": [20, 70], "dir": -90, "spread": 60, "gravity": -30, "plife": [0.5, 1.0], "fade": "strobe", "palette": ["$main*1.7", "$alt*1.7", "#ffffff*2", "#39ff9f*1.7"]},
+				{"type": "sim", "pos": [0, -50], "count": 14, "emit": 0.9, "shape": "box", "box": [60, 90], "tex": "glyph", "size": [8, 10], "speed": [10, 40], "dir": 0, "spread": 360, "vy_scale": 0.2, "plife": [0.3, 0.6], "fade": "strobe", "palette": ["$main*1.7", "$alt*1.7"]},
+				{"type": "ring", "pos": [0, -1], "life": 1.2, "r0": 20, "r1": 46, "width": 2.5, "dashes": 12, "rotate": 5, "power": 0.8, "colors": ["$main*1.7", "$alt*1.5"]},
+				{"type": "flash", "pos": [0, -50], "life": 0.25, "size": 60, "squash": 1.4, "colors": ["$alt*1.7", "$core"]},
+				{"type": "light", "pos": [0, -50], "life": 1.3, "radius": 170, "energy": 2.0, "attack": 0.1, "power": 1.0, "flicker": 0.25}
+			]
+		},
+		"teleport_glitch": {
+			"palette": {"main": "#3fd2ff", "alt": "#ff2e88", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "glitch", "pos": [0, 8], "life": 0.6, "size": [80, 110], "slices": 12, "amount": 0.035, "split": 0.012, "tint": "$main", "rate": 24, "bars": 0.8},
+				{"type": "sim", "pos": [0, 0], "count": 22, "emit": 0.35, "shape": "box", "box": [30, 60], "tex": "chip", "aspect": 0.18, "size": [18, 46], "speed": [60, 220], "dir": 0, "spread": 360, "vy_scale": 0.0, "iso_vel": false, "drag": 4, "plife": [0.15, 0.35], "fade": "none", "palette": ["$main*1.7", "$alt*1.7", "#39ff9f*1.7", "#ffffff*2"]},
+				{"type": "pillar", "pos": [0, 0], "life": 0.4, "width": 18, "height": 150, "attack": 0.04, "colors": ["$main*1.2", "$core"]},
+				{"type": "flash", "pos": [0, -26], "life": 0.22, "size": 40, "squash": 1.6, "colors": ["$main*1.7", "$core"]},
+				{"type": "ring", "pos": [0, -1], "life": 0.35, "r0": 6, "r1": 44, "width": 3, "colors": ["$core", "$main*1.7"]},
+				{"type": "light", "pos": [0, -26], "life": 0.45, "radius": 130, "energy": 2.0, "flicker": 0.6}
+			]
+		},
+		"droid_build": {
+			"palette": {"main": "#3fd2ff", "alt": "#39ff9f", "hot": "#ffd23f", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "scan", "pos": [0, 0], "life": 1.5, "box": [44, 54], "sweeps": 2, "colors": ["$main*1.7", "$alt*1.7"]},
+				{"type": "sim", "pos": [0, -26], "count": 44, "emit": 1.1, "shape": "ring", "radius": 60, "iso": true, "attract": 520, "kill_radius": 8, "speed": [10, 40], "render": "line", "width": 1.6, "stretch": 0.05, "size": [3, 5], "plife": [0.4, 0.7], "fade": "in_out", "colors": ["#ffffff*2.4", "$main*1.7", "$alt*1.5"]},
+				{"type": "sim", "pos": [0, 0], "count": 14, "emit": 1.2, "shape": "box", "box": [36, 50], "tex": "star", "size": [12, 22], "speed": [0, 5], "plife": [0.08, 0.16], "fade": "none", "colors": ["$hot*1.7", "#ffffff*2.4"]},
+				{"type": "sim", "pos": [0, -26], "count": 24, "emit": 1.2, "shape": "box", "box": [36, 30], "render": "line", "width": 1.3, "stretch": 0.04, "size": [2, 4], "speed": [80, 180], "dir": -90, "spread": 200, "gravity": 600, "floor": true, "floor_offset": 26, "bounce": 0.4, "plife": [0.3, 0.6], "colors": ["#ffffff*2.4", "$hot*1.7", "#ff6a1f"]},
+				{"type": "flash", "pos": [0, -28], "delay": 1.25, "life": 0.3, "size": 60, "colors": ["$main*1.7", "$alt*1.7", "$core"], "rays": 6},
+				{"type": "ring", "pos": [0, -1], "delay": 1.25, "life": 0.4, "r0": 10, "r1": 60, "width": 4, "colors": ["$core", "$main*1.7"]},
+				{"type": "light", "pos": [0, -28], "life": 1.6, "radius": 130, "energy": 1.6, "flicker": 0.4, "attack": 0.2, "power": 0.8}
+			]
+		},
+		"level_up": {
+			"palette": {"main": "#ffd23f", "alt": "#ff8a3d", "core": "#ffffff*2.2"},
+			"shake": [3.0, 0.2],
+			"parts": [
+				{"type": "pillar", "pos": [0, 0], "life": 1.5, "width": 26, "height": 200, "attack": 0.1, "colors": ["$main*1.6", "$core"]},
+				{"type": "flash", "pos": [0, -24], "life": 0.4, "size": 50, "colors": ["$main*1.7", "$core"], "rays": 8, "ray_len": 90, "ray_spin": 1.5},
+				{"type": "ring", "pos": [0, -1], "life": 0.7, "count": 3, "stagger": 0.12, "r0": 10, "r1": 80, "width": 4, "colors": ["$core", "$main*1.7", "$alt*1.4"]},
+				{"type": "sim", "pos": [0, -30], "blend": "mix", "count": 80, "tex": "chip", "size": [4, 7], "speed": [160, 300], "dir": -90, "spread": 80, "gravity": 420, "drag": 1.4, "floor": true, "floor_offset": 30, "floor_jitter": 18, "bounce": 0.2, "spin": [360, 1000], "plife": [1.3, 2.1], "fade": "late", "palette": ["#ff2e88*1.6", "#3fd2ff*1.6", "#39ff9f*1.6", "#ffd23f*1.7", "#b14dff*1.6", "#ffffff*1.6"]},
+				{"type": "sim", "pos": [0, -4], "count": 40, "emit": 1.0, "shape": "disc", "radius": 22, "tex": "core", "size": [3, 7], "speed": [80, 160], "dir": -90, "spread": 10, "gravity": -60, "plife": [0.7, 1.2], "render": "trail", "trail": 6, "width": 2, "fade": "in_out", "colors": ["$core", "$main*1.7", "$alt*1.4"]},
+				{"type": "sim", "pos": [0, -60], "count": 16, "emit": 1.0, "shape": "box", "box": [60, 140], "tex": "star", "size": [10, 20], "speed": [0, 10], "plife": [0.25, 0.5], "fade": "strobe", "colors": ["#ffffff*2.4", "$main*1.7"]},
+				{"type": "light", "pos": [0, -40], "life": 1.6, "radius": 240, "energy": 2.4, "attack": 0.1, "power": 1.2}
+			]
+		},
+		"crit_hit": {
+			"palette": {"main": "#ffd23f", "alt": "#ff2e88", "core": "#ffffff*2.2"},
+			"shake": [7.0, 0.25],
+			"hit_stop": 0.09,
+			"parts": [
+				{"type": "flash", "pos": [0, -24], "life": 0.3, "size": 32, "colors": ["$alt*1.4", "$main*1.5", "$core"], "rays": 8, "ray_len": 110, "ray_width": 3, "power": 2.6},
+				{"type": "streaks", "pos": [0, -24], "life": 0.26, "count": 18, "len": [50, 120], "width": 4, "travel": 70, "inner": 16, "colors": ["#ffffff*2.4", "$main*1.7", "$alt*1.7"]},
+				{"type": "shockwave", "pos": [0, -16], "life": 0.4, "radius": 130, "squash": 0.6, "strength": 0.055, "thickness": 0.18, "rim": "$main*1.6", "chroma": 1.2},
+				{"type": "ring", "pos": [0, -2], "life": 0.3, "count": 2, "stagger": 0.05, "r0": 8, "r1": 70, "width": 5, "colors": ["#ffffff*2.4", "$alt*1.7"]},
+				{"type": "sim", "pos": [0, -24], "count": 40, "render": "line", "width": 2.2, "stretch": 0.05, "size": [4, 8], "speed": [250, 520], "spread": 360, "gravity": 600, "floor": true, "floor_jitter": 10, "bounce": 0.4, "plife": [0.3, 0.7], "colors": ["#ffffff*2.4", "$main*1.7", "$alt*1.7"]},
+				{"type": "light", "pos": [0, -24], "life": 0.4, "radius": 200, "energy": 3.0}
+			]
+		},
+		"death_dissolve": {
+			"palette": {"main": "#ff2e88", "alt": "#3fd2ff", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "glitch", "pos": [0, 4], "life": 0.5, "size": [50, 70], "slices": 9, "amount": 0.02, "tint": "$main"},
+				{"type": "flash", "pos": [0, -26], "life": 0.6, "size": 26, "squash": 1.8, "attack": 0.05, "colors": ["$main*1.4", "$core"]},
+				{"type": "sim", "pos": [0, 0], "count": 170, "emit": 0.9, "shape": "box", "box": [26, 52], "sweep": 1, "tex": "chip", "size": [2, 4], "speed": [10, 40], "dir": -90, "spread": 70, "gravity": [40, -90], "turbulence": 90, "plife": [0.8, 1.6], "fade": "in_out", "colors": ["$core", "$main*1.7", "$alt*1.2", "$alt*0.4"]},
+				{"type": "sim", "pos": [0, 0], "count": 40, "emit": 0.9, "shape": "box", "box": [24, 50], "sweep": 1, "tex": "core", "size": [4, 7], "speed": [5, 20], "dir": -90, "spread": 40, "gravity": [20, -50], "plife": [0.5, 1.0], "fade": "in_out", "colors": ["$main*1.7", "$main*0.6"]},
+				{"type": "ring", "pos": [0, -1], "life": 0.8, "r0": 22, "r1": 8, "width": 2, "ease": 1.5, "power": 0.8, "colors": ["$main*1.6", "$alt"]},
+				{"type": "light", "pos": [0, -24], "life": 1.2, "radius": 100, "energy": 1.4, "attack": 0.1, "power": 1.0}
+			]
+		},
+		"footstep_dust": {
+			"palette": {"main": "#a89478"},
+			"parts": [
+				{"type": "sim", "pos": [0, -2], "blend": "mix", "count": 9, "tex": "puff", "shape": "disc", "radius": 4, "speed": [14, 34], "dir": 180, "spread": 360, "vy_scale": 0.3, "drag": 3, "gravity": -12, "plife": [0.35, 0.6], "size": [7.800000000000001, 14.3], "size_curve": [0.6, 1.4], "fade": "in_out", "colors": ["#e0d0b8e0", "#a8987c00"]}
+			]
+		},
+		"landing_dust": {
+			"palette": {"main": "#a89478"},
+			"shake": [1.5, 0.1],
+			"parts": [
+				{"type": "sim", "pos": [0, -2], "blend": "mix", "count": 16, "tex": "puff", "shape": "ring", "radius": 10, "radial": 1, "speed": [50, 100], "drag": 3.5, "gravity": -10, "plife": [0.5, 0.8], "size": [13.0, 23.400000000000002], "size_curve": [0.6, 1.5], "fade": "in_out", "colors": ["#d8c8b0d0", "#a8987c00"]},
+				{"type": "sim", "pos": [0, -4], "blend": "mix", "render": "poly", "count": 7, "speed": [60, 130], "dir": -90, "spread": 160, "gravity": 600, "floor": true, "floor_offset": 4, "bounce": 0.3, "spin": [200, 600], "plife": [0.5, 0.8], "size": [2, 4], "fade": "late", "colors": ["#b8a68a"]},
+				{"type": "ring", "pos": [0, -1], "life": 0.25, "r0": 6, "r1": 30, "width": 1.5, "colors": ["#e0d0b8*1.2", "#e0d0b800"]}
+			]
+		},
+		"water_splash": {
+			"palette": {"main": "#7fc8ff", "core": "#e8f8ff*1.7"},
+			"parts": [
+				{"type": "sim", "pos": [0, -2], "count": 34, "tex": "droplet", "stretch": 0.022, "size": [3, 5], "speed": [110, 240], "dir": -90, "spread": 70, "gravity": 720, "floor": true, "floor_offset": 2, "floor_kill": true, "floor_jitter": 8, "plife": [0.5, 0.9], "fade": "none", "colors": ["$core", "$main*1.4"]},
+				{"type": "ring", "pos": [0, -1], "life": 0.5, "count": 2, "stagger": 0.12, "r0": 4, "r1": 34, "width": 2.5, "colors": ["$core", "$main"]},
+				{"type": "sim", "pos": [0, -6], "blend": "mix", "count": 6, "tex": "puff", "shape": "disc", "radius": 8, "speed": [10, 30], "dir": -90, "spread": 120, "plife": [0.4, 0.7], "size": [12, 20], "size_curve": [0.6, 1.4], "fade": "in_out", "colors": ["#e8f8ff80", "#bfe0ff00"]},
+				{"type": "flash", "pos": [0, -4], "life": 0.15, "size": 22, "colors": ["$main", "$core"]}
+			]
+		},
+		"neon_sign_sparks": {
+			"palette": {"main": "#ffd23f", "alt": "#ff6a1f", "arc": "#7fd8ff", "core": "#ffffff*2.2"},
+			"parts": [
+				{"type": "lightning", "pos": [-12, -84], "to": [26, 8], "life": 0.35, "jag": 0.35, "detail": 3, "branches": 1, "refresh": 0.03, "widths": [7, 2.5, 1.2], "colors": ["$arc*0.8", "$arc*1.7", "$core"], "end_glow": 8},
+				{"type": "flash", "pos": [0, -80], "life": 0.5, "size": 22, "colors": ["$arc*1.6", "$core"], "rays": 4, "ray_len": 34},
+				{"type": "sim", "pos": [0, -80], "count": 30, "emit": 0.3, "render": "line", "width": 1.4, "stretch": 0.035, "size": [2, 4], "speed": [40, 170], "dir": 90, "spread": 150, "gravity": 620, "floor": true, "floor_jitter": 10, "bounce": 0.45, "friction": 0.6, "plife": [0.7, 1.2], "colors": ["#ffffff*2.4", "$main*1.7", "$alt*1.6"]},
+				{"type": "sim", "pos": [0, -78], "blend": "mix", "delay": 0.1, "count": 5, "tex": "puff", "speed": [8, 18], "dir": -90, "spread": 60, "gravity": -20, "plife": [0.8, 1.2], "size": [10, 16], "size_curve": [0.6, 1.5], "fade": "in_out", "colors": ["#3a3640a0", "#2a263000"]},
+				{"type": "light", "pos": [0, -80], "life": 0.6, "radius": 120, "energy": 2.0, "color": "$arc", "flicker": 0.8}
+			]
+		},
+		"rain_splash": {
+			"palette": {"main": "#9fc4ff", "core": "#e8f2ff*1.6"},
+			"parts": [
+				{"type": "ring", "pos": [0, -1], "life": 0.32, "r0": 2, "r1": 18, "width": 2, "colors": ["$core", "$main"]},
+				{"type": "sim", "pos": [0, -1], "count": 9, "tex": "droplet", "stretch": 0.02, "size": [2, 3], "speed": [50, 110], "dir": -90, "spread": 100, "gravity": 520, "floor": true, "floor_offset": 1, "floor_kill": true, "plife": [0.2, 0.4], "fade": "none", "colors": ["$core", "$main"]}
+			]
+		}
+	},
+	"types": {
+		"plasma": {"travel": "plasma_bolt", "impact": "plasma_burst", "big": "plasma_explosion"},
+		"electric": {"impact": "electric_arc", "mode": "arc", "aoe": "chain_lightning", "aoe_mode": "chain", "big": "chain_lightning", "big_mode": "chain"},
+		"cryo": {"travel": "cryo_bolt", "impact": "cryo_shatter"},
+		"void": {"travel": "void_bolt", "impact": "void_implosion"},
+		"essence": {"impact": "essence_drain", "mode": "stream"},
+		"tech": {"travel": "tech_bolt", "impact": "impact_tech"},
+		"kinetic": {"impact": "impact_kinetic"},
+		"physical": {"travel": "tracer", "impact": "impact_physical"}
+	},
+	"kinds": {
+		"HEAL": {"impact": "heal_bloom", "multi": true},
+		"BUFF": {"impact": "buff_aura", "multi": true},
+		"DEBUFF": {"impact": "debuff_curse", "multi": true},
+		"UTILITY": {"impact": "buff_aura"}
+	},
+	"specials": {
+		"summon": {"impact": "summon_portal"},
+		"summon_droid": {"impact": "droid_build"},
+		"reanimate": {"impact": "summon_portal"},
+		"echo": {"impact": "summon_portal"},
+		"revive": {"impact": "level_up"},
+		"blink": {"cast": "teleport_glitch", "impact": "teleport_glitch"},
+		"terrain": {"impact": "impact_kinetic"},
+		"kinetic": {"impact": "impact_kinetic"},
+		"time": {"impact": "teleport_glitch"},
+		"cleanse": {"impact": "heal_bloom", "multi": true},
+		"restore_mp": {"impact": "buff_aura"},
+		"steal_coins": {"impact": "impact_physical"},
+		"steal_chip": {"impact": "impact_tech"}
+	},
+	"abilities": {
+		"deploy_turret": {"impact": "droid_build"},
+		"warp_coordinates": {"impact": "teleport_glitch"},
+		"shock_mine": {"impact": "electric_arc", "mode": "arc"},
+		"void_rift": {"impact": "void_implosion"},
+		"event_horizon": {"impact": "void_implosion"},
+		"neon_fire_trace": {"travel": "plasma_bolt", "impact": "plasma_burst"},
+		"chain_lightning": {"impact": "chain_lightning", "mode": "chain"},
+		"plasma_ram": {"impact": "plasma_burst"}
+	}
+}

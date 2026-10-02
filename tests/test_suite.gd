@@ -29,6 +29,7 @@ func run(p_tree: SceneTree) -> int:
 	test_summoner()
 	test_asset_intake()
 	test_vfx_and_tiles()
+	await test_vfx_library()
 	await test_cutscenes()
 	await test_battles()
 	print("\n=== %d passed, %d failed ===" % [_passes, _fails])
@@ -624,6 +625,128 @@ func test_vfx_and_tiles() -> void:
 	var big := ParticleFactory.make("rain", Rect2(0, 0, 2000, 1000), 500, 128.0)
 	check((big.get_node("Emitter") as CPUParticles2D).amount == ParticleFactory.MAX_AMOUNT, "particle amount capped")
 	big.free()
+
+
+func test_vfx_library() -> void:
+	VFX.reload()
+	var ids := VFX.effect_ids()
+	for req: String in ["impact_physical", "impact_kinetic", "plasma_burst", "plasma_explosion", "electric_arc",
+			"chain_lightning", "cryo_shatter", "void_implosion", "essence_drain", "heal_bloom", "buff_aura",
+			"debuff_curse", "summon_portal", "teleport_glitch", "droid_build", "level_up", "crit_hit",
+			"death_dissolve", "footstep_dust", "landing_dust", "water_splash", "neon_sign_sparks", "rain_splash"]:
+		check(ids.has(req), "vfx %s is defined" % req)
+	check(VFX.parse_color("#ff0000*2") == Color(2, 0, 0) and VFX.parse_color("$main*0.5", {"main": "#ffffff"}) == Color(0.5, 0.5, 0.5)
+		and VFX.parse_color([1, 2, 3, 0.5]) == Color(1, 2, 3, 0.5), "vfx colour syntax (#hex*k, $palette, arrays)")
+	VFX.paused = true
+	VFX.hit_stop_enabled = false
+	VFX.shake_enabled = false
+	var host := Node2D.new()
+	root.add_child(host)
+	var spawned: Array = []
+	for id in ids:
+		var fx := VFX.spawn(host, id, Vector2(100, 100), {"to": Vector2(260, 60), "targets": [Vector2(200, 80), Vector2(260, 120)], "seed": 7, "floor_z": 3}) as VFXEffect
+		var ok := fx != null and fx.get_parent() == host and not fx.parts.is_empty()
+		var steps := 0
+		while ok and not fx.is_done() and steps < 600:
+			fx.step(1.0 / 30.0)
+			steps += 1
+		check(ok and fx.is_done() and fx.is_queued_for_deletion() and fx.time <= 12.1, "vfx %s spawns, plays and frees itself" % id)
+		spawned.append(fx)
+	var unknown := VFX.spawn(host, "no_such_effect", Vector2.ZERO) as VFXEffect
+	check(unknown != null and not unknown.parts.is_empty(), "unknown vfx id falls back to a flash")
+	unknown.advance_to(5.0)
+	spawned.append(unknown)
+	# Projectiles report their landing time and emit `impacted`.
+	var hits: Array = []
+	var bolt := VFX.spawn(host, "plasma_bolt", Vector2.ZERO, {"to": Vector2(200, 0)}) as VFXEffect
+	bolt.impacted.connect(func(p: Vector2) -> void: hits.append(p))
+	check(absf(VFX.impact_time("plasma_bolt") - 0.24) < 0.01, "plasma_bolt impact time from its trail (%.2f)" % VFX.impact_time("plasma_bolt"))
+	bolt.advance_to(1.0)
+	check(hits.size() == 1 and hits[0] == Vector2(200, 0), "projectile emits impacted at the target (%s)" % [hits])
+	spawned.append(bolt)
+	# Self-driven: unpaused effects run on _process and free themselves.
+	VFX.paused = false
+	var live := VFX.spawn(host, "rain_splash", Vector2.ZERO)
+	for f in 60:
+		await process_frame
+		if not is_instance_valid(live):
+			break
+	check(not is_instance_valid(live), "unpaused vfx frees itself on its own")
+	await process_frame
+	var alive := 0
+	for n: Variant in spawned:
+		if is_instance_valid(n):
+			alive += 1
+	check(alive == 0, "every spawned vfx node is freed (%d alive)" % alive)
+	# GPU burst path builds a GPUParticles2D (headless forces it explicitly).
+	VFXSim.force_gpu = true
+	var gfx := VFXEffect.new()
+	gfx.setup("test_burst", {"parts": [{"type": "burst", "count": 30, "speed": [40, 80], "turbulence": 50, "colors": ["#ffffff*2", "#ff2e88"]}]}, Vector2.ZERO, {})
+	host.add_child(gfx)
+	check(gfx.parts.size() == 1 and gfx.parts[0].get_node_or_null("GPU") is GPUParticles2D, "burst part uses GPUParticles2D when available")
+	VFXSim.force_gpu = false
+	host.free()
+	VFX.hit_stop_enabled = true
+	VFX.shake_enabled = true
+	# Battle mapping.
+	var plan := VFX.plan_for_ability(ContentDB.get_ability("plasma_bolt"), true)
+	check(plan["travel"] == "plasma_bolt" and plan["impact"] == "plasma_burst" and plan["mode"] == "point", "plasma ability → bolt + burst (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("cryo_lattice"), true)
+	check(plan["impact"] == "cryo_shatter" and plan["travel"] == "cryo_bolt", "cryo ability → cryo bolt + shatter (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("arc_lash"), true)
+	check(plan["impact"] == "electric_arc" and plan["mode"] == "arc" and plan["travel"] == "", "electric ability → arc (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("chain_lightning"), true)
+	check(plan["impact"] == "chain_lightning" and plan["mode"] == "chain", "chain lightning chains (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("essence_siphon"), true)
+	check(plan["impact"] == "essence_drain" and plan["mode"] == "stream", "essence → drain stream (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("mend_light"), true)
+	check(plan["impact"] == "heal_bloom" and plan["multi"], "heal → heal bloom on each target (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("build_assault_droid"), false)
+	check(plan["impact"] == "droid_build", "droid builds scan in (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("shadow_step"), true)
+	check(plan["impact"] == "teleport_glitch" and plan["cast"] == "teleport_glitch", "blink glitches out and in (%s)" % [plan])
+	plan = VFX.plan_for_ability(ContentDB.get_ability("gravity_crush"), true)
+	check(plan["impact"] == "void_implosion", "void → implosion (%s)" % [plan])
+	var melee := Ability.new()
+	plan = VFX.plan_for_ability(melee, false)
+	check(plan["impact"] == "impact_physical" and plan["travel"] == "", "plain melee → physical impact, no projectile (%s)" % [plan])
+	melee.vfx_id = "crit_hit"
+	check(VFX.plan_for_ability(melee, false)["impact"] == "crit_hit", "ability.vfx_id overrides the mapping")
+	for k: String in ["types", "kinds", "specials", "abilities"]:
+		for key: String in VFX.data()[k]:
+			var e: Variant = VFX.data()[k][key]
+			var refs: Array = [e] if e is String else [e.get("impact", ""), e.get("travel", ""), e.get("cast", ""), e.get("big", ""), e.get("aoe", "")]
+			for r: Variant in refs:
+				check(str(r) == "" or VFX.has_effect(str(r)), "vfx.json %s.%s references a real effect (%s)" % [k, key, r])
+	# Juiced weather presets.
+	var diamonds: Array[PackedVector2Array] = []
+	for c in [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
+		var ctr := Vector2((c.x - c.y) * 64, (c.x + c.y) * 32)
+		diamonds.append(PackedVector2Array([ctr + Vector2(0, -32), ctr + Vector2(64, 0), ctr + Vector2(0, 32), ctr + Vector2(-64, 0)]))
+	var rain := ParticleFactory.make_for_cells("rain", diamonds)
+	check(rain.get_node_or_null("EmitterFar") is CPUParticles2D and rain.get_node_or_null("Droplets") != null and rain.get_node_or_null("Wind") != null, "rain has a far parallax layer, droplets and wind gusts")
+	var near := rain.get_node("Emitter") as CPUParticles2D
+	var far := rain.get_node("EmitterFar") as CPUParticles2D
+	check(far.scale_amount_max < near.scale_amount_max and far.color.a < near.color.a, "far rain layer is smaller and dimmer")
+	check(near.gravity.x > 0.0, "rain wind pushes sideways (%s)" % near.gravity)
+	rain.free()
+	var fog := ParticleFactory.make_for_cells("fog", diamonds)
+	check(fog.get_node_or_null("FogSheet") != null and fog.get_node("FogSheet").material is ShaderMaterial, "fog gets a drifting noise sheet")
+	fog.free()
+	var flies := ParticleFactory.make_for_cells("fireflies", diamonds)
+	var wisps := flies.get_node_or_null("Wisps")
+	check(wisps != null and wisps.get_children().any(func(n: Node) -> bool: return n is PointLight2D), "fireflies emit real lights")
+	flies.free()
+	var storm := ParticleFactory.make_for_cells("storm_clouds", diamonds)
+	check(storm.get_node_or_null("Lightning/FlashLight") is PointLight2D, "storm lightning lights the area")
+	storm.free()
+	var embers := ParticleFactory.get_preset("embers")
+	check(not ParticleFactory.use_gpu(embers), "headless builds CPU particles (gl_compatibility fallback)")
+	var gpu_pts := PackedVector2Array([Vector2(0, 0), Vector2(10, 5), Vector2(-8, 3)])
+	var gpu := ParticleFactory._gpu_emitter(embers, gpu_pts, 3, 1.0)
+	var pm := gpu.process_material as ParticleProcessMaterial
+	check(pm.turbulence_enabled and pm.emission_point_count == 3 and pm.emission_point_texture != null, "GPU emitter: turbulence + emission point texture")
+	gpu.free()
 
 
 func _make_tile_fixture() -> void:

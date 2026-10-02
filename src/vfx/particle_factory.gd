@@ -22,6 +22,15 @@ extends RefCounted
 ##   scale_curve (flat|grow|grow_slight|shrink), rise (px band above the cell),
 ##   wander (px/s² tangential jitter), center (emit from cell centre only),
 ##   splash (rain: ground splash rings), lightning (storm flashes)
+## Juice keys:
+##   turbulence (px/s²; real GPU turbulence on Forward+/Mobile, CPU jitter
+##   fallback on gl_compatibility / headless), wind [x, y] (px/s², gusting;
+##   plus the global ParticleFactory.wind), depth (bool: a smaller, dimmer,
+##   slower far layer behind the near one = parallax), stretch (streak length
+##   per px/s of fall speed), droplets (rain: bouncing ground droplets),
+##   lights (n tiny wandering PointLight2D wisps: fireflies, data motes),
+##   fog_sheet (drifting noise-textured fog over the cells), flash_light
+##   (storm lightning lights the area; default on with lightning)
 
 const DATA_PATH := "res://data/particles.json"
 const MAX_AMOUNT := 600
@@ -37,7 +46,14 @@ const DEFAULTS := {
 	"explosiveness": 0.0, "damping": 0.0, "spin": 0.0, "fade": "in_out",
 	"scale_curve": "flat", "rise": 0.0, "wander": 0.0, "center": false,
 	"splash": false, "lightning": false,
+	"turbulence": 0.0, "wind": [0, 0], "depth": false, "stretch": 0.0,
+	"droplets": false, "lights": 0, "fog_sheet": false, "flash_light": true,
 }
+
+## Global wind (px/s²) added to every emitter built after it is set.
+static var wind := Vector2.ZERO
+## Tests/screenshots: never build GPUParticles2D.
+static var force_cpu := false
 
 static var _file_cache: Dictionary = {}
 static var _tex_cache: Dictionary = {}
@@ -141,9 +157,33 @@ static func _build(preset_id: String, p: Dictionary, pts: PackedVector2Array, ce
 	if p.is_empty():
 		push_warning("ParticleFactory: unknown preset '%s'" % preset_id)
 		return root
+	var gusts: Array[Node] = []
+	if bool(p["fog_sheet"]):
+		var sheet := FogSheet.new()
+		sheet.name = "FogSheet"
+		sheet.setup(p, pts, s, bounds)
+		root.add_child(sheet)
+	if bool(p["depth"]):
+		# Far layer: smaller, dimmer, slower, a touch higher → parallax depth.
+		var far := p.duplicate()
+		far["size"] = float(p["size"]) * 0.55
+		far["speed"] = float(p["speed"]) * 0.72
+		far["gravity"] = float(p["gravity"]) * 0.72
+		far["alpha"] = float(p["alpha"]) * 0.5
+		far["glow"] = maxf(float(p["glow"]) * 0.75, 0.6)
+		far["amount"] = float(p["amount"]) * 0.7
+		var far_pts := PackedVector2Array()
+		for pt in pts:
+			far_pts.append(pt + Vector2(0, -14.0 * s))
+		var fe := _emitter(far, far_pts, cells, s)
+		fe.name = "EmitterFar"
+		fe.z_index = -1
+		root.add_child(fe)
+		gusts.append(fe)
 	var em := _emitter(p, pts, cells, s)
 	em.name = "Emitter"
 	root.add_child(em)
+	gusts.append(em)
 	if bool(p["splash"]):
 		var ground := PackedVector2Array()
 		var fall := float(p["fall_from"]) * s
@@ -152,6 +192,22 @@ static func _build(preset_id: String, p: Dictionary, pts: PackedVector2Array, ce
 		var sp := _splash_emitter(p, ground, cells, s)
 		sp.name = "Splash"
 		root.add_child(sp)
+		if bool(p["droplets"]):
+			var dr := _droplet_emitter(p, ground, cells, s)
+			dr.name = "Droplets"
+			root.add_child(dr)
+	if int(p["lights"]) > 0:
+		var wisps := Wisps.new()
+		wisps.name = "Wisps"
+		wisps.setup(p, pts, mini(int(p["lights"]) * maxi(cells / 4, 1), 8), s)
+		root.add_child(wisps)
+	var wv := _wind_of(p, s)
+	if wv != Vector2.ZERO:
+		var gust := WindGust.new()
+		gust.name = "Wind"
+		gust.emitters = gusts
+		gust.wind = wv
+		root.add_child(gust)
 	if bool(p["lightning"]):
 		var fx := LightningFlash.new()
 		fx.name = "Lightning"
@@ -159,11 +215,31 @@ static func _build(preset_id: String, p: Dictionary, pts: PackedVector2Array, ce
 		fx.bolt_length = 300.0 * s
 		fx.clouds = em
 		fx.material = _additive()
+		if bool(p["flash_light"]):
+			fx.add_light(maxf(bounds.size.x, 200.0 * s))
 		root.add_child(fx)
 	return root
 
 
-static func _emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: float) -> CPUParticles2D:
+static func _wind_of(p: Dictionary, s: float) -> Vector2:
+	var w: Variant = p["wind"]
+	var v := Vector2(float(w[0]), float(w[1])) if w is Array and (w as Array).size() >= 2 else Vector2.ZERO
+	return (v + wind) * s
+
+
+## GPUParticles2D (real turbulence) only where the renderer supports it.
+static func use_gpu(p: Dictionary) -> bool:
+	if force_cpu or float(p["turbulence"]) <= 0.0:
+		return false
+	if DisplayServer.get_name() == "headless":
+		return false
+	var m := RenderingServer.get_current_rendering_method()
+	return m == "forward_plus" or m == "mobile"
+
+
+static func _emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: float) -> Node2D:
+	if use_gpu(p):
+		return _gpu_emitter(p, pts, cells, s)
 	var em := CPUParticles2D.new()
 	em.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	em.local_coords = true
@@ -183,7 +259,7 @@ static func _emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: floa
 	em.initial_velocity_min = speed * 0.8
 	em.initial_velocity_max = speed * 1.2
 	var g := float(p["gravity"]) * s
-	em.gravity = Vector2(0, g)
+	em.gravity = Vector2(0, g) + _wind_of(p, s)
 	var life := float(p["lifetime"])
 	var fall := float(p["fall_from"]) * s
 	if fall > 0.0 and float(p["damping"]) == 0.0:
@@ -203,11 +279,16 @@ static func _emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: floa
 		em.angle_max = 180.0 if spin > 20.0 else 12.0
 	em.particle_flag_align_y = bool(p["align"])
 	var wander := float(p["wander"]) * s
-	em.tangential_accel_min = -wander
-	em.tangential_accel_max = wander
+	# CPU stand-in for turbulence: random tangential + radial jitter.
+	var turb := float(p["turbulence"]) * s
+	em.tangential_accel_min = -wander - turb * 0.6
+	em.tangential_accel_max = wander + turb * 0.6
+	if turb > 0.0:
+		em.radial_accel_min = -turb * 0.35
+		em.radial_accel_max = turb * 0.35
 	# `size` is the particle's longest side (a rain streak's length).
 	var tex_w := float(maxi(tex.get_width(), tex.get_height())) if tex else 8.0
-	var sz := float(p["size"]) * s
+	var sz := _length_of(p, s)
 	em.scale_amount_min = sz * 0.7 / tex_w
 	em.scale_amount_max = sz * 1.2 / tex_w
 	em.scale_amount_curve = _scale_curve(str(p["scale_curve"]))
@@ -229,6 +310,128 @@ static func _fall_time(dist: float, vy: float, g: float, fallback: float) -> flo
 		return fallback
 	var t := (-vy + sqrt(disc)) / g
 	return t if t > 0.0 else fallback
+
+
+## Particle size; streaks stretch with fall speed ("stretch" px per px/s).
+static func _length_of(p: Dictionary, s: float) -> float:
+	var sz := float(p["size"]) * s
+	var st := float(p["stretch"])
+	if st > 0.0:
+		var v := float(p["speed"]) * s + float(p["gravity"]) * s * 0.25
+		sz = maxf(sz, v * st)
+	return sz
+
+
+static func _gpu_emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: float) -> GPUParticles2D:
+	var em := GPUParticles2D.new()
+	em.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	em.local_coords = true
+	em.amount = clampi(int(round(float(p["amount"]) * cells)), 1, MAX_AMOUNT)
+	var tex := _texture_for(p)
+	em.texture = tex
+	var m := ParticleProcessMaterial.new()
+	m.particle_flag_disable_z = true
+	# Emission points live in a float texture (one texel per point).
+	var n := maxi(pts.size(), 1)
+	var w := mini(n, 256)
+	var h := int(ceil(float(n) / w))
+	var img := Image.create(w, h, false, Image.FORMAT_RGF)
+	var bounds := Rect2(pts[0] if pts.size() > 0 else Vector2.ZERO, Vector2.ZERO)
+	for i in pts.size():
+		img.set_pixel(i % w, i / w, Color(pts[i].x, pts[i].y, 0))
+		bounds = bounds.expand(pts[i])
+	m.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_POINTS
+	m.emission_point_texture = ImageTexture.create_from_image(img)
+	m.emission_point_count = pts.size()
+	var dir_arr: Array = p["direction"]
+	var dir := Vector2(float(dir_arr[0]), float(dir_arr[1])) if dir_arr.size() >= 2 else Vector2.DOWN
+	dir = dir.normalized() if dir != Vector2.ZERO else Vector2.DOWN
+	m.direction = Vector3(dir.x, dir.y, 0)
+	m.spread = float(p["spread"])
+	var speed := float(p["speed"]) * s
+	m.initial_velocity_min = speed * 0.8
+	m.initial_velocity_max = speed * 1.2
+	var g := float(p["gravity"]) * s
+	var wv := _wind_of(p, s)
+	m.gravity = Vector3(wv.x, g + wv.y, 0)
+	var life := float(p["lifetime"])
+	var fall := float(p["fall_from"]) * s
+	if fall > 0.0 and float(p["damping"]) == 0.0:
+		life = _fall_time(fall, speed * dir.y, g, life)
+	em.lifetime = maxf(life, 0.05)
+	em.preprocess = em.lifetime if float(p["explosiveness"]) < 0.5 else 0.0
+	em.explosiveness = float(p["explosiveness"])
+	em.randomness = 0.3
+	m.lifetime_randomness = 0.0 if fall > 0.0 else 0.25
+	m.damping_min = float(p["damping"]) * s * 0.7
+	m.damping_max = float(p["damping"]) * s
+	var spin := float(p["spin"])
+	m.angular_velocity_min = -spin
+	m.angular_velocity_max = spin
+	m.angle_min = -180.0 if spin > 20.0 else -12.0
+	m.angle_max = 180.0 if spin > 20.0 else 12.0
+	m.particle_flag_align_y = bool(p["align"])
+	var wander := float(p["wander"]) * s
+	m.tangential_accel_min = -wander
+	m.tangential_accel_max = wander
+	var turb := float(p["turbulence"])
+	m.turbulence_enabled = true
+	m.turbulence_noise_strength = clampf(turb / 20.0, 0.5, 12.0)
+	m.turbulence_noise_scale = 4.0
+	m.turbulence_noise_speed_random = 0.4
+	m.turbulence_influence_min = 0.05
+	m.turbulence_influence_max = 0.2
+	var tex_w := float(maxi(tex.get_width(), tex.get_height())) if tex else 8.0
+	var sz := _length_of(p, s)
+	m.scale_min = sz * 0.7 / tex_w
+	m.scale_max = sz * 1.2 / tex_w
+	var sc := _scale_curve(str(p["scale_curve"]))
+	if sc:
+		var ct := CurveTexture.new()
+		ct.curve = sc
+		m.scale_curve = ct
+	var glow := float(p["glow"])
+	m.color = Color(glow, glow, glow, float(p["alpha"]))
+	var it := GradientTexture1D.new()
+	it.gradient = _tint_ramp(p)
+	it.use_hdr = true
+	m.color_initial_ramp = it
+	var rt := GradientTexture1D.new()
+	rt.gradient = _fade_ramp(str(p["fade"]))
+	m.color_ramp = rt
+	em.process_material = m
+	em.visibility_rect = bounds.grow(maxf(sz * 2.0, 64.0) + fall + speed * em.lifetime)
+	if str(p["blend"]) == "add":
+		em.material = _additive()
+	return em
+
+
+## Rain: tiny droplets kicked up where drops land, falling back with gravity.
+static func _droplet_emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: float) -> CPUParticles2D:
+	var em := CPUParticles2D.new()
+	em.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	em.local_coords = true
+	em.amount = clampi(int(float(p["amount"]) * cells * 0.8), 1, MAX_AMOUNT / 2)
+	em.emission_shape = CPUParticles2D.EMISSION_SHAPE_POINTS
+	em.emission_points = pts
+	em.texture = generated_texture("soft")
+	em.lifetime = 0.32
+	em.preprocess = 0.32
+	em.direction = Vector2.UP
+	em.spread = 55.0
+	em.initial_velocity_min = 50.0 * s
+	em.initial_velocity_max = 110.0 * s
+	em.gravity = Vector2(0, 700.0 * s)
+	var sz := 4.0 * s / 64.0
+	em.scale_amount_min = sz * 0.6
+	em.scale_amount_max = sz * 1.2
+	var glow := float(p["glow"]) * 1.2
+	em.color = Color(glow, glow, glow, float(p["alpha"]))
+	em.color_initial_ramp = _tint_ramp(p)
+	em.color_ramp = _fade_ramp("out")
+	if str(p["blend"]) == "add":
+		em.material = _additive()
+	return em
 
 
 static func _splash_emitter(p: Dictionary, pts: PackedVector2Array, cells: int, s: float) -> CPUParticles2D:
@@ -529,6 +732,20 @@ class LightningFlash extends Node2D:
 	var _t: float = -1.0
 	var _bolts: Array[PackedVector2Array] = []
 	var _origin: Vector2
+	var _light: PointLight2D
+
+	## A PointLight2D that lights the area under the storm on every flash.
+	func add_light(radius: float) -> void:
+		_light = PointLight2D.new()
+		_light.name = "FlashLight"
+		_light.texture = VFX.texture("light")
+		_light.texture_scale = radius * 2.0 / float(_light.texture.get_width())
+		_light.color = Color(0.78, 0.74, 1.0)
+		_light.energy = 0.0
+		_light.enabled = false
+		_light.range_z_min = -4096
+		_light.range_z_max = 4096
+		add_child(_light)
 
 	func _ready() -> void:
 		_rng.randomize()
@@ -583,6 +800,10 @@ class LightningFlash extends Node2D:
 		var k := intensity()
 		if is_instance_valid(clouds):
 			clouds.self_modulate = Color(1, 1, 1).lerp(Color(2.0, 1.95, 2.6), k)
+		if _light:
+			_light.position = _origin + Vector2(0, bolt_length * 0.6)
+			_light.energy = 2.4 * k
+			_light.enabled = k > 0.0
 		queue_redraw()
 
 	func _draw() -> void:
@@ -596,3 +817,174 @@ class LightningFlash extends Node2D:
 			var w := 1.0 if i > 0 else 1.6
 			draw_polyline(_bolts[i], Color(0.8, 0.7, 2.0, 0.35 * k), 10.0 * w, true)
 			draw_polyline(_bolts[i], Color(3.0, 3.0, 4.0, k), 2.4 * w, true)
+
+
+
+# --- Wind gusts --------------------------------------------------------------
+
+## Breathes the wind part of each emitter's gravity so rain/snow sway in gusts.
+class WindGust extends Node:
+	var emitters: Array[Node] = []
+	var wind := Vector2.ZERO
+	var _base: Array = []
+	var _t: float = 0.0
+
+	func _ready() -> void:
+		_t = randf() * 10.0
+		for e in emitters:
+			if e is CPUParticles2D:
+				_base.append((e as CPUParticles2D).gravity)
+			elif e is GPUParticles2D and (e as GPUParticles2D).process_material is ParticleProcessMaterial:
+				var g := ((e as GPUParticles2D).process_material as ParticleProcessMaterial).gravity
+				_base.append(Vector2(g.x, g.y))
+			else:
+				_base.append(Vector2.ZERO)
+
+	## Gust multiplier on the wind (around 1.0).
+	func gust(t: float) -> float:
+		return 1.0 + 0.45 * sin(t * 0.9) + 0.25 * sin(t * 2.3 + 1.3) + 0.12 * sin(t * 5.1)
+
+	func _process(delta: float) -> void:
+		_t += delta
+		var extra := wind * (gust(_t) - 1.0)
+		for i in emitters.size():
+			var e := emitters[i]
+			if not is_instance_valid(e) or i >= _base.size():
+				continue
+			var g: Vector2 = _base[i] + extra
+			if e is CPUParticles2D:
+				(e as CPUParticles2D).gravity = g
+			elif e is GPUParticles2D and (e as GPUParticles2D).process_material is ParticleProcessMaterial:
+				((e as GPUParticles2D).process_material as ParticleProcessMaterial).gravity = Vector3(g.x, g.y, 0)
+
+
+# --- Light-emitting wisps ----------------------------------------------------
+
+## Fireflies / data motes that actually light their surroundings: a few
+## PointLight2D wanderers with a visible glow core, pulsing out of phase.
+class Wisps extends Node2D:
+	var _lights: Array[PointLight2D] = []
+	var _params: Array[Vector4] = []  # fx, fy, phase, pulse speed
+	var _box := Rect2()
+	var _cols: Array[Color] = []
+	var _t: float = 0.0
+	var _size: float = 6.0
+	var _glow: float = 2.0
+
+	func setup(p: Dictionary, pts: PackedVector2Array, n: int, s: float) -> void:
+		material = ParticleFactory._additive()
+		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		var b := Rect2(pts[0] if pts.size() > 0 else Vector2.ZERO, Vector2.ZERO)
+		for pt in pts:
+			b = b.expand(pt)
+		_box = b.grow(4.0 * s)
+		_size = float(p["size"]) * s * 1.4
+		_glow = float(p["glow"])
+		var c1 := Color(str(p["color"]))
+		var c2s := str(p["color2"])
+		var c2 := Color(c2s) if c2s != "" else c1
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash(str(p["name"])) ^ pts.size()
+		for i in maxi(n, 1):
+			var l := PointLight2D.new()
+			l.texture = VFX.texture("light")
+			l.texture_scale = 120.0 * s / float(l.texture.get_width())
+			var c := c1.lerp(c2, rng.randf())
+			l.color = c
+			l.energy = 0.0
+			l.range_z_min = -4096
+			l.range_z_max = 4096
+			add_child(l)
+			_lights.append(l)
+			_cols.append(c)
+			_params.append(Vector4(rng.randf_range(0.13, 0.3), rng.randf_range(0.17, 0.37), rng.randf() * TAU, rng.randf_range(1.2, 2.6)))
+		_t = rng.randf() * 20.0
+		_place()
+
+	func _process(delta: float) -> void:
+		_t += delta
+		_place()
+		queue_redraw()
+
+	func _pos(i: int) -> Vector2:
+		var q := _params[i]
+		var u := 0.5 + 0.5 * sin(_t * q.x + q.z)
+		var v := 0.5 + 0.5 * sin(_t * q.y + q.z * 1.7)
+		return _box.position + Vector2(u, v) * _box.size
+
+	func _pulse(i: int) -> float:
+		var q := _params[i]
+		return clampf(0.35 + 0.65 * sin(_t * q.w + q.z * 3.0), 0.0, 1.0)
+
+	func _place() -> void:
+		for i in _lights.size():
+			_lights[i].position = _pos(i)
+			_lights[i].energy = 1.5 * _pulse(i)
+
+	func _draw() -> void:
+		var tex := VFX.texture("core")
+		for i in _lights.size():
+			var k := _pulse(i)
+			var c := _cols[i]
+			var r := _size * (0.8 + 0.4 * k)
+			draw_texture_rect(tex, Rect2(_pos(i) - Vector2(r, r), Vector2(r * 2, r * 2)), false, Color(c.r * _glow, c.g * _glow, c.b * _glow, k))
+
+
+# --- Fog sheet ---------------------------------------------------------------
+
+## Soft fog blobs over the painted cells whose alpha is eaten by two layers of
+## world-space noise scrolling with the wind: fog that drifts and breathes
+## instead of a few big sprites sliding around.
+class FogSheet extends Node2D:
+	const CODE := """
+shader_type canvas_item;
+uniform sampler2D noise_tex : repeat_enable, filter_linear;
+uniform vec2 drift = vec2(0.012, 0.003);
+uniform float density = 1.0;
+varying vec2 wpos;
+void vertex() {
+	wpos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+void fragment() {
+	vec4 base = texture(TEXTURE, UV) * COLOR;
+	float n1 = texture(noise_tex, wpos * 0.0022 + TIME * drift).r;
+	float n2 = texture(noise_tex, wpos * 0.0055 - TIME * drift * 1.9 + vec2(0.37, 0.11)).r;
+	float n = smoothstep(0.2, 0.8, n1 * 0.7 + n2 * 0.45);
+	COLOR = vec4(base.rgb, base.a * n * density);
+}
+"""
+	static var _shader: Shader
+	static var _noise: Texture2D
+	var _blobs: Array[Rect2] = []
+	var _color := Color.WHITE
+
+	func setup(p: Dictionary, pts: PackedVector2Array, s: float, _bounds: Rect2) -> void:
+		if _shader == null:
+			_shader = Shader.new()
+			_shader.code = CODE
+		if _noise == null:
+			var fn := FastNoiseLite.new()
+			fn.seed = 11
+			fn.frequency = 0.02
+			fn.fractal_octaves = 3
+			_noise = ImageTexture.create_from_image(fn.get_seamless_image(256, 256))
+		var m := ShaderMaterial.new()
+		m.shader = _shader
+		m.set_shader_parameter("noise_tex", _noise)
+		var dir_arr: Array = p["direction"]
+		var dir := Vector2(float(dir_arr[0]), float(dir_arr[1])) if dir_arr.size() >= 2 else Vector2.RIGHT
+		m.set_shader_parameter("drift", -dir.normalized() * 0.012 * maxf(float(p["speed"]) / 10.0, 0.3))
+		m.set_shader_parameter("density", clampf(float(p["alpha"]) * 2.2, 0.2, 1.0))
+		material = m
+		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		var c := Color(str(p["color2"])) if str(p["color2"]) != "" else Color(str(p["color"]))
+		_color = Color(c.r, c.g, c.b, 0.85)
+		var r := float(p["size"]) * s * 0.55
+		var step := maxi(pts.size() / 48, 1)
+		for i in range(0, pts.size(), step):
+			_blobs.append(Rect2(pts[i] - Vector2(r, r * 0.5), Vector2(r * 2, r)))
+
+	func _draw() -> void:
+		var tex := ParticleFactory.generated_texture("soft")
+		for b in _blobs:
+			draw_texture_rect(tex, b, false, _color)

@@ -18,7 +18,11 @@
 		"alpha": 0.7,
 		"align": true,
 		"fade": "out_late",
-		"splash": true
+		"splash": true,
+		"wind": [40, 0],
+		"depth": true,
+		"stretch": 0.07,
+		"droplets": true
 	},
 	"neon_rain": {
 		"name": "Neon Rain",
@@ -40,7 +44,11 @@
 		"align": true,
 		"blend": "add",
 		"fade": "out_late",
-		"splash": true
+		"splash": true,
+		"wind": [-30, 0],
+		"depth": true,
+		"stretch": 0.07,
+		"droplets": true
 	},
 	"storm_clouds": {
 		"name": "Storm Clouds",
@@ -62,7 +70,9 @@
 		"fade": "in_out",
 		"scale_curve": "grow_slight",
 		"spin": 2,
-		"lightning": true
+		"lightning": true,
+		"wind": [6, 0],
+		"flash_light": true
 	},
 	"fog": {
 		"name": "Fog",
@@ -83,7 +93,9 @@
 		"alpha": 0.32,
 		"fade": "in_out",
 		"scale_curve": "grow_slight",
-		"spin": 3
+		"spin": 3,
+		"fog_sheet": true,
+		"turbulence": 8
 	},
 	"ground_mist": {
 		"name": "Ground Mist",
@@ -103,7 +115,9 @@
 		"direction": [1, 0],
 		"alpha": 0.28,
 		"fade": "in_out",
-		"scale_curve": "grow_slight"
+		"scale_curve": "grow_slight",
+		"fog_sheet": true,
+		"turbulence": 6
 	},
 	"snow": {
 		"name": "Snow",
@@ -123,7 +137,10 @@
 		"direction": [0.3, 1],
 		"alpha": 0.9,
 		"fade": "in_out",
-		"damping": 10
+		"damping": 10,
+		"wind": [24, 0],
+		"depth": true,
+		"turbulence": 30
 	},
 	"ash": {
 		"name": "Ash",
@@ -143,7 +160,10 @@
 		"direction": [0.5, 1],
 		"alpha": 0.85,
 		"fade": "in_out",
-		"spin": 160
+		"spin": 160,
+		"wind": [18, 0],
+		"depth": true,
+		"turbulence": 40
 	},
 	"embers": {
 		"name": "Embers",
@@ -164,7 +184,9 @@
 		"alpha": 1.0,
 		"blend": "add",
 		"fade": "flicker_out",
-		"scale_curve": "shrink"
+		"scale_curve": "shrink",
+		"turbulence": 60,
+		"lights": 1
 	},
 	"sparks": {
 		"name": "Electric Sparks",
@@ -207,7 +229,9 @@
 		"direction": [1, -0.2],
 		"alpha": 0.45,
 		"fade": "in_out",
-		"scale_curve": "grow"
+		"scale_curve": "grow",
+		"wind": [10, 0],
+		"turbulence": 20
 	},
 	"smoke": {
 		"name": "Smoke",
@@ -228,7 +252,9 @@
 		"alpha": 0.75,
 		"fade": "in_out",
 		"scale_curve": "grow",
-		"spin": 12
+		"spin": 12,
+		"wind": [12, 0],
+		"turbulence": 25
 	},
 	"steam_vent": {
 		"name": "Steam Vent",
@@ -251,7 +277,8 @@
 		"scale_curve": "grow",
 		"damping": 25,
 		"spin": 30,
-		"center": true
+		"center": true,
+		"turbulence": 30
 	},
 	"toxic_spores": {
 		"name": "Toxic Spores",
@@ -272,7 +299,9 @@
 		"alpha": 0.9,
 		"blend": "add",
 		"fade": "pulse",
-		"rise": 40
+		"rise": 40,
+		"turbulence": 30,
+		"lights": 1
 	},
 	"data_motes": {
 		"name": "Data Motes",
@@ -292,7 +321,8 @@
 		"direction": [0, -1],
 		"alpha": 1.0,
 		"blend": "add",
-		"fade": "glitch"
+		"fade": "glitch",
+		"lights": 2
 	},
 	"fireflies": {
 		"name": "Fireflies",
@@ -314,6 +344,8 @@
 		"blend": "add",
 		"fade": "pulse",
 		"rise": 50,
-		"wander": 40
+		"wander": 40,
+		"turbulence": 40,
+		"lights": 3
 	}
 }
