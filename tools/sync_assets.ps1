@@ -17,6 +17,9 @@ param(
     [string]$RepoUrl       = "https://github.com/teamcuh-mariomakerterran/Beyond-The-Neon-Void.git",
     [string]$Branch        = "claude/optimistic-fermat-pie49w",
     [int]$ChunkMB          = 300,
+    # Dump mode: copy this whole folder (all subfolders, names as-is) into
+    # assets\incoming\<folder name>; Claude sorts/renames/indexes from there.
+    [string]$Dump          = "",
     [switch]$NoPrompt,
     [switch]$NoPush
 )
@@ -80,12 +83,23 @@ try {
 
     # --- 3. collect jobs ----------------------------------------------------------
     $jobs = @()
+    if ($Dump) {
+        $Dump = $Dump.Trim('"', ' ').TrimEnd('\')
+        if (-not (Test-Path -LiteralPath $Dump -PathType Container)) { Say "Dump folder not found: $Dump" "Red"; Read-Host "Enter to close"; exit 1 }
+        $leaf = Split-Path $Dump -Leaf
+        $jobs += [pscustomobject]@{ Src = $Dump; Dst = "assets\incoming\$leaf"; Label = "dump" }
+        $count = (Get-ChildItem -LiteralPath $Dump -Recurse -File | Measure-Object).Count
+        $mb = (Get-ChildItem -LiteralPath $Dump -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1MB
+        Say ("Dump mode: {0} files ({1:N0} MB) from {2}" -f $count, $mb, $Dump) "Magenta"
+        Say "Copying only - your originals are never moved or changed." "Magenta"
+        $NoPromptExtras = $true
+    }
     foreach ($k in $Map.Keys) {
         $src = Join-Path $BlackDoctrine $k
         if (Test-Path $src) { $jobs += [pscustomobject]@{ Src = $src; Dst = $Map[$k]; Label = $k } }
         else { Say "  (not found, skipping) $src" "DarkGray" }
     }
-    if (-not $NoPrompt) {
+    if (-not $NoPrompt -and -not $NoPromptExtras) {
         Say ""
         Say "Optional extras. Drag one or more FOLDERS into this window (commas are fine)," "Cyan"
         Say "or just press Enter to skip. Folders already listed above are copied automatically." "Cyan"
