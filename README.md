@@ -38,6 +38,8 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
   - **Stamps:** save a copied chunk as a stamp (it lands in `data/stamps/`). Reuse it from the STAMPS list; Shift+R rotates it and Shift+F flips it before placing.
   - **⛰ Generate:** select tiles from low to high (e.g. water, sand, grass, forest, rock, snow) and sculpt the whole map, or 16×16 around the cursor, from noise. Change the seed and go again.
   - **⚠ Check** finds broken links, missing art, bad spawns and unreachable enemies; click a problem to fly to it. **◇ Tactics** shows blocked tiles, cover and move range from the cursor.
+  - **Sculpt (U):** raise, lower, flatten to the stack layer, or smooth. **Ramp / stairs (Q):** any ground tile becomes a slope up to the next level and faces uphill automatically (Shift+R turns it). **Mirror X/Y** painting. **Variation** randomly flips and tints tiles as you paint. **Recent tiles** on number keys 1–9.
+  - **Play-test round trip:** after F5 → Esc you land back on the same map, camera, layer and tool.
   - **HD-2D look:** each map can pick a post-processing preset in the map panel: warm diorama, neon noir, toxic haze, dream or cinematic. It adds tilt-shift depth of field that keeps the player sharp, plus bloom, haze, light shafts, grading and a vignette.
   - **X-ray (◎):** anything standing in front of the player (in game) or the cursor (in the editor) turns see-through.
   - **Footprints:** big structures claim an N×N area for sorting and blocking.

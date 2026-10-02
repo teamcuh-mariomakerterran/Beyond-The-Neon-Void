@@ -26,7 +26,7 @@ extends HSplitContainer
 signal status(text: String, color: Color)
 
 enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY }
-enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE, COPY, STAMP }
+enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE, COPY, STAMP, SCULPT, RAMP }
 enum Play { SPAWN, ENEMY, BLOCK, COVER, SIGHT }
 
 const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY"]
@@ -40,8 +40,12 @@ const TOOL_INFO := [
 	["⌫", "Erase [E]", "Remove what this layer holds under the brush."],
 	["⧉", "Copy area [C]", "Drag over an area to copy all of its layers (tiles + particles)."],
 	["⎘", "Stamp [T]", "Click to paste the copied area; its lowest layer lands on the stack layer."],
+	["⛰", "Sculpt [U]", "Raise / lower / flatten / smooth the ground under the brush (pick the mode below)."],
+	["◢", "Ramp / stairs [Q]", "Slope any ground tile up to the next level. Points uphill automatically; Shift+R turns it."],
 ]
-const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I: Tool.PICK, KEY_V: Tool.SELECT, KEY_H: Tool.PAN, KEY_E: Tool.ERASE, KEY_C: Tool.COPY, KEY_T: Tool.STAMP}
+const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I: Tool.PICK, KEY_V: Tool.SELECT, KEY_H: Tool.PAN, KEY_E: Tool.ERASE, KEY_C: Tool.COPY, KEY_T: Tool.STAMP, KEY_U: Tool.SCULPT, KEY_Q: Tool.RAMP}
+const SCULPT_MODES := ["raise", "lower", "flatten", "smooth"]
+const RAMP_DIRS := ["x+", "y+", "x-", "y-"]
 const PLAY_NAMES := ["PLAYER SPAWN", "ENEMY", "BLOCK WALK", "COVER", "SIGHT"]
 const OBJECT_SOURCES := ["structures", "props", "units", "items", "vfx", "portraits"]
 const GHOST := Color(0.25, 1.9, 0.75)
@@ -74,6 +78,17 @@ var selected: Dictionary = {}
 ## Scatter: pick randomly from the selected tiles instead of cycling, and only
 ## paint `density`% of the cells the brush touches (forests, rubble, flowers).
 var paint_random: bool = false
+## Per-tile variation on placement: random mirror + slight colour jitter.
+var vary_tiles: bool = false
+var sculpt_mode: String = "raise"
+var ramp_dir: String = "x+"
+var ramp_stairs: bool = false
+var mirror_x: bool = false
+var mirror_y: bool = false
+## Last 9 tiles used — number keys 1–9 pick them.
+var recent_tiles: Array[String] = []
+## Survives the trip into play-test and back (same map → same view and tools).
+static var _session: Dictionary = {}
 var density: int = 100
 ## Copied area: {"tiles": [[dx, dy, z, id]], "particles": [[dx, dy, z, preset]], "base_z": int}.
 var clipboard: Dictionary = {}
@@ -163,6 +178,16 @@ class GhostLayer extends Node2D:
 			_hover_info(font, w)
 			return
 		match p.mode:
+			Mode.TILES when p.tool == Tool.SCULPT:
+				for cell: Vector2i in cells:
+					var tzs := w.top_z(cell, p.layer)
+					var goal := tzs + 1 if p.sculpt_mode == "raise" else (tzs - 1 if p.sculpt_mode == "lower" else (p.layer if p.sculpt_mode == "flatten" else tzs))
+					_prism(w, cell, goal, Color(1.9, 1.4, 0.3) if p.sculpt_mode != "lower" else Color(2.0, 0.4, 0.4))
+			Mode.TILES when p.tool == Tool.RAMP:
+				for cell: Vector2i in cells:
+					if not p.sel_tiles.is_empty():
+						WorldRenderer.draw_tile(self, w, p.sel_tiles[0], w.to_screen(Vector2(cell), p._hover_z), 0.6, 0.0, {"ramp": p.ramp_for(cell, p._hover_z), "stairs": p.ramp_stairs})
+					_prism(w, cell, p._hover_z, GHOST)
 			Mode.TILES:
 				var tz := p.target_layer()
 				var n := 0
@@ -366,6 +391,7 @@ func _ready() -> void:
 		new_map("new_world", "world", 24, 24)
 	set_mode(Mode.TILES)
 	set_tool(Tool.BRUSH)
+	_restore_session()
 	_rng.randomize()
 	var autosave := Timer.new()
 	autosave.wait_time = 90.0
@@ -469,6 +495,34 @@ func _build_left() -> Control:
 	rnd.toggled.connect(func(on: bool) -> void: paint_random = on)
 	cv.add_child(rnd)
 	_slider(cv, "Density %", 5, 100, 100, func(n: int) -> void: density = n)
+	var vary := CheckBox.new()
+	vary.text = "Variation: random flip + colour jitter"
+	vary.tooltip_text = "Each placed tile is randomly mirrored and slightly tinted, so big areas don't look stamped."
+	vary.toggled.connect(func(on: bool) -> void: vary_tiles = on)
+	cv.add_child(vary)
+	var mir := HBoxContainer.new()
+	mir.add_child(NeonTheme.label("Mirror", 13))
+	for axis: String in ["X", "Y"]:
+		var mb := CheckBox.new()
+		mb.text = axis
+		mb.tooltip_text = "Paint mirrored across the map's %s centre line." % ("left-right" if axis == "X" else "top-bottom")
+		var ax := axis
+		mb.toggled.connect(func(on: bool) -> void:
+			if ax == "X": mirror_x = on
+			else: mirror_y = on)
+		mir.add_child(mb)
+	cv.add_child(mir)
+	var sc := HBoxContainer.new()
+	sc.add_child(NeonTheme.label("Sculpt", 13))
+	sc.add_child(ForgeForm._option(SCULPT_MODES, sculpt_mode, func(m: String) -> void:
+		sculpt_mode = m
+		set_tool(Tool.SCULPT)))
+	var st := CheckBox.new()
+	st.text = "Stairs"
+	st.tooltip_text = "Ramp tool draws steps instead of a smooth slope."
+	st.toggled.connect(func(on: bool) -> void: ramp_stairs = on)
+	sc.add_child(st)
+	cv.add_child(sc)
 	var dim := CheckBox.new()
 	dim.text = "Fade layers above the stack layer"
 	dim.toggled.connect(func(on: bool) -> void:
@@ -691,7 +745,43 @@ func _palette_stamps() -> void:
 	_palette.add_child(row)
 
 
+func _remember_tile(tid: String) -> void:
+	recent_tiles.erase(tid)
+	recent_tiles.push_front(tid)
+	if recent_tiles.size() > 9:
+		recent_tiles.resize(9)
+
+
+func pick_recent(i: int) -> void:
+	if i < recent_tiles.size():
+		sel_tiles = [recent_tiles[i]]
+		if tool not in [Tool.BRUSH, Tool.RECT, Tool.FILL, Tool.RAMP, Tool.SCULPT]:
+			set_tool(Tool.BRUSH)
+		if mode != Mode.TILES:
+			set_mode(Mode.TILES)
+		else:
+			_build_palette()
+		status.emit("Tile %d: %s" % [i + 1, sel_tiles[0].get_file()], NeonTheme.CYAN)
+
+
 func _palette_tiles() -> void:
+	if not recent_tiles.is_empty():
+		_palette.add_child(_section("RECENT  (keys 1–9)", NeonTheme.CYAN))
+		var rr := HFlowContainer.new()
+		for i in recent_tiles.size():
+			var b := Button.new()
+			b.custom_minimum_size = Vector2(44, 44)
+			var fr := WorldRenderer.tile_frames(recent_tiles[i])
+			if not fr.is_empty():
+				b.icon = fr[0]
+				b.expand_icon = true
+			b.text = str(i + 1)
+			b.tooltip_text = recent_tiles[i]
+			_style_toggle(b, sel_tiles.has(recent_tiles[i]))
+			var ii := i
+			b.pressed.connect(func() -> void: pick_recent(ii))
+			rr.add_child(b)
+		_palette.add_child(rr)
 	_palette_stamps()
 	var top := HBoxContainer.new()
 	var info := NeonTheme.label(_sel_text(), 12, NeonTheme.CYAN)
@@ -748,6 +838,7 @@ func _palette_tiles() -> void:
 						sel_tiles.append(tid)
 				else:
 					sel_tiles = [tid]
+				_remember_tile(tid)
 				_cycle = 0
 				if tool in [Tool.PICK, Tool.SELECT, Tool.PAN, Tool.ERASE]:
 					set_tool(Tool.BRUSH)
@@ -974,6 +1065,25 @@ func _refresh_post() -> void:
 		_vp.add_child(_post)
 
 
+## Back from a play-test: same map, camera, layer, tool and palette picks.
+func _restore_session() -> void:
+	if _session.is_empty():
+		return
+	if ContentDB.maps.has(str(_session["map"])) and str(_session["map"]) != world.id:
+		load_map(str(_session["map"]))
+	if str(_session["map"]) != world.id:
+		return
+	sel_tiles.assign(_session.get("sel", []))
+	recent_tiles.assign(_session.get("recent", []))
+	set_layer(int(_session.get("layer", 0)))
+	set_mode(int(_session.get("mode", Mode.TILES)))
+	set_tool(int(_session.get("tool", Tool.BRUSH)))
+	var cam: Vector2 = _session.get("cam", Vector2.ZERO)
+	var zoom := float(_session.get("zoom", 1.0))
+	get_tree().process_frame.connect(func() -> void: _snap_cam(cam, zoom), CONNECT_ONE_SHOT)
+	status.emit("Welcome back — right where you left off.", NeonTheme.GREEN)
+
+
 func _snap_cam(pos: Vector2, zoom: float) -> void:
 	_cam_goal = pos
 	_zoom_goal = zoom
@@ -1040,6 +1150,8 @@ func save_map() -> void:
 
 func play_here() -> void:
 	save_map()
+	_session = {"map": world.id, "cam": _cam.position, "zoom": _cam.zoom.x, "mode": mode, "tool": tool,
+		"layer": layer, "sel": sel_tiles.duplicate(), "recent": recent_tiles.duplicate()}
 	if world.kind == "encounter":
 		var mission := ContentDB.get_mission(mission_id)
 		if mission == null or mission.map_id != world.id:
@@ -1158,6 +1270,11 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		play_here()
 	elif k.shift_pressed and k.keycode == KEY_R and tool == Tool.STAMP:
 		transform_clipboard(true)
+	elif k.shift_pressed and k.keycode == KEY_R and tool == Tool.RAMP:
+		ramp_dir = RAMP_DIRS[(RAMP_DIRS.find(ramp_dir) + 1) % 4]
+		status.emit("Ramp faces %s (used when no neighbour is one step higher)." % ramp_dir, NeonTheme.CYAN)
+	elif k.keycode >= KEY_1 and k.keycode <= KEY_9 and not k.alt_pressed and not k.ctrl_pressed:
+		pick_recent(k.keycode - KEY_1)
 	elif k.shift_pressed and k.keycode == KEY_F and tool == Tool.STAMP:
 		transform_clipboard(false)
 	elif k.keycode in [KEY_DELETE, KEY_BACKSPACE]:
@@ -1341,6 +1458,12 @@ func _press() -> void:
 		Tool.STAMP:
 			_push_undo()
 			_stamp(_hover_cell)
+		Tool.SCULPT:
+			_push_undo()
+			sculpt(target_cells())
+		Tool.RAMP:
+			_push_undo()
+			place_ramps(target_cells())
 		_:
 			_push_undo()
 			_apply(target_cells())
@@ -1349,6 +1472,10 @@ func _press() -> void:
 func _drag() -> void:
 	if tool == Tool.SELECT and not _moving.is_empty():
 		_move_selected()
+	elif tool == Tool.SCULPT:
+		sculpt(target_cells())
+	elif tool == Tool.RAMP:
+		place_ramps(target_cells())
 	elif tool in [Tool.BRUSH, Tool.ERASE] and mode in [Mode.TILES, Mode.PARTICLES, Mode.GAMEPLAY] and not (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]):
 		_apply(target_cells())
 
@@ -1494,6 +1621,126 @@ func _stamp(at: Vector2i) -> void:
 	dirty = true
 
 
+## Adds the mirror images of `cells` across the map centre (X and/or Y).
+func with_mirrors(cells: Array[Vector2i]) -> Array[Vector2i]:
+	if not mirror_x and not mirror_y:
+		return cells
+	var out: Array[Vector2i] = []
+	var seen := {}
+	for c in cells:
+		var group: Array[Vector2i] = [c]
+		if mirror_x:
+			group.append(Vector2i(world.width - 1 - c.x, c.y))
+		if mirror_y:
+			group.append(Vector2i(c.x, world.depth - 1 - c.y))
+		if mirror_x and mirror_y:
+			group.append(Vector2i(world.width - 1 - c.x, world.depth - 1 - c.y))
+		for g in group:
+			if not seen.has(g):
+				seen[g] = true
+				out.append(g)
+	return out
+
+
+## Random flip + subtle hue/brightness jitter (only when Variation is on).
+func _variation() -> Dictionary:
+	if not vary_tiles:
+		return {}
+	var o := {}
+	if _rng.randf() < 0.5:
+		o["flip"] = true
+	var c := Color.from_hsv(_rng.randf(), _rng.randf_range(0.0, 0.07), _rng.randf_range(0.9, 1.0))
+	o["tint"] = "#" + c.to_html(false)
+	return o
+
+
+## Uphill direction for a ramp at (cell, z): toward a neighbour whose top is
+## exactly one step higher; otherwise the manual ramp_dir (Shift+R).
+func ramp_for(cell: Vector2i, z: int) -> String:
+	for i in 4:
+		var d: String = RAMP_DIRS[i]
+		var off := Vector2i(1 if d == "x+" else (-1 if d == "x-" else 0), 1 if d == "y+" else (-1 if d == "y-" else 0))
+		var n := cell + off
+		if world.tiles.has(n) and world.top_z(n) == z + 1:
+			return d
+	return ramp_dir
+
+
+func place_ramps(cells: Array[Vector2i]) -> void:
+	if sel_tiles.is_empty():
+		status.emit("Pick the ground tile to turn into a ramp first.", NeonTheme.MAGENTA)
+		return
+	var changed: Array = []
+	for c in with_mirrors(cells):
+		var k := "r%d,%d" % [c.x, c.y]
+		if _last_applied.has(k) or not world.in_bounds(c):
+			continue
+		_last_applied[k] = true
+		var z := _hover_z
+		world.set_tile(c, z, sel_tiles[0], {"ramp": ramp_for(c, z), "stairs": ramp_stairs})
+		_renderer.pop(c, z)
+		changed.append(c)
+	_renderer.refresh_columns(changed)
+	_minimap.mark_dirty()
+	_edit_count += 1
+	dirty = true
+
+
+## Height sculpting on column tops: raise, lower, flatten (to the stack
+## layer) or smooth (toward the neighbours' average). Once per cell per stroke.
+func sculpt(cells: Array[Vector2i]) -> void:
+	var changed: Array = []
+	var snapshot := {}
+	if sculpt_mode == "smooth":
+		for c in cells:
+			snapshot[c] = world.top_z(c, 0)
+	for c in with_mirrors(cells):
+		var k := "s%d,%d" % [c.x, c.y]
+		if _last_applied.has(k) or not world.in_bounds(c):
+			continue
+		_last_applied[k] = true
+		var has := world.tiles.has(c)
+		var top := world.top_z(c, layer)
+		var tid := world.top_tile(c) if has else (sel_tiles[0] if not sel_tiles.is_empty() else "")
+		if tid == "":
+			continue
+		var goal := top
+		match sculpt_mode:
+			"raise": goal = top + 1 if has else layer
+			"lower": goal = top - 1
+			"flatten": goal = layer
+			"smooth":
+				var sum := float(top)
+				var n := 1.0
+				for d in IsometricGrid.DIRECTIONS:
+					if world.tiles.has(c + d):
+						sum += float(snapshot.get(c + d, world.top_z(c + d)))
+						n += 1.0
+				goal = roundi(sum / n)
+		if has and goal == top:
+			continue
+		if sculpt_mode == "lower" and has:
+			world.remove_tile(c, top)
+			_renderer.pop(c, top, true, changed.size() < 40)
+		elif not has:
+			world.set_tile(c, goal, tid)
+		elif goal > top:
+			for z in range(top + 1, goal + 1):
+				world.set_tile(c, z, tid)
+			_renderer.pop(c, goal, false, changed.size() < 40)
+		else:
+			for e: Array in world.stack_at(c).duplicate():
+				if int(e[0]) > goal:
+					world.remove_tile(c, int(e[0]))
+			if world.tile_at(c, goal) == "":
+				world.set_tile(c, goal, tid)
+		changed.append(c)
+	_renderer.refresh_columns(changed)
+	_minimap.mark_dirty()
+	_edit_count += 1
+	dirty = true
+
+
 func _next_tile() -> String:
 	if sel_tiles.is_empty():
 		return ""
@@ -1520,6 +1767,7 @@ func _apply(cells: Array[Vector2i]) -> void:
 				return
 			var tz := target_layer()
 			var rings := 0
+			cells = with_mirrors(cells)
 			for c: Vector2i in cells:
 				var ck := "%d,%d" % [c.x, c.y]
 				if _last_applied.has(ck):
@@ -1533,14 +1781,15 @@ func _apply(cells: Array[Vector2i]) -> void:
 							_renderer.pop(c, z, true, rings < 40)
 							rings += 1
 					else:
-						world.set_tile(c, z, _next_tile())
+						var tid := _next_tile()
+						world.set_tile(c, z, tid, _variation())
 						_renderer.pop(c, z, false, rings < 40)
 						rings += 1
 				changed.append(c)
 			_renderer.refresh_columns(changed)
 			_minimap.mark_dirty()
 		Mode.PARTICLES:
-			for c: Vector2i in cells:
+			for c: Vector2i in with_mirrors(cells):
 				if not erase and _skip_for_density():
 					continue
 				if erase:

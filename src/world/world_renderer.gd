@@ -280,8 +280,13 @@ static func default_scale(w: WorldMap, asset: String, kind: String) -> float:
 
 
 ## Draws one tile whose top-face centre is `center`. `alpha` for ghosts/fading.
-static func draw_tile(ci: CanvasItem, w: WorldMap, tile_id: String, center: Vector2, alpha: float = 1.0, phase: float = 0.0) -> void:
+static func draw_tile(ci: CanvasItem, w: WorldMap, tile_id: String, center: Vector2, alpha: float = 1.0, phase: float = 0.0, opts: Dictionary = {}) -> void:
 	var frames := tile_frames(tile_id)
+	var col := Color(str(opts.get("tint", "#ffffff")))
+	col.a = alpha
+	if opts.has("ramp"):
+		_draw_ramp(ci, w, tile_id, frames, center, col, str(opts["ramp"]), bool(opts.get("stairs", false)), phase)
+		return
 	if frames.is_empty():
 		_draw_color_block(ci, w, tile_id, center, alpha)
 		return
@@ -291,7 +296,107 @@ static func draw_tile(ci: CanvasItem, w: WorldMap, tile_id: String, center: Vect
 	var used := fit_rect(tex)
 	var s := w.tile_width / used.size.x
 	var north := center + Vector2(-w.tile_width * 0.5, -w.tile_height * 0.5)
-	ci.draw_texture_rect_region(tex, Rect2(north, used.size * s), used, Color(1, 1, 1, alpha))
+	if bool(opts.get("flip", false)):
+		# Mirror around the tile's vertical axis (variation without new art).
+		ci.draw_set_transform(Vector2(center.x * 2.0, 0), 0.0, Vector2(-1, 1))
+		ci.draw_texture_rect_region(tex, Rect2(north, used.size * s), used, col)
+		ci.draw_set_transform(Vector2.ZERO)
+	else:
+		ci.draw_texture_rect_region(tex, Rect2(north, used.size * s), used, col)
+
+
+## Grid corners of a cell's top face in draw order N, E, S, W, as (dx, dy) signs.
+const _CORNERS := [Vector2i(-1, -1), Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1)]
+
+
+## A slope from this layer up one height_step toward `dir`, texture-mapped from
+## the tile's own top face (any ground tile can become a ramp), with shaded
+## side faces; `stairs` adds step treads.
+static func _draw_ramp(ci: CanvasItem, w: WorldMap, tile_id: String, frames: Array, center: Vector2, col: Color, dir: String, stairs: bool, phase: float) -> void:
+	var hw := w.tile_width * 0.5
+	var hh := w.tile_height * 0.5
+	var base := PackedVector2Array([center + Vector2(0, -hh), center + Vector2(hw, 0), center + Vector2(0, hh), center + Vector2(-hw, 0)])
+	var up := PackedVector2Array(base)
+	var axis := 0 if dir.begins_with("x") else 1
+	var sign := 1 if dir.ends_with("+") else -1
+	for i in 4:
+		var c: Vector2i = _CORNERS[i]
+		if (c.x if axis == 0 else c.y) == sign:
+			up[i] = base[i] + Vector2(0, -w.height_step)
+	var side := tile_avg_color(tile_id, frames).darkened(0.35)
+	side.a = col.a
+	# Visible side faces are the front-left (W→S) and front-right (S→E) edges.
+	for edge: Array in [[3, 2], [2, 1]]:
+		var a: int = edge[0]
+		var b: int = edge[1]
+		if up[a] != base[a] or up[b] != base[b]:
+			var shade := side if edge[0] == 3 else side.darkened(0.2)
+			ci.draw_colored_polygon(PackedVector2Array([up[a], up[b], base[b], base[a]]), shade)
+	if frames.is_empty():
+		var def: Dictionary = ContentDB.terrain.get(WorldMap.terrain_of(tile_id), {})
+		var top := Color(str(def.get("color", "#2a2438"))) * col
+		ci.draw_colored_polygon(up, top)
+	else:
+		var tex: Texture2D = frames[0]
+		if frames.size() > 1:
+			tex = frames[SheetSprite.frame_at(now(), frames.size(), tile_fps(tile_id), "loop", phase)]
+		var u := fit_rect(tex)
+		var ts := tex.get_size()
+		var uvs := PackedVector2Array([
+			Vector2(u.position.x + u.size.x * 0.5, u.position.y) / ts,
+			Vector2(u.end.x, u.position.y + u.size.x * 0.25) / ts,
+			Vector2(u.position.x + u.size.x * 0.5, u.position.y + u.size.x * 0.5) / ts,
+			Vector2(u.position.x, u.position.y + u.size.x * 0.25) / ts])
+		ci.draw_colored_polygon(up, col, uvs, tex)
+	if stairs:
+		# Step treads: lines across the slope, darker below each nose.
+		# Each low corner climbs to its adjacent high corner; treads join them.
+		var lo: Array = [0, 1, 2, 3].filter(func(i: int) -> bool: return up[i] == base[i])
+		var hi: Array = [0, 1, 2, 3].filter(func(i: int) -> bool: return up[i] != base[i])
+		if lo.size() == 2 and hi.size() == 2:
+			var pair := func(l: int) -> int: return (l + 1) % 4 if hi.has((l + 1) % 4) else (l + 3) % 4
+			for k in range(1, 4):
+				var t := k / 4.0
+				var p1: Vector2 = up[lo[0]].lerp(up[pair.call(lo[0])], t)
+				var p2: Vector2 = up[lo[1]].lerp(up[pair.call(lo[1])], t)
+				ci.draw_line(p1, p2, Color(0, 0, 0, 0.45 * col.a), 2.0)
+				ci.draw_line(p1 + Vector2(0, -1.5), p2 + Vector2(0, -1.5), Color(1, 1, 1, 0.12 * col.a), 1.0)
+	var outline := PackedVector2Array(up)
+	outline.append(up[0])
+	ci.draw_polyline(outline, Color(0, 0, 0, 0.25 * col.a), 1.0)
+
+
+static var _avg_colors: Dictionary = {}
+
+
+## Average colour of a tile's top face (ramp sides, minimap).
+static func tile_avg_color(tile_id: String, frames: Array = []) -> Color:
+	if _avg_colors.has(tile_id):
+		return _avg_colors[tile_id]
+	var c := Color(str(ContentDB.terrain.get(WorldMap.terrain_of(tile_id), {}).get("side", "#1a1626")))
+	if frames.is_empty():
+		frames = tile_frames(tile_id)
+	if not frames.is_empty():
+		var img: Image = (frames[0] as Texture2D).get_image()
+		if img:
+			if img.is_compressed():
+				img = img.duplicate()
+				img.decompress()
+			var r := fit_rect(frames[0])
+			var acc := Color(0, 0, 0, 0)
+			var n := 0
+			for fx in [0.3, 0.5, 0.7]:
+				for fy in [0.15, 0.25, 0.35]:
+					var px := Vector2i(int(r.position.x + r.size.x * fx), int(r.position.y + r.size.x * fy))
+					px = px.clamp(Vector2i.ZERO, img.get_size() - Vector2i.ONE)
+					var p := img.get_pixelv(px)
+					if p.a > 0.3:
+						acc += p
+						n += 1
+			if n > 0:
+				c = Color(acc.r / n, acc.g / n, acc.b / n)
+	_avg_colors[tile_id] = c
+	return c
 
 
 static func _draw_color_block(ci: CanvasItem, w: WorldMap, tile_id: String, center: Vector2, alpha: float) -> void:
@@ -467,6 +572,7 @@ class StripView extends Node2D:
 			var cut := renderer.cutaway_alpha(w.to_screen(Vector2(cell), top_z), key.x, top_z)
 			for e: Array in stack:
 				var z := int(e[0])
+				var opts: Dictionary = e[2] if e.size() > 2 and e[2] is Dictionary else {}
 				var a := (1.0 if z <= renderer.dim_above else 0.18) * (cut if z >= renderer.cutaway_z else 1.0)
 				var at := w.to_screen(Vector2(cell), z)
 				var t := renderer.pop_progress(cell, z)
@@ -475,7 +581,7 @@ class StripView extends Node2D:
 					var k := 1.0 - t
 					at.y -= w.height_step * 1.4 * k * k - sin(t * PI) * 3.0
 					a *= 0.35 + 0.65 * t
-				WorldRenderer.draw_tile(self, w, str(e[1]), at, a, phase)
+				WorldRenderer.draw_tile(self, w, str(e[1]), at, a, phase, opts)
 
 
 ## A detail decal or an object sprite (static, sheet-animated or frame list).

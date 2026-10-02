@@ -16,6 +16,7 @@ func run(p_tree: SceneTree) -> int:
 	test_validator()
 	test_sync_blade()
 	await test_strips_and_cutaway()
+	await test_sculpt_ramps_mirror()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -213,6 +214,63 @@ func test_strips_and_cutaway() -> void:
 	r.set_cutaway(Vector2.INF, 0, 0)
 	check(r.cutaway_alpha(w.to_screen(Vector2(11, 11), 6), 22, 6) == 1.0, "x-ray off")
 	r.queue_free()
+	await tree.process_frame
+
+
+func test_sculpt_ramps_mirror() -> void:
+	var p := ForgeWorldPainter.new()
+	tree.root.add_child(p)
+	await tree.process_frame
+	p.new_map("t_sculpt", "encounter", 10, 10)
+	for x in 10:
+		for y in 10:
+			p.world.set_tile(Vector2i(x, y), 0, "terrain:grass")
+	p.set_mode(ForgeWorldPainter.Mode.TILES)
+	p.set_tool(ForgeWorldPainter.Tool.SCULPT)
+	p.brush_size = 1
+	p.sculpt_mode = "raise"
+	_press(p, Vector2i(5, 5), 0)
+	check(p.world.top_z(Vector2i(5, 5)) == 1 and p.world.top_tile(Vector2i(5, 5)) == "terrain:grass", "sculpt raise copies the top tile up")
+	p.sculpt_mode = "flatten"
+	p.set_layer(3)
+	_press(p, Vector2i(2, 2), 3)
+	check(p.world.top_z(Vector2i(2, 2)) == 3 and p.world.stack_at(Vector2i(2, 2)).size() == 4, "flatten fills up to the layer")
+	p.set_layer(0)
+	_press(p, Vector2i(2, 2), 0)
+	check(p.world.top_z(Vector2i(2, 2)) == 0, "flatten cuts down to the layer")
+	p.sculpt_mode = "lower"
+	_press(p, Vector2i(5, 5), 0)
+	check(p.world.top_z(Vector2i(5, 5)) == 0, "sculpt lower")
+	p.world.set_tile(Vector2i(7, 7), 4, "terrain:rock")
+	p.sculpt_mode = "smooth"
+	_press(p, Vector2i(7, 7), 0)
+	check(p.world.top_z(Vector2i(7, 7)) == 1, "smooth pulls a spike toward its neighbours (got %d)" % p.world.top_z(Vector2i(7, 7)))
+	# Ramp points uphill at the neighbour one step higher.
+	p.world.set_tile(Vector2i(4, 3), 1, "terrain:grass")
+	p.set_tool(ForgeWorldPainter.Tool.RAMP)
+	p.sel_tiles = ["terrain:grass"]
+	_press(p, Vector2i(3, 3), 0)
+	check(str(p.world.tile_opts(Vector2i(3, 3), 0).get("ramp", "")) == "x+", "ramp auto-faces uphill (x+)")
+	var rt := WorldMap.from_dict(JSON.parse_string(JSON.stringify(p.world.to_dict())))
+	check(str(rt.tile_opts(Vector2i(3, 3), 0).get("ramp", "")) == "x+", "ramp survives save/load")
+	# Mirror X paints both sides.
+	p.mirror_x = true
+	p.set_tool(ForgeWorldPainter.Tool.BRUSH)
+	p.sel_tiles = ["terrain:sand"]
+	_press(p, Vector2i(1, 8), 0)
+	check(p.world.tile_at(Vector2i(8, 8), 0) == "terrain:sand" and p.world.tile_at(Vector2i(1, 8), 0) == "terrain:sand", "mirror X")
+	p.mirror_x = false
+	# Variation stamps flip / tint options.
+	p.vary_tiles = true
+	_press(p, Vector2i(0, 0), 0)
+	check(p.world.tile_opts(Vector2i(0, 0), 0).has("tint"), "variation adds a tint")
+	p.vary_tiles = false
+	# Recent tiles + number keys.
+	p._remember_tile("terrain:rock")
+	p._remember_tile("terrain:sand")
+	p.pick_recent(1)
+	check(p.sel_tiles == ["terrain:rock"], "recent tile 2 = rock")
+	p.queue_free()
 	await tree.process_frame
 
 

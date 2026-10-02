@@ -21,6 +21,22 @@ func run(tree: SceneTree) -> void:
 		painter.set_mode(ForgeWorldPainter.Mode.TILES)
 		painter.sel_tiles = ["terrain:water", "terrain:sand", "terrain:grass", "terrain:forest", "terrain:rock", "terrain:snow"]
 		painter.generate_terrain(Rect2i(), 9, 0.07, 0.32, 7)
+	if args.size() > 2 and args[2] == "ramps":
+		painter.new_map("ramp_demo", "encounter", 12, 12)
+		var w: WorldMap = painter.world
+		for x in 12:
+			for y in 12:
+				var h := 0 if x < 4 else (1 if x < 7 else 2)
+				for z in h + 1:
+					w.set_tile(Vector2i(x, y), z, "terrain:concrete" if z < h else ("terrain:grass" if h == 0 else ("terrain:rock" if h == 1 else "terrain:sand")))
+		for y in range(2, 5):
+			w.set_tile(Vector2i(3, y), 0, "terrain:grass", {"ramp": "x+"})
+			w.set_tile(Vector2i(6, y), 1, "terrain:rock", {"ramp": "x+", "stairs": true})
+		for y in range(7, 10):
+			w.set_tile(Vector2i(3, y), 0, "terrain:grass", {"flip": true, "tint": "#e8d8ff"})
+		painter._renderer.rebuild()
+		await _wait(tree, 3)
+		painter._snap_cam(w.to_screen(Vector2(5, 4), 1), 1.5)
 	if args.size() > 2 and args[2] == "tactics":
 		painter.set_mode(ForgeWorldPainter.Mode.GAMEPLAY)
 		painter.tactics_view = true

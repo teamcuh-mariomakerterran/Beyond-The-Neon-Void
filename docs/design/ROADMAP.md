@@ -19,22 +19,22 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
 
 ## Editor: approved
 - ✅ Scatter brush (built)
-- ⬜ Height sculpt brushes
-- ⬜ Line / stairs / ramp tool: slope a ground texture 2:1 up to the next elevation
-- ⬜ Mirror / symmetry painting
+- ✅ Height sculpt brushes (raise / lower / flatten / smooth)
+- ✅ Ramp + stairs tool (auto-uphill; any ground tile): slope a ground texture 2:1 up to the next elevation
+- ✅ Mirror X / Y painting
 - ✅ Procedural fill (terrain generator built; more modes later)
-- ⬜ Quick palette (recent and favourite tiles, number keys)
+- ✅ Quick palette (recent and favourite tiles, number keys)
 - ✅ Editor juice pack (built)
-- ⬜ Instant playtest round trip (return to the same camera, tool and selection)
+- ✅ Instant playtest round trip (return to the same camera, tool and selection)
 - ⬜ Preview animated tiles, particles and lights at game speed while sculpting
 - ✅ Painted lights and ambient (built)
-- ⬜ **Animated props and buildings at different timings:**
+- ✅ **Animated props and buildings at different timings:**
   - Grok is animating almost every building (window lights, chimney smoke) and doing an indoor-prop pass.
   - Every instance needs its own phase and speed so they don't pulse in sync. `random_start` exists; add a per-object phase/speed jitter.
   - The flickering computer consoles live in "animated items and props and busts".
-- ⬜ Per-tile variation: tint, flip, hue jitter
+- ✅ Per-tile variation: tint, flip, hue jitter
 - ❌ **View rotation:** too much art to redraw. NOT doing.
-- ⬜ **Cutaway / x-ray** (almost a must, since there's no camera turn): fade or slice anything that hides the player or the cursor.
+- ✅ **Cutaway / x-ray** (almost a must, since there's no camera turn): fade or slice anything that hides the player or the cursor.
 - ✅ Tactical overlay (built)
 - ⬜ Typed entity fields and references
 - ⬜ Regions and triggers

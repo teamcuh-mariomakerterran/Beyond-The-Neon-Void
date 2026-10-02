@@ -103,6 +103,13 @@ func tile_at(cell: Vector2i, z: int) -> String:
 	return ""
 
 
+func tile_opts(cell: Vector2i, z: int) -> Dictionary:
+	for e: Array in stack_at(cell):
+		if int(e[0]) == z:
+			return e[2] if e.size() > 2 and e[2] is Dictionary else {}
+	return {}
+
+
 func top_z(cell: Vector2i, fallback: int = 0) -> int:
 	var s := stack_at(cell)
 	return int(s[s.size() - 1][0]) if not s.is_empty() else fallback
@@ -113,7 +120,10 @@ func top_tile(cell: Vector2i) -> String:
 	return str(s[s.size() - 1][1]) if not s.is_empty() else ""
 
 
-func set_tile(cell: Vector2i, z: int, tile_id: String) -> void:
+## `opts` (optional, stored as the 3rd entry): {"flip": bool, "tint": "#rrggbb",
+## "ramp": "x+"|"x-"|"y+"|"y-" (slopes up toward that grid direction),
+## "stairs": bool (draw the ramp as steps)}.
+func set_tile(cell: Vector2i, z: int, tile_id: String, opts: Dictionary = {}) -> void:
 	if not in_bounds(cell):
 		return
 	z = clampi(z, MIN_Z, MAX_Z)
@@ -121,8 +131,12 @@ func set_tile(cell: Vector2i, z: int, tile_id: String) -> void:
 	for e: Array in s:
 		if int(e[0]) == z:
 			e[1] = tile_id
+			if e.size() > 2:
+				e.resize(2)
+			if not opts.is_empty():
+				e.append(opts)
 			return
-	s.append([z, tile_id])
+	s.append([z, tile_id] if opts.is_empty() else [z, tile_id, opts])
 	s.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
 	tiles[cell] = s
 
@@ -265,7 +279,10 @@ func load_dict(d: Dictionary) -> void:
 		for k: String in t:
 			var s: Array = []
 			for e: Array in t[k]:
-				s.append([int(e[0]), str(e[1])])
+				if e.size() > 2 and e[2] is Dictionary and not (e[2] as Dictionary).is_empty():
+					s.append([int(e[0]), str(e[1]), (e[2] as Dictionary).duplicate()])
+				else:
+					s.append([int(e[0]), str(e[1])])
 			s.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
 			tiles[parse_key(k)] = s
 		var p: Dictionary = d.get("particles", {})
