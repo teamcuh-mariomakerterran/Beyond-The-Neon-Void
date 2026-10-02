@@ -943,6 +943,7 @@ func _after_load() -> void:
 	_redo.clear()
 	selected = {}
 	_renderer.set_world(world)
+	_refresh_post()
 	if _minimap:
 		_minimap.mark_dirty()
 	frame_map()
@@ -957,6 +958,20 @@ func frame_map() -> void:
 	var span := (world.width + world.depth) * world.tile_width * 0.5
 	var vw := maxf(_vpc.size.x, 800.0)
 	_snap_cam(world.to_screen(Vector2(world.width, world.depth) * 0.5, 0), clampf(vw / maxf(span, 1.0) * 0.9, 0.08, 2.0))
+
+
+var _post: HD2DPost
+
+
+## Live HD-2D preview inside the editor viewport (focus follows the cursor).
+func _refresh_post() -> void:
+	if _post:
+		_post.queue_free()
+		_post = null
+	_post = HD2DPost.for_map(world.post)
+	if _post:
+		_post.layer = 3
+		_vp.add_child(_post)
 
 
 func _snap_cam(pos: Vector2, zoom: float) -> void:
@@ -978,6 +993,9 @@ func _zoom(f: float) -> void:
 func _process(delta: float) -> void:
 	if _cam == null:
 		return
+	if _post and _vpc.size.y > 0:
+		var sy := (_vp.get_canvas_transform() * world.to_screen(Vector2(_hover_cell), _hover_z)).y / _vpc.size.y
+		_post.set_focus(sy if world.in_bounds(_hover_cell) else 0.5)
 	if xray and world.in_bounds(_hover_cell):
 		_renderer.set_cutaway(world.to_screen(Vector2(_hover_cell), _hover_z), _hover_cell.x + _hover_cell.y, _hover_z)
 	var k := 1.0 - exp(-delta * 14.0)
@@ -1899,6 +1917,19 @@ func _map_inspector() -> void:
 		dirty = true)
 	amb_row.add_child(amb_col)
 	_inspector.add_child(amb_row)
+	var post_row := HBoxContainer.new()
+	post_row.add_child(NeonTheme.label("HD-2D look", 12, NeonTheme.TEXT_DIM))
+	var cur_post := str(world.post.get("preset", "")) if world.post is Dictionary else str(world.post)
+	var post_pick := ForgeForm._option(["off"] + HD2DPost.PRESETS.keys().filter(func(k: String) -> bool: return k != "off"), cur_post if cur_post != "" else "off", func(k: String) -> void:
+		world.post = "" if k == "off" else k
+		_refresh_post()
+		dirty = true)
+	post_pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	post_row.add_child(post_pick)
+	_inspector.add_child(post_row)
+	var ptip := NeonTheme.label("Tilt-shift depth of field, bloom, haze, light shafts and grading — the Octopath 'living diorama' look. Previewed live here; the game focuses it on the player.", 11, NeonTheme.TEXT_DIM)
+	ptip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_inspector.add_child(ptip)
 	var auto := _autosave_path()
 	if FileAccess.file_exists(auto):
 		var restore := Button.new()

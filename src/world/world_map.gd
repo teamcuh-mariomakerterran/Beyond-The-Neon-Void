@@ -23,6 +23,8 @@ var height_step: float = 32.0
 var music: String = ""
 ## Ambient tint for the whole map (CanvasModulate), e.g. "#4a4f86" for night.
 var ambient: String = ""
+## HD-2D post look: "" / "off" / an HD2DPost preset id, or {"preset": ..., overrides}.
+var post: Variant = ""
 ## Vector2i -> Array of [z:int, tile_id:String], sorted by z ascending.
 var tiles: Dictionary = {}
 ## Vector2i -> Array of [z:int, preset_id:String].
@@ -247,6 +249,7 @@ func load_dict(d: Dictionary) -> void:
 	depth = int(d.get("depth", 24))
 	music = str(d.get("music", ""))
 	ambient = str(d.get("ambient", ""))
+	post = d.get("post", "")
 	spawns = d.get("spawns", {"player": [], "enemy": []}).duplicate(true)
 	if not spawns.has("player"):
 		spawns["player"] = []
@@ -319,6 +322,8 @@ func to_dict() -> Dictionary:
 		out["music"] = music
 	if ambient != "":
 		out["ambient"] = ambient
+	if not (post is String and str(post) == ""):
+		out["post"] = post
 	if not legacy_props.is_empty():
 		out["props"] = legacy_props
 	return out

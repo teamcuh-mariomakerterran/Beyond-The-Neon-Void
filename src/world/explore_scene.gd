@@ -25,6 +25,7 @@ var _path: Array[Vector2i] = []
 var _toast: Label
 var _hud: CanvasLayer
 var _prompt: Label
+var _post: HD2DPost
 
 
 func _ready() -> void:
@@ -56,6 +57,9 @@ func _ready() -> void:
 	add_child(_cam)
 	_cam.make_current()
 	_build_hud()
+	_post = HD2DPost.for_map(world.post)
+	if _post:
+		add_child(_post)
 	_build_labels()
 	_place_avatar()
 	_cam.reset_smoothing()
@@ -120,6 +124,7 @@ class AvatarMarker extends Node2D:
 
 func _build_hud() -> void:
 	_hud = CanvasLayer.new()
+	_hud.layer = 10  # above the HD-2D post layer, so text stays crisp
 	add_child(_hud)
 	_toast = NeonTheme.label("", 28, NeonTheme.CYAN)
 	_toast.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
@@ -299,6 +304,10 @@ func _process(_delta: float) -> void:
 	# X-ray: whatever stands between the camera and the player turns see-through.
 	_renderer.set_cutaway(_avatar.position + Vector2(0, -world.tile_height * 0.6), cell.x + cell.y, grid.get_height(cell))
 	_update_labels()
+	if _post:
+		# Keep the player in the sharp band of the tilt-shift.
+		var sp := get_viewport().get_canvas_transform() * _avatar.position
+		_post.set_focus(sp.y / maxf(get_viewport().get_visible_rect().size.y, 1.0) - 0.04)
 	var o := _interactable()
 	if o.is_empty():
 		_prompt.text = ""

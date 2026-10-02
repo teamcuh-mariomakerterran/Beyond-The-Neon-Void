@@ -38,6 +38,8 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
   - **Stamps:** save a copied chunk as a stamp (it lands in `data/stamps/`). Reuse it from the STAMPS list; Shift+R rotates it and Shift+F flips it before placing.
   - **⛰ Generate:** select tiles from low to high (e.g. water, sand, grass, forest, rock, snow) and sculpt the whole map, or 16×16 around the cursor, from noise. Change the seed and go again.
   - **⚠ Check** finds broken links, missing art, bad spawns and unreachable enemies; click a problem to fly to it. **◇ Tactics** shows blocked tiles, cover and move range from the cursor.
+  - **HD-2D look:** each map can pick a post-processing preset in the map panel: warm diorama, neon noir, toxic haze, dream or cinematic. It adds tilt-shift depth of field that keeps the player sharp, plus bloom, haze, light shafts, grading and a vignette.
+  - **X-ray (◎):** anything standing in front of the player (in game) or the cursor (in the editor) turns see-through.
   - **Footprints:** big structures claim an N×N area for sorting and blocking.
   - **Autosave:** every 90 seconds to `user://forge_autosave`, with a restore button in the map panel.
   - More ideas, ranked: [docs/research/EDITOR_IDEAS.md](docs/research/EDITOR_IDEAS.md).
@@ -55,6 +57,7 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
 ![World Painter](docs/screenshots/world_painter_particles.png)
 ![Exploring a world map](docs/screenshots/world_explore.png)
 ![Neon lighting](docs/screenshots/world_lighting.png)
+![HD-2D tilt-shift](docs/screenshots/hd2d_world.png)
 
 ## Where things are
 ```

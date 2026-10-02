@@ -76,7 +76,7 @@ def world():
                     "empty_text": "Just roots. They hum a little, if you're imagining things.", "dialog_npc": "",
                     "location": None})
     return {"format": 2, "id": "neon_expanse", "name": "The Neon Expanse", "kind": "world", "width": W, "depth": D,
-            "tile_width": 128, "tile_height": 64, "height_step": 32, "tiles": tiles, "details": [],
+            "tile_width": 128, "tile_height": 64, "height_step": 32, "post": "hd2d_warm", "tiles": tiles, "details": [],
             "particles": particles, "objects": objects, "spawns": {"player": [[9, 13]], "enemy": []}, "gameplay": {}}
 
 
@@ -115,7 +115,7 @@ def hub():
                         "light": {"preset": preset, "color": col, "energy": en, "radius": rad, "flicker": fl, "height": 1.0}})
     particles = {f"{x},{y}": [[6, "neon_rain"]] for x in range(W) for y in range(D) if (x + y) % 2 == 0}
     return {"format": 2, "id": "neo_kowloon_hub", "name": "Neo Kowloon — Street Level", "kind": "hub", "width": W,
-            "depth": D, "tile_width": 128, "tile_height": 64, "height_step": 32, "ambient": "#5a5294", "tiles": tiles,
+            "depth": D, "tile_width": 128, "tile_height": 64, "height_step": 32, "ambient": "#5a5294", "post": "neon_noir", "tiles": tiles,
             "details": [], "particles": particles, "objects": objects, "spawns": {"player": [[9, 16]], "enemy": []},
             "gameplay": {}}
 

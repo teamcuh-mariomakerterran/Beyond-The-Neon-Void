@@ -8,6 +8,7 @@
 	"tile_width": 128,
 	"tile_height": 64,
 	"height_step": 32,
+	"post": "hd2d_warm",
 	"tiles": {
 		"0,0": [
 			[

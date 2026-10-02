@@ -135,6 +135,9 @@ func _build_grid() -> void:
 		renderer.world = wm
 		world.add_child(renderer)
 		world_renderer = renderer
+		var post := HD2DPost.for_map(wm.post)
+		if post:
+			add_child(post)
 		for o: Dictionary in wm.objects:
 			if str(o.get("loot_item_id", "")) != "" or str(o.get("found_text", "")) != "":
 				_spawn_prop({"id": o["id"], "cell": o["cell"], "loot_item_id": o.get("loot_item_id", ""),

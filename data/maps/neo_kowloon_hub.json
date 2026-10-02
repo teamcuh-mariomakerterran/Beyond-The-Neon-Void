@@ -9,6 +9,7 @@
 	"tile_height": 64,
 	"height_step": 32,
 	"ambient": "#5a5294",
+	"post": "neon_noir",
 	"tiles": {
 		"0,0": [
 			[
