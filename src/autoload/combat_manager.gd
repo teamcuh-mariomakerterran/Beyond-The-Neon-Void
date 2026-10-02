@@ -304,7 +304,13 @@ func _execute(unit: Node, ability: Ability, cell: Vector2i, extra_cells: Array[V
 	ctx.battle = self
 	ctx.rng = rng
 	EventBus.ability_used.emit(unit, ability, cell)
-	if animate and map_node and map_node.has_method("play_ability_fx"):
+	if not ability.addition.is_empty():
+		var hits := await _run_addition(unit, ability)
+		ctx.power_mult = Additions.multiplier(ability, hits, Additions.mastery(unit.data, ability.id))
+		ctx.force_hit = true
+		Additions.record_use(unit.data, ability.id)
+		EventBus.log_message.emit("%s: %d/%d beats" % [ability.display_name, hits, Additions.beats(ability).size()])
+	elif animate and map_node and map_node.has_method("play_ability_fx"):
 		await map_node.play_ability_fx(unit, ability, cell)
 	var results: Array[Dictionary] = unit.job_handler.execute_ability(ability, ctx)
 	if ability.special != "echo":
@@ -324,6 +330,17 @@ func _execute(unit: Node, ability: Ability, cell: Vector2i, extra_cells: Array[V
 				EventBus.log_message.emit("%s misses %s" % [ability.display_name, target.display_name()])
 	if animate and is_inside_tree():
 		await get_tree().create_timer(0.25).timeout
+
+
+## Sync Blade Addition: the player times it; AI, headless runs and "auto"
+## mode land a fixed ~70% of the beats.
+func _run_addition(unit: Node, ability: Ability) -> int:
+	var interactive: bool = animate and is_inside_tree() and unit.is_player_controlled and not SettingsFlags.auto_additions and DisplayServer.get_name() != "headless"
+	if not interactive:
+		return Additions.auto_hits(ability)
+	var w := AdditionWidget.new()
+	get_tree().root.add_child(w)
+	return await w.run(ability, Additions.mastery(unit.data, ability.id))
 
 
 ## Bluescreen Mage: getting hit by blue-learnable tech teaches it (FFT Blue Mage).

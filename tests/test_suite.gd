@@ -49,9 +49,9 @@ func test_content() -> void:
 		printerr("  content: ", p)
 	check(problems.is_empty(), "content cross-references valid (%d problems)" % problems.size())
 	check(ContentDB.load_errors.is_empty(), "no JSON load errors")
-	check(ClassLibrary.get_all_classes().size() == 36, "36 playable classes (got %d)" % ClassLibrary.get_all_classes().size())
+	check(ClassLibrary.get_all_classes().size() == 37, "37 playable classes (got %d)" % ClassLibrary.get_all_classes().size())
 	var secret := ClassLibrary.get_all_classes().filter(func(c: ClassResource) -> bool: return c.is_hidden)
-	check(secret.size() == 6, "6 secret classes")
+	check(secret.size() == 7, "7 secret classes (incl. Sync Blade)")
 	for c in ClassLibrary.get_all_classes():
 		check(not c.innate_ability_ids.is_empty(), "class %s has innate abilities" % c.id)
 	# JSON round trip keeps enums as names.

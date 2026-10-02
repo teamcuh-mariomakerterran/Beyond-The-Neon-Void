@@ -496,6 +496,16 @@ class WorldSprite extends Node2D:
 			if selected:
 				draw_rect(_rect.grow(3), Color(0.3, 2.0, 1.0), false, 2.0)
 			return
+		if tex == null and str(data.get("asset", "")) == "":
+			# No art on purpose: hidden loot / triggers. Invisible in game, a
+			# dashed marker in the editor so you can find (and move) it.
+			_rect = Rect2(-14, -30, 28, 30)
+			if renderer.editor_markers:
+				draw_rect(_rect, Color(2.0, 1.6, 0.3, 0.8), false, 1.5)
+				draw_string(NeonTheme.mono(), Vector2(-5, -10), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(2.0, 1.6, 0.3))
+				if selected:
+					draw_rect(_rect.grow(3), Color(0.3, 2.0, 1.0), false, 2.0)
+			return
 		if tex == null:
 			# Missing art: a readable placeholder instead of nothing.
 			_rect = Rect2(-16, -40, 32, 40)

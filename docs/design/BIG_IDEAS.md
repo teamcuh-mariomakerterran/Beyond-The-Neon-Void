@@ -178,3 +178,43 @@ Current: Shift Warden, Choir Enforcer, Cantor Adept, Factory Marksman, Foreman (
 | Mirror Unit | mimic | copies the last ability used against it |
 | **The Auditor** (boss) | boss | rewrites the win condition mid-fight |
 | **Choir Cardinal** (boss) | boss | phases: sermon (buffs), hymn (AoE), silence |
+
+### Sync Blade: BUILT (2026-10-02)
+- Class `sync_blade` (secret, tier 3, melee: sword / katana / heavy blade). It unlocks when you pick up **Stardust** (`key_stardust`, LEGENDARY key item), a nod to the Stardust you collect in Legend of Dragoon.
+- **Where the Stardust is:** for now it's hidden loot with no art and no marker in `neon_expanse` (5,19). Move it to roughly the 25% point once the campaign maps exist.
+- **Additions** (each is `abilities.json` → `addition: {beats, window, per_hit, finisher}`):
+
+| Chain | Beats | Unlocks at |
+|---|---|---|
+| Two-Step | 2 | from the start |
+| Neon Rondo | 4 | Lv2 |
+| Backbeat | 5 | Lv3 |
+| Dead Air | 3, with a long gap | Lv4 |
+| Overclock | 7, speeding up | Lv5 |
+| Final Cut | 8, finisher | Lv7 |
+
+  Sync Stance (a focus buff) is also known from the start.
+- **Damage:** 0 hits is a glancing 0.5×. Each hit adds `per_hit`, and a full chain adds the finisher.
+- **Mastery:** every 15 uses is a level, up to 5. Each level gives +8% damage and a slightly wider window.
+- **Auto mode:** `SettingsFlags.auto_additions`, and the AI, land 70% of the beats with no finisher.
+- **Code:** `src/combat/additions.gd`, `src/ui/addition_widget.gd`, `CombatManager._run_addition`.
+
+### Boss and enemy art previews (Brian, 2026-10-02): names to be decided
+All sheets are 3×3 with 8 facings. The in-game iso view uses the **diagonal** facings most, so those poses matter most. Brian is fixing their linework.
+
+1. **Purple-haired tech-scavenger:** green-glow backpack, claw tendrils
+2. **Navy/violet siege mech:** shoulder cannons (animated GIF)
+3. **White/teal gatling mech:** heavy gunner
+4. **White/cyan arm-cannon mech:** lighter frame
+5. **Hooded masked figure:** purple robe with cyan circuitry. There's a second violet variant, so two forms or a pair of twins?
+6. **White/black armored brute:** red accents and a red blade
+7. **Crowned robed figure:** crimson/magenta spiked crown
+8. **Gold horned armor:** red hair, ornate (a champion type?)
+9. **Goggled hooded rogue:** purple hair, gold trim
+10. **Visor soldier:** cyan visor, rifle (single frame)
+11. **Dark horned knight:** purple-violet armor
+12. **White/orange shield mech:** rifle plus a tower shield
+13. **TANK:** treads and a turret (8 facings)
+14. **Choir Cardinal:** bald older man in a black coat with orange trim. CONFIRMED as the Choir Cardinal.
+
+**To do:** support 8-direction sheets in Unit / slicer, choosing the sprite from facing plus camera, with diagonals as the primary frames.

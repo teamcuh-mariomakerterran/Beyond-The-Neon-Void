@@ -156,6 +156,9 @@ func get_stack_count(item_id: String) -> int:
 ## Adds any item: equipment becomes a unique instance, the rest stacks.
 func give_item(item_id: String, qty: int = 1) -> void:
 	var item := ContentDB.get_item(item_id)
+	if item and item.grants_flag != "" and not check_story_flag(item.grants_flag):
+		set_story_flag(item.grants_flag)
+		EventBus.log_message.emit("%s — something new stirs. (%s)" % [item.display_name, item.grants_flag])
 	if item == null:
 		if ContentDB.get_card(item_id):
 			cards[item_id] = int(cards.get(item_id, 0)) + qty

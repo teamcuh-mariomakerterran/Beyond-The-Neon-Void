@@ -1027,5 +1027,15 @@
 		"description": "A gold-foil disk that hums a server-room hymn. A Daemon Caller can learn Call: SAINT UPTIME from it.",
 		"lore_text": "Salvagers swear it turns up under junk nobody else bothered to lift.",
 		"teaches_ability_id": "call_saint_uptime"
+	},
+	{
+		"id": "key_stardust",
+		"display_name": "Stardust",
+		"category": "KEY",
+		"rarity": "LEGENDARY",
+		"value": 0,
+		"description": "A pinch of glittering dust that hums in time with your pulse. Whoever carries it can learn the Sync Blade.",
+		"lore_text": "Found where nobody looks, by somebody who looks everywhere. It keeps time better than any clock in the city.",
+		"grants_flag": "found_stardust"
 	}
 ]

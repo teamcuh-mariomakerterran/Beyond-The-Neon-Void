@@ -2852,5 +2852,162 @@
 		],
 		"requires_item_id": "dsk_saint_uptime",
 		"flavor_text": "99.999% uptime. The 0.001% is when you die."
+	},
+	{
+		"id": "add_two_step",
+		"display_name": "Two-Step",
+		"class_id": "sync_blade",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Addition · 2 beats. The first thing they teach you, and the last thing you forget.",
+		"power": 1.0,
+		"ap_cost": 1,
+		"uses_weapon_range": true,
+		"addition": {
+			"beats": [
+				0.0,
+				0.45
+			],
+			"window": 0.16,
+			"per_hit": 0.3,
+			"finisher": 0.4
+		}
+	},
+	{
+		"id": "add_neon_rondo",
+		"display_name": "Neon Rondo",
+		"class_id": "sync_blade",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Addition · 4 even beats. Round and round, like the sign over the bar.",
+		"power": 1.05,
+		"ap_cost": 1,
+		"uses_weapon_range": true,
+		"addition": {
+			"beats": [
+				0.0,
+				0.4,
+				0.8,
+				1.2
+			],
+			"window": 0.13,
+			"per_hit": 0.25,
+			"finisher": 0.6
+		},
+		"required_class_level": 2
+	},
+	{
+		"id": "add_backbeat",
+		"display_name": "Backbeat",
+		"class_id": "sync_blade",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Addition · 5 beats, off the beat. Hit where the drummer isn't.",
+		"power": 1.1,
+		"ap_cost": 1,
+		"uses_weapon_range": true,
+		"addition": {
+			"beats": [
+				0.0,
+				0.3,
+				0.75,
+				0.95,
+				1.4
+			],
+			"window": 0.13,
+			"per_hit": 0.24,
+			"finisher": 0.75
+		},
+		"required_class_level": 3
+	},
+	{
+		"id": "add_dead_air",
+		"display_name": "Dead Air",
+		"class_id": "sync_blade",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Addition · 3 beats with a long silence before the last. Most people press too early. Most people die.",
+		"power": 1.15,
+		"ap_cost": 1,
+		"uses_weapon_range": true,
+		"addition": {
+			"beats": [
+				0.0,
+				0.35,
+				1.55
+			],
+			"window": 0.12,
+			"per_hit": 0.3,
+			"finisher": 1.0
+		},
+		"required_class_level": 4
+	},
+	{
+		"id": "add_overclock",
+		"display_name": "Overclock",
+		"class_id": "sync_blade",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Addition · 7 beats that keep speeding up until your thumb files a complaint.",
+		"power": 1.1,
+		"ap_cost": 2,
+		"uses_weapon_range": true,
+		"addition": {
+			"beats": [
+				0.0,
+				0.5,
+				0.9,
+				1.22,
+				1.48,
+				1.68,
+				1.84
+			],
+			"window": 0.11,
+			"per_hit": 0.2,
+			"finisher": 1.0
+		},
+		"required_class_level": 5
+	},
+	{
+		"id": "add_final_cut",
+		"display_name": "Final Cut",
+		"class_id": "sync_blade",
+		"kind": "ATTACK",
+		"target": "ENEMY",
+		"description": "Addition · 8 beats, every one required. The finisher is louder than the rest of the fight.",
+		"power": 1.2,
+		"ap_cost": 2,
+		"uses_weapon_range": true,
+		"addition": {
+			"beats": [
+				0.0,
+				0.38,
+				0.7,
+				1.15,
+				1.4,
+				1.62,
+				2.3,
+				2.5
+			],
+			"window": 0.11,
+			"per_hit": 0.18,
+			"finisher": 1.6
+		},
+		"required_class_level": 7,
+		"crit_bonus": 0.1
+	},
+	{
+		"id": "sync_stance",
+		"display_name": "Sync Stance",
+		"class_id": "sync_blade",
+		"kind": "BUFF",
+		"target": "SELF",
+		"description": "Breathe in on the one. Focus up — the next chain feels slower than it is.",
+		"ap_cost": 1,
+		"status_ids": [
+			"focused"
+		],
+		"range_min": 0,
+		"range_max": 0
 	}
 ]

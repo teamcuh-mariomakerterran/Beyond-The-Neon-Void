@@ -4,3 +4,5 @@ extends RefCounted
 
 static var reduce_motion: bool = false
 static var fast_battles: bool = false
+## Sync Blade Additions resolve automatically at ~70% strength (no timing).
+static var auto_additions: bool = false

@@ -13,6 +13,7 @@ const CLASS_ORDER: Array[String] = [
 	"holo_summoner", "synth_bard", "holo_dancer", "jumpjet_dragoon", "void_knight", "stim_berserker",
 	"cyber_sniper", "ghost_assassin", "plasma_vanguard", "static_oracle", "void_technician",
 	"vector_knight", "chrono_stitcher", "cartographer", "deck_stacker", "echo_mime", "digimancer",
+	"daemon_caller", "sync_blade",
 ]
 
 const DEFAULT_CLASS := "chrome_warrior"

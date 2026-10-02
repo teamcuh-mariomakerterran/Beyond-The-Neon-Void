@@ -41,6 +41,8 @@ enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 @export var lore_text: String = ""
 ## Data disks: the ability this key item unlocks for learning (Daemon Caller summons).
 @export var teaches_ability_id: String = ""
+## Picking this up sets a story flag, e.g. Stardust → "found_stardust" (unlocks Sync Blade).
+@export var grants_flag: String = ""
 ## Free-form markers, e.g. "intake_pending" for items created by the Forge intake
 ## wizard whose type is still undecided.
 @export var tags: Array[String] = []

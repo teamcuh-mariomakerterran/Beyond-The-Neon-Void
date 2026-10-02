@@ -8182,6 +8182,29 @@
 			"empty_text": "Just fumes and regret.",
 			"dialog_npc": "",
 			"location": null
+		},
+		{
+			"id": "obj_neon_expanse_stardust",
+			"asset": "",
+			"cell": [
+				5,
+				19
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "loot",
+			"anim": null,
+			"loot_item_id": "key_stardust",
+			"found_text": "Something glitters between the roots. It hums in time with your pulse. STARDUST.",
+			"empty_text": "Just roots. They hum a little, if you're imagining things.",
+			"dialog_npc": "",
+			"location": null
 		}
 	],
 	"spawns": {

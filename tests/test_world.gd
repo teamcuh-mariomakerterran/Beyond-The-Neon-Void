@@ -14,6 +14,7 @@ func run(p_tree: SceneTree) -> int:
 	test_roundtrip_and_v1()
 	test_to_grid()
 	test_validator()
+	test_sync_blade()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -150,6 +151,40 @@ func test_validator() -> void:
 	check(issues2.any(func(i: Dictionary) -> bool: return str(i["text"]).contains("can't be reached")), "validator: unreachable enemy")
 	check(issues2[0]["level"] == MapValidator.ERROR, "errors sort first")
 	check(MapValidator.validate(WorldMap.from_dict(ContentDB.get_map("neon_expanse"))).filter(func(i: Dictionary) -> bool: return i["level"] == MapValidator.ERROR).is_empty(), "demo world has no errors")
+
+
+func test_sync_blade() -> void:
+	var two := ContentDB.get_ability("add_two_step")
+	var cut := ContentDB.get_ability("add_final_cut")
+	check(two != null and cut != null and Additions.beats(cut).size() == 8, "addition chains load")
+	check(Additions.judge(two, 1, 0, 0.05) == 0 and Additions.judge(two, 1, 1, 0.45) == 1, "on-beat presses land")
+	check(Additions.judge(two, 1, 1, 0.2) == -1, "early press misses")
+	check(Additions.multiplier(cut, 8) > Additions.multiplier(cut, 7) + 1.0, "full chain fires the finisher")
+	check(Additions.multiplier(two, 0) == 0.5 and Additions.auto_hits(cut) == 5, "glance + auto mode 70%%")
+	var ch := CharacterData.new()
+	for i in 30:
+		Additions.record_use(ch, "add_two_step")
+	check(Additions.mastery(ch, "add_two_step") == 3 and Additions.window(two, 3) > Additions.window(two, 1), "chain mastery widens the window")
+	# The widget: perfect presses on every beat land the whole chain.
+	var w := AdditionWidget.new()
+	tree.root.add_child(w)
+	w.ability = two
+	w.level = 1
+	w._beats = Additions.beats(two)
+	w.press(0.01)
+	w.press(0.46)
+	check(w.hits == 2 and w._over, "widget: two perfect presses → full chain")
+	w.queue_free()
+	# Stardust unlocks the class.
+	var cls := ContentDB.get_class_res("sync_blade")
+	GameManager.story_flags.erase("found_stardust")
+	var hero := CharacterData.new()
+	check(cls != null and not ClassLibrary.is_unlocked_for("sync_blade", hero), "Sync Blade locked before Stardust")
+	GameManager.give_item("key_stardust")
+	check(ClassLibrary.is_unlocked_for("sync_blade", hero), "Stardust unlocks Sync Blade")
+	GameManager.story_flags.erase("found_stardust")
+	var exp := WorldMap.from_dict(ContentDB.get_map("neon_expanse"))
+	check(exp.objects.any(func(o: Dictionary) -> bool: return str(o.get("loot_item_id", "")) == "key_stardust"), "Stardust is hidden in the world")
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:

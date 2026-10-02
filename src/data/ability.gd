@@ -57,6 +57,10 @@ enum Shape { SINGLE, DIAMOND, LINE, CROSS }
 @export var special: String = ""
 ## A Bluescreen Mage hit by this ability learns it.
 @export var blue_learnable: bool = false
+## Sync Blade "Additions" (Legend of Dragoon-style timed chains). Empty = normal.
+## {"beats": [seconds from the first press], "window": 0.13, "per_hit": 0.3,
+##  "finisher": 0.8}. Each beat pressed on time adds a strike; a miss ends it.
+@export var addition: Dictionary = {}
 ## Can only be learned by absorbing it (blue magic) — not sold at terminals.
 @export var absorb_only: bool = false
 ## Free-form numbers the special logic can read (pull distance, height delta...).
@@ -80,6 +84,10 @@ class Context extends RefCounted:
 	var battle: Node  # CombatManager
 	var rng: RandomNumberGenerator
 	var results: Array[Dictionary] = []
+	## Damage multiplier from an Addition chain (1.0 = untouched).
+	var power_mult: float = 1.0
+	## Additions always connect; the chain decides how hard.
+	var force_hit: bool = false
 
 	func log_result(unit: Node, kind: String, amount: int = 0, crit: bool = false) -> void:
 		results.append({"unit": unit, "kind": kind, "amount": amount, "crit": crit})
@@ -193,12 +201,12 @@ func _apply_to_unit(ctx: Context, unit: Node) -> void:
 		ctx.log_result(unit, "heal", amount)
 	elif kind in [Kind.ATTACK, Kind.MAGIC]:
 		var chance := DamageCalculator.hit_chance(caster, unit, self, ctx.grid)
-		if ctx.rng.randf() > chance:
+		if not ctx.force_hit and ctx.rng.randf() > chance:
 			ctx.log_result(unit, "miss")
 			EventBus.unit_missed.emit(unit)
 			return
 		var crit := ctx.rng.randf() < DamageCalculator.crit_chance(caster, self)
-		var dmg := DamageCalculator.damage(caster, unit, self, ctx.grid, crit)
+		var dmg := int(round(DamageCalculator.damage(caster, unit, self, ctx.grid, crit) * ctx.power_mult))
 		var dealt: int = unit.take_damage(dmg, crit)
 		ctx.log_result(unit, "damage", dealt, crit)
 	if not status_ids.is_empty():

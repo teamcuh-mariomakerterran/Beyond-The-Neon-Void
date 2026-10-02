@@ -1827,6 +1827,58 @@
 		"playable": true
 	},
 	{
+		"id": "sync_blade",
+		"display_name": "Sync Blade",
+		"role": "MELEE",
+		"tier": 3,
+		"description": "Fights on the beat. Every swing is a rhythm game, and the rhythm is trying to kill you. Awakened by Stardust.",
+		"base_hp": 105,
+		"base_mp": 25,
+		"hp_growth": 11,
+		"mp_growth": 2,
+		"base_speed": 9,
+		"move": 4,
+		"jump": 3,
+		"max_ap": 2,
+		"multipliers": {
+			"strength": 1.4,
+			"agility": 1.2,
+			"intelligence": 0.65,
+			"vitality": 1.0
+		},
+		"growth": {
+			"strength": 2,
+			"agility": 2,
+			"intelligence": 0,
+			"vitality": 1
+		},
+		"weapon_types": [
+			"sword",
+			"katana",
+			"heavy_blade"
+		],
+		"specialty_weapon_types": [
+			"sword"
+		],
+		"innate_ability_ids": [
+			"add_two_step",
+			"sync_stance"
+		],
+		"learnable_ability_ids": [
+			"add_neon_rondo",
+			"add_backbeat",
+			"add_dead_air",
+			"add_overclock",
+			"add_final_cut"
+		],
+		"unlock_requirements": {},
+		"unlock_flag": "found_stardust",
+		"is_hidden": true,
+		"uses_deck": false,
+		"element_modifiers": {},
+		"playable": true
+	},
+	{
 		"id": "droid_assault_chassis",
 		"display_name": "Assault Droid",
 		"role": "MELEE",

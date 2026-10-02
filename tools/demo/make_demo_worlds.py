@@ -67,6 +67,14 @@ def world():
                     "kind": "loot", "anim": None, "loot_item_id": "con_neon_gin",
                     "found_text": "Behind the pumps: a bottle of Neon Gin. Someone's retirement plan.",
                     "empty_text": "Just fumes and regret.", "dialog_npc": "", "location": None})
+    # Stardust: no art, no marker, no hint. Unlocks the Sync Blade (LoD homage).
+    # Move it to the ~25% point of the real campaign once that map exists.
+    objects.append({"id": "obj_neon_expanse_stardust", "asset": "", "cell": [5, 19], "z": 0, "offset": [0, 0],
+                    "scale": 1.0, "flip": False, "layer": 0, "kind": "loot", "anim": None,
+                    "loot_item_id": "key_stardust",
+                    "found_text": "Something glitters between the roots. It hums in time with your pulse. STARDUST.",
+                    "empty_text": "Just roots. They hum a little, if you're imagining things.", "dialog_npc": "",
+                    "location": None})
     return {"format": 2, "id": "neon_expanse", "name": "The Neon Expanse", "kind": "world", "width": W, "depth": D,
             "tile_width": 128, "tile_height": 64, "height_step": 32, "tiles": tiles, "details": [],
             "particles": particles, "objects": objects, "spawns": {"player": [[9, 13]], "enemy": []}, "gameplay": {}}

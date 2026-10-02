@@ -23,6 +23,8 @@ extends GameResource
 
 @export_group("Abilities")
 @export var learned_ability_ids: Array[String] = []
+## Sync Blade: times each Addition chain was performed (drives chain mastery).
+@export var addition_uses: Dictionary = {}
 
 @export_group("Gear")
 ## {slot: item_instance_uid}
