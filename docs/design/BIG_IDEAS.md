@@ -154,7 +154,7 @@ Comedy as a system, not just in dialogue.
   - *Two-Step* (2 presses)
   - *Neon Rondo* (4, even beat)
   - *Backbeat* (5, off-beat)
-  - *Overclock* (7, speeds up)
+  - *Overdrive* (7, speeds up)
   - *Dead Air* (3 with a long silent gap: the timing trap)
   - *Final Cut* (8, needs every press, huge finisher)
 - **Tactics fit:** attacks still use the grid (range, facing, height). The chain only plays when the attack is made, as a close-up using the cutscene player we already have. An "auto" option gives about 70% damage, so it's accessibility-friendly.
@@ -190,7 +190,7 @@ Current: Shift Warden, Choir Enforcer, Cantor Adept, Factory Marksman, Foreman (
 | Neon Rondo | 4 | Lv2 |
 | Backbeat | 5 | Lv3 |
 | Dead Air | 3, with a long gap | Lv4 |
-| Overclock | 7, speeding up | Lv5 |
+| Overdrive | 7, speeding up | Lv5 |
 | Final Cut | 8, finisher | Lv7 |
 
   Sync Stance (a focus buff) is also known from the start.

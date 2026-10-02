@@ -2943,8 +2943,8 @@
 		"required_class_level": 4
 	},
 	{
-		"id": "add_overclock",
-		"display_name": "Overclock",
+		"id": "add_overdrive",
+		"display_name": "Overdrive",
 		"class_id": "sync_blade",
 		"kind": "ATTACK",
 		"target": "ENEMY",

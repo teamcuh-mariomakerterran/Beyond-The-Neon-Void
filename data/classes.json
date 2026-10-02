@@ -1868,7 +1868,7 @@
 			"add_neon_rondo",
 			"add_backbeat",
 			"add_dead_air",
-			"add_overclock",
+			"add_overdrive",
 			"add_final_cut"
 		],
 		"unlock_requirements": {},
