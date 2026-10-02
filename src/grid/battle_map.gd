@@ -15,6 +15,8 @@ const FALLBACK_MISSION := "m01_the_brew_plan"
 
 var grid := IsometricGrid.new()
 var highlights := HighlightManager.new()
+## Format-2 maps only: the stacked-tile renderer (x-ray cutaway lives here).
+var world_renderer: WorldRenderer
 var tiles: Dictionary = {}  # Vector2i -> TileView
 var world: Node2D
 var units_root: Node2D
@@ -132,6 +134,7 @@ func _build_grid() -> void:
 		var renderer := WorldRenderer.new()
 		renderer.world = wm
 		world.add_child(renderer)
+		world_renderer = renderer
 		for o: Dictionary in wm.objects:
 			if str(o.get("loot_item_id", "")) != "" or str(o.get("found_text", "")) != "":
 				_spawn_prop({"id": o["id"], "cell": o["cell"], "loot_item_id": o.get("loot_item_id", ""),
@@ -362,6 +365,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _update_hover(cell: Vector2i) -> void:
 	if cell == hovered_cell:
 		return
+	if world_renderer and grid.in_bounds(cell):
+		# X-ray: what stands in front of the hovered tile fades out.
+		world_renderer.set_cutaway(grid.grid_to_world(cell), cell.x + cell.y, grid.get_height(cell))
 	if tiles.has(hovered_cell):
 		tiles[hovered_cell].hovered = false
 		tiles[hovered_cell].queue_redraw()

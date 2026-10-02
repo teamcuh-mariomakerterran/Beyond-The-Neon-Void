@@ -84,6 +84,7 @@ var _minimap: Minimap
 var _rng := RandomNumberGenerator.new()
 ## Tactics view: battle-grid read-out (blocked, cover, move range from the cursor).
 var tactics_view: bool = false
+var xray: bool = false
 var tactics_move: int = 4
 var tactics_jump: int = 2
 var _tgrid: IsometricGrid
@@ -545,6 +546,16 @@ func _build_topbar() -> Control:
 		tactics_view = on
 		_style_toggle(tac, on))
 	h.add_child(tac)
+	var xr := Button.new()
+	xr.text = "◎ X-RAY"
+	xr.toggle_mode = true
+	xr.tooltip_text = "See-through cutaway: tiles and objects in front of the cursor fade (what the game does for the player)."
+	xr.toggled.connect(func(on: bool) -> void:
+		xray = on
+		_style_toggle(xr, on)
+		if not on:
+			_renderer.set_cutaway(Vector2.INF, 0, 0))
+	h.add_child(xr)
 	_check_btn = Button.new()
 	_check_btn.text = "⚠ CHECK"
 	_check_btn.tooltip_text = "Find broken links, missing art, bad spawns and unreachable enemies."
@@ -967,6 +978,8 @@ func _zoom(f: float) -> void:
 func _process(delta: float) -> void:
 	if _cam == null:
 		return
+	if xray and world.in_bounds(_hover_cell):
+		_renderer.set_cutaway(world.to_screen(Vector2(_hover_cell), _hover_z), _hover_cell.x + _hover_cell.y, _hover_z)
 	var k := 1.0 - exp(-delta * 14.0)
 	_cam.position = _cam.position.lerp(_cam_goal, k)
 	var z := lerpf(_cam.zoom.x, _zoom_goal, k)

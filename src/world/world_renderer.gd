@@ -1,6 +1,6 @@
 class_name WorldRenderer
 extends Node2D
-## Draws a WorldMap: one ColumnView per occupied column (its whole tile stack),
+## Draws a WorldMap: one StripView per 32 columns of an iso diagonal (their tile stacks),
 ## detail decals, objects (static or animated) and painted particle volumes.
 ## Used by the Neon Forge World Painter (live), exploration and battles, so what
 ## you paint is exactly what plays.
@@ -20,7 +20,7 @@ var show_objects: bool = true
 var show_details: bool = true
 var dim_above: int = 999  # layers above this are drawn faded (painter focus)
 
-var _columns: Dictionary = {}  # Vector2i -> ColumnView
+var _columns: Dictionary = {}  # strip key (order, segment) -> StripView
 var _obj_nodes: Dictionary = {}  # id -> WorldSprite
 var _detail_nodes: Dictionary = {}
 var _particle_nodes: Dictionary = {}  # "preset|z" -> Node2D
@@ -106,20 +106,36 @@ func rebuild() -> void:
 	rebuild_lighting()
 
 
+## Columns are drawn in strips: every column on the same iso diagonal (x + y)
+## shares a draw order, so a strip of STRIP_LEN of them is one node. That keeps
+## sorting against units/objects correct and cuts node count ~32× (huge maps).
+const STRIP_LEN := 32
+
+
+static func strip_key(cell: Vector2i) -> Vector2i:
+	return Vector2i(cell.x + cell.y, floori(float(cell.x) / STRIP_LEN))
+
+
 func refresh_column(cell: Vector2i) -> void:
-	var cv: ColumnView = _columns.get(cell)
-	if not world.tiles.has(cell):
-		if cv:
-			cv.queue_free()
-			_columns.erase(cell)
+	var key := strip_key(cell)
+	var sv: StripView = _columns.get(key)
+	if sv == null:
+		if not world.tiles.has(cell):
+			return
+		sv = StripView.new()
+		sv.renderer = self
+		sv.key = key
+		_columns[key] = sv
+		_columns_root.add_child(sv)
+	if world.tiles.has(cell):
+		sv.cells[cell] = true
+	else:
+		sv.cells.erase(cell)
+	if sv.cells.is_empty():
+		sv.queue_free()
+		_columns.erase(key)
 		return
-	if cv == null:
-		cv = ColumnView.new()
-		cv.renderer = self
-		cv.cell = cell
-		_columns[cell] = cv
-		_columns_root.add_child(cv)
-	cv.refresh()
+	sv.refresh()
 
 
 func refresh_columns(cells: Array) -> void:
@@ -133,9 +149,9 @@ func pop(cell: Vector2i, z: int, erase: bool = false, ring: bool = true) -> void
 		if not _pops.has(cell):
 			_pops[cell] = {}
 		_pops[cell][z] = now()
-		var cv: ColumnView = _columns.get(cell)
-		if cv:
-			cv.set_process(true)
+		var sv: StripView = _columns.get(strip_key(cell))
+		if sv:
+			sv.set_process(true)
 	if _fx and ring:
 		_fx.add_ring(world.to_screen(Vector2(cell), z), Color(2.2, 0.35, 0.5) if erase else Color(0.3, 2.0, 1.2))
 
@@ -164,8 +180,46 @@ func flash_text(at: Vector2, text: String, color: Color) -> void:
 
 
 func redraw_all_columns() -> void:
-	for cv: ColumnView in _columns.values():
-		cv.queue_redraw()
+	for sv: StripView in _columns.values():
+		sv.queue_redraw()
+
+
+## X-ray cutaway: tiles and objects in front of `focus` (screen point of the
+## player / cursor) that would hide it are drawn see-through. order/z describe
+## the focus column; pass Vector2.INF to turn it off.
+var cutaway_focus: Vector2 = Vector2.INF
+var cutaway_order: int = 0
+var cutaway_z: int = 0
+const CUTAWAY_RADIUS := 1.6  # in tile widths
+
+
+func set_cutaway(focus: Vector2, order: int, z: int) -> void:
+	if focus == cutaway_focus and order == cutaway_order:
+		return
+	var old := cutaway_order
+	cutaway_focus = focus
+	cutaway_order = order
+	cutaway_z = z
+	for key: Vector2i in _columns:
+		if (key.x > old and key.x <= old + 12) or (key.x > order and key.x <= order + 12):
+			(_columns[key] as StripView).queue_redraw()
+	for n: WorldSprite in _obj_nodes.values():
+		n.apply_cutaway()
+
+
+## 0.3 when the thing at (screen pos, order, top z) hides the focus, else 1.
+func cutaway_alpha(at: Vector2, order: int, z: int) -> float:
+	if cutaway_focus == Vector2.INF or order <= cutaway_order or z < cutaway_z:
+		return 1.0
+	# The column spans from its top face down to the focus's level: it hides
+	# the focus if the focus point falls inside that span (horizontally close).
+	var top_y := at.y - world.tile_height * 0.5
+	var base_y := at.y + (z - cutaway_z) * world.height_step + world.tile_height
+	if absf(at.x - cutaway_focus.x) > world.tile_width * CUTAWAY_RADIUS * 0.6:
+		return 1.0
+	if cutaway_focus.y < top_y or cutaway_focus.y > base_y:
+		return 1.0
+	return 0.3
 
 
 # --- Tiles -----------------------------------------------------------------
@@ -373,41 +427,55 @@ func rebuild_particles() -> void:
 		_particle_nodes[k] = node
 
 
-class ColumnView extends Node2D:
+class StripView extends Node2D:
 	var renderer: WorldRenderer
-	var cell: Vector2i
+	var key: Vector2i
+	var cells: Dictionary = {}  # Vector2i -> true
 	var _animated: bool = false
 
 	func refresh() -> void:
 		var w := renderer.world
-		position = Vector2.ZERO
-		z_index = (cell.x + cell.y) * 2
+		z_index = key.x * 2
 		_animated = false
-		for e: Array in w.stack_at(cell):
-			if WorldRenderer.tile_frames(str(e[1])).size() > 1:
-				_animated = true
+		for c: Vector2i in cells:
+			for e: Array in w.stack_at(c):
+				if WorldRenderer.tile_frames(str(e[1])).size() > 1:
+					_animated = true
+					break
+			if _animated:
+				break
 		set_process(_animated)
 		queue_redraw()
 
 	func _process(_d: float) -> void:
 		queue_redraw()
-		if not _animated and not renderer.is_popping(cell):
-			set_process(false)
+		if _animated:
+			return
+		for c: Vector2i in cells:
+			if renderer.is_popping(c):
+				return
+		set_process(false)
 
 	func _draw() -> void:
 		var w := renderer.world
 		var phase := 0.0  # water frames stay in sync across the sea
-		for e: Array in w.stack_at(cell):
-			var z := int(e[0])
-			var a := 1.0 if z <= renderer.dim_above else 0.18
-			var at := w.to_screen(Vector2(cell), z)
-			var t := renderer.pop_progress(cell, z)
-			if t < 1.0:
-				# Drop in from above with a little overshoot.
-				var k := 1.0 - t
-				at.y -= w.height_step * 1.4 * k * k - sin(t * PI) * 3.0
-				a *= 0.35 + 0.65 * t
-			WorldRenderer.draw_tile(self, w, str(e[1]), at, a, phase)
+		for cell: Vector2i in cells:
+			var stack := w.stack_at(cell)
+			if stack.is_empty():
+				continue
+			var top_z := int(stack[stack.size() - 1][0])
+			var cut := renderer.cutaway_alpha(w.to_screen(Vector2(cell), top_z), key.x, top_z)
+			for e: Array in stack:
+				var z := int(e[0])
+				var a := (1.0 if z <= renderer.dim_above else 0.18) * (cut if z >= renderer.cutaway_z else 1.0)
+				var at := w.to_screen(Vector2(cell), z)
+				var t := renderer.pop_progress(cell, z)
+				if t < 1.0:
+					# Drop in from above with a little overshoot.
+					var k := 1.0 - t
+					at.y -= w.height_step * 1.4 * k * k - sin(t * PI) * 3.0
+					a *= 0.35 + 0.65 * t
+				WorldRenderer.draw_tile(self, w, str(e[1]), at, a, phase)
 
 
 ## A detail decal or an object sprite (static, sheet-animated or frame list).
@@ -473,8 +541,26 @@ class WorldSprite extends Node2D:
 			return null
 		if _frames.size() == 1:
 			return _frames[0]
-		var phase := float(hash(str(data.get("id", ""))) % 100) / 100.0 if str(_anim.get("mode", "loop")) == "random_start" else 0.0
-		return _frames[SheetSprite.frame_at(WorldRenderer.now(), _frames.size(), float(_anim.get("fps", 8)), str(_anim.get("mode", "loop")), phase)]
+		# Every instance runs on its own clock (phase + ±12% speed) so a street of
+		# animated buildings never blinks in lockstep. "sync": true opts out.
+		var fps := float(_anim.get("fps", 8))
+		var phase := 0.0
+		var mode := str(_anim.get("mode", "loop"))
+		if not bool(_anim.get("sync", false)) and mode != "once":
+			var h := absi(hash(str(data.get("id", ""))))
+			fps *= 1.0 + (float(h % 241) / 240.0 - 0.5) * 0.24 * float(_anim.get("speed_jitter", 1.0))
+			phase = float(h % 997) / 997.0 * float(_frames.size()) / maxf(fps, 0.01)
+			if mode == "random_start":
+				mode = "loop"
+		return _frames[SheetSprite.frame_at(WorldRenderer.now(), _frames.size(), fps, mode, phase)]
+
+	## X-ray: fade when this sprite stands in front of the cutaway focus.
+	func apply_cutaway() -> void:
+		var a := 1.0
+		if renderer.cutaway_focus != Vector2.INF and (z_index - 1) / 2 > renderer.cutaway_order:
+			if Rect2(position + _rect.position, _rect.size).grow(6).has_point(renderer.cutaway_focus):
+				a = 0.3
+		modulate.a = a
 
 	func _draw() -> void:
 		var tex := _current()

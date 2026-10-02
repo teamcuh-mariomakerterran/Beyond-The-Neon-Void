@@ -15,6 +15,7 @@ func run(p_tree: SceneTree) -> int:
 	test_to_grid()
 	test_validator()
 	test_sync_blade()
+	await test_strips_and_cutaway()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -185,6 +186,34 @@ func test_sync_blade() -> void:
 	GameManager.story_flags.erase("found_stardust")
 	var exp := WorldMap.from_dict(ContentDB.get_map("neon_expanse"))
 	check(exp.objects.any(func(o: Dictionary) -> bool: return str(o.get("loot_item_id", "")) == "key_stardust"), "Stardust is hidden in the world")
+
+
+func test_strips_and_cutaway() -> void:
+	var w := _map()
+	w.width = 80
+	w.depth = 80
+	for x in 80:
+		for y in 80:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	var r := WorldRenderer.new()
+	r.world = w
+	tree.root.add_child(r)
+	# 6400 columns → strips per diagonal of ≤32 columns (far fewer nodes).
+	check(r._columns.size() < 400 and r._columns.size() >= 159, "strip renderer: %d nodes for 6400 columns" % r._columns.size())
+	w.remove_tile(Vector2i(3, 4), 0)
+	r.refresh_column(Vector2i(3, 4))
+	var sv: WorldRenderer.StripView = r._columns[WorldRenderer.strip_key(Vector2i(3, 4))]
+	check(not sv.cells.has(Vector2i(3, 4)) and sv.cells.has(Vector2i(4, 3)), "strip tracks its columns")
+	# Cutaway: a tall column right in front of the focus fades; one behind doesn't.
+	w.set_tile(Vector2i(11, 11), 6, "terrain:concrete")
+	var focus := w.to_screen(Vector2(10, 10), 0)
+	r.set_cutaway(focus, 20, 0)
+	check(r.cutaway_alpha(w.to_screen(Vector2(11, 11), 6), 22, 6) < 1.0, "x-ray fades the column in front")
+	check(r.cutaway_alpha(w.to_screen(Vector2(9, 9), 0), 18, 0) == 1.0, "x-ray leaves what's behind")
+	r.set_cutaway(Vector2.INF, 0, 0)
+	check(r.cutaway_alpha(w.to_screen(Vector2(11, 11), 6), 22, 6) == 1.0, "x-ray off")
+	r.queue_free()
+	await tree.process_frame
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:

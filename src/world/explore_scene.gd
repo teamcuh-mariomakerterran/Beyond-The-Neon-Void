@@ -296,6 +296,8 @@ func _process(_delta: float) -> void:
 	if world == null:
 		return
 	_cam.position = _avatar.position
+	# X-ray: whatever stands between the camera and the player turns see-through.
+	_renderer.set_cutaway(_avatar.position + Vector2(0, -world.tile_height * 0.6), cell.x + cell.y, grid.get_height(cell))
 	_update_labels()
 	var o := _interactable()
 	if o.is_empty():
