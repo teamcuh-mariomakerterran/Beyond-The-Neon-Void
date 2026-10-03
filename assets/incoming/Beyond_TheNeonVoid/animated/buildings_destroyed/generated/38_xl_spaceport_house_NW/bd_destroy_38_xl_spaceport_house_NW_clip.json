@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_38_xl_spaceport_house_NW",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    384,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 384,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 768,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 1152,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 1536,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 1920,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 2304,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 2688,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 3072,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 3456,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 3840,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 4224,
+      "y": 0,
+      "w": 384,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    191,
+    394
+  ],
+  "ruinAnchor": [
+    572,
+    1405
+  ],
+  "sourceSize": [
+    1145,
+    1406
+  ],
+  "ruinSize": [
+    1145,
+    1406
+  ],
+  "smolderEmitters": [
+    {
+      "x": 206,
+      "y": 535
+    },
+    {
+      "x": 572,
+      "y": 495
+    },
+    {
+      "x": 938,
+      "y": 550
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_38_xl_spaceport_house_NW_strip.png",
+    "ruin": "bd_destroy_38_xl_spaceport_house_NW_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 38_xl_spaceport_house_NW",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_38_xl_spaceport_house_NW_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_38_xl_spaceport_house_NW_ruin.png",
+      "static": true,
+      "anchor": [
+        572,
+        1405
+      ]
+    }
+  }
+}
