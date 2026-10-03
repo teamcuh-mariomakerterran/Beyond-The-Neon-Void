@@ -1,0 +1,48 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_gore_blood_splat_smear",
+  "kind": "fx",
+  "loop": false,
+  "generator": "fx.blood_splat_decal",
+  "cell": [
+    96,
+    96
+  ],
+  "frames": 1,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 96,
+      "h": 96
+    }
+  ],
+  "fps": 1,
+  "holds": null,
+  "tickSequence": null,
+  "palette": "Gore fluid ramp",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    48,
+    69
+  ],
+  "sortBias": 2,
+  "depthKey": "share_base",
+  "dirOrderNote": "No character DIR_ORDER \u2014 compass labels are spray travel direction only.",
+  "textures": {
+    "strip": "bd_gore_blood_splat_smear_strip.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "static ground splat decal (smear)",
+  "group": "Gore",
+  "unitCell": 84,
+  "padCell": 96,
+  "fluid": "blood",
+  "style": "smear",
+  "static": true,
+  "anchorNote": "Ground splat center; scatter freely."
+}

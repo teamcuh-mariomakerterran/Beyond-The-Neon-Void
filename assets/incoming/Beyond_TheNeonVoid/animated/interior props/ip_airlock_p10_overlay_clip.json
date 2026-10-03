@@ -1,0 +1,301 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_airlock_p10_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  327,
+  211
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 1,
+   "x": 327,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 2,
+   "x": 654,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 3,
+   "x": 981,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 4,
+   "x": 1308,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 5,
+   "x": 1635,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 6,
+   "x": 1962,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 7,
+   "x": 2289,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 8,
+   "x": 2616,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 9,
+   "x": 2943,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 10,
+   "x": 3270,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 11,
+   "x": 3597,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 12,
+   "x": 3924,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 13,
+   "x": 4251,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 14,
+   "x": 4578,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 15,
+   "x": 4905,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 16,
+   "x": 5232,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 17,
+   "x": 5559,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 18,
+   "x": 5886,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 19,
+   "x": 6213,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 20,
+   "x": 6540,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 21,
+   "x": 6867,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 22,
+   "x": 7194,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  },
+  {
+   "i": 23,
+   "x": 7521,
+   "y": 0,
+   "w": 327,
+   "h": 211
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  163,
+  206
+ ],
+ "propBBox": [
+  3,
+  4,
+  323,
+  207
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_airlock_p10_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_airlock_p10.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_airlock_p10.png",
+  "placementKey": "bldg_interior_indoor_airlock_p10",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Airlock 10 \u2014 capsule light bank",
+ "qaGrade": "B+",
+ "qaNote": "capsule light bank: tubes glow sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 34,
+    "y": 169,
+    "warm": true
+   },
+   {
+    "x": 91,
+    "y": 177,
+    "warm": true
+   },
+   {
+    "x": 102,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 206,
+    "y": 193,
+    "warm": true
+   },
+   {
+    "x": 221,
+    "y": 195,
+    "warm": true
+   },
+   {
+    "x": 273,
+    "y": 202,
+    "warm": true
+   },
+   {
+    "x": 279,
+    "y": 204,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     165,
+     75,
+     197,
+     150
+    ],
+    "slope": 0.0,
+    "area": 1823
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     233,
+     83,
+     266,
+     159
+    ],
+    "slope": 0.0,
+    "area": 2241
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 7,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 2,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 49024,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_airlock_p10",
+ "overlayClip": null
+}

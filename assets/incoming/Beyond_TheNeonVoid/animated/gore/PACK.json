@@ -1,0 +1,534 @@
+{
+  "format": "lattice.gore.pack.v1",
+  "version": 1,
+  "name": "bd_gore",
+  "source": "LATTICE",
+  "group": "Gore",
+  "note": "Blood / oil / xeno combat gore. Cells are 96 pad; units are 84. Spray dirs are compass travel directions (not Forge DIR_ORDER). Pool anchor is feet/ground center of the 84 unit in the pad.",
+  "unitCell": 84,
+  "padCell": 96,
+  "poolAnchor": [
+    48,
+    78
+  ],
+  "fluids": [
+    "blood",
+    "oil",
+    "xeno"
+  ],
+  "effects": [
+    {
+      "id": "blood_spray_hit_E",
+      "label": "blood spray E",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_E_strip.png",
+      "clip": "bd_gore_blood_spray_hit_E_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "E",
+      "suggestedUse": "directional blood spray burst traveling E"
+    },
+    {
+      "id": "blood_spray_hit_NE",
+      "label": "blood spray NE",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_NE_strip.png",
+      "clip": "bd_gore_blood_spray_hit_NE_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "NE",
+      "suggestedUse": "directional blood spray burst traveling NE"
+    },
+    {
+      "id": "blood_spray_hit_N",
+      "label": "blood spray N",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_N_strip.png",
+      "clip": "bd_gore_blood_spray_hit_N_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "N",
+      "suggestedUse": "directional blood spray burst traveling N"
+    },
+    {
+      "id": "blood_spray_hit_NW",
+      "label": "blood spray NW",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_NW_strip.png",
+      "clip": "bd_gore_blood_spray_hit_NW_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "NW",
+      "suggestedUse": "directional blood spray burst traveling NW"
+    },
+    {
+      "id": "blood_spray_hit_W",
+      "label": "blood spray W",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_W_strip.png",
+      "clip": "bd_gore_blood_spray_hit_W_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "W",
+      "suggestedUse": "directional blood spray burst traveling W"
+    },
+    {
+      "id": "blood_spray_hit_SW",
+      "label": "blood spray SW",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_SW_strip.png",
+      "clip": "bd_gore_blood_spray_hit_SW_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "SW",
+      "suggestedUse": "directional blood spray burst traveling SW"
+    },
+    {
+      "id": "blood_spray_hit_S",
+      "label": "blood spray S",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_S_strip.png",
+      "clip": "bd_gore_blood_spray_hit_S_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "S",
+      "suggestedUse": "directional blood spray burst traveling S"
+    },
+    {
+      "id": "blood_spray_hit_SE",
+      "label": "blood spray SE",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_spray_hit_SE_strip.png",
+      "clip": "bd_gore_blood_spray_hit_SE_clip.json",
+      "fluid": "blood",
+      "sprayDirection": "SE",
+      "suggestedUse": "directional blood spray burst traveling SE"
+    },
+    {
+      "id": "blood_mist_headshot",
+      "label": "blood mist headshot",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_blood_mist_headshot_strip.png",
+      "clip": "bd_gore_blood_mist_headshot_clip.json",
+      "fluid": "blood",
+      "suggestedUse": "fine red mist puff + droplets (headshot)"
+    },
+    {
+      "id": "gib_splatter_A",
+      "label": "gib splatter A",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "bd_gore_gib_splatter_A_strip.png",
+      "clip": "bd_gore_gib_splatter_A_clip.json",
+      "fluid": "blood",
+      "variant": "A",
+      "suggestedUse": "chunky gib splatter variant A"
+    },
+    {
+      "id": "gib_splatter_B",
+      "label": "gib splatter B",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "bd_gore_gib_splatter_B_strip.png",
+      "clip": "bd_gore_gib_splatter_B_clip.json",
+      "fluid": "blood",
+      "variant": "B",
+      "suggestedUse": "chunky gib splatter variant B"
+    },
+    {
+      "id": "gib_splatter_C",
+      "label": "gib splatter C",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "bd_gore_gib_splatter_C_strip.png",
+      "clip": "bd_gore_gib_splatter_C_clip.json",
+      "fluid": "blood",
+      "variant": "C",
+      "suggestedUse": "chunky gib splatter variant C"
+    },
+    {
+      "id": "blood_pool_spread_small",
+      "label": "blood pool small",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "bd_gore_blood_pool_spread_small_strip.png",
+      "clip": "bd_gore_blood_pool_spread_small_clip.json",
+      "decal": "bd_gore_blood_pool_small_decal.png",
+      "fluid": "blood",
+      "poolScale": "small",
+      "anchor": [
+        48,
+        78
+      ],
+      "suggestedUse": "blood pool spreading (small) under corpse"
+    },
+    {
+      "id": "blood_pool_spread_medium",
+      "label": "blood pool medium",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "bd_gore_blood_pool_spread_medium_strip.png",
+      "clip": "bd_gore_blood_pool_spread_medium_clip.json",
+      "decal": "bd_gore_blood_pool_medium_decal.png",
+      "fluid": "blood",
+      "poolScale": "medium",
+      "anchor": [
+        48,
+        78
+      ],
+      "suggestedUse": "blood pool spreading (medium) under corpse"
+    },
+    {
+      "id": "blood_pool_spread_large",
+      "label": "blood pool large",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "bd_gore_blood_pool_spread_large_strip.png",
+      "clip": "bd_gore_blood_pool_spread_large_clip.json",
+      "decal": "bd_gore_blood_pool_large_decal.png",
+      "fluid": "blood",
+      "poolScale": "large",
+      "anchor": [
+        48,
+        78
+      ],
+      "suggestedUse": "blood pool spreading (large) under corpse"
+    },
+    {
+      "id": "blood_splat_drop",
+      "label": "splat drop",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_blood_splat_drop_strip.png",
+      "clip": "bd_gore_blood_splat_drop_clip.json",
+      "decal": "bd_gore_blood_splat_drop.png",
+      "fluid": "blood",
+      "style": "drop",
+      "static": true,
+      "suggestedUse": "static ground splat decal (drop)"
+    },
+    {
+      "id": "blood_splat_smear",
+      "label": "splat smear",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_blood_splat_smear_strip.png",
+      "clip": "bd_gore_blood_splat_smear_clip.json",
+      "decal": "bd_gore_blood_splat_smear.png",
+      "fluid": "blood",
+      "style": "smear",
+      "static": true,
+      "suggestedUse": "static ground splat decal (smear)"
+    },
+    {
+      "id": "blood_splat_spatter_ring",
+      "label": "splat spatter_ring",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_blood_splat_spatter_ring_strip.png",
+      "clip": "bd_gore_blood_splat_spatter_ring_clip.json",
+      "decal": "bd_gore_blood_splat_spatter_ring.png",
+      "fluid": "blood",
+      "style": "spatter_ring",
+      "static": true,
+      "suggestedUse": "static ground splat decal (spatter_ring)"
+    },
+    {
+      "id": "blood_splat_drag_trail",
+      "label": "splat drag_trail",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_blood_splat_drag_trail_strip.png",
+      "clip": "bd_gore_blood_splat_drag_trail_clip.json",
+      "decal": "bd_gore_blood_splat_drag_trail.png",
+      "fluid": "blood",
+      "style": "drag_trail",
+      "static": true,
+      "suggestedUse": "static ground splat decal (drag_trail)"
+    },
+    {
+      "id": "blood_splat_cluster",
+      "label": "splat cluster",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_blood_splat_cluster_strip.png",
+      "clip": "bd_gore_blood_splat_cluster_clip.json",
+      "decal": "bd_gore_blood_splat_cluster.png",
+      "fluid": "blood",
+      "style": "cluster",
+      "static": true,
+      "suggestedUse": "static ground splat decal (cluster)"
+    },
+    {
+      "id": "blood_splat_splash",
+      "label": "splat splash",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_blood_splat_splash_strip.png",
+      "clip": "bd_gore_blood_splat_splash_clip.json",
+      "decal": "bd_gore_blood_splat_splash.png",
+      "fluid": "blood",
+      "style": "splash",
+      "static": true,
+      "suggestedUse": "static ground splat decal (splash)"
+    },
+    {
+      "id": "bleed_drip",
+      "label": "bleed drip",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_bleed_drip_strip.png",
+      "clip": "bd_gore_bleed_drip_clip.json",
+      "fluid": "blood",
+      "suggestedUse": "looping drip under wounded unit"
+    },
+    {
+      "id": "oil_spray_hit_E",
+      "label": "oil spray E",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_oil_spray_hit_E_strip.png",
+      "clip": "bd_gore_oil_spray_hit_E_clip.json",
+      "fluid": "oil",
+      "sprayDirection": "E",
+      "suggestedUse": "oil spray traveling E"
+    },
+    {
+      "id": "oil_pool_spread_medium",
+      "label": "oil pool medium",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "bd_gore_oil_pool_spread_medium_strip.png",
+      "clip": "bd_gore_oil_pool_spread_medium_clip.json",
+      "decal": "bd_gore_oil_pool_medium_decal.png",
+      "fluid": "oil",
+      "poolScale": "medium",
+      "anchor": [
+        48,
+        78
+      ],
+      "suggestedUse": "oil pool medium"
+    },
+    {
+      "id": "oil_splat_spatter_ring",
+      "label": "oil spatter ring",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_oil_splat_spatter_ring_strip.png",
+      "clip": "bd_gore_oil_splat_spatter_ring_clip.json",
+      "decal": "bd_gore_oil_splat_spatter_ring.png",
+      "fluid": "oil",
+      "static": true,
+      "suggestedUse": "oil spatter ring decal"
+    },
+    {
+      "id": "xeno_spray_hit_E",
+      "label": "xeno spray E",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "bd_gore_xeno_spray_hit_E_strip.png",
+      "clip": "bd_gore_xeno_spray_hit_E_clip.json",
+      "fluid": "xeno",
+      "sprayDirection": "E",
+      "suggestedUse": "xeno spray traveling E"
+    },
+    {
+      "id": "xeno_pool_spread_medium",
+      "label": "xeno pool medium",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "bd_gore_xeno_pool_spread_medium_strip.png",
+      "clip": "bd_gore_xeno_pool_spread_medium_clip.json",
+      "decal": "bd_gore_xeno_pool_medium_decal.png",
+      "fluid": "xeno",
+      "poolScale": "medium",
+      "anchor": [
+        48,
+        78
+      ],
+      "suggestedUse": "xeno pool medium"
+    },
+    {
+      "id": "xeno_splat_spatter_ring",
+      "label": "xeno spatter ring",
+      "kind": "fx",
+      "loop": false,
+      "fps": 1,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 1,
+      "strip": "bd_gore_xeno_splat_spatter_ring_strip.png",
+      "clip": "bd_gore_xeno_splat_spatter_ring_clip.json",
+      "decal": "bd_gore_xeno_splat_spatter_ring.png",
+      "fluid": "xeno",
+      "static": true,
+      "suggestedUse": "xeno spatter ring decal"
+    }
+  ]
+}
