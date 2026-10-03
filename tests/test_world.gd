@@ -19,6 +19,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_sculpt_ramps_mirror()
 	await test_regions_and_links()
 	await test_lattice_clip()
+	test_location_graph()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -718,3 +719,42 @@ func test_lattice_units() -> void:
 			DirAccess.remove_absolute(d + "/" + fn)
 	for d in [gv, gvd, root + "/gold_vehicles", root + "/gold_vehicles_damage", root]:
 		DirAccess.remove_absolute(d)
+
+
+func test_location_graph() -> void:
+	var world_d := {"id": "g_world", "format": 2, "kind": "world", "objects": [
+		{"id": "o1", "cell": [1, 1], "location": {"name": "Kowloon", "target_map": "g_hub"}},
+		{"id": "o2", "cell": [2, 2], "location": {"name": "Lost", "target_map": "g_nowhere"}}]}
+	var hub_d := {"id": "g_hub", "format": 2, "kind": "hub", "objects": [], "regions": [
+		{"name": "Back door", "cells": ["1,1"], "triggers": [{"on": "enter", "do": "teleport", "arg": "g_bar:3,4"}]}]}
+	var bar_d := {"id": "g_bar", "format": 2, "kind": "interior"}
+	check(LocationGraph.links_of("g_hub", hub_d) == [{"from": "g_hub", "to": "g_bar", "label": "Back door", "how": "teleport"}], "teleport triggers are links")
+	var g := LocationGraph.new()
+	g.build({"g_world": world_d, "g_bar": bar_d}, hub_d)
+	check(g.nodes.size() == 4 and g.nodes["g_nowhere"]["missing"], "live map included; broken link gets a ghost node")
+	check(g.edges.size() == 3 and g.incoming("g_bar") == 1, "doors + teleports drawn as edges")
+	var r_world: Rect2 = g.nodes["g_world"]["rect"]
+	var r_hub: Rect2 = g.nodes["g_hub"]["rect"]
+	var r_bar: Rect2 = g.nodes["g_bar"]["rect"]
+	check(r_world.position.x < r_hub.position.x and r_hub.position.x < r_bar.position.x, "columns: world → hub → interior")
+	check(g.node_at(r_hub.get_center()) == "g_hub", "click finds the node")
+	var picked := {"id": ""}
+	g.map_chosen.connect(func(id: String) -> void: picked["id"] = id)
+	var ev := InputEventMouseButton.new()
+	ev.button_index = MOUSE_BUTTON_LEFT
+	ev.pressed = true
+	ev.position = g.nodes["g_nowhere"]["rect"].get_center()
+	g._gui_input(ev)
+	ev.position = r_bar.get_center()
+	g._gui_input(ev)
+	check(picked["id"] == "g_bar", "clicking a missing map does nothing, a real one opens it")
+	# Real demo data: the world map's door reaches the hub.
+	var real := LocationGraph.new()
+	real.build(ContentDB.maps)
+	var found := false
+	for e: Dictionary in real.edges:
+		if e["from"] == "neon_expanse" and e["to"] == "neo_kowloon_hub":
+			found = true
+	check(found, "neon_expanse → neo_kowloon_hub link found in the demo maps")
+	g.free()
+	real.free()

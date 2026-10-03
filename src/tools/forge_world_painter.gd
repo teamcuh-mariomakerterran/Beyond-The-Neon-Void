@@ -638,6 +638,11 @@ func _build_topbar() -> Control:
 		if not on:
 			_renderer.set_cutaway(Vector2.INF, 0, 0))
 	h.add_child(xr)
+	var links := Button.new()
+	links.text = "⛬ LINKS"
+	links.tooltip_text = "Location graph: every map and the doors / teleports between them. Click a map to open it."
+	links.pressed.connect(show_links)
+	h.add_child(links)
 	_check_btn = Button.new()
 	_check_btn.text = "⚠ CHECK"
 	_check_btn.tooltip_text = "Find broken links, missing art, bad spawns and unreachable enemies."
@@ -2265,6 +2270,30 @@ func show_issues() -> void:
 	back.text = "← MAP SETTINGS"
 	back.pressed.connect(_show_inspector)
 	_inspector.add_child(back)
+
+
+## Location graph window (world → hub → interior), unsaved links included.
+func show_links() -> AcceptDialog:
+	var dlg := AcceptDialog.new()
+	dlg.title = "LOCATION LINKS"
+	dlg.ok_button_text = "CLOSE"
+	var sc := ScrollContainer.new()
+	sc.custom_minimum_size = Vector2(1080, 620)
+	var g := LocationGraph.new()
+	g.theme = NeonTheme.get_theme()
+	g.current = world.id
+	g.build(ContentDB.maps, world.to_dict())
+	g.map_chosen.connect(func(id: String) -> void:
+		dlg.queue_free()
+		if id != world.id:
+			load_map(id))
+	sc.add_child(g)
+	dlg.add_child(sc)
+	dlg.confirmed.connect(dlg.queue_free)
+	dlg.canceled.connect(dlg.queue_free)
+	add_child(dlg)
+	dlg.popup_centered()
+	return dlg
 
 
 ## Battle grid for the tactics view, rebuilt only after edits.
