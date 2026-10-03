@@ -46,6 +46,10 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
   - **X-ray (◎):** anything standing in front of the player (in game) or the cursor (in the editor) turns see-through.
   - **Footprints:** big structures claim an N×N area for sorting and blocking.
   - **Autosave:** every 90 seconds to `user://forge_autosave`, with a restore button in the map panel.
+  - **⛬ LINKS:** every map as a node graph (world → city/hub → interior → encounter), with doors and teleports as arrows and broken links in red. Click a map to open it.
+  - **Overhead cables:** buildings get roof anchors (found automatically, or click ✎ PLACE ANCHORS), and the city is strung with sagging, swaying wires plus a few live neon ones and hanging junk. Move a building and the wires re-string. Map settings live under OVERHEAD CABLES.
+  - **Screens (living signage):** tick "This object has a screen" on any object, click its 4 corners on the art, then pick a feed (live news, propaganda, ads, stats, gossip, custom) and a display (LED, LCD, CRT, hologram). Screens glow onto the street. Ad images go in `assets/signage/ads/`.
+  - **Lattice clips** (animated buildings and props) sit in the palette with a ▶; their black backgrounds are cut out automatically. Demo: open **neon_block_demo** (CITY tab).
   - More ideas, ranked: [docs/research/EDITOR_IDEAS.md](docs/research/EDITOR_IDEAS.md).
 - **Characters:**
   - Drop a portrait or an animation sheet on the character's drop zone.
@@ -63,6 +67,17 @@ A cyberpunk turn-based tactics RPG: a spiritual successor to *Final Fantasy Tact
 ![Neon lighting](docs/screenshots/world_lighting.png)
 ![HD-2D tilt-shift](docs/screenshots/hd2d_world.png)
 ![VFX library](docs/screenshots/vfx_showcase.png)
+
+### Battle systems added 2026-10-03
+- **Loadout (FFT):** a secondary job plus one **Reaction / Support / Movement** passive per character, set in Hub → Crew → LOADOUT and learned with microchips at the terminal. 19 passives in `data/passives.json`, e.g. Counter-Hack, Firewall, Overwatch, Auto-Patch, Reroute, Overclock Cooling, Quickdraw, Move +2, Grapple Line and Phase Step.
+- **Status looks:** every status shows on the unit's body (petrify turns it to cracked stone, banish drags it through the floor, plus frost, poison, fire, glitch, dissolve and cloak). Tune them in `data/status_looks.json`.
+- **Cues:** gameplay fires named moments (`hit.crit`, `kill.boss`, `victory`...). `data/cues.json` decides what each one feels like: shake, hit-stop, slow-mo, zoom punch, flash, VFX, sound, a news headline, letterbox or a boss title card. A red heartbeat vignette shows while anyone in the crew is under 25% HP. Mark a character `is_boss` (with a `boss_title`) to get the intro card.
+- **Dev console:** press **`** (backtick) in a dev build. Type `help`; anything else is evaluated as GDScript (`CombatManager.active_unit.current_hp`). Tab completes commands and ids; `watch <expr>` pins a live readout.
+- **Unit art:** a character's sprite path can be a Lattice clip (`…_idle_clip.json`) or a **PixelMatrix** folder (`assets/units/pixelmatrix/<name>`). `tools\compile_pixelmatrix.bat <name>` files PM_*.png exports from Downloads into that layout.
+
+![Lattice block](docs/screenshots/lattice_block.png)
+![Living signage and cables](docs/screenshots/signage_cables.png)
+![Status looks](docs/screenshots/status_looks.png)
 
 ## Where things are
 ```

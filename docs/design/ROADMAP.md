@@ -44,3 +44,15 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
 ## Art pipeline
 - Battle facings: **4 diagonals** (2 + mirror allowed per character). The other 4 facings are for cutscenes and menus.
 - The first big asset dump is arriving in `assets/incoming/`. Claude sorts, renames and indexes it.
+
+## Built 2026-10-03
+- ✅ Overhead cable network (MST + density spans, sag, sway, live neon, hanging junk, anchor editing)
+- ✅ Living signage (LED / LCD / CRT / hologram screens, shared feeds: news, propaganda, ads, stats, gossip, custom)
+- ✅ Status looks (one data-driven unit shader; petrify stone, banish sink…)
+- ✅ Cue system + juice (hit-stop, slow-mo, zoom punch, flashes, boss intro, low-HP heartbeat, override stack)
+- ✅ FFT loadout: Reaction / Support / Movement passives + secondary job in the Crew tab
+- ✅ Dev console
+- ✅ PixelMatrix layered units + export sorter
+- ✅ Lattice format guide adopted (holds = ticks, dirs-rows, unit packs, overlays)
+- ⬜ Mega-tile ground (on hold, by request)
+
