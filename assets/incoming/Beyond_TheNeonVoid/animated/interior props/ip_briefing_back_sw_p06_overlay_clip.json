@@ -1,0 +1,366 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_briefing_back_sw_p06_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  311,
+  250
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 1,
+   "x": 311,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 2,
+   "x": 622,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 3,
+   "x": 933,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 4,
+   "x": 1244,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 5,
+   "x": 1555,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 6,
+   "x": 1866,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 7,
+   "x": 2177,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 8,
+   "x": 2488,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 9,
+   "x": 2799,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 10,
+   "x": 3110,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 11,
+   "x": 3421,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 12,
+   "x": 3732,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 13,
+   "x": 4043,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 14,
+   "x": 4354,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 15,
+   "x": 4665,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 16,
+   "x": 4976,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 17,
+   "x": 5287,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 18,
+   "x": 5598,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 19,
+   "x": 5909,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 20,
+   "x": 6220,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 21,
+   "x": 6531,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 22,
+   "x": 6842,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  },
+  {
+   "i": 23,
+   "x": 7153,
+   "y": 0,
+   "w": 311,
+   "h": 250
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  156,
+  245
+ ],
+ "propBBox": [
+  4,
+  4,
+  308,
+  246
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_briefing_back_sw_p06_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_briefing_back_sw_p06.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_briefing_back_sw_p06.png",
+  "placementKey": "bldg_interior_indoor_briefing_back_sw_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Briefing Back Sw 06 \u2014 wall display",
+ "qaGrade": "B+",
+ "qaNote": "wall display: scanline sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 197,
+    "y": 118,
+    "warm": false
+   },
+   {
+    "x": 218,
+    "y": 123,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 127,
+    "warm": false
+   },
+   {
+    "x": 71,
+    "y": 130,
+    "warm": false
+   },
+   {
+    "x": 71,
+    "y": 141,
+    "warm": false
+   },
+   {
+    "x": 38,
+    "y": 169,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 173,
+    "warm": true
+   },
+   {
+    "x": 65,
+    "y": 177,
+    "warm": true
+   },
+   {
+    "x": 240,
+    "y": 224,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     38,
+     57,
+     91,
+     97
+    ],
+    "slope": 0.25533428165007077,
+    "area": 856
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     101,
+     82,
+     164,
+     158
+    ],
+    "slope": 0.18121413470250702,
+    "area": 3948
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     226,
+     103,
+     241,
+     120
+    ],
+    "slope": 0.24090909090909224,
+    "area": 201
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     38,
+     115,
+     57,
+     140
+    ],
+    "slope": 0.2472527472527452,
+    "area": 395
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     190,
+     135,
+     241,
+     154
+    ],
+    "slope": 0.2519607843137258,
+    "area": 393
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     218,
+     163,
+     241,
+     191
+    ],
+    "slope": 0.2647058823529418,
+    "area": 517
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     176,
+     164,
+     204,
+     176
+    ],
+    "slope": 0.25375939849624174,
+    "area": 175
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 9,
+   "strips": 0,
+   "screens": 6,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 35097,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_briefing_back_sw_p06",
+ "overlayClip": null
+}

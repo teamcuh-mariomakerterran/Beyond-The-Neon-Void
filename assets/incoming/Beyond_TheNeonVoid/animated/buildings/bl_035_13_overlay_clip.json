@@ -1,0 +1,301 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "bl_035_13_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "building_life (Brian battle-map building, own lit spots animated)",
+ "cell": [
+  172,
+  353
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 1,
+   "x": 172,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 2,
+   "x": 344,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 3,
+   "x": 516,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 4,
+   "x": 688,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 5,
+   "x": 860,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 6,
+   "x": 1032,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 7,
+   "x": 1204,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 8,
+   "x": 1376,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 9,
+   "x": 1548,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 10,
+   "x": 1720,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 11,
+   "x": 1892,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 12,
+   "x": 2064,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 13,
+   "x": 2236,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 14,
+   "x": 2408,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 15,
+   "x": 2580,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 16,
+   "x": 2752,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 17,
+   "x": 2924,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 18,
+   "x": 3096,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 19,
+   "x": 3268,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 20,
+   "x": 3440,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 21,
+   "x": 3612,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 22,
+   "x": 3784,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  },
+  {
+   "i": 23,
+   "x": 3956,
+   "y": 0,
+   "w": 172,
+   "h": 353
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  87,
+  344
+ ],
+ "buildingBBox": [
+  8,
+  12,
+  166,
+  345
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "bl_035_13_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "bd_battle_sorted/bsheet_035_13_2.png",
+  "gamePath": "/assets/buildings/bd_battle_sorted/bsheet_035_13_2.png",
+  "placementKey": "bldg_battle_bsheet_035_13",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "identicalFiles": []
+ },
+ "title": "White crystal monolith",
+ "emitters": {
+  "counts": {
+   "neon": 11
+  },
+  "beacons": [],
+  "pointLights": [],
+  "windows": [],
+  "neon": [
+   [
+    48,
+    36,
+    84,
+    177
+   ],
+   [
+    83,
+    38,
+    116,
+    330
+   ],
+   [
+    118,
+    133,
+    149,
+    207
+   ],
+   [
+    23,
+    145,
+    42,
+    284
+   ],
+   [
+    134,
+    157,
+    149,
+    266
+   ],
+   [
+    43,
+    198,
+    60,
+    265
+   ],
+   [
+    125,
+    228,
+    127,
+    277
+   ],
+   [
+    93,
+    230,
+    125,
+    319
+   ],
+   [
+    128,
+    258,
+    161,
+    323
+   ],
+   [
+    58,
+    266,
+    60,
+    305
+   ],
+   [
+    13,
+    269,
+    40,
+    322
+   ]
+  ],
+  "cores": [],
+  "vents": [],
+  "pings": [],
+  "screens": []
+ },
+ "layering": "Draw over the static building sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (lights, steam, pings).",
+ "overlayOf": "bl_035_13",
+ "overlayClip": null
+}

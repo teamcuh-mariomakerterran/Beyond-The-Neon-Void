@@ -1,0 +1,491 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_upgraded_back_sw_p01_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  454,
+  338
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 1,
+   "x": 454,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 2,
+   "x": 908,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 3,
+   "x": 1362,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 4,
+   "x": 1816,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 5,
+   "x": 2270,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 6,
+   "x": 2724,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 7,
+   "x": 3178,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 8,
+   "x": 3632,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 9,
+   "x": 4086,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 10,
+   "x": 4540,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 11,
+   "x": 4994,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 12,
+   "x": 5448,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 13,
+   "x": 5902,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 14,
+   "x": 6356,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 15,
+   "x": 6810,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 16,
+   "x": 7264,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 17,
+   "x": 7718,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 18,
+   "x": 8172,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 19,
+   "x": 8626,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 20,
+   "x": 9080,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 21,
+   "x": 9534,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 22,
+   "x": 9988,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  },
+  {
+   "i": 23,
+   "x": 10442,
+   "y": 0,
+   "w": 454,
+   "h": 338
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  228,
+  337
+ ],
+ "propBBox": [
+  4,
+  4,
+  451,
+  338
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_upgraded_back_sw_p01_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_upgraded_back_sw_p01_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_upgraded_back_sw_p01_2.png",
+  "placementKey": "bldg_interior_indoor_lab_upgraded_back_sw_p01",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab Upgraded Back Sw 01 \u2014 lab bench",
+ "qaGrade": "B",
+ "qaNote": "lab bench: lit drawer + tube rack glow",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 151,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 125,
+    "y": 63,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 57,
+    "warm": true
+   },
+   {
+    "x": 318,
+    "y": 57,
+    "warm": true
+   },
+   {
+    "x": 223,
+    "y": 61,
+    "warm": true
+   },
+   {
+    "x": 100,
+    "y": 71,
+    "warm": false
+   },
+   {
+    "x": 206,
+    "y": 74,
+    "warm": true
+   },
+   {
+    "x": 364,
+    "y": 91,
+    "warm": true
+   },
+   {
+    "x": 356,
+    "y": 94,
+    "warm": true
+   },
+   {
+    "x": 320,
+    "y": 107,
+    "warm": true
+   },
+   {
+    "x": 347,
+    "y": 116,
+    "warm": true
+   },
+   {
+    "x": 355,
+    "y": 134,
+    "warm": true
+   },
+   {
+    "x": 416,
+    "y": 141,
+    "warm": true
+   },
+   {
+    "x": 426,
+    "y": 159,
+    "warm": true
+   },
+   {
+    "x": 259,
+    "y": 169,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 185,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 190,
+    "warm": true
+   },
+   {
+    "x": 407,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 62,
+    "y": 199,
+    "warm": false
+   },
+   {
+    "x": 71,
+    "y": 204,
+    "warm": false
+   },
+   {
+    "x": 76,
+    "y": 206,
+    "warm": false
+   },
+   {
+    "x": 85,
+    "y": 211,
+    "warm": false
+   },
+   {
+    "x": 108,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 260,
+    "warm": true
+   },
+   {
+    "x": 41,
+    "y": 269,
+    "warm": false
+   },
+   {
+    "x": 52,
+    "y": 278,
+    "warm": false
+   },
+   {
+    "x": 64,
+    "y": 284,
+    "warm": false
+   },
+   {
+    "x": 71,
+    "y": 288,
+    "warm": false
+   },
+   {
+    "x": 76,
+    "y": 291,
+    "warm": false
+   },
+   {
+    "x": 197,
+    "y": 297,
+    "warm": true
+   },
+   {
+    "x": 171,
+    "y": 302,
+    "warm": true
+   },
+   {
+    "x": 165,
+    "y": 304,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     46,
+     235,
+     84,
+     259
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     266,
+     44,
+     281,
+     62
+    ],
+    "slope": 0.0,
+    "area": 198
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     146,
+     73,
+     158,
+     97
+    ],
+    "slope": -0.22023809523809457,
+    "area": 229
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     120,
+     81,
+     133,
+     105
+    ],
+    "slope": -0.5,
+    "area": 258
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     98,
+     90,
+     108,
+     114
+    ],
+    "slope": -0.5,
+    "area": 197
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     156,
+     205,
+     197,
+     223
+    ],
+    "slope": -0.5,
+    "area": 153
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     43,
+     207,
+     95,
+     251
+    ],
+    "slope": 0.5,
+    "area": 1283
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     41,
+     247,
+     85,
+     286
+    ],
+    "slope": 0.5,
+    "area": 962
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 32,
+   "strips": 1,
+   "screens": 7,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 51746,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lab_upgraded_back_sw_p01_2_overlay_clip.json",
+ "paletteCount": 47764
+}

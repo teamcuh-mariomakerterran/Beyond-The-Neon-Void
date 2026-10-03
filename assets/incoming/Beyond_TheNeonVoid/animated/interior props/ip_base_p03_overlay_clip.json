@@ -1,0 +1,305 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_base_p03_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  268,
+  298
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 1,
+   "x": 268,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 2,
+   "x": 536,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 3,
+   "x": 804,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 4,
+   "x": 1072,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 5,
+   "x": 1340,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 6,
+   "x": 1608,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 7,
+   "x": 1876,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 8,
+   "x": 2144,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 9,
+   "x": 2412,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 10,
+   "x": 2680,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 11,
+   "x": 2948,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 12,
+   "x": 3216,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 13,
+   "x": 3484,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 14,
+   "x": 3752,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 15,
+   "x": 4020,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 16,
+   "x": 4288,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 17,
+   "x": 4556,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 18,
+   "x": 4824,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 19,
+   "x": 5092,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 20,
+   "x": 5360,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 21,
+   "x": 5628,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 22,
+   "x": 5896,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  },
+  {
+   "i": 23,
+   "x": 6164,
+   "y": 0,
+   "w": 268,
+   "h": 298
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  134,
+  293
+ ],
+ "propBBox": [
+  4,
+  4,
+  264,
+  294
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_base_p03_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_base_p03.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_base_p03.png",
+  "placementKey": "bldg_interior_indoor_base_p03",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Base 03 \u2014 cyan-striped panel/door",
+ "qaGrade": "B+",
+ "qaNote": "cyan-striped panel/door: sweep + glitch + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 162,
+    "y": 118,
+    "warm": false
+   },
+   {
+    "x": 201,
+    "y": 124,
+    "warm": false
+   },
+   {
+    "x": 162,
+    "y": 127,
+    "warm": false
+   },
+   {
+    "x": 201,
+    "y": 134,
+    "warm": false
+   },
+   {
+    "x": 162,
+    "y": 136,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 159,
+    "warm": true
+   },
+   {
+    "x": 196,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 162,
+    "y": 175,
+    "warm": false
+   },
+   {
+    "x": 209,
+    "y": 175,
+    "warm": true
+   },
+   {
+    "x": 95,
+    "y": 223,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     55,
+     70,
+     156,
+     224
+    ],
+    "slope": 0.18659115820241134,
+    "area": 21638
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 10,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 13835,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_base_p03",
+ "overlayClip": null
+}

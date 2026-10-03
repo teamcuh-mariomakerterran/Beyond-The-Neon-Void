@@ -1,0 +1,471 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_power_p04_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  269,
+  305
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 1,
+   "x": 269,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 2,
+   "x": 538,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 3,
+   "x": 807,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 4,
+   "x": 1076,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 5,
+   "x": 1345,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 6,
+   "x": 1614,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 7,
+   "x": 1883,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 8,
+   "x": 2152,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 9,
+   "x": 2421,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 10,
+   "x": 2690,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 11,
+   "x": 2959,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 12,
+   "x": 3228,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 13,
+   "x": 3497,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 14,
+   "x": 3766,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 15,
+   "x": 4035,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 16,
+   "x": 4304,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 17,
+   "x": 4573,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 18,
+   "x": 4842,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 19,
+   "x": 5111,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 20,
+   "x": 5380,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 21,
+   "x": 5649,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 22,
+   "x": 5918,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  },
+  {
+   "i": 23,
+   "x": 6187,
+   "y": 0,
+   "w": 269,
+   "h": 305
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  134,
+  300
+ ],
+ "propBBox": [
+  4,
+  4,
+  265,
+  301
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_power_p04_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_power_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_power_p04_2.png",
+  "placementKey": "bldg_interior_indoor_power_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Power 04 \u2014 power console",
+ "qaGrade": "B+",
+ "qaNote": "power console: screen sweep + button LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 102,
+    "y": 7,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 14,
+    "warm": true
+   },
+   {
+    "x": 130,
+    "y": 17,
+    "warm": true
+   },
+   {
+    "x": 140,
+    "y": 21,
+    "warm": true
+   },
+   {
+    "x": 150,
+    "y": 24,
+    "warm": true
+   },
+   {
+    "x": 169,
+    "y": 31,
+    "warm": true
+   },
+   {
+    "x": 198,
+    "y": 41,
+    "warm": true
+   },
+   {
+    "x": 208,
+    "y": 45,
+    "warm": true
+   },
+   {
+    "x": 236,
+    "y": 55,
+    "warm": true
+   },
+   {
+    "x": 255,
+    "y": 62,
+    "warm": true
+   },
+   {
+    "x": 69,
+    "y": 79,
+    "warm": false
+   },
+   {
+    "x": 31,
+    "y": 78,
+    "warm": true
+   },
+   {
+    "x": 64,
+    "y": 91,
+    "warm": false
+   },
+   {
+    "x": 104,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 76,
+    "y": 95,
+    "warm": false
+   },
+   {
+    "x": 88,
+    "y": 99,
+    "warm": false
+   },
+   {
+    "x": 60,
+    "y": 102,
+    "warm": false
+   },
+   {
+    "x": 100,
+    "y": 104,
+    "warm": false
+   },
+   {
+    "x": 72,
+    "y": 107,
+    "warm": false
+   },
+   {
+    "x": 83,
+    "y": 111,
+    "warm": false
+   },
+   {
+    "x": 56,
+    "y": 112,
+    "warm": false
+   },
+   {
+    "x": 95,
+    "y": 116,
+    "warm": false
+   },
+   {
+    "x": 69,
+    "y": 116,
+    "warm": false
+   },
+   {
+    "x": 80,
+    "y": 120,
+    "warm": false
+   },
+   {
+    "x": 88,
+    "y": 123,
+    "warm": false
+   },
+   {
+    "x": 220,
+    "y": 127,
+    "warm": true
+   },
+   {
+    "x": 93,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 43,
+    "y": 131,
+    "warm": true
+   },
+   {
+    "x": 146,
+    "y": 135,
+    "warm": false
+   },
+   {
+    "x": 217,
+    "y": 135,
+    "warm": true
+   },
+   {
+    "x": 168,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 213,
+    "y": 144,
+    "warm": true
+   },
+   {
+    "x": 120,
+    "y": 145,
+    "warm": true
+   },
+   {
+    "x": 114,
+    "y": 146,
+    "warm": false
+   },
+   {
+    "x": 136,
+    "y": 152,
+    "warm": false
+   },
+   {
+    "x": 210,
+    "y": 153,
+    "warm": true
+   },
+   {
+    "x": 131,
+    "y": 164,
+    "warm": false
+   },
+   {
+    "x": 207,
+    "y": 161,
+    "warm": true
+   },
+   {
+    "x": 203,
+    "y": 171,
+    "warm": true
+   },
+   {
+    "x": 200,
+    "y": 180,
+    "warm": true
+   },
+   {
+    "x": 193,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 209,
+    "warm": true
+   },
+   {
+    "x": 184,
+    "y": 219,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     76,
+     79,
+     99,
+     95
+    ],
+    "slope": 0.5,
+    "area": 198
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 43,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 62383,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_power_p04_2_overlay_clip.json",
+ "paletteCount": 23208
+}

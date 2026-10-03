@@ -1,0 +1,9 @@
+059 patch
+02_expressions/sheet08_idle_lBaQ6.jpg
+02_expressions/sheet08_smirk_brSGN.jpg
+02_expressions/sheet08_think_t4Rsy.jpg
+02_expressions/sheet08_allin_XpZ28.jpg
+02_expressions/sheet08_shock_lBuXZ.jpg
+02_expressions/sheet08_laugh_gfluK.jpg
+02_expressions/sheet08_sad_wQ748.jpg
+02_expressions/sheet08_angry_5C6PR.jpg

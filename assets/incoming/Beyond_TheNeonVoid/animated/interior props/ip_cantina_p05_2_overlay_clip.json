@@ -1,0 +1,356 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_p05_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  304,
+  271
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 1,
+   "x": 304,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 2,
+   "x": 608,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 3,
+   "x": 912,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 4,
+   "x": 1216,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 5,
+   "x": 1520,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 6,
+   "x": 1824,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 7,
+   "x": 2128,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 8,
+   "x": 2432,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 9,
+   "x": 2736,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 10,
+   "x": 3040,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 11,
+   "x": 3344,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 12,
+   "x": 3648,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 13,
+   "x": 3952,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 14,
+   "x": 4256,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 15,
+   "x": 4560,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 16,
+   "x": 4864,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 17,
+   "x": 5168,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 18,
+   "x": 5472,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 19,
+   "x": 5776,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 20,
+   "x": 6080,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 21,
+   "x": 6384,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 22,
+   "x": 6688,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  },
+  {
+   "i": 23,
+   "x": 6992,
+   "y": 0,
+   "w": 304,
+   "h": 271
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  152,
+  267
+ ],
+ "propBBox": [
+  4,
+  4,
+  300,
+  268
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_p05_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_p05_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina 05 \u2014 neon sign",
+ "qaGrade": "B+",
+ "qaNote": "neon sign: magenta panel scanline + cyan frame pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 35,
+    "y": 6,
+    "warm": false
+   },
+   {
+    "x": 26,
+    "y": 10,
+    "warm": false
+   },
+   {
+    "x": 50,
+    "y": 10,
+    "warm": false
+   },
+   {
+    "x": 17,
+    "y": 15,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 16,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 22,
+    "warm": false
+   },
+   {
+    "x": 118,
+    "y": 26,
+    "warm": false
+   },
+   {
+    "x": 6,
+    "y": 27,
+    "warm": false
+   },
+   {
+    "x": 170,
+    "y": 38,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 42,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 46,
+    "warm": false
+   },
+   {
+    "x": 219,
+    "y": 50,
+    "warm": false
+   },
+   {
+    "x": 234,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 252,
+    "y": 59,
+    "warm": false
+   },
+   {
+    "x": 284,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 288,
+    "y": 71,
+    "warm": false
+   },
+   {
+    "x": 292,
+    "y": 75,
+    "warm": false
+   },
+   {
+    "x": 296,
+    "y": 81,
+    "warm": false
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     130,
+     30,
+     163,
+     37
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     26,
+     66,
+     266,
+     236
+    ],
+    "slope": 0.24725697292863028,
+    "area": 22512
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 18,
+   "strips": 1,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 54920,
+ "config": {
+  "pinklit": true
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_cantina_p05_2",
+ "overlayClip": null
+}

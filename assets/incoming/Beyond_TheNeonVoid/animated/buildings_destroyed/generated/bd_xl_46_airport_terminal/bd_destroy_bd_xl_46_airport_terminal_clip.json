@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_bd_xl_46_airport_terminal",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    470,
+    362
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 1,
+      "x": 470,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 2,
+      "x": 940,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 3,
+      "x": 1410,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 4,
+      "x": 1880,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 5,
+      "x": 2350,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 6,
+      "x": 2820,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 7,
+      "x": 3290,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 8,
+      "x": 3760,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 9,
+      "x": 4230,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 10,
+      "x": 4700,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    },
+    {
+      "i": 11,
+      "x": 5170,
+      "y": 0,
+      "w": 470,
+      "h": 362
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    234,
+    321
+  ],
+  "ruinAnchor": [
+    413,
+    683
+  ],
+  "sourceSize": [
+    826,
+    684
+  ],
+  "ruinSize": [
+    826,
+    684
+  ],
+  "smolderEmitters": [
+    {
+      "x": 148,
+      "y": 272
+    },
+    {
+      "x": 413,
+      "y": 243
+    },
+    {
+      "x": 677,
+      "y": 278
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_bd_xl_46_airport_terminal_strip.png",
+    "ruin": "bd_destroy_bd_xl_46_airport_terminal_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of bd_xl_46_airport_terminal",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_bd_xl_46_airport_terminal_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_bd_xl_46_airport_terminal_ruin.png",
+      "static": true,
+      "anchor": [
+        413,
+        683
+      ]
+    }
+  }
+}

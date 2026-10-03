@@ -1,0 +1,263 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_living_back_sw_p08_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  152,
+  277
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 1,
+   "x": 152,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 2,
+   "x": 304,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 3,
+   "x": 456,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 4,
+   "x": 608,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 5,
+   "x": 760,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 6,
+   "x": 912,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 7,
+   "x": 1064,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 8,
+   "x": 1216,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 9,
+   "x": 1368,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 10,
+   "x": 1520,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 11,
+   "x": 1672,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 12,
+   "x": 1824,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 13,
+   "x": 1976,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 14,
+   "x": 2128,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 15,
+   "x": 2280,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 16,
+   "x": 2432,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 17,
+   "x": 2584,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 18,
+   "x": 2736,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 19,
+   "x": 2888,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 20,
+   "x": 3040,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 21,
+   "x": 3192,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 22,
+   "x": 3344,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  },
+  {
+   "i": 23,
+   "x": 3496,
+   "y": 0,
+   "w": 152,
+   "h": 277
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  76,
+  272
+ ],
+ "propBBox": [
+  4,
+  4,
+  148,
+  273
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_living_back_sw_p08_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_living_back_sw_p08_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_living_back_sw_p08_2.png",
+  "placementKey": "bldg_interior_indoor_living_back_sw_p08",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Living Back Sw 08 \u2014 floor lamp",
+ "qaGrade": "B",
+ "qaNote": "floor lamp: bulb breathes",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 76,
+    "y": 230,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     95,
+     87,
+     135,
+     114
+    ],
+    "slope": -0.5,
+    "area": 514
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 1,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 13859,
+ "config": {
+  "lightmode": "breathe"
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_living_back_sw_p08_2_overlay_clip.json",
+ "paletteCount": 12457
+}

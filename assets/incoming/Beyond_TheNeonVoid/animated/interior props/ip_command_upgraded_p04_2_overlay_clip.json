@@ -1,0 +1,460 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_upgraded_p04_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  374,
+  315
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 1,
+   "x": 374,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 2,
+   "x": 748,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 3,
+   "x": 1122,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 4,
+   "x": 1496,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 5,
+   "x": 1870,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 6,
+   "x": 2244,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 7,
+   "x": 2618,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 8,
+   "x": 2992,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 9,
+   "x": 3366,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 10,
+   "x": 3740,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 11,
+   "x": 4114,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 12,
+   "x": 4488,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 13,
+   "x": 4862,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 14,
+   "x": 5236,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 15,
+   "x": 5610,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 16,
+   "x": 5984,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 17,
+   "x": 6358,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 18,
+   "x": 6732,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 19,
+   "x": 7106,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 20,
+   "x": 7480,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 21,
+   "x": 7854,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 22,
+   "x": 8228,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  },
+  {
+   "i": 23,
+   "x": 8602,
+   "y": 0,
+   "w": 374,
+   "h": 315
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  187,
+  310
+ ],
+ "propBBox": [
+  4,
+  0,
+  370,
+  311
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_upgraded_p04_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_upgraded_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_upgraded_p04_2.png",
+  "placementKey": "bldg_interior_indoor_command_upgraded_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command Upgraded 04 \u2014 holo cube on table",
+ "qaGrade": "A-",
+ "qaNote": "holo cube on table: hologram shimmer lines + sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 83,
+    "y": 106,
+    "warm": false
+   },
+   {
+    "x": 74,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 69,
+    "y": 117,
+    "warm": false
+   },
+   {
+    "x": 63,
+    "y": 121,
+    "warm": false
+   },
+   {
+    "x": 283,
+    "y": 121,
+    "warm": false
+   },
+   {
+    "x": 287,
+    "y": 122,
+    "warm": false
+   },
+   {
+    "x": 86,
+    "y": 122,
+    "warm": false
+   },
+   {
+    "x": 74,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 291,
+    "y": 124,
+    "warm": false
+   },
+   {
+    "x": 82,
+    "y": 125,
+    "warm": false
+   },
+   {
+    "x": 302,
+    "y": 128,
+    "warm": false
+   },
+   {
+    "x": 297,
+    "y": 129,
+    "warm": false
+   },
+   {
+    "x": 82,
+    "y": 129,
+    "warm": false
+   },
+   {
+    "x": 87,
+    "y": 131,
+    "warm": false
+   },
+   {
+    "x": 306,
+    "y": 132,
+    "warm": false
+   },
+   {
+    "x": 301,
+    "y": 133,
+    "warm": false
+   },
+   {
+    "x": 80,
+    "y": 134,
+    "warm": false
+   },
+   {
+    "x": 293,
+    "y": 138,
+    "warm": false
+   },
+   {
+    "x": 279,
+    "y": 139,
+    "warm": false
+   },
+   {
+    "x": 301,
+    "y": 144,
+    "warm": false
+   },
+   {
+    "x": 250,
+    "y": 161,
+    "warm": false
+   },
+   {
+    "x": 72,
+    "y": 167,
+    "warm": true
+   },
+   {
+    "x": 75,
+    "y": 168,
+    "warm": true
+   },
+   {
+    "x": 315,
+    "y": 171,
+    "warm": true
+   },
+   {
+    "x": 79,
+    "y": 170,
+    "warm": true
+   },
+   {
+    "x": 232,
+    "y": 170,
+    "warm": false
+   },
+   {
+    "x": 61,
+    "y": 175,
+    "warm": true
+   },
+   {
+    "x": 82,
+    "y": 177,
+    "warm": true
+   },
+   {
+    "x": 71,
+    "y": 180,
+    "warm": true
+   },
+   {
+    "x": 219,
+    "y": 178,
+    "warm": false
+   },
+   {
+    "x": 201,
+    "y": 180,
+    "warm": false
+   },
+   {
+    "x": 215,
+    "y": 181,
+    "warm": false
+   },
+   {
+    "x": 208,
+    "y": 184,
+    "warm": false
+   },
+   {
+    "x": 43,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 135,
+    "y": 201,
+    "warm": true
+   },
+   {
+    "x": 248,
+    "y": 216,
+    "warm": true
+   },
+   {
+    "x": 68,
+    "y": 234,
+    "warm": true
+   },
+   {
+    "x": 78,
+    "y": 239,
+    "warm": true
+   },
+   {
+    "x": 179,
+    "y": 260,
+    "warm": true
+   },
+   {
+    "x": 128,
+    "y": 265,
+    "warm": true
+   },
+   {
+    "x": 246,
+    "y": 286,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     46,
+     9,
+     323,
+     194
+    ],
+    "slope": 0.0,
+    "area": 24348
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 41,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 56832,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_command_upgraded_p04_2",
+ "overlayClip": null
+}

@@ -1,0 +1,264 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_back_sw_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  119,
+  216
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 1,
+   "x": 119,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 2,
+   "x": 238,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 3,
+   "x": 357,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 4,
+   "x": 476,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 5,
+   "x": 595,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 6,
+   "x": 714,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 7,
+   "x": 833,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 8,
+   "x": 952,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 9,
+   "x": 1071,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 10,
+   "x": 1190,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 11,
+   "x": 1309,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 12,
+   "x": 1428,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 13,
+   "x": 1547,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 14,
+   "x": 1666,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 15,
+   "x": 1785,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 16,
+   "x": 1904,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 17,
+   "x": 2023,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 18,
+   "x": 2142,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 19,
+   "x": 2261,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 20,
+   "x": 2380,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 21,
+   "x": 2499,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 22,
+   "x": 2618,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  },
+  {
+   "i": 23,
+   "x": 2737,
+   "y": 0,
+   "w": 119,
+   "h": 216
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  60,
+  211
+ ],
+ "propBBox": [
+  4,
+  4,
+  115,
+  212
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_back_sw_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_back_sw_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_back_sw_p09_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_back_sw_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Back Sw 09 \u2014 amber lantern",
+ "qaGrade": "B",
+ "qaNote": "amber lantern: glass sheen glides over the glow",
+ "emitters": {
+  "statusLights": [],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     22,
+     69,
+     71,
+     159
+    ],
+    "slope": 0.18666443850267356,
+    "area": 3782
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 0,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 18602,
+ "config": {
+  "warmlit": true,
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_cantina_back_sw_p09_2",
+ "overlayClip": null
+}

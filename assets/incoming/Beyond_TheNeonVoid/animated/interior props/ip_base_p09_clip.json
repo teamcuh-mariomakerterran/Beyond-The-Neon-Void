@@ -1,0 +1,371 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_base_p09",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  154,
+  243
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 1,
+   "x": 154,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 2,
+   "x": 308,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 3,
+   "x": 462,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 4,
+   "x": 616,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 5,
+   "x": 770,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 6,
+   "x": 924,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 7,
+   "x": 1078,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 8,
+   "x": 1232,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 9,
+   "x": 1386,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 10,
+   "x": 1540,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 11,
+   "x": 1694,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 12,
+   "x": 1848,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 13,
+   "x": 2002,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 14,
+   "x": 2156,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 15,
+   "x": 2310,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 16,
+   "x": 2464,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 17,
+   "x": 2618,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 18,
+   "x": 2772,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 19,
+   "x": 2926,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 20,
+   "x": 3080,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 21,
+   "x": 3234,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 22,
+   "x": 3388,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  },
+  {
+   "i": 23,
+   "x": 3542,
+   "y": 0,
+   "w": 154,
+   "h": 243
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  77,
+  238
+ ],
+ "propBBox": [
+  4,
+  4,
+  150,
+  239
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_base_p09_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_base_p09.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_base_p09.png",
+  "placementKey": "bldg_interior_indoor_base_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Base 09 \u2014 orange energy capsule",
+ "qaGrade": "B+",
+ "qaNote": "orange energy capsule: bubbles rise in the glowing core + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 72,
+    "y": 72,
+    "warm": true
+   },
+   {
+    "x": 22,
+    "y": 71,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 98,
+    "warm": true
+   },
+   {
+    "x": 118,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 118,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 118,
+    "y": 136,
+    "warm": false
+   },
+   {
+    "x": 118,
+    "y": 145,
+    "warm": false
+   },
+   {
+    "x": 6,
+    "y": 153,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 167,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 180,
+    "warm": true
+   },
+   {
+    "x": 135,
+    "y": 187,
+    "warm": true
+   },
+   {
+    "x": 10,
+    "y": 194,
+    "warm": true
+   },
+   {
+    "x": 16,
+    "y": 201,
+    "warm": true
+   },
+   {
+    "x": 19,
+    "y": 204,
+    "warm": true
+   },
+   {
+    "x": 129,
+    "y": 212,
+    "warm": true
+   },
+   {
+    "x": 26,
+    "y": 218,
+    "warm": true
+   },
+   {
+    "x": 125,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 44,
+    "y": 225,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 228,
+    "warm": true
+   },
+   {
+    "x": 71,
+    "y": 230,
+    "warm": true
+   },
+   {
+    "x": 109,
+    "y": 232,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "tank",
+    "bbox": [
+     32,
+     65,
+     69,
+     184
+    ],
+    "slope": 0.0,
+    "area": 3296
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 21,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 1,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 57109,
+ "config": {
+  "warmlit": true,
+  "tanks": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_base_p09_overlay_clip.json",
+ "paletteCount": 61462
+}

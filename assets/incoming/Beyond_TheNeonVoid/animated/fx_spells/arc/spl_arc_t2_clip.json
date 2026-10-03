@@ -1,0 +1,183 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_arc_t2",
+ "cell": [
+  112,
+  152
+ ],
+ "frames": 17,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 1,
+   "x": 112,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 2,
+   "x": 224,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 3,
+   "x": 336,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 4,
+   "x": 448,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 5,
+   "x": 560,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 6,
+   "x": 672,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 7,
+   "x": 784,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 8,
+   "x": 896,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 9,
+   "x": 1008,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 10,
+   "x": 1120,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 11,
+   "x": 1232,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 12,
+   "x": 1344,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 13,
+   "x": 1456,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 14,
+   "x": 1568,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 15,
+   "x": 1680,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  },
+  {
+   "i": 16,
+   "x": 1792,
+   "y": 0,
+   "w": 112,
+   "h": 152
+  }
+ ],
+ "textures": {
+  "strip": "spl_arc_t2_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Arcra (tier 2) \u2014 three bolts converge into a crackling ball, which discharges into the tile",
+ "qaGrade": "A-",
+ "qaNote": "three bolts converge into a crackling ball that discharges into the tile",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  56,
+  136
+ ],
+ "group": "arc",
+ "tags": [
+  "spell",
+  "arc",
+  "tier2"
+ ],
+ "config": {
+  "footprintTiles": [
+   1,
+   1
+  ],
+  "tileCentre": [
+   56,
+   120
+  ],
+  "family": "arc",
+  "tier": 2
+ },
+ "suggestedUse": "Elemental tier impact on the target tile. Chain: spl_charge_cyan on the caster -> (optional) spl_arc_beam_<dir> -> this clip on the target tile. Bolts enter from the top of the cell (the sky).",
+ "layering": "Anchor = ground point of the TARGET tile (bottom vertex of its 64x32 diamond); draw over the target unit.",
+ "groundPoint": [
+  56,
+  136
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 8,
+   "x": 56,
+   "y": 120
+  }
+ ]
+}

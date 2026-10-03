@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_30_cyber_outpost (1)",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "blue_flame_burnout",
+  "cell": [
+    374,
+    441
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 1,
+      "x": 374,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 2,
+      "x": 748,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 3,
+      "x": 1122,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 4,
+      "x": 1496,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 5,
+      "x": 1870,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 6,
+      "x": 2244,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 7,
+      "x": 2618,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 8,
+      "x": 2992,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 9,
+      "x": 3366,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 10,
+      "x": 3740,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    },
+    {
+      "i": 11,
+      "x": 4114,
+      "y": 0,
+      "w": 374,
+      "h": 441
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    186,
+    391
+  ],
+  "ruinAnchor": [
+    338,
+    844
+  ],
+  "sourceSize": [
+    676,
+    845
+  ],
+  "ruinSize": [
+    676,
+    845
+  ],
+  "smolderEmitters": [
+    {
+      "x": 121,
+      "y": 305
+    },
+    {
+      "x": 338,
+      "y": 308
+    },
+    {
+      "x": 554,
+      "y": 326
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_30_cyber_outpost (1)_strip.png",
+    "ruin": "bd_destroy_30_cyber_outpost (1)_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Blue Flame Burnout destroy of 30_cyber_outpost (1)",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_30_cyber_outpost (1)_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_30_cyber_outpost (1)_ruin.png",
+      "static": true,
+      "anchor": [
+        338,
+        844
+      ]
+    }
+  }
+}

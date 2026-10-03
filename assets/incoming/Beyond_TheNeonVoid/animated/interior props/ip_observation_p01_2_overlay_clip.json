@@ -1,0 +1,294 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_observation_p01_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  530,
+  345
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 1,
+   "x": 530,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 2,
+   "x": 1060,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 3,
+   "x": 1590,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 4,
+   "x": 2120,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 5,
+   "x": 2650,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 6,
+   "x": 3180,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 7,
+   "x": 3710,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 8,
+   "x": 4240,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 9,
+   "x": 4770,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 10,
+   "x": 5300,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 11,
+   "x": 5830,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 12,
+   "x": 6360,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 13,
+   "x": 6890,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 14,
+   "x": 7420,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 15,
+   "x": 7950,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 16,
+   "x": 8480,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 17,
+   "x": 9010,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 18,
+   "x": 9540,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 19,
+   "x": 10070,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 20,
+   "x": 10600,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 21,
+   "x": 11130,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 22,
+   "x": 11660,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  },
+  {
+   "i": 23,
+   "x": 12190,
+   "y": 0,
+   "w": 530,
+   "h": 345
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  265,
+  344
+ ],
+ "propBBox": [
+  4,
+  4,
+  526,
+  345
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_observation_p01_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_observation_p01_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_observation_p01_2.png",
+  "placementKey": "bldg_interior_indoor_observation_p01",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Observation 01 \u2014 mountain-view window",
+ "qaGrade": "B",
+ "qaNote": "mountain-view window: glass sheen sweep (sky only)",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 441,
+    "y": 44,
+    "warm": false
+   },
+   {
+    "x": 434,
+    "y": 45,
+    "warm": false
+   },
+   {
+    "x": 424,
+    "y": 46,
+    "warm": false
+   },
+   {
+    "x": 146,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 136,
+    "y": 88,
+    "warm": false
+   },
+   {
+    "x": 129,
+    "y": 89,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     89,
+     72,
+     465,
+     275
+    ],
+    "slope": 0.0,
+    "area": 46632
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 6,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 19109,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_observation_p01_2",
+ "overlayClip": null
+}

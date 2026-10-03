@@ -1,0 +1,127 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_channel_cyan",
+ "cell": [
+  96,
+  128
+ ],
+ "frames": 12,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 1,
+   "x": 96,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 2,
+   "x": 192,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 3,
+   "x": 288,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 4,
+   "x": 384,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 5,
+   "x": 480,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 6,
+   "x": 576,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 7,
+   "x": 672,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 8,
+   "x": 768,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 9,
+   "x": 864,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 10,
+   "x": 960,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  },
+  {
+   "i": 11,
+   "x": 1056,
+   "y": 0,
+   "w": 96,
+   "h": 128
+  }
+ ],
+ "textures": {
+  "strip": "spl_channel_cyan_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Channel loop \u2014 cyan",
+ "qaGrade": "B+",
+ "qaNote": "circle at the feet, rising data streaks, orbiting motes, halo rings; busy but readable",
+ "kind": "ambient",
+ "loop": true,
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  48,
+  120
+ ],
+ "group": "caster",
+ "tags": [
+  "spell",
+  "caster"
+ ],
+ "config": {
+  "family": "caster"
+ },
+ "suggestedUse": "Caster side. cast_circle_* loops under the caster during the cast; charge_* is the one-shot wind-up (release frame in emitters.releaseFrame -> start the projectile/impact there); channel_* loops while a spell is held.",
+ "layering": "Loop over the caster while a spell is held (anchor on the caster tile ground point): cast circle at the feet, a light column with rising data streaks and two orbiting mote bands. Draw over the unit.",
+ "sortBias": 3,
+ "depthKey": "fx_over"
+}

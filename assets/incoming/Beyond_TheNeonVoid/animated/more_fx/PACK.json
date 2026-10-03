@@ -1,0 +1,1389 @@
+{
+  "format": "lattice.map_fx.pack.v1",
+  "version": 1,
+  "name": "bd_map_fx",
+  "source": "LATTICE",
+  "note": "Reusable battle-map FX. Drop strip+clip on map; facing-agnostic.",
+  "effects": [
+    {
+      "id": "ping",
+      "label": "ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "strip": "ping_strip.png",
+      "clip": "ping_clip.json",
+      "suggestedUse": "selection / radar alert ping"
+    },
+    {
+      "id": "buff_aura",
+      "label": "buff aura",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 8,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "strip": "buff_aura_strip.png",
+      "clip": "buff_aura_clip.json",
+      "suggestedUse": "looping buff halo on unit/building"
+    },
+    {
+      "id": "explosion_sm",
+      "label": "explosion sm",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "strip": "explosion_sm_strip.png",
+      "clip": "explosion_sm_clip.json",
+      "suggestedUse": "small explosion one-shot"
+    },
+    {
+      "id": "shockwave",
+      "label": "shockwave",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "strip": "shockwave_strip.png",
+      "clip": "shockwave_clip.json",
+      "suggestedUse": "ground shock ring"
+    },
+    {
+      "id": "heal_motes",
+      "label": "heal motes",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 8,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "strip": "heal_motes_strip.png",
+      "clip": "heal_motes_clip.json",
+      "suggestedUse": "rising heal motes"
+    },
+    {
+      "id": "alert_pulse",
+      "label": "alert pulse",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "strip": "alert_pulse_strip.png",
+      "clip": "alert_pulse_clip.json",
+      "suggestedUse": "urgent red map ping"
+    },
+    {
+      "id": "emp_burst",
+      "label": "emp burst",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "strip": "emp_burst_strip.png",
+      "clip": "emp_burst_clip.json",
+      "suggestedUse": "electric arc EMP burst"
+    },
+    {
+      "id": "cauliflower_blast",
+      "label": "cauliflower blast",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "cauliflower_blast_strip.png",
+      "clip": "cauliflower_blast_clip.json",
+      "suggestedUse": "golden cauliflower fireball one-shot"
+    },
+    {
+      "id": "painterly_blast",
+      "label": "painterly blast",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "painterly_blast_strip.png",
+      "clip": "painterly_blast_clip.json",
+      "suggestedUse": "orange painterly blast \u2192 smoke ring"
+    },
+    {
+      "id": "mushroom_blast",
+      "label": "mushroom blast",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "mushroom_blast_strip.png",
+      "clip": "mushroom_blast_clip.json",
+      "suggestedUse": "ground mushroom cloud explosion"
+    },
+    {
+      "id": "energy_dome",
+      "label": "energy dome",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "energy_dome_strip.png",
+      "clip": "energy_dome_clip.json",
+      "suggestedUse": "cyan energy dome \u2192 lightning"
+    },
+    {
+      "id": "energy_orb",
+      "label": "energy orb",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "energy_orb_strip.png",
+      "clip": "energy_orb_clip.json",
+      "suggestedUse": "blue cellular orb \u2192 shatter arcs"
+    },
+    {
+      "id": "muzzle_flash",
+      "label": "muzzle flash",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "muzzle_flash_strip.png",
+      "clip": "muzzle_flash_clip.json",
+      "suggestedUse": "directional muzzle flash cone + sparks"
+    },
+    {
+      "id": "impact_hit",
+      "label": "impact hit",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "impact_hit_strip.png",
+      "clip": "impact_hit_clip.json",
+      "suggestedUse": "star burst impact hit one-shot"
+    },
+    {
+      "id": "shield_break",
+      "label": "shield break",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "shield_break_strip.png",
+      "clip": "shield_break_clip.json",
+      "suggestedUse": "cyan hex shield crack \u2192 shards"
+    },
+    {
+      "id": "teleport_out",
+      "label": "teleport out",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "teleport_out_strip.png",
+      "clip": "teleport_out_clip.json",
+      "suggestedUse": "vertical dissolve teleport out"
+    },
+    {
+      "id": "teleport_in",
+      "label": "teleport in",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "teleport_in_strip.png",
+      "clip": "teleport_in_clip.json",
+      "suggestedUse": "particle coalesce teleport in"
+    },
+    {
+      "id": "scrap_burst",
+      "label": "scrap burst",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "scrap_burst_strip.png",
+      "clip": "scrap_burst_clip.json",
+      "suggestedUse": "metallic scrap debris + sparks"
+    },
+    {
+      "id": "acid_spit",
+      "label": "acid spit",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "acid_spit_strip.png",
+      "clip": "acid_spit_clip.json",
+      "suggestedUse": "toxic green acid spray + drips"
+    },
+    {
+      "id": "ice_shatter",
+      "label": "ice shatter",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "ice_shatter_strip.png",
+      "clip": "ice_shatter_clip.json",
+      "suggestedUse": "crystalline ice shatter + frost ring"
+    },
+    {
+      "id": "heal_bloom",
+      "label": "heal bloom",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "heal_bloom_strip.png",
+      "clip": "heal_bloom_clip.json",
+      "suggestedUse": "soft green/gold heal bloom petals"
+    },
+    {
+      "id": "status_alert",
+      "label": "status alert",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "status_alert_strip.png",
+      "clip": "status_alert_clip.json",
+      "suggestedUse": "red/amber status alert badge pulse"
+    },
+    {
+      "id": "status_stun",
+      "label": "status stun",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "status_stun_strip.png",
+      "clip": "status_stun_clip.json",
+      "suggestedUse": "yellow/white stun stars orbit"
+    },
+    {
+      "id": "status_silence",
+      "label": "status silence",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "status_silence_strip.png",
+      "clip": "status_silence_clip.json",
+      "suggestedUse": "purple silence X + cancelled waves"
+    },
+    {
+      "id": "lightning_strike",
+      "label": "lightning strike",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "lightning_strike_strip.png",
+      "clip": "lightning_strike_clip.json",
+      "suggestedUse": "vertical lightning bolt + ground flash"
+    },
+    {
+      "id": "rain_splash",
+      "label": "rain splash",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "rain_splash_strip.png",
+      "clip": "rain_splash_clip.json",
+      "suggestedUse": "map weather rain splash rings"
+    },
+    {
+      "id": "snow_burst",
+      "label": "snow burst",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "snow_burst_strip.png",
+      "clip": "snow_burst_clip.json",
+      "suggestedUse": "soft snow flakes + chill puff"
+    },
+    {
+      "id": "building_demolish",
+      "label": "building demolish",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "building_demolish_strip.png",
+      "clip": "building_demolish_clip.json",
+      "suggestedUse": "dust mushroom + falling debris"
+    },
+    {
+      "id": "emp_pulse",
+      "label": "emp pulse",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "emp_pulse_strip.png",
+      "clip": "emp_pulse_clip.json",
+      "suggestedUse": "cyan hex EMP expanding pulse"
+    },
+    {
+      "id": "poison_cloud",
+      "label": "poison cloud",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "poison_cloud_strip.png",
+      "clip": "poison_cloud_clip.json",
+      "suggestedUse": "toxic green/purple poison billow"
+    },
+    {
+      "id": "crit_spark",
+      "label": "crit spark",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "crit_spark_strip.png",
+      "clip": "crit_spark_clip.json",
+      "suggestedUse": "white/gold crit slash + star burst"
+    },
+    {
+      "id": "fire_burn",
+      "label": "fire burn",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "fire_burn_strip.png",
+      "clip": "fire_burn_clip.json",
+      "suggestedUse": "loopable chunky burning flame mass + embers"
+    },
+    {
+      "id": "smoke_screen",
+      "label": "smoke screen",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "smoke_screen_strip.png",
+      "clip": "smoke_screen_clip.json",
+      "suggestedUse": "grey billowing smoke cover cloud"
+    },
+    {
+      "id": "plasma_bolt",
+      "label": "plasma bolt",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "plasma_bolt_strip.png",
+      "clip": "plasma_bolt_clip.json",
+      "suggestedUse": "magenta/cyan plasma projectile streak"
+    },
+    {
+      "id": "laser_hit",
+      "label": "laser hit",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "laser_hit_strip.png",
+      "clip": "laser_hit_clip.json",
+      "suggestedUse": "thin red laser beam + impact star"
+    },
+    {
+      "id": "orbital_strike",
+      "label": "orbital strike",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "orbital_strike_strip.png",
+      "clip": "orbital_strike_clip.json",
+      "suggestedUse": "reticle warn then orbital column blast"
+    },
+    {
+      "id": "landmine_blast",
+      "label": "landmine blast",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "landmine_blast_strip.png",
+      "clip": "landmine_blast_clip.json",
+      "suggestedUse": "low ground mine blast + dirt clods"
+    },
+    {
+      "id": "oil_splatter",
+      "label": "oil splatter",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "oil_splatter_strip.png",
+      "clip": "oil_splatter_clip.json",
+      "suggestedUse": "dark oil droplets + sparks (mech hurt)"
+    },
+    {
+      "id": "shield_up",
+      "label": "shield up",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "shield_up_strip.png",
+      "clip": "shield_up_clip.json",
+      "suggestedUse": "hex shield bubble assembling upward"
+    },
+    {
+      "id": "cloak_shimmer",
+      "label": "cloak shimmer",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "cloak_shimmer_strip.png",
+      "clip": "cloak_shimmer_clip.json",
+      "suggestedUse": "cloak dissolve scanline shimmer"
+    },
+    {
+      "id": "resource_pickup",
+      "label": "resource pickup",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 8,
+      "strip": "resource_pickup_strip.png",
+      "clip": "resource_pickup_clip.json",
+      "suggestedUse": "gold/cyan resource chip pickup pop"
+    },
+    {
+      "id": "smolder_smoke",
+      "label": "smolder smoke",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 8,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "smolder_smoke_strip.png",
+      "clip": "smolder_smoke_clip.json",
+      "suggestedUse": "looping smolder over destroyed ruin"
+    },
+    {
+      "id": "flamethrower_stream",
+      "label": "flamethrower stream",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "flamethrower_stream_strip.png",
+      "clip": "flamethrower_stream_clip.json",
+      "suggestedUse": "looping flamethrower fire stream"
+    },
+    {
+      "id": "rocket_trail",
+      "label": "rocket trail",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "rocket_trail_strip.png",
+      "clip": "rocket_trail_clip.json",
+      "suggestedUse": "loopable rocket exhaust + smoke trail"
+    },
+    {
+      "id": "artillery_impact",
+      "label": "artillery impact",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "artillery_impact_strip.png",
+      "clip": "artillery_impact_clip.json",
+      "suggestedUse": "incoming shell streak then dirt/fire burst"
+    },
+    {
+      "id": "chain_lightning",
+      "label": "chain lightning",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "chain_lightning_strip.png",
+      "clip": "chain_lightning_clip.json",
+      "suggestedUse": "lightning arc jumping between 3 points"
+    },
+    {
+      "id": "nanite_repair",
+      "label": "nanite repair",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "nanite_repair_strip.png",
+      "clip": "nanite_repair_clip.json",
+      "suggestedUse": "green/cyan nanite swarm repair loop"
+    },
+    {
+      "id": "drop_pod_landing",
+      "label": "drop pod landing",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "drop_pod_landing_strip.png",
+      "clip": "drop_pod_landing_clip.json",
+      "suggestedUse": "drop pod streak down, land, dust ring"
+    },
+    {
+      "id": "flare_signal",
+      "label": "flare signal",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "flare_signal_strip.png",
+      "clip": "flare_signal_clip.json",
+      "suggestedUse": "colored signal smoke plume loop"
+    },
+    {
+      "id": "radiation_leak",
+      "label": "radiation leak",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "radiation_leak_strip.png",
+      "clip": "radiation_leak_clip.json",
+      "suggestedUse": "sickly green pulsing glow + motes loop"
+    },
+    {
+      "id": "frost_aura",
+      "label": "frost aura",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "frost_aura_strip.png",
+      "clip": "frost_aura_clip.json",
+      "suggestedUse": "icy crystal aura loop"
+    },
+    {
+      "id": "gravity_well",
+      "label": "gravity well",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "gravity_well_strip.png",
+      "clip": "gravity_well_clip.json",
+      "suggestedUse": "inward spiral gravity vortex loop"
+    },
+    {
+      "id": "buff_up",
+      "label": "buff up",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "buff_up_strip.png",
+      "clip": "buff_up_clip.json",
+      "suggestedUse": "rising buff chevrons / aura"
+    },
+    {
+      "id": "debuff_down",
+      "label": "debuff down",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "debuff_down_strip.png",
+      "clip": "debuff_down_clip.json",
+      "suggestedUse": "sinking dark debuff motes"
+    },
+    {
+      "id": "promotion_levelup",
+      "label": "promotion levelup",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "promotion_levelup_strip.png",
+      "clip": "promotion_levelup_clip.json",
+      "suggestedUse": "rank-up burst plus stars"
+    },
+    {
+      "id": "capture_flag",
+      "label": "capture flag",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "capture_flag_strip.png",
+      "clip": "capture_flag_clip.json",
+      "suggestedUse": "flag plant / claim pulse"
+    },
+    {
+      "id": "damaged_sparks",
+      "label": "damaged sparks",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "damaged_sparks_strip.png",
+      "clip": "damaged_sparks_clip.json",
+      "suggestedUse": "intermittent sparks from damaged building loop"
+    },
+    {
+      "id": "fog_drift",
+      "label": "fog drift",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 8,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "fog_drift_strip.png",
+      "clip": "fog_drift_clip.json",
+      "suggestedUse": "ambient fog bank drift loop"
+    },
+    {
+      "id": "ash_fall",
+      "label": "ash fall",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "ash_fall_strip.png",
+      "clip": "ash_fall_clip.json",
+      "suggestedUse": "ambient ash fall loop"
+    },
+    {
+      "id": "acid_pool",
+      "label": "acid pool",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "acid_pool_strip.png",
+      "clip": "acid_pool_clip.json",
+      "suggestedUse": "bubbling acid pool loop"
+    },
+    {
+      "id": "missile_lock",
+      "label": "missile lock",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "missile_lock_strip.png",
+      "clip": "missile_lock_clip.json",
+      "suggestedUse": "reticle lock-on converging"
+    },
+    {
+      "id": "spawn_warp",
+      "label": "spawn warp",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "spawn_warp_strip.png",
+      "clip": "spawn_warp_clip.json",
+      "suggestedUse": "unit deploy beam-in"
+    },
+    {
+      "id": "medkit_burst",
+      "label": "medkit burst",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "medkit_burst_strip.png",
+      "clip": "medkit_burst_clip.json",
+      "suggestedUse": "medkit cross pop + heal motes"
+    },
+    {
+      "id": "overshield_shatter",
+      "label": "overshield shatter",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "overshield_shatter_strip.png",
+      "clip": "overshield_shatter_clip.json",
+      "suggestedUse": "gold overshield crack then shards"
+    },
+    {
+      "id": "smoke_grenade",
+      "label": "smoke grenade",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "smoke_grenade_strip.png",
+      "clip": "smoke_grenade_clip.json",
+      "suggestedUse": "canister pop + rising smoke plume"
+    },
+    {
+      "id": "flashbang_whiteout",
+      "label": "flashbang whiteout",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "flashbang_whiteout_strip.png",
+      "clip": "flashbang_whiteout_clip.json",
+      "suggestedUse": "flashbang white disc + star spikes"
+    },
+    {
+      "id": "sticky_bomb_blink",
+      "label": "sticky bomb blink",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "sticky_bomb_blink_strip.png",
+      "clip": "sticky_bomb_blink_clip.json",
+      "suggestedUse": "sticky bomb LED blink then pop"
+    },
+    {
+      "id": "concussion_ring",
+      "label": "concussion ring",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "concussion_ring_strip.png",
+      "clip": "concussion_ring_clip.json",
+      "suggestedUse": "soft expanding concussion air ring"
+    },
+    {
+      "id": "tracer_ricochet",
+      "label": "tracer ricochet",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "tracer_ricochet_strip.png",
+      "clip": "tracer_ricochet_clip.json",
+      "suggestedUse": "tracer streak + ricochet sparks"
+    },
+    {
+      "id": "alarm_strobe",
+      "label": "alarm strobe",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 8,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "alarm_strobe_strip.png",
+      "clip": "alarm_strobe_clip.json",
+      "suggestedUse": "building alarm strobe loop"
+    },
+    {
+      "id": "dust_kick",
+      "label": "dust kick",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "dust_kick_strip.png",
+      "clip": "dust_kick_clip.json",
+      "suggestedUse": "footstep / vehicle dust kick"
+    },
+    {
+      "id": "drone_scout_ping",
+      "label": "drone scout ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "drone_scout_ping_strip.png",
+      "clip": "drone_scout_ping_clip.json",
+      "suggestedUse": "drone sonar ping + scan wedge"
+    },
+    {
+      "id": "decoy_hologram",
+      "label": "decoy hologram",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "decoy_hologram_strip.png",
+      "clip": "decoy_hologram_clip.json",
+      "suggestedUse": "cyan decoy silhouette flicker then pop"
+    },
+    {
+      "id": "mine_arm_blink",
+      "label": "mine arm blink",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "mine_arm_blink_strip.png",
+      "clip": "mine_arm_blink_clip.json",
+      "suggestedUse": "mine arming LED blink then click"
+    },
+    {
+      "id": "tripwire_snap",
+      "label": "tripwire snap",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "tripwire_snap_strip.png",
+      "clip": "tripwire_snap_clip.json",
+      "suggestedUse": "red tripwire laser then snap sparks"
+    },
+    {
+      "id": "breach_charge_spark",
+      "label": "breach charge spark",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "breach_charge_spark_strip.png",
+      "clip": "breach_charge_spark_clip.json",
+      "suggestedUse": "breach charge countdown sparks"
+    },
+    {
+      "id": "poison_gas_plume",
+      "label": "poison gas plume",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "poison_gas_plume_strip.png",
+      "clip": "poison_gas_plume_clip.json",
+      "suggestedUse": "toxic green rising gas plume"
+    },
+    {
+      "id": "ice_ground_crack",
+      "label": "ice ground crack",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "ice_ground_crack_strip.png",
+      "clip": "ice_ground_crack_clip.json",
+      "suggestedUse": "ground freeze cracks + frost"
+    },
+    {
+      "id": "burn_ember_dot",
+      "label": "burn ember dot",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "burn_ember_dot_strip.png",
+      "clip": "burn_ember_dot_clip.json",
+      "suggestedUse": "small burn DoT ember loop"
+    },
+    {
+      "id": "revive_spark",
+      "label": "revive spark",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "revive_spark_strip.png",
+      "clip": "revive_spark_clip.json",
+      "suggestedUse": "revive get-up flash + motes"
+    },
+    {
+      "id": "jammer_static",
+      "label": "jammer static",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "jammer_static_strip.png",
+      "clip": "jammer_static_clip.json",
+      "suggestedUse": "jammer static noise cloud loop"
+    },
+    {
+      "id": "enemy_mark_ping",
+      "label": "enemy mark ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "enemy_mark_ping_strip.png",
+      "clip": "enemy_mark_ping_clip.json",
+      "suggestedUse": "red enemy mark diamond + warn rings"
+    },
+    {
+      "id": "supply_crate_drop",
+      "label": "supply crate drop",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "supply_crate_drop_strip.png",
+      "clip": "supply_crate_drop_clip.json",
+      "suggestedUse": "supply crate parachute drop + landing puff"
+    },
+    {
+      "id": "turret_deploy",
+      "label": "turret deploy",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "turret_deploy_strip.png",
+      "clip": "turret_deploy_clip.json",
+      "suggestedUse": "turret unfold + barrel snap flash"
+    },
+    {
+      "id": "muzzle_smoke",
+      "label": "muzzle smoke",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "muzzle_smoke_strip.png",
+      "clip": "muzzle_smoke_clip.json",
+      "suggestedUse": "small after-shot muzzle smoke puff"
+    },
+    {
+      "id": "casing_eject",
+      "label": "casing eject",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "casing_eject_strip.png",
+      "clip": "casing_eject_clip.json",
+      "suggestedUse": "brass casing eject arc + glint"
+    },
+    {
+      "id": "vehicle_exhaust",
+      "label": "vehicle exhaust",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "vehicle_exhaust_strip.png",
+      "clip": "vehicle_exhaust_clip.json",
+      "suggestedUse": "vehicle exhaust puff loop"
+    },
+    {
+      "id": "reload_click",
+      "label": "reload click",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "reload_click_strip.png",
+      "clip": "reload_click_clip.json",
+      "suggestedUse": "magazine seat click + spark"
+    },
+    {
+      "id": "heal_ground_aura",
+      "label": "heal ground aura",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "heal_ground_aura_strip.png",
+      "clip": "heal_ground_aura_clip.json",
+      "suggestedUse": "flat green ground heal ring aura"
+    },
+    {
+      "id": "banner_capture_spin",
+      "label": "banner capture spin",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "banner_capture_spin_strip.png",
+      "clip": "banner_capture_spin_clip.json",
+      "suggestedUse": "spinning capture banner on pole"
+    },
+    {
+      "id": "ally_mark_ping",
+      "label": "ally mark ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "ally_mark_ping_strip.png",
+      "clip": "ally_mark_ping_clip.json",
+      "suggestedUse": "cyan ally mark diamond + rings"
+    },
+    {
+      "id": "fortify_plate",
+      "label": "fortify plate",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "fortify_plate_strip.png",
+      "clip": "fortify_plate_clip.json",
+      "suggestedUse": "armor plate fortify slam flash"
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_airlock_upgraded_p10_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  329,
+  225
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 1,
+   "x": 329,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 2,
+   "x": 658,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 3,
+   "x": 987,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 4,
+   "x": 1316,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 5,
+   "x": 1645,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 6,
+   "x": 1974,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 7,
+   "x": 2303,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 8,
+   "x": 2632,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 9,
+   "x": 2961,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 10,
+   "x": 3290,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 11,
+   "x": 3619,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 12,
+   "x": 3948,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 13,
+   "x": 4277,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 14,
+   "x": 4606,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 15,
+   "x": 4935,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 16,
+   "x": 5264,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 17,
+   "x": 5593,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 18,
+   "x": 5922,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 19,
+   "x": 6251,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 20,
+   "x": 6580,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 21,
+   "x": 6909,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 22,
+   "x": 7238,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  },
+  {
+   "i": 23,
+   "x": 7567,
+   "y": 0,
+   "w": 329,
+   "h": 225
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  165,
+  220
+ ],
+ "propBBox": [
+  4,
+  4,
+  326,
+  221
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_airlock_upgraded_p10_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_airlock_upgraded_p10.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_airlock_upgraded_p10.png",
+  "placementKey": "bldg_interior_indoor_airlock_upgraded_p10",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Airlock Upgraded 10 \u2014 capsule light bank",
+ "qaGrade": "B+",
+ "qaNote": "capsule light bank: tubes glow sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 67,
+    "y": 96,
+    "warm": true
+   },
+   {
+    "x": 8,
+    "y": 166,
+    "warm": true
+   },
+   {
+    "x": 13,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 17,
+    "y": 176,
+    "warm": true
+   },
+   {
+    "x": 28,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 42,
+    "y": 181,
+    "warm": true
+   },
+   {
+    "x": 128,
+    "y": 194,
+    "warm": true
+   },
+   {
+    "x": 210,
+    "y": 206,
+    "warm": true
+   },
+   {
+    "x": 232,
+    "y": 209,
+    "warm": true
+   },
+   {
+    "x": 246,
+    "y": 211,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     169,
+     81,
+     202,
+     159
+    ],
+    "slope": 0.0,
+    "area": 2218
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     238,
+     89,
+     270,
+     169
+    ],
+    "slope": 0.0,
+    "area": 2307
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 10,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 2,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 61855,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_airlock_upgraded_p10",
+ "overlayClip": null
+}

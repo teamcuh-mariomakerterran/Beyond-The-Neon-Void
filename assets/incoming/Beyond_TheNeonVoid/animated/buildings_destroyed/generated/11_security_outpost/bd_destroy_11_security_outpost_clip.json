@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_11_security_outpost",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    478,
+    427
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 1,
+      "x": 478,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 2,
+      "x": 956,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 3,
+      "x": 1434,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 4,
+      "x": 1912,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 5,
+      "x": 2390,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 6,
+      "x": 2868,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 7,
+      "x": 3346,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 8,
+      "x": 3824,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 9,
+      "x": 4302,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 10,
+      "x": 4780,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    },
+    {
+      "i": 11,
+      "x": 5258,
+      "y": 0,
+      "w": 478,
+      "h": 427
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    238,
+    379
+  ],
+  "ruinAnchor": [
+    596,
+    1144
+  ],
+  "sourceSize": [
+    1193,
+    1145
+  ],
+  "ruinSize": [
+    1193,
+    1145
+  ],
+  "smolderEmitters": [
+    {
+      "x": 214,
+      "y": 486
+    },
+    {
+      "x": 596,
+      "y": 443
+    },
+    {
+      "x": 978,
+      "y": 396
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_11_security_outpost_strip.png",
+    "ruin": "bd_destroy_11_security_outpost_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 11_security_outpost",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_11_security_outpost_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_11_security_outpost_ruin.png",
+      "static": true,
+      "anchor": [
+        596,
+        1144
+      ]
+    }
+  }
+}

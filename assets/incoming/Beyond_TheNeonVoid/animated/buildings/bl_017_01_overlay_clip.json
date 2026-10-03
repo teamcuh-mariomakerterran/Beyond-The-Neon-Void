@@ -1,0 +1,350 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "bl_017_01_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "building_life v2 (Brian battle-map building, own lit spots animated + added FX)",
+ "cell": [
+  79,
+  340
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 1,
+   "x": 79,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 2,
+   "x": 158,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 3,
+   "x": 237,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 4,
+   "x": 316,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 5,
+   "x": 395,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 6,
+   "x": 474,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 7,
+   "x": 553,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 8,
+   "x": 632,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 9,
+   "x": 711,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 10,
+   "x": 790,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 11,
+   "x": 869,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 12,
+   "x": 948,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 13,
+   "x": 1027,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 14,
+   "x": 1106,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 15,
+   "x": 1185,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 16,
+   "x": 1264,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 17,
+   "x": 1343,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 18,
+   "x": 1422,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 19,
+   "x": 1501,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 20,
+   "x": 1580,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 21,
+   "x": 1659,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 22,
+   "x": 1738,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  },
+  {
+   "i": 23,
+   "x": 1817,
+   "y": 0,
+   "w": 79,
+   "h": 340
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  38,
+  331
+ ],
+ "buildingBBox": [
+  6,
+  8,
+  71,
+  332
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "bl_017_01_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "bd_battle_sorted/bsheet_017_01_2.png",
+  "gamePath": "/assets/buildings/bd_battle_sorted/bsheet_017_01_2.png",
+  "placementKey": "bldg_battle_bsheet_017_01",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "identicalFiles": []
+ },
+ "title": "Battle building 017 / 01",
+ "qaGrade": "B",
+ "qaNote": "needle tower, cyan stripes (thin at 1x)",
+ "emitters": {
+  "counts": {
+   "beacon": 1,
+   "neon": 8,
+   "point": 11
+  },
+  "beacons": [
+   [
+    41.0,
+    58.0
+   ]
+  ],
+  "pointLights": [
+   [
+    30.0,
+    131.0
+   ],
+   [
+    45.0,
+    139.0
+   ],
+   [
+    26.0,
+    142.0
+   ],
+   [
+    26.0,
+    151.0
+   ],
+   [
+    25.0,
+    184.0
+   ],
+   [
+    50.0,
+    232.0
+   ],
+   [
+    28.0,
+    239.0
+   ],
+   [
+    50.0,
+    241.0
+   ],
+   [
+    59.0,
+    273.0
+   ],
+   [
+    59.0,
+    277.0
+   ],
+   [
+    51.0,
+    283.5
+   ]
+  ],
+  "windows": [],
+  "neon": [
+   [
+    42,
+    60,
+    43,
+    76
+   ],
+   [
+    50,
+    72,
+    51,
+    141
+   ],
+   [
+    26,
+    84,
+    27,
+    140
+   ],
+   [
+    50,
+    150,
+    52,
+    226
+   ],
+   [
+    25,
+    164,
+    26,
+    180
+   ],
+   [
+    25,
+    186,
+    26,
+    224
+   ],
+   [
+    22,
+    228,
+    23,
+    307
+   ],
+   [
+    54,
+    229,
+    56,
+    314
+   ]
+  ],
+  "signs": [],
+  "cores": [],
+  "vents": [],
+  "pings": [],
+  "screens": [],
+  "addedBeacons": [
+   {
+    "x": 39,
+    "y": 9,
+    "col": "red",
+    "per": 12,
+    "size": 2
+   }
+  ],
+  "glints": [],
+  "padTop": 0
+ },
+ "phaseSeed": 43108,
+ "layering": "Draw over the static building sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (lights, steam, pings, glints).",
+ "overlayOf": "bl_017_01",
+ "overlayClip": null
+}

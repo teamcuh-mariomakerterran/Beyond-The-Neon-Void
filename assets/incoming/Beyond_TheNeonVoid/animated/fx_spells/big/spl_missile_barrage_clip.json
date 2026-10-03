@@ -1,0 +1,285 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_missile_barrage",
+ "cell": [
+  224,
+  240
+ ],
+ "frames": 26,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 1,
+   "x": 224,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 2,
+   "x": 448,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 3,
+   "x": 672,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 4,
+   "x": 896,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 5,
+   "x": 1120,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 6,
+   "x": 1344,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 7,
+   "x": 1568,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 8,
+   "x": 1792,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 9,
+   "x": 2016,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 10,
+   "x": 2240,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 11,
+   "x": 2464,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 12,
+   "x": 2688,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 13,
+   "x": 2912,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 14,
+   "x": 3136,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 15,
+   "x": 3360,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 16,
+   "x": 3584,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 17,
+   "x": 3808,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 18,
+   "x": 4032,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 19,
+   "x": 4256,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 20,
+   "x": 4480,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 21,
+   "x": 4704,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 22,
+   "x": 4928,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 23,
+   "x": 5152,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 24,
+   "x": 5376,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  },
+  {
+   "i": 25,
+   "x": 5600,
+   "y": 0,
+   "w": 224,
+   "h": 240
+  }
+ ],
+ "textures": {
+  "strip": "spl_missile_barrage_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Missile barrage \u2014 a salvo arcs in with smoke trails, rockets hit tile by tile across the 3x3, flashes + shock rings",
+ "qaGrade": "A-",
+ "qaNote": "nine rockets arc in with smoke trails and hit tile by tile: flash, fireball, shock ring, debris, smoke",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  112,
+  192
+ ],
+ "group": "big",
+ "tags": [
+  "spell",
+  "big",
+  "3x3"
+ ],
+ "config": {
+  "footprintTiles": [
+   3,
+   3
+  ],
+  "tileCentre": [
+   112,
+   176
+  ],
+  "family": "big"
+ },
+ "suggestedUse": "Big spell; anchor on the target (centre) tile ground point. Beams/rods/rockets enter from the top of the cell (the sky).",
+ "layering": "Anchor = ground point of the CENTRE tile of the 3x3 area (bottom vertex of its 64x32 diamond). Draw over units.",
+ "groundPoint": [
+  112,
+  192
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 6,
+   "x": 80,
+   "y": 160
+  },
+  {
+   "frame": 8,
+   "x": 112,
+   "y": 176
+  },
+  {
+   "frame": 10,
+   "x": 48,
+   "y": 176
+  },
+  {
+   "frame": 11,
+   "x": 80,
+   "y": 192
+  },
+  {
+   "frame": 13,
+   "x": 112,
+   "y": 144
+  },
+  {
+   "frame": 14,
+   "x": 144,
+   "y": 192
+  },
+  {
+   "frame": 16,
+   "x": 176,
+   "y": 176
+  },
+  {
+   "frame": 18,
+   "x": 144,
+   "y": 160
+  },
+  {
+   "frame": 19,
+   "x": 112,
+   "y": 208
+  }
+ ]
+}

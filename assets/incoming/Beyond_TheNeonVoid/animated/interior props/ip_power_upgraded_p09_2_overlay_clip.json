@@ -1,0 +1,372 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_power_upgraded_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  218,
+  291
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 1,
+   "x": 218,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 2,
+   "x": 436,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 3,
+   "x": 654,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 4,
+   "x": 872,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 5,
+   "x": 1090,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 6,
+   "x": 1308,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 7,
+   "x": 1526,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 8,
+   "x": 1744,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 9,
+   "x": 1962,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 10,
+   "x": 2180,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 11,
+   "x": 2398,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 12,
+   "x": 2616,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 13,
+   "x": 2834,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 14,
+   "x": 3052,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 15,
+   "x": 3270,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 16,
+   "x": 3488,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 17,
+   "x": 3706,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 18,
+   "x": 3924,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 19,
+   "x": 4142,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 20,
+   "x": 4360,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 21,
+   "x": 4578,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 22,
+   "x": 4796,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  },
+  {
+   "i": 23,
+   "x": 5014,
+   "y": 0,
+   "w": 218,
+   "h": 291
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  109,
+  286
+ ],
+ "propBBox": [
+  4,
+  4,
+  214,
+  287
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_power_upgraded_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_power_upgraded_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_power_upgraded_p09_2.png",
+  "placementKey": "bldg_interior_indoor_power_upgraded_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Power Upgraded 09 \u2014 energy core",
+ "qaGrade": "A-",
+ "qaNote": "energy core: bubbles rising in the glowing tube + arcs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 77,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 78,
+    "y": 185,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 191,
+    "warm": false
+   },
+   {
+    "x": 179,
+    "y": 192,
+    "warm": true
+   },
+   {
+    "x": 170,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 203,
+    "y": 236,
+    "warm": true
+   },
+   {
+    "x": 184,
+    "y": 248,
+    "warm": true
+   },
+   {
+    "x": 24,
+    "y": 244,
+    "warm": true
+   },
+   {
+    "x": 34,
+    "y": 249,
+    "warm": true
+   },
+   {
+    "x": 46,
+    "y": 257,
+    "warm": true
+   },
+   {
+    "x": 167,
+    "y": 259,
+    "warm": true
+   },
+   {
+    "x": 158,
+    "y": 264,
+    "warm": true
+   },
+   {
+    "x": 151,
+    "y": 268,
+    "warm": true
+   },
+   {
+    "x": 71,
+    "y": 270,
+    "warm": true
+   },
+   {
+    "x": 86,
+    "y": 278,
+    "warm": true
+   },
+   {
+    "x": 91,
+    "y": 281,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     85,
+     120,
+     123,
+     125
+    ]
+   },
+   {
+    "bbox": [
+     56,
+     166,
+     59,
+     204
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "tank",
+    "bbox": [
+     76,
+     15,
+     133,
+     45
+    ],
+    "slope": 0.0,
+    "area": 866
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     152,
+     180,
+     160,
+     216
+    ],
+    "slope": -0.6,
+    "area": 158
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 16,
+   "strips": 2,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 2,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 57465,
+ "config": {
+  "tanks": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_power_upgraded_p09_2",
+ "overlayClip": null
+}

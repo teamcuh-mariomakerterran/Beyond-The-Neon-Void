@@ -1,0 +1,264 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_arc_t3_3x3",
+ "cell": [
+  224,
+  200
+ ],
+ "frames": 22,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 1,
+   "x": 224,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 2,
+   "x": 448,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 3,
+   "x": 672,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 4,
+   "x": 896,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 5,
+   "x": 1120,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 6,
+   "x": 1344,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 7,
+   "x": 1568,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 8,
+   "x": 1792,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 9,
+   "x": 2016,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 10,
+   "x": 2240,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 11,
+   "x": 2464,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 12,
+   "x": 2688,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 13,
+   "x": 2912,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 14,
+   "x": 3136,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 15,
+   "x": 3360,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 16,
+   "x": 3584,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 17,
+   "x": 3808,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 18,
+   "x": 4032,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 19,
+   "x": 4256,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 20,
+   "x": 4480,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  },
+  {
+   "i": 21,
+   "x": 4704,
+   "y": 0,
+   "w": 224,
+   "h": 200
+  }
+ ],
+ "textures": {
+  "strip": "spl_arc_t3_3x3_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Arcga (tier 3, 3x3) \u2014 chain storm: strikes hop across all 9 tiles, then a mega bolt arcs out to every tile",
+ "qaGrade": "B+",
+ "qaNote": "strikes hop over all 9 tiles with chain arcs, then a mega bolt arcs out to every tile",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  112,
+  152
+ ],
+ "group": "arc",
+ "tags": [
+  "spell",
+  "arc",
+  "tier3",
+  "3x3"
+ ],
+ "config": {
+  "footprintTiles": [
+   3,
+   3
+  ],
+  "tileCentre": [
+   112,
+   136
+  ],
+  "family": "arc",
+  "tier": 3
+ },
+ "suggestedUse": "Elemental tier impact on the target tile. Chain: spl_charge_cyan on the caster -> (optional) spl_arc_beam_<dir> -> this clip on the target tile. Bolts enter from the top of the cell (the sky).",
+ "layering": "Anchor = ground point of the CENTRE tile of the 3x3 area (bottom vertex of its 64x32 diamond); the effect covers that tile and its 8 neighbours. Draw over units.",
+ "groundPoint": [
+  112,
+  152
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 1,
+   "x": 112,
+   "y": 104
+  },
+  {
+   "frame": 2,
+   "x": 144,
+   "y": 120
+  },
+  {
+   "frame": 3,
+   "x": 176,
+   "y": 136
+  },
+  {
+   "frame": 4,
+   "x": 144,
+   "y": 152
+  },
+  {
+   "frame": 5,
+   "x": 112,
+   "y": 136
+  },
+  {
+   "frame": 6,
+   "x": 80,
+   "y": 120
+  },
+  {
+   "frame": 7,
+   "x": 48,
+   "y": 136
+  },
+  {
+   "frame": 8,
+   "x": 80,
+   "y": 152
+  },
+  {
+   "frame": 9,
+   "x": 112,
+   "y": 168
+  },
+  {
+   "frame": 11,
+   "x": 112,
+   "y": 136
+  }
+ ]
+}

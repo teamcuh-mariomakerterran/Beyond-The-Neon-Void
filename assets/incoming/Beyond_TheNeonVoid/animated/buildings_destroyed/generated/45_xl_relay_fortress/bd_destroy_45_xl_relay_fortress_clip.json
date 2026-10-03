@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_45_xl_relay_fortress",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "surge_shed",
+  "cell": [
+    370,
+    441
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 1,
+      "x": 370,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 2,
+      "x": 740,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 3,
+      "x": 1110,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 4,
+      "x": 1480,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 5,
+      "x": 1850,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 6,
+      "x": 2220,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 7,
+      "x": 2590,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 8,
+      "x": 2960,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 9,
+      "x": 3330,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 10,
+      "x": 3700,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    },
+    {
+      "i": 11,
+      "x": 4070,
+      "y": 0,
+      "w": 370,
+      "h": 441
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    184,
+    391
+  ],
+  "ruinAnchor": [
+    353,
+    890
+  ],
+  "sourceSize": [
+    707,
+    891
+  ],
+  "ruinSize": [
+    707,
+    891
+  ],
+  "smolderEmitters": [
+    {
+      "x": 127,
+      "y": 324
+    },
+    {
+      "x": 353,
+      "y": 394
+    },
+    {
+      "x": 579,
+      "y": 356
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_45_xl_relay_fortress_strip.png",
+    "ruin": "bd_destroy_45_xl_relay_fortress_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Surge Shed destroy of 45_xl_relay_fortress",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_45_xl_relay_fortress_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_45_xl_relay_fortress_ruin.png",
+      "static": true,
+      "anchor": [
+        353,
+        890
+      ]
+    }
+  }
+}

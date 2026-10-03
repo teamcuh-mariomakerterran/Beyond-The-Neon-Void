@@ -1,0 +1,323 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_utility_upgraded_p11",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  224,
+  326
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 1,
+   "x": 224,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 2,
+   "x": 448,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 3,
+   "x": 672,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 4,
+   "x": 896,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 5,
+   "x": 1120,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 6,
+   "x": 1344,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 7,
+   "x": 1568,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 8,
+   "x": 1792,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 9,
+   "x": 2016,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 10,
+   "x": 2240,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 11,
+   "x": 2464,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 12,
+   "x": 2688,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 13,
+   "x": 2912,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 14,
+   "x": 3136,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 15,
+   "x": 3360,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 16,
+   "x": 3584,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 17,
+   "x": 3808,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 18,
+   "x": 4032,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 19,
+   "x": 4256,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 20,
+   "x": 4480,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 21,
+   "x": 4704,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 22,
+   "x": 4928,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  },
+  {
+   "i": 23,
+   "x": 5152,
+   "y": 0,
+   "w": 224,
+   "h": 326
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  112,
+  321
+ ],
+ "propBBox": [
+  4,
+  4,
+  220,
+  322
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_utility_upgraded_p11_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_utility_upgraded_p11.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_utility_upgraded_p11.png",
+  "placementKey": "bldg_interior_indoor_utility_upgraded_p11",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Utility Upgraded 11 \u2014 barrel with glowing rings",
+ "qaGrade": "B+",
+ "qaNote": "barrel with glowing rings: ring pulse + sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 187,
+    "y": 104,
+    "warm": false
+   },
+   {
+    "x": 129,
+    "y": 141,
+    "warm": false
+   },
+   {
+    "x": 20,
+    "y": 164,
+    "warm": true
+   },
+   {
+    "x": 155,
+    "y": 162,
+    "warm": false
+   },
+   {
+    "x": 52,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 54,
+    "y": 181,
+    "warm": true
+   },
+   {
+    "x": 55,
+    "y": 193,
+    "warm": true
+   },
+   {
+    "x": 52,
+    "y": 206,
+    "warm": true
+   },
+   {
+    "x": 160,
+    "y": 236,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 289,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     149,
+     153,
+     161,
+     171
+    ]
+   },
+   {
+    "bbox": [
+     200,
+     238,
+     213,
+     286
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     11,
+     105,
+     159,
+     243
+    ],
+    "slope": 0.2047584758475845,
+    "area": 5762
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 10,
+   "strips": 2,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 1094,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_utility_upgraded_p11_overlay_clip.json",
+ "paletteCount": 43376
+}

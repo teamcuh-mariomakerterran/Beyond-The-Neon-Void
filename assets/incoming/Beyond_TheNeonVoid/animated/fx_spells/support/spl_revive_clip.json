@@ -1,0 +1,202 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_revive",
+ "cell": [
+  128,
+  160
+ ],
+ "frames": 21,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 1,
+   "x": 128,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 2,
+   "x": 256,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 3,
+   "x": 384,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 4,
+   "x": 512,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 5,
+   "x": 640,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 6,
+   "x": 768,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 7,
+   "x": 896,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 8,
+   "x": 1024,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 9,
+   "x": 1152,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 10,
+   "x": 1280,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 11,
+   "x": 1408,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 12,
+   "x": 1536,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 13,
+   "x": 1664,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 14,
+   "x": 1792,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 15,
+   "x": 1920,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 16,
+   "x": 2048,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 17,
+   "x": 2176,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 18,
+   "x": 2304,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 19,
+   "x": 2432,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  },
+  {
+   "i": 20,
+   "x": 2560,
+   "y": 0,
+   "w": 128,
+   "h": 160
+  }
+ ],
+ "textures": {
+  "strip": "spl_revive_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Revive pulse \u2014 gold beam drops, ECG trace spikes, three defib ping rings, life sparks rise",
+ "qaGrade": "A-",
+ "qaNote": "gold beam, ECG spike trace, three defib ping rings, life sparks",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  64,
+  136
+ ],
+ "group": "support",
+ "tags": [
+  "spell",
+  "support"
+ ],
+ "config": {
+  "footprintTiles": [
+   1,
+   1
+  ],
+  "tileCentre": [
+   64,
+   120
+  ],
+  "family": "support"
+ },
+ "suggestedUse": "Support/status effect on a unit; anchor on the unit's tile ground point.",
+ "layering": "Anchor = ground point of the target unit's tile (bottom vertex of its 64x32 diamond); draw over the unit (sized for 84x84 units: body ~16-70px above the anchor).",
+ "groundPoint": [
+  64,
+  136
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over"
+}

@@ -1,0 +1,376 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "bl_021_07",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "building_life v2 (Brian battle-map building, own lit spots animated + added FX)",
+ "cell": [
+  252,
+  346
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 1,
+   "x": 252,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 2,
+   "x": 504,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 3,
+   "x": 756,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 4,
+   "x": 1008,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 5,
+   "x": 1260,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 6,
+   "x": 1512,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 7,
+   "x": 1764,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 8,
+   "x": 2016,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 9,
+   "x": 2268,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 10,
+   "x": 2520,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 11,
+   "x": 2772,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 12,
+   "x": 3024,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 13,
+   "x": 3276,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 14,
+   "x": 3528,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 15,
+   "x": 3780,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 16,
+   "x": 4032,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 17,
+   "x": 4284,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 18,
+   "x": 4536,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 19,
+   "x": 4788,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 20,
+   "x": 5040,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 21,
+   "x": 5292,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 22,
+   "x": 5544,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  },
+  {
+   "i": 23,
+   "x": 5796,
+   "y": 0,
+   "w": 252,
+   "h": 346
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  125,
+  337
+ ],
+ "buildingBBox": [
+  8,
+  9,
+  242,
+  338
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "bl_021_07_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "bd_battle_sorted/bsheet_021_07_2.png",
+  "gamePath": "/assets/buildings/bd_battle_sorted/bsheet_021_07_2.png",
+  "placementKey": "bldg_battle_bsheet_021_07",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "identicalFiles": []
+ },
+ "title": "Battle building 021 / 07",
+ "qaGrade": "B+",
+ "qaNote": "dark cross tower, cyan strips + emblem",
+ "emitters": {
+  "counts": {
+   "neon": 5,
+   "point": 12,
+   "window": 9
+  },
+  "beacons": [],
+  "pointLights": [
+   [
+    12.6,
+    116.2
+   ],
+   [
+    161.0,
+    128.5
+   ],
+   [
+    198.5,
+    142.5
+   ],
+   [
+    146.5,
+    164.5
+   ],
+   [
+    114.5,
+    230.5
+   ],
+   [
+    232.8,
+    231.0
+   ],
+   [
+    147.0,
+    246.5
+   ],
+   [
+    208.0,
+    264.0
+   ],
+   [
+    47.0,
+    274.5
+   ],
+   [
+    49.5,
+    277.0
+   ],
+   [
+    138.0,
+    287.5
+   ],
+   [
+    152.5,
+    299.5
+   ]
+  ],
+  "windows": [
+   [
+    16.3,
+    118.9
+   ],
+   [
+    30.6,
+    127.2
+   ],
+   [
+    46.9,
+    136.3
+   ],
+   [
+    59.2,
+    142.7
+   ],
+   [
+    208.5,
+    205.5
+   ],
+   [
+    213.5,
+    207.5
+   ],
+   [
+    146.6,
+    234.3
+   ],
+   [
+    148.3,
+    296.6
+   ],
+   [
+    154.7,
+    302.9
+   ]
+  ],
+  "neon": [
+   [
+    97,
+    85,
+    116,
+    112
+   ],
+   [
+    138,
+    124,
+    146,
+    177
+   ],
+   [
+    12,
+    182,
+    44,
+    202
+   ],
+   [
+    128,
+    193,
+    207,
+    238
+   ],
+   [
+    139,
+    210,
+    146,
+    294
+   ]
+  ],
+  "signs": [],
+  "cores": [],
+  "vents": [],
+  "pings": [],
+  "screens": [],
+  "addedBeacons": [
+   {
+    "x": 117,
+    "y": 10,
+    "col": "red",
+    "per": 12,
+    "size": 2
+   },
+   {
+    "x": 140,
+    "y": 19,
+    "col": "amber",
+    "per": 16,
+    "size": 1
+   }
+  ],
+  "glints": [],
+  "padTop": 0
+ },
+ "phaseSeed": 10333,
+ "layering": "Drop-in replacement for the static sprite: same canvas, same anchor. Background is the art's own opaque near-black.",
+ "overlayOf": null,
+ "overlayClip": "bl_021_07_overlay_clip.json",
+ "paletteCount": 11634
+}

@@ -1,0 +1,47 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_gore_xeno_splat_spatter_ring",
+  "kind": "fx",
+  "loop": false,
+  "generator": "fx.blood_splat_decal",
+  "cell": [
+    96,
+    96
+  ],
+  "frames": 1,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 96,
+      "h": 96
+    }
+  ],
+  "fps": 1,
+  "holds": null,
+  "tickSequence": null,
+  "palette": "Gore fluid ramp",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    48,
+    88
+  ],
+  "sortBias": 2,
+  "depthKey": "share_base",
+  "dirOrderNote": "No character DIR_ORDER \u2014 compass labels are spray travel direction only.",
+  "textures": {
+    "strip": "bd_gore_xeno_splat_spatter_ring_strip.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "xeno spatter ring decal",
+  "group": "Gore",
+  "unitCell": 84,
+  "padCell": 96,
+  "fluid": "xeno",
+  "style": "spatter_ring",
+  "static": true
+}

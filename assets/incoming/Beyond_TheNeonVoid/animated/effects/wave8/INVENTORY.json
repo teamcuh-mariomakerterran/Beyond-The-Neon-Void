@@ -1,0 +1,158 @@
+{
+  "format": "lattice.effects.wave.inventory.v1",
+  "wave": 8,
+  "version": 1,
+  "count": 10,
+  "effects": [
+    {
+      "id": "decoy_hologram",
+      "label": "decoy hologram",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "decoy_hologram_strip.png",
+      "clip": "decoy_hologram_clip.json",
+      "suggestedUse": "cyan decoy silhouette flicker then pop"
+    },
+    {
+      "id": "mine_arm_blink",
+      "label": "mine arm blink",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "mine_arm_blink_strip.png",
+      "clip": "mine_arm_blink_clip.json",
+      "suggestedUse": "mine arming LED blink then click"
+    },
+    {
+      "id": "tripwire_snap",
+      "label": "tripwire snap",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "tripwire_snap_strip.png",
+      "clip": "tripwire_snap_clip.json",
+      "suggestedUse": "red tripwire laser then snap sparks"
+    },
+    {
+      "id": "breach_charge_spark",
+      "label": "breach charge spark",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "breach_charge_spark_strip.png",
+      "clip": "breach_charge_spark_clip.json",
+      "suggestedUse": "breach charge countdown sparks"
+    },
+    {
+      "id": "poison_gas_plume",
+      "label": "poison gas plume",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "poison_gas_plume_strip.png",
+      "clip": "poison_gas_plume_clip.json",
+      "suggestedUse": "toxic green rising gas plume"
+    },
+    {
+      "id": "ice_ground_crack",
+      "label": "ice ground crack",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "ice_ground_crack_strip.png",
+      "clip": "ice_ground_crack_clip.json",
+      "suggestedUse": "ground freeze cracks + frost"
+    },
+    {
+      "id": "burn_ember_dot",
+      "label": "burn ember dot",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "burn_ember_dot_strip.png",
+      "clip": "burn_ember_dot_clip.json",
+      "suggestedUse": "small burn DoT ember loop"
+    },
+    {
+      "id": "revive_spark",
+      "label": "revive spark",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "revive_spark_strip.png",
+      "clip": "revive_spark_clip.json",
+      "suggestedUse": "revive get-up flash + motes"
+    },
+    {
+      "id": "jammer_static",
+      "label": "jammer static",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "jammer_static_strip.png",
+      "clip": "jammer_static_clip.json",
+      "suggestedUse": "jammer static noise cloud loop"
+    },
+    {
+      "id": "enemy_mark_ping",
+      "label": "enemy mark ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "enemy_mark_ping_strip.png",
+      "clip": "enemy_mark_ping_clip.json",
+      "suggestedUse": "red enemy mark diamond + warn rings"
+    }
+  ]
+}

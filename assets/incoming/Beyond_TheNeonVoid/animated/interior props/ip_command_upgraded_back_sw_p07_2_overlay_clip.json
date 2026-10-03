@@ -1,0 +1,450 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_upgraded_back_sw_p07_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  328,
+  406
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 1,
+   "x": 328,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 2,
+   "x": 656,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 3,
+   "x": 984,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 4,
+   "x": 1312,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 5,
+   "x": 1640,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 6,
+   "x": 1968,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 7,
+   "x": 2296,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 8,
+   "x": 2624,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 9,
+   "x": 2952,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 10,
+   "x": 3280,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 11,
+   "x": 3608,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 12,
+   "x": 3936,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 13,
+   "x": 4264,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 14,
+   "x": 4592,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 15,
+   "x": 4920,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 16,
+   "x": 5248,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 17,
+   "x": 5576,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 18,
+   "x": 5904,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 19,
+   "x": 6232,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 20,
+   "x": 6560,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 21,
+   "x": 6888,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 22,
+   "x": 7216,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  },
+  {
+   "i": 23,
+   "x": 7544,
+   "y": 0,
+   "w": 328,
+   "h": 406
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  164,
+  402
+ ],
+ "propBBox": [
+  4,
+  4,
+  324,
+  403
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_upgraded_back_sw_p07_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_upgraded_back_sw_p07_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_upgraded_back_sw_p07_2.png",
+  "placementKey": "bldg_interior_indoor_command_upgraded_back_sw_p07",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command Upgraded Back Sw 07 \u2014 holo crystal over projector",
+ "qaGrade": "A-",
+ "qaNote": "holo crystal over projector: shimmer lines",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 106,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 115,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 79,
+    "y": 162,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 165,
+    "warm": false
+   },
+   {
+    "x": 256,
+    "y": 167,
+    "warm": false
+   },
+   {
+    "x": 223,
+    "y": 168,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 173,
+    "warm": false
+   },
+   {
+    "x": 223,
+    "y": 172,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 181,
+    "warm": false
+   },
+   {
+    "x": 93,
+    "y": 203,
+    "warm": false
+   },
+   {
+    "x": 269,
+    "y": 230,
+    "warm": false
+   },
+   {
+    "x": 61,
+    "y": 234,
+    "warm": false
+   },
+   {
+    "x": 264,
+    "y": 240,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 274,
+    "warm": false
+   },
+   {
+    "x": 284,
+    "y": 274,
+    "warm": false
+   },
+   {
+    "x": 115,
+    "y": 301,
+    "warm": true
+   },
+   {
+    "x": 213,
+    "y": 301,
+    "warm": true
+   },
+   {
+    "x": 252,
+    "y": 300,
+    "warm": false
+   },
+   {
+    "x": 255,
+    "y": 305,
+    "warm": false
+   },
+   {
+    "x": 223,
+    "y": 318,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 323,
+    "warm": true
+   },
+   {
+    "x": 163,
+    "y": 327,
+    "warm": false
+   },
+   {
+    "x": 152,
+    "y": 328,
+    "warm": false
+   },
+   {
+    "x": 273,
+    "y": 330,
+    "warm": false
+   },
+   {
+    "x": 51,
+    "y": 332,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 336,
+    "warm": false
+   },
+   {
+    "x": 19,
+    "y": 338,
+    "warm": true
+   },
+   {
+    "x": 280,
+    "y": 337,
+    "warm": false
+   },
+   {
+    "x": 94,
+    "y": 345,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 346,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 347,
+    "warm": true
+   },
+   {
+    "x": 228,
+    "y": 348,
+    "warm": true
+   },
+   {
+    "x": 94,
+    "y": 351,
+    "warm": true
+   },
+   {
+    "x": 92,
+    "y": 356,
+    "warm": true
+   },
+   {
+    "x": 313,
+    "y": 360,
+    "warm": true
+   },
+   {
+    "x": 314,
+    "y": 372,
+    "warm": true
+   },
+   {
+    "x": 311,
+    "y": 376,
+    "warm": true
+   },
+   {
+    "x": 299,
+    "y": 381,
+    "warm": true
+   },
+   {
+    "x": 263,
+    "y": 388,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     73,
+     9,
+     260,
+     301
+    ],
+    "slope": 0.0,
+    "area": 29219
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 39,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 23380,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_command_upgraded_back_sw_p07_2",
+ "overlayClip": null
+}

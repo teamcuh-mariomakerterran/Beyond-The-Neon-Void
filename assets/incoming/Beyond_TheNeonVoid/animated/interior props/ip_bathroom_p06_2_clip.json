@@ -1,0 +1,255 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_bathroom_p06_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  161,
+  238
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 1,
+   "x": 161,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 2,
+   "x": 322,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 3,
+   "x": 483,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 4,
+   "x": 644,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 5,
+   "x": 805,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 6,
+   "x": 966,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 7,
+   "x": 1127,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 8,
+   "x": 1288,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 9,
+   "x": 1449,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 10,
+   "x": 1610,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 11,
+   "x": 1771,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 12,
+   "x": 1932,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 13,
+   "x": 2093,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 14,
+   "x": 2254,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 15,
+   "x": 2415,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 16,
+   "x": 2576,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 17,
+   "x": 2737,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 18,
+   "x": 2898,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 19,
+   "x": 3059,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 20,
+   "x": 3220,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 21,
+   "x": 3381,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 22,
+   "x": 3542,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  },
+  {
+   "i": 23,
+   "x": 3703,
+   "y": 0,
+   "w": 161,
+   "h": 238
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  81,
+  233
+ ],
+ "propBBox": [
+  4,
+  4,
+  158,
+  234
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_bathroom_p06_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_bathroom_p06_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_bathroom_p06_2.png",
+  "placementKey": "bldg_interior_indoor_bathroom_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Bathroom 06 \u2014 wall dispenser",
+ "qaGrade": "B",
+ "qaNote": "wall dispenser: small screen sweep + button",
+ "emitters": {
+  "statusLights": [],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     27,
+     61,
+     92,
+     111
+    ],
+    "slope": 0.2324769433465086,
+    "area": 2385
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 0,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 39142,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_bathroom_p06_2_overlay_clip.json",
+ "paletteCount": 13552
+}

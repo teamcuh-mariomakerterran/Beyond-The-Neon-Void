@@ -1,0 +1,9 @@
+066 needle
+02_expressions/sheet08_idle_3RIvd.jpg
+02_expressions/sheet08_smirk_45548.jpg
+02_expressions/sheet08_think_ICj16.jpg
+02_expressions/sheet08_allin_jeoL1.jpg
+02_expressions/sheet08_shock_lqq5N.jpg
+02_expressions/sheet08_laugh_CQH8T.jpg
+02_expressions/sheet08_sad_nddlJ.jpg
+02_expressions/sheet08_angry_JiqTz.jpg

@@ -1,0 +1,435 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_bathroom_upgraded_p08_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  269,
+  320
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 1,
+   "x": 269,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 2,
+   "x": 538,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 3,
+   "x": 807,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 4,
+   "x": 1076,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 5,
+   "x": 1345,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 6,
+   "x": 1614,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 7,
+   "x": 1883,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 8,
+   "x": 2152,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 9,
+   "x": 2421,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 10,
+   "x": 2690,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 11,
+   "x": 2959,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 12,
+   "x": 3228,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 13,
+   "x": 3497,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 14,
+   "x": 3766,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 15,
+   "x": 4035,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 16,
+   "x": 4304,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 17,
+   "x": 4573,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 18,
+   "x": 4842,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 19,
+   "x": 5111,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 20,
+   "x": 5380,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 21,
+   "x": 5649,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 22,
+   "x": 5918,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  },
+  {
+   "i": 23,
+   "x": 6187,
+   "y": 0,
+   "w": 269,
+   "h": 320
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  134,
+  315
+ ],
+ "propBBox": [
+  4,
+  4,
+  265,
+  316
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_bathroom_upgraded_p08_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_bathroom_upgraded_p08_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_bathroom_upgraded_p08_2.png",
+  "placementKey": "bldg_interior_indoor_bathroom_upgraded_p08",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Bathroom Upgraded 08 \u2014 fan unit",
+ "qaGrade": "B",
+ "qaNote": "fan unit: edge lights pulse (fan not spun: painted blades)",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 182,
+    "y": 43,
+    "warm": true
+   },
+   {
+    "x": 163,
+    "y": 46,
+    "warm": false
+   },
+   {
+    "x": 238,
+    "y": 80,
+    "warm": true
+   },
+   {
+    "x": 234,
+    "y": 99,
+    "warm": false
+   },
+   {
+    "x": 206,
+    "y": 135,
+    "warm": false
+   },
+   {
+    "x": 218,
+    "y": 137,
+    "warm": false
+   },
+   {
+    "x": 222,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 206,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 150,
+    "warm": false
+   },
+   {
+    "x": 233,
+    "y": 152,
+    "warm": false
+   },
+   {
+    "x": 196,
+    "y": 158,
+    "warm": false
+   },
+   {
+    "x": 249,
+    "y": 188,
+    "warm": false
+   },
+   {
+    "x": 222,
+    "y": 201,
+    "warm": false
+   },
+   {
+    "x": 214,
+    "y": 206,
+    "warm": false
+   },
+   {
+    "x": 216,
+    "y": 229,
+    "warm": true
+   },
+   {
+    "x": 222,
+    "y": 253,
+    "warm": false
+   },
+   {
+    "x": 250,
+    "y": 269,
+    "warm": true
+   },
+   {
+    "x": 237,
+    "y": 278,
+    "warm": true
+   },
+   {
+    "x": 229,
+    "y": 283,
+    "warm": true
+   },
+   {
+    "x": 223,
+    "y": 288,
+    "warm": true
+   },
+   {
+    "x": 213,
+    "y": 295,
+    "warm": true
+   },
+   {
+    "x": 207,
+    "y": 301,
+    "warm": true
+   },
+   {
+    "x": 195,
+    "y": 310,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     221,
+     164,
+     225,
+     178
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     71,
+     26,
+     172,
+     68
+    ],
+    "slope": 0.23072707343807092,
+    "area": 1979
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     27,
+     73,
+     57,
+     106
+    ],
+    "slope": -0.6,
+    "area": 419
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     140,
+     97,
+     170,
+     137
+    ],
+    "slope": 0.6,
+    "area": 416
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     205,
+     144,
+     220,
+     224
+    ],
+    "slope": -0.6,
+    "area": 494
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     27,
+     201,
+     56,
+     240
+    ],
+    "slope": 0.6,
+    "area": 375
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     135,
+     224,
+     170,
+     263
+    ],
+    "slope": -0.6,
+    "area": 485
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 23,
+   "strips": 1,
+   "screens": 6,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 24710,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_bathroom_upgraded_p08_2_overlay_clip.json",
+ "paletteCount": 47920
+}

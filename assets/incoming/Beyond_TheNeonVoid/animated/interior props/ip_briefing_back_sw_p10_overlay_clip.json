@@ -1,0 +1,254 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_briefing_back_sw_p10_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  335,
+  210
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 1,
+   "x": 335,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 2,
+   "x": 670,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 3,
+   "x": 1005,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 4,
+   "x": 1340,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 5,
+   "x": 1675,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 6,
+   "x": 2010,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 7,
+   "x": 2345,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 8,
+   "x": 2680,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 9,
+   "x": 3015,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 10,
+   "x": 3350,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 11,
+   "x": 3685,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 12,
+   "x": 4020,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 13,
+   "x": 4355,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 14,
+   "x": 4690,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 15,
+   "x": 5025,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 16,
+   "x": 5360,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 17,
+   "x": 5695,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 18,
+   "x": 6030,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 19,
+   "x": 6365,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 20,
+   "x": 6700,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 21,
+   "x": 7035,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 22,
+   "x": 7370,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  },
+  {
+   "i": 23,
+   "x": 7705,
+   "y": 0,
+   "w": 335,
+   "h": 210
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  168,
+  205
+ ],
+ "propBBox": [
+  4,
+  4,
+  331,
+  206
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_briefing_back_sw_p10_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_briefing_back_sw_p10.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_briefing_back_sw_p10.png",
+  "placementKey": "bldg_interior_indoor_briefing_back_sw_p10",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Briefing Back Sw 10 \u2014 light bar",
+ "qaGrade": "B+",
+ "qaNote": "light bar: tube flicker + sweep",
+ "emitters": {
+  "statusLights": [],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     62,
+     30,
+     292,
+     160
+    ],
+    "slope": -0.5,
+    "area": 6423
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 0,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 7533,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_briefing_back_sw_p10",
+ "overlayClip": null
+}

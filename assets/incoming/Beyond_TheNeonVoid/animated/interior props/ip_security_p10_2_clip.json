@@ -1,0 +1,268 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_security_p10_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  189,
+  235
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 1,
+   "x": 189,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 2,
+   "x": 378,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 3,
+   "x": 567,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 4,
+   "x": 756,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 5,
+   "x": 945,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 6,
+   "x": 1134,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 7,
+   "x": 1323,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 8,
+   "x": 1512,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 9,
+   "x": 1701,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 10,
+   "x": 1890,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 11,
+   "x": 2079,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 12,
+   "x": 2268,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 13,
+   "x": 2457,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 14,
+   "x": 2646,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 15,
+   "x": 2835,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 16,
+   "x": 3024,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 17,
+   "x": 3213,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 18,
+   "x": 3402,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 19,
+   "x": 3591,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 20,
+   "x": 3780,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 21,
+   "x": 3969,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 22,
+   "x": 4158,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  },
+  {
+   "i": 23,
+   "x": 4347,
+   "y": 0,
+   "w": 189,
+   "h": 235
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  94,
+  230
+ ],
+ "propBBox": [
+  4,
+  4,
+  185,
+  231
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_security_p10_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_security_p10_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_security_p10_2.png",
+  "placementKey": "bldg_interior_indoor_security_p10",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Security 10 \u2014 warning sign",
+ "qaGrade": "B+",
+ "qaNote": "warning sign: orange triangle neon pulse + LED",
+ "emitters": {
+  "statusLights": [],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     41,
+     82,
+     106,
+     153
+    ],
+    "slope": 0.2100131752305671,
+    "area": 2675
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     102,
+     170,
+     125,
+     200
+    ],
+    "slope": 0.31004901960784326,
+    "area": 603
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 0,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 21800,
+ "config": {
+  "warmlit": true
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_security_p10_2_overlay_clip.json",
+ "paletteCount": 14079
+}

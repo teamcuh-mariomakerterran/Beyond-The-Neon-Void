@@ -1,0 +1,351 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_airlock_p07",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  272,
+  303
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 1,
+   "x": 272,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 2,
+   "x": 544,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 3,
+   "x": 816,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 4,
+   "x": 1088,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 5,
+   "x": 1360,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 6,
+   "x": 1632,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 7,
+   "x": 1904,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 8,
+   "x": 2176,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 9,
+   "x": 2448,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 10,
+   "x": 2720,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 11,
+   "x": 2992,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 12,
+   "x": 3264,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 13,
+   "x": 3536,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 14,
+   "x": 3808,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 15,
+   "x": 4080,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 16,
+   "x": 4352,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 17,
+   "x": 4624,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 18,
+   "x": 4896,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 19,
+   "x": 5168,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 20,
+   "x": 5440,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 21,
+   "x": 5712,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 22,
+   "x": 5984,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  },
+  {
+   "i": 23,
+   "x": 6256,
+   "y": 0,
+   "w": 272,
+   "h": 303
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  136,
+  299
+ ],
+ "propBBox": [
+  4,
+  4,
+  268,
+  300
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_airlock_p07_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_airlock_p07.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_airlock_p07.png",
+  "placementKey": "bldg_interior_indoor_airlock_p07",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Airlock 07 \u2014 wall unit",
+ "qaGrade": "B+",
+ "qaNote": "wall unit: tube light flicker + sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 45,
+    "y": 78,
+    "warm": false
+   },
+   {
+    "x": 58,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 149,
+    "y": 94,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 103,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 157,
+    "y": 117,
+    "warm": true
+   },
+   {
+    "x": 142,
+    "y": 125,
+    "warm": false
+   },
+   {
+    "x": 156,
+    "y": 128,
+    "warm": true
+   },
+   {
+    "x": 140,
+    "y": 158,
+    "warm": true
+   },
+   {
+    "x": 157,
+    "y": 160,
+    "warm": true
+   },
+   {
+    "x": 21,
+    "y": 264,
+    "warm": true
+   },
+   {
+    "x": 65,
+    "y": 274,
+    "warm": true
+   },
+   {
+    "x": 77,
+    "y": 276,
+    "warm": true
+   },
+   {
+    "x": 237,
+    "y": 282,
+    "warm": true
+   },
+   {
+    "x": 134,
+    "y": 283,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 284,
+    "warm": true
+   },
+   {
+    "x": 234,
+    "y": 284,
+    "warm": true
+   },
+   {
+    "x": 228,
+    "y": 290,
+    "warm": true
+   },
+   {
+    "x": 224,
+    "y": 293,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     24,
+     74,
+     66,
+     191
+    ],
+    "slope": 0.0,
+    "area": 3565
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 19,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 7010,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_airlock_p07_overlay_clip.json",
+ "paletteCount": 20842
+}

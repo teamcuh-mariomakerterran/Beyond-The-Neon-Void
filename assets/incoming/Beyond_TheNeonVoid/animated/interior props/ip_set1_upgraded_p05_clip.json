@@ -1,0 +1,310 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set1_upgraded_p05",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  250,
+  327
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 1,
+   "x": 250,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 2,
+   "x": 500,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 3,
+   "x": 750,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 4,
+   "x": 1000,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 5,
+   "x": 1250,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 6,
+   "x": 1500,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 7,
+   "x": 1750,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 8,
+   "x": 2000,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 9,
+   "x": 2250,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 10,
+   "x": 2500,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 11,
+   "x": 2750,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 12,
+   "x": 3000,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 13,
+   "x": 3250,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 14,
+   "x": 3500,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 15,
+   "x": 3750,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 16,
+   "x": 4000,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 17,
+   "x": 4250,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 18,
+   "x": 4500,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 19,
+   "x": 4750,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 20,
+   "x": 5000,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 21,
+   "x": 5250,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 22,
+   "x": 5500,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  },
+  {
+   "i": 23,
+   "x": 5750,
+   "y": 0,
+   "w": 250,
+   "h": 327
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  125,
+  322
+ ],
+ "propBBox": [
+  4,
+  4,
+  246,
+  323
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set1_upgraded_p05_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set1_upgraded_p05.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set1_upgraded_p05.png",
+  "placementKey": "bldg_interior_indoor_set1_upgraded_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set1 Upgraded 05 \u2014 medical cabinet",
+ "qaGrade": "B+",
+ "qaNote": "medical cabinet: glowing cross sign pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 38,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 234,
+    "y": 136,
+    "warm": true
+   },
+   {
+    "x": 223,
+    "y": 137,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 155,
+    "warm": true
+   },
+   {
+    "x": 202,
+    "y": 195,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 191,
+    "y": 225,
+    "warm": true
+   },
+   {
+    "x": 140,
+    "y": 248,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 283,
+    "warm": false
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     207,
+     253,
+     220,
+     262
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     54,
+     89,
+     134,
+     184
+    ],
+    "slope": 0.0,
+    "area": 3720
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 9,
+   "strips": 1,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 46795,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_set1_upgraded_p05_overlay_clip.json",
+ "paletteCount": 32340
+}

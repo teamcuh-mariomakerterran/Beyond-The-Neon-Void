@@ -1,0 +1,358 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_limit_doctrine",
+ "cell": [
+  480,
+  340
+ ],
+ "frames": 30,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 1,
+   "x": 480,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 2,
+   "x": 960,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 3,
+   "x": 1440,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 4,
+   "x": 1920,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 5,
+   "x": 2400,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 6,
+   "x": 2880,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 7,
+   "x": 3360,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 8,
+   "x": 3840,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 9,
+   "x": 4320,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 10,
+   "x": 4800,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 11,
+   "x": 5280,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 12,
+   "x": 5760,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 13,
+   "x": 6240,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 14,
+   "x": 6720,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 15,
+   "x": 7200,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 16,
+   "x": 7680,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 17,
+   "x": 8160,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 18,
+   "x": 8640,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 19,
+   "x": 9120,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 20,
+   "x": 9600,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 21,
+   "x": 10080,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 22,
+   "x": 10560,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 23,
+   "x": 11040,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 24,
+   "x": 11520,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 25,
+   "x": 12000,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 26,
+   "x": 12480,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 27,
+   "x": 12960,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 28,
+   "x": 13440,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  },
+  {
+   "i": 29,
+   "x": 13920,
+   "y": 0,
+   "w": 480,
+   "h": 340
+  }
+ ],
+ "textures": {
+  "strip": "spl_limit_doctrine_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Limit break: DOCTRINE PROTOCOL (map-wide 7x7) \u2014 circuit grid floods the battlefield, the glitch skull rises, orbital lances rain on the field, white-out",
+ "qaGrade": "A-",
+ "qaNote": "map-wide 7x7: circuit grid floods out, ping arcs, Brian's giant cyborg skull (crosshair eyes flare red), 18 orbital lances, white-out",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  240,
+  236
+ ],
+ "group": "big",
+ "tags": [
+  "spell",
+  "big",
+  "map-wide"
+ ],
+ "config": {
+  "footprintTiles": [
+   7,
+   7
+  ],
+  "tileCentre": [
+   240,
+   220
+  ],
+  "family": "big"
+ },
+ "suggestedUse": "Big spell; anchor on the target (centre) tile ground point. Beams/rods/rockets enter from the top of the cell (the sky).",
+ "layering": "Map-wide: anchor = ground point of the CENTRE tile of a 7x7 area (bottom vertex of its 64x32 diamond); covers 7x7 tiles (448x224 px). Draw over everything. Strip is 14400 px wide (under 15840).",
+ "groundPoint": [
+  240,
+  236
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 12,
+   "x": 144,
+   "y": 268
+  },
+  {
+   "frame": 13,
+   "x": 304,
+   "y": 284
+  },
+  {
+   "frame": 14,
+   "x": 368,
+   "y": 188
+  },
+  {
+   "frame": 14,
+   "x": 176,
+   "y": 188
+  },
+  {
+   "frame": 15,
+   "x": 208,
+   "y": 172
+  },
+  {
+   "frame": 15,
+   "x": 176,
+   "y": 220
+  },
+  {
+   "frame": 16,
+   "x": 240,
+   "y": 220
+  },
+  {
+   "frame": 16,
+   "x": 208,
+   "y": 140
+  },
+  {
+   "frame": 17,
+   "x": 336,
+   "y": 236
+  },
+  {
+   "frame": 17,
+   "x": 80,
+   "y": 236
+  },
+  {
+   "frame": 18,
+   "x": 336,
+   "y": 268
+  },
+  {
+   "frame": 19,
+   "x": 176,
+   "y": 156
+  },
+  {
+   "frame": 19,
+   "x": 208,
+   "y": 204
+  },
+  {
+   "frame": 20,
+   "x": 240,
+   "y": 252
+  },
+  {
+   "frame": 20,
+   "x": 112,
+   "y": 188
+  },
+  {
+   "frame": 21,
+   "x": 272,
+   "y": 300
+  },
+  {
+   "frame": 21,
+   "x": 48,
+   "y": 220
+  },
+  {
+   "frame": 22,
+   "x": 144,
+   "y": 172
+  }
+ ]
+}

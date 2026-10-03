@@ -1,0 +1,162 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_charge_plasma",
+ "cell": [
+  96,
+  112
+ ],
+ "frames": 16,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 1,
+   "x": 96,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 2,
+   "x": 192,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 3,
+   "x": 288,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 4,
+   "x": 384,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 5,
+   "x": 480,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 6,
+   "x": 576,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 7,
+   "x": 672,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 8,
+   "x": 768,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 9,
+   "x": 864,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 10,
+   "x": 960,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 11,
+   "x": 1056,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 12,
+   "x": 1152,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 13,
+   "x": 1248,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 14,
+   "x": 1344,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  },
+  {
+   "i": 15,
+   "x": 1440,
+   "y": 0,
+   "w": 96,
+   "h": 112
+  }
+ ],
+ "textures": {
+  "strip": "spl_charge_plasma_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Charge-up \u2014 plasma",
+ "qaGrade": "A-",
+ "qaNote": "plasma charge",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  48,
+  104
+ ],
+ "group": "caster",
+ "tags": [
+  "spell",
+  "caster"
+ ],
+ "config": {
+  "family": "caster"
+ },
+ "suggestedUse": "Caster side. cast_circle_* loops under the caster during the cast; charge_* is the one-shot wind-up (release frame in emitters.releaseFrame -> start the projectile/impact there); channel_* loops while a spell is held.",
+ "layering": "Draw OVER the caster, anchor on the caster tile ground point. Motes stream in to chest height (~42px up), the core swells, release flash + shock rings on frame 12.",
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "emitters": {
+  "release": [
+   48,
+   62
+  ],
+  "releaseFrame": 12
+ }
+}

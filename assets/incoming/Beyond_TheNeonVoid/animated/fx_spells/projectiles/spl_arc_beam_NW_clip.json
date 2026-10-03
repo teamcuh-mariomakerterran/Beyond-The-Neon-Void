@@ -1,0 +1,154 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_arc_beam_NW",
+ "cell": [
+  148,
+  108
+ ],
+ "frames": 12,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 1,
+   "x": 148,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 2,
+   "x": 296,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 3,
+   "x": 444,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 4,
+   "x": 592,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 5,
+   "x": 740,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 6,
+   "x": 888,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 7,
+   "x": 1036,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 8,
+   "x": 1184,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 9,
+   "x": 1332,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 10,
+   "x": 1480,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  },
+  {
+   "i": 11,
+   "x": 1628,
+   "y": 0,
+   "w": 148,
+   "h": 108
+  }
+ ],
+ "textures": {
+  "strip": "spl_arc_beam_NW_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Arc beam \u2014 lightning lance NW",
+ "qaGrade": "B+",
+ "qaNote": "arc beam NW",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": "NW",
+ "anchor": [
+  122,
+  82
+ ],
+ "group": "projectiles",
+ "tags": [
+  "spell",
+  "projectiles"
+ ],
+ "config": {
+  "family": "projectiles"
+ },
+ "suggestedUse": "Travel stage: pin `spawn` (= anchor) on the caster's hand at chest height, pick the clip whose facing matches the shot direction; hits[0] gives the arrival frame + point (start the impact clip there).",
+ "dirOrder": [
+  "N",
+  "NE",
+  "E",
+  "SE",
+  "S",
+  "SW",
+  "W",
+  "NW"
+ ],
+ "dirIndex": 7,
+ "spawn": [
+  122,
+  82
+ ],
+ "travelVector": [
+  -0.8944,
+  -0.4472
+ ],
+ "rangePx": 108,
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "layering": "Attach `spawn` (= anchor) to the caster's hand; the beam snaps out along travelVector to rangePx (frames 0-1), crackles (2-8), fades (9-11). hits[0] = beam end (target chest height).",
+ "hits": [
+  {
+   "frame": 2,
+   "x": 25,
+   "y": 34
+  }
+ ]
+}

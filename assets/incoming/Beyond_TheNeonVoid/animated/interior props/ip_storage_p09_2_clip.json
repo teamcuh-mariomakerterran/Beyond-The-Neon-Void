@@ -1,0 +1,421 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_storage_p09_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  292,
+  242
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 1,
+   "x": 292,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 2,
+   "x": 584,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 3,
+   "x": 876,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 4,
+   "x": 1168,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 5,
+   "x": 1460,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 6,
+   "x": 1752,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 7,
+   "x": 2044,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 8,
+   "x": 2336,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 9,
+   "x": 2628,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 10,
+   "x": 2920,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 11,
+   "x": 3212,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 12,
+   "x": 3504,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 13,
+   "x": 3796,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 14,
+   "x": 4088,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 15,
+   "x": 4380,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 16,
+   "x": 4672,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 17,
+   "x": 4964,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 18,
+   "x": 5256,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 19,
+   "x": 5548,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 20,
+   "x": 5840,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 21,
+   "x": 6132,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 22,
+   "x": 6424,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  },
+  {
+   "i": 23,
+   "x": 6716,
+   "y": 0,
+   "w": 292,
+   "h": 242
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  146,
+  237
+ ],
+ "propBBox": [
+  4,
+  4,
+  288,
+  238
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_storage_p09_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_storage_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_storage_p09_2.png",
+  "placementKey": "bldg_interior_indoor_storage_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Storage 09 \u2014 fuel tank",
+ "qaGrade": "B",
+ "qaNote": "fuel tank: gauge bars blink",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 131,
+    "y": 19,
+    "warm": true
+   },
+   {
+    "x": 163,
+    "y": 24,
+    "warm": true
+   },
+   {
+    "x": 40,
+    "y": 53,
+    "warm": true
+   },
+   {
+    "x": 70,
+    "y": 54,
+    "warm": true
+   },
+   {
+    "x": 44,
+    "y": 56,
+    "warm": true
+   },
+   {
+    "x": 284,
+    "y": 126,
+    "warm": true
+   },
+   {
+    "x": 273,
+    "y": 150,
+    "warm": true
+   },
+   {
+    "x": 270,
+    "y": 153,
+    "warm": true
+   },
+   {
+    "x": 267,
+    "y": 156,
+    "warm": true
+   },
+   {
+    "x": 263,
+    "y": 159,
+    "warm": true
+   },
+   {
+    "x": 14,
+    "y": 178,
+    "warm": true
+   },
+   {
+    "x": 209,
+    "y": 178,
+    "warm": true
+   },
+   {
+    "x": 217,
+    "y": 180,
+    "warm": true
+   },
+   {
+    "x": 193,
+    "y": 181,
+    "warm": true
+   },
+   {
+    "x": 223,
+    "y": 183,
+    "warm": true
+   },
+   {
+    "x": 258,
+    "y": 185,
+    "warm": true
+   },
+   {
+    "x": 235,
+    "y": 187,
+    "warm": true
+   },
+   {
+    "x": 172,
+    "y": 188,
+    "warm": true
+   },
+   {
+    "x": 252,
+    "y": 188,
+    "warm": true
+   },
+   {
+    "x": 24,
+    "y": 193,
+    "warm": true
+   },
+   {
+    "x": 145,
+    "y": 195,
+    "warm": true
+   },
+   {
+    "x": 137,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 120,
+    "y": 202,
+    "warm": true
+   },
+   {
+    "x": 107,
+    "y": 207,
+    "warm": true
+   },
+   {
+    "x": 101,
+    "y": 209,
+    "warm": true
+   },
+   {
+    "x": 31,
+    "y": 216,
+    "warm": true
+   },
+   {
+    "x": 40,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 222,
+    "warm": true
+   },
+   {
+    "x": 54,
+    "y": 225,
+    "warm": true
+   },
+   {
+    "x": 64,
+    "y": 229,
+    "warm": true
+   },
+   {
+    "x": 98,
+    "y": 229,
+    "warm": true
+   },
+   {
+    "x": 75,
+    "y": 233,
+    "warm": true
+   },
+   {
+    "x": 91,
+    "y": 233,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     140,
+     113,
+     188,
+     163
+    ],
+    "slope": -0.3097367968346804,
+    "area": 1145
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 33,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 8573,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_storage_p09_2_overlay_clip.json",
+ "paletteCount": 18533
+}

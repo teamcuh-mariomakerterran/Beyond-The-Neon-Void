@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_bd_58_xl_civic_forum_hq",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    474,
+    337
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 1,
+      "x": 474,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 2,
+      "x": 948,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 3,
+      "x": 1422,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 4,
+      "x": 1896,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 5,
+      "x": 2370,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 6,
+      "x": 2844,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 7,
+      "x": 3318,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 8,
+      "x": 3792,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 9,
+      "x": 4266,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 10,
+      "x": 4740,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    },
+    {
+      "i": 11,
+      "x": 5214,
+      "y": 0,
+      "w": 474,
+      "h": 337
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    236,
+    299
+  ],
+  "ruinAnchor": [
+    466,
+    712
+  ],
+  "sourceSize": [
+    932,
+    713
+  ],
+  "ruinSize": [
+    932,
+    713
+  ],
+  "smolderEmitters": [
+    {
+      "x": 167,
+      "y": 243
+    },
+    {
+      "x": 466,
+      "y": 183
+    },
+    {
+      "x": 764,
+      "y": 293
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_bd_58_xl_civic_forum_hq_strip.png",
+    "ruin": "bd_destroy_bd_58_xl_civic_forum_hq_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of bd_58_xl_civic_forum_hq",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_bd_58_xl_civic_forum_hq_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_bd_58_xl_civic_forum_hq_ruin.png",
+      "static": true,
+      "anchor": [
+        466,
+        712
+      ]
+    }
+  }
+}

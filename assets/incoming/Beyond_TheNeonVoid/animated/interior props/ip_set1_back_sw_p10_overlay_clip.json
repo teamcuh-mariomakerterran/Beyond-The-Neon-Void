@@ -1,0 +1,367 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set1_back_sw_p10_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  255,
+  285
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 1,
+   "x": 255,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 2,
+   "x": 510,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 3,
+   "x": 765,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 4,
+   "x": 1020,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 5,
+   "x": 1275,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 6,
+   "x": 1530,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 7,
+   "x": 1785,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 8,
+   "x": 2040,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 9,
+   "x": 2295,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 10,
+   "x": 2550,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 11,
+   "x": 2805,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 12,
+   "x": 3060,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 13,
+   "x": 3315,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 14,
+   "x": 3570,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 15,
+   "x": 3825,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 16,
+   "x": 4080,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 17,
+   "x": 4335,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 18,
+   "x": 4590,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 19,
+   "x": 4845,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 20,
+   "x": 5100,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 21,
+   "x": 5355,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 22,
+   "x": 5610,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  },
+  {
+   "i": 23,
+   "x": 5865,
+   "y": 0,
+   "w": 255,
+   "h": 285
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  128,
+  280
+ ],
+ "propBBox": [
+  4,
+  4,
+  251,
+  281
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set1_back_sw_p10_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set1_back_sw_p10.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set1_back_sw_p10.png",
+  "placementKey": "bldg_interior_indoor_set1_back_sw_p10",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set1 Back Sw 10 \u2014 circuit wall panel",
+ "qaGrade": "A-",
+ "qaNote": "circuit wall panel: energy traces sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 47,
+    "y": 106,
+    "warm": false
+   },
+   {
+    "x": 47,
+    "y": 111,
+    "warm": false
+   },
+   {
+    "x": 46,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 45,
+    "y": 123,
+    "warm": false
+   },
+   {
+    "x": 163,
+    "y": 133,
+    "warm": false
+   },
+   {
+    "x": 46,
+    "y": 130,
+    "warm": false
+   },
+   {
+    "x": 46,
+    "y": 142,
+    "warm": false
+   },
+   {
+    "x": 164,
+    "y": 144,
+    "warm": false
+   },
+   {
+    "x": 75,
+    "y": 200,
+    "warm": false
+   },
+   {
+    "x": 93,
+    "y": 203,
+    "warm": false
+   },
+   {
+    "x": 118,
+    "y": 207,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 210,
+    "warm": false
+   },
+   {
+    "x": 156,
+    "y": 210,
+    "warm": false
+   },
+   {
+    "x": 103,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 131,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 45,
+    "y": 250,
+    "warm": true
+   },
+   {
+    "x": 108,
+    "y": 261,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 264,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     79,
+     67,
+     169,
+     222
+    ],
+    "slope": 0.25001389274798547,
+    "area": 3250
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     51,
+     121,
+     93,
+     150
+    ],
+    "slope": 0.5,
+    "area": 397
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     41,
+     145,
+     86,
+     216
+    ],
+    "slope": 0.5,
+    "area": 715
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 18,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 28468,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_set1_back_sw_p10",
+ "overlayClip": null
+}

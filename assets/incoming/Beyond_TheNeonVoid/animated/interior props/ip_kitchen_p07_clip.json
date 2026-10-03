@@ -1,0 +1,307 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_kitchen_p07",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  273,
+  212
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 1,
+   "x": 273,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 2,
+   "x": 546,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 3,
+   "x": 819,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 4,
+   "x": 1092,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 5,
+   "x": 1365,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 6,
+   "x": 1638,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 7,
+   "x": 1911,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 8,
+   "x": 2184,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 9,
+   "x": 2457,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 10,
+   "x": 2730,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 11,
+   "x": 3003,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 12,
+   "x": 3276,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 13,
+   "x": 3549,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 14,
+   "x": 3822,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 15,
+   "x": 4095,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 16,
+   "x": 4368,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 17,
+   "x": 4641,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 18,
+   "x": 4914,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 19,
+   "x": 5187,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 20,
+   "x": 5460,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 21,
+   "x": 5733,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 22,
+   "x": 6006,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  },
+  {
+   "i": 23,
+   "x": 6279,
+   "y": 0,
+   "w": 273,
+   "h": 212
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  136,
+  207
+ ],
+ "propBBox": [
+  3,
+  4,
+  269,
+  208
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_kitchen_p07_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_kitchen_p07.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_kitchen_p07.png",
+  "placementKey": "bldg_interior_indoor_kitchen_p07",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Kitchen 07 \u2014 microwave",
+ "qaGrade": "B",
+ "qaNote": "microwave: display sweep + keypad LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 166,
+    "y": 130,
+    "warm": true
+   },
+   {
+    "x": 184,
+    "y": 134,
+    "warm": true
+   },
+   {
+    "x": 166,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 184,
+    "y": 152,
+    "warm": true
+   },
+   {
+    "x": 73,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 90,
+    "y": 183,
+    "warm": true
+   },
+   {
+    "x": 110,
+    "y": 186,
+    "warm": true
+   },
+   {
+    "x": 147,
+    "y": 194,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     29,
+     90,
+     120,
+     121
+    ],
+    "slope": 0.18855103120042316,
+    "area": 1248
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     164,
+     98,
+     189,
+     117
+    ],
+    "slope": 0.19362745098039164,
+    "area": 379
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 8,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 31267,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_kitchen_p07_overlay_clip.json",
+ "paletteCount": 13421
+}

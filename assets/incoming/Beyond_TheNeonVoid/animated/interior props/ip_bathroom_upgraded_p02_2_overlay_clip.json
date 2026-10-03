@@ -1,0 +1,541 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_bathroom_upgraded_p02_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  314,
+  437
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 1,
+   "x": 314,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 2,
+   "x": 628,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 3,
+   "x": 942,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 4,
+   "x": 1256,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 5,
+   "x": 1570,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 6,
+   "x": 1884,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 7,
+   "x": 2198,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 8,
+   "x": 2512,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 9,
+   "x": 2826,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 10,
+   "x": 3140,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 11,
+   "x": 3454,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 12,
+   "x": 3768,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 13,
+   "x": 4082,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 14,
+   "x": 4396,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 15,
+   "x": 4710,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 16,
+   "x": 5024,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 17,
+   "x": 5338,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 18,
+   "x": 5652,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 19,
+   "x": 5966,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 20,
+   "x": 6280,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 21,
+   "x": 6594,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 22,
+   "x": 6908,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  },
+  {
+   "i": 23,
+   "x": 7222,
+   "y": 0,
+   "w": 314,
+   "h": 437
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  157,
+  432
+ ],
+ "propBBox": [
+  4,
+  3,
+  310,
+  433
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_bathroom_upgraded_p02_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_bathroom_upgraded_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_bathroom_upgraded_p02_2.png",
+  "placementKey": "bldg_interior_indoor_bathroom_upgraded_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Bathroom Upgraded 02 \u2014 shower glass",
+ "qaGrade": "B+",
+ "qaNote": "shower glass: sheen sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 145,
+    "y": 19,
+    "warm": true
+   },
+   {
+    "x": 187,
+    "y": 55,
+    "warm": true
+   },
+   {
+    "x": 195,
+    "y": 57,
+    "warm": true
+   },
+   {
+    "x": 204,
+    "y": 59,
+    "warm": true
+   },
+   {
+    "x": 250,
+    "y": 63,
+    "warm": true
+   },
+   {
+    "x": 177,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 164,
+    "y": 77,
+    "warm": false
+   },
+   {
+    "x": 201,
+    "y": 80,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 80,
+    "warm": true
+   },
+   {
+    "x": 20,
+    "y": 103,
+    "warm": false
+   },
+   {
+    "x": 169,
+    "y": 111,
+    "warm": false
+   },
+   {
+    "x": 164,
+    "y": 113,
+    "warm": false
+   },
+   {
+    "x": 247,
+    "y": 119,
+    "warm": false
+   },
+   {
+    "x": 289,
+    "y": 113,
+    "warm": true
+   },
+   {
+    "x": 164,
+    "y": 132,
+    "warm": false
+   },
+   {
+    "x": 158,
+    "y": 139,
+    "warm": false
+   },
+   {
+    "x": 300,
+    "y": 135,
+    "warm": true
+   },
+   {
+    "x": 78,
+    "y": 138,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 145,
+    "warm": false
+   },
+   {
+    "x": 267,
+    "y": 149,
+    "warm": false
+   },
+   {
+    "x": 22,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 256,
+    "y": 176,
+    "warm": false
+   },
+   {
+    "x": 59,
+    "y": 196,
+    "warm": false
+   },
+   {
+    "x": 285,
+    "y": 186,
+    "warm": true
+   },
+   {
+    "x": 294,
+    "y": 196,
+    "warm": true
+   },
+   {
+    "x": 257,
+    "y": 205,
+    "warm": true
+   },
+   {
+    "x": 268,
+    "y": 219,
+    "warm": false
+   },
+   {
+    "x": 187,
+    "y": 224,
+    "warm": true
+   },
+   {
+    "x": 297,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 168,
+    "y": 227,
+    "warm": false
+   },
+   {
+    "x": 262,
+    "y": 234,
+    "warm": true
+   },
+   {
+    "x": 275,
+    "y": 246,
+    "warm": false
+   },
+   {
+    "x": 256,
+    "y": 256,
+    "warm": false
+   },
+   {
+    "x": 273,
+    "y": 260,
+    "warm": false
+   },
+   {
+    "x": 291,
+    "y": 264,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 262,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 274,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 289,
+    "warm": false
+   },
+   {
+    "x": 237,
+    "y": 338,
+    "warm": false
+   },
+   {
+    "x": 237,
+    "y": 350,
+    "warm": false
+   },
+   {
+    "x": 214,
+    "y": 349,
+    "warm": true
+   },
+   {
+    "x": 235,
+    "y": 363,
+    "warm": false
+   },
+   {
+    "x": 54,
+    "y": 369,
+    "warm": true
+   },
+   {
+    "x": 96,
+    "y": 383,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 383,
+    "warm": true
+   },
+   {
+    "x": 106,
+    "y": 387,
+    "warm": true
+   },
+   {
+    "x": 115,
+    "y": 389,
+    "warm": true
+   },
+   {
+    "x": 154,
+    "y": 398,
+    "warm": true
+   },
+   {
+    "x": 216,
+    "y": 401,
+    "warm": true
+   },
+   {
+    "x": 135,
+    "y": 411,
+    "warm": true
+   },
+   {
+    "x": 189,
+    "y": 429,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     47,
+     56,
+     177,
+     374
+    ],
+    "slope": 0.6,
+    "area": 27135
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     173,
+     79,
+     202,
+     93
+    ],
+    "slope": 0.18961038961038978,
+    "area": 256
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     261,
+     161,
+     267,
+     195
+    ],
+    "slope": 0.0,
+    "area": 182
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 51,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 3,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 58704,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_bathroom_upgraded_p02_2",
+ "overlayClip": null
+}

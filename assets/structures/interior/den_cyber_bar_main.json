@@ -1,0 +1,453 @@
+{
+  "version": 1,
+  "id": "den_cyber_bar_main",
+  "name": "Cyber Bar \u2014 Main",
+  "description": "Walkable Cyber Bar \u2014 Blueprint interior. Poker booth still portals to the arcade.",
+  "exterior": {
+    "buildingDefKey": "bldg_den_cyber_bar",
+    "districtRoomId": "den_district",
+    "returnSpotHint": {
+      "dx": 0,
+      "dy": 1
+    }
+  },
+  "map": {
+    "width": 12,
+    "height": 10,
+    "tiles": [
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "plains"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      },
+      {
+        "kind": "ruins"
+      }
+    ],
+    "buildings": [],
+    "atmosphere": "clear"
+  },
+  "spots": [
+    {
+      "id": "exit_cyber_bar",
+      "x": 6,
+      "y": 9,
+      "kind": "exit",
+      "label": "Den street",
+      "blurb": "Back into the neon alley."
+    },
+    {
+      "id": "portal_poker_booth",
+      "x": 8,
+      "y": 6,
+      "kind": "portal",
+      "label": "Poker tables",
+      "blurb": "Felt and bad decisions.",
+      "to": "/poker"
+    },
+    {
+      "id": "vendor_bar",
+      "x": 4,
+      "y": 7,
+      "kind": "vendor",
+      "label": "Bartender",
+      "blurb": "Something cold. Something loud.",
+      "price": 50,
+      "itemId": "stim",
+      "itemName": "Bar stim"
+    },
+    {
+      "id": "npc_pity",
+      "x": 6,
+      "y": 6,
+      "kind": "npc",
+      "label": "Pity",
+      "blurb": "Stylus down. Waiting.",
+      "dialogTreeId": "d_00"
+    }
+  ],
+  "spawn": {
+    "x": 6,
+    "y": 8
+  },
+  "lights": [
+    {
+      "id": "bar_neon",
+      "x": 6,
+      "y": 2,
+      "color": "#e040a0",
+      "intensity": 0.7
+    }
+  ],
+  "particles": [],
+  "npcs": [],
+  "authoring": {
+    "pixelRects": [
+      {
+        "id": "exit_1",
+        "quality": "exit",
+        "px": 100,
+        "py": 200,
+        "pw": 40,
+        "ph": 30,
+        "snappedTile": {
+          "x": 5,
+          "y": 8
+        }
+      }
+    ]
+  },
+  "companionHome": false
+}

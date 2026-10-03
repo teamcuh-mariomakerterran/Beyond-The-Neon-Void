@@ -1,0 +1,329 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_upgraded_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  198,
+  358
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 1,
+   "x": 198,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 2,
+   "x": 396,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 3,
+   "x": 594,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 4,
+   "x": 792,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 5,
+   "x": 990,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 6,
+   "x": 1188,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 7,
+   "x": 1386,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 8,
+   "x": 1584,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 9,
+   "x": 1782,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 10,
+   "x": 1980,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 11,
+   "x": 2178,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 12,
+   "x": 2376,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 13,
+   "x": 2574,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 14,
+   "x": 2772,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 15,
+   "x": 2970,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 16,
+   "x": 3168,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 17,
+   "x": 3366,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 18,
+   "x": 3564,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 19,
+   "x": 3762,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 20,
+   "x": 3960,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 21,
+   "x": 4158,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 22,
+   "x": 4356,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  },
+  {
+   "i": 23,
+   "x": 4554,
+   "y": 0,
+   "w": 198,
+   "h": 358
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  98,
+  354
+ ],
+ "propBBox": [
+  3,
+  0,
+  194,
+  355
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_upgraded_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_upgraded_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_upgraded_p09_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_upgraded_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Upgraded 09 \u2014 cyan fire bin",
+ "qaGrade": "B",
+ "qaNote": "cyan fire bin: flame shimmer/flicker",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 69,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 38,
+    "y": 76,
+    "warm": false
+   },
+   {
+    "x": 44,
+    "y": 83,
+    "warm": false
+   },
+   {
+    "x": 43,
+    "y": 94,
+    "warm": false
+   },
+   {
+    "x": 109,
+    "y": 152,
+    "warm": true
+   },
+   {
+    "x": 49,
+    "y": 178,
+    "warm": true
+   },
+   {
+    "x": 54,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 110,
+    "y": 195,
+    "warm": true
+   },
+   {
+    "x": 48,
+    "y": 214,
+    "warm": true
+   },
+   {
+    "x": 108,
+    "y": 233,
+    "warm": true
+   },
+   {
+    "x": 186,
+    "y": 296,
+    "warm": true
+   },
+   {
+    "x": 161,
+    "y": 331,
+    "warm": true
+   },
+   {
+    "x": 149,
+    "y": 338,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "holo",
+    "bbox": [
+     39,
+     6,
+     159,
+     121
+    ],
+    "slope": 0.0,
+    "area": 6491
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 13,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 1,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 55780,
+ "config": {
+  "holos": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_cantina_upgraded_p09_2",
+ "overlayClip": null
+}

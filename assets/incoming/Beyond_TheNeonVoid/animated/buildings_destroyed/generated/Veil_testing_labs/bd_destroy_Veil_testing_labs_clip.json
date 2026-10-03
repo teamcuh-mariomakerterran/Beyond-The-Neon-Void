@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_Veil_testing_labs",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    383,
+    331
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 1,
+      "x": 383,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 2,
+      "x": 766,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 3,
+      "x": 1149,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 4,
+      "x": 1532,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 5,
+      "x": 1915,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 6,
+      "x": 2298,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 7,
+      "x": 2681,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 8,
+      "x": 3064,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 9,
+      "x": 3447,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 10,
+      "x": 3830,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    },
+    {
+      "i": 11,
+      "x": 4213,
+      "y": 0,
+      "w": 383,
+      "h": 331
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    191,
+    293
+  ],
+  "ruinAnchor": [
+    141,
+    282
+  ],
+  "sourceSize": [
+    283,
+    283
+  ],
+  "ruinSize": [
+    283,
+    283
+  ],
+  "smolderEmitters": [
+    {
+      "x": 66,
+      "y": 116
+    },
+    {
+      "x": 144,
+      "y": 109
+    },
+    {
+      "x": 221,
+      "y": 117
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_Veil_testing_labs_strip.png",
+    "ruin": "bd_destroy_Veil_testing_labs_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of Veil_testing_labs",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_Veil_testing_labs_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_Veil_testing_labs_ruin.png",
+      "static": true,
+      "anchor": [
+        141,
+        282
+      ]
+    }
+  }
+}

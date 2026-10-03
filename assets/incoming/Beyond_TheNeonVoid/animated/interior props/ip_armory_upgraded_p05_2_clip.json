@@ -1,0 +1,476 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_armory_upgraded_p05_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  272,
+  236
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 1,
+   "x": 272,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 2,
+   "x": 544,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 3,
+   "x": 816,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 4,
+   "x": 1088,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 5,
+   "x": 1360,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 6,
+   "x": 1632,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 7,
+   "x": 1904,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 8,
+   "x": 2176,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 9,
+   "x": 2448,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 10,
+   "x": 2720,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 11,
+   "x": 2992,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 12,
+   "x": 3264,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 13,
+   "x": 3536,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 14,
+   "x": 3808,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 15,
+   "x": 4080,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 16,
+   "x": 4352,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 17,
+   "x": 4624,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 18,
+   "x": 4896,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 19,
+   "x": 5168,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 20,
+   "x": 5440,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 21,
+   "x": 5712,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 22,
+   "x": 5984,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  },
+  {
+   "i": 23,
+   "x": 6256,
+   "y": 0,
+   "w": 272,
+   "h": 236
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  136,
+  231
+ ],
+ "propBBox": [
+  4,
+  4,
+  268,
+  232
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_armory_upgraded_p05_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_armory_upgraded_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_armory_upgraded_p05_2.png",
+  "placementKey": "bldg_interior_indoor_armory_upgraded_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Armory Upgraded 05 \u2014 weapon crate",
+ "qaGrade": "B+",
+ "qaNote": "weapon crate: cyan light strips pulse + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 10,
+    "y": 80,
+    "warm": true
+   },
+   {
+    "x": 249,
+    "y": 80,
+    "warm": true
+   },
+   {
+    "x": 223,
+    "y": 93,
+    "warm": false
+   },
+   {
+    "x": 259,
+    "y": 90,
+    "warm": true
+   },
+   {
+    "x": 247,
+    "y": 97,
+    "warm": true
+   },
+   {
+    "x": 252,
+    "y": 103,
+    "warm": true
+   },
+   {
+    "x": 242,
+    "y": 100,
+    "warm": true
+   },
+   {
+    "x": 187,
+    "y": 113,
+    "warm": true
+   },
+   {
+    "x": 206,
+    "y": 121,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 123,
+    "warm": false
+   },
+   {
+    "x": 86,
+    "y": 130,
+    "warm": false
+   },
+   {
+    "x": 37,
+    "y": 129,
+    "warm": false
+   },
+   {
+    "x": 58,
+    "y": 136,
+    "warm": false
+   },
+   {
+    "x": 145,
+    "y": 137,
+    "warm": false
+   },
+   {
+    "x": 53,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 255,
+    "y": 144,
+    "warm": true
+   },
+   {
+    "x": 53,
+    "y": 151,
+    "warm": false
+   },
+   {
+    "x": 230,
+    "y": 153,
+    "warm": false
+   },
+   {
+    "x": 220,
+    "y": 158,
+    "warm": false
+   },
+   {
+    "x": 41,
+    "y": 165,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 169,
+    "warm": false
+   },
+   {
+    "x": 120,
+    "y": 173,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 179,
+    "warm": false
+   },
+   {
+    "x": 183,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 216,
+    "y": 178,
+    "warm": false
+   },
+   {
+    "x": 211,
+    "y": 180,
+    "warm": false
+   },
+   {
+    "x": 153,
+    "y": 186,
+    "warm": false
+   },
+   {
+    "x": 133,
+    "y": 196,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 200,
+    "warm": false
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     132,
+     164,
+     135,
+     192
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     71,
+     48,
+     165,
+     81
+    ],
+    "slope": 0.2947000915750917,
+    "area": 1250
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     186,
+     70,
+     213,
+     84
+    ],
+    "slope": -0.31491228070175403,
+    "area": 193
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     62,
+     76,
+     110,
+     100
+    ],
+    "slope": 0.5,
+    "area": 454
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     39,
+     126,
+     47,
+     163
+    ],
+    "slope": 0.2571428571428589,
+    "area": 272
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     57,
+     141,
+     119,
+     181
+    ],
+    "slope": 0.5,
+    "area": 1069
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     205,
+     155,
+     239,
+     180
+    ],
+    "slope": -0.5,
+    "area": 326
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     138,
+     159,
+     146,
+     197
+    ],
+    "slope": 0.5,
+    "area": 293
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 29,
+   "strips": 1,
+   "screens": 7,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 29355,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_armory_upgraded_p05_2_overlay_clip.json",
+ "paletteCount": 47297
+}

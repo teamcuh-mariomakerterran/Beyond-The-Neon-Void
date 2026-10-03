@@ -1,0 +1,327 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_kitchen_upgraded_p04",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  345,
+  325
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 1,
+   "x": 345,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 2,
+   "x": 690,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 3,
+   "x": 1035,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 4,
+   "x": 1380,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 5,
+   "x": 1725,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 6,
+   "x": 2070,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 7,
+   "x": 2415,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 8,
+   "x": 2760,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 9,
+   "x": 3105,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 10,
+   "x": 3450,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 11,
+   "x": 3795,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 12,
+   "x": 4140,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 13,
+   "x": 4485,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 14,
+   "x": 4830,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 15,
+   "x": 5175,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 16,
+   "x": 5520,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 17,
+   "x": 5865,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 18,
+   "x": 6210,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 19,
+   "x": 6555,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 20,
+   "x": 6900,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 21,
+   "x": 7245,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 22,
+   "x": 7590,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  },
+  {
+   "i": 23,
+   "x": 7935,
+   "y": 0,
+   "w": 345,
+   "h": 325
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  173,
+  322
+ ],
+ "propBBox": [
+  4,
+  4,
+  342,
+  323
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_kitchen_upgraded_p04_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_kitchen_upgraded_p04.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_kitchen_upgraded_p04.png",
+  "placementKey": "bldg_interior_indoor_kitchen_upgraded_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Kitchen Upgraded 04 \u2014 sink",
+ "qaGrade": "B",
+ "qaNote": "sink: water sheen sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 220,
+    "y": 10,
+    "warm": true
+   },
+   {
+    "x": 224,
+    "y": 16,
+    "warm": true
+   },
+   {
+    "x": 117,
+    "y": 58,
+    "warm": true
+   },
+   {
+    "x": 266,
+    "y": 60,
+    "warm": true
+   },
+   {
+    "x": 190,
+    "y": 66,
+    "warm": true
+   },
+   {
+    "x": 194,
+    "y": 69,
+    "warm": true
+   },
+   {
+    "x": 197,
+    "y": 75,
+    "warm": true
+   },
+   {
+    "x": 237,
+    "y": 81,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     124,
+     107,
+     241,
+     151
+    ],
+    "slope": 0.0,
+    "area": 2611
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     39,
+     207,
+     79,
+     246
+    ],
+    "slope": 0.20922276956759725,
+    "area": 716
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     181,
+     249,
+     217,
+     274
+    ],
+    "slope": 0.2158695652173902,
+    "area": 455
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 8,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 3,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 26947,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_kitchen_upgraded_p04_overlay_clip.json",
+ "paletteCount": 32691
+}

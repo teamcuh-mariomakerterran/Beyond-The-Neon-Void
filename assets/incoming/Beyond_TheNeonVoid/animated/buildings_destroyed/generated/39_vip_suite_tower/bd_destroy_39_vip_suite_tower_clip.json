@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_39_vip_suite_tower",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    368,
+    448
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 1,
+      "x": 368,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 2,
+      "x": 736,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 3,
+      "x": 1104,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 4,
+      "x": 1472,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 5,
+      "x": 1840,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 6,
+      "x": 2208,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 7,
+      "x": 2576,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 8,
+      "x": 2944,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 9,
+      "x": 3312,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 10,
+      "x": 3680,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    },
+    {
+      "i": 11,
+      "x": 4048,
+      "y": 0,
+      "w": 368,
+      "h": 448
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    183,
+    397
+  ],
+  "ruinAnchor": [
+    504,
+    1302
+  ],
+  "sourceSize": [
+    1009,
+    1303
+  ],
+  "ruinSize": [
+    1009,
+    1303
+  ],
+  "smolderEmitters": [
+    {
+      "x": 181,
+      "y": 506
+    },
+    {
+      "x": 504,
+      "y": 506
+    },
+    {
+      "x": 827,
+      "y": 515
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_39_vip_suite_tower_strip.png",
+    "ruin": "bd_destroy_39_vip_suite_tower_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 39_vip_suite_tower",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_39_vip_suite_tower_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_39_vip_suite_tower_ruin.png",
+      "static": true,
+      "anchor": [
+        504,
+        1302
+      ]
+    }
+  }
+}

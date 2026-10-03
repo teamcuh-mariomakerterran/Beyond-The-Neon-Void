@@ -1,0 +1,565 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_storage_upgraded_p06_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  289,
+  272
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 1,
+   "x": 289,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 2,
+   "x": 578,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 3,
+   "x": 867,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 4,
+   "x": 1156,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 5,
+   "x": 1445,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 6,
+   "x": 1734,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 7,
+   "x": 2023,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 8,
+   "x": 2312,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 9,
+   "x": 2601,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 10,
+   "x": 2890,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 11,
+   "x": 3179,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 12,
+   "x": 3468,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 13,
+   "x": 3757,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 14,
+   "x": 4046,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 15,
+   "x": 4335,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 16,
+   "x": 4624,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 17,
+   "x": 4913,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 18,
+   "x": 5202,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 19,
+   "x": 5491,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 20,
+   "x": 5780,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 21,
+   "x": 6069,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 22,
+   "x": 6358,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  },
+  {
+   "i": 23,
+   "x": 6647,
+   "y": 0,
+   "w": 289,
+   "h": 272
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  145,
+  267
+ ],
+ "propBBox": [
+  4,
+  4,
+  286,
+  268
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_storage_upgraded_p06_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_storage_upgraded_p06.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_storage_upgraded_p06.png",
+  "placementKey": "bldg_interior_indoor_storage_upgraded_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Storage Upgraded 06 \u2014 crate",
+ "qaGrade": "B",
+ "qaNote": "crate: cyan lights pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 20,
+    "y": 70,
+    "warm": true
+   },
+   {
+    "x": 268,
+    "y": 75,
+    "warm": true
+   },
+   {
+    "x": 21,
+    "y": 106,
+    "warm": true
+   },
+   {
+    "x": 269,
+    "y": 106,
+    "warm": true
+   },
+   {
+    "x": 192,
+    "y": 114,
+    "warm": true
+   },
+   {
+    "x": 162,
+    "y": 115,
+    "warm": true
+   },
+   {
+    "x": 223,
+    "y": 118,
+    "warm": false
+   },
+   {
+    "x": 267,
+    "y": 115,
+    "warm": true
+   },
+   {
+    "x": 237,
+    "y": 120,
+    "warm": true
+   },
+   {
+    "x": 76,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 133,
+    "y": 135,
+    "warm": false
+   },
+   {
+    "x": 165,
+    "y": 152,
+    "warm": true
+   },
+   {
+    "x": 236,
+    "y": 158,
+    "warm": true
+   },
+   {
+    "x": 44,
+    "y": 158,
+    "warm": false
+   },
+   {
+    "x": 266,
+    "y": 160,
+    "warm": true
+   },
+   {
+    "x": 49,
+    "y": 164,
+    "warm": false
+   },
+   {
+    "x": 52,
+    "y": 168,
+    "warm": false
+   },
+   {
+    "x": 56,
+    "y": 176,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 170,
+    "warm": false
+   },
+   {
+    "x": 19,
+    "y": 187,
+    "warm": true
+   },
+   {
+    "x": 271,
+    "y": 194,
+    "warm": true
+   },
+   {
+    "x": 189,
+    "y": 197,
+    "warm": true
+   },
+   {
+    "x": 62,
+    "y": 199,
+    "warm": true
+   },
+   {
+    "x": 117,
+    "y": 205,
+    "warm": false
+   },
+   {
+    "x": 12,
+    "y": 207,
+    "warm": true
+   },
+   {
+    "x": 19,
+    "y": 209,
+    "warm": true
+   },
+   {
+    "x": 24,
+    "y": 211,
+    "warm": true
+   },
+   {
+    "x": 274,
+    "y": 215,
+    "warm": true
+   },
+   {
+    "x": 41,
+    "y": 212,
+    "warm": true
+   },
+   {
+    "x": 33,
+    "y": 214,
+    "warm": true
+   },
+   {
+    "x": 48,
+    "y": 214,
+    "warm": true
+   },
+   {
+    "x": 56,
+    "y": 217,
+    "warm": true
+   },
+   {
+    "x": 62,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 134,
+    "y": 224,
+    "warm": true
+   },
+   {
+    "x": 262,
+    "y": 222,
+    "warm": true
+   },
+   {
+    "x": 70,
+    "y": 222,
+    "warm": true
+   },
+   {
+    "x": 75,
+    "y": 224,
+    "warm": true
+   },
+   {
+    "x": 257,
+    "y": 224,
+    "warm": true
+   },
+   {
+    "x": 81,
+    "y": 226,
+    "warm": true
+   },
+   {
+    "x": 87,
+    "y": 228,
+    "warm": true
+   },
+   {
+    "x": 193,
+    "y": 235,
+    "warm": true
+   },
+   {
+    "x": 98,
+    "y": 232,
+    "warm": true
+   },
+   {
+    "x": 161,
+    "y": 235,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 233,
+    "warm": true
+   },
+   {
+    "x": 103,
+    "y": 234,
+    "warm": true
+   },
+   {
+    "x": 234,
+    "y": 235,
+    "warm": true
+   },
+   {
+    "x": 110,
+    "y": 236,
+    "warm": true
+   },
+   {
+    "x": 121,
+    "y": 241,
+    "warm": true
+   },
+   {
+    "x": 129,
+    "y": 243,
+    "warm": true
+   },
+   {
+    "x": 134,
+    "y": 245,
+    "warm": true
+   },
+   {
+    "x": 211,
+    "y": 247,
+    "warm": true
+   },
+   {
+    "x": 141,
+    "y": 248,
+    "warm": true
+   },
+   {
+    "x": 204,
+    "y": 253,
+    "warm": true
+   },
+   {
+    "x": 148,
+    "y": 254,
+    "warm": true
+   },
+   {
+    "x": 200,
+    "y": 255,
+    "warm": true
+   },
+   {
+    "x": 154,
+    "y": 256,
+    "warm": true
+   },
+   {
+    "x": 195,
+    "y": 257,
+    "warm": true
+   },
+   {
+    "x": 160,
+    "y": 259,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     40,
+     123,
+     42,
+     152
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     45,
+     105,
+     103,
+     173
+    ],
+    "slope": 0.5,
+    "area": 1557
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     114,
+     140,
+     151,
+     205
+    ],
+    "slope": -0.5,
+    "area": 1273
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 58,
+   "strips": 1,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 10023,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_storage_upgraded_p06",
+ "overlayClip": null
+}

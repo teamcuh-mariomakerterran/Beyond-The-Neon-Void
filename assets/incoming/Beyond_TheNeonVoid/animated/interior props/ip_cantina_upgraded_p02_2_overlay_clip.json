@@ -1,0 +1,428 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_upgraded_p02_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  265,
+  398
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 1,
+   "x": 265,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 2,
+   "x": 530,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 3,
+   "x": 795,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 4,
+   "x": 1060,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 5,
+   "x": 1325,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 6,
+   "x": 1590,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 7,
+   "x": 1855,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 8,
+   "x": 2120,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 9,
+   "x": 2385,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 10,
+   "x": 2650,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 11,
+   "x": 2915,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 12,
+   "x": 3180,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 13,
+   "x": 3445,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 14,
+   "x": 3710,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 15,
+   "x": 3975,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 16,
+   "x": 4240,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 17,
+   "x": 4505,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 18,
+   "x": 4770,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 19,
+   "x": 5035,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 20,
+   "x": 5300,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 21,
+   "x": 5565,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 22,
+   "x": 5830,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  },
+  {
+   "i": 23,
+   "x": 6095,
+   "y": 0,
+   "w": 265,
+   "h": 398
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  132,
+  393
+ ],
+ "propBBox": [
+  3,
+  4,
+  261,
+  394
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_upgraded_p02_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_upgraded_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_upgraded_p02_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_upgraded_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Upgraded 02 \u2014 drinks fridge (upgraded)",
+ "qaGrade": "B+",
+ "qaNote": "drinks fridge (upgraded): glass sheen + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 117,
+    "y": 10,
+    "warm": true
+   },
+   {
+    "x": 145,
+    "y": 16,
+    "warm": true
+   },
+   {
+    "x": 87,
+    "y": 18,
+    "warm": true
+   },
+   {
+    "x": 158,
+    "y": 20,
+    "warm": true
+   },
+   {
+    "x": 170,
+    "y": 22,
+    "warm": true
+   },
+   {
+    "x": 193,
+    "y": 28,
+    "warm": true
+   },
+   {
+    "x": 36,
+    "y": 30,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 38,
+    "warm": true
+   },
+   {
+    "x": 210,
+    "y": 45,
+    "warm": true
+   },
+   {
+    "x": 245,
+    "y": 44,
+    "warm": true
+   },
+   {
+    "x": 51,
+    "y": 109,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 115,
+    "warm": true
+   },
+   {
+    "x": 250,
+    "y": 126,
+    "warm": true
+   },
+   {
+    "x": 252,
+    "y": 133,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 215,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 226,
+    "warm": false
+   },
+   {
+    "x": 217,
+    "y": 228,
+    "warm": true
+   },
+   {
+    "x": 220,
+    "y": 234,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 234,
+    "warm": false
+   },
+   {
+    "x": 210,
+    "y": 250,
+    "warm": true
+   },
+   {
+    "x": 209,
+    "y": 257,
+    "warm": true
+   },
+   {
+    "x": 226,
+    "y": 271,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 287,
+    "warm": true
+   },
+   {
+    "x": 219,
+    "y": 292,
+    "warm": true
+   },
+   {
+    "x": 226,
+    "y": 292,
+    "warm": true
+   },
+   {
+    "x": 210,
+    "y": 300,
+    "warm": true
+   },
+   {
+    "x": 225,
+    "y": 315,
+    "warm": true
+   },
+   {
+    "x": 187,
+    "y": 328,
+    "warm": true
+   },
+   {
+    "x": 235,
+    "y": 333,
+    "warm": true
+   },
+   {
+    "x": 25,
+    "y": 338,
+    "warm": true
+   },
+   {
+    "x": 142,
+    "y": 374,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     63,
+     179,
+     67,
+     201
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     34,
+     105,
+     142,
+     325
+    ],
+    "slope": 0.2599282912084383,
+    "area": 13303
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 31,
+   "strips": 1,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 13829,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_cantina_upgraded_p02_2",
+ "overlayClip": null
+}

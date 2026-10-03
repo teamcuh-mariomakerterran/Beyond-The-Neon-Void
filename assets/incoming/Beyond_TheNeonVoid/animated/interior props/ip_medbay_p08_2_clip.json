@@ -1,0 +1,511 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_medbay_p08_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  283,
+  362
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 1,
+   "x": 283,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 2,
+   "x": 566,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 3,
+   "x": 849,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 4,
+   "x": 1132,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 5,
+   "x": 1415,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 6,
+   "x": 1698,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 7,
+   "x": 1981,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 8,
+   "x": 2264,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 9,
+   "x": 2547,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 10,
+   "x": 2830,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 11,
+   "x": 3113,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 12,
+   "x": 3396,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 13,
+   "x": 3679,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 14,
+   "x": 3962,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 15,
+   "x": 4245,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 16,
+   "x": 4528,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 17,
+   "x": 4811,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 18,
+   "x": 5094,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 19,
+   "x": 5377,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 20,
+   "x": 5660,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 21,
+   "x": 5943,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 22,
+   "x": 6226,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  },
+  {
+   "i": 23,
+   "x": 6509,
+   "y": 0,
+   "w": 283,
+   "h": 362
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  142,
+  357
+ ],
+ "propBBox": [
+  4,
+  4,
+  279,
+  358
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_medbay_p08_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_medbay_p08_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_medbay_p08_2.png",
+  "placementKey": "bldg_interior_indoor_medbay_p08",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Medbay 08 \u2014 body-scan station",
+ "qaGrade": "A-",
+ "qaNote": "body-scan station: screen sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 98,
+    "y": 57,
+    "warm": false
+   },
+   {
+    "x": 89,
+    "y": 65,
+    "warm": false
+   },
+   {
+    "x": 193,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 83,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 79,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 74,
+    "y": 103,
+    "warm": false
+   },
+   {
+    "x": 98,
+    "y": 114,
+    "warm": false
+   },
+   {
+    "x": 182,
+    "y": 108,
+    "warm": false
+   },
+   {
+    "x": 168,
+    "y": 117,
+    "warm": false
+   },
+   {
+    "x": 244,
+    "y": 117,
+    "warm": true
+   },
+   {
+    "x": 179,
+    "y": 120,
+    "warm": false
+   },
+   {
+    "x": 51,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 138,
+    "y": 170,
+    "warm": false
+   },
+   {
+    "x": 149,
+    "y": 174,
+    "warm": false
+   },
+   {
+    "x": 150,
+    "y": 231,
+    "warm": true
+   },
+   {
+    "x": 275,
+    "y": 290,
+    "warm": true
+   },
+   {
+    "x": 270,
+    "y": 295,
+    "warm": true
+   },
+   {
+    "x": 266,
+    "y": 298,
+    "warm": true
+   },
+   {
+    "x": 18,
+    "y": 300,
+    "warm": true
+   },
+   {
+    "x": 29,
+    "y": 302,
+    "warm": true
+   },
+   {
+    "x": 251,
+    "y": 308,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 309,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 312,
+    "warm": true
+   },
+   {
+    "x": 72,
+    "y": 316,
+    "warm": true
+   },
+   {
+    "x": 235,
+    "y": 319,
+    "warm": true
+   },
+   {
+    "x": 83,
+    "y": 320,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 323,
+    "warm": true
+   },
+   {
+    "x": 103,
+    "y": 327,
+    "warm": true
+   },
+   {
+    "x": 221,
+    "y": 330,
+    "warm": true
+   },
+   {
+    "x": 115,
+    "y": 331,
+    "warm": true
+   },
+   {
+    "x": 125,
+    "y": 334,
+    "warm": true
+   },
+   {
+    "x": 216,
+    "y": 334,
+    "warm": true
+   },
+   {
+    "x": 210,
+    "y": 338,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 341,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 344,
+    "warm": true
+   },
+   {
+    "x": 155,
+    "y": 345,
+    "warm": true
+   },
+   {
+    "x": 164,
+    "y": 348,
+    "warm": true
+   },
+   {
+    "x": 192,
+    "y": 351,
+    "warm": true
+   },
+   {
+    "x": 174,
+    "y": 352,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 354,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     62,
+     40,
+     122,
+     120
+    ],
+    "slope": -0.5,
+    "area": 616
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     103,
+     56,
+     159,
+     132
+    ],
+    "slope": -0.6,
+    "area": 1839
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     169,
+     73,
+     200,
+     113
+    ],
+    "slope": -0.6,
+    "area": 411
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     160,
+     123,
+     184,
+     143
+    ],
+    "slope": 0.3125,
+    "area": 238
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     42,
+     192,
+     81,
+     209
+    ],
+    "slope": 0.28113553113553014,
+    "area": 306
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     51,
+     233,
+     76,
+     247
+    ],
+    "slope": 0.27941176470588563,
+    "area": 197
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 40,
+   "strips": 0,
+   "screens": 5,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 62703,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_medbay_p08_2_overlay_clip.json",
+ "paletteCount": 30065
+}

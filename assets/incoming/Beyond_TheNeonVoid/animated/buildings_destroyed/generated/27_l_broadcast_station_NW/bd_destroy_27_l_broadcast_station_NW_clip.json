@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_27_l_broadcast_station_NW",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "surge_shed",
+  "cell": [
+    275,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 275,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 550,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 825,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 1100,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 1375,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 1650,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 1925,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 2200,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 2475,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 2750,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 3025,
+      "y": 0,
+      "w": 275,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    137,
+    394
+  ],
+  "ruinAnchor": [
+    403,
+    1364
+  ],
+  "sourceSize": [
+    807,
+    1365
+  ],
+  "ruinSize": [
+    807,
+    1365
+  ],
+  "smolderEmitters": [
+    {
+      "x": 149,
+      "y": 549
+    },
+    {
+      "x": 406,
+      "y": 305
+    },
+    {
+      "x": 662,
+      "y": 734
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_27_l_broadcast_station_NW_strip.png",
+    "ruin": "bd_destroy_27_l_broadcast_station_NW_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Surge Shed destroy of 27_l_broadcast_station_NW",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_27_l_broadcast_station_NW_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_27_l_broadcast_station_NW_ruin.png",
+      "static": true,
+      "anchor": [
+        403,
+        1364
+      ]
+    }
+  }
+}

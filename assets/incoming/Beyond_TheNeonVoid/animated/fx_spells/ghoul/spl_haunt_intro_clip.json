@@ -1,0 +1,140 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_haunt_intro",
+ "cell": [
+  96,
+  160
+ ],
+ "frames": 12,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 1,
+   "x": 96,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 2,
+   "x": 192,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 3,
+   "x": 288,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 4,
+   "x": 384,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 5,
+   "x": 480,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 6,
+   "x": 576,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 7,
+   "x": 672,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 8,
+   "x": 768,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 9,
+   "x": 864,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 10,
+   "x": 960,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  },
+  {
+   "i": 11,
+   "x": 1056,
+   "y": 0,
+   "w": 96,
+   "h": 160
+  }
+ ],
+ "textures": {
+  "strip": "spl_haunt_intro_strip.png"
+ },
+ "source": "LATTICE + Brian's glitch-ghoul frame sheet (26b36bda.png) at native pixels (sheet was 4x upscaled), 1/2 downscale, requantised; head faces screen-right",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Haunt (intro) \u2014 Brian's glitch ghoul tears into view over the cursed unit, curse ring flashes, the tether snaps down to the unit",
+ "qaGrade": "B+",
+ "qaNote": "ghoul tears into view on scanlines over the unit, curse ring flashes, tether drops; ends on the loop pose",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  48,
+  152
+ ],
+ "group": "ghoul",
+ "tags": [
+  "spell",
+  "ghoul"
+ ],
+ "config": {
+  "footprintTiles": [
+   1,
+   1
+  ],
+  "tileCentre": [
+   48,
+   136
+  ],
+  "family": "ghoul"
+ },
+ "suggestedUse": "Brian's glitch-ghoul curses (one facing: art faces screen-right; mirror the clip horizontally at runtime for a left-facing cast, anchor x -> cell w - x). Anchor = target tile ground point. spl_death_soul on a unit's death tile after its death/wreck anim. spl_fear_scream on the target (hits[0] = scream lands) -> spl_terrified_loop on the target while the debuff lasts (pairsWith). spl_banish on the target: move the unit down emitters.unitSink.px over startFrame..endFrame (clip/fade it at the tile), hide it at emitters.unitHideFrame. spl_haunt_intro (endsOn) -> spl_haunt_loop over a cursed unit. spl_curse_petrify (hits[0] = spikes land) -> spl_petrified_loop + grey tint config.unitTintHint on the unit sprite.",
+ "layering": "Anchor = ground point of the target unit's tile (bottom vertex of its 64x32 diamond); draw over the unit. The head art faces screen-right only: for a cast toward screen-left, mirror the clip horizontally at runtime (anchor x -> cell width - x).",
+ "groundPoint": [
+  48,
+  152
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "endsOn": "spl_haunt_loop"
+}

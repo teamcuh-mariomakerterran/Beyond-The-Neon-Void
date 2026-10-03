@@ -1,0 +1,123 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_map_smoke_vent",
+  "kind": "ambient",
+  "loop": true,
+  "generator": null,
+  "cell": [
+    64,
+    64
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 1,
+      "x": 64,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 2,
+      "x": 128,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 3,
+      "x": 192,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 4,
+      "x": 256,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 5,
+      "x": 320,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 6,
+      "x": 384,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 7,
+      "x": 448,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 8,
+      "x": 512,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 9,
+      "x": 576,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 10,
+      "x": 640,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    },
+    {
+      "i": 11,
+      "x": 704,
+      "y": 0,
+      "w": 64,
+      "h": 64
+    }
+  ],
+  "fps": 7,
+  "holds": null,
+  "tickSequence": null,
+  "palette": null,
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    32,
+    62
+  ],
+  "sortBias": 1,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic map ambient \u2014 no character DIR_ORDER. Overlays share the base tile/building depthKey.",
+  "textures": {
+    "strip": "bd_map_smoke_vent_strip.png",
+    "base": "building_base_coolingtower.png"
+  },
+  "source": "LATTICE",
+  "sourceAssets": {
+    "smokePrimary": "smoke roll 001.png \u2014 4\u00d73 sheet of 384\u00d7384 cells \u2192 12-frame horizontal strip @ 64\u00d764",
+    "smokeSiblings": "smoke roll 002.png \u2026 005.png available (same sheet layout); not packed in this smoke-test",
+    "building": "bsheet_040_14_2.png (cooling-tower industrial \u2014 vents suit smoke)"
+  }
+}

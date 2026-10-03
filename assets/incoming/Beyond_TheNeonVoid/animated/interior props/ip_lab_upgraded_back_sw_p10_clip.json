@@ -1,0 +1,365 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_upgraded_back_sw_p10",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  272,
+  330
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 1,
+   "x": 272,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 2,
+   "x": 544,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 3,
+   "x": 816,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 4,
+   "x": 1088,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 5,
+   "x": 1360,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 6,
+   "x": 1632,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 7,
+   "x": 1904,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 8,
+   "x": 2176,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 9,
+   "x": 2448,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 10,
+   "x": 2720,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 11,
+   "x": 2992,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 12,
+   "x": 3264,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 13,
+   "x": 3536,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 14,
+   "x": 3808,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 15,
+   "x": 4080,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 16,
+   "x": 4352,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 17,
+   "x": 4624,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 18,
+   "x": 4896,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 19,
+   "x": 5168,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 20,
+   "x": 5440,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 21,
+   "x": 5712,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 22,
+   "x": 5984,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  },
+  {
+   "i": 23,
+   "x": 6256,
+   "y": 0,
+   "w": 272,
+   "h": 330
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  136,
+  325
+ ],
+ "propBBox": [
+  3,
+  4,
+  268,
+  326
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_upgraded_back_sw_p10_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_upgraded_back_sw_p10.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_upgraded_back_sw_p10.png",
+  "placementKey": "bldg_interior_indoor_lab_upgraded_back_sw_p10",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab Upgraded Back Sw 10 \u2014 specimen fridge (back)",
+ "qaGrade": "B+",
+ "qaNote": "specimen fridge (back): glass sheen + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 199,
+    "y": 48,
+    "warm": true
+   },
+   {
+    "x": 69,
+    "y": 98,
+    "warm": false
+   },
+   {
+    "x": 94,
+    "y": 103,
+    "warm": false
+   },
+   {
+    "x": 223,
+    "y": 99,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 101,
+    "warm": true
+   },
+   {
+    "x": 227,
+    "y": 125,
+    "warm": true
+   },
+   {
+    "x": 96,
+    "y": 176,
+    "warm": false
+   },
+   {
+    "x": 248,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 51,
+    "y": 186,
+    "warm": false
+   },
+   {
+    "x": 101,
+    "y": 186,
+    "warm": false
+   },
+   {
+    "x": 146,
+    "y": 192,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 198,
+    "warm": false
+   },
+   {
+    "x": 207,
+    "y": 222,
+    "warm": true
+   },
+   {
+    "x": 207,
+    "y": 230,
+    "warm": true
+   },
+   {
+    "x": 208,
+    "y": 241,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 250,
+    "warm": true
+   },
+   {
+    "x": 208,
+    "y": 262,
+    "warm": true
+   },
+   {
+    "x": 250,
+    "y": 261,
+    "warm": true
+   },
+   {
+    "x": 246,
+    "y": 265,
+    "warm": true
+   },
+   {
+    "x": 138,
+    "y": 296,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     37,
+     76,
+     152,
+     257
+    ],
+    "slope": 0.2670487407329508,
+    "area": 8423
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 20,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 3810,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lab_upgraded_back_sw_p10_overlay_clip.json",
+ "paletteCount": 31863
+}

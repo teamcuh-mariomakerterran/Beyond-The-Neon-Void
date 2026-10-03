@@ -1,0 +1,101 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "pl_destroy_dome_reactor",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": null,
+  "preset": "core_meltdown",
+  "cell": [
+    1024,
+    1024
+  ],
+  "frames": 8,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 1,
+      "x": 1024,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 2,
+      "x": 2048,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 3,
+      "x": 3072,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 4,
+      "x": 4096,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 5,
+      "x": 5120,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 6,
+      "x": 6144,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    },
+    {
+      "i": 7,
+      "x": 7168,
+      "y": 0,
+      "w": 1024,
+      "h": 1024
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": null,
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    512,
+    1016
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "pl_destroy_dome_reactor_strip.png",
+    "ruin": "pl_destroy_dome_reactor_ruin.png"
+  },
+  "source": "PIXELLAB_REF",
+  "suggestedUse": "Dark dome reactor lava cracks + shell peel"
+}

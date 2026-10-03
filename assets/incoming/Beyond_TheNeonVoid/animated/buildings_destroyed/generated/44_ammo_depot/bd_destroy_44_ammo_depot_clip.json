@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_44_ammo_depot",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    478,
+    400
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 1,
+      "x": 478,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 2,
+      "x": 956,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 3,
+      "x": 1434,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 4,
+      "x": 1912,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 5,
+      "x": 2390,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 6,
+      "x": 2868,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 7,
+      "x": 3346,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 8,
+      "x": 3824,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 9,
+      "x": 4302,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 10,
+      "x": 4780,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    },
+    {
+      "i": 11,
+      "x": 5258,
+      "y": 0,
+      "w": 478,
+      "h": 400
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    238,
+    355
+  ],
+  "ruinAnchor": [
+    606,
+    1087
+  ],
+  "sourceSize": [
+    1212,
+    1088
+  ],
+  "ruinSize": [
+    1212,
+    1088
+  ],
+  "smolderEmitters": [
+    {
+      "x": 218,
+      "y": 302
+    },
+    {
+      "x": 606,
+      "y": 393
+    },
+    {
+      "x": 993,
+      "y": 324
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_44_ammo_depot_strip.png",
+    "ruin": "bd_destroy_44_ammo_depot_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 44_ammo_depot",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_44_ammo_depot_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_44_ammo_depot_ruin.png",
+      "static": true,
+      "anchor": [
+        606,
+        1087
+      ]
+    }
+  }
+}

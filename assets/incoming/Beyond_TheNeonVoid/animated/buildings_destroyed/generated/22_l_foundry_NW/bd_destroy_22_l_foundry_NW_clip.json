@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_22_l_foundry_NW",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "core_meltdown",
+  "cell": [
+    411,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 411,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 822,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 1233,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 1644,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 2055,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 2466,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 2877,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 3288,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 3699,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 4110,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 4521,
+      "y": 0,
+      "w": 411,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    205,
+    394
+  ],
+  "ruinAnchor": [
+    583,
+    1339
+  ],
+  "sourceSize": [
+    1167,
+    1340
+  ],
+  "ruinSize": [
+    1167,
+    1340
+  ],
+  "smolderEmitters": [
+    {
+      "x": 210,
+      "y": 496
+    },
+    {
+      "x": 583,
+      "y": 458
+    },
+    {
+      "x": 956,
+      "y": 434
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_22_l_foundry_NW_strip.png",
+    "ruin": "bd_destroy_22_l_foundry_NW_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Core Meltdown destroy of 22_l_foundry_NW",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_22_l_foundry_NW_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_22_l_foundry_NW_ruin.png",
+      "static": true,
+      "anchor": [
+        583,
+        1339
+      ]
+    }
+  }
+}

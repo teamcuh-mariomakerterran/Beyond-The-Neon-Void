@@ -1,0 +1,275 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_gym_p10_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  251,
+  262
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 1,
+   "x": 251,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 2,
+   "x": 502,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 3,
+   "x": 753,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 4,
+   "x": 1004,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 5,
+   "x": 1255,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 6,
+   "x": 1506,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 7,
+   "x": 1757,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 8,
+   "x": 2008,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 9,
+   "x": 2259,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 10,
+   "x": 2510,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 11,
+   "x": 2761,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 12,
+   "x": 3012,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 13,
+   "x": 3263,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 14,
+   "x": 3514,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 15,
+   "x": 3765,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 16,
+   "x": 4016,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 17,
+   "x": 4267,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 18,
+   "x": 4518,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 19,
+   "x": 4769,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 20,
+   "x": 5020,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 21,
+   "x": 5271,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 22,
+   "x": 5522,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  },
+  {
+   "i": 23,
+   "x": 5773,
+   "y": 0,
+   "w": 251,
+   "h": 262
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  126,
+  257
+ ],
+ "propBBox": [
+  4,
+  4,
+  248,
+  258
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_gym_p10_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_gym_p10_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_gym_p10_2.png",
+  "placementKey": "bldg_interior_indoor_gym_p10",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Gym 10 \u2014 wall display",
+ "qaGrade": "B+",
+ "qaNote": "wall display: scanline sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 30,
+    "y": 66,
+    "warm": false
+   },
+   {
+    "x": 190,
+    "y": 124,
+    "warm": false
+   },
+   {
+    "x": 30,
+    "y": 151,
+    "warm": false
+   },
+   {
+    "x": 190,
+    "y": 213,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     52,
+     82,
+     171,
+     204
+    ],
+    "slope": 0.5,
+    "area": 6542
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 4,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 9244,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_gym_p10_2",
+ "overlayClip": null
+}

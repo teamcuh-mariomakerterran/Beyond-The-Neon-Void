@@ -1,0 +1,282 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_security_back_sw_p01_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  267,
+  384
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 1,
+   "x": 267,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 2,
+   "x": 534,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 3,
+   "x": 801,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 4,
+   "x": 1068,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 5,
+   "x": 1335,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 6,
+   "x": 1602,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 7,
+   "x": 1869,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 8,
+   "x": 2136,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 9,
+   "x": 2403,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 10,
+   "x": 2670,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 11,
+   "x": 2937,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 12,
+   "x": 3204,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 13,
+   "x": 3471,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 14,
+   "x": 3738,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 15,
+   "x": 4005,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 16,
+   "x": 4272,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 17,
+   "x": 4539,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 18,
+   "x": 4806,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 19,
+   "x": 5073,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 20,
+   "x": 5340,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 21,
+   "x": 5607,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 22,
+   "x": 5874,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  },
+  {
+   "i": 23,
+   "x": 6141,
+   "y": 0,
+   "w": 267,
+   "h": 384
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  134,
+  379
+ ],
+ "propBBox": [
+  4,
+  4,
+  263,
+  380
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_security_back_sw_p01_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_security_back_sw_p01_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_security_back_sw_p01_2.png",
+  "placementKey": "bldg_interior_indoor_security_back_sw_p01",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Security Back Sw 01 \u2014 scanner gate",
+ "qaGrade": "B",
+ "qaNote": "scanner gate: side light strips pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 177,
+    "y": 306,
+    "warm": true
+   },
+   {
+    "x": 185,
+    "y": 312,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 368,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     229,
+     163,
+     239,
+     211
+    ],
+    "slope": 0.0,
+    "area": 453
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     66,
+     199,
+     76,
+     247
+    ],
+    "slope": 0.0,
+    "area": 424
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 3,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 25994,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_security_back_sw_p01_2_overlay_clip.json",
+ "paletteCount": 14142
+}

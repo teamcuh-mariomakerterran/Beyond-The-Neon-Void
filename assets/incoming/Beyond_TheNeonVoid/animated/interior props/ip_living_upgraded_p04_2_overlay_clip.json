@@ -1,0 +1,446 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_living_upgraded_p04_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  270,
+  264
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 1,
+   "x": 270,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 2,
+   "x": 540,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 3,
+   "x": 810,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 4,
+   "x": 1080,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 5,
+   "x": 1350,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 6,
+   "x": 1620,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 7,
+   "x": 1890,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 8,
+   "x": 2160,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 9,
+   "x": 2430,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 10,
+   "x": 2700,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 11,
+   "x": 2970,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 12,
+   "x": 3240,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 13,
+   "x": 3510,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 14,
+   "x": 3780,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 15,
+   "x": 4050,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 16,
+   "x": 4320,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 17,
+   "x": 4590,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 18,
+   "x": 4860,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 19,
+   "x": 5130,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 20,
+   "x": 5400,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 21,
+   "x": 5670,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 22,
+   "x": 5940,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  },
+  {
+   "i": 23,
+   "x": 6210,
+   "y": 0,
+   "w": 270,
+   "h": 264
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  134,
+  259
+ ],
+ "propBBox": [
+  3,
+  4,
+  266,
+  260
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_living_upgraded_p04_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_living_upgraded_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_living_upgraded_p04_2.png",
+  "placementKey": "bldg_interior_indoor_living_upgraded_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Living Upgraded 04 \u2014 TV (upgraded)",
+ "qaGrade": "A-",
+ "qaNote": "TV (upgraded): scanline sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 120,
+    "y": 22,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 57,
+    "y": 69,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 85,
+    "warm": false
+   },
+   {
+    "x": 158,
+    "y": 88,
+    "warm": false
+   },
+   {
+    "x": 169,
+    "y": 97,
+    "warm": false
+   },
+   {
+    "x": 121,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 71,
+    "y": 131,
+    "warm": false
+   },
+   {
+    "x": 46,
+    "y": 144,
+    "warm": false
+   },
+   {
+    "x": 91,
+    "y": 146,
+    "warm": false
+   },
+   {
+    "x": 188,
+    "y": 161,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 176,
+    "warm": false
+   },
+   {
+    "x": 32,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 181,
+    "warm": true
+   },
+   {
+    "x": 133,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 145,
+    "y": 200,
+    "warm": true
+   },
+   {
+    "x": 154,
+    "y": 202,
+    "warm": true
+   },
+   {
+    "x": 162,
+    "y": 204,
+    "warm": true
+   },
+   {
+    "x": 189,
+    "y": 215,
+    "warm": true
+   },
+   {
+    "x": 204,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 216,
+    "y": 221,
+    "warm": false
+   },
+   {
+    "x": 87,
+    "y": 221,
+    "warm": true
+   },
+   {
+    "x": 85,
+    "y": 223,
+    "warm": true
+   },
+   {
+    "x": 128,
+    "y": 232,
+    "warm": true
+   },
+   {
+    "x": 119,
+    "y": 234,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 246,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     40,
+     67,
+     44,
+     134
+    ]
+   },
+   {
+    "bbox": [
+     75,
+     135,
+     88,
+     147
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     51,
+     51,
+     191,
+     117
+    ],
+    "slope": 0.0,
+    "area": 1082
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     93,
+     81,
+     151,
+     149
+    ],
+    "slope": 0.0,
+    "area": 3611
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     161,
+     94,
+     193,
+     130
+    ],
+    "slope": -0.6,
+    "area": 175
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     58,
+     98,
+     207,
+     181
+    ],
+    "slope": 0.0,
+    "area": 1404
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     52,
+     101,
+     83,
+     135
+    ],
+    "slope": -0.6,
+    "area": 165
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 26,
+   "strips": 2,
+   "screens": 5,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 33576,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_living_upgraded_p04_2",
+ "overlayClip": null
+}

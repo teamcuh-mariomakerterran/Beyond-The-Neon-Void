@@ -1,0 +1,231 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_kinetic_rod",
+ "cell": [
+  224,
+  300
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 1,
+   "x": 224,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 2,
+   "x": 448,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 3,
+   "x": 672,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 4,
+   "x": 896,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 5,
+   "x": 1120,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 6,
+   "x": 1344,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 7,
+   "x": 1568,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 8,
+   "x": 1792,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 9,
+   "x": 2016,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 10,
+   "x": 2240,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 11,
+   "x": 2464,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 12,
+   "x": 2688,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 13,
+   "x": 2912,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 14,
+   "x": 3136,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 15,
+   "x": 3360,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 16,
+   "x": 3584,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 17,
+   "x": 3808,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 18,
+   "x": 4032,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 19,
+   "x": 4256,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 20,
+   "x": 4480,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 21,
+   "x": 4704,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 22,
+   "x": 4928,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  },
+  {
+   "i": 23,
+   "x": 5152,
+   "y": 0,
+   "w": 224,
+   "h": 300
+  }
+ ],
+ "textures": {
+  "strip": "spl_kinetic_rod_strip.png"
+ },
+ "source": "LATTICE",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Kinetic rod \u2014 orbital tungsten rod streaks down with a plasma sheath + smoke trail, white-out impact, dust shockwave, crater",
+ "qaGrade": "B+",
+ "qaNote": "rod streaks in on a plasma sheath + smoke trail, white-out, dust torus, crater, dust column",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  112,
+  252
+ ],
+ "group": "big",
+ "tags": [
+  "spell",
+  "big",
+  "3x3"
+ ],
+ "config": {
+  "footprintTiles": [
+   3,
+   3
+  ],
+  "tileCentre": [
+   112,
+   236
+  ],
+  "family": "big"
+ },
+ "suggestedUse": "Big spell; anchor on the target (centre) tile ground point. Beams/rods/rockets enter from the top of the cell (the sky).",
+ "layering": "Anchor = ground point of the CENTRE tile of the 3x3 area (bottom vertex of its 64x32 diamond). Draw over units.",
+ "groundPoint": [
+  112,
+  252
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 8,
+   "x": 112,
+   "y": 236
+  }
+ ]
+}

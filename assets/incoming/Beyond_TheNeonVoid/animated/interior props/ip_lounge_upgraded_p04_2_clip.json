@@ -1,0 +1,462 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lounge_upgraded_p04_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  332,
+  291
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 1,
+   "x": 332,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 2,
+   "x": 664,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 3,
+   "x": 996,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 4,
+   "x": 1328,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 5,
+   "x": 1660,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 6,
+   "x": 1992,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 7,
+   "x": 2324,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 8,
+   "x": 2656,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 9,
+   "x": 2988,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 10,
+   "x": 3320,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 11,
+   "x": 3652,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 12,
+   "x": 3984,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 13,
+   "x": 4316,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 14,
+   "x": 4648,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 15,
+   "x": 4980,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 16,
+   "x": 5312,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 17,
+   "x": 5644,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 18,
+   "x": 5976,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 19,
+   "x": 6308,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 20,
+   "x": 6640,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 21,
+   "x": 6972,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 22,
+   "x": 7304,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  },
+  {
+   "i": 23,
+   "x": 7636,
+   "y": 0,
+   "w": 332,
+   "h": 291
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  166,
+  286
+ ],
+ "propBBox": [
+  4,
+  4,
+  329,
+  287
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lounge_upgraded_p04_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lounge_upgraded_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lounge_upgraded_p04_2.png",
+  "placementKey": "bldg_interior_indoor_lounge_upgraded_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lounge Upgraded 04 \u2014 coffee table holo screen",
+ "qaGrade": "B+",
+ "qaNote": "coffee table holo screen: shimmer + mug unchanged",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 144,
+    "y": 55,
+    "warm": false
+   },
+   {
+    "x": 189,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 191,
+    "y": 121,
+    "warm": false
+   },
+   {
+    "x": 86,
+    "y": 131,
+    "warm": true
+   },
+   {
+    "x": 306,
+    "y": 136,
+    "warm": true
+   },
+   {
+    "x": 279,
+    "y": 151,
+    "warm": true
+   },
+   {
+    "x": 27,
+    "y": 155,
+    "warm": true
+   },
+   {
+    "x": 42,
+    "y": 163,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 167,
+    "warm": true
+   },
+   {
+    "x": 248,
+    "y": 165,
+    "warm": true
+   },
+   {
+    "x": 59,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 268,
+    "y": 173,
+    "warm": true
+   },
+   {
+    "x": 67,
+    "y": 176,
+    "warm": true
+   },
+   {
+    "x": 260,
+    "y": 177,
+    "warm": true
+   },
+   {
+    "x": 75,
+    "y": 181,
+    "warm": true
+   },
+   {
+    "x": 252,
+    "y": 182,
+    "warm": true
+   },
+   {
+    "x": 83,
+    "y": 185,
+    "warm": true
+   },
+   {
+    "x": 314,
+    "y": 183,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 186,
+    "warm": true
+   },
+   {
+    "x": 311,
+    "y": 185,
+    "warm": true
+   },
+   {
+    "x": 235,
+    "y": 191,
+    "warm": true
+   },
+   {
+    "x": 95,
+    "y": 192,
+    "warm": true
+   },
+   {
+    "x": 220,
+    "y": 199,
+    "warm": true
+   },
+   {
+    "x": 18,
+    "y": 199,
+    "warm": false
+   },
+   {
+    "x": 21,
+    "y": 200,
+    "warm": true
+   },
+   {
+    "x": 25,
+    "y": 203,
+    "warm": true
+   },
+   {
+    "x": 215,
+    "y": 202,
+    "warm": true
+   },
+   {
+    "x": 210,
+    "y": 205,
+    "warm": true
+   },
+   {
+    "x": 176,
+    "y": 208,
+    "warm": true
+   },
+   {
+    "x": 202,
+    "y": 210,
+    "warm": true
+   },
+   {
+    "x": 132,
+    "y": 210,
+    "warm": true
+   },
+   {
+    "x": 192,
+    "y": 215,
+    "warm": true
+   },
+   {
+    "x": 186,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 181,
+    "y": 222,
+    "warm": true
+   },
+   {
+    "x": 177,
+    "y": 225,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "holo",
+    "bbox": [
+     125,
+     48,
+     266,
+     166
+    ],
+    "slope": 0.0,
+    "area": 4890
+   },
+   {
+    "kind": "holo",
+    "bbox": [
+     177,
+     177,
+     295,
+     247
+    ],
+    "slope": -0.5,
+    "area": 707
+   },
+   {
+    "kind": "holo",
+    "bbox": [
+     38,
+     193,
+     135,
+     249
+    ],
+    "slope": 0.5,
+    "area": 630
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 35,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 3,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 13198,
+ "config": {
+  "holos": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lounge_upgraded_p04_2_overlay_clip.json",
+ "paletteCount": 50990
+}

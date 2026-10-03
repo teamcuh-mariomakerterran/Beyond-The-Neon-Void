@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_18_l_train_station_NW",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    441,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 441,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 882,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 1323,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 1764,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 2205,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 2646,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 3087,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 3528,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 3969,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 4410,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 4851,
+      "y": 0,
+      "w": 441,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    220,
+    394
+  ],
+  "ruinAnchor": [
+    618,
+    1325
+  ],
+  "sourceSize": [
+    1237,
+    1326
+  ],
+  "ruinSize": [
+    1237,
+    1326
+  ],
+  "smolderEmitters": [
+    {
+      "x": 222,
+      "y": 491
+    },
+    {
+      "x": 618,
+      "y": 349
+    },
+    {
+      "x": 1014,
+      "y": 443
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_18_l_train_station_NW_strip.png",
+    "ruin": "bd_destroy_18_l_train_station_NW_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 18_l_train_station_NW",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_18_l_train_station_NW_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_18_l_train_station_NW_ruin.png",
+      "static": true,
+      "anchor": [
+        618,
+        1325
+      ]
+    }
+  }
+}

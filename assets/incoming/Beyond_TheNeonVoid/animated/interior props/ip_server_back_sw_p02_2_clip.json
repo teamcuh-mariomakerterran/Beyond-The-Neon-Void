@@ -1,0 +1,381 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_server_back_sw_p02_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  310,
+  330
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 1,
+   "x": 310,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 2,
+   "x": 620,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 3,
+   "x": 930,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 4,
+   "x": 1240,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 5,
+   "x": 1550,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 6,
+   "x": 1860,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 7,
+   "x": 2170,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 8,
+   "x": 2480,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 9,
+   "x": 2790,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 10,
+   "x": 3100,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 11,
+   "x": 3410,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 12,
+   "x": 3720,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 13,
+   "x": 4030,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 14,
+   "x": 4340,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 15,
+   "x": 4650,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 16,
+   "x": 4960,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 17,
+   "x": 5270,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 18,
+   "x": 5580,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 19,
+   "x": 5890,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 20,
+   "x": 6200,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 21,
+   "x": 6510,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 22,
+   "x": 6820,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  },
+  {
+   "i": 23,
+   "x": 7130,
+   "y": 0,
+   "w": 310,
+   "h": 330
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  154,
+  326
+ ],
+ "propBBox": [
+  3,
+  4,
+  306,
+  327
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_server_back_sw_p02_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_server_back_sw_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_server_back_sw_p02_2.png",
+  "placementKey": "bldg_interior_indoor_server_back_sw_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Server Back Sw 02 \u2014 holo cube",
+ "qaGrade": "A-",
+ "qaNote": "holo cube: shimmer edges + particles",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 117,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 190,
+    "y": 59,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 66,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 78,
+    "warm": false
+   },
+   {
+    "x": 214,
+    "y": 82,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 230,
+    "y": 97,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 101,
+    "warm": false
+   },
+   {
+    "x": 176,
+    "y": 107,
+    "warm": false
+   },
+   {
+    "x": 212,
+    "y": 109,
+    "warm": false
+   },
+   {
+    "x": 94,
+    "y": 115,
+    "warm": true
+   },
+   {
+    "x": 77,
+    "y": 120,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 132,
+    "warm": false
+   },
+   {
+    "x": 184,
+    "y": 148,
+    "warm": false
+   },
+   {
+    "x": 198,
+    "y": 147,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 149,
+    "warm": false
+   },
+   {
+    "x": 184,
+    "y": 160,
+    "warm": false
+   },
+   {
+    "x": 133,
+    "y": 164,
+    "warm": false
+   },
+   {
+    "x": 96,
+    "y": 168,
+    "warm": true
+   },
+   {
+    "x": 218,
+    "y": 167,
+    "warm": true
+   },
+   {
+    "x": 200,
+    "y": 175,
+    "warm": true
+   },
+   {
+    "x": 132,
+    "y": 242,
+    "warm": false
+   },
+   {
+    "x": 9,
+    "y": 238,
+    "warm": true
+   },
+   {
+    "x": 224,
+    "y": 280,
+    "warm": true
+   },
+   {
+    "x": 120,
+    "y": 299,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "holo",
+    "bbox": [
+     55,
+     6,
+     253,
+     216
+    ],
+    "slope": 0.0,
+    "area": 18668
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 25,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 1,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 3905,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_server_back_sw_p02_2_overlay_clip.json",
+ "paletteCount": 55271
+}

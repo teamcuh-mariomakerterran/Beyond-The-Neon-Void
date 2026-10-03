@@ -1,0 +1,247 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "fx_rocket_flight_E",
+ "kind": "fx",
+ "loop": false,
+ "generator": "fx_rocket_8dir (Lattice, from the library launcher rocket)",
+ "cell": [
+  130,
+  32
+ ],
+ "frames": 18,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 1,
+   "x": 130,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 2,
+   "x": 260,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 3,
+   "x": 390,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 4,
+   "x": 520,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 5,
+   "x": 650,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 6,
+   "x": 780,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 7,
+   "x": 910,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 8,
+   "x": 1040,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 9,
+   "x": 1170,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 10,
+   "x": 1300,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 11,
+   "x": 1430,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 12,
+   "x": 1560,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 13,
+   "x": 1690,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 14,
+   "x": 1820,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 15,
+   "x": 1950,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 16,
+   "x": 2080,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  },
+  {
+   "i": 17,
+   "x": 2210,
+   "y": 0,
+   "w": 130,
+   "h": 32
+  }
+ ],
+ "fps": 14,
+ "frameMs": 71,
+ "holds": null,
+ "tickSequence": null,
+ "facing": "E",
+ "dirs": null,
+ "dirOrder": [
+  "N",
+  "NE",
+  "E",
+  "SE",
+  "S",
+  "SW",
+  "W",
+  "NW"
+ ],
+ "dirOrderSource": "Forge SHEET_DIR_ORDER (pixel-forge-app/src/lib/sheetImport.js:26); Lattice UnitKit takes the same order from unit.kit.json `facings` (src/js/39_unitkit.js)",
+ "dirIndex": 2,
+ "anchor": [
+  10,
+  21
+ ],
+ "spawn": [
+  10,
+  21
+ ],
+ "travelVector": [
+  1.0,
+  0.0
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "textures": {
+  "strip": "fx_rocket_flight_E_strip.png"
+ },
+ "source": "LATTICE",
+ "suggestedUse": "Rocket shot toward E: ignition flash at spawn, 5x3 rocket body with flickering FIRE exhaust accelerating out to 110px, smoke trail that lingers and dissipates. Attach `spawn` to the launcher muzzle.",
+ "rangePx": 110,
+ "rocketPath": [
+  {
+   "frame": 0,
+   "x": 13,
+   "y": 21,
+   "dist": 3.0
+  },
+  {
+   "frame": 1,
+   "x": 18,
+   "y": 21,
+   "dist": 8.1
+  },
+  {
+   "frame": 2,
+   "x": 25,
+   "y": 21,
+   "dist": 15.4
+  },
+  {
+   "frame": 3,
+   "x": 35,
+   "y": 21,
+   "dist": 24.9
+  },
+  {
+   "frame": 4,
+   "x": 47,
+   "y": 21,
+   "dist": 36.6
+  },
+  {
+   "frame": 5,
+   "x": 60,
+   "y": 21,
+   "dist": 50.5
+  },
+  {
+   "frame": 6,
+   "x": 77,
+   "y": 21,
+   "dist": 66.6
+  },
+  {
+   "frame": 7,
+   "x": 95,
+   "y": 21,
+   "dist": 84.9
+  },
+  {
+   "frame": 8,
+   "x": 115,
+   "y": 21,
+   "dist": 105.4
+  },
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null
+ ],
+ "rocketGoneFrame": 9,
+ "projection": "2:1 dimetric battle plane (tile 64x32): N/S vertical, E/W horizontal, diagonals along tile edges (2:1, 26.57deg)"
+}

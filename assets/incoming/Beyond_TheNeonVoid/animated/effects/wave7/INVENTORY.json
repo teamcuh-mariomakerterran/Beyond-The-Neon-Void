@@ -1,0 +1,158 @@
+{
+  "format": "lattice.effects.wave.inventory.v1",
+  "wave": 7,
+  "version": 1,
+  "count": 10,
+  "effects": [
+    {
+      "id": "medkit_burst",
+      "label": "medkit burst",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "medkit_burst_strip.png",
+      "clip": "medkit_burst_clip.json",
+      "suggestedUse": "medkit cross pop + heal motes"
+    },
+    {
+      "id": "overshield_shatter",
+      "label": "overshield shatter",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "overshield_shatter_strip.png",
+      "clip": "overshield_shatter_clip.json",
+      "suggestedUse": "gold overshield crack then shards"
+    },
+    {
+      "id": "smoke_grenade",
+      "label": "smoke grenade",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "smoke_grenade_strip.png",
+      "clip": "smoke_grenade_clip.json",
+      "suggestedUse": "canister pop + rising smoke plume"
+    },
+    {
+      "id": "flashbang_whiteout",
+      "label": "flashbang whiteout",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "flashbang_whiteout_strip.png",
+      "clip": "flashbang_whiteout_clip.json",
+      "suggestedUse": "flashbang white disc + star spikes"
+    },
+    {
+      "id": "sticky_bomb_blink",
+      "label": "sticky bomb blink",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "sticky_bomb_blink_strip.png",
+      "clip": "sticky_bomb_blink_clip.json",
+      "suggestedUse": "sticky bomb LED blink then pop"
+    },
+    {
+      "id": "concussion_ring",
+      "label": "concussion ring",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "concussion_ring_strip.png",
+      "clip": "concussion_ring_clip.json",
+      "suggestedUse": "soft expanding concussion air ring"
+    },
+    {
+      "id": "tracer_ricochet",
+      "label": "tracer ricochet",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "tracer_ricochet_strip.png",
+      "clip": "tracer_ricochet_clip.json",
+      "suggestedUse": "tracer streak + ricochet sparks"
+    },
+    {
+      "id": "alarm_strobe",
+      "label": "alarm strobe",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 8,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "alarm_strobe_strip.png",
+      "clip": "alarm_strobe_clip.json",
+      "suggestedUse": "building alarm strobe loop"
+    },
+    {
+      "id": "dust_kick",
+      "label": "dust kick",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "dust_kick_strip.png",
+      "clip": "dust_kick_clip.json",
+      "suggestedUse": "footstep / vehicle dust kick"
+    },
+    {
+      "id": "drone_scout_ping",
+      "label": "drone scout ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "drone_scout_ping_strip.png",
+      "clip": "drone_scout_ping_clip.json",
+      "suggestedUse": "drone sonar ping + scan wedge"
+    }
+  ]
+}

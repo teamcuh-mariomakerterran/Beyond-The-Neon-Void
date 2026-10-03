@@ -1,0 +1,298 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set2_p06_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  284,
+  353
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 1,
+   "x": 284,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 2,
+   "x": 568,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 3,
+   "x": 852,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 4,
+   "x": 1136,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 5,
+   "x": 1420,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 6,
+   "x": 1704,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 7,
+   "x": 1988,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 8,
+   "x": 2272,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 9,
+   "x": 2556,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 10,
+   "x": 2840,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 11,
+   "x": 3124,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 12,
+   "x": 3408,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 13,
+   "x": 3692,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 14,
+   "x": 3976,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 15,
+   "x": 4260,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 16,
+   "x": 4544,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 17,
+   "x": 4828,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 18,
+   "x": 5112,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 19,
+   "x": 5396,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 20,
+   "x": 5680,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 21,
+   "x": 5964,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 22,
+   "x": 6248,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  },
+  {
+   "i": 23,
+   "x": 6532,
+   "y": 0,
+   "w": 284,
+   "h": 353
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  142,
+  348
+ ],
+ "propBBox": [
+  4,
+  3,
+  280,
+  349
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set2_p06_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set2_p06_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set2_p06_2.png",
+  "placementKey": "bldg_interior_indoor_set2_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set2 06 \u2014 hanging frame",
+ "qaGrade": "B",
+ "qaNote": "hanging frame: light bars flicker + sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 22,
+    "y": 280,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 306,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     16,
+     143,
+     21,
+     226
+    ],
+    "slope": 0.0,
+    "area": 413
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     252,
+     201,
+     258,
+     290
+    ],
+    "slope": 0.0,
+    "area": 532
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     50,
+     273,
+     92,
+     290
+    ],
+    "slope": 0.2743568691844567,
+    "area": 280
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     176,
+     309,
+     223,
+     328
+    ],
+    "slope": 0.28024732620321036,
+    "area": 312
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 2,
+   "strips": 0,
+   "screens": 4,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 33259,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_set2_p06_2",
+ "overlayClip": null
+}

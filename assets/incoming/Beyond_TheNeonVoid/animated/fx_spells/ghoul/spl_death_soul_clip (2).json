@@ -1,0 +1,319 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_death_soul",
+ "cell": [
+  112,
+  184
+ ],
+ "frames": 36,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 1,
+   "x": 112,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 2,
+   "x": 224,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 3,
+   "x": 336,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 4,
+   "x": 448,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 5,
+   "x": 560,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 6,
+   "x": 672,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 7,
+   "x": 784,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 8,
+   "x": 896,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 9,
+   "x": 1008,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 10,
+   "x": 1120,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 11,
+   "x": 1232,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 12,
+   "x": 1344,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 13,
+   "x": 1456,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 14,
+   "x": 1568,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 15,
+   "x": 1680,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 16,
+   "x": 1792,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 17,
+   "x": 1904,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 18,
+   "x": 2016,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 19,
+   "x": 2128,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 20,
+   "x": 2240,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 21,
+   "x": 2352,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 22,
+   "x": 2464,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 23,
+   "x": 2576,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 24,
+   "x": 2688,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 25,
+   "x": 2800,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 26,
+   "x": 2912,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 27,
+   "x": 3024,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 28,
+   "x": 3136,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 29,
+   "x": 3248,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 30,
+   "x": 3360,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 31,
+   "x": 3472,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 32,
+   "x": 3584,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 33,
+   "x": 3696,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 34,
+   "x": 3808,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  },
+  {
+   "i": 35,
+   "x": 3920,
+   "y": 0,
+   "w": 112,
+   "h": 184
+  }
+ ],
+ "textures": {
+  "strip": "spl_death_soul_strip.png"
+ },
+ "source": "LATTICE + Brian's glitch-ghoul frame sheet (7aa47321.png) at native pixels (sheet was 4x upscaled), 1/2 downscale, requantised; head faces screen-right",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Death soul \u2014 on a death tile the ground cracks with a violet glow, Brian's glitch ghoul claws up out of the seam, screams, then dissolves into particles drifting up",
+ "qaGrade": "A-",
+ "qaNote": "death tile cracks with a violet glow and tears open; Brian's ghoul rises out of the seam (masked below the tile lip), glitching, screams with rings, then his own dissolve frames break it into debris that drifts up as motes",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  56,
+  176
+ ],
+ "group": "ghoul",
+ "tags": [
+  "spell",
+  "ghoul"
+ ],
+ "config": {
+  "footprintTiles": [
+   1,
+   1
+  ],
+  "tileCentre": [
+   56,
+   160
+  ],
+  "family": "ghoul"
+ },
+ "suggestedUse": "Brian's glitch-ghoul curses (one facing: art faces screen-right; mirror the clip horizontally at runtime for a left-facing cast, anchor x -> cell w - x). Anchor = target tile ground point. spl_death_soul on a unit's death tile after its death/wreck anim. spl_fear_scream on the target (hits[0] = scream lands) -> spl_terrified_loop on the target while the debuff lasts (pairsWith). spl_banish on the target: move the unit down emitters.unitSink.px over startFrame..endFrame (clip/fade it at the tile), hide it at emitters.unitHideFrame. spl_haunt_intro (endsOn) -> spl_haunt_loop over a cursed unit. spl_curse_petrify (hits[0] = spikes land) -> spl_petrified_loop + grey tint config.unitTintHint on the unit sprite.",
+ "layering": "Anchor = ground point of the TARGET tile (bottom vertex of its 64x32 diamond); draw over the target unit. The head art faces screen-right only: for a cast toward screen-left, mirror the clip horizontally at runtime (anchor x -> cell width - x).",
+ "groundPoint": [
+  56,
+  176
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 16,
+   "x": 56,
+   "y": 90
+  }
+ ],
+ "emitters": {
+  "riseStart": 6,
+  "screamFrame": 16,
+  "dissolveStart": 24
+ }
+}

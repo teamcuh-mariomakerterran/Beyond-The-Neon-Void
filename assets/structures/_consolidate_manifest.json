@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-09-16T17:35:03Z",
+  "root": "C:\\godot and game projects\\black-doctrine\\public\\assets\\all_structures",
+  "suiteMirror": "C:\\Users\\Brian\\Desktop\\cardsheeteditor\\Art\\BlackDoctrine\\All_Structures",
+  "suiteBackup": "C:\\Users\\Brian\\Desktop\\cardsheeteditor\\Art\\BlackDoctrine\\_structures_consolidate_backup_2026-09-16",
+  "totalsCopiedApprox": {
+    "buildings": 1748,
+    "battle_map_buildings": 558,
+    "interior": 7314,
+    "exterior": 126
+  },
+  "mapping": [
+    {
+      "src": "buildings/bd_drive",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/batch1",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/cells",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/den",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/den2",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/bd_structures_clean_NW",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/bd_structures_clean_SE",
+      "bucket": "buildings"
+    },
+    {
+      "src": "library/exterior",
+      "bucket": "buildings"
+    },
+    {
+      "src": "library/exterior_buildings",
+      "bucket": "buildings"
+    },
+    {
+      "src": "library/exterior_structures",
+      "bucket": "buildings"
+    },
+    {
+      "src": "buildings/bd_battle_sorted",
+      "bucket": "battle_map_buildings"
+    },
+    {
+      "src": "library/interior",
+      "bucket": "interior"
+    },
+    {
+      "src": "library/interior_bd_indoor_pieces",
+      "bucket": "interior"
+    },
+    {
+      "src": "library/interior_bd_sheets_indoor",
+      "bucket": "interior"
+    },
+    {
+      "src": "library/interior_modules_2026-09-03",
+      "bucket": "interior"
+    },
+    {
+      "src": "library/interior_structures",
+      "bucket": "interior"
+    },
+    {
+      "src": "library/interior_these",
+      "bucket": "interior"
+    },
+    {
+      "src": "library/exterior_outdoor_props_2026-09-03",
+      "bucket": "exterior"
+    },
+    {
+      "src": "props",
+      "bucket": "exterior"
+    }
+  ],
+  "recordCount": 19492
+}

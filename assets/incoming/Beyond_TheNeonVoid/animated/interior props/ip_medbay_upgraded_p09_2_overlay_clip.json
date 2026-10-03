@@ -1,0 +1,475 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_medbay_upgraded_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  297,
+  388
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 1,
+   "x": 297,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 2,
+   "x": 594,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 3,
+   "x": 891,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 4,
+   "x": 1188,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 5,
+   "x": 1485,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 6,
+   "x": 1782,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 7,
+   "x": 2079,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 8,
+   "x": 2376,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 9,
+   "x": 2673,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 10,
+   "x": 2970,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 11,
+   "x": 3267,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 12,
+   "x": 3564,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 13,
+   "x": 3861,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 14,
+   "x": 4158,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 15,
+   "x": 4455,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 16,
+   "x": 4752,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 17,
+   "x": 5049,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 18,
+   "x": 5346,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 19,
+   "x": 5643,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 20,
+   "x": 5940,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 21,
+   "x": 6237,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 22,
+   "x": 6534,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  },
+  {
+   "i": 23,
+   "x": 6831,
+   "y": 0,
+   "w": 297,
+   "h": 388
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  149,
+  383
+ ],
+ "propBBox": [
+  4,
+  4,
+  294,
+  384
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_medbay_upgraded_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_medbay_upgraded_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_medbay_upgraded_p09_2.png",
+  "placementKey": "bldg_interior_indoor_medbay_upgraded_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Medbay Upgraded 09 \u2014 body-scan station",
+ "qaGrade": "A-",
+ "qaNote": "body-scan station: screen sweep + glitch + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 99,
+    "y": 62,
+    "warm": false
+   },
+   {
+    "x": 168,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 181,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 91,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 195,
+    "y": 74,
+    "warm": false
+   },
+   {
+    "x": 84,
+    "y": 90,
+    "warm": false
+   },
+   {
+    "x": 80,
+    "y": 102,
+    "warm": false
+   },
+   {
+    "x": 75,
+    "y": 113,
+    "warm": false
+   },
+   {
+    "x": 98,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 272,
+    "y": 127,
+    "warm": false
+   },
+   {
+    "x": 181,
+    "y": 131,
+    "warm": false
+   },
+   {
+    "x": 51,
+    "y": 163,
+    "warm": true
+   },
+   {
+    "x": 138,
+    "y": 186,
+    "warm": false
+   },
+   {
+    "x": 149,
+    "y": 190,
+    "warm": false
+   },
+   {
+    "x": 274,
+    "y": 187,
+    "warm": true
+   },
+   {
+    "x": 235,
+    "y": 201,
+    "warm": false
+   },
+   {
+    "x": 271,
+    "y": 205,
+    "warm": false
+   },
+   {
+    "x": 278,
+    "y": 211,
+    "warm": false
+   },
+   {
+    "x": 275,
+    "y": 213,
+    "warm": false
+   },
+   {
+    "x": 271,
+    "y": 216,
+    "warm": false
+   },
+   {
+    "x": 266,
+    "y": 218,
+    "warm": false
+   },
+   {
+    "x": 273,
+    "y": 243,
+    "warm": true
+   },
+   {
+    "x": 268,
+    "y": 250,
+    "warm": true
+   },
+   {
+    "x": 153,
+    "y": 252,
+    "warm": true
+   },
+   {
+    "x": 233,
+    "y": 253,
+    "warm": true
+   },
+   {
+    "x": 214,
+    "y": 270,
+    "warm": true
+   },
+   {
+    "x": 265,
+    "y": 304,
+    "warm": true
+   },
+   {
+    "x": 280,
+    "y": 306,
+    "warm": true
+   },
+   {
+    "x": 203,
+    "y": 341,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     180,
+     116,
+     192,
+     122
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     61,
+     45,
+     124,
+     132
+    ],
+    "slope": -0.6,
+    "area": 681
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     104,
+     62,
+     161,
+     145
+    ],
+    "slope": -0.6,
+    "area": 2008
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     160,
+     79,
+     203,
+     157
+    ],
+    "slope": -0.6,
+    "area": 732
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     254,
+     120,
+     271,
+     145
+    ],
+    "slope": -0.5,
+    "area": 286
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     41,
+     208,
+     82,
+     228
+    ],
+    "slope": 0.30615763546798136,
+    "area": 383
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     235,
+     212,
+     241,
+     242
+    ],
+    "slope": 0.0,
+    "area": 173
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     51,
+     253,
+     76,
+     269
+    ],
+    "slope": 0.3161764705882398,
+    "area": 228
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 29,
+   "strips": 1,
+   "screens": 6,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 7035,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_medbay_upgraded_p09_2",
+ "overlayClip": null
+}
