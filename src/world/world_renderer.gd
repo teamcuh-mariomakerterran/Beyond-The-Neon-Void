@@ -282,7 +282,8 @@ static func default_scale(w: WorldMap, asset: String, kind: String) -> float:
 		if clip.get("ok", false):
 			var bb: Array = clip["bbox"]
 			var bw := maxf(float(bb[2]) - float(bb[0]), 1.0)
-			var goal := w.tile_width * (float(clip["footprint"]) + 0.4)
+			# Lattice footprints are in tiles and the base spans them exactly.
+			var goal := w.tile_width * float(clip["footprint"])
 			return snappedf(goal / bw, 0.001) if bw > goal * 1.25 else 1.0
 	var tex := ForgeStore.load_texture(asset)
 	if tex == null:
@@ -636,7 +637,7 @@ class WorldSprite extends Node2D:
 				var t := ForgeStore.load_texture(p)
 				if t:
 					_frames.append(t)
-		else:
+		elif not _clip.get("ok", false):
 			var tex := ForgeStore.load_texture(str(data.get("asset", "")))
 			if tex:
 				var hf := maxi(int(_anim.get("hframes", 1)), 1)

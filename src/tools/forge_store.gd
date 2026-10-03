@@ -217,6 +217,12 @@ static func load_texture(path: String) -> Texture2D:
 		return null
 	if _tex_cache.has(path):
 		return _tex_cache[path]
+	if path.ends_with(".json"):
+		# Lattice clips preview as their first frame (palette, inspector, lists).
+		var clip := LatticeClip.load_clip(path) if LatticeClip.is_clip(path) else {}
+		var first: Texture2D = LatticeClip.frame_texture(clip, 0) if clip.get("ok", false) else null
+		_tex_cache[path] = first
+		return first
 	var tex: Texture2D = null
 	if ResourceLoader.exists(path):
 		tex = load(path) as Texture2D
