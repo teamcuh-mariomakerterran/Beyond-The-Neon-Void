@@ -1,0 +1,329 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_server_upgraded_p04_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  422,
+  301
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 1,
+   "x": 422,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 2,
+   "x": 844,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 3,
+   "x": 1266,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 4,
+   "x": 1688,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 5,
+   "x": 2110,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 6,
+   "x": 2532,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 7,
+   "x": 2954,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 8,
+   "x": 3376,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 9,
+   "x": 3798,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 10,
+   "x": 4220,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 11,
+   "x": 4642,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 12,
+   "x": 5064,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 13,
+   "x": 5486,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 14,
+   "x": 5908,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 15,
+   "x": 6330,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 16,
+   "x": 6752,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 17,
+   "x": 7174,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 18,
+   "x": 7596,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 19,
+   "x": 8018,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 20,
+   "x": 8440,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 21,
+   "x": 8862,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 22,
+   "x": 9284,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 23,
+   "x": 9706,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  211,
+  297
+ ],
+ "propBBox": [
+  4,
+  4,
+  418,
+  298
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_server_upgraded_p04_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_server_upgraded_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_server_upgraded_p04_2.png",
+  "placementKey": "bldg_interior_indoor_server_upgraded_p04",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Server Upgraded 04 \u2014 cable tray",
+ "qaGrade": "B+",
+ "qaNote": "cable tray: energy pulse along cyan cables",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 278,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 242,
+    "y": 117,
+    "warm": true
+   },
+   {
+    "x": 97,
+    "y": 161,
+    "warm": false
+   },
+   {
+    "x": 74,
+    "y": 185,
+    "warm": true
+   },
+   {
+    "x": 54,
+    "y": 193,
+    "warm": true
+   },
+   {
+    "x": 112,
+    "y": 210,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     58,
+     54,
+     244,
+     241
+    ],
+    "slope": -0.5,
+    "area": 2122
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     131,
+     68,
+     277,
+     170
+    ],
+    "slope": -0.6,
+    "area": 1193
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     287,
+     83,
+     316,
+     99
+    ],
+    "slope": -0.5,
+    "area": 189
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     203,
+     125,
+     241,
+     159
+    ],
+    "slope": -0.6,
+    "area": 277
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     115,
+     221,
+     170,
+     259
+    ],
+    "slope": 0.5,
+    "area": 249
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 6,
+   "strips": 0,
+   "screens": 5,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 8449,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_server_upgraded_p04_2",
+ "overlayClip": null
+}

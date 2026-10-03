@@ -1,0 +1,437 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_server_p09",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  352,
+  365
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 1,
+   "x": 352,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 2,
+   "x": 704,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 3,
+   "x": 1056,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 4,
+   "x": 1408,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 5,
+   "x": 1760,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 6,
+   "x": 2112,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 7,
+   "x": 2464,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 8,
+   "x": 2816,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 9,
+   "x": 3168,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 10,
+   "x": 3520,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 11,
+   "x": 3872,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 12,
+   "x": 4224,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 13,
+   "x": 4576,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 14,
+   "x": 4928,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 15,
+   "x": 5280,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 16,
+   "x": 5632,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 17,
+   "x": 5984,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 18,
+   "x": 6336,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 19,
+   "x": 6688,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 20,
+   "x": 7040,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 21,
+   "x": 7392,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 22,
+   "x": 7744,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  },
+  {
+   "i": 23,
+   "x": 8096,
+   "y": 0,
+   "w": 352,
+   "h": 365
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  174,
+  360
+ ],
+ "propBBox": [
+  0,
+  0,
+  348,
+  361
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_server_p09_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_server_p09.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_server_p09.png",
+  "placementKey": "bldg_interior_indoor_server_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Server 09 \u2014 holo cylinder on pedestal",
+ "qaGrade": "A-",
+ "qaNote": "holo cylinder on pedestal: shimmer/sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 7,
+    "y": 4,
+    "warm": true
+   },
+   {
+    "x": 173,
+    "y": 211,
+    "warm": false
+   },
+   {
+    "x": 289,
+    "y": 238,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 253,
+    "warm": false
+   },
+   {
+    "x": 236,
+    "y": 257,
+    "warm": false
+   },
+   {
+    "x": 173,
+    "y": 264,
+    "warm": false
+   },
+   {
+    "x": 321,
+    "y": 276,
+    "warm": false
+   },
+   {
+    "x": 173,
+    "y": 276,
+    "warm": false
+   },
+   {
+    "x": 5,
+    "y": 282,
+    "warm": true
+   },
+   {
+    "x": 10,
+    "y": 285,
+    "warm": true
+   },
+   {
+    "x": 15,
+    "y": 288,
+    "warm": true
+   },
+   {
+    "x": 21,
+    "y": 292,
+    "warm": true
+   },
+   {
+    "x": 28,
+    "y": 296,
+    "warm": true
+   },
+   {
+    "x": 34,
+    "y": 299,
+    "warm": true
+   },
+   {
+    "x": 40,
+    "y": 303,
+    "warm": true
+   },
+   {
+    "x": 46,
+    "y": 306,
+    "warm": true
+   },
+   {
+    "x": 56,
+    "y": 312,
+    "warm": true
+   },
+   {
+    "x": 276,
+    "y": 323,
+    "warm": true
+   },
+   {
+    "x": 64,
+    "y": 317,
+    "warm": true
+   },
+   {
+    "x": 70,
+    "y": 320,
+    "warm": true
+   },
+   {
+    "x": 76,
+    "y": 323,
+    "warm": true
+   },
+   {
+    "x": 82,
+    "y": 327,
+    "warm": true
+   },
+   {
+    "x": 87,
+    "y": 330,
+    "warm": true
+   },
+   {
+    "x": 93,
+    "y": 334,
+    "warm": true
+   },
+   {
+    "x": 99,
+    "y": 338,
+    "warm": true
+   },
+   {
+    "x": 105,
+    "y": 341,
+    "warm": true
+   },
+   {
+    "x": 110,
+    "y": 344,
+    "warm": true
+   },
+   {
+    "x": 116,
+    "y": 348,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 351,
+    "warm": true
+   },
+   {
+    "x": 128,
+    "y": 355,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "holo",
+    "bbox": [
+     103,
+     6,
+     246,
+     186
+    ],
+    "slope": 0.0,
+    "area": 22871
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     81,
+     238,
+     113,
+     262
+    ],
+    "slope": 0.5,
+    "area": 253
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     63,
+     293,
+     94,
+     316
+    ],
+    "slope": 0.5,
+    "area": 226
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 30,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 1,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 5738,
+ "config": {
+  "holos": [
+   [
+    0,
+    0,
+    9999,
+    140
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_server_p09_overlay_clip.json",
+ "paletteCount": 70714
+}

@@ -1,0 +1,330 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_server_back_sw_p04_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  422,
+  301
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 1,
+   "x": 422,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 2,
+   "x": 844,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 3,
+   "x": 1266,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 4,
+   "x": 1688,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 5,
+   "x": 2110,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 6,
+   "x": 2532,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 7,
+   "x": 2954,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 8,
+   "x": 3376,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 9,
+   "x": 3798,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 10,
+   "x": 4220,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 11,
+   "x": 4642,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 12,
+   "x": 5064,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 13,
+   "x": 5486,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 14,
+   "x": 5908,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 15,
+   "x": 6330,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 16,
+   "x": 6752,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 17,
+   "x": 7174,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 18,
+   "x": 7596,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 19,
+   "x": 8018,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 20,
+   "x": 8440,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 21,
+   "x": 8862,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 22,
+   "x": 9284,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  },
+  {
+   "i": 23,
+   "x": 9706,
+   "y": 0,
+   "w": 422,
+   "h": 301
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  210,
+  296
+ ],
+ "propBBox": [
+  3,
+  4,
+  418,
+  297
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_server_back_sw_p04_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_server_back_sw_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_server_back_sw_p04_2.png",
+  "placementKey": "bldg_interior_indoor_server_back_sw_p04",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Server Back Sw 04 \u2014 cable tray",
+ "qaGrade": "B+",
+ "qaNote": "cable tray: energy pulse along cyan cables",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 240,
+    "y": 56,
+    "warm": false
+   },
+   {
+    "x": 81,
+    "y": 184,
+    "warm": false
+   },
+   {
+    "x": 54,
+    "y": 192,
+    "warm": true
+   },
+   {
+    "x": 113,
+    "y": 208,
+    "warm": false
+   },
+   {
+    "x": 137,
+    "y": 244,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 252,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     58,
+     58,
+     237,
+     243
+    ],
+    "slope": -0.5,
+    "area": 2154
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     126,
+     67,
+     277,
+     175
+    ],
+    "slope": -0.6,
+    "area": 1191
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     285,
+     82,
+     315,
+     99
+    ],
+    "slope": -0.5,
+    "area": 181
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     202,
+     124,
+     241,
+     160
+    ],
+    "slope": -0.6,
+    "area": 287
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     85,
+     156,
+     103,
+     179
+    ],
+    "slope": -0.6,
+    "area": 165
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 6,
+   "strips": 0,
+   "screens": 5,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 29683,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_server_back_sw_p04_2_overlay_clip.json",
+ "paletteCount": 39044
+}
