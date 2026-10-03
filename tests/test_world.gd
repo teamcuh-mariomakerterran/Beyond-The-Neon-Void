@@ -26,6 +26,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_cues()
 	await test_passives()
 	test_dev_console()
+	await test_pixel_matrix()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1074,3 +1075,54 @@ func test_dev_console() -> void:
 	dc.run("unwatch")
 	check(dc.run("cue hit.crit").contains("hit.crit"), "cue command fires a cue")
 	check(dc.history.size() >= 10, "history kept")
+
+
+func _pm_strip(path: String, color: Color, frames: int = 2, rect: Rect2i = Rect2i(8, 8, 16, 16)) -> void:
+	var img := Image.create(32 * frames, 32, false, Image.FORMAT_RGBA8)
+	for i in frames:
+		img.fill_rect(Rect2i(rect.position + Vector2i(i * 32, 0), rect.size), color)
+	img.save_png(path)
+
+
+func test_pixel_matrix() -> void:
+	check(PixelMatrix.parse_export("PM_96_SE_walk.png") == {"res": 96, "facing": "SE", "anim": "walk", "layer": ""}, "export names parse")
+	check(PixelMatrix.parse_export("PM_84_NW_idle_LeftArm.png")["layer"] == "LeftArm" and PixelMatrix.parse_export("walk.png").is_empty(), "layer names parse; others ignored")
+	check(PixelMatrix.layer_order("SE", ["LeftArm", "RightArm", "", "Torso_armor", "Torso"]) == ["", "RightArm", "Torso", "Torso_armor", "LeftArm"], "SE: right arm behind, gear right above its limb")
+	check(PixelMatrix.layer_order("NE", ["LeftArm", "RightArm"]) == ["LeftArm", "RightArm"], "NE flips which arm is in front")
+	var root := "user://t_pm/hero"
+	var gear := "user://t_pm/gear_cape"
+	for d: String in [root + "/idle", root + "/attack", gear + "/idle"]:
+		DirAccess.make_dir_recursive_absolute(d)
+	for f: String in ["SE", "NE"]:
+		_pm_strip(root + "/idle/%s_LeftArm.png" % f, Color.RED)
+		_pm_strip(root + "/idle/%s_RightArm.png" % f, Color.BLUE)
+	_pm_strip(root + "/attack/SE.png", Color.GREEN, 4)
+	_pm_strip(gear + "/idle/SE_RightArm.png", Color.YELLOW, 2, Rect2i(10, 10, 4, 4))
+	check(PixelMatrix.is_root(root) and not PixelMatrix.is_root("user://t_pm"), "character folder detected")
+	var se := PixelMatrix.composite(root, "idle", "SE")
+	var ne := PixelMatrix.composite(root, "idle", "NE")
+	check(se.get_pixel(12, 12) == Color.RED and ne.get_pixel(12, 12) == Color.BLUE, "facing decides which limb is drawn on top")
+	var geared := PixelMatrix.composite(root, "idle", "SE", [gear])
+	check(geared.get_pixel(11, 11) == Color.RED and geared.get_pixel(40 + 3, 11) == Color.RED, "gear on the back arm stays behind the front arm")
+	var us := PixelMatrix.unit_set(root)
+	var sf: SpriteFrames = us["frames"]
+	check(us["ok"] and sf.has_animation("idle_SE") and sf.has_animation("idle_NE") and sf.get_frame_count("attack_SE") == 4, "unit set: anims per facing, frames from strip width")
+	check(sf.get_animation_loop("idle_SE") and not sf.get_animation_loop("attack_SE"), "idles loop, attacks play once")
+	check(us["anchors"]["idle_SE"] == Vector2(16, 31), "feet at bottom-centre by default")
+	var cd: CharacterData = (ContentDB.get_all("characters")[0] as CharacterData).duplicate(true)
+	cd.sprite_frames_path = root
+	var u := Unit.new()
+	u.setup(cd, Unit.Team.PLAYER, 1)
+	tree.root.add_child(u)
+	await tree.process_frame
+	check(u.sprite != null and str(u.sprite.animation) == "idle_SE", "a unit wears a PixelMatrix folder")
+	u.facing = Vector2i(0, -1)
+	check(str(u.sprite.animation) == "idle_NE", "and turns with it")
+	u.queue_free()
+	await tree.process_frame
+	for d: String in [root + "/idle", root + "/attack", gear + "/idle"]:
+		for f in DirAccess.get_files_at(d):
+			DirAccess.remove_absolute(d + "/" + f)
+		DirAccess.remove_absolute(d)
+	for d: String in [root, gear, "user://t_pm"]:
+		DirAccess.remove_absolute(d)

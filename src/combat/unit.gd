@@ -534,10 +534,13 @@ func land_squash() -> void:
 
 
 func _try_load_sprite() -> void:
-	if data == null or data.sprite_frames_path == "" or not FileAccess.file_exists(data.sprite_frames_path):
+	if data == null or data.sprite_frames_path == "":
 		return
-	if data.sprite_frames_path.ends_with(".json") and LatticeClip.is_clip(data.sprite_frames_path):
-		_lattice = LatticeClip.unit_set(data.sprite_frames_path)
+	var pm := PixelMatrix.is_root(data.sprite_frames_path)
+	if not pm and not FileAccess.file_exists(data.sprite_frames_path):
+		return
+	if pm or (data.sprite_frames_path.ends_with(".json") and LatticeClip.is_clip(data.sprite_frames_path)):
+		_lattice = PixelMatrix.unit_set(data.sprite_frames_path) if pm else LatticeClip.unit_set(data.sprite_frames_path)
 		if not _lattice.get("ok", false):
 			_lattice = {}
 			return
