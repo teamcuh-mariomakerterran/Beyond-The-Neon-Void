@@ -1,0 +1,290 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_briefing_back_sw_p02_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  319,
+  372
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 1,
+   "x": 319,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 2,
+   "x": 638,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 3,
+   "x": 957,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 4,
+   "x": 1276,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 5,
+   "x": 1595,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 6,
+   "x": 1914,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 7,
+   "x": 2233,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 8,
+   "x": 2552,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 9,
+   "x": 2871,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 10,
+   "x": 3190,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 11,
+   "x": 3509,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 12,
+   "x": 3828,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 13,
+   "x": 4147,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 14,
+   "x": 4466,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 15,
+   "x": 4785,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 16,
+   "x": 5104,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 17,
+   "x": 5423,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 18,
+   "x": 5742,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 19,
+   "x": 6061,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 20,
+   "x": 6380,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 21,
+   "x": 6699,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 22,
+   "x": 7018,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  },
+  {
+   "i": 23,
+   "x": 7337,
+   "y": 0,
+   "w": 319,
+   "h": 372
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  160,
+  367
+ ],
+ "propBBox": [
+  4,
+  4,
+  316,
+  368
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_briefing_back_sw_p02_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_briefing_back_sw_p02.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_briefing_back_sw_p02.png",
+  "placementKey": "bldg_interior_indoor_briefing_back_sw_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Briefing Back Sw 02 \u2014 wall monitor",
+ "qaGrade": "A-",
+ "qaNote": "wall monitor: skewed scanline sweep + interlace glitch, status LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 95,
+    "y": 22,
+    "warm": true
+   },
+   {
+    "x": 138,
+    "y": 33,
+    "warm": true
+   },
+   {
+    "x": 291,
+    "y": 73,
+    "warm": true
+   },
+   {
+    "x": 52,
+    "y": 187,
+    "warm": false
+   },
+   {
+    "x": 101,
+    "y": 201,
+    "warm": false
+   },
+   {
+    "x": 126,
+    "y": 274,
+    "warm": true
+   },
+   {
+    "x": 171,
+    "y": 288,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     32,
+     49,
+     269,
+     266
+    ],
+    "slope": 0.26986356579890136,
+    "area": 48642
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 7,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 19712,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_briefing_back_sw_p02",
+ "overlayClip": null
+}

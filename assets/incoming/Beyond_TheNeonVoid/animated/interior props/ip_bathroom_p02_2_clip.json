@@ -1,0 +1,397 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_bathroom_p02_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  293,
+  415
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 1,
+   "x": 293,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 2,
+   "x": 586,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 3,
+   "x": 879,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 4,
+   "x": 1172,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 5,
+   "x": 1465,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 6,
+   "x": 1758,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 7,
+   "x": 2051,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 8,
+   "x": 2344,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 9,
+   "x": 2637,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 10,
+   "x": 2930,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 11,
+   "x": 3223,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 12,
+   "x": 3516,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 13,
+   "x": 3809,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 14,
+   "x": 4102,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 15,
+   "x": 4395,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 16,
+   "x": 4688,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 17,
+   "x": 4981,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 18,
+   "x": 5274,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 19,
+   "x": 5567,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 20,
+   "x": 5860,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 21,
+   "x": 6153,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 22,
+   "x": 6446,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  },
+  {
+   "i": 23,
+   "x": 6739,
+   "y": 0,
+   "w": 293,
+   "h": 415
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  146,
+  410
+ ],
+ "propBBox": [
+  4,
+  4,
+  289,
+  411
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_bathroom_p02_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_bathroom_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_bathroom_p02_2.png",
+  "placementKey": "bldg_interior_indoor_bathroom_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Bathroom 02 \u2014 shower",
+ "qaGrade": "B",
+ "qaNote": "shower: glass sheen sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 94,
+    "y": 147,
+    "warm": false
+   },
+   {
+    "x": 94,
+    "y": 166,
+    "warm": false
+   },
+   {
+    "x": 107,
+    "y": 182,
+    "warm": false
+   },
+   {
+    "x": 95,
+    "y": 196,
+    "warm": false
+   },
+   {
+    "x": 95,
+    "y": 213,
+    "warm": false
+   },
+   {
+    "x": 107,
+    "y": 219,
+    "warm": false
+   },
+   {
+    "x": 123,
+    "y": 226,
+    "warm": false
+   },
+   {
+    "x": 95,
+    "y": 230,
+    "warm": false
+   },
+   {
+    "x": 115,
+    "y": 299,
+    "warm": false
+   },
+   {
+    "x": 117,
+    "y": 302,
+    "warm": false
+   },
+   {
+    "x": 135,
+    "y": 307,
+    "warm": false
+   },
+   {
+    "x": 106,
+    "y": 311,
+    "warm": false
+   },
+   {
+    "x": 150,
+    "y": 313,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 310,
+    "warm": false
+   },
+   {
+    "x": 124,
+    "y": 316,
+    "warm": false
+   },
+   {
+    "x": 165,
+    "y": 318,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 322,
+    "warm": false
+   },
+   {
+    "x": 112,
+    "y": 325,
+    "warm": false
+   },
+   {
+    "x": 155,
+    "y": 327,
+    "warm": false
+   },
+   {
+    "x": 128,
+    "y": 331,
+    "warm": false
+   },
+   {
+    "x": 146,
+    "y": 332,
+    "warm": false
+   },
+   {
+    "x": 144,
+    "y": 336,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     63,
+     56,
+     143,
+     119
+    ],
+    "slope": 0.5,
+    "area": 1938
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     40,
+     115,
+     171,
+     362
+    ],
+    "slope": 0.2823118828736805,
+    "area": 4713
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     120,
+     169,
+     127,
+     203
+    ],
+    "slope": 0.19999999999999168,
+    "area": 215
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 22,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 3,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 12346,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_bathroom_p02_2_overlay_clip.json",
+ "paletteCount": 30756
+}

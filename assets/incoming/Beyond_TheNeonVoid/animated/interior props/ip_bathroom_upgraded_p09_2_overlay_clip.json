@@ -1,0 +1,478 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_bathroom_upgraded_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  262,
+  360
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 1,
+   "x": 262,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 2,
+   "x": 524,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 3,
+   "x": 786,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 4,
+   "x": 1048,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 5,
+   "x": 1310,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 6,
+   "x": 1572,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 7,
+   "x": 1834,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 8,
+   "x": 2096,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 9,
+   "x": 2358,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 10,
+   "x": 2620,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 11,
+   "x": 2882,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 12,
+   "x": 3144,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 13,
+   "x": 3406,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 14,
+   "x": 3668,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 15,
+   "x": 3930,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 16,
+   "x": 4192,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 17,
+   "x": 4454,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 18,
+   "x": 4716,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 19,
+   "x": 4978,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 20,
+   "x": 5240,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 21,
+   "x": 5502,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 22,
+   "x": 5764,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  },
+  {
+   "i": 23,
+   "x": 6026,
+   "y": 0,
+   "w": 262,
+   "h": 360
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  131,
+  355
+ ],
+ "propBBox": [
+  4,
+  4,
+  258,
+  356
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_bathroom_upgraded_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_bathroom_upgraded_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_bathroom_upgraded_p09_2.png",
+  "placementKey": "bldg_interior_indoor_bathroom_upgraded_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Bathroom Upgraded 09 \u2014 cabinet with lit top panel",
+ "qaGrade": "B",
+ "qaNote": "cabinet with lit top panel: sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 111,
+    "y": 36,
+    "warm": false
+   },
+   {
+    "x": 175,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 203,
+    "y": 107,
+    "warm": false
+   },
+   {
+    "x": 190,
+    "y": 121,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 31,
+    "y": 122,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 137,
+    "warm": true
+   },
+   {
+    "x": 118,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 151,
+    "warm": true
+   },
+   {
+    "x": 175,
+    "y": 158,
+    "warm": false
+   },
+   {
+    "x": 116,
+    "y": 161,
+    "warm": true
+   },
+   {
+    "x": 198,
+    "y": 174,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 201,
+    "warm": true
+   },
+   {
+    "x": 222,
+    "y": 207,
+    "warm": true
+   },
+   {
+    "x": 31,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 27,
+    "y": 228,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 247,
+    "warm": true
+   },
+   {
+    "x": 183,
+    "y": 265,
+    "warm": true
+   },
+   {
+    "x": 247,
+    "y": 265,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 297,
+    "warm": true
+   },
+   {
+    "x": 197,
+    "y": 298,
+    "warm": true
+   },
+   {
+    "x": 212,
+    "y": 300,
+    "warm": true
+   },
+   {
+    "x": 207,
+    "y": 304,
+    "warm": true
+   },
+   {
+    "x": 202,
+    "y": 308,
+    "warm": true
+   },
+   {
+    "x": 233,
+    "y": 308,
+    "warm": true
+   },
+   {
+    "x": 18,
+    "y": 309,
+    "warm": true
+   },
+   {
+    "x": 210,
+    "y": 317,
+    "warm": true
+   },
+   {
+    "x": 36,
+    "y": 315,
+    "warm": true
+   },
+   {
+    "x": 58,
+    "y": 321,
+    "warm": true
+   },
+   {
+    "x": 172,
+    "y": 323,
+    "warm": true
+   },
+   {
+    "x": 79,
+    "y": 329,
+    "warm": true
+   },
+   {
+    "x": 186,
+    "y": 334,
+    "warm": true
+   },
+   {
+    "x": 100,
+    "y": 335,
+    "warm": true
+   },
+   {
+    "x": 179,
+    "y": 339,
+    "warm": true
+   },
+   {
+    "x": 119,
+    "y": 341,
+    "warm": true
+   },
+   {
+    "x": 168,
+    "y": 346,
+    "warm": true
+   },
+   {
+    "x": 139,
+    "y": 347,
+    "warm": true
+   },
+   {
+    "x": 155,
+    "y": 352,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     55,
+     51,
+     169,
+     102
+    ],
+    "slope": 0.0,
+    "area": 3263
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     40,
+     139,
+     67,
+     208
+    ],
+    "slope": 0.5,
+    "area": 1699
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     181,
+     178,
+     203,
+     239
+    ],
+    "slope": 0.6,
+    "area": 659
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     189,
+     269,
+     210,
+     289
+    ],
+    "slope": -0.6,
+    "area": 161
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 38,
+   "strips": 0,
+   "screens": 3,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 2737,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_bathroom_upgraded_p09_2",
+ "overlayClip": null
+}
