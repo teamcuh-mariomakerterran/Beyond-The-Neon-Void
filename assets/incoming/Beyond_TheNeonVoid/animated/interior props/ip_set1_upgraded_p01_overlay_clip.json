@@ -1,0 +1,990 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set1_upgraded_p01_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  440,
+  340
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 1,
+   "x": 440,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 2,
+   "x": 880,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 3,
+   "x": 1320,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 4,
+   "x": 1760,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 5,
+   "x": 2200,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 6,
+   "x": 2640,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 7,
+   "x": 3080,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 8,
+   "x": 3520,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 9,
+   "x": 3960,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 10,
+   "x": 4400,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 11,
+   "x": 4840,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 12,
+   "x": 5280,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 13,
+   "x": 5720,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 14,
+   "x": 6160,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 15,
+   "x": 6600,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 16,
+   "x": 7040,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 17,
+   "x": 7480,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 18,
+   "x": 7920,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 19,
+   "x": 8360,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 20,
+   "x": 8800,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 21,
+   "x": 9240,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 22,
+   "x": 9680,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  },
+  {
+   "i": 23,
+   "x": 10120,
+   "y": 0,
+   "w": 440,
+   "h": 340
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  222,
+  339
+ ],
+ "propBBox": [
+  4,
+  4,
+  440,
+  340
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set1_upgraded_p01_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set1_upgraded_p01.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set1_upgraded_p01.png",
+  "placementKey": "bldg_interior_indoor_set1_upgraded_p01",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set1 Upgraded 01 \u2014 triple-monitor desk",
+ "qaGrade": "B+",
+ "qaNote": "triple-monitor desk: screens sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 234,
+    "y": 35,
+    "warm": false
+   },
+   {
+    "x": 252,
+    "y": 40,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 43,
+    "warm": false
+   },
+   {
+    "x": 235,
+    "y": 42,
+    "warm": false
+   },
+   {
+    "x": 234,
+    "y": 47,
+    "warm": false
+   },
+   {
+    "x": 194,
+    "y": 50,
+    "warm": false
+   },
+   {
+    "x": 252,
+    "y": 50,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 52,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 52,
+    "warm": false
+   },
+   {
+    "x": 177,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 234,
+    "y": 54,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 55,
+    "warm": false
+   },
+   {
+    "x": 119,
+    "y": 56,
+    "warm": false
+   },
+   {
+    "x": 326,
+    "y": 56,
+    "warm": false
+   },
+   {
+    "x": 194,
+    "y": 58,
+    "warm": false
+   },
+   {
+    "x": 113,
+    "y": 59,
+    "warm": false
+   },
+   {
+    "x": 186,
+    "y": 59,
+    "warm": false
+   },
+   {
+    "x": 247,
+    "y": 59,
+    "warm": false
+   },
+   {
+    "x": 308,
+    "y": 60,
+    "warm": false
+   },
+   {
+    "x": 178,
+    "y": 61,
+    "warm": false
+   },
+   {
+    "x": 106,
+    "y": 62,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 63,
+    "warm": false
+   },
+   {
+    "x": 235,
+    "y": 62,
+    "warm": false
+   },
+   {
+    "x": 327,
+    "y": 63,
+    "warm": false
+   },
+   {
+    "x": 343,
+    "y": 65,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 64,
+    "warm": false
+   },
+   {
+    "x": 299,
+    "y": 66,
+    "warm": false
+   },
+   {
+    "x": 119,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 354,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 68,
+    "warm": false
+   },
+   {
+    "x": 94,
+    "y": 68,
+    "warm": false
+   },
+   {
+    "x": 177,
+    "y": 69,
+    "warm": false
+   },
+   {
+    "x": 252,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 71,
+    "warm": false
+   },
+   {
+    "x": 320,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 327,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 111,
+    "y": 71,
+    "warm": false
+   },
+   {
+    "x": 108,
+    "y": 73,
+    "warm": false
+   },
+   {
+    "x": 101,
+    "y": 76,
+    "warm": false
+   },
+   {
+    "x": 343,
+    "y": 75,
+    "warm": false
+   },
+   {
+    "x": 222,
+    "y": 77,
+    "warm": false
+   },
+   {
+    "x": 253,
+    "y": 77,
+    "warm": false
+   },
+   {
+    "x": 355,
+    "y": 77,
+    "warm": false
+   },
+   {
+    "x": 70,
+    "y": 80,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 79,
+    "warm": false
+   },
+   {
+    "x": 81,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 328,
+    "y": 80,
+    "warm": false
+   },
+   {
+    "x": 113,
+    "y": 80,
+    "warm": false
+   },
+   {
+    "x": 198,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 234,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 299,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 110,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 104,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 306,
+    "y": 83,
+    "warm": false
+   },
+   {
+    "x": 355,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 188,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 317,
+    "y": 85,
+    "warm": false
+   },
+   {
+    "x": 70,
+    "y": 87,
+    "warm": false
+   },
+   {
+    "x": 180,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 328,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 114,
+    "y": 88,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 88,
+    "warm": false
+   },
+   {
+    "x": 198,
+    "y": 90,
+    "warm": false
+   },
+   {
+    "x": 254,
+    "y": 90,
+    "warm": false
+   },
+   {
+    "x": 104,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 186,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 354,
+    "y": 91,
+    "warm": false
+   },
+   {
+    "x": 70,
+    "y": 96,
+    "warm": false
+   },
+   {
+    "x": 178,
+    "y": 94,
+    "warm": false
+   },
+   {
+    "x": 113,
+    "y": 95,
+    "warm": false
+   },
+   {
+    "x": 111,
+    "y": 96,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 96,
+    "warm": false
+   },
+   {
+    "x": 137,
+    "y": 98,
+    "warm": true
+   },
+   {
+    "x": 104,
+    "y": 99,
+    "warm": false
+   },
+   {
+    "x": 81,
+    "y": 102,
+    "warm": false
+   },
+   {
+    "x": 70,
+    "y": 104,
+    "warm": false
+   },
+   {
+    "x": 381,
+    "y": 104,
+    "warm": true
+   },
+   {
+    "x": 390,
+    "y": 115,
+    "warm": true
+   },
+   {
+    "x": 70,
+    "y": 116,
+    "warm": false
+   },
+   {
+    "x": 87,
+    "y": 118,
+    "warm": false
+   },
+   {
+    "x": 70,
+    "y": 125,
+    "warm": false
+   },
+   {
+    "x": 75,
+    "y": 123,
+    "warm": false
+   },
+   {
+    "x": 381,
+    "y": 125,
+    "warm": true
+   },
+   {
+    "x": 372,
+    "y": 129,
+    "warm": true
+   },
+   {
+    "x": 251,
+    "y": 132,
+    "warm": true
+   },
+   {
+    "x": 268,
+    "y": 134,
+    "warm": false
+   },
+   {
+    "x": 257,
+    "y": 138,
+    "warm": true
+   },
+   {
+    "x": 274,
+    "y": 136,
+    "warm": false
+   },
+   {
+    "x": 30,
+    "y": 141,
+    "warm": true
+   },
+   {
+    "x": 270,
+    "y": 139,
+    "warm": false
+   },
+   {
+    "x": 278,
+    "y": 140,
+    "warm": false
+   },
+   {
+    "x": 238,
+    "y": 142,
+    "warm": true
+   },
+   {
+    "x": 274,
+    "y": 142,
+    "warm": false
+   },
+   {
+    "x": 264,
+    "y": 144,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 145,
+    "warm": true
+   },
+   {
+    "x": 221,
+    "y": 148,
+    "warm": true
+   },
+   {
+    "x": 28,
+    "y": 150,
+    "warm": true
+   },
+   {
+    "x": 245,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 213,
+    "y": 150,
+    "warm": true
+   },
+   {
+    "x": 236,
+    "y": 152,
+    "warm": true
+   },
+   {
+    "x": 204,
+    "y": 153,
+    "warm": true
+   },
+   {
+    "x": 228,
+    "y": 154,
+    "warm": true
+   },
+   {
+    "x": 194,
+    "y": 156,
+    "warm": true
+   },
+   {
+    "x": 220,
+    "y": 157,
+    "warm": true
+   },
+   {
+    "x": 211,
+    "y": 160,
+    "warm": true
+   },
+   {
+    "x": 319,
+    "y": 162,
+    "warm": true
+   },
+   {
+    "x": 202,
+    "y": 162,
+    "warm": true
+   },
+   {
+    "x": 300,
+    "y": 168,
+    "warm": true
+   },
+   {
+    "x": 154,
+    "y": 171,
+    "warm": true
+   },
+   {
+    "x": 86,
+    "y": 237,
+    "warm": true
+   },
+   {
+    "x": 203,
+    "y": 247,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 237,
+    "warm": false
+   },
+   {
+    "x": 68,
+    "y": 240,
+    "warm": false
+   },
+   {
+    "x": 60,
+    "y": 244,
+    "warm": false
+   },
+   {
+    "x": 74,
+    "y": 244,
+    "warm": false
+   },
+   {
+    "x": 91,
+    "y": 244,
+    "warm": true
+   },
+   {
+    "x": 67,
+    "y": 247,
+    "warm": false
+   },
+   {
+    "x": 89,
+    "y": 246,
+    "warm": true
+   },
+   {
+    "x": 74,
+    "y": 250,
+    "warm": false
+   },
+   {
+    "x": 60,
+    "y": 251,
+    "warm": false
+   },
+   {
+    "x": 193,
+    "y": 262,
+    "warm": true
+   },
+   {
+    "x": 88,
+    "y": 269,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     240,
+     29,
+     255,
+     35
+    ]
+   },
+   {
+    "bbox": [
+     211,
+     36,
+     230,
+     42
+    ]
+   },
+   {
+    "bbox": [
+     170,
+     42,
+     198,
+     51
+    ]
+   },
+   {
+    "bbox": [
+     212,
+     46,
+     227,
+     88
+    ]
+   },
+   {
+    "bbox": [
+     193,
+     48,
+     218,
+     68
+    ]
+   },
+   {
+    "bbox": [
+     299,
+     51,
+     323,
+     57
+    ]
+   },
+   {
+    "bbox": [
+     337,
+     56,
+     357,
+     62
+    ]
+   },
+   {
+    "bbox": [
+     303,
+     66,
+     318,
+     71
+    ]
+   },
+   {
+    "bbox": [
+     74,
+     70,
+     89,
+     79
+    ]
+   },
+   {
+    "bbox": [
+     233,
+     71,
+     250,
+     78
+    ]
+   },
+   {
+    "bbox": [
+     170,
+     72,
+     207,
+     83
+    ]
+   },
+   {
+    "bbox": [
+     299,
+     74,
+     319,
+     80
+    ]
+   },
+   {
+    "bbox": [
+     338,
+     80,
+     350,
+     85
+    ]
+   },
+   {
+    "bbox": [
+     75,
+     85,
+     97,
+     98
+    ]
+   },
+   {
+    "bbox": [
+     338,
+     87,
+     351,
+     92
+    ]
+   },
+   {
+    "bbox": [
+     75,
+     107,
+     90,
+     116
+    ]
+   },
+   {
+    "bbox": [
+     65,
+     253,
+     76,
+     261
+    ]
+   }
+  ],
+  "panels": [],
+  "addedLights": [],
+  "counts": {
+   "lights": 122,
+   "strips": 17,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 29394,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_set1_upgraded_p01",
+ "overlayClip": null
+}

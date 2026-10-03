@@ -1,0 +1,458 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set2_back_sw_p05_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  293,
+  342
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 1,
+   "x": 293,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 2,
+   "x": 586,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 3,
+   "x": 879,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 4,
+   "x": 1172,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 5,
+   "x": 1465,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 6,
+   "x": 1758,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 7,
+   "x": 2051,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 8,
+   "x": 2344,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 9,
+   "x": 2637,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 10,
+   "x": 2930,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 11,
+   "x": 3223,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 12,
+   "x": 3516,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 13,
+   "x": 3809,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 14,
+   "x": 4102,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 15,
+   "x": 4395,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 16,
+   "x": 4688,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 17,
+   "x": 4981,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 18,
+   "x": 5274,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 19,
+   "x": 5567,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 20,
+   "x": 5860,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 21,
+   "x": 6153,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 22,
+   "x": 6446,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  },
+  {
+   "i": 23,
+   "x": 6739,
+   "y": 0,
+   "w": 293,
+   "h": 342
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  147,
+  337
+ ],
+ "propBBox": [
+  4,
+  4,
+  290,
+  338
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set2_back_sw_p05_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set2_back_sw_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set2_back_sw_p05_2.png",
+  "placementKey": "bldg_interior_indoor_set2_back_sw_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set2 Back Sw 05 \u2014 console",
+ "qaGrade": "B",
+ "qaNote": "console: twin small screens sweep + keys",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 136,
+    "y": 16,
+    "warm": true
+   },
+   {
+    "x": 99,
+    "y": 46,
+    "warm": false
+   },
+   {
+    "x": 110,
+    "y": 49,
+    "warm": false
+   },
+   {
+    "x": 120,
+    "y": 52,
+    "warm": false
+   },
+   {
+    "x": 132,
+    "y": 55,
+    "warm": false
+   },
+   {
+    "x": 99,
+    "y": 56,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 58,
+    "warm": false
+   },
+   {
+    "x": 116,
+    "y": 61,
+    "warm": false
+   },
+   {
+    "x": 132,
+    "y": 65,
+    "warm": false
+   },
+   {
+    "x": 99,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 68,
+    "warm": false
+   },
+   {
+    "x": 110,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 120,
+    "y": 73,
+    "warm": false
+   },
+   {
+    "x": 195,
+    "y": 73,
+    "warm": false
+   },
+   {
+    "x": 132,
+    "y": 76,
+    "warm": false
+   },
+   {
+    "x": 204,
+    "y": 76,
+    "warm": false
+   },
+   {
+    "x": 215,
+    "y": 79,
+    "warm": false
+   },
+   {
+    "x": 142,
+    "y": 79,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 81,
+    "warm": false
+   },
+   {
+    "x": 195,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 204,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 215,
+    "y": 90,
+    "warm": false
+   },
+   {
+    "x": 185,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 96,
+    "warm": false
+   },
+   {
+    "x": 215,
+    "y": 101,
+    "warm": false
+   },
+   {
+    "x": 109,
+    "y": 114,
+    "warm": false
+   },
+   {
+    "x": 138,
+    "y": 122,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 128,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 178,
+    "warm": false
+   },
+   {
+    "x": 143,
+    "y": 209,
+    "warm": true
+   },
+   {
+    "x": 52,
+    "y": 216,
+    "warm": false
+   },
+   {
+    "x": 145,
+    "y": 215,
+    "warm": true
+   },
+   {
+    "x": 52,
+    "y": 227,
+    "warm": false
+   },
+   {
+    "x": 53,
+    "y": 236,
+    "warm": false
+   },
+   {
+    "x": 59,
+    "y": 239,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 248,
+    "warm": false
+   },
+   {
+    "x": 150,
+    "y": 252,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 259,
+    "warm": false
+   },
+   {
+    "x": 150,
+    "y": 263,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 270,
+    "warm": false
+   },
+   {
+    "x": 150,
+    "y": 274,
+    "warm": false
+   },
+   {
+    "x": 44,
+    "y": 282,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [],
+  "addedLights": [],
+  "counts": {
+   "lights": 43,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 26014,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_set2_back_sw_p05_2",
+ "overlayClip": null
+}

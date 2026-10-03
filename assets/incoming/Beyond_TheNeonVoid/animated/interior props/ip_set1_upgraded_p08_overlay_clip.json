@@ -1,0 +1,467 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set1_upgraded_p08_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  278,
+  302
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 1,
+   "x": 278,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 2,
+   "x": 556,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 3,
+   "x": 834,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 4,
+   "x": 1112,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 5,
+   "x": 1390,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 6,
+   "x": 1668,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 7,
+   "x": 1946,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 8,
+   "x": 2224,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 9,
+   "x": 2502,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 10,
+   "x": 2780,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 11,
+   "x": 3058,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 12,
+   "x": 3336,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 13,
+   "x": 3614,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 14,
+   "x": 3892,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 15,
+   "x": 4170,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 16,
+   "x": 4448,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 17,
+   "x": 4726,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 18,
+   "x": 5004,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 19,
+   "x": 5282,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 20,
+   "x": 5560,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 21,
+   "x": 5838,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 22,
+   "x": 6116,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  },
+  {
+   "i": 23,
+   "x": 6394,
+   "y": 0,
+   "w": 278,
+   "h": 302
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  138,
+  297
+ ],
+ "propBBox": [
+  3,
+  4,
+  274,
+  298
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set1_upgraded_p08_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set1_upgraded_p08.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set1_upgraded_p08.png",
+  "placementKey": "bldg_interior_indoor_set1_upgraded_p08",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set1 Upgraded 08 \u2014 circuit wall panel",
+ "qaGrade": "A-",
+ "qaNote": "circuit wall panel: energy traces sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 217,
+    "y": 53,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 65,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 67,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 72,
+    "warm": true
+   },
+   {
+    "x": 96,
+    "y": 85,
+    "warm": false
+   },
+   {
+    "x": 234,
+    "y": 92,
+    "warm": true
+   },
+   {
+    "x": 78,
+    "y": 94,
+    "warm": false
+   },
+   {
+    "x": 96,
+    "y": 97,
+    "warm": false
+   },
+   {
+    "x": 157,
+    "y": 99,
+    "warm": false
+   },
+   {
+    "x": 54,
+    "y": 105,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 109,
+    "warm": false
+   },
+   {
+    "x": 49,
+    "y": 113,
+    "warm": false
+   },
+   {
+    "x": 54,
+    "y": 113,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 116,
+    "warm": false
+   },
+   {
+    "x": 236,
+    "y": 119,
+    "warm": true
+   },
+   {
+    "x": 152,
+    "y": 120,
+    "warm": false
+   },
+   {
+    "x": 49,
+    "y": 151,
+    "warm": false
+   },
+   {
+    "x": 170,
+    "y": 153,
+    "warm": false
+   },
+   {
+    "x": 170,
+    "y": 156,
+    "warm": false
+   },
+   {
+    "x": 170,
+    "y": 167,
+    "warm": false
+   },
+   {
+    "x": 97,
+    "y": 188,
+    "warm": false
+   },
+   {
+    "x": 52,
+    "y": 193,
+    "warm": false
+   },
+   {
+    "x": 170,
+    "y": 194,
+    "warm": false
+   },
+   {
+    "x": 74,
+    "y": 210,
+    "warm": false
+   },
+   {
+    "x": 97,
+    "y": 215,
+    "warm": false
+   },
+   {
+    "x": 169,
+    "y": 214,
+    "warm": false
+   },
+   {
+    "x": 123,
+    "y": 219,
+    "warm": false
+   },
+   {
+    "x": 118,
+    "y": 218,
+    "warm": false
+   },
+   {
+    "x": 146,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 124,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 151,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 164,
+    "y": 223,
+    "warm": false
+   },
+   {
+    "x": 157,
+    "y": 227,
+    "warm": false
+   },
+   {
+    "x": 84,
+    "y": 231,
+    "warm": false
+   },
+   {
+    "x": 109,
+    "y": 236,
+    "warm": false
+   },
+   {
+    "x": 239,
+    "y": 237,
+    "warm": true
+   },
+   {
+    "x": 133,
+    "y": 240,
+    "warm": false
+   },
+   {
+    "x": 245,
+    "y": 243,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     83,
+     73,
+     177,
+     237
+    ],
+    "slope": 0.2520489926739929,
+    "area": 3608
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     45,
+     119,
+     97,
+     161
+    ],
+    "slope": 0.5,
+    "area": 546
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     44,
+     154,
+     91,
+     228
+    ],
+    "slope": 0.5,
+    "area": 786
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 38,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 51830,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_set1_upgraded_p08",
+ "overlayClip": null
+}
