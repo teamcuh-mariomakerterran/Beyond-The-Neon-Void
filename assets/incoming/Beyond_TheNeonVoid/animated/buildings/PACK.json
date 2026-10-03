@@ -1,0 +1,9296 @@
+{
+ "format": "lattice.building_life.pack.v1",
+ "version": 2,
+ "name": "building_life",
+ "source": "LATTICE",
+ "built": "2026-10-01",
+ "note": "Subtle seamless idle loops for Black Doctrine battle-map buildings (bd_battle_sorted, read-only copies). Only pixels the art already paints as lit (bright + saturated, contrast-checked against the surrounding body) are animated, plus added FX (dish pings, steam/smoke, beacons, landing-light chases, screen scanlines, glass sweeps, star glints); the building body is never recoloured. Each building has a full drop-in clip (exact canvas + anchor of the static sprite) and an overlay-only clip (FX on transparent) for engine layering. Emitter points are in each clip JSON. Phases are seeded per building id so neighbours do not pulse in sync.",
+ "loopFrames": 24,
+ "fps": 10,
+ "frameMs": 100,
+ "qa": {
+  "gifs": "samples/ui/qa_building_life/bl_<id>.gif (1x, 256-colour)",
+  "contact": "samples/ui/qa_building_life.png",
+  "vignette": "samples/ui/qa_building_life_vignette.gif"
+ },
+ "effects": [
+  {
+   "id": "bl_026_06",
+   "label": "Twin-stack cooling plant (orange)",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    367,
+    371
+   ],
+   "frames": 24,
+   "strip": "bl_026_06_strip.png",
+   "clip": "bl_026_06_clip.json",
+   "anchor": [
+    184,
+    362
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_06_2.png",
+   "placementKey": "bldg_battle_bsheet_026_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_026_06_overlay",
+   "label": "Twin-stack cooling plant (orange) \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    367,
+    371
+   ],
+   "frames": 24,
+   "strip": "bl_026_06_overlay_strip.png",
+   "clip": "bl_026_06_overlay_clip.json",
+   "anchor": [
+    184,
+    362
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_06_2.png",
+   "placementKey": "bldg_battle_bsheet_026_06",
+   "overlayOf": "bl_026_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_022_06",
+   "label": "Cooling-tower arcology (purple/cyan)",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    402,
+    364
+   ],
+   "frames": 24,
+   "strip": "bl_022_06_strip.png",
+   "clip": "bl_022_06_clip.json",
+   "anchor": [
+    200,
+    354
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_06_2.png",
+   "placementKey": "bldg_battle_bsheet_022_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B"
+  },
+  {
+   "id": "bl_022_06_overlay",
+   "label": "Cooling-tower arcology (purple/cyan) \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    402,
+    364
+   ],
+   "frames": 24,
+   "strip": "bl_022_06_overlay_strip.png",
+   "clip": "bl_022_06_overlay_clip.json",
+   "anchor": [
+    200,
+    354
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_06_2.png",
+   "placementKey": "bldg_battle_bsheet_022_06",
+   "overlayOf": "bl_022_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B"
+  },
+  {
+   "id": "bl_023_03",
+   "label": "White chem works with stacks",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    409,
+    364
+   ],
+   "frames": 24,
+   "strip": "bl_023_03_strip.png",
+   "clip": "bl_023_03_clip.json",
+   "anchor": [
+    204,
+    355
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_023_03_2.png",
+   "placementKey": "bldg_battle_bsheet_023_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B-"
+  },
+  {
+   "id": "bl_023_03_overlay",
+   "label": "White chem works with stacks \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    409,
+    364
+   ],
+   "frames": 24,
+   "strip": "bl_023_03_overlay_strip.png",
+   "clip": "bl_023_03_overlay_clip.json",
+   "anchor": [
+    204,
+    355
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_023_03_2.png",
+   "placementKey": "bldg_battle_bsheet_023_03",
+   "overlayOf": "bl_023_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B-"
+  },
+  {
+   "id": "bl_003_01",
+   "label": "Twin-dish office tower",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    269,
+    426
+   ],
+   "frames": 24,
+   "strip": "bl_003_01_strip.png",
+   "clip": "bl_003_01_clip.json",
+   "anchor": [
+    134,
+    419
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_003_01_2.png",
+   "placementKey": "bldg_battle_bsheet_003_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_003_01_overlay",
+   "label": "Twin-dish office tower \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    269,
+    426
+   ],
+   "frames": 24,
+   "strip": "bl_003_01_overlay_strip.png",
+   "clip": "bl_003_01_overlay_clip.json",
+   "anchor": [
+    134,
+    419
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_003_01_2.png",
+   "placementKey": "bldg_battle_bsheet_003_01",
+   "overlayOf": "bl_003_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_025_12",
+   "label": "Cyan crystal spire",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    208,
+    347
+   ],
+   "frames": 24,
+   "strip": "bl_025_12_strip.png",
+   "clip": "bl_025_12_clip.json",
+   "anchor": [
+    104,
+    338
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_12_2.png",
+   "placementKey": "bldg_battle_bsheet_025_12",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "core",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_025_12_overlay",
+   "label": "Cyan crystal spire \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    208,
+    347
+   ],
+   "frames": 24,
+   "strip": "bl_025_12_overlay_strip.png",
+   "clip": "bl_025_12_overlay_clip.json",
+   "anchor": [
+    104,
+    338
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_12_2.png",
+   "placementKey": "bldg_battle_bsheet_025_12",
+   "overlayOf": "bl_025_12",
+   "features": [
+    "beacon",
+    "core",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_021_14",
+   "label": "Magenta crystal spire",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    354
+   ],
+   "frames": 24,
+   "strip": "bl_021_14_strip.png",
+   "clip": "bl_021_14_clip.json",
+   "anchor": [
+    108,
+    345
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_14_2.png",
+   "placementKey": "bldg_battle_bsheet_021_14",
+   "overlayOf": null,
+   "features": [
+    "core",
+    "neon",
+    "point"
+   ],
+   "qaGrade": "A-"
+  },
+  {
+   "id": "bl_021_14_overlay",
+   "label": "Magenta crystal spire \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    354
+   ],
+   "frames": 24,
+   "strip": "bl_021_14_overlay_strip.png",
+   "clip": "bl_021_14_overlay_clip.json",
+   "anchor": [
+    108,
+    345
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_14_2.png",
+   "placementKey": "bldg_battle_bsheet_021_14",
+   "overlayOf": "bl_021_14",
+   "features": [
+    "core",
+    "neon",
+    "point"
+   ],
+   "qaGrade": "A-"
+  },
+  {
+   "id": "bl_035_13",
+   "label": "White crystal monolith",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    172,
+    353
+   ],
+   "frames": 24,
+   "strip": "bl_035_13_strip.png",
+   "clip": "bl_035_13_clip.json",
+   "anchor": [
+    87,
+    344
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_13_2.png",
+   "placementKey": "bldg_battle_bsheet_035_13",
+   "overlayOf": null,
+   "features": [
+    "neon"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_035_13_overlay",
+   "label": "White crystal monolith \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    172,
+    353
+   ],
+   "frames": 24,
+   "strip": "bl_035_13_overlay_strip.png",
+   "clip": "bl_035_13_overlay_clip.json",
+   "anchor": [
+    87,
+    344
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_13_2.png",
+   "placementKey": "bldg_battle_bsheet_035_13",
+   "overlayOf": "bl_035_13",
+   "features": [
+    "neon"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_019_01",
+   "label": "Night office cluster",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    292,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_019_01_strip.png",
+   "clip": "bl_019_01_clip.json",
+   "anchor": [
+    145,
+    350
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_01_2.png",
+   "placementKey": "bldg_battle_bsheet_019_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "A-"
+  },
+  {
+   "id": "bl_019_01_overlay",
+   "label": "Night office cluster \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    292,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_019_01_overlay_strip.png",
+   "clip": "bl_019_01_overlay_clip.json",
+   "anchor": [
+    145,
+    350
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_01_2.png",
+   "placementKey": "bldg_battle_bsheet_019_01",
+   "overlayOf": "bl_019_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "A-"
+  },
+  {
+   "id": "bl_022_07",
+   "label": "Neon spire hub",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    397,
+    353
+   ],
+   "frames": 24,
+   "strip": "bl_022_07_strip.png",
+   "clip": "bl_022_07_clip.json",
+   "anchor": [
+    198,
+    343
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_07_2.png",
+   "placementKey": "bldg_battle_bsheet_022_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "A-"
+  },
+  {
+   "id": "bl_022_07_overlay",
+   "label": "Neon spire hub \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    397,
+    353
+   ],
+   "frames": 24,
+   "strip": "bl_022_07_overlay_strip.png",
+   "clip": "bl_022_07_overlay_clip.json",
+   "anchor": [
+    198,
+    343
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_07_2.png",
+   "placementKey": "bldg_battle_bsheet_022_07",
+   "overlayOf": "bl_022_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "A-"
+  },
+  {
+   "id": "bl_024_01",
+   "label": "Amber high-rise",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    167,
+    360
+   ],
+   "frames": 24,
+   "strip": "bl_024_01_strip.png",
+   "clip": "bl_024_01_clip.json",
+   "anchor": [
+    84,
+    351
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_024_01_2.png",
+   "placementKey": "bldg_battle_bsheet_024_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_024_01_overlay",
+   "label": "Amber high-rise \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    167,
+    360
+   ],
+   "frames": 24,
+   "strip": "bl_024_01_overlay_strip.png",
+   "clip": "bl_024_01_overlay_clip.json",
+   "anchor": [
+    84,
+    351
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_024_01_2.png",
+   "placementKey": "bldg_battle_bsheet_024_01",
+   "overlayOf": "bl_024_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_018_06",
+   "label": "Starfish arcology",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    442,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_018_06_strip.png",
+   "clip": "bl_018_06_clip.json",
+   "anchor": [
+    220,
+    394
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_06_2.png",
+   "placementKey": "bldg_battle_bsheet_018_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B"
+  },
+  {
+   "id": "bl_018_06_overlay",
+   "label": "Starfish arcology \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    442,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_018_06_overlay_strip.png",
+   "clip": "bl_018_06_overlay_clip.json",
+   "anchor": [
+    220,
+    394
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_06_2.png",
+   "placementKey": "bldg_battle_bsheet_018_06",
+   "overlayOf": "bl_018_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B"
+  },
+  {
+   "id": "bl_021_11",
+   "label": "Neon gantry tower",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    264,
+    341
+   ],
+   "frames": 24,
+   "strip": "bl_021_11_strip.png",
+   "clip": "bl_021_11_clip.json",
+   "anchor": [
+    131,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_11_2.png",
+   "placementKey": "bldg_battle_bsheet_021_11",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_021_11_overlay",
+   "label": "Neon gantry tower \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    264,
+    341
+   ],
+   "frames": 24,
+   "strip": "bl_021_11_overlay_strip.png",
+   "clip": "bl_021_11_overlay_clip.json",
+   "anchor": [
+    131,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_11_2.png",
+   "placementKey": "bldg_battle_bsheet_021_11",
+   "overlayOf": "bl_021_11",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_019_04",
+   "label": "Neon warehouse (amber strip)",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    365,
+    266
+   ],
+   "frames": 24,
+   "strip": "bl_019_04_strip.png",
+   "clip": "bl_019_04_clip.json",
+   "anchor": [
+    183,
+    259
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_04_2.png",
+   "placementKey": "bldg_battle_bsheet_019_04",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B"
+  },
+  {
+   "id": "bl_019_04_overlay",
+   "label": "Neon warehouse (amber strip) \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    365,
+    266
+   ],
+   "frames": 24,
+   "strip": "bl_019_04_overlay_strip.png",
+   "clip": "bl_019_04_overlay_clip.json",
+   "anchor": [
+    183,
+    259
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_04_2.png",
+   "placementKey": "bldg_battle_bsheet_019_04",
+   "overlayOf": "bl_019_04",
+   "features": [
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B"
+  },
+  {
+   "id": "bl_035_08",
+   "label": "Control tower",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    151,
+    338
+   ],
+   "frames": 24,
+   "strip": "bl_035_08_strip.png",
+   "clip": "bl_035_08_clip.json",
+   "anchor": [
+    76,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_08_2.png",
+   "placementKey": "bldg_battle_bsheet_035_08",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_035_08_overlay",
+   "label": "Control tower \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    151,
+    338
+   ],
+   "frames": 24,
+   "strip": "bl_035_08_overlay_strip.png",
+   "clip": "bl_035_08_overlay_clip.json",
+   "anchor": [
+    76,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_08_2.png",
+   "placementKey": "bldg_battle_bsheet_035_08",
+   "overlayOf": "bl_035_08",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+"
+  },
+  {
+   "id": "bl_030_03",
+   "label": "Satellite uplink complex",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    497,
+    505
+   ],
+   "frames": 24,
+   "strip": "bl_030_03_strip.png",
+   "clip": "bl_030_03_clip.json",
+   "anchor": [
+    249,
+    485
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_030_03_2.png",
+   "placementKey": "bldg_battle_bsheet_030_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_030_03_overlay",
+   "label": "Satellite uplink complex \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    497,
+    505
+   ],
+   "frames": 24,
+   "strip": "bl_030_03_overlay_strip.png",
+   "clip": "bl_030_03_overlay_clip.json",
+   "anchor": [
+    249,
+    485
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_030_03_2.png",
+   "placementKey": "bldg_battle_bsheet_030_03",
+   "overlayOf": "bl_030_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_021_03",
+   "label": "Triple-dish relay HQ (neon)",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    309,
+    327
+   ],
+   "frames": 24,
+   "strip": "bl_021_03_strip.png",
+   "clip": "bl_021_03_clip.json",
+   "anchor": [
+    154,
+    318
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_03_2.png",
+   "placementKey": "bldg_battle_bsheet_021_03",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_021_03_overlay",
+   "label": "Triple-dish relay HQ (neon) \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    309,
+    327
+   ],
+   "frames": 24,
+   "strip": "bl_021_03_overlay_strip.png",
+   "clip": "bl_021_03_overlay_clip.json",
+   "anchor": [
+    154,
+    318
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_03_2.png",
+   "placementKey": "bldg_battle_bsheet_021_03",
+   "overlayOf": "bl_021_03",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_017_02",
+   "label": "Cross-pad dish tower",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    303,
+    286
+   ],
+   "frames": 24,
+   "strip": "bl_017_02_strip.png",
+   "clip": "bl_017_02_clip.json",
+   "anchor": [
+    151,
+    279
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_02_2.png",
+   "placementKey": "bldg_battle_bsheet_017_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_017_02_overlay",
+   "label": "Cross-pad dish tower \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    303,
+    286
+   ],
+   "frames": 24,
+   "strip": "bl_017_02_overlay_strip.png",
+   "clip": "bl_017_02_overlay_clip.json",
+   "anchor": [
+    151,
+    279
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_02_2.png",
+   "placementKey": "bldg_battle_bsheet_017_02",
+   "overlayOf": "bl_017_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_011_05",
+   "label": "Dish silo",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    248,
+    427
+   ],
+   "frames": 24,
+   "strip": "bl_011_05_strip.png",
+   "clip": "bl_011_05_clip.json",
+   "anchor": [
+    124,
+    418
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_011_05_2.png",
+   "placementKey": "bldg_battle_bsheet_011_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_011_05_overlay",
+   "label": "Dish silo \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    248,
+    427
+   ],
+   "frames": 24,
+   "strip": "bl_011_05_overlay_strip.png",
+   "clip": "bl_011_05_overlay_clip.json",
+   "anchor": [
+    124,
+    418
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_011_05_2.png",
+   "placementKey": "bldg_battle_bsheet_011_05",
+   "overlayOf": "bl_011_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "pings"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_036_06",
+   "label": "Cooling-tower block (cyan/magenta)",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    360,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_036_06_strip.png",
+   "clip": "bl_036_06_clip.json",
+   "anchor": [
+    180,
+    334
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_06_2.png",
+   "placementKey": "bldg_battle_bsheet_036_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_036_06_overlay",
+   "label": "Cooling-tower block (cyan/magenta) \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    360,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_036_06_overlay_strip.png",
+   "clip": "bl_036_06_overlay_clip.json",
+   "anchor": [
+    180,
+    334
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_06_2.png",
+   "placementKey": "bldg_battle_bsheet_036_06",
+   "overlayOf": "bl_036_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_020_04",
+   "label": "Command hub tower",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    414,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_020_04_strip.png",
+   "clip": "bl_020_04_clip.json",
+   "anchor": [
+    204,
+    395
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_04_2.png",
+   "placementKey": "bldg_battle_bsheet_020_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "screens",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_020_04_overlay",
+   "label": "Command hub tower \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    414,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_020_04_overlay_strip.png",
+   "clip": "bl_020_04_overlay_clip.json",
+   "anchor": [
+    204,
+    395
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_04_2.png",
+   "placementKey": "bldg_battle_bsheet_020_04",
+   "overlayOf": "bl_020_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "screens",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_026_03",
+   "label": "Refinery with stacks",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    408,
+    336
+   ],
+   "frames": 24,
+   "strip": "bl_026_03_strip.png",
+   "clip": "bl_026_03_clip.json",
+   "anchor": [
+    204,
+    327
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_03_2.png",
+   "placementKey": "bldg_battle_bsheet_026_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_026_03_overlay",
+   "label": "Refinery with stacks \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    408,
+    336
+   ],
+   "frames": 24,
+   "strip": "bl_026_03_overlay_strip.png",
+   "clip": "bl_026_03_overlay_clip.json",
+   "anchor": [
+    204,
+    327
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_03_2.png",
+   "placementKey": "bldg_battle_bsheet_026_03",
+   "overlayOf": "bl_026_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_026_03_padded",
+   "label": "Refinery with stacks (padded +40 top)",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    408,
+    376
+   ],
+   "frames": 24,
+   "strip": "bl_026_03_padded_strip.png",
+   "clip": "bl_026_03_padded_clip.json",
+   "anchor": [
+    204,
+    367
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_03_2.png",
+   "placementKey": "bldg_battle_bsheet_026_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix",
+   "padding": {
+    "top": 40,
+    "bottom": 0,
+    "left": 0,
+    "right": 0,
+    "note": "Canvas is the source sprite with 40px of its own background added on top so the stack smoke is not clipped. Building pixels/anchor are unchanged relative to the building; in this canvas the anchor sits pad px lower. Exact-canvas version: bl_026_03."
+   },
+   "variantOf": "bl_026_03"
+  },
+  {
+   "id": "bl_026_03_padded_overlay",
+   "label": "Refinery with stacks (padded +40 top) \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    408,
+    376
+   ],
+   "frames": 24,
+   "strip": "bl_026_03_padded_overlay_strip.png",
+   "clip": "bl_026_03_padded_overlay_clip.json",
+   "anchor": [
+    204,
+    367
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_03_2.png",
+   "placementKey": "bldg_battle_bsheet_026_03",
+   "overlayOf": "bl_026_03_padded",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "vents"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix",
+   "padding": {
+    "top": 40,
+    "bottom": 0,
+    "left": 0,
+    "right": 0,
+    "note": "Canvas is the source sprite with 40px of its own background added on top so the stack smoke is not clipped. Building pixels/anchor are unchanged relative to the building; in this canvas the anchor sits pad px lower. Exact-canvas version: bl_026_03."
+   },
+   "variantOf": "bl_026_03"
+  },
+  {
+   "id": "bl_025_14",
+   "label": "Roof-garden media block",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    301,
+    275
+   ],
+   "frames": 24,
+   "strip": "bl_025_14_strip.png",
+   "clip": "bl_025_14_clip.json",
+   "anchor": [
+    150,
+    265
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_14_2.png",
+   "placementKey": "bldg_battle_bsheet_025_14",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "screens"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_025_14_overlay",
+   "label": "Roof-garden media block \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    301,
+    275
+   ],
+   "frames": 24,
+   "strip": "bl_025_14_overlay_strip.png",
+   "clip": "bl_025_14_overlay_clip.json",
+   "anchor": [
+    150,
+    265
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_14_2.png",
+   "placementKey": "bldg_battle_bsheet_025_14",
+   "overlayOf": "bl_025_14",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "screens"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_004_02",
+   "label": "Dome reactor district",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    524,
+    484
+   ],
+   "frames": 24,
+   "strip": "bl_004_02_strip.png",
+   "clip": "bl_004_02_clip.json",
+   "anchor": [
+    262,
+    477
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_004_02_2.png",
+   "placementKey": "bldg_battle_bsheet_004_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "core",
+    "neon",
+    "point"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_004_02_overlay",
+   "label": "Dome reactor district \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    524,
+    484
+   ],
+   "frames": 24,
+   "strip": "bl_004_02_overlay_strip.png",
+   "clip": "bl_004_02_overlay_clip.json",
+   "anchor": [
+    262,
+    477
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_004_02_2.png",
+   "placementKey": "bldg_battle_bsheet_004_02",
+   "overlayOf": "bl_004_02",
+   "features": [
+    "beacon",
+    "core",
+    "neon",
+    "point"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_028_02",
+   "label": "Market tower",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    411,
+    468
+   ],
+   "frames": 24,
+   "strip": "bl_028_02_strip.png",
+   "clip": "bl_028_02_clip.json",
+   "anchor": [
+    205,
+    459
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_028_02_2.png",
+   "placementKey": "bldg_battle_bsheet_028_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "point",
+    "sign",
+    "window",
+    "glints"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_028_02_overlay",
+   "label": "Market tower \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    411,
+    468
+   ],
+   "frames": 24,
+   "strip": "bl_028_02_overlay_strip.png",
+   "clip": "bl_028_02_overlay_clip.json",
+   "anchor": [
+    205,
+    459
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_028_02_2.png",
+   "placementKey": "bldg_battle_bsheet_028_02",
+   "overlayOf": "bl_028_02",
+   "features": [
+    "beacon",
+    "point",
+    "sign",
+    "window",
+    "glints"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_fix"
+  },
+  {
+   "id": "bl_021_13",
+   "label": "Battle building 021 / 13",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    166,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_021_13_strip.png",
+   "clip": "bl_021_13_clip.json",
+   "anchor": [
+    82,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_13_2.png",
+   "placementKey": "bldg_battle_bsheet_021_13",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_13_overlay",
+   "label": "Battle building 021 / 13 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    166,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_021_13_overlay_strip.png",
+   "clip": "bl_021_13_overlay_clip.json",
+   "anchor": [
+    82,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_13_2.png",
+   "placementKey": "bldg_battle_bsheet_021_13",
+   "overlayOf": "bl_021_13",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_15",
+   "label": "Battle building 025 / 15",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    160,
+    333
+   ],
+   "frames": 24,
+   "strip": "bl_025_15_strip.png",
+   "clip": "bl_025_15_clip.json",
+   "anchor": [
+    80,
+    325
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_15_2.png",
+   "placementKey": "bldg_battle_bsheet_025_15",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_15_overlay",
+   "label": "Battle building 025 / 15 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    160,
+    333
+   ],
+   "frames": 24,
+   "strip": "bl_025_15_overlay_strip.png",
+   "clip": "bl_025_15_overlay_clip.json",
+   "anchor": [
+    80,
+    325
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_15_2.png",
+   "placementKey": "bldg_battle_bsheet_025_15",
+   "overlayOf": "bl_025_15",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_05",
+   "label": "Battle building 035 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    238,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_035_05_strip.png",
+   "clip": "bl_035_05_clip.json",
+   "anchor": [
+    118,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_05_2.png",
+   "placementKey": "bldg_battle_bsheet_035_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_05_overlay",
+   "label": "Battle building 035 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    238,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_035_05_overlay_strip.png",
+   "clip": "bl_035_05_overlay_clip.json",
+   "anchor": [
+    118,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_05_2.png",
+   "placementKey": "bldg_battle_bsheet_035_05",
+   "overlayOf": "bl_035_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_12",
+   "label": "Battle building 021 / 12",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    279,
+    290
+   ],
+   "frames": 24,
+   "strip": "bl_021_12_strip.png",
+   "clip": "bl_021_12_clip.json",
+   "anchor": [
+    140,
+    281
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_12_2.png",
+   "placementKey": "bldg_battle_bsheet_021_12",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_12_overlay",
+   "label": "Battle building 021 / 12 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    279,
+    290
+   ],
+   "frames": 24,
+   "strip": "bl_021_12_overlay_strip.png",
+   "clip": "bl_021_12_overlay_clip.json",
+   "anchor": [
+    140,
+    281
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_12_2.png",
+   "placementKey": "bldg_battle_bsheet_021_12",
+   "overlayOf": "bl_021_12",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_12",
+   "label": "Battle building 017 / 12",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    252,
+    319
+   ],
+   "frames": 24,
+   "strip": "bl_017_12_strip.png",
+   "clip": "bl_017_12_clip.json",
+   "anchor": [
+    126,
+    311
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_12_2.png",
+   "placementKey": "bldg_battle_bsheet_017_12",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_12_overlay",
+   "label": "Battle building 017 / 12 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    252,
+    319
+   ],
+   "frames": 24,
+   "strip": "bl_017_12_overlay_strip.png",
+   "clip": "bl_017_12_overlay_clip.json",
+   "anchor": [
+    126,
+    311
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_12_2.png",
+   "placementKey": "bldg_battle_bsheet_017_12",
+   "overlayOf": "bl_017_12",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_04",
+   "label": "Battle building 021 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    304,
+    356
+   ],
+   "frames": 24,
+   "strip": "bl_021_04_strip.png",
+   "clip": "bl_021_04_clip.json",
+   "anchor": [
+    152,
+    345
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_04_2.png",
+   "placementKey": "bldg_battle_bsheet_021_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_04_overlay",
+   "label": "Battle building 021 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    304,
+    356
+   ],
+   "frames": 24,
+   "strip": "bl_021_04_overlay_strip.png",
+   "clip": "bl_021_04_overlay_clip.json",
+   "anchor": [
+    152,
+    345
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_04_2.png",
+   "placementKey": "bldg_battle_bsheet_021_04",
+   "overlayOf": "bl_021_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_01",
+   "label": "Battle building 021 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    115,
+    362
+   ],
+   "frames": 24,
+   "strip": "bl_021_01_strip.png",
+   "clip": "bl_021_01_clip.json",
+   "anchor": [
+    58,
+    352
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_01_2.png",
+   "placementKey": "bldg_battle_bsheet_021_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_01_overlay",
+   "label": "Battle building 021 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    115,
+    362
+   ],
+   "frames": 24,
+   "strip": "bl_021_01_overlay_strip.png",
+   "clip": "bl_021_01_overlay_clip.json",
+   "anchor": [
+    58,
+    352
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_01_2.png",
+   "placementKey": "bldg_battle_bsheet_021_01",
+   "overlayOf": "bl_021_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_10",
+   "label": "Battle building 019 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    292,
+    321
+   ],
+   "frames": 24,
+   "strip": "bl_019_10_strip.png",
+   "clip": "bl_019_10_clip.json",
+   "anchor": [
+    146,
+    314
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_10_2.png",
+   "placementKey": "bldg_battle_bsheet_019_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_10_overlay",
+   "label": "Battle building 019 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    292,
+    321
+   ],
+   "frames": 24,
+   "strip": "bl_019_10_overlay_strip.png",
+   "clip": "bl_019_10_overlay_clip.json",
+   "anchor": [
+    146,
+    314
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_10_2.png",
+   "placementKey": "bldg_battle_bsheet_019_10",
+   "overlayOf": "bl_019_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_02",
+   "label": "Battle building 022 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    410,
+    327
+   ],
+   "frames": 24,
+   "strip": "bl_022_02_strip.png",
+   "clip": "bl_022_02_clip.json",
+   "anchor": [
+    205,
+    318
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_02_2.png",
+   "placementKey": "bldg_battle_bsheet_022_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_02_overlay",
+   "label": "Battle building 022 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    410,
+    327
+   ],
+   "frames": 24,
+   "strip": "bl_022_02_overlay_strip.png",
+   "clip": "bl_022_02_overlay_clip.json",
+   "anchor": [
+    205,
+    318
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_02_2.png",
+   "placementKey": "bldg_battle_bsheet_022_02",
+   "overlayOf": "bl_022_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_023_01",
+   "label": "Battle building 023 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    393,
+    357
+   ],
+   "frames": 24,
+   "strip": "bl_023_01_strip.png",
+   "clip": "bl_023_01_clip.json",
+   "anchor": [
+    195,
+    347
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_023_01_2.png",
+   "placementKey": "bldg_battle_bsheet_023_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_023_01_overlay",
+   "label": "Battle building 023 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    393,
+    357
+   ],
+   "frames": 24,
+   "strip": "bl_023_01_overlay_strip.png",
+   "clip": "bl_023_01_overlay_clip.json",
+   "anchor": [
+    195,
+    347
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_023_01_2.png",
+   "placementKey": "bldg_battle_bsheet_023_01",
+   "overlayOf": "bl_023_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_08",
+   "label": "Battle building 021 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    301,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_021_08_strip.png",
+   "clip": "bl_021_08_clip.json",
+   "anchor": [
+    150,
+    330
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_08_2.png",
+   "placementKey": "bldg_battle_bsheet_021_08",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_08_overlay",
+   "label": "Battle building 021 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    301,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_021_08_overlay_strip.png",
+   "clip": "bl_021_08_overlay_clip.json",
+   "anchor": [
+    150,
+    330
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_08_2.png",
+   "placementKey": "bldg_battle_bsheet_021_08",
+   "overlayOf": "bl_021_08",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_06",
+   "label": "Battle building 017 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    201,
+    320
+   ],
+   "frames": 24,
+   "strip": "bl_017_06_strip.png",
+   "clip": "bl_017_06_clip.json",
+   "anchor": [
+    100,
+    310
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_06_2.png",
+   "placementKey": "bldg_battle_bsheet_017_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_06_overlay",
+   "label": "Battle building 017 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    201,
+    320
+   ],
+   "frames": 24,
+   "strip": "bl_017_06_overlay_strip.png",
+   "clip": "bl_017_06_overlay_clip.json",
+   "anchor": [
+    100,
+    310
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_06_2.png",
+   "placementKey": "bldg_battle_bsheet_017_06",
+   "overlayOf": "bl_017_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_01",
+   "label": "Battle building 017 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    79,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_017_01_strip.png",
+   "clip": "bl_017_01_clip.json",
+   "anchor": [
+    38,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_01_2.png",
+   "placementKey": "bldg_battle_bsheet_017_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_01_overlay",
+   "label": "Battle building 017 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    79,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_017_01_overlay_strip.png",
+   "clip": "bl_017_01_overlay_clip.json",
+   "anchor": [
+    38,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_01_2.png",
+   "placementKey": "bldg_battle_bsheet_017_01",
+   "overlayOf": "bl_017_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_11",
+   "label": "Battle building 019 / 11",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    330,
+    288
+   ],
+   "frames": 24,
+   "strip": "bl_019_11_strip.png",
+   "clip": "bl_019_11_clip.json",
+   "anchor": [
+    167,
+    280
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_11_2.png",
+   "placementKey": "bldg_battle_bsheet_019_11",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_11_overlay",
+   "label": "Battle building 019 / 11 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    330,
+    288
+   ],
+   "frames": 24,
+   "strip": "bl_019_11_overlay_strip.png",
+   "clip": "bl_019_11_overlay_clip.json",
+   "anchor": [
+    167,
+    280
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_11_2.png",
+   "placementKey": "bldg_battle_bsheet_019_11",
+   "overlayOf": "bl_019_11",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_10",
+   "label": "Battle building 022 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    391,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_022_10_strip.png",
+   "clip": "bl_022_10_clip.json",
+   "anchor": [
+    196,
+    376
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_10_2.png",
+   "placementKey": "bldg_battle_bsheet_022_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_10_overlay",
+   "label": "Battle building 022 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    391,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_022_10_overlay_strip.png",
+   "clip": "bl_022_10_overlay_clip.json",
+   "anchor": [
+    196,
+    376
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_10_2.png",
+   "placementKey": "bldg_battle_bsheet_022_10",
+   "overlayOf": "bl_022_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_10",
+   "label": "Battle building 035 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    343
+   ],
+   "frames": 24,
+   "strip": "bl_035_10_strip.png",
+   "clip": "bl_035_10_clip.json",
+   "anchor": [
+    108,
+    335
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_10_2.png",
+   "placementKey": "bldg_battle_bsheet_035_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_10_overlay",
+   "label": "Battle building 035 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    343
+   ],
+   "frames": 24,
+   "strip": "bl_035_10_overlay_strip.png",
+   "clip": "bl_035_10_overlay_clip.json",
+   "anchor": [
+    108,
+    335
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_10_2.png",
+   "placementKey": "bldg_battle_bsheet_035_10",
+   "overlayOf": "bl_035_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_01",
+   "label": "Battle building 020 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    440,
+    438
+   ],
+   "frames": 24,
+   "strip": "bl_020_01_strip.png",
+   "clip": "bl_020_01_clip.json",
+   "anchor": [
+    220,
+    430
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_01_2.png",
+   "placementKey": "bldg_battle_bsheet_020_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_01_overlay",
+   "label": "Battle building 020 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    440,
+    438
+   ],
+   "frames": 24,
+   "strip": "bl_020_01_overlay_strip.png",
+   "clip": "bl_020_01_overlay_clip.json",
+   "anchor": [
+    220,
+    430
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_01_2.png",
+   "placementKey": "bldg_battle_bsheet_020_01",
+   "overlayOf": "bl_020_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_06",
+   "label": "Battle building 019 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    259,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_019_06_strip.png",
+   "clip": "bl_019_06_clip.json",
+   "anchor": [
+    131,
+    339
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_06_2.png",
+   "placementKey": "bldg_battle_bsheet_019_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_06_overlay",
+   "label": "Battle building 019 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    259,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_019_06_overlay_strip.png",
+   "clip": "bl_019_06_overlay_clip.json",
+   "anchor": [
+    131,
+    339
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_06_2.png",
+   "placementKey": "bldg_battle_bsheet_019_06",
+   "overlayOf": "bl_019_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_07",
+   "label": "Battle building 035 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    192,
+    349
+   ],
+   "frames": 24,
+   "strip": "bl_035_07_strip.png",
+   "clip": "bl_035_07_clip.json",
+   "anchor": [
+    96,
+    340
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_07_2.png",
+   "placementKey": "bldg_battle_bsheet_035_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_07_overlay",
+   "label": "Battle building 035 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    192,
+    349
+   ],
+   "frames": 24,
+   "strip": "bl_035_07_overlay_strip.png",
+   "clip": "bl_035_07_overlay_clip.json",
+   "anchor": [
+    96,
+    340
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_07_2.png",
+   "placementKey": "bldg_battle_bsheet_035_07",
+   "overlayOf": "bl_035_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_09",
+   "label": "Battle building 017 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    244,
+    316
+   ],
+   "frames": 24,
+   "strip": "bl_017_09_strip.png",
+   "clip": "bl_017_09_clip.json",
+   "anchor": [
+    120,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_09_2.png",
+   "placementKey": "bldg_battle_bsheet_017_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_09_overlay",
+   "label": "Battle building 017 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    244,
+    316
+   ],
+   "frames": 24,
+   "strip": "bl_017_09_overlay_strip.png",
+   "clip": "bl_017_09_overlay_clip.json",
+   "anchor": [
+    120,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_09_2.png",
+   "placementKey": "bldg_battle_bsheet_017_09",
+   "overlayOf": "bl_017_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_02",
+   "label": "Battle building 026 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    400,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_026_02_strip.png",
+   "clip": "bl_026_02_clip.json",
+   "anchor": [
+    200,
+    377
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_02_2.png",
+   "placementKey": "bldg_battle_bsheet_026_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_02_overlay",
+   "label": "Battle building 026 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    400,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_026_02_overlay_strip.png",
+   "clip": "bl_026_02_overlay_clip.json",
+   "anchor": [
+    200,
+    377
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_02_2.png",
+   "placementKey": "bldg_battle_bsheet_026_02",
+   "overlayOf": "bl_026_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_07",
+   "label": "Battle building 025 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    160,
+    319
+   ],
+   "frames": 24,
+   "strip": "bl_025_07_strip.png",
+   "clip": "bl_025_07_clip.json",
+   "anchor": [
+    80,
+    312
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_07_2.png",
+   "placementKey": "bldg_battle_bsheet_025_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_07_overlay",
+   "label": "Battle building 025 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    160,
+    319
+   ],
+   "frames": 24,
+   "strip": "bl_025_07_overlay_strip.png",
+   "clip": "bl_025_07_overlay_clip.json",
+   "anchor": [
+    80,
+    312
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_07_2.png",
+   "placementKey": "bldg_battle_bsheet_025_07",
+   "overlayOf": "bl_025_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_11",
+   "label": "Battle building 022 / 11",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    400,
+    361
+   ],
+   "frames": 24,
+   "strip": "bl_022_11_strip.png",
+   "clip": "bl_022_11_clip.json",
+   "anchor": [
+    200,
+    350
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_11_2.png",
+   "placementKey": "bldg_battle_bsheet_022_11",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_11_overlay",
+   "label": "Battle building 022 / 11 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    400,
+    361
+   ],
+   "frames": 24,
+   "strip": "bl_022_11_overlay_strip.png",
+   "clip": "bl_022_11_overlay_clip.json",
+   "anchor": [
+    200,
+    350
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_11_2.png",
+   "placementKey": "bldg_battle_bsheet_022_11",
+   "overlayOf": "bl_022_11",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_12",
+   "label": "Battle building 022 / 12",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    403,
+    304
+   ],
+   "frames": 24,
+   "strip": "bl_022_12_strip.png",
+   "clip": "bl_022_12_clip.json",
+   "anchor": [
+    202,
+    294
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_12_2.png",
+   "placementKey": "bldg_battle_bsheet_022_12",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_12_overlay",
+   "label": "Battle building 022 / 12 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    403,
+    304
+   ],
+   "frames": 24,
+   "strip": "bl_022_12_overlay_strip.png",
+   "clip": "bl_022_12_overlay_clip.json",
+   "anchor": [
+    202,
+    294
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_12_2.png",
+   "placementKey": "bldg_battle_bsheet_022_12",
+   "overlayOf": "bl_022_12",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_03",
+   "label": "Battle building 035 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    254,
+    324
+   ],
+   "frames": 24,
+   "strip": "bl_035_03_strip.png",
+   "clip": "bl_035_03_clip.json",
+   "anchor": [
+    127,
+    315
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_03_2.png",
+   "placementKey": "bldg_battle_bsheet_035_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_03_overlay",
+   "label": "Battle building 035 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    254,
+    324
+   ],
+   "frames": 24,
+   "strip": "bl_035_03_overlay_strip.png",
+   "clip": "bl_035_03_overlay_clip.json",
+   "anchor": [
+    127,
+    315
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_03_2.png",
+   "placementKey": "bldg_battle_bsheet_035_03",
+   "overlayOf": "bl_035_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_03",
+   "label": "Battle building 019 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    270,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_019_03_strip.png",
+   "clip": "bl_019_03_clip.json",
+   "anchor": [
+    135,
+    338
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_03_2.png",
+   "placementKey": "bldg_battle_bsheet_019_03",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_03_overlay",
+   "label": "Battle building 019 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    270,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_019_03_overlay_strip.png",
+   "clip": "bl_019_03_overlay_clip.json",
+   "anchor": [
+    135,
+    338
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_03_2.png",
+   "placementKey": "bldg_battle_bsheet_019_03",
+   "overlayOf": "bl_019_03",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_15",
+   "label": "Battle building 021 / 15",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    315,
+    342
+   ],
+   "frames": 24,
+   "strip": "bl_021_15_strip.png",
+   "clip": "bl_021_15_clip.json",
+   "anchor": [
+    156,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_15_2.png",
+   "placementKey": "bldg_battle_bsheet_021_15",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_15_overlay",
+   "label": "Battle building 021 / 15 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    315,
+    342
+   ],
+   "frames": 24,
+   "strip": "bl_021_15_overlay_strip.png",
+   "clip": "bl_021_15_overlay_clip.json",
+   "anchor": [
+    156,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_15_2.png",
+   "placementKey": "bldg_battle_bsheet_021_15",
+   "overlayOf": "bl_021_15",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_08",
+   "label": "Battle building 009 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    233,
+    420
+   ],
+   "frames": 24,
+   "strip": "bl_009_08_strip.png",
+   "clip": "bl_009_08_clip.json",
+   "anchor": [
+    116,
+    413
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_08_2.png",
+   "placementKey": "bldg_battle_bsheet_009_08",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_08_overlay",
+   "label": "Battle building 009 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    233,
+    420
+   ],
+   "frames": 24,
+   "strip": "bl_009_08_overlay_strip.png",
+   "clip": "bl_009_08_overlay_clip.json",
+   "anchor": [
+    116,
+    413
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_08_2.png",
+   "placementKey": "bldg_battle_bsheet_009_08",
+   "overlayOf": "bl_009_08",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_07",
+   "label": "Battle building 020 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    340,
+    412
+   ],
+   "frames": 24,
+   "strip": "bl_020_07_strip.png",
+   "clip": "bl_020_07_clip.json",
+   "anchor": [
+    170,
+    405
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_07_2.png",
+   "placementKey": "bldg_battle_bsheet_020_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_07_overlay",
+   "label": "Battle building 020 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    340,
+    412
+   ],
+   "frames": 24,
+   "strip": "bl_020_07_overlay_strip.png",
+   "clip": "bl_020_07_overlay_clip.json",
+   "anchor": [
+    170,
+    405
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_07_2.png",
+   "placementKey": "bldg_battle_bsheet_020_07",
+   "overlayOf": "bl_020_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_09",
+   "label": "Battle building 035 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    196,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_035_09_strip.png",
+   "clip": "bl_035_09_clip.json",
+   "anchor": [
+    98,
+    335
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_09_2.png",
+   "placementKey": "bldg_battle_bsheet_035_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_09_overlay",
+   "label": "Battle building 035 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    196,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_035_09_overlay_strip.png",
+   "clip": "bl_035_09_overlay_clip.json",
+   "anchor": [
+    98,
+    335
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_09_2.png",
+   "placementKey": "bldg_battle_bsheet_035_09",
+   "overlayOf": "bl_035_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_07",
+   "label": "Battle building 021 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    252,
+    346
+   ],
+   "frames": 24,
+   "strip": "bl_021_07_strip.png",
+   "clip": "bl_021_07_clip.json",
+   "anchor": [
+    125,
+    337
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_07_2.png",
+   "placementKey": "bldg_battle_bsheet_021_07",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_07_overlay",
+   "label": "Battle building 021 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    252,
+    346
+   ],
+   "frames": 24,
+   "strip": "bl_021_07_overlay_strip.png",
+   "clip": "bl_021_07_overlay_clip.json",
+   "anchor": [
+    125,
+    337
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_07_2.png",
+   "placementKey": "bldg_battle_bsheet_021_07",
+   "overlayOf": "bl_021_07",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_05",
+   "label": "Battle building 027 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    156,
+    437
+   ],
+   "frames": 24,
+   "strip": "bl_027_05_strip.png",
+   "clip": "bl_027_05_clip.json",
+   "anchor": [
+    79,
+    424
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_05_2.png",
+   "placementKey": "bldg_battle_bsheet_027_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_05_overlay",
+   "label": "Battle building 027 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    156,
+    437
+   ],
+   "frames": 24,
+   "strip": "bl_027_05_overlay_strip.png",
+   "clip": "bl_027_05_overlay_clip.json",
+   "anchor": [
+    79,
+    424
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_05_2.png",
+   "placementKey": "bldg_battle_bsheet_027_05",
+   "overlayOf": "bl_027_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_02",
+   "label": "Battle building 021 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    225,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_021_02_strip.png",
+   "clip": "bl_021_02_clip.json",
+   "anchor": [
+    113,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_02_2.png",
+   "placementKey": "bldg_battle_bsheet_021_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_02_overlay",
+   "label": "Battle building 021 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    225,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_021_02_overlay_strip.png",
+   "clip": "bl_021_02_overlay_clip.json",
+   "anchor": [
+    113,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_02_2.png",
+   "placementKey": "bldg_battle_bsheet_021_02",
+   "overlayOf": "bl_021_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_04",
+   "label": "Battle building 022 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    403,
+    354
+   ],
+   "frames": 24,
+   "strip": "bl_022_04_strip.png",
+   "clip": "bl_022_04_clip.json",
+   "anchor": [
+    202,
+    344
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_04_2.png",
+   "placementKey": "bldg_battle_bsheet_022_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_04_overlay",
+   "label": "Battle building 022 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    403,
+    354
+   ],
+   "frames": 24,
+   "strip": "bl_022_04_overlay_strip.png",
+   "clip": "bl_022_04_overlay_clip.json",
+   "anchor": [
+    202,
+    344
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_04_2.png",
+   "placementKey": "bldg_battle_bsheet_022_04",
+   "overlayOf": "bl_022_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_01",
+   "label": "Battle building 022 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    379,
+    375
+   ],
+   "frames": 24,
+   "strip": "bl_022_01_strip.png",
+   "clip": "bl_022_01_clip.json",
+   "anchor": [
+    189,
+    365
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_01_2.png",
+   "placementKey": "bldg_battle_bsheet_022_01",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_01_overlay",
+   "label": "Battle building 022 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    379,
+    375
+   ],
+   "frames": 24,
+   "strip": "bl_022_01_overlay_strip.png",
+   "clip": "bl_022_01_overlay_clip.json",
+   "anchor": [
+    189,
+    365
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_01_2.png",
+   "placementKey": "bldg_battle_bsheet_022_01",
+   "overlayOf": "bl_022_01",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_029_07",
+   "label": "Battle building 029 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    270,
+    398
+   ],
+   "frames": 24,
+   "strip": "bl_029_07_strip.png",
+   "clip": "bl_029_07_clip.json",
+   "anchor": [
+    135,
+    397
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_029_07_2.png",
+   "placementKey": "bldg_battle_bsheet_029_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_029_07_overlay",
+   "label": "Battle building 029 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    270,
+    398
+   ],
+   "frames": 24,
+   "strip": "bl_029_07_overlay_strip.png",
+   "clip": "bl_029_07_overlay_clip.json",
+   "anchor": [
+    135,
+    397
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_029_07_2.png",
+   "placementKey": "bldg_battle_bsheet_029_07",
+   "overlayOf": "bl_029_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_01",
+   "label": "Battle building 026 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    320,
+    375
+   ],
+   "frames": 24,
+   "strip": "bl_026_01_strip.png",
+   "clip": "bl_026_01_clip.json",
+   "anchor": [
+    159,
+    362
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_01_2.png",
+   "placementKey": "bldg_battle_bsheet_026_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_01_overlay",
+   "label": "Battle building 026 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    320,
+    375
+   ],
+   "frames": 24,
+   "strip": "bl_026_01_overlay_strip.png",
+   "clip": "bl_026_01_overlay_clip.json",
+   "anchor": [
+    159,
+    362
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_01_2.png",
+   "placementKey": "bldg_battle_bsheet_026_01",
+   "overlayOf": "bl_026_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_02",
+   "label": "Battle building 035 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    353
+   ],
+   "frames": 24,
+   "strip": "bl_035_02_strip.png",
+   "clip": "bl_035_02_clip.json",
+   "anchor": [
+    108,
+    344
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_02_2.png",
+   "placementKey": "bldg_battle_bsheet_035_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_02_overlay",
+   "label": "Battle building 035 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    353
+   ],
+   "frames": 24,
+   "strip": "bl_035_02_overlay_strip.png",
+   "clip": "bl_035_02_overlay_clip.json",
+   "anchor": [
+    108,
+    344
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_02_2.png",
+   "placementKey": "bldg_battle_bsheet_035_02",
+   "overlayOf": "bl_035_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_10",
+   "label": "Battle building 021 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    242,
+    334
+   ],
+   "frames": 24,
+   "strip": "bl_021_10_strip.png",
+   "clip": "bl_021_10_clip.json",
+   "anchor": [
+    121,
+    325
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_10_2.png",
+   "placementKey": "bldg_battle_bsheet_021_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_10_overlay",
+   "label": "Battle building 021 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    242,
+    334
+   ],
+   "frames": 24,
+   "strip": "bl_021_10_overlay_strip.png",
+   "clip": "bl_021_10_overlay_clip.json",
+   "anchor": [
+    121,
+    325
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_10_2.png",
+   "placementKey": "bldg_battle_bsheet_021_10",
+   "overlayOf": "bl_021_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_10",
+   "label": "Battle building 017 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    259,
+    319
+   ],
+   "frames": 24,
+   "strip": "bl_017_10_strip.png",
+   "clip": "bl_017_10_clip.json",
+   "anchor": [
+    129,
+    310
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_10_2.png",
+   "placementKey": "bldg_battle_bsheet_017_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_10_overlay",
+   "label": "Battle building 017 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    259,
+    319
+   ],
+   "frames": 24,
+   "strip": "bl_017_10_overlay_strip.png",
+   "clip": "bl_017_10_overlay_clip.json",
+   "anchor": [
+    129,
+    310
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_10_2.png",
+   "placementKey": "bldg_battle_bsheet_017_10",
+   "overlayOf": "bl_017_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_16",
+   "label": "Battle building 021 / 16",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    304,
+    315
+   ],
+   "frames": 24,
+   "strip": "bl_021_16_strip.png",
+   "clip": "bl_021_16_clip.json",
+   "anchor": [
+    152,
+    305
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_16_2.png",
+   "placementKey": "bldg_battle_bsheet_021_16",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_16_overlay",
+   "label": "Battle building 021 / 16 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    304,
+    315
+   ],
+   "frames": 24,
+   "strip": "bl_021_16_overlay_strip.png",
+   "clip": "bl_021_16_overlay_clip.json",
+   "anchor": [
+    152,
+    305
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_16_2.png",
+   "placementKey": "bldg_battle_bsheet_021_16",
+   "overlayOf": "bl_021_16",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_024_09",
+   "label": "Battle building 024 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    215,
+    359
+   ],
+   "frames": 24,
+   "strip": "bl_024_09_strip.png",
+   "clip": "bl_024_09_clip.json",
+   "anchor": [
+    108,
+    350
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_024_09_2.png",
+   "placementKey": "bldg_battle_bsheet_024_09",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_024_09_overlay",
+   "label": "Battle building 024 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    215,
+    359
+   ],
+   "frames": 24,
+   "strip": "bl_024_09_overlay_strip.png",
+   "clip": "bl_024_09_overlay_clip.json",
+   "anchor": [
+    108,
+    350
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_024_09_2.png",
+   "placementKey": "bldg_battle_bsheet_024_09",
+   "overlayOf": "bl_024_09",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_05",
+   "label": "Battle building 021 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    269,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_021_05_strip.png",
+   "clip": "bl_021_05_clip.json",
+   "anchor": [
+    136,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_05_2.png",
+   "placementKey": "bldg_battle_bsheet_021_05",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_05_overlay",
+   "label": "Battle building 021 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    269,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_021_05_overlay_strip.png",
+   "clip": "bl_021_05_overlay_clip.json",
+   "anchor": [
+    136,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_05_2.png",
+   "placementKey": "bldg_battle_bsheet_021_05",
+   "overlayOf": "bl_021_05",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_02",
+   "label": "Battle building 019 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    226,
+    358
+   ],
+   "frames": 24,
+   "strip": "bl_019_02_strip.png",
+   "clip": "bl_019_02_clip.json",
+   "anchor": [
+    113,
+    357
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_02_2.png",
+   "placementKey": "bldg_battle_bsheet_019_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_02_overlay",
+   "label": "Battle building 019 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    226,
+    358
+   ],
+   "frames": 24,
+   "strip": "bl_019_02_overlay_strip.png",
+   "clip": "bl_019_02_overlay_clip.json",
+   "anchor": [
+    113,
+    357
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_02_2.png",
+   "placementKey": "bldg_battle_bsheet_019_02",
+   "overlayOf": "bl_019_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_02",
+   "label": "Battle building 020 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    436,
+    394
+   ],
+   "frames": 24,
+   "strip": "bl_020_02_strip.png",
+   "clip": "bl_020_02_clip.json",
+   "anchor": [
+    218,
+    388
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_02_2.png",
+   "placementKey": "bldg_battle_bsheet_020_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_02_overlay",
+   "label": "Battle building 020 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    436,
+    394
+   ],
+   "frames": 24,
+   "strip": "bl_020_02_overlay_strip.png",
+   "clip": "bl_020_02_overlay_clip.json",
+   "anchor": [
+    218,
+    388
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_02_2.png",
+   "placementKey": "bldg_battle_bsheet_020_02",
+   "overlayOf": "bl_020_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_09",
+   "label": "Battle building 027 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    294,
+    383
+   ],
+   "frames": 24,
+   "strip": "bl_027_09_strip.png",
+   "clip": "bl_027_09_clip.json",
+   "anchor": [
+    147,
+    370
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_09_2.png",
+   "placementKey": "bldg_battle_bsheet_027_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_09_overlay",
+   "label": "Battle building 027 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    294,
+    383
+   ],
+   "frames": 24,
+   "strip": "bl_027_09_overlay_strip.png",
+   "clip": "bl_027_09_overlay_clip.json",
+   "anchor": [
+    147,
+    370
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_09_2.png",
+   "placementKey": "bldg_battle_bsheet_027_09",
+   "overlayOf": "bl_027_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_16",
+   "label": "Battle building 035 / 16",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    307,
+    283
+   ],
+   "frames": 24,
+   "strip": "bl_035_16_strip.png",
+   "clip": "bl_035_16_clip.json",
+   "anchor": [
+    154,
+    275
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_16_2.png",
+   "placementKey": "bldg_battle_bsheet_035_16",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_035_16_overlay",
+   "label": "Battle building 035 / 16 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    307,
+    283
+   ],
+   "frames": 24,
+   "strip": "bl_035_16_overlay_strip.png",
+   "clip": "bl_035_16_overlay_clip.json",
+   "anchor": [
+    154,
+    275
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_035_16_2.png",
+   "placementKey": "bldg_battle_bsheet_035_16",
+   "overlayOf": "bl_035_16",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_03",
+   "label": "Battle building 022 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    409,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_022_03_strip.png",
+   "clip": "bl_022_03_clip.json",
+   "anchor": [
+    205,
+    329
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_03_2.png",
+   "placementKey": "bldg_battle_bsheet_022_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_03_overlay",
+   "label": "Battle building 022 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    409,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_022_03_overlay_strip.png",
+   "clip": "bl_022_03_overlay_clip.json",
+   "anchor": [
+    205,
+    329
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_03_2.png",
+   "placementKey": "bldg_battle_bsheet_022_03",
+   "overlayOf": "bl_022_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_01",
+   "label": "Battle building 036 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    349,
+    373
+   ],
+   "frames": 24,
+   "strip": "bl_036_01_strip.png",
+   "clip": "bl_036_01_clip.json",
+   "anchor": [
+    174,
+    365
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_01_2.png",
+   "placementKey": "bldg_battle_bsheet_036_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_01_overlay",
+   "label": "Battle building 036 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    349,
+    373
+   ],
+   "frames": 24,
+   "strip": "bl_036_01_overlay_strip.png",
+   "clip": "bl_036_01_overlay_clip.json",
+   "anchor": [
+    174,
+    365
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_01_2.png",
+   "placementKey": "bldg_battle_bsheet_036_01",
+   "overlayOf": "bl_036_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_05",
+   "label": "Battle building 026 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    343,
+    396
+   ],
+   "frames": 24,
+   "strip": "bl_026_05_strip.png",
+   "clip": "bl_026_05_clip.json",
+   "anchor": [
+    172,
+    387
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_05_2.png",
+   "placementKey": "bldg_battle_bsheet_026_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_05_overlay",
+   "label": "Battle building 026 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    343,
+    396
+   ],
+   "frames": 24,
+   "strip": "bl_026_05_overlay_strip.png",
+   "clip": "bl_026_05_overlay_clip.json",
+   "anchor": [
+    172,
+    387
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_05_2.png",
+   "placementKey": "bldg_battle_bsheet_026_05",
+   "overlayOf": "bl_026_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_07",
+   "label": "Battle building 018 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    435,
+    455
+   ],
+   "frames": 24,
+   "strip": "bl_018_07_strip.png",
+   "clip": "bl_018_07_clip.json",
+   "anchor": [
+    218,
+    446
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_07_2.png",
+   "placementKey": "bldg_battle_bsheet_018_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_07_overlay",
+   "label": "Battle building 018 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    435,
+    455
+   ],
+   "frames": 24,
+   "strip": "bl_018_07_overlay_strip.png",
+   "clip": "bl_018_07_overlay_clip.json",
+   "anchor": [
+    218,
+    446
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_07_2.png",
+   "placementKey": "bldg_battle_bsheet_018_07",
+   "overlayOf": "bl_018_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_07",
+   "label": "Battle building 017 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    257,
+    317
+   ],
+   "frames": 24,
+   "strip": "bl_017_07_strip.png",
+   "clip": "bl_017_07_clip.json",
+   "anchor": [
+    128,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_07_2.png",
+   "placementKey": "bldg_battle_bsheet_017_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_07_overlay",
+   "label": "Battle building 017 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    257,
+    317
+   ],
+   "frames": 24,
+   "strip": "bl_017_07_overlay_strip.png",
+   "clip": "bl_017_07_overlay_clip.json",
+   "anchor": [
+    128,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_07_2.png",
+   "placementKey": "bldg_battle_bsheet_017_07",
+   "overlayOf": "bl_017_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_05",
+   "label": "Battle building 019 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    291,
+    342
+   ],
+   "frames": 24,
+   "strip": "bl_019_05_strip.png",
+   "clip": "bl_019_05_clip.json",
+   "anchor": [
+    146,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_05_2.png",
+   "placementKey": "bldg_battle_bsheet_019_05",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_05_overlay",
+   "label": "Battle building 019 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    291,
+    342
+   ],
+   "frames": 24,
+   "strip": "bl_019_05_overlay_strip.png",
+   "clip": "bl_019_05_overlay_clip.json",
+   "anchor": [
+    146,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_05_2.png",
+   "placementKey": "bldg_battle_bsheet_019_05",
+   "overlayOf": "bl_019_05",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_029_03",
+   "label": "Battle building 029 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    341,
+    405
+   ],
+   "frames": 24,
+   "strip": "bl_029_03_strip.png",
+   "clip": "bl_029_03_clip.json",
+   "anchor": [
+    169,
+    404
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_029_03_2.png",
+   "placementKey": "bldg_battle_bsheet_029_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_029_03_overlay",
+   "label": "Battle building 029 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    341,
+    405
+   ],
+   "frames": 24,
+   "strip": "bl_029_03_overlay_strip.png",
+   "clip": "bl_029_03_overlay_clip.json",
+   "anchor": [
+    169,
+    404
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_029_03_2.png",
+   "placementKey": "bldg_battle_bsheet_029_03",
+   "overlayOf": "bl_029_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_06",
+   "label": "Battle building 020 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    448,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_020_06_strip.png",
+   "clip": "bl_020_06_clip.json",
+   "anchor": [
+    224,
+    394
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_06_2.png",
+   "placementKey": "bldg_battle_bsheet_020_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_06_overlay",
+   "label": "Battle building 020 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    448,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_020_06_overlay_strip.png",
+   "clip": "bl_020_06_overlay_clip.json",
+   "anchor": [
+    224,
+    394
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_06_2.png",
+   "placementKey": "bldg_battle_bsheet_020_06",
+   "overlayOf": "bl_020_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_01",
+   "label": "Battle building 025 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    122,
+    350
+   ],
+   "frames": 24,
+   "strip": "bl_025_01_strip.png",
+   "clip": "bl_025_01_clip.json",
+   "anchor": [
+    60,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_01_2.png",
+   "placementKey": "bldg_battle_bsheet_025_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_01_overlay",
+   "label": "Battle building 025 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    122,
+    350
+   ],
+   "frames": 24,
+   "strip": "bl_025_01_overlay_strip.png",
+   "clip": "bl_025_01_overlay_clip.json",
+   "anchor": [
+    60,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_01_2.png",
+   "placementKey": "bldg_battle_bsheet_025_01",
+   "overlayOf": "bl_025_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_05",
+   "label": "Battle building 022 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    371,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_022_05_strip.png",
+   "clip": "bl_022_05_clip.json",
+   "anchor": [
+    185,
+    377
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_05_2.png",
+   "placementKey": "bldg_battle_bsheet_022_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_05_overlay",
+   "label": "Battle building 022 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    371,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_022_05_overlay_strip.png",
+   "clip": "bl_022_05_overlay_clip.json",
+   "anchor": [
+    185,
+    377
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_05_2.png",
+   "placementKey": "bldg_battle_bsheet_022_05",
+   "overlayOf": "bl_022_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_03",
+   "label": "Battle building 017 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    285,
+    335
+   ],
+   "frames": 24,
+   "strip": "bl_017_03_strip.png",
+   "clip": "bl_017_03_clip.json",
+   "anchor": [
+    142,
+    334
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_03_2.png",
+   "placementKey": "bldg_battle_bsheet_017_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_03_overlay",
+   "label": "Battle building 017 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    285,
+    335
+   ],
+   "frames": 24,
+   "strip": "bl_017_03_overlay_strip.png",
+   "clip": "bl_017_03_overlay_clip.json",
+   "anchor": [
+    142,
+    334
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_03_2.png",
+   "placementKey": "bldg_battle_bsheet_017_03",
+   "overlayOf": "bl_017_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_05",
+   "label": "Battle building 025 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    208,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_025_05_strip.png",
+   "clip": "bl_025_05_clip.json",
+   "anchor": [
+    101,
+    338
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_05_2.png",
+   "placementKey": "bldg_battle_bsheet_025_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_05_overlay",
+   "label": "Battle building 025 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    208,
+    345
+   ],
+   "frames": 24,
+   "strip": "bl_025_05_overlay_strip.png",
+   "clip": "bl_025_05_overlay_clip.json",
+   "anchor": [
+    101,
+    338
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_05_2.png",
+   "placementKey": "bldg_battle_bsheet_025_05",
+   "overlayOf": "bl_025_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_003_07",
+   "label": "Battle building 003 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    246,
+    401
+   ],
+   "frames": 24,
+   "strip": "bl_003_07_strip.png",
+   "clip": "bl_003_07_clip.json",
+   "anchor": [
+    122,
+    400
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_003_07_2.png",
+   "placementKey": "bldg_battle_bsheet_003_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_003_07_overlay",
+   "label": "Battle building 003 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    246,
+    401
+   ],
+   "frames": 24,
+   "strip": "bl_003_07_overlay_strip.png",
+   "clip": "bl_003_07_overlay_clip.json",
+   "anchor": [
+    122,
+    400
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_003_07_2.png",
+   "placementKey": "bldg_battle_bsheet_003_07",
+   "overlayOf": "bl_003_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_11",
+   "label": "Battle building 017 / 11",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    245,
+    314
+   ],
+   "frames": 24,
+   "strip": "bl_017_11_strip.png",
+   "clip": "bl_017_11_clip.json",
+   "anchor": [
+    122,
+    305
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_11_2.png",
+   "placementKey": "bldg_battle_bsheet_017_11",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_11_overlay",
+   "label": "Battle building 017 / 11 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    245,
+    314
+   ],
+   "frames": 24,
+   "strip": "bl_017_11_overlay_strip.png",
+   "clip": "bl_017_11_overlay_clip.json",
+   "anchor": [
+    122,
+    305
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_11_2.png",
+   "placementKey": "bldg_battle_bsheet_017_11",
+   "overlayOf": "bl_017_11",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_04",
+   "label": "Battle building 026 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    400,
+    357
+   ],
+   "frames": 24,
+   "strip": "bl_026_04_strip.png",
+   "clip": "bl_026_04_clip.json",
+   "anchor": [
+    200,
+    348
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_04_2.png",
+   "placementKey": "bldg_battle_bsheet_026_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_04_overlay",
+   "label": "Battle building 026 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    400,
+    357
+   ],
+   "frames": 24,
+   "strip": "bl_026_04_overlay_strip.png",
+   "clip": "bl_026_04_overlay_clip.json",
+   "anchor": [
+    200,
+    348
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_04_2.png",
+   "placementKey": "bldg_battle_bsheet_026_04",
+   "overlayOf": "bl_026_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_09",
+   "label": "Battle building 019 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    274,
+    327
+   ],
+   "frames": 24,
+   "strip": "bl_019_09_strip.png",
+   "clip": "bl_019_09_clip.json",
+   "anchor": [
+    137,
+    319
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_09_2.png",
+   "placementKey": "bldg_battle_bsheet_019_09",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_09_overlay",
+   "label": "Battle building 019 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    274,
+    327
+   ],
+   "frames": 24,
+   "strip": "bl_019_09_overlay_strip.png",
+   "clip": "bl_019_09_overlay_clip.json",
+   "anchor": [
+    137,
+    319
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_09_2.png",
+   "placementKey": "bldg_battle_bsheet_019_09",
+   "overlayOf": "bl_019_09",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_02",
+   "label": "Battle building 036 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    405,
+    366
+   ],
+   "frames": 24,
+   "strip": "bl_036_02_strip.png",
+   "clip": "bl_036_02_clip.json",
+   "anchor": [
+    202,
+    357
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_02_2.png",
+   "placementKey": "bldg_battle_bsheet_036_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_02_overlay",
+   "label": "Battle building 036 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    405,
+    366
+   ],
+   "frames": 24,
+   "strip": "bl_036_02_overlay_strip.png",
+   "clip": "bl_036_02_overlay_clip.json",
+   "anchor": [
+    202,
+    357
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_02_2.png",
+   "placementKey": "bldg_battle_bsheet_036_02",
+   "overlayOf": "bl_036_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_03",
+   "label": "Battle building 025 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    242,
+    322
+   ],
+   "frames": 24,
+   "strip": "bl_025_03_strip.png",
+   "clip": "bl_025_03_clip.json",
+   "anchor": [
+    121,
+    312
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_03_2.png",
+   "placementKey": "bldg_battle_bsheet_025_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_03_overlay",
+   "label": "Battle building 025 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    242,
+    322
+   ],
+   "frames": 24,
+   "strip": "bl_025_03_overlay_strip.png",
+   "clip": "bl_025_03_overlay_clip.json",
+   "anchor": [
+    121,
+    312
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_03_2.png",
+   "placementKey": "bldg_battle_bsheet_025_03",
+   "overlayOf": "bl_025_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_030_05",
+   "label": "Battle building 030 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    489,
+    546
+   ],
+   "frames": 24,
+   "strip": "bl_030_05_strip.png",
+   "clip": "bl_030_05_clip.json",
+   "anchor": [
+    244,
+    539
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_030_05_2.png",
+   "placementKey": "bldg_battle_bsheet_030_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_030_05_overlay",
+   "label": "Battle building 030 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    489,
+    546
+   ],
+   "frames": 24,
+   "strip": "bl_030_05_overlay_strip.png",
+   "clip": "bl_030_05_overlay_clip.json",
+   "anchor": [
+    244,
+    539
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_030_05_2.png",
+   "placementKey": "bldg_battle_bsheet_030_05",
+   "overlayOf": "bl_030_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_08",
+   "label": "Battle building 019 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    210,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_019_08_strip.png",
+   "clip": "bl_019_08_clip.json",
+   "anchor": [
+    104,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_08_2.png",
+   "placementKey": "bldg_battle_bsheet_019_08",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_019_08_overlay",
+   "label": "Battle building 019 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    210,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_019_08_overlay_strip.png",
+   "clip": "bl_019_08_overlay_clip.json",
+   "anchor": [
+    104,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_019_08_2.png",
+   "placementKey": "bldg_battle_bsheet_019_08",
+   "overlayOf": "bl_019_08",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_011_04",
+   "label": "Battle building 011 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    330,
+    324
+   ],
+   "frames": 24,
+   "strip": "bl_011_04_strip.png",
+   "clip": "bl_011_04_clip.json",
+   "anchor": [
+    165,
+    316
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_011_04_2.png",
+   "placementKey": "bldg_battle_bsheet_011_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_011_04_overlay",
+   "label": "Battle building 011 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    330,
+    324
+   ],
+   "frames": 24,
+   "strip": "bl_011_04_overlay_strip.png",
+   "clip": "bl_011_04_overlay_clip.json",
+   "anchor": [
+    165,
+    316
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_011_04_2.png",
+   "placementKey": "bldg_battle_bsheet_011_04",
+   "overlayOf": "bl_011_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_09",
+   "label": "Battle building 026 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    374,
+    378
+   ],
+   "frames": 24,
+   "strip": "bl_026_09_strip.png",
+   "clip": "bl_026_09_clip.json",
+   "anchor": [
+    187,
+    370
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_09_2.png",
+   "placementKey": "bldg_battle_bsheet_026_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_026_09_overlay",
+   "label": "Battle building 026 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    374,
+    378
+   ],
+   "frames": 24,
+   "strip": "bl_026_09_overlay_strip.png",
+   "clip": "bl_026_09_overlay_clip.json",
+   "anchor": [
+    187,
+    370
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_026_09_2.png",
+   "placementKey": "bldg_battle_bsheet_026_09",
+   "overlayOf": "bl_026_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_06",
+   "label": "Battle building 021 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    110,
+    361
+   ],
+   "frames": 24,
+   "strip": "bl_021_06_strip.png",
+   "clip": "bl_021_06_clip.json",
+   "anchor": [
+    55,
+    351
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_06_2.png",
+   "placementKey": "bldg_battle_bsheet_021_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_06_overlay",
+   "label": "Battle building 021 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    110,
+    361
+   ],
+   "frames": 24,
+   "strip": "bl_021_06_overlay_strip.png",
+   "clip": "bl_021_06_overlay_clip.json",
+   "anchor": [
+    55,
+    351
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_06_2.png",
+   "placementKey": "bldg_battle_bsheet_021_06",
+   "overlayOf": "bl_021_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_09",
+   "label": "Battle building 021 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    199,
+    362
+   ],
+   "frames": 24,
+   "strip": "bl_021_09_strip.png",
+   "clip": "bl_021_09_clip.json",
+   "anchor": [
+    98,
+    353
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_09_2.png",
+   "placementKey": "bldg_battle_bsheet_021_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_021_09_overlay",
+   "label": "Battle building 021 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    199,
+    362
+   ],
+   "frames": 24,
+   "strip": "bl_021_09_overlay_strip.png",
+   "clip": "bl_021_09_overlay_clip.json",
+   "anchor": [
+    98,
+    353
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_021_09_2.png",
+   "placementKey": "bldg_battle_bsheet_021_09",
+   "overlayOf": "bl_021_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_09",
+   "label": "Battle building 025 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    220,
+    325
+   ],
+   "frames": 24,
+   "strip": "bl_025_09_strip.png",
+   "clip": "bl_025_09_clip.json",
+   "anchor": [
+    108,
+    316
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_09_2.png",
+   "placementKey": "bldg_battle_bsheet_025_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_09_overlay",
+   "label": "Battle building 025 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    220,
+    325
+   ],
+   "frames": 24,
+   "strip": "bl_025_09_overlay_strip.png",
+   "clip": "bl_025_09_overlay_clip.json",
+   "anchor": [
+    108,
+    316
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_09_2.png",
+   "placementKey": "bldg_battle_bsheet_025_09",
+   "overlayOf": "bl_025_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_07",
+   "label": "Battle building 009 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    199,
+    392
+   ],
+   "frames": 24,
+   "strip": "bl_009_07_strip.png",
+   "clip": "bl_009_07_clip.json",
+   "anchor": [
+    100,
+    385
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_07_2.png",
+   "placementKey": "bldg_battle_bsheet_009_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_07_overlay",
+   "label": "Battle building 009 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    199,
+    392
+   ],
+   "frames": 24,
+   "strip": "bl_009_07_overlay_strip.png",
+   "clip": "bl_009_07_overlay_clip.json",
+   "anchor": [
+    100,
+    385
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_07_2.png",
+   "placementKey": "bldg_battle_bsheet_009_07",
+   "overlayOf": "bl_009_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "A-",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_10",
+   "label": "Battle building 025 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    214,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_025_10_strip.png",
+   "clip": "bl_025_10_clip.json",
+   "anchor": [
+    106,
+    333
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_10_2.png",
+   "placementKey": "bldg_battle_bsheet_025_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_10_overlay",
+   "label": "Battle building 025 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    214,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_025_10_overlay_strip.png",
+   "clip": "bl_025_10_overlay_clip.json",
+   "anchor": [
+    106,
+    333
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_10_2.png",
+   "placementKey": "bldg_battle_bsheet_025_10",
+   "overlayOf": "bl_025_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_09",
+   "label": "Battle building 009 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    256,
+    412
+   ],
+   "frames": 24,
+   "strip": "bl_009_09_strip.png",
+   "clip": "bl_009_09_clip.json",
+   "anchor": [
+    128,
+    404
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_09_2.png",
+   "placementKey": "bldg_battle_bsheet_009_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_09_overlay",
+   "label": "Battle building 009 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    256,
+    412
+   ],
+   "frames": 24,
+   "strip": "bl_009_09_overlay_strip.png",
+   "clip": "bl_009_09_overlay_clip.json",
+   "anchor": [
+    128,
+    404
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_09_2.png",
+   "placementKey": "bldg_battle_bsheet_009_09",
+   "overlayOf": "bl_009_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_08",
+   "label": "Battle building 001 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    206,
+    333
+   ],
+   "frames": 24,
+   "strip": "bl_001_08_strip.png",
+   "clip": "bl_001_08_clip.json",
+   "anchor": [
+    103,
+    324
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_08_2.png",
+   "placementKey": "bldg_battle_bsheet_001_08",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_08_overlay",
+   "label": "Battle building 001 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    206,
+    333
+   ],
+   "frames": 24,
+   "strip": "bl_001_08_overlay_strip.png",
+   "clip": "bl_001_08_overlay_clip.json",
+   "anchor": [
+    103,
+    324
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_08_2.png",
+   "placementKey": "bldg_battle_bsheet_001_08",
+   "overlayOf": "bl_001_08",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_10",
+   "label": "Battle building 001 / 10",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    204,
+    317
+   ],
+   "frames": 24,
+   "strip": "bl_001_10_strip.png",
+   "clip": "bl_001_10_clip.json",
+   "anchor": [
+    101,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_10_2.png",
+   "placementKey": "bldg_battle_bsheet_001_10",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_10_overlay",
+   "label": "Battle building 001 / 10 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    204,
+    317
+   ],
+   "frames": 24,
+   "strip": "bl_001_10_overlay_strip.png",
+   "clip": "bl_001_10_overlay_clip.json",
+   "anchor": [
+    101,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_10_2.png",
+   "placementKey": "bldg_battle_bsheet_001_10",
+   "overlayOf": "bl_001_10",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_05",
+   "label": "Battle building 001 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    207,
+    328
+   ],
+   "frames": 24,
+   "strip": "bl_001_05_strip.png",
+   "clip": "bl_001_05_clip.json",
+   "anchor": [
+    104,
+    320
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_05_2.png",
+   "placementKey": "bldg_battle_bsheet_001_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_05_overlay",
+   "label": "Battle building 001 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    207,
+    328
+   ],
+   "frames": 24,
+   "strip": "bl_001_05_overlay_strip.png",
+   "clip": "bl_001_05_overlay_clip.json",
+   "anchor": [
+    104,
+    320
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_05_2.png",
+   "placementKey": "bldg_battle_bsheet_001_05",
+   "overlayOf": "bl_001_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_04",
+   "label": "Battle building 025 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    272,
+    338
+   ],
+   "frames": 24,
+   "strip": "bl_025_04_strip.png",
+   "clip": "bl_025_04_clip.json",
+   "anchor": [
+    136,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_04_2.png",
+   "placementKey": "bldg_battle_bsheet_025_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_04_overlay",
+   "label": "Battle building 025 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    272,
+    338
+   ],
+   "frames": 24,
+   "strip": "bl_025_04_overlay_strip.png",
+   "clip": "bl_025_04_overlay_clip.json",
+   "anchor": [
+    136,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_04_2.png",
+   "placementKey": "bldg_battle_bsheet_025_04",
+   "overlayOf": "bl_025_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_05",
+   "label": "Battle building 009 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    302,
+    344
+   ],
+   "frames": 24,
+   "strip": "bl_009_05_strip.png",
+   "clip": "bl_009_05_clip.json",
+   "anchor": [
+    148,
+    336
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_05_2.png",
+   "placementKey": "bldg_battle_bsheet_009_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_05_overlay",
+   "label": "Battle building 009 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    302,
+    344
+   ],
+   "frames": 24,
+   "strip": "bl_009_05_overlay_strip.png",
+   "clip": "bl_009_05_overlay_clip.json",
+   "anchor": [
+    148,
+    336
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_05_2.png",
+   "placementKey": "bldg_battle_bsheet_009_05",
+   "overlayOf": "bl_009_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_03",
+   "label": "Battle building 009 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    316,
+    302
+   ],
+   "frames": 24,
+   "strip": "bl_009_03_strip.png",
+   "clip": "bl_009_03_clip.json",
+   "anchor": [
+    158,
+    295
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_03_2.png",
+   "placementKey": "bldg_battle_bsheet_009_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_03_overlay",
+   "label": "Battle building 009 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    316,
+    302
+   ],
+   "frames": 24,
+   "strip": "bl_009_03_overlay_strip.png",
+   "clip": "bl_009_03_overlay_clip.json",
+   "anchor": [
+    158,
+    295
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_03_2.png",
+   "placementKey": "bldg_battle_bsheet_009_03",
+   "overlayOf": "bl_009_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_03",
+   "label": "Battle building 027 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    280,
+    412
+   ],
+   "frames": 24,
+   "strip": "bl_027_03_strip.png",
+   "clip": "bl_027_03_clip.json",
+   "anchor": [
+    137,
+    399
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_03_2.png",
+   "placementKey": "bldg_battle_bsheet_027_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_03_overlay",
+   "label": "Battle building 027 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    280,
+    412
+   ],
+   "frames": 24,
+   "strip": "bl_027_03_overlay_strip.png",
+   "clip": "bl_027_03_overlay_clip.json",
+   "anchor": [
+    137,
+    399
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_03_2.png",
+   "placementKey": "bldg_battle_bsheet_027_03",
+   "overlayOf": "bl_027_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_002_05",
+   "label": "Battle building 002 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    481,
+    462
+   ],
+   "frames": 24,
+   "strip": "bl_002_05_strip.png",
+   "clip": "bl_002_05_clip.json",
+   "anchor": [
+    240,
+    454
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_002_05_2.png",
+   "placementKey": "bldg_battle_bsheet_002_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_002_05_overlay",
+   "label": "Battle building 002 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    481,
+    462
+   ],
+   "frames": 24,
+   "strip": "bl_002_05_overlay_strip.png",
+   "clip": "bl_002_05_overlay_clip.json",
+   "anchor": [
+    240,
+    454
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_002_05_2.png",
+   "placementKey": "bldg_battle_bsheet_002_05",
+   "overlayOf": "bl_002_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_03",
+   "label": "Battle building 001 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    205,
+    331
+   ],
+   "frames": 24,
+   "strip": "bl_001_03_strip.png",
+   "clip": "bl_001_03_clip.json",
+   "anchor": [
+    102,
+    323
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_03_2.png",
+   "placementKey": "bldg_battle_bsheet_001_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_03_overlay",
+   "label": "Battle building 001 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    205,
+    331
+   ],
+   "frames": 24,
+   "strip": "bl_001_03_overlay_strip.png",
+   "clip": "bl_001_03_overlay_clip.json",
+   "anchor": [
+    102,
+    323
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_03_2.png",
+   "placementKey": "bldg_battle_bsheet_001_03",
+   "overlayOf": "bl_001_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_07",
+   "label": "Battle building 001 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    207,
+    323
+   ],
+   "frames": 24,
+   "strip": "bl_001_07_strip.png",
+   "clip": "bl_001_07_clip.json",
+   "anchor": [
+    102,
+    316
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_07_2.png",
+   "placementKey": "bldg_battle_bsheet_001_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_07_overlay",
+   "label": "Battle building 001 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    207,
+    323
+   ],
+   "frames": 24,
+   "strip": "bl_001_07_overlay_strip.png",
+   "clip": "bl_001_07_overlay_clip.json",
+   "anchor": [
+    102,
+    316
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_07_2.png",
+   "placementKey": "bldg_battle_bsheet_001_07",
+   "overlayOf": "bl_001_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_01",
+   "label": "Battle building 001 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    210,
+    326
+   ],
+   "frames": 24,
+   "strip": "bl_001_01_strip.png",
+   "clip": "bl_001_01_clip.json",
+   "anchor": [
+    104,
+    318
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_01_2.png",
+   "placementKey": "bldg_battle_bsheet_001_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_01_overlay",
+   "label": "Battle building 001 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    210,
+    326
+   ],
+   "frames": 24,
+   "strip": "bl_001_01_overlay_strip.png",
+   "clip": "bl_001_01_overlay_clip.json",
+   "anchor": [
+    104,
+    318
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_01_2.png",
+   "placementKey": "bldg_battle_bsheet_001_01",
+   "overlayOf": "bl_001_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_06",
+   "label": "Battle building 001 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    206,
+    322
+   ],
+   "frames": 24,
+   "strip": "bl_001_06_strip.png",
+   "clip": "bl_001_06_clip.json",
+   "anchor": [
+    102,
+    315
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_06_2.png",
+   "placementKey": "bldg_battle_bsheet_001_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_06_overlay",
+   "label": "Battle building 001 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    206,
+    322
+   ],
+   "frames": 24,
+   "strip": "bl_001_06_overlay_strip.png",
+   "clip": "bl_001_06_overlay_clip.json",
+   "anchor": [
+    102,
+    315
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_06_2.png",
+   "placementKey": "bldg_battle_bsheet_001_06",
+   "overlayOf": "bl_001_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_09",
+   "label": "Battle building 001 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    207,
+    315
+   ],
+   "frames": 24,
+   "strip": "bl_001_09_strip.png",
+   "clip": "bl_001_09_clip.json",
+   "anchor": [
+    103,
+    306
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_09_2.png",
+   "placementKey": "bldg_battle_bsheet_001_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_09_overlay",
+   "label": "Battle building 001 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    207,
+    315
+   ],
+   "frames": 24,
+   "strip": "bl_001_09_overlay_strip.png",
+   "clip": "bl_001_09_overlay_clip.json",
+   "anchor": [
+    103,
+    306
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_09_2.png",
+   "placementKey": "bldg_battle_bsheet_001_09",
+   "overlayOf": "bl_001_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_11",
+   "label": "Battle building 001 / 11",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    236,
+    306
+   ],
+   "frames": 24,
+   "strip": "bl_001_11_strip.png",
+   "clip": "bl_001_11_clip.json",
+   "anchor": [
+    118,
+    299
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_11_2.png",
+   "placementKey": "bldg_battle_bsheet_001_11",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_11_overlay",
+   "label": "Battle building 001 / 11 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    236,
+    306
+   ],
+   "frames": 24,
+   "strip": "bl_001_11_overlay_strip.png",
+   "clip": "bl_001_11_overlay_clip.json",
+   "anchor": [
+    118,
+    299
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_11_2.png",
+   "placementKey": "bldg_battle_bsheet_001_11",
+   "overlayOf": "bl_001_11",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_11",
+   "label": "Battle building 025 / 11",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    223,
+    356
+   ],
+   "frames": 24,
+   "strip": "bl_025_11_strip.png",
+   "clip": "bl_025_11_clip.json",
+   "anchor": [
+    111,
+    346
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_11_2.png",
+   "placementKey": "bldg_battle_bsheet_025_11",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_11_overlay",
+   "label": "Battle building 025 / 11 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    223,
+    356
+   ],
+   "frames": 24,
+   "strip": "bl_025_11_overlay_strip.png",
+   "clip": "bl_025_11_overlay_clip.json",
+   "anchor": [
+    111,
+    346
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_11_2.png",
+   "placementKey": "bldg_battle_bsheet_025_11",
+   "overlayOf": "bl_025_11",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_01",
+   "label": "Battle building 027 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    348,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_01_strip.png",
+   "clip": "bl_027_01_clip.json",
+   "anchor": [
+    172,
+    408
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_01_2.png",
+   "placementKey": "bldg_battle_bsheet_027_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_01_overlay",
+   "label": "Battle building 027 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    348,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_01_overlay_strip.png",
+   "clip": "bl_027_01_overlay_clip.json",
+   "anchor": [
+    172,
+    408
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_01_2.png",
+   "placementKey": "bldg_battle_bsheet_027_01",
+   "overlayOf": "bl_027_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_02",
+   "label": "Battle building 001 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    205,
+    331
+   ],
+   "frames": 24,
+   "strip": "bl_001_02_strip.png",
+   "clip": "bl_001_02_clip.json",
+   "anchor": [
+    101,
+    323
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_02_2.png",
+   "placementKey": "bldg_battle_bsheet_001_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_02_overlay",
+   "label": "Battle building 001 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    205,
+    331
+   ],
+   "frames": 24,
+   "strip": "bl_001_02_overlay_strip.png",
+   "clip": "bl_001_02_overlay_clip.json",
+   "anchor": [
+    101,
+    323
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_02_2.png",
+   "placementKey": "bldg_battle_bsheet_001_02",
+   "overlayOf": "bl_001_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_07",
+   "label": "Battle building 027 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    281,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_07_strip.png",
+   "clip": "bl_027_07_clip.json",
+   "anchor": [
+    142,
+    404
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_07_2.png",
+   "placementKey": "bldg_battle_bsheet_027_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_07_overlay",
+   "label": "Battle building 027 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    281,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_07_overlay_strip.png",
+   "clip": "bl_027_07_overlay_clip.json",
+   "anchor": [
+    142,
+    404
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_07_2.png",
+   "placementKey": "bldg_battle_bsheet_027_07",
+   "overlayOf": "bl_027_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_011_03",
+   "label": "Battle building 011 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    260,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_011_03_strip.png",
+   "clip": "bl_011_03_clip.json",
+   "anchor": [
+    128,
+    395
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_011_03_2.png",
+   "placementKey": "bldg_battle_bsheet_011_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_011_03_overlay",
+   "label": "Battle building 011 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    260,
+    402
+   ],
+   "frames": 24,
+   "strip": "bl_011_03_overlay_strip.png",
+   "clip": "bl_011_03_overlay_clip.json",
+   "anchor": [
+    128,
+    395
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_011_03_2.png",
+   "placementKey": "bldg_battle_bsheet_011_03",
+   "overlayOf": "bl_011_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_04",
+   "label": "Battle building 017 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    334,
+    244
+   ],
+   "frames": 24,
+   "strip": "bl_017_04_strip.png",
+   "clip": "bl_017_04_clip.json",
+   "anchor": [
+    167,
+    237
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_04_2.png",
+   "placementKey": "bldg_battle_bsheet_017_04",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_04_overlay",
+   "label": "Battle building 017 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    334,
+    244
+   ],
+   "frames": 24,
+   "strip": "bl_017_04_overlay_strip.png",
+   "clip": "bl_017_04_overlay_clip.json",
+   "anchor": [
+    167,
+    237
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_04_2.png",
+   "placementKey": "bldg_battle_bsheet_017_04",
+   "overlayOf": "bl_017_04",
+   "features": [
+    "neon",
+    "point",
+    "window"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_06",
+   "label": "Battle building 027 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    277,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_06_strip.png",
+   "clip": "bl_027_06_clip.json",
+   "anchor": [
+    139,
+    408
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_06_2.png",
+   "placementKey": "bldg_battle_bsheet_027_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_06_overlay",
+   "label": "Battle building 027 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    277,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_06_overlay_strip.png",
+   "clip": "bl_027_06_overlay_clip.json",
+   "anchor": [
+    139,
+    408
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_06_2.png",
+   "placementKey": "bldg_battle_bsheet_027_06",
+   "overlayOf": "bl_027_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_12",
+   "label": "Battle building 001 / 12",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    236,
+    309
+   ],
+   "frames": 24,
+   "strip": "bl_001_12_strip.png",
+   "clip": "bl_001_12_clip.json",
+   "anchor": [
+    118,
+    300
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_12_2.png",
+   "placementKey": "bldg_battle_bsheet_001_12",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_12_overlay",
+   "label": "Battle building 001 / 12 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    236,
+    309
+   ],
+   "frames": 24,
+   "strip": "bl_001_12_overlay_strip.png",
+   "clip": "bl_001_12_overlay_clip.json",
+   "anchor": [
+    118,
+    300
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_12_2.png",
+   "placementKey": "bldg_battle_bsheet_001_12",
+   "overlayOf": "bl_001_12",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_06",
+   "label": "Battle building 009 / 06",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    414,
+    309
+   ],
+   "frames": 24,
+   "strip": "bl_009_06_strip.png",
+   "clip": "bl_009_06_clip.json",
+   "anchor": [
+    206,
+    302
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_06_2.png",
+   "placementKey": "bldg_battle_bsheet_009_06",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_06_overlay",
+   "label": "Battle building 009 / 06 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    414,
+    309
+   ],
+   "frames": 24,
+   "strip": "bl_009_06_overlay_strip.png",
+   "clip": "bl_009_06_overlay_clip.json",
+   "anchor": [
+    206,
+    302
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_06_2.png",
+   "placementKey": "bldg_battle_bsheet_009_06",
+   "overlayOf": "bl_009_06",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_01",
+   "label": "Battle building 009 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    257,
+    411
+   ],
+   "frames": 24,
+   "strip": "bl_009_01_strip.png",
+   "clip": "bl_009_01_clip.json",
+   "anchor": [
+    126,
+    403
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_01_2.png",
+   "placementKey": "bldg_battle_bsheet_009_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_01_overlay",
+   "label": "Battle building 009 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    257,
+    411
+   ],
+   "frames": 24,
+   "strip": "bl_009_01_overlay_strip.png",
+   "clip": "bl_009_01_overlay_clip.json",
+   "anchor": [
+    126,
+    403
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_01_2.png",
+   "placementKey": "bldg_battle_bsheet_009_01",
+   "overlayOf": "bl_009_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_02",
+   "label": "Battle building 027 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    282,
+    415
+   ],
+   "frames": 24,
+   "strip": "bl_027_02_strip.png",
+   "clip": "bl_027_02_clip.json",
+   "anchor": [
+    142,
+    400
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_02_2.png",
+   "placementKey": "bldg_battle_bsheet_027_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_02_overlay",
+   "label": "Battle building 027 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    282,
+    415
+   ],
+   "frames": 24,
+   "strip": "bl_027_02_overlay_strip.png",
+   "clip": "bl_027_02_overlay_clip.json",
+   "anchor": [
+    142,
+    400
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_02_2.png",
+   "placementKey": "bldg_battle_bsheet_027_02",
+   "overlayOf": "bl_027_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_04",
+   "label": "Battle building 027 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    283,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_04_strip.png",
+   "clip": "bl_027_04_clip.json",
+   "anchor": [
+    141,
+    407
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_04_2.png",
+   "placementKey": "bldg_battle_bsheet_027_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_04_overlay",
+   "label": "Battle building 027 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    283,
+    421
+   ],
+   "frames": 24,
+   "strip": "bl_027_04_overlay_strip.png",
+   "clip": "bl_027_04_overlay_clip.json",
+   "anchor": [
+    141,
+    407
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_04_2.png",
+   "placementKey": "bldg_battle_bsheet_027_04",
+   "overlayOf": "bl_027_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_04",
+   "label": "Battle building 036 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    412,
+    341
+   ],
+   "frames": 24,
+   "strip": "bl_036_04_strip.png",
+   "clip": "bl_036_04_clip.json",
+   "anchor": [
+    206,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_04_2.png",
+   "placementKey": "bldg_battle_bsheet_036_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_04_overlay",
+   "label": "Battle building 036 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    412,
+    341
+   ],
+   "frames": 24,
+   "strip": "bl_036_04_overlay_strip.png",
+   "clip": "bl_036_04_overlay_clip.json",
+   "anchor": [
+    206,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_04_2.png",
+   "placementKey": "bldg_battle_bsheet_036_04",
+   "overlayOf": "bl_036_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_04",
+   "label": "Battle building 009 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    234,
+    408
+   ],
+   "frames": 24,
+   "strip": "bl_009_04_strip.png",
+   "clip": "bl_009_04_clip.json",
+   "anchor": [
+    114,
+    400
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_04_2.png",
+   "placementKey": "bldg_battle_bsheet_009_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_04_overlay",
+   "label": "Battle building 009 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    234,
+    408
+   ],
+   "frames": 24,
+   "strip": "bl_009_04_overlay_strip.png",
+   "clip": "bl_009_04_overlay_clip.json",
+   "anchor": [
+    114,
+    400
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_04_2.png",
+   "placementKey": "bldg_battle_bsheet_009_04",
+   "overlayOf": "bl_009_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_028_03",
+   "label": "Battle building 028 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    488,
+    469
+   ],
+   "frames": 24,
+   "strip": "bl_028_03_strip.png",
+   "clip": "bl_028_03_clip.json",
+   "anchor": [
+    243,
+    461
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_028_03_2.png",
+   "placementKey": "bldg_battle_bsheet_028_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_028_03_overlay",
+   "label": "Battle building 028 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    488,
+    469
+   ],
+   "frames": 24,
+   "strip": "bl_028_03_overlay_strip.png",
+   "clip": "bl_028_03_overlay_clip.json",
+   "anchor": [
+    243,
+    461
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_028_03_2.png",
+   "placementKey": "bldg_battle_bsheet_028_03",
+   "overlayOf": "bl_028_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_13",
+   "label": "Battle building 025 / 13",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    223,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_025_13_strip.png",
+   "clip": "bl_025_13_clip.json",
+   "anchor": [
+    112,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_13_2.png",
+   "placementKey": "bldg_battle_bsheet_025_13",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_13_overlay",
+   "label": "Battle building 025 / 13 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    223,
+    340
+   ],
+   "frames": 24,
+   "strip": "bl_025_13_overlay_strip.png",
+   "clip": "bl_025_13_overlay_clip.json",
+   "anchor": [
+    112,
+    331
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_13_2.png",
+   "placementKey": "bldg_battle_bsheet_025_13",
+   "overlayOf": "bl_025_13",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_08",
+   "label": "Battle building 017 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    282,
+    329
+   ],
+   "frames": 24,
+   "strip": "bl_017_08_strip.png",
+   "clip": "bl_017_08_clip.json",
+   "anchor": [
+    141,
+    328
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_08_2.png",
+   "placementKey": "bldg_battle_bsheet_017_08",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_08_overlay",
+   "label": "Battle building 017 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    282,
+    329
+   ],
+   "frames": 24,
+   "strip": "bl_017_08_overlay_strip.png",
+   "clip": "bl_017_08_overlay_clip.json",
+   "anchor": [
+    141,
+    328
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_08_2.png",
+   "placementKey": "bldg_battle_bsheet_017_08",
+   "overlayOf": "bl_017_08",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_09",
+   "label": "Battle building 036 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    375,
+    369
+   ],
+   "frames": 24,
+   "strip": "bl_036_09_strip.png",
+   "clip": "bl_036_09_clip.json",
+   "anchor": [
+    188,
+    360
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_09_2.png",
+   "placementKey": "bldg_battle_bsheet_036_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_09_overlay",
+   "label": "Battle building 036 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    375,
+    369
+   ],
+   "frames": 24,
+   "strip": "bl_036_09_overlay_strip.png",
+   "clip": "bl_036_09_overlay_clip.json",
+   "anchor": [
+    188,
+    360
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_09_2.png",
+   "placementKey": "bldg_battle_bsheet_036_09",
+   "overlayOf": "bl_036_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_07",
+   "label": "Battle building 036 / 07",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    394,
+    359
+   ],
+   "frames": 24,
+   "strip": "bl_036_07_strip.png",
+   "clip": "bl_036_07_clip.json",
+   "anchor": [
+    196,
+    352
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_07_2.png",
+   "placementKey": "bldg_battle_bsheet_036_07",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_07_overlay",
+   "label": "Battle building 036 / 07 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    394,
+    359
+   ],
+   "frames": 24,
+   "strip": "bl_036_07_overlay_strip.png",
+   "clip": "bl_036_07_overlay_clip.json",
+   "anchor": [
+    196,
+    352
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_07_2.png",
+   "placementKey": "bldg_battle_bsheet_036_07",
+   "overlayOf": "bl_036_07",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_05",
+   "label": "Battle building 036 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    352,
+    384
+   ],
+   "frames": 24,
+   "strip": "bl_036_05_strip.png",
+   "clip": "bl_036_05_clip.json",
+   "anchor": [
+    176,
+    376
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_05_2.png",
+   "placementKey": "bldg_battle_bsheet_036_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_05_overlay",
+   "label": "Battle building 036 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    352,
+    384
+   ],
+   "frames": 24,
+   "strip": "bl_036_05_overlay_strip.png",
+   "clip": "bl_036_05_overlay_clip.json",
+   "anchor": [
+    176,
+    376
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_05_2.png",
+   "placementKey": "bldg_battle_bsheet_036_05",
+   "overlayOf": "bl_036_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_08",
+   "label": "Battle building 025 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    222,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_025_08_strip.png",
+   "clip": "bl_025_08_clip.json",
+   "anchor": [
+    112,
+    329
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_08_2.png",
+   "placementKey": "bldg_battle_bsheet_025_08",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_08_overlay",
+   "label": "Battle building 025 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    222,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_025_08_overlay_strip.png",
+   "clip": "bl_025_08_overlay_clip.json",
+   "anchor": [
+    112,
+    329
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_08_2.png",
+   "placementKey": "bldg_battle_bsheet_025_08",
+   "overlayOf": "bl_025_08",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_05",
+   "label": "Battle building 020 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    420,
+    427
+   ],
+   "frames": 24,
+   "strip": "bl_020_05_strip.png",
+   "clip": "bl_020_05_clip.json",
+   "anchor": [
+    210,
+    420
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_05_2.png",
+   "placementKey": "bldg_battle_bsheet_020_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_05_overlay",
+   "label": "Battle building 020 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    420,
+    427
+   ],
+   "frames": 24,
+   "strip": "bl_020_05_overlay_strip.png",
+   "clip": "bl_020_05_overlay_clip.json",
+   "anchor": [
+    210,
+    420
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_05_2.png",
+   "placementKey": "bldg_battle_bsheet_020_05",
+   "overlayOf": "bl_020_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_09",
+   "label": "Battle building 022 / 09",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    383,
+    404
+   ],
+   "frames": 24,
+   "strip": "bl_022_09_strip.png",
+   "clip": "bl_022_09_clip.json",
+   "anchor": [
+    190,
+    395
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_09_2.png",
+   "placementKey": "bldg_battle_bsheet_022_09",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_022_09_overlay",
+   "label": "Battle building 022 / 09 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    383,
+    404
+   ],
+   "frames": 24,
+   "strip": "bl_022_09_overlay_strip.png",
+   "clip": "bl_022_09_overlay_clip.json",
+   "anchor": [
+    190,
+    395
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_022_09_2.png",
+   "placementKey": "bldg_battle_bsheet_022_09",
+   "overlayOf": "bl_022_09",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_03",
+   "label": "Battle building 036 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    376,
+    352
+   ],
+   "frames": 24,
+   "strip": "bl_036_03_strip.png",
+   "clip": "bl_036_03_clip.json",
+   "anchor": [
+    188,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_03_2.png",
+   "placementKey": "bldg_battle_bsheet_036_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_036_03_overlay",
+   "label": "Battle building 036 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    376,
+    352
+   ],
+   "frames": 24,
+   "strip": "bl_036_03_overlay_strip.png",
+   "clip": "bl_036_03_overlay_clip.json",
+   "anchor": [
+    188,
+    342
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_036_03_2.png",
+   "placementKey": "bldg_battle_bsheet_036_03",
+   "overlayOf": "bl_036_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_01",
+   "label": "Battle building 018 / 01",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    437,
+    437
+   ],
+   "frames": 24,
+   "strip": "bl_018_01_strip.png",
+   "clip": "bl_018_01_clip.json",
+   "anchor": [
+    216,
+    428
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_01_2.png",
+   "placementKey": "bldg_battle_bsheet_018_01",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_01_overlay",
+   "label": "Battle building 018 / 01 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    437,
+    437
+   ],
+   "frames": 24,
+   "strip": "bl_018_01_overlay_strip.png",
+   "clip": "bl_018_01_overlay_clip.json",
+   "anchor": [
+    216,
+    428
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_01_2.png",
+   "placementKey": "bldg_battle_bsheet_018_01",
+   "overlayOf": "bl_018_01",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_05",
+   "label": "Battle building 017 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    186,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_017_05_strip.png",
+   "clip": "bl_017_05_clip.json",
+   "anchor": [
+    94,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_05_2.png",
+   "placementKey": "bldg_battle_bsheet_017_05",
+   "overlayOf": null,
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_017_05_overlay",
+   "label": "Battle building 017 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    186,
+    339
+   ],
+   "frames": 24,
+   "strip": "bl_017_05_overlay_strip.png",
+   "clip": "bl_017_05_overlay_clip.json",
+   "anchor": [
+    94,
+    332
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_017_05_2.png",
+   "placementKey": "bldg_battle_bsheet_017_05",
+   "overlayOf": "bl_017_05",
+   "features": [
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_04",
+   "label": "Battle building 001 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    327,
+    317
+   ],
+   "frames": 24,
+   "strip": "bl_001_04_strip.png",
+   "clip": "bl_001_04_clip.json",
+   "anchor": [
+    164,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_04_2.png",
+   "placementKey": "bldg_battle_bsheet_001_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_001_04_overlay",
+   "label": "Battle building 001 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    327,
+    317
+   ],
+   "frames": 24,
+   "strip": "bl_001_04_overlay_strip.png",
+   "clip": "bl_001_04_overlay_clip.json",
+   "anchor": [
+    164,
+    308
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_001_04_2.png",
+   "placementKey": "bldg_battle_bsheet_001_04",
+   "overlayOf": "bl_001_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_08",
+   "label": "Battle building 020 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    444,
+    369
+   ],
+   "frames": 24,
+   "strip": "bl_020_08_strip.png",
+   "clip": "bl_020_08_clip.json",
+   "anchor": [
+    221,
+    361
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_08_2.png",
+   "placementKey": "bldg_battle_bsheet_020_08",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_020_08_overlay",
+   "label": "Battle building 020 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    444,
+    369
+   ],
+   "frames": 24,
+   "strip": "bl_020_08_overlay_strip.png",
+   "clip": "bl_020_08_overlay_clip.json",
+   "anchor": [
+    221,
+    361
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_020_08_2.png",
+   "placementKey": "bldg_battle_bsheet_020_08",
+   "overlayOf": "bl_020_08",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_04",
+   "label": "Battle building 018 / 04",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    440,
+    387
+   ],
+   "frames": 24,
+   "strip": "bl_018_04_strip.png",
+   "clip": "bl_018_04_clip.json",
+   "anchor": [
+    216,
+    379
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_04_2.png",
+   "placementKey": "bldg_battle_bsheet_018_04",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_04_overlay",
+   "label": "Battle building 018 / 04 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    440,
+    387
+   ],
+   "frames": 24,
+   "strip": "bl_018_04_overlay_strip.png",
+   "clip": "bl_018_04_overlay_clip.json",
+   "anchor": [
+    216,
+    379
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_04_2.png",
+   "placementKey": "bldg_battle_bsheet_018_04",
+   "overlayOf": "bl_018_04",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_02",
+   "label": "Battle building 018 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    419,
+    436
+   ],
+   "frames": 24,
+   "strip": "bl_018_02_strip.png",
+   "clip": "bl_018_02_clip.json",
+   "anchor": [
+    209,
+    428
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_02_2.png",
+   "placementKey": "bldg_battle_bsheet_018_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_02_overlay",
+   "label": "Battle building 018 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    419,
+    436
+   ],
+   "frames": 24,
+   "strip": "bl_018_02_overlay_strip.png",
+   "clip": "bl_018_02_overlay_clip.json",
+   "anchor": [
+    209,
+    428
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_02_2.png",
+   "placementKey": "bldg_battle_bsheet_018_02",
+   "overlayOf": "bl_018_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_08",
+   "label": "Battle building 027 / 08",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    278,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_027_08_strip.png",
+   "clip": "bl_027_08_clip.json",
+   "anchor": [
+    140,
+    369
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_08_2.png",
+   "placementKey": "bldg_battle_bsheet_027_08",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_027_08_overlay",
+   "label": "Battle building 027 / 08 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    278,
+    386
+   ],
+   "frames": 24,
+   "strip": "bl_027_08_overlay_strip.png",
+   "clip": "bl_027_08_overlay_clip.json",
+   "anchor": [
+    140,
+    369
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_027_08_2.png",
+   "placementKey": "bldg_battle_bsheet_027_08",
+   "overlayOf": "bl_027_08",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_03",
+   "label": "Battle building 018 / 03",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    436,
+    406
+   ],
+   "frames": 24,
+   "strip": "bl_018_03_strip.png",
+   "clip": "bl_018_03_clip.json",
+   "anchor": [
+    222,
+    397
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_03_2.png",
+   "placementKey": "bldg_battle_bsheet_018_03",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_03_overlay",
+   "label": "Battle building 018 / 03 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    436,
+    406
+   ],
+   "frames": 24,
+   "strip": "bl_018_03_overlay_strip.png",
+   "clip": "bl_018_03_overlay_clip.json",
+   "anchor": [
+    222,
+    397
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_03_2.png",
+   "placementKey": "bldg_battle_bsheet_018_03",
+   "overlayOf": "bl_018_03",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_024_02",
+   "label": "Battle building 024 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    281,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_024_02_strip.png",
+   "clip": "bl_024_02_clip.json",
+   "anchor": [
+    140,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_024_02_2.png",
+   "placementKey": "bldg_battle_bsheet_024_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_024_02_overlay",
+   "label": "Battle building 024 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    281,
+    351
+   ],
+   "frames": 24,
+   "strip": "bl_024_02_overlay_strip.png",
+   "clip": "bl_024_02_overlay_clip.json",
+   "anchor": [
+    140,
+    341
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_024_02_2.png",
+   "placementKey": "bldg_battle_bsheet_024_02",
+   "overlayOf": "bl_024_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_05",
+   "label": "Battle building 018 / 05",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    432,
+    426
+   ],
+   "frames": 24,
+   "strip": "bl_018_05_strip.png",
+   "clip": "bl_018_05_clip.json",
+   "anchor": [
+    216,
+    418
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_05_2.png",
+   "placementKey": "bldg_battle_bsheet_018_05",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_018_05_overlay",
+   "label": "Battle building 018 / 05 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    432,
+    426
+   ],
+   "frames": 24,
+   "strip": "bl_018_05_overlay_strip.png",
+   "clip": "bl_018_05_overlay_clip.json",
+   "anchor": [
+    216,
+    418
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_018_05_2.png",
+   "placementKey": "bldg_battle_bsheet_018_05",
+   "overlayOf": "bl_018_05",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_02",
+   "label": "Battle building 009 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    268,
+    393
+   ],
+   "frames": 24,
+   "strip": "bl_009_02_strip.png",
+   "clip": "bl_009_02_clip.json",
+   "anchor": [
+    134,
+    386
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_02_2.png",
+   "placementKey": "bldg_battle_bsheet_009_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_009_02_overlay",
+   "label": "Battle building 009 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    268,
+    393
+   ],
+   "frames": 24,
+   "strip": "bl_009_02_overlay_strip.png",
+   "clip": "bl_009_02_overlay_clip.json",
+   "anchor": [
+    134,
+    386
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_009_02_2.png",
+   "placementKey": "bldg_battle_bsheet_009_02",
+   "overlayOf": "bl_009_02",
+   "features": [
+    "beacon",
+    "neon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B+",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_02",
+   "label": "Battle building 025 / 02",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    333
+   ],
+   "frames": 24,
+   "strip": "bl_025_02_strip.png",
+   "clip": "bl_025_02_clip.json",
+   "anchor": [
+    106,
+    324
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_02_2.png",
+   "placementKey": "bldg_battle_bsheet_025_02",
+   "overlayOf": null,
+   "features": [
+    "beacon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  },
+  {
+   "id": "bl_025_02_overlay",
+   "label": "Battle building 025 / 02 \u2014 overlay only",
+   "kind": "ambient_overlay",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    216,
+    333
+   ],
+   "frames": 24,
+   "strip": "bl_025_02_overlay_strip.png",
+   "clip": "bl_025_02_overlay_clip.json",
+   "anchor": [
+    106,
+    324
+   ],
+   "sourceArt": "bd_battle_sorted/bsheet_025_02_2.png",
+   "placementKey": "bldg_battle_bsheet_025_02",
+   "overlayOf": "bl_025_02",
+   "features": [
+    "beacon",
+    "point",
+    "window",
+    "addedBeacons"
+   ],
+   "qaGrade": "B",
+   "batch": "v2_new"
+  }
+ ],
+ "selection": "Battle placement library (public/assets/library/structure-placements.json, library \"battle\"): 437 entries, 305 files present in bd_battle_sorted, 216 unique after removing byte-identical duplicates; ranked by painted-emissive pixel score, then 24 hand-picked for feature variety (cooling towers/stacks, dishes, screens, crystals, neon, window grids). No map data in the repo names specific buildings. v2: all remaining unique battle buildings (192) auto-configured with a contrast-checked emissive filter (adaptive threshold for dark neon art), each reviewed by eye (first frame / busiest frame / touched-pixel map) and graded; B or better shipped.",
+ "skipped": [],
+ "v2": {
+  "fixed": [
+   "004_02",
+   "011_05",
+   "017_02",
+   "020_04",
+   "021_03",
+   "025_14",
+   "026_03",
+   "028_02",
+   "030_03",
+   "036_06"
+  ],
+  "paddedVariants": [
+   "026_03_padded"
+  ],
+  "newBuildings": 125,
+  "reviewed": 192,
+  "dropped": 67,
+  "gradeBar": "B or better ships (A-, B+, B); B- and below dropped"
+ },
+ "dropped": [
+  {
+   "source": "bd_battle_sorted/bsheet_029_05_2.png",
+   "grade": "B-",
+   "reason": "thin tan spire; few lit pixels, mostly body trim"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_06_2.png",
+   "grade": "B-",
+   "reason": "thin light spire, tiny lit area"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_11_2.png",
+   "grade": "B-",
+   "reason": "light body; few strips, mostly static"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_011_01_2.png",
+   "grade": "B-",
+   "reason": "dark spire, faint orange trim only"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_024_03_2.png",
+   "grade": "B-",
+   "reason": "tan outline trim touched (paint, not light)"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_026_11_2.png",
+   "grade": "B-",
+   "reason": "light complex; sparse lit bits, reads mostly static"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_12_2.png",
+   "grade": "B-",
+   "reason": "light tower; sparse, mostly static"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_14_2.png",
+   "grade": "B-",
+   "reason": "light tower; sparse, mostly static"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_029_02_2.png",
+   "grade": "B-",
+   "reason": "light twin block; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_15_2.png",
+   "grade": "B-",
+   "reason": "light tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_029_04_2.png",
+   "grade": "B-",
+   "reason": "light twin block; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_011_07_2.png",
+   "grade": "B-",
+   "reason": "orange-plated body; lit strips weak against paint"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_04_2.png",
+   "grade": "B-",
+   "reason": "tan stepped pyramid; after paint filter only sparse cyan windows"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_029_06_2.png",
+   "grade": "B-",
+   "reason": "light twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_023_07_2.png",
+   "grade": "B-",
+   "reason": "light citadel; few lit slots"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_003_05_2.png",
+   "grade": "B-",
+   "reason": "light tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_011_02_2.png",
+   "grade": "B-",
+   "reason": "orange-plated towers; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_030_02_2.png",
+   "grade": "B-",
+   "reason": "light twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_024_16_2.png",
+   "grade": "C+",
+   "reason": "white cross tower; almost nothing lit"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_035_01_2.png",
+   "grade": "B-",
+   "reason": "light spire; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_024_13_2.png",
+   "grade": "B-",
+   "reason": "grey tower; sparse orange slots"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_003_08_2.png",
+   "grade": "B-",
+   "reason": "light twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_030_01_2.png",
+   "grade": "B-",
+   "reason": "light twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_029_01_2.png",
+   "grade": "B-",
+   "reason": "light twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_026_07_2.png",
+   "grade": "B-",
+   "reason": "grey depot; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_025_06_2.png",
+   "grade": "B-",
+   "reason": "slim dark tower; very sparse at 1x"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_030_04_2.png",
+   "grade": "B-",
+   "reason": "light tower complex; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_004_01_2.png",
+   "grade": "B-",
+   "reason": "light tower cluster; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_023_05_2.png",
+   "grade": "B-",
+   "reason": "white citadel; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_026_08_2.png",
+   "grade": "C+",
+   "reason": "stone fortress; almost nothing lit"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_003_06_2.png",
+   "grade": "B-",
+   "reason": "light twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_012_05_2.png",
+   "grade": "C",
+   "reason": "bronze stone grid; touched pixels are painted outline, not light"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_003_04_2.png",
+   "grade": "B-",
+   "reason": "light twin block; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_012_06_2.png",
+   "grade": "C+",
+   "reason": "bronze bridge towers; mostly painted outline touched"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_030_06_2.png",
+   "grade": "B-",
+   "reason": "stone fortress with panels; orange base trim mostly paint"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_003_02_2.png",
+   "grade": "B-",
+   "reason": "two-tone twin tower; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_012_04_2.png",
+   "grade": "C",
+   "reason": "stone castle; touched pixels are painted gold trim"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_002_01_2.png",
+   "grade": "B-",
+   "reason": "dark spire cluster; sparse at 1x"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_002_03_2.png",
+   "grade": "B-",
+   "reason": "dark low compound; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_002_06_2.png",
+   "grade": "B-",
+   "reason": "very dark cluster; scattered specks"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_022_08_2.png",
+   "grade": "B-",
+   "reason": "dark cathedral; dome lattice touched reads as texture noise"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_002_02_2.png",
+   "grade": "B-",
+   "reason": "dark dome cluster; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_004_04_2.png",
+   "grade": "B-",
+   "reason": "dark compound, faint orange slots"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_003_03_2.png",
+   "grade": "B-",
+   "reason": "light factory; lights sparse (stack smoke would be needed)"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_028_01_2.png",
+   "grade": "B-",
+   "reason": "dark twin block; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_010_04_2.png",
+   "grade": "B-",
+   "reason": "very dark citadel; specks only"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_010_02_2.png",
+   "grade": "B-",
+   "reason": "very dark citadel; magenta specks only"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_028_05_2.png",
+   "grade": "B-",
+   "reason": "dark tower cluster; sparse specks"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_010_05_2.png",
+   "grade": "B-",
+   "reason": "dark bridge; faint cable glints"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_012_02_2.png",
+   "grade": "B-",
+   "reason": "bronze ziggurat; sparse slots"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_011_06_2.png",
+   "grade": "B-",
+   "reason": "orange-banded tower; orange is paint, only a few cyan slots move"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_012_03_2.png",
+   "grade": "B-",
+   "reason": "bronze courtyard fort; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_002_04_2.png",
+   "grade": "B-",
+   "reason": "dark tower block; sparse magenta"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_004_03_2.png",
+   "grade": "B-",
+   "reason": "grey compound; sparse slots"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_012_01_2.png",
+   "grade": "C+",
+   "reason": "star fort; orange arms are painted trim"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_028_04_2.png",
+   "grade": "B-",
+   "reason": "dark tower cluster; sparse magenta"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_036_08_2.png",
+   "grade": "B-",
+   "reason": "dark fortress, cyan slits; faint"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_028_06_2.png",
+   "grade": "B-",
+   "reason": "dark dish block; sparse"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_010_01_2.png",
+   "grade": "C+",
+   "reason": "dark ziggurat; specks only"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_004_06_2.png",
+   "grade": "C+",
+   "reason": "bronze spires; nothing lit reads"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_004_05_2.png",
+   "grade": "C",
+   "reason": "orange crate yard; orange is paint, nothing lit left after filter"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_023_02_2.png",
+   "grade": "C+",
+   "reason": "white/orange complex; orange is paint"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_019_07_2.png",
+   "grade": "C+",
+   "reason": "bronze spire; tiny base light only"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_020_03_2.png",
+   "grade": "C+",
+   "reason": "orange bridge; tiny lit hub only"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_010_03_2.png",
+   "grade": "C",
+   "reason": "near-black ziggurat; nothing reads"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_010_06_2.png",
+   "grade": "C",
+   "reason": "near-black star; nothing reads"
+  },
+  {
+   "source": "bd_battle_sorted/bsheet_hq_var_001_2.png",
+   "grade": "C",
+   "reason": "HQ variant: no lit pixels detected"
+  }
+ ]
+}
