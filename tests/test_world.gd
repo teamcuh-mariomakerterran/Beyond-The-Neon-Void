@@ -18,6 +18,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_strips_and_cutaway()
 	await test_sculpt_ramps_mirror()
 	await test_regions_and_links()
+	await test_lattice_clip()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -346,6 +347,47 @@ func test_regions_and_links() -> void:
 		DirAccess.remove_absolute("res://assets/_t_refs/" + d)
 	DirAccess.remove_absolute("res://assets/_t_refs")
 	AssetRefs.reindex()
+
+
+func test_lattice_clip() -> void:
+	# Fixture: 4 frames of 32×24 in a horizontal strip, with holds + order.
+	var dir := "user://t_clip"
+	DirAccess.make_dir_recursive_absolute(dir)
+	var img := Image.create(128, 24, false, Image.FORMAT_RGBA8)
+	for i in 4:
+		img.fill_rect(Rect2i(i * 32 + 4, 2, 24, 22), Color(0.2 * i, 1.0, 1.0))
+	img.save_png(dir + "/bl_t_strip.png")
+	var clip_dict := {"format": "lattice.clip", "version": 1, "name": "bl_t", "loop": true, "cell": [32, 24], "frames": 4,
+		"layout": "horizontal", "rects": [], "fps": 10, "frameMs": 100, "holds": [1, 3, 1, 1], "tickSequence": [0, 1, 2, 3],
+		"anchor": [16, 23], "buildingBBox": [4, 2, 28, 24], "textures": {"strip": "bl_t_strip.png"},
+		"sourceArt": {"footprint": {"w": 2, "h": 2}}, "phaseSeed": 0,
+		"emitters": {"beacons": [[10.0, 5.0]], "windows": [[20.0, 10.0], [22.0, 12.0]]}, "overlayClip": null}
+	var f := FileAccess.open(dir + "/bl_t.json", FileAccess.WRITE)
+	f.store_string(JSON.stringify(clip_dict))
+	f.close()
+	var path := dir + "/bl_t.json"
+	check(LatticeClip.is_clip(path) and LatticeClip.find_for_png(dir + "/bl_t_strip.png") == path, "clip detected next to its strip")
+	var c := LatticeClip.load_clip(path)
+	check(c["ok"] and (c["rects"] as Array).size() == 4 and is_equal_approx(float(c["total"]), 600.0), "clip loads: 4 frames, holds → 600 ms")
+	check(LatticeClip.frame_at(c, 0.05) == 0 and LatticeClip.frame_at(c, 0.15) == 1 and LatticeClip.frame_at(c, 0.35) == 1 and LatticeClip.frame_at(c, 0.45) == 2, "holds stretch frame 1 to 300 ms")
+	check(LatticeClip.frame_at(c, 0.65) == 0, "clip loops")
+	check(int(c["footprint"]) == 2 and WorldMap.footprint({"asset": path, "kind": "prop"}) == 2, "clip footprint becomes the object footprint")
+	check(LatticeClip.light_points(c, 5).size() == 3, "light points from beacons + windows")
+	var w := _map()
+	w.set_tile(Vector2i(3, 3), 0, "terrain:concrete")
+	var o := w.add_object(path, Vector2i(3, 3), 0, "structure")
+	var r := WorldRenderer.new()
+	r.world = w
+	tree.root.add_child(r)
+	await tree.process_frame
+	var node := r.object_node(str(o["id"]))
+	check(node != null and node._clip.get("ok", false), "renderer plays the clip")
+	check(r._lights_root.get_child_count() == 3, "clip lights hung on beacons/windows (%d)" % r._lights_root.get_child_count())
+	r.queue_free()
+	await tree.process_frame
+	for fn in ["bl_t.json", "bl_t_strip.png"]:
+		DirAccess.remove_absolute(dir + "/" + fn)
+	DirAccess.remove_absolute(dir)
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:

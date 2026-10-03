@@ -229,6 +229,9 @@ func add_detail(asset: String, pos: Vector2, z: int) -> Dictionary:
 static func footprint(o: Dictionary) -> int:
 	if o.has("footprint"):
 		return clampi(int(o["footprint"]), 1, 8)
+	var asset := str(o.get("asset", ""))
+	if asset.ends_with(".json") and LatticeClip.is_clip(asset):
+		return clampi(int(LatticeClip.load_clip(asset).get("footprint", 1)), 1, 8)
 	return 2 if str(o.get("kind", "")) in ["structure", "location"] and str(o.get("asset", "")) != "" else 1
 
 

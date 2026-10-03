@@ -270,6 +270,13 @@ static func fit_rect(tex: Texture2D) -> Rect2:
 ## Scale that makes a freshly placed object a sensible size for this map:
 ## structures span ~2 tiles, everything else ~1 (source art is often 1000px+).
 static func default_scale(w: WorldMap, asset: String, kind: String) -> float:
+	if asset.ends_with(".json") and LatticeClip.is_clip(asset):
+		var clip := LatticeClip.load_clip(asset)
+		if clip.get("ok", false):
+			var bb: Array = clip["bbox"]
+			var bw := maxf(float(bb[2]) - float(bb[0]), 1.0)
+			var goal := w.tile_width * (float(clip["footprint"]) + 0.4)
+			return snappedf(goal / bw, 0.001) if bw > goal * 1.25 else 1.0
 	var tex := ForgeStore.load_texture(asset)
 	if tex == null:
 		return 1.0
@@ -594,10 +601,19 @@ class WorldSprite extends Node2D:
 	var _anim: Dictionary = {}
 	var _rect: Rect2
 	var _foot: int = 1
+	var _clip: Dictionary = {}  # LatticeClip (Grok building/prop animation), if the asset is one
+	var _overlay: Dictionary = {}
 
 	func refresh() -> void:
 		var w := renderer.world
 		_frames.clear()
+		_clip = {}
+		_overlay = {}
+		var asset := str(data.get("asset", ""))
+		if asset.ends_with(".json") and LatticeClip.is_clip(asset):
+			_clip = LatticeClip.load_clip(asset)
+			if _clip.get("ok", false) and str(_clip["overlay"]) != "":
+				_overlay = LatticeClip.load_clip(str(_clip["overlay"]))
 		_anim = data.get("anim") if data.get("anim") is Dictionary else {}
 		var frame_paths: Array = _anim.get("frames", [])
 		if frame_paths.size() > 1:
@@ -636,8 +652,33 @@ class WorldSprite extends Node2D:
 		var off: Array = data.get("offset", [0, 0])
 		position = w.to_screen(cell_f, z) + Vector2(float(off[0]), float(off[1]))
 		z_index = order * 2 + 1
-		set_process(_frames.size() > 1)
+		set_process(_frames.size() > 1 or bool(_clip.get("ok", false)))
 		queue_redraw()
+
+	## Per-instance clock offset: the clip's own seed plus this object's id.
+	func _clip_phase() -> float:
+		return float(_clip.get("phase", 0.0)) + float(absi(hash(str(data.get("id", "")))) % 997) / 97.0
+
+	func _draw_clip() -> void:
+		var w := renderer.world
+		var sc := float(data.get("scale", 1.0))
+		var anchor: Vector2 = _clip["anchor"]
+		var cell: Vector2 = _clip["cell"]
+		var tint := Color(str(data.get("tint", "#ffffff")))
+		var base := Vector2(0, w.tile_height * (0.5 * _foot - 0.25))
+		_rect = Rect2(base - anchor * sc, cell * sc)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1 if bool(data.get("flip", false)) else 1, 1))
+		var t := WorldRenderer.now()
+		var i := LatticeClip.frame_at(_clip, t, _clip_phase())
+		draw_texture_rect_region(_clip["tex"], _rect, (_clip["rects"] as Array)[i], tint)
+		if _overlay.get("ok", false):
+			var j := LatticeClip.frame_at(_overlay, t, _clip_phase())
+			draw_texture_rect_region(_overlay["tex"], _rect, (_overlay["rects"] as Array)[j], tint)
+		draw_set_transform(Vector2.ZERO)
+		var bb: Array = _clip.get("bbox", [0, 0, cell.x, cell.y])
+		_rect = Rect2(base - anchor * sc + Vector2(float(bb[0]), float(bb[1])) * sc, Vector2(float(bb[2]) - float(bb[0]), float(bb[3]) - float(bb[1])) * sc)
+		if selected:
+			draw_rect(_rect.grow(3), Color(0.3, 2.0, 1.0), false, 2.0)
 
 	func _process(_d: float) -> void:
 		queue_redraw()
@@ -669,6 +710,9 @@ class WorldSprite extends Node2D:
 		modulate.a = a
 
 	func _draw() -> void:
+		if _clip.get("ok", false):
+			_draw_clip()
+			return
 		var tex := _current()
 		var w := renderer.world
 		var sc := float(data.get("scale", 1.0))
@@ -758,6 +802,27 @@ func rebuild_lighting() -> void:
 	_ambient.visible = show_lighting
 	if not show_lighting:
 		return
+	# Animated buildings light their surroundings from their own beacons/windows.
+	for o2: Dictionary in world.objects:
+		var node: WorldSprite = _obj_nodes.get(str(o2.get("id", "")))
+		if node == null or not node._clip.get("ok", false) or not bool(o2.get("clip_lights", true)):
+			continue
+		var sc := float(o2.get("scale", 1.0))
+		var flip := -1.0 if bool(o2.get("flip", false)) else 1.0
+		var base := Vector2(0, world.tile_height * (0.5 * node._foot - 0.25))
+		for lp: Dictionary in LatticeClip.light_points(node._clip, int(o2.get("clip_light_count", 5))):
+			var rel: Vector2 = (lp["pos"] - node._clip["anchor"]) * sc
+			var cl := NeonLight.new()
+			cl.texture = light_texture()
+			cl.color = lp["color"]
+			cl.base_energy = 0.75
+			cl.energy = 0.75
+			cl.flicker = 0.06
+			cl.texture_scale = 0.8 * world.tile_width / 128.0
+			cl.blend_mode = Light2D.BLEND_MODE_ADD
+			cl.position = node.position + base + Vector2(rel.x * flip, rel.y)
+			cl.seed_phase = float(hash(str(o2.get("id", "")) + str(lp["pos"])) % 1000) / 100.0
+			_lights_root.add_child(cl)
 	for o: Dictionary in world.objects:
 		if not (o.get("light") is Dictionary):
 			continue

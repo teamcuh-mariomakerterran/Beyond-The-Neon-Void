@@ -51,7 +51,7 @@ const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I
 const SCULPT_MODES := ["raise", "lower", "flatten", "smooth"]
 const RAMP_DIRS := ["x+", "y+", "x-", "y-"]
 const PLAY_NAMES := ["PLAYER SPAWN", "ENEMY", "BLOCK WALK", "COVER", "SIGHT"]
-const OBJECT_SOURCES := ["structures", "props", "units", "items", "vfx", "portraits"]
+const OBJECT_SOURCES := ["structures", "props", "units", "items", "vfx", "portraits", "incoming"]
 const GHOST := Color(0.25, 1.9, 0.75)
 
 var world: WorldMap = WorldMap.new()
@@ -215,6 +215,10 @@ class GhostLayer extends Node2D:
 				if p.tool in [Tool.BRUSH, Tool.RECT]:
 					var asset := p.sel_object if p.mode == Mode.OBJECTS else p.sel_detail
 					var tex := ForgeStore.load_texture(asset)
+					if tex == null and asset.ends_with(".json") and LatticeClip.is_clip(asset):
+						var clip := LatticeClip.load_clip(asset)
+						if clip.get("ok", false):
+							tex = LatticeClip.frame_texture(clip, 0)
 					var at := p._placement_point()
 					if tex:
 						if p.mode == Mode.DETAILS:
@@ -884,9 +888,28 @@ func _sel_text() -> String:
 	return "Cycling %d tiles as you paint" % sel_tiles.size()
 
 
+## Clip JSONs (Grok animations) under a folder, recursively.
+static func _clips_under(dir: String, out: Array[String]) -> void:
+	if not DirAccess.dir_exists_absolute(dir):
+		return
+	for f in DirAccess.get_files_at(dir):
+		if f.ends_with(".json") and LatticeClip.is_clip(dir.path_join(f)) and not f.ends_with("_overlay_clip.json"):
+			out.append(dir.path_join(f))
+	for d in DirAccess.get_directories_at(dir):
+		_clips_under(dir.path_join(d), out)
+
+
 func _asset_paths(category: String) -> Array[String]:
 	if ForgeStore.ASSET_CATEGORIES.has(category):
-		return ForgeStore.list_assets(category)
+		# Animated clips replace their own strip PNGs in the palette.
+		var clips: Array[String] = []
+		_clips_under(str(ForgeStore.ASSET_CATEGORIES[category]["dir"]), clips)
+		var out: Array[String] = []
+		out.append_array(clips)
+		for p in ForgeStore.list_assets(category):
+			if LatticeClip.find_for_png(p) == "":
+				out.append(p)
+		return out
 	var out: Array[String] = []
 	var dir := "res://assets/" + category
 	if DirAccess.dir_exists_absolute(dir):
@@ -912,7 +935,12 @@ func _palette_assets(category: String, pick: Callable, current: Callable) -> voi
 				continue
 			var b := Button.new()
 			b.custom_minimum_size = Vector2(62, 62)
-			b.icon = ForgeStore.load_texture(p)
+			if p.ends_with(".json"):
+				var clip := LatticeClip.load_clip(p)
+				b.icon = LatticeClip.frame_texture(clip, 0) if clip.get("ok", false) else null
+				b.text = "▶"
+			else:
+				b.icon = ForgeStore.load_texture(p)
 			b.expand_icon = true
 			b.tooltip_text = p.trim_prefix("res://assets/")
 			_style_toggle(b, current.call() == p)
