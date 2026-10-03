@@ -1,0 +1,92 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_map_drone_orbit",
+  "kind": "ambient",
+  "loop": true,
+  "generator": null,
+  "cell": [
+    32,
+    32
+  ],
+  "frames": 8,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 1,
+      "x": 32,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 2,
+      "x": 64,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 3,
+      "x": 96,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 4,
+      "x": 128,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 5,
+      "x": 160,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 6,
+      "x": 192,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "i": 7,
+      "x": 224,
+      "y": 0,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "fps": 8,
+  "holds": null,
+  "tickSequence": null,
+  "palette": null,
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    16,
+    16
+  ],
+  "sortBias": 2,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic map ambient \u2014 procedural placeholder drone, not character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_map_drone_orbit_strip.png"
+  },
+  "source": "LATTICE",
+  "sourceAssets": {
+    "note": "Procedural orbit dots \u2014 replace with authored mini-drone when available"
+  }
+}
