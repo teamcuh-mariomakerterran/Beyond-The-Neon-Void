@@ -1,0 +1,270 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  261,
+  181
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 1,
+   "x": 261,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 2,
+   "x": 522,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 3,
+   "x": 783,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 4,
+   "x": 1044,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 5,
+   "x": 1305,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 6,
+   "x": 1566,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 7,
+   "x": 1827,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 8,
+   "x": 2088,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 9,
+   "x": 2349,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 10,
+   "x": 2610,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 11,
+   "x": 2871,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 12,
+   "x": 3132,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 13,
+   "x": 3393,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 14,
+   "x": 3654,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 15,
+   "x": 3915,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 16,
+   "x": 4176,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 17,
+   "x": 4437,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 18,
+   "x": 4698,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 19,
+   "x": 4959,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 20,
+   "x": 5220,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 21,
+   "x": 5481,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 22,
+   "x": 5742,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  },
+  {
+   "i": 23,
+   "x": 6003,
+   "y": 0,
+   "w": 261,
+   "h": 181
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  130,
+  177
+ ],
+ "propBBox": [
+  4,
+  4,
+  257,
+  178
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_p09_2.png",
+  "placementKey": "bldg_interior_indoor_command_p09",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command 09 \u2014 holo pad base",
+ "qaGrade": "B",
+ "qaNote": "holo pad base: centre emitter glow sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 116,
+    "y": 41,
+    "warm": false
+   },
+   {
+    "x": 6,
+    "y": 125,
+    "warm": true
+   },
+   {
+    "x": 63,
+    "y": 161,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     105,
+     45,
+     157,
+     75
+    ],
+    "slope": 0.0,
+    "area": 1204
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 3,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 48494,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_command_p09_2",
+ "overlayClip": null
+}

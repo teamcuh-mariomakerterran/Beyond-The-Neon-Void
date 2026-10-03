@@ -1,0 +1,305 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_back_sw_p10_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  264,
+  191
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 1,
+   "x": 264,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 2,
+   "x": 528,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 3,
+   "x": 792,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 4,
+   "x": 1056,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 5,
+   "x": 1320,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 6,
+   "x": 1584,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 7,
+   "x": 1848,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 8,
+   "x": 2112,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 9,
+   "x": 2376,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 10,
+   "x": 2640,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 11,
+   "x": 2904,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 12,
+   "x": 3168,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 13,
+   "x": 3432,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 14,
+   "x": 3696,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 15,
+   "x": 3960,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 16,
+   "x": 4224,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 17,
+   "x": 4488,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 18,
+   "x": 4752,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 19,
+   "x": 5016,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 20,
+   "x": 5280,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 21,
+   "x": 5544,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 22,
+   "x": 5808,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  },
+  {
+   "i": 23,
+   "x": 6072,
+   "y": 0,
+   "w": 264,
+   "h": 191
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  132,
+  186
+ ],
+ "propBBox": [
+  3,
+  0,
+  260,
+  187
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_back_sw_p10_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_back_sw_p10_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_back_sw_p10_2.png",
+  "placementKey": "bldg_interior_indoor_command_back_sw_p10",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command Back Sw 10 \u2014 holo projector pad",
+ "qaGrade": "A-",
+ "qaNote": "holo projector pad: shimmer + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 113,
+    "y": 11,
+    "warm": false
+   },
+   {
+    "x": 156,
+    "y": 12,
+    "warm": false
+   },
+   {
+    "x": 30,
+    "y": 81,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 81,
+    "warm": false
+   },
+   {
+    "x": 130,
+    "y": 125,
+    "warm": false
+   },
+   {
+    "x": 18,
+    "y": 142,
+    "warm": true
+   },
+   {
+    "x": 69,
+    "y": 148,
+    "warm": false
+   },
+   {
+    "x": 194,
+    "y": 147,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "holo",
+    "bbox": [
+     65,
+     17,
+     199,
+     102
+    ],
+    "slope": 0.0,
+    "area": 8281
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 8,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 1,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 27758,
+ "config": {
+  "holos": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_command_back_sw_p10_2_overlay_clip.json",
+ "paletteCount": 36875
+}

@@ -1,0 +1,314 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_p10_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  263,
+  190
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 1,
+   "x": 263,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 2,
+   "x": 526,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 3,
+   "x": 789,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 4,
+   "x": 1052,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 5,
+   "x": 1315,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 6,
+   "x": 1578,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 7,
+   "x": 1841,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 8,
+   "x": 2104,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 9,
+   "x": 2367,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 10,
+   "x": 2630,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 11,
+   "x": 2893,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 12,
+   "x": 3156,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 13,
+   "x": 3419,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 14,
+   "x": 3682,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 15,
+   "x": 3945,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 16,
+   "x": 4208,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 17,
+   "x": 4471,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 18,
+   "x": 4734,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 19,
+   "x": 4997,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 20,
+   "x": 5260,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 21,
+   "x": 5523,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 22,
+   "x": 5786,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  },
+  {
+   "i": 23,
+   "x": 6049,
+   "y": 0,
+   "w": 263,
+   "h": 190
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  132,
+  185
+ ],
+ "propBBox": [
+  4,
+  0,
+  259,
+  186
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_p10_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_p10_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_p10_2.png",
+  "placementKey": "bldg_interior_indoor_command_p10",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command 10 \u2014 holo projector pad",
+ "qaGrade": "A-",
+ "qaNote": "holo projector pad: shimmer + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 91,
+    "y": 9,
+    "warm": false
+   },
+   {
+    "x": 155,
+    "y": 13,
+    "warm": false
+   },
+   {
+    "x": 30,
+    "y": 81,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 81,
+    "warm": false
+   },
+   {
+    "x": 184,
+    "y": 119,
+    "warm": false
+   },
+   {
+    "x": 130,
+    "y": 124,
+    "warm": false
+   },
+   {
+    "x": 9,
+    "y": 134,
+    "warm": true
+   },
+   {
+    "x": 194,
+    "y": 147,
+    "warm": true
+   },
+   {
+    "x": 69,
+    "y": 148,
+    "warm": false
+   },
+   {
+    "x": 49,
+    "y": 166,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "holo",
+    "bbox": [
+     64,
+     16,
+     198,
+     103
+    ],
+    "slope": 0.0,
+    "area": 8531
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 10,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 1,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 57732,
+ "config": {
+  "holos": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_command_p10_2",
+ "overlayClip": null
+}

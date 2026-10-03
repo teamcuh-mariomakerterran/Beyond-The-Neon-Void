@@ -1,0 +1,466 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_p07_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  266,
+  281
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 1,
+   "x": 266,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 2,
+   "x": 532,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 3,
+   "x": 798,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 4,
+   "x": 1064,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 5,
+   "x": 1330,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 6,
+   "x": 1596,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 7,
+   "x": 1862,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 8,
+   "x": 2128,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 9,
+   "x": 2394,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 10,
+   "x": 2660,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 11,
+   "x": 2926,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 12,
+   "x": 3192,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 13,
+   "x": 3458,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 14,
+   "x": 3724,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 15,
+   "x": 3990,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 16,
+   "x": 4256,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 17,
+   "x": 4522,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 18,
+   "x": 4788,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 19,
+   "x": 5054,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 20,
+   "x": 5320,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 21,
+   "x": 5586,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 22,
+   "x": 5852,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  },
+  {
+   "i": 23,
+   "x": 6118,
+   "y": 0,
+   "w": 266,
+   "h": 281
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  132,
+  276
+ ],
+ "propBBox": [
+  3,
+  4,
+  262,
+  277
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_p07_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_p07_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_p07_2.png",
+  "placementKey": "bldg_interior_indoor_command_p07",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command 07 \u2014 lock terminal",
+ "qaGrade": "B+",
+ "qaNote": "lock terminal: screen sweep + keypad LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 64,
+    "y": 51,
+    "warm": false
+   },
+   {
+    "x": 64,
+    "y": 66,
+    "warm": false
+   },
+   {
+    "x": 129,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 129,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 66,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 129,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 126,
+    "y": 102,
+    "warm": false
+   },
+   {
+    "x": 127,
+    "y": 121,
+    "warm": false
+   },
+   {
+    "x": 176,
+    "y": 122,
+    "warm": false
+   },
+   {
+    "x": 189,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 49,
+    "y": 131,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 130,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 131,
+    "warm": true
+   },
+   {
+    "x": 63,
+    "y": 135,
+    "warm": true
+   },
+   {
+    "x": 184,
+    "y": 135,
+    "warm": true
+   },
+   {
+    "x": 165,
+    "y": 139,
+    "warm": true
+   },
+   {
+    "x": 41,
+    "y": 139,
+    "warm": true
+   },
+   {
+    "x": 196,
+    "y": 139,
+    "warm": true
+   },
+   {
+    "x": 95,
+    "y": 141,
+    "warm": false
+   },
+   {
+    "x": 178,
+    "y": 143,
+    "warm": true
+   },
+   {
+    "x": 89,
+    "y": 146,
+    "warm": false
+   },
+   {
+    "x": 189,
+    "y": 147,
+    "warm": false
+   },
+   {
+    "x": 113,
+    "y": 148,
+    "warm": true
+   },
+   {
+    "x": 194,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 82,
+    "y": 154,
+    "warm": false
+   },
+   {
+    "x": 108,
+    "y": 154,
+    "warm": true
+   },
+   {
+    "x": 103,
+    "y": 159,
+    "warm": true
+   },
+   {
+    "x": 148,
+    "y": 162,
+    "warm": false
+   },
+   {
+    "x": 157,
+    "y": 167,
+    "warm": true
+   },
+   {
+    "x": 139,
+    "y": 171,
+    "warm": true
+   },
+   {
+    "x": 175,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 152,
+    "y": 176,
+    "warm": true
+   },
+   {
+    "x": 166,
+    "y": 181,
+    "warm": true
+   },
+   {
+    "x": 36,
+    "y": 192,
+    "warm": true
+   },
+   {
+    "x": 44,
+    "y": 226,
+    "warm": true
+   },
+   {
+    "x": 138,
+    "y": 232,
+    "warm": true
+   },
+   {
+    "x": 107,
+    "y": 247,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     64,
+     32,
+     73,
+     43
+    ]
+   },
+   {
+    "bbox": [
+     124,
+     48,
+     131,
+     67
+    ]
+   },
+   {
+    "bbox": [
+     121,
+     99,
+     131,
+     109
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     81,
+     47,
+     111,
+     95
+    ],
+    "slope": 0.2082706766917293,
+    "area": 1116
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 37,
+   "strips": 3,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 36964,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_command_p07_2_overlay_clip.json",
+ "paletteCount": 19557
+}
