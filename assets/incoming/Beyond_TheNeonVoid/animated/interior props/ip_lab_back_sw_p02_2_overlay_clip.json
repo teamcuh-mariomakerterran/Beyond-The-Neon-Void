@@ -1,0 +1,325 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_back_sw_p02_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  242,
+  346
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 1,
+   "x": 242,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 2,
+   "x": 484,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 3,
+   "x": 726,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 4,
+   "x": 968,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 5,
+   "x": 1210,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 6,
+   "x": 1452,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 7,
+   "x": 1694,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 8,
+   "x": 1936,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 9,
+   "x": 2178,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 10,
+   "x": 2420,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 11,
+   "x": 2662,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 12,
+   "x": 2904,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 13,
+   "x": 3146,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 14,
+   "x": 3388,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 15,
+   "x": 3630,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 16,
+   "x": 3872,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 17,
+   "x": 4114,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 18,
+   "x": 4356,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 19,
+   "x": 4598,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 20,
+   "x": 4840,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 21,
+   "x": 5082,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 22,
+   "x": 5324,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  },
+  {
+   "i": 23,
+   "x": 5566,
+   "y": 0,
+   "w": 242,
+   "h": 346
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  119,
+  345
+ ],
+ "propBBox": [
+  0,
+  4,
+  238,
+  346
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_back_sw_p02_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_back_sw_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_back_sw_p02_2.png",
+  "placementKey": "bldg_interior_indoor_lab_back_sw_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab Back Sw 02 \u2014 cryo pod (back)",
+ "qaGrade": "A-",
+ "qaNote": "cryo pod (back): bubbles + glow + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 190,
+    "y": 150,
+    "warm": true
+   },
+   {
+    "x": 197,
+    "y": 147,
+    "warm": true
+   },
+   {
+    "x": 190,
+    "y": 162,
+    "warm": true
+   },
+   {
+    "x": 197,
+    "y": 170,
+    "warm": true
+   },
+   {
+    "x": 190,
+    "y": 173,
+    "warm": true
+   },
+   {
+    "x": 194,
+    "y": 215,
+    "warm": false
+   },
+   {
+    "x": 125,
+    "y": 237,
+    "warm": false
+   },
+   {
+    "x": 77,
+    "y": 245,
+    "warm": false
+   },
+   {
+    "x": 122,
+    "y": 251,
+    "warm": false
+   },
+   {
+    "x": 199,
+    "y": 295,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "tank",
+    "bbox": [
+     64,
+     61,
+     93,
+     73
+    ],
+    "slope": 0.2616883116883121,
+    "area": 196
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     32,
+     68,
+     156,
+     281
+    ],
+    "slope": 0.0,
+    "area": 12743
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 10,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 2,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 17454,
+ "config": {
+  "tanks": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_lab_back_sw_p02_2",
+ "overlayClip": null
+}

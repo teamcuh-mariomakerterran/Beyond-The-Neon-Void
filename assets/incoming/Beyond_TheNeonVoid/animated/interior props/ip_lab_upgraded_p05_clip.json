@@ -1,0 +1,461 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_upgraded_p05",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  371,
+  339
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 1,
+   "x": 371,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 2,
+   "x": 742,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 3,
+   "x": 1113,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 4,
+   "x": 1484,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 5,
+   "x": 1855,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 6,
+   "x": 2226,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 7,
+   "x": 2597,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 8,
+   "x": 2968,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 9,
+   "x": 3339,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 10,
+   "x": 3710,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 11,
+   "x": 4081,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 12,
+   "x": 4452,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 13,
+   "x": 4823,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 14,
+   "x": 5194,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 15,
+   "x": 5565,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 16,
+   "x": 5936,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 17,
+   "x": 6307,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 18,
+   "x": 6678,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 19,
+   "x": 7049,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 20,
+   "x": 7420,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 21,
+   "x": 7791,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 22,
+   "x": 8162,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  },
+  {
+   "i": 23,
+   "x": 8533,
+   "y": 0,
+   "w": 371,
+   "h": 339
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  188,
+  338
+ ],
+ "propBBox": [
+  4,
+  4,
+  371,
+  339
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_upgraded_p05_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_upgraded_p05.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_upgraded_p05.png",
+  "placementKey": "bldg_interior_indoor_lab_upgraded_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab Upgraded 05 \u2014 microscope desk",
+ "qaGrade": "B+",
+ "qaNote": "microscope desk: monitor sweep + lit drawer",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 215,
+    "y": 53,
+    "warm": false
+   },
+   {
+    "x": 228,
+    "y": 56,
+    "warm": false
+   },
+   {
+    "x": 246,
+    "y": 55,
+    "warm": false
+   },
+   {
+    "x": 259,
+    "y": 58,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 62,
+    "warm": false
+   },
+   {
+    "x": 238,
+    "y": 65,
+    "warm": false
+   },
+   {
+    "x": 251,
+    "y": 65,
+    "warm": false
+   },
+   {
+    "x": 214,
+    "y": 67,
+    "warm": false
+   },
+   {
+    "x": 230,
+    "y": 71,
+    "warm": false
+   },
+   {
+    "x": 218,
+    "y": 79,
+    "warm": false
+   },
+   {
+    "x": 248,
+    "y": 78,
+    "warm": false
+   },
+   {
+    "x": 255,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 251,
+    "y": 87,
+    "warm": false
+   },
+   {
+    "x": 261,
+    "y": 90,
+    "warm": false
+   },
+   {
+    "x": 101,
+    "y": 108,
+    "warm": false
+   },
+   {
+    "x": 69,
+    "y": 123,
+    "warm": true
+   },
+   {
+    "x": 139,
+    "y": 132,
+    "warm": true
+   },
+   {
+    "x": 98,
+    "y": 142,
+    "warm": false
+   },
+   {
+    "x": 328,
+    "y": 176,
+    "warm": true
+   },
+   {
+    "x": 342,
+    "y": 194,
+    "warm": true
+   },
+   {
+    "x": 281,
+    "y": 199,
+    "warm": false
+   },
+   {
+    "x": 271,
+    "y": 203,
+    "warm": false
+   },
+   {
+    "x": 45,
+    "y": 204,
+    "warm": true
+   },
+   {
+    "x": 177,
+    "y": 252,
+    "warm": false
+   },
+   {
+    "x": 310,
+    "y": 251,
+    "warm": true
+   },
+   {
+    "x": 49,
+    "y": 281,
+    "warm": false
+   },
+   {
+    "x": 87,
+    "y": 286,
+    "warm": false
+   },
+   {
+    "x": 119,
+    "y": 316,
+    "warm": true
+   },
+   {
+    "x": 142,
+    "y": 316,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     231,
+     69,
+     249,
+     87
+    ]
+   },
+   {
+    "bbox": [
+     250,
+     73,
+     263,
+     84
+    ]
+   },
+   {
+    "bbox": [
+     286,
+     79,
+     289,
+     96
+    ]
+   },
+   {
+    "bbox": [
+     171,
+     233,
+     187,
+     242
+    ]
+   },
+   {
+    "bbox": [
+     172,
+     240,
+     187,
+     249
+    ]
+   },
+   {
+    "bbox": [
+     54,
+     284,
+     78,
+     297
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     236,
+     204,
+     266,
+     221
+    ],
+    "slope": -0.5,
+    "area": 195
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     42,
+     218,
+     94,
+     292
+    ],
+    "slope": 0.5,
+    "area": 2231
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 29,
+   "strips": 6,
+   "screens": 1,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 48731,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lab_upgraded_p05_overlay_clip.json",
+ "paletteCount": 37425
+}

@@ -1,0 +1,459 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_p04_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  285,
+  311
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 1,
+   "x": 285,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 2,
+   "x": 570,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 3,
+   "x": 855,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 4,
+   "x": 1140,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 5,
+   "x": 1425,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 6,
+   "x": 1710,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 7,
+   "x": 1995,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 8,
+   "x": 2280,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 9,
+   "x": 2565,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 10,
+   "x": 2850,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 11,
+   "x": 3135,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 12,
+   "x": 3420,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 13,
+   "x": 3705,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 14,
+   "x": 3990,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 15,
+   "x": 4275,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 16,
+   "x": 4560,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 17,
+   "x": 4845,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 18,
+   "x": 5130,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 19,
+   "x": 5415,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 20,
+   "x": 5700,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 21,
+   "x": 5985,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 22,
+   "x": 6270,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  },
+  {
+   "i": 23,
+   "x": 6555,
+   "y": 0,
+   "w": 285,
+   "h": 311
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  142,
+  306
+ ],
+ "propBBox": [
+  4,
+  0,
+  281,
+  307
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_p04_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_p04_2.png",
+  "placementKey": "bldg_interior_indoor_lab_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab 04 \u2014 specimen shelf",
+ "qaGrade": "B",
+ "qaNote": "specimen shelf: glowing jars breathe + bubbles",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 96,
+    "y": 55,
+    "warm": false
+   },
+   {
+    "x": 100,
+    "y": 63,
+    "warm": false
+   },
+   {
+    "x": 151,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 113,
+    "y": 80,
+    "warm": false
+   },
+   {
+    "x": 108,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 83,
+    "warm": false
+   },
+   {
+    "x": 40,
+    "y": 158,
+    "warm": false
+   },
+   {
+    "x": 207,
+    "y": 213,
+    "warm": false
+   },
+   {
+    "x": 183,
+    "y": 225,
+    "warm": false
+   },
+   {
+    "x": 195,
+    "y": 222,
+    "warm": false
+   },
+   {
+    "x": 147,
+    "y": 226,
+    "warm": true
+   },
+   {
+    "x": 146,
+    "y": 233,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 238,
+    "warm": false
+   },
+   {
+    "x": 263,
+    "y": 242,
+    "warm": true
+   },
+   {
+    "x": 254,
+    "y": 244,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 250,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 258,
+    "warm": true
+   },
+   {
+    "x": 208,
+    "y": 257,
+    "warm": true
+   },
+   {
+    "x": 166,
+    "y": 269,
+    "warm": true
+   },
+   {
+    "x": 17,
+    "y": 276,
+    "warm": true
+   },
+   {
+    "x": 146,
+    "y": 276,
+    "warm": true
+   },
+   {
+    "x": 133,
+    "y": 280,
+    "warm": true
+   },
+   {
+    "x": 124,
+    "y": 283,
+    "warm": true
+   },
+   {
+    "x": 37,
+    "y": 290,
+    "warm": true
+   },
+   {
+    "x": 44,
+    "y": 293,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 297,
+    "warm": true
+   },
+   {
+    "x": 78,
+    "y": 300,
+    "warm": true
+   },
+   {
+    "x": 56,
+    "y": 301,
+    "warm": true
+   },
+   {
+    "x": 70,
+    "y": 302,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     58,
+     62,
+     76,
+     66
+    ]
+   },
+   {
+    "bbox": [
+     210,
+     205,
+     223,
+     222
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "tank",
+    "bbox": [
+     56,
+     66,
+     81,
+     93
+    ],
+    "slope": -0.29656862745097745,
+    "area": 512
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     115,
+     135,
+     151,
+     170
+    ],
+    "slope": 0.0,
+    "area": 1063
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     70,
+     147,
+     105,
+     183
+    ],
+    "slope": 0.0,
+    "area": 1010
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     231,
+     196,
+     246,
+     215
+    ],
+    "slope": 0.0,
+    "area": 219
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 29,
+   "strips": 2,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 4,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 12047,
+ "config": {
+  "tanks": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_lab_p04_2",
+ "overlayClip": null
+}

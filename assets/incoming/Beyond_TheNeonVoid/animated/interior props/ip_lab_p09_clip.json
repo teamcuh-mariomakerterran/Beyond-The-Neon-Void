@@ -1,0 +1,341 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_p09",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  179,
+  241
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 1,
+   "x": 179,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 2,
+   "x": 358,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 3,
+   "x": 537,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 4,
+   "x": 716,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 5,
+   "x": 895,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 6,
+   "x": 1074,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 7,
+   "x": 1253,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 8,
+   "x": 1432,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 9,
+   "x": 1611,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 10,
+   "x": 1790,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 11,
+   "x": 1969,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 12,
+   "x": 2148,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 13,
+   "x": 2327,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 14,
+   "x": 2506,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 15,
+   "x": 2685,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 16,
+   "x": 2864,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 17,
+   "x": 3043,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 18,
+   "x": 3222,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 19,
+   "x": 3401,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 20,
+   "x": 3580,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 21,
+   "x": 3759,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 22,
+   "x": 3938,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  },
+  {
+   "i": 23,
+   "x": 4117,
+   "y": 0,
+   "w": 179,
+   "h": 241
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  90,
+  236
+ ],
+ "propBBox": [
+  4,
+  4,
+  175,
+  237
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_p09_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_p09.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_p09.png",
+  "placementKey": "bldg_interior_indoor_lab_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab 09 \u2014 lab monitor",
+ "qaGrade": "B+",
+ "qaNote": "lab monitor: screen sweep + glitch + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 82,
+    "y": 40,
+    "warm": true
+   },
+   {
+    "x": 153,
+    "y": 129,
+    "warm": false
+   },
+   {
+    "x": 153,
+    "y": 142,
+    "warm": false
+   },
+   {
+    "x": 40,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 153,
+    "y": 156,
+    "warm": false
+   },
+   {
+    "x": 153,
+    "y": 171,
+    "warm": false
+   },
+   {
+    "x": 44,
+    "y": 174,
+    "warm": false
+   },
+   {
+    "x": 9,
+    "y": 186,
+    "warm": true
+   },
+   {
+    "x": 19,
+    "y": 192,
+    "warm": true
+   },
+   {
+    "x": 33,
+    "y": 198,
+    "warm": false
+   },
+   {
+    "x": 168,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 47,
+    "y": 201,
+    "warm": false
+   },
+   {
+    "x": 106,
+    "y": 214,
+    "warm": false
+   },
+   {
+    "x": 36,
+    "y": 211,
+    "warm": true
+   },
+   {
+    "x": 165,
+    "y": 213,
+    "warm": true
+   },
+   {
+    "x": 64,
+    "y": 217,
+    "warm": true
+   },
+   {
+    "x": 78,
+    "y": 220,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     37,
+     95,
+     104,
+     157
+    ],
+    "slope": 0.19815546772068576,
+    "area": 2918
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 17,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 43025,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lab_p09_overlay_clip.json",
+ "paletteCount": 21788
+}

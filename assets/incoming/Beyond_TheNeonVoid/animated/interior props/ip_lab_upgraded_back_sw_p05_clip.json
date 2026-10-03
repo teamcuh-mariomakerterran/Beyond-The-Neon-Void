@@ -1,0 +1,284 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_upgraded_back_sw_p05",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  164,
+  340
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 1,
+   "x": 164,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 2,
+   "x": 328,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 3,
+   "x": 492,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 4,
+   "x": 656,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 5,
+   "x": 820,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 6,
+   "x": 984,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 7,
+   "x": 1148,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 8,
+   "x": 1312,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 9,
+   "x": 1476,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 10,
+   "x": 1640,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 11,
+   "x": 1804,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 12,
+   "x": 1968,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 13,
+   "x": 2132,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 14,
+   "x": 2296,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 15,
+   "x": 2460,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 16,
+   "x": 2624,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 17,
+   "x": 2788,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 18,
+   "x": 2952,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 19,
+   "x": 3116,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 20,
+   "x": 3280,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 21,
+   "x": 3444,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 22,
+   "x": 3608,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  },
+  {
+   "i": 23,
+   "x": 3772,
+   "y": 0,
+   "w": 164,
+   "h": 340
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  82,
+  335
+ ],
+ "propBBox": [
+  4,
+  4,
+  160,
+  336
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_upgraded_back_sw_p05_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_upgraded_back_sw_p05.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_upgraded_back_sw_p05.png",
+  "placementKey": "bldg_interior_indoor_lab_upgraded_back_sw_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab Upgraded Back Sw 05 \u2014 IV stand",
+ "qaGrade": "B",
+ "qaNote": "IV stand: bubbles in the drip bag",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 41,
+    "y": 114,
+    "warm": false
+   },
+   {
+    "x": 71,
+    "y": 227,
+    "warm": false
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     31,
+     145,
+     35,
+     171
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "tank",
+    "bbox": [
+     34,
+     172,
+     71,
+     226
+    ],
+    "slope": 0.6,
+    "area": 212
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 2,
+   "strips": 1,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 1,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 52012,
+ "config": {
+  "tanks": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lab_upgraded_back_sw_p05_overlay_clip.json",
+ "paletteCount": 14735
+}

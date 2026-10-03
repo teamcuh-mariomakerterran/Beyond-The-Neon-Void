@@ -1,0 +1,458 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lab_upgraded_back_sw_p06",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  371,
+  344
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 1,
+   "x": 371,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 2,
+   "x": 742,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 3,
+   "x": 1113,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 4,
+   "x": 1484,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 5,
+   "x": 1855,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 6,
+   "x": 2226,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 7,
+   "x": 2597,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 8,
+   "x": 2968,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 9,
+   "x": 3339,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 10,
+   "x": 3710,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 11,
+   "x": 4081,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 12,
+   "x": 4452,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 13,
+   "x": 4823,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 14,
+   "x": 5194,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 15,
+   "x": 5565,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 16,
+   "x": 5936,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 17,
+   "x": 6307,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 18,
+   "x": 6678,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 19,
+   "x": 7049,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 20,
+   "x": 7420,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 21,
+   "x": 7791,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 22,
+   "x": 8162,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  },
+  {
+   "i": 23,
+   "x": 8533,
+   "y": 0,
+   "w": 371,
+   "h": 344
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  188,
+  343
+ ],
+ "propBBox": [
+  4,
+  4,
+  371,
+  344
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lab_upgraded_back_sw_p06_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lab_upgraded_back_sw_p06.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lab_upgraded_back_sw_p06.png",
+  "placementKey": "bldg_interior_indoor_lab_upgraded_back_sw_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lab Upgraded Back Sw 06 \u2014 microscope desk",
+ "qaGrade": "B+",
+ "qaNote": "microscope desk: monitor sweep + lit drawer",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 231,
+    "y": 57,
+    "warm": false
+   },
+   {
+    "x": 248,
+    "y": 56,
+    "warm": false
+   },
+   {
+    "x": 237,
+    "y": 63,
+    "warm": false
+   },
+   {
+    "x": 217,
+    "y": 69,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 241,
+    "y": 66,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 69,
+    "warm": false
+   },
+   {
+    "x": 250,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 244,
+    "y": 75,
+    "warm": false
+   },
+   {
+    "x": 260,
+    "y": 77,
+    "warm": false
+   },
+   {
+    "x": 222,
+    "y": 81,
+    "warm": false
+   },
+   {
+    "x": 250,
+    "y": 80,
+    "warm": false
+   },
+   {
+    "x": 289,
+    "y": 87,
+    "warm": false
+   },
+   {
+    "x": 237,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 254,
+    "y": 83,
+    "warm": false
+   },
+   {
+    "x": 258,
+    "y": 85,
+    "warm": false
+   },
+   {
+    "x": 253,
+    "y": 88,
+    "warm": false
+   },
+   {
+    "x": 263,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 111,
+    "warm": false
+   },
+   {
+    "x": 139,
+    "y": 134,
+    "warm": true
+   },
+   {
+    "x": 99,
+    "y": 145,
+    "warm": false
+   },
+   {
+    "x": 292,
+    "y": 161,
+    "warm": true
+   },
+   {
+    "x": 271,
+    "y": 170,
+    "warm": true
+   },
+   {
+    "x": 214,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 328,
+    "y": 179,
+    "warm": true
+   },
+   {
+    "x": 342,
+    "y": 198,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 207,
+    "warm": true
+   },
+   {
+    "x": 279,
+    "y": 246,
+    "warm": true
+   },
+   {
+    "x": 311,
+    "y": 256,
+    "warm": true
+   },
+   {
+    "x": 186,
+    "y": 280,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 286,
+    "warm": false
+   },
+   {
+    "x": 86,
+    "y": 290,
+    "warm": false
+   },
+   {
+    "x": 162,
+    "y": 290,
+    "warm": true
+   },
+   {
+    "x": 61,
+    "y": 292,
+    "warm": false
+   },
+   {
+    "x": 72,
+    "y": 297,
+    "warm": false
+   },
+   {
+    "x": 119,
+    "y": 321,
+    "warm": true
+   },
+   {
+    "x": 143,
+    "y": 322,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     215,
+     48,
+     224,
+     62
+    ]
+   },
+   {
+    "bbox": [
+     252,
+     56,
+     265,
+     70
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     42,
+     222,
+     93,
+     297
+    ],
+    "slope": 0.5,
+    "area": 2268
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 37,
+   "strips": 2,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 39574,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_lab_upgraded_back_sw_p06_overlay_clip.json",
+ "paletteCount": 32156
+}
