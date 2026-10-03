@@ -24,7 +24,8 @@ static func is_clip(path: String) -> bool:
 ## The clip JSON for a strip / static PNG (name_strip.png → name.json), or "".
 static func find_for_png(png: String) -> String:
 	var base := png.get_basename()
-	for cand in [base.trim_suffix("_strip") + ".json", base + ".json"]:
+	var stem := base.trim_suffix("_strip")
+	for cand in [stem + "_clip.json", stem + ".json", base + ".json"]:
 		if is_clip(cand):
 			return cand
 	return ""
@@ -56,6 +57,7 @@ static func load_clip(path: String) -> Dictionary:
 		var vertical := str(d.get("layout", "horizontal")) == "vertical"
 		for i in n:
 			rects.append(Rect2(0 if vertical else i * float(cell[0]), i * float(cell[1]) if vertical else 0, float(cell[0]), float(cell[1])))
+	tex = _keyed(path, tex, d, rects)
 	var frame_ms := float(d.get("frameMs", 1000.0 / maxf(float(d.get("fps", 10)), 0.1)))
 	var seq: Array = d.get("tickSequence") if d.get("tickSequence") is Array else range(rects.size())
 	var holds: Variant = d.get("holds")
@@ -82,6 +84,95 @@ static func load_clip(path: String) -> Dictionary:
 		out["overlay"] = dir.path_join(ov)
 	_cache[path] = out
 	return out
+
+
+## Opaque strips ("Background is the art's own opaque near-black", or a
+## "bgKey" colour) get their background keyed out: flood-filled in from the
+## frame edges on frame 0, so dark pixels *inside* the building survive, then
+## that mask is applied to every frame. Cached in user://lattice_keyed.
+const KEY_DIR := "user://lattice_keyed"
+const KEY_TOL := 10  # max per-channel distance (0-255) from the background colour
+
+
+static func _keyed(path: String, tex: Texture2D, d: Dictionary, rects: Array[Rect2]) -> Texture2D:
+	if d.get("bgKey") == false or rects.is_empty():
+		return tex
+	var img := tex.get_image()
+	if img == null:
+		return tex
+	if img.is_compressed():
+		img.decompress()
+	img.convert(Image.FORMAT_RGBA8)
+	var r0 := Rect2i(rects[0])
+	var corners := [r0.position, Vector2i(r0.end.x - 1, r0.position.y), Vector2i(r0.position.x, r0.end.y - 1), r0.end - Vector2i.ONE]
+	var bg: Color
+	if d.get("bgKey") is String:
+		bg = Color(str(d["bgKey"]))
+	else:
+		# Auto: all four corners opaque and the same colour → that's a backdrop.
+		bg = img.get_pixelv(corners[0])
+		for c: Vector2i in corners:
+			var px := img.get_pixelv(c)
+			if px.a < 0.99 or absf(px.r - bg.r) * 255.0 > KEY_TOL or absf(px.g - bg.g) * 255.0 > KEY_TOL or absf(px.b - bg.b) * 255.0 > KEY_TOL:
+				return tex
+	var stamp := "%s_%d_%d" % [path.get_file().get_basename(), FileAccess.get_modified_time(path), FileAccess.get_modified_time(path.get_base_dir().path_join(str((d.get("textures", {}) as Dictionary).get("strip", ""))))]
+	var cached := KEY_DIR.path_join(stamp + ".png")
+	if FileAccess.file_exists(cached):
+		var ci := Image.load_from_file(ProjectSettings.globalize_path(cached))
+		if ci and ci.get_size() == img.get_size():
+			return ImageTexture.create_from_image(ci)
+	var frame_mask := key_mask(img.get_region(r0), bg)
+	var mask := Image.create(img.get_width(), img.get_height(), false, Image.FORMAT_RGBA8)
+	for r: Rect2 in rects:
+		mask.blit_rect(frame_mask, Rect2i(Vector2i.ZERO, frame_mask.get_size()), Vector2i(r.position))
+	var out := Image.create(img.get_width(), img.get_height(), false, Image.FORMAT_RGBA8)
+	out.blit_rect_mask(img, mask, Rect2i(Vector2i.ZERO, img.get_size()), Vector2i.ZERO)
+	DirAccess.make_dir_recursive_absolute(KEY_DIR)
+	out.save_png(cached)
+	return ImageTexture.create_from_image(out)
+
+
+## Mask (opaque = keep) for one frame: background pixels connected to the
+## frame edge within KEY_TOL of `bg` are cleared.
+static func key_mask(frame: Image, bg: Color) -> Image:
+	var w := frame.get_width()
+	var h := frame.get_height()
+	var src := frame.get_data()
+	var br := bg.r8
+	var bgg := bg.g8
+	var bb := bg.b8
+	var gone := PackedByteArray()
+	gone.resize(w * h)
+	var stack := PackedInt32Array()
+	for x in w:
+		stack.append(x)
+		stack.append((h - 1) * w + x)
+	for y in h:
+		stack.append(y * w)
+		stack.append(y * w + w - 1)
+	while not stack.is_empty():
+		var i := stack[stack.size() - 1]
+		stack.resize(stack.size() - 1)
+		if gone[i] != 0:
+			continue
+		var o := i * 4
+		if absi(src[o] - br) > KEY_TOL or absi(src[o + 1] - bgg) > KEY_TOL or absi(src[o + 2] - bb) > KEY_TOL:
+			continue
+		gone[i] = 1
+		var x := i % w
+		if x > 0: stack.append(i - 1)
+		if x < w - 1: stack.append(i + 1)
+		if i >= w: stack.append(i - w)
+		if i < w * (h - 1): stack.append(i + w)
+	var m := PackedByteArray()
+	m.resize(w * h * 4)
+	for i in w * h:
+		var v := 0 if gone[i] != 0 else 255
+		m[i * 4] = v
+		m[i * 4 + 1] = v
+		m[i * 4 + 2] = v
+		m[i * 4 + 3] = v
+	return Image.create_from_data(w, h, false, Image.FORMAT_RGBA8, m)
 
 
 ## Index into clip.rects for time `t` (seconds), honouring holds and order.

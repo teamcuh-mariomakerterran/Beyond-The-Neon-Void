@@ -388,6 +388,40 @@ func test_lattice_clip() -> void:
 	for fn in ["bl_t.json", "bl_t_strip.png"]:
 		DirAccess.remove_absolute(dir + "/" + fn)
 	DirAccess.remove_absolute(dir)
+	await test_lattice_real_export()
+
+
+## The animator's real bl_036_04 JSONs (tests/fixtures/lattice) with stand-in
+## strips: opaque near-black main strip + transparent overlay strip.
+func test_lattice_real_export() -> void:
+	var dir := "user://t_clip_real"
+	DirAccess.make_dir_recursive_absolute(dir)
+	for fn in ["bl_036_04_clip.json", "bl_036_04_overlay_clip.json"]:
+		DirAccess.copy_absolute("res://tests/fixtures/lattice/" + fn, dir + "/" + fn)
+	var bg := Color8(10, 10, 15)
+	var main := Image.create(412 * 24, 341, false, Image.FORMAT_RGBA8)
+	main.fill(bg)
+	var ov := Image.create(412 * 24, 341, false, Image.FORMAT_RGBA8)
+	for i in 24:
+		main.fill_rect(Rect2i(i * 412 + 60, 100, 290, 220), Color8(60, 30, 80))
+		main.fill_rect(Rect2i(i * 412 + 180, 180, 40, 40), bg)  # dark courtyard, enclosed
+		ov.fill_rect(Rect2i(i * 412 + 200 + i, 120, 4, 4), Color(1, 0.3, 0.8))
+	main.save_png(dir + "/bl_036_04_strip.png")
+	ov.save_png(dir + "/bl_036_04_overlay_strip.png")
+	var path := dir + "/bl_036_04_clip.json"
+	check(LatticeClip.find_for_png(dir + "/bl_036_04_strip.png") == path, "strip finds its _clip.json")
+	check(LatticeClip.find_for_png(dir + "/bl_036_04_overlay_strip.png") == dir + "/bl_036_04_overlay_clip.json", "overlay strip finds its _overlay_clip.json")
+	var c := LatticeClip.load_clip(path)
+	check(c["ok"] and (c["rects"] as Array).size() == 24 and str(c["overlay"]).ends_with("bl_036_04_overlay_clip.json"), "real export loads with its overlay")
+	var img: Image = (c["tex"] as Texture2D).get_image()
+	check(img.get_pixel(2, 2).a == 0.0 and img.get_pixel(412 * 23 + 5, 330).a == 0.0, "opaque near-black backdrop keyed out on every frame")
+	check(img.get_pixel(100, 150).a == 1.0 and img.get_pixel(412 * 5 + 195, 195).a == 1.0, "building and its enclosed dark courtyard kept")
+	var o := LatticeClip.load_clip(dir + "/bl_036_04_overlay_clip.json")
+	check(o["ok"] and (o["tex"] as Texture2D).get_image().get_pixel(201, 121).a == 1.0, "transparent overlay left untouched")
+	check(DirAccess.get_files_at(LatticeClip.KEY_DIR).size() > 0, "keyed strip cached")
+	for fn in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir + "/" + fn)
+	DirAccess.remove_absolute(dir)
 
 
 func _press(p: ForgeWorldPainter, cell: Vector2i, z: int) -> void:
