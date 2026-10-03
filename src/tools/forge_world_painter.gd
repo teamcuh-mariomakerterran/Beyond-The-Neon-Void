@@ -1500,6 +1500,41 @@ func _update_hover(local: Vector2) -> void:
 	_hover_z = layer
 
 
+## Cable anchor editing: click on the selected building's sprite to add a
+## roof anchor, Shift+click to remove the nearest one.
+var anchor_edit := false
+
+
+func _place_anchor(remove: bool) -> bool:
+	if selected.is_empty() or _is_detail(selected):
+		return false
+	var node := _renderer.object_node(str(selected.get("id", "")))
+	if node == null or node._rect.size.x <= 1.0:
+		return false
+	var uv := (_hover_world - node.position - node._rect.position) / node._rect.size
+	if uv.x < -0.05 or uv.y < -0.05 or uv.x > 1.05 or uv.y > 1.05:
+		return false
+	if bool(selected.get("flip", false)):
+		uv.x = 1.0 - uv.x
+	_push_undo()
+	var cur: Variant = selected.get("cables", "auto")
+	var list: Array = (cur as Array).duplicate(true) if cur is Array else (CableNet.auto_uvs(node, node._rect.size.y > world.tile_width * 2.4).duplicate(true) if str(cur) == "auto" else [])
+	if remove:
+		var best := -1
+		for i in list.size():
+			if best < 0 or Vector2(float(list[i][0]), float(list[i][1])).distance_to(uv) < Vector2(float(list[best][0]), float(list[best][1])).distance_to(uv):
+				best = i
+		if best >= 0:
+			list.remove_at(best)
+	else:
+		list.append([snappedf(clampf(uv.x, 0, 1), 0.001), snappedf(clampf(uv.y, 0, 1), 0.001)])
+	selected["cables"] = list
+	_renderer.cables.mark_dirty()
+	dirty = true
+	_show_inspector()
+	return true
+
+
 func _on_view_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
@@ -1517,6 +1552,8 @@ func _on_view_input(event: InputEvent) -> void:
 				_panning = mb.pressed
 				return
 			if mb.pressed:
+				if anchor_edit and _place_anchor(mb.shift_pressed):
+					return
 				if mb.double_click and mode == Mode.OBJECTS:
 					var o := _renderer.pick_sprite(_hover_world)
 					if not o.is_empty():
@@ -2395,6 +2432,7 @@ func _map_inspector() -> void:
 	var ptip := NeonTheme.label("Tilt-shift depth of field, bloom, haze, light shafts and grading — the Octopath 'living diorama' look. Previewed live here; the game focuses it on the player.", 11, NeonTheme.TEXT_DIM)
 	ptip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_inspector.add_child(ptip)
+	_inspector.add_child(_cable_settings())
 	var auto := _autosave_path()
 	if FileAccess.file_exists(auto):
 		var restore := Button.new()
@@ -2446,6 +2484,7 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 	else:
 		_inspector.add_child(_anim_editor(o, detail))
 	if not detail:
+		_inspector.add_child(_cable_editor(o))
 		var loc := Button.new()
 		loc.text = "⌖ LOCATION LINK…" if not (o.get("location") is Dictionary) else "⌖ EDIT LOCATION: " + str(o["location"].get("name", ""))
 		loc.tooltip_text = "Make this a city / point of interest / door that leads to another map."
@@ -2458,6 +2497,88 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 		b.pressed.connect(pair[1])
 		row.add_child(b)
 	_inspector.add_child(row)
+
+
+## Overhead cable anchors for one building.
+func _cable_editor(o: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_child(_section("CABLES", NeonTheme.CYAN))
+	var cur: Variant = o.get("cables", "auto")
+	var mode_name := "custom" if cur is Array else str(cur)
+	var row := HBoxContainer.new()
+	row.add_child(NeonTheme.label("Anchors", 12, NeonTheme.TEXT_DIM))
+	var pick := ForgeForm._option(["auto", "none", "custom"], mode_name, func(k: String) -> void:
+		_push_undo()
+		if k == "custom":
+			var node := _renderer.object_node(str(o.get("id", "")))
+			o["cables"] = CableNet.auto_uvs(node, node._rect.size.y > world.tile_width * 2.4).duplicate(true) if node else []
+		elif k == "auto":
+			o.erase("cables")
+		else:
+			o["cables"] = k
+		_renderer.cables.mark_dirty()
+		dirty = true
+		_show_inspector())
+	pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(pick)
+	box.add_child(row)
+	var edit := Button.new()
+	edit.text = "✎ PLACE ANCHORS"
+	edit.toggle_mode = true
+	edit.tooltip_text = "Click the building's roof to add a cable anchor; Shift+click removes the nearest."
+	_style_toggle(edit, anchor_edit)
+	edit.toggled.connect(func(on: bool) -> void:
+		anchor_edit = on
+		_renderer.cables.show_anchors = on
+		_style_toggle(edit, on))
+	box.add_child(edit)
+	var n := (cur as Array).size() if cur is Array else -1
+	var tip := NeonTheme.label(("%d hand-placed anchor(s)." % n) if n >= 0 else ("Auto: anchors found on the roofline of tall structures." if str(cur) == "auto" else "No cables on this object."), 11, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(tip)
+	return box
+
+
+## Map-wide cable web settings.
+func _cable_settings() -> Control:
+	var box := VBoxContainer.new()
+	box.add_child(_section("OVERHEAD CABLES", NeonTheme.CYAN))
+	var s := CableNet.settings_of(world)
+	var apply := func(k: String, v: Variant) -> void:
+		world.cables[k] = v
+		_renderer.cables.mark_dirty()
+		dirty = true
+	var on := CheckBox.new()
+	on.text = "String cables between buildings"
+	on.button_pressed = bool(s["enabled"])
+	on.toggled.connect(func(b: bool) -> void: apply.call("enabled", b))
+	box.add_child(on)
+	var junk := CheckBox.new()
+	junk.text = "Hanging junk (lanterns, flags, shoes)"
+	junk.button_pressed = bool(s["debris"])
+	junk.toggled.connect(func(b: bool) -> void: apply.call("debris", b))
+	box.add_child(junk)
+	var grid := GridContainer.new()
+	grid.columns = 2
+	for spec: Array in [["Live neon share 0–1", "live", 0.0, 1.0], ["Extra spans 0–1", "extra", 0.0, 1.0], ["Sway", "sway", 0.0, 12.0]]:
+		grid.add_child(NeonTheme.label(spec[0], 12, NeonTheme.TEXT_DIM))
+		var key: String = spec[1]
+		var lo: float = spec[2]
+		var hi: float = spec[3]
+		var sp := ForgeForm._spin(float(s[key]), false, func(v: float) -> void: apply.call(key, clampf(v, lo, hi)))
+		sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(sp)
+	grid.add_child(NeonTheme.label("Wire colour", 12, NeonTheme.TEXT_DIM))
+	var col := ColorPickerButton.new()
+	col.color = Color(str(s["color"]))
+	col.custom_minimum_size.y = 28
+	col.color_changed.connect(func(c: Color) -> void: apply.call("color", "#" + c.to_html(false)))
+	grid.add_child(col)
+	box.add_child(grid)
+	var tip := NeonTheme.label("Regenerated from where the buildings stand: move one and the wires re-string. Tall structures get roof anchors automatically; tune any building in its CABLES panel.", 11, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(tip)
+	return box
 
 
 ## Colour / strength / reach / flicker for a neon light object.

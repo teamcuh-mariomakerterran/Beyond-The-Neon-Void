@@ -41,6 +41,8 @@ var legacy_props: Array = []
 ##   "battle"|"flag"|"music"|"toast"|"teleport", arg: "...", once: bool,
 ##   requires_flag: "", blocks_flag: ""}], encounter: {rate, missions: []}}]
 var regions: Array = []
+## Overhead cable settings (CableNet.settings_of fills the defaults).
+var cables: Dictionary = {}
 var _uid: int = 0
 
 
@@ -290,6 +292,7 @@ func load_dict(d: Dictionary) -> void:
 		spawns["player"] = []
 	legacy_props = d.get("props", []).duplicate(true)
 	regions = d.get("regions", []).duplicate(true)
+	cables = (d.get("cables") as Dictionary).duplicate(true) if d.get("cables") is Dictionary else {}
 	tiles.clear()
 	particles.clear()
 	gameplay.clear()
@@ -367,6 +370,8 @@ func to_dict() -> Dictionary:
 		out["props"] = legacy_props
 	if not regions.is_empty():
 		out["regions"] = regions
+	if not cables.is_empty():
+		out["cables"] = cables
 	return out
 
 

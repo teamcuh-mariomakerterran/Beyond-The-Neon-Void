@@ -30,6 +30,7 @@ var _objects_root: Node2D
 var _particles_root: Node2D
 var _lights_root: Node2D
 var _fx: FxLayer
+var cables: CableNet
 var _ambient: CanvasModulate
 ## Preview the map's ambient tint + neon lights (on in game, toggleable in the editor).
 var show_lighting: bool = true
@@ -66,6 +67,9 @@ func _ready() -> void:
 	_lights_root = Node2D.new()
 	for n: Node2D in [_columns_root, _details_root, _objects_root, _particles_root, _lights_root]:
 		add_child(n)
+	cables = CableNet.new()
+	cables.renderer = self
+	add_child(cables)
 	_fx = FxLayer.new()
 	_fx.renderer = self
 	_fx.z_as_relative = false
@@ -469,6 +473,8 @@ func rebuild_objects() -> void:
 	_obj_nodes.clear()
 	for o: Dictionary in world.objects:
 		refresh_object(o)
+	if cables:
+		cables.mark_dirty()
 
 
 func refresh_object(o: Dictionary) -> void:
@@ -481,6 +487,8 @@ func refresh_object(o: Dictionary) -> void:
 	node.data = o
 	node.visible = show_objects and not bool(o.get("hidden", false))
 	node.refresh()
+	if cables:
+		cables.mark_dirty()
 
 
 func remove_object(o: Dictionary) -> void:
@@ -488,6 +496,8 @@ func remove_object(o: Dictionary) -> void:
 	if node:
 		node.queue_free()
 		_obj_nodes.erase(str(o["id"]))
+	if cables:
+		cables.mark_dirty()
 
 
 func object_node(obj_id: String) -> WorldSprite:

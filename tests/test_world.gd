@@ -20,6 +20,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_regions_and_links()
 	await test_lattice_clip()
 	test_location_graph()
+	await test_cables()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -758,3 +759,68 @@ func test_location_graph() -> void:
 	check(found, "neon_expanse → neo_kowloon_hub link found in the demo maps")
 	g.free()
 	real.free()
+
+
+func test_cables() -> void:
+	# Network maths: 4 buildings in a row, 2 anchors each, 100 px apart.
+	var pts: Array = []
+	for b in 4:
+		for k in 2:
+			pts.append({"pos": Vector2(b * 100.0, k * 30.0), "owner": "b%d" % b})
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 1
+	var mst := CableNet.link_anchors(pts, 150.0, 0.0, rng)
+	check(mst.size() == 7, "MST joins all 8 anchors with 7 spans (%d)" % mst.size())
+	var same := false
+	var too_long := false
+	for e: Array in mst:
+		same = same or pts[e[0]]["owner"] == pts[e[1]]["owner"]
+		too_long = too_long or (pts[e[0]]["pos"] as Vector2).distance_to(pts[e[1]]["pos"]) > 150.0
+	check(not same and not too_long, "spans only between different buildings, never longer than max")
+	rng.seed = 1
+	var dense := CableNet.link_anchors(pts, 150.0, 0.5, rng)
+	check(dense.size() > mst.size() and dense.size() <= mst.size() + 4, "extra spans add density (%d)" % dense.size())
+	var far: Array = [{"pos": Vector2.ZERO, "owner": "a"}, {"pos": Vector2(1000, 0), "owner": "b"}]
+	check(CableNet.link_anchors(far, 150.0, 1.0, rng).is_empty(), "no span across a too-wide gap")
+	check(CableNet.curve(Vector2.ZERO, Vector2(100, 0), 18.0, 2.0, 1.0, 0.0) == Vector2.ZERO and CableNet.curve(Vector2.ZERO, Vector2(100, 0), 18.0, 2.0, 1.0, 1.0).is_equal_approx(Vector2(100, 0)), "sag and sway are zero at the anchors")
+	check(CableNet.curve(Vector2.ZERO, Vector2(100, 0), 18.0, 0.0, 0.0, 0.5).y == 18.0, "sag peaks mid-span")
+	# Renderer: tall structures get roofline anchors and are strung together.
+	var dir := "user://t_cables"
+	DirAccess.make_dir_recursive_absolute(dir)
+	var img := Image.create(100, 300, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(0, 60, 100, 240), Color(0.3, 0.2, 0.5))  # roof at y = 60
+	img.save_png(dir + "/tower.png")
+	var w := _map()
+	w.kind = "hub"
+	for x in 12:
+		for y in 12:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	for c: Vector2i in [Vector2i(2, 2), Vector2i(4, 2), Vector2i(2, 4)]:
+		var o := w.add_object(dir + "/tower.png", c, 0, "structure")
+		o["scale"] = w.tile_width * 0.8 / 100.0
+	var small := w.add_object(dir + "/tower.png", Vector2i(8, 8), 0, "prop")
+	small["scale"] = 0.2
+	var r := WorldRenderer.new()
+	r.world = w
+	tree.root.add_child(r)
+	for i in 4:
+		await tree.process_frame
+	check(r.cables.anchors.size() == 6, "2 roof anchors per tall structure, none on props (%d)" % r.cables.anchors.size())
+	check(r.cables.spans.size() >= 2, "buildings strung together (%d spans)" % r.cables.spans.size())
+	var uvs: Array = CableNet.auto_uvs(r.object_node(str(w.objects[0]["id"])), false)
+	check(absf(float(uvs[0][1]) - 0.015) < 0.02, "auto anchor sits on the roofline (%s)" % str(uvs))
+	w.objects[1]["cables"] = "none"
+	r.refresh_object(w.objects[1])
+	for i in 4:
+		await tree.process_frame
+	check(r.cables.anchors.size() == 4, "\"none\" removes a building from the web")
+	w.cables["enabled"] = false
+	r.cables.mark_dirty()
+	for i in 4:
+		await tree.process_frame
+	check(r.cables.spans.is_empty(), "map setting turns the web off")
+	check(WorldMap.from_dict(w.to_dict()).cables.get("enabled") == false, "cable settings saved with the map")
+	r.queue_free()
+	await tree.process_frame
+	DirAccess.remove_absolute(dir + "/tower.png")
+	DirAccess.remove_absolute(dir)
