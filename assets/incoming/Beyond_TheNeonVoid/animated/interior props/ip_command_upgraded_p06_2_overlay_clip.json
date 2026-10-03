@@ -1,0 +1,615 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_upgraded_p06_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  314,
+  365
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 1,
+   "x": 314,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 2,
+   "x": 628,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 3,
+   "x": 942,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 4,
+   "x": 1256,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 5,
+   "x": 1570,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 6,
+   "x": 1884,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 7,
+   "x": 2198,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 8,
+   "x": 2512,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 9,
+   "x": 2826,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 10,
+   "x": 3140,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 11,
+   "x": 3454,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 12,
+   "x": 3768,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 13,
+   "x": 4082,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 14,
+   "x": 4396,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 15,
+   "x": 4710,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 16,
+   "x": 5024,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 17,
+   "x": 5338,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 18,
+   "x": 5652,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 19,
+   "x": 5966,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 20,
+   "x": 6280,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 21,
+   "x": 6594,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 22,
+   "x": 6908,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  },
+  {
+   "i": 23,
+   "x": 7222,
+   "y": 0,
+   "w": 314,
+   "h": 365
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  157,
+  360
+ ],
+ "propBBox": [
+  4,
+  4,
+  310,
+  361
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_upgraded_p06_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_upgraded_p06_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_upgraded_p06_2.png",
+  "placementKey": "bldg_interior_indoor_command_upgraded_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command Upgraded 06 \u2014 tactical map board",
+ "qaGrade": "B",
+ "qaNote": "tactical map board: route lines pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 57,
+    "y": 33,
+    "warm": true
+   },
+   {
+    "x": 82,
+    "y": 65,
+    "warm": false
+   },
+   {
+    "x": 131,
+    "y": 82,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 85,
+    "warm": true
+   },
+   {
+    "x": 128,
+    "y": 93,
+    "warm": false
+   },
+   {
+    "x": 141,
+    "y": 91,
+    "warm": false
+   },
+   {
+    "x": 80,
+    "y": 92,
+    "warm": false
+   },
+   {
+    "x": 149,
+    "y": 99,
+    "warm": false
+   },
+   {
+    "x": 107,
+    "y": 108,
+    "warm": false
+   },
+   {
+    "x": 115,
+    "y": 109,
+    "warm": false
+   },
+   {
+    "x": 115,
+    "y": 114,
+    "warm": false
+   },
+   {
+    "x": 106,
+    "y": 115,
+    "warm": false
+   },
+   {
+    "x": 46,
+    "y": 120,
+    "warm": false
+   },
+   {
+    "x": 102,
+    "y": 118,
+    "warm": false
+   },
+   {
+    "x": 107,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 175,
+    "y": 128,
+    "warm": false
+   },
+   {
+    "x": 195,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 238,
+    "y": 129,
+    "warm": false
+   },
+   {
+    "x": 170,
+    "y": 140,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 220,
+    "y": 148,
+    "warm": true
+   },
+   {
+    "x": 288,
+    "y": 148,
+    "warm": true
+   },
+   {
+    "x": 293,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 172,
+    "y": 150,
+    "warm": false
+   },
+   {
+    "x": 158,
+    "y": 153,
+    "warm": false
+   },
+   {
+    "x": 165,
+    "y": 155,
+    "warm": false
+   },
+   {
+    "x": 224,
+    "y": 156,
+    "warm": true
+   },
+   {
+    "x": 169,
+    "y": 162,
+    "warm": false
+   },
+   {
+    "x": 227,
+    "y": 164,
+    "warm": true
+   },
+   {
+    "x": 169,
+    "y": 169,
+    "warm": false
+   },
+   {
+    "x": 296,
+    "y": 176,
+    "warm": true
+   },
+   {
+    "x": 146,
+    "y": 172,
+    "warm": false
+   },
+   {
+    "x": 116,
+    "y": 171,
+    "warm": false
+   },
+   {
+    "x": 114,
+    "y": 172,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 181,
+    "warm": false
+   },
+   {
+    "x": 141,
+    "y": 176,
+    "warm": false
+   },
+   {
+    "x": 154,
+    "y": 175,
+    "warm": false
+   },
+   {
+    "x": 163,
+    "y": 179,
+    "warm": false
+   },
+   {
+    "x": 137,
+    "y": 186,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 185,
+    "warm": false
+   },
+   {
+    "x": 251,
+    "y": 189,
+    "warm": false
+   },
+   {
+    "x": 143,
+    "y": 192,
+    "warm": true
+   },
+   {
+    "x": 261,
+    "y": 192,
+    "warm": false
+   },
+   {
+    "x": 294,
+    "y": 205,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 214,
+    "warm": false
+   },
+   {
+    "x": 111,
+    "y": 222,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 233,
+    "warm": false
+   },
+   {
+    "x": 58,
+    "y": 236,
+    "warm": true
+   },
+   {
+    "x": 65,
+    "y": 241,
+    "warm": true
+   },
+   {
+    "x": 208,
+    "y": 244,
+    "warm": false
+   },
+   {
+    "x": 217,
+    "y": 246,
+    "warm": true
+   },
+   {
+    "x": 208,
+    "y": 250,
+    "warm": false
+   },
+   {
+    "x": 224,
+    "y": 248,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 251,
+    "warm": false
+   },
+   {
+    "x": 146,
+    "y": 262,
+    "warm": true
+   },
+   {
+    "x": 155,
+    "y": 265,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 269,
+    "warm": true
+   },
+   {
+    "x": 243,
+    "y": 276,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 290,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 302,
+    "warm": true
+   },
+   {
+    "x": 237,
+    "y": 351,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     53,
+     94,
+     79,
+     164
+    ]
+   },
+   {
+    "bbox": [
+     182,
+     136,
+     217,
+     152
+    ]
+   },
+   {
+    "bbox": [
+     74,
+     162,
+     110,
+     223
+    ]
+   },
+   {
+    "bbox": [
+     147,
+     193,
+     171,
+     216
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     72,
+     70,
+     109,
+     107
+    ],
+    "slope": 0.6,
+    "area": 166
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     94,
+     121,
+     140,
+     173
+    ],
+    "slope": 0.6,
+    "area": 223
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     170,
+     172,
+     207,
+     243
+    ],
+    "slope": 0.6,
+    "area": 271
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 61,
+   "strips": 4,
+   "screens": 3,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 2670,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_command_upgraded_p06_2",
+ "overlayClip": null
+}

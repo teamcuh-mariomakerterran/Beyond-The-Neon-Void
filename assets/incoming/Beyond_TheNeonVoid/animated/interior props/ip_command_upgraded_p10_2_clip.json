@@ -1,0 +1,306 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_upgraded_p10_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  270,
+  201
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 1,
+   "x": 270,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 2,
+   "x": 540,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 3,
+   "x": 810,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 4,
+   "x": 1080,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 5,
+   "x": 1350,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 6,
+   "x": 1620,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 7,
+   "x": 1890,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 8,
+   "x": 2160,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 9,
+   "x": 2430,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 10,
+   "x": 2700,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 11,
+   "x": 2970,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 12,
+   "x": 3240,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 13,
+   "x": 3510,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 14,
+   "x": 3780,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 15,
+   "x": 4050,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 16,
+   "x": 4320,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 17,
+   "x": 4590,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 18,
+   "x": 4860,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 19,
+   "x": 5130,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 20,
+   "x": 5400,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 21,
+   "x": 5670,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 22,
+   "x": 5940,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  },
+  {
+   "i": 23,
+   "x": 6210,
+   "y": 0,
+   "w": 270,
+   "h": 201
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  134,
+  196
+ ],
+ "propBBox": [
+  3,
+  4,
+  266,
+  197
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_upgraded_p10_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_upgraded_p10_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_upgraded_p10_2.png",
+  "placementKey": "bldg_interior_indoor_command_upgraded_p10",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command Upgraded 10 \u2014 holo pad base",
+ "qaGrade": "B",
+ "qaNote": "holo pad base: centre emitter glow sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 131,
+    "y": 16,
+    "warm": false
+   },
+   {
+    "x": 254,
+    "y": 97,
+    "warm": true
+   },
+   {
+    "x": 250,
+    "y": 101,
+    "warm": true
+   },
+   {
+    "x": 14,
+    "y": 103,
+    "warm": true
+   },
+   {
+    "x": 13,
+    "y": 122,
+    "warm": true
+   },
+   {
+    "x": 15,
+    "y": 125,
+    "warm": true
+   },
+   {
+    "x": 83,
+    "y": 146,
+    "warm": true
+   },
+   {
+    "x": 178,
+    "y": 146,
+    "warm": true
+   },
+   {
+    "x": 74,
+    "y": 173,
+    "warm": true
+   },
+   {
+    "x": 76,
+    "y": 177,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     107,
+     49,
+     160,
+     80
+    ],
+    "slope": 0.0,
+    "area": 1305
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 10,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 4537,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_command_upgraded_p10_2_overlay_clip.json",
+ "paletteCount": 19849
+}

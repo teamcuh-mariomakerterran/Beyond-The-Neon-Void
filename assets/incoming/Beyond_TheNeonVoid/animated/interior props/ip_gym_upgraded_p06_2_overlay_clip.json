@@ -1,0 +1,317 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_gym_upgraded_p06_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  211,
+  405
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 1,
+   "x": 211,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 2,
+   "x": 422,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 3,
+   "x": 633,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 4,
+   "x": 844,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 5,
+   "x": 1055,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 6,
+   "x": 1266,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 7,
+   "x": 1477,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 8,
+   "x": 1688,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 9,
+   "x": 1899,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 10,
+   "x": 2110,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 11,
+   "x": 2321,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 12,
+   "x": 2532,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 13,
+   "x": 2743,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 14,
+   "x": 2954,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 15,
+   "x": 3165,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 16,
+   "x": 3376,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 17,
+   "x": 3587,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 18,
+   "x": 3798,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 19,
+   "x": 4009,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 20,
+   "x": 4220,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 21,
+   "x": 4431,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 22,
+   "x": 4642,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  },
+  {
+   "i": 23,
+   "x": 4853,
+   "y": 0,
+   "w": 211,
+   "h": 405
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  106,
+  400
+ ],
+ "propBBox": [
+  4,
+  4,
+  207,
+  401
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_gym_upgraded_p06_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_gym_upgraded_p06_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_gym_upgraded_p06_2.png",
+  "placementKey": "bldg_interior_indoor_gym_upgraded_p06",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Gym Upgraded 06 \u2014 water cooler",
+ "qaGrade": "B+",
+ "qaNote": "water cooler: bubbles rise in the jug + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 16,
+    "y": 166,
+    "warm": true
+   },
+   {
+    "x": 189,
+    "y": 172,
+    "warm": true
+   },
+   {
+    "x": 191,
+    "y": 180,
+    "warm": true
+   },
+   {
+    "x": 41,
+    "y": 270,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "tank",
+    "bbox": [
+     42,
+     27,
+     158,
+     162
+    ],
+    "slope": 0.0,
+    "area": 10832
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     171,
+     174,
+     184,
+     204
+    ],
+    "slope": -0.5,
+    "area": 305
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     40,
+     209,
+     57,
+     227
+    ],
+    "slope": 0.0,
+    "area": 215
+   },
+   {
+    "kind": "tank",
+    "bbox": [
+     72,
+     225,
+     89,
+     244
+    ],
+    "slope": 0.0,
+    "area": 222
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 4,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 4,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 55642,
+ "config": {
+  "tanks": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_gym_upgraded_p06_2",
+ "overlayClip": null
+}

@@ -1,0 +1,272 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_garage_p07_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  132,
+  275
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 1,
+   "x": 132,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 2,
+   "x": 264,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 3,
+   "x": 396,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 4,
+   "x": 528,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 5,
+   "x": 660,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 6,
+   "x": 792,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 7,
+   "x": 924,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 8,
+   "x": 1056,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 9,
+   "x": 1188,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 10,
+   "x": 1320,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 11,
+   "x": 1452,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 12,
+   "x": 1584,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 13,
+   "x": 1716,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 14,
+   "x": 1848,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 15,
+   "x": 1980,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 16,
+   "x": 2112,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 17,
+   "x": 2244,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 18,
+   "x": 2376,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 19,
+   "x": 2508,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 20,
+   "x": 2640,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 21,
+   "x": 2772,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 22,
+   "x": 2904,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  },
+  {
+   "i": 23,
+   "x": 3036,
+   "y": 0,
+   "w": 132,
+   "h": 275
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  66,
+  270
+ ],
+ "propBBox": [
+  4,
+  4,
+  129,
+  271
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_garage_p07_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_garage_p07_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_garage_p07_2.png",
+  "placementKey": "bldg_interior_indoor_garage_p07",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Garage 07 \u2014 hanging lamp",
+ "qaGrade": "B",
+ "qaNote": "hanging lamp: bulb ring breathes",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 112,
+    "y": 147,
+    "warm": true
+   },
+   {
+    "x": 93,
+    "y": 151,
+    "warm": true
+   },
+   {
+    "x": 112,
+    "y": 159,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     20,
+     170,
+     114,
+     193
+    ],
+    "slope": 0.0,
+    "area": 407
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 3,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 6758,
+ "config": {
+  "lightmode": "breathe"
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_garage_p07_2",
+ "overlayClip": null
+}

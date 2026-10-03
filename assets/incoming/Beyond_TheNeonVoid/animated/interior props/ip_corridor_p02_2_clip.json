@@ -1,0 +1,275 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_corridor_p02_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  428,
+  255
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 1,
+   "x": 428,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 2,
+   "x": 856,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 3,
+   "x": 1284,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 4,
+   "x": 1712,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 5,
+   "x": 2140,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 6,
+   "x": 2568,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 7,
+   "x": 2996,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 8,
+   "x": 3424,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 9,
+   "x": 3852,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 10,
+   "x": 4280,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 11,
+   "x": 4708,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 12,
+   "x": 5136,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 13,
+   "x": 5564,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 14,
+   "x": 5992,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 15,
+   "x": 6420,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 16,
+   "x": 6848,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 17,
+   "x": 7276,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 18,
+   "x": 7704,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 19,
+   "x": 8132,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 20,
+   "x": 8560,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 21,
+   "x": 8988,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 22,
+   "x": 9416,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  },
+  {
+   "i": 23,
+   "x": 9844,
+   "y": 0,
+   "w": 428,
+   "h": 255
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  214,
+  250
+ ],
+ "propBBox": [
+  4,
+  4,
+  425,
+  251
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_corridor_p02_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_corridor_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_corridor_p02_2.png",
+  "placementKey": "bldg_interior_indoor_corridor_p02",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Corridor 02 \u2014 wall light tube",
+ "qaGrade": "B+",
+ "qaNote": "wall light tube: flicker + sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 92,
+    "y": 22,
+    "warm": true
+   },
+   {
+    "x": 33,
+    "y": 87,
+    "warm": false
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     327,
+     177,
+     330,
+     210
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     66,
+     70,
+     322,
+     209
+    ],
+    "slope": 0.5,
+    "area": 10224
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 2,
+   "strips": 1,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 60598,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_corridor_p02_2_overlay_clip.json",
+ "paletteCount": 40902
+}

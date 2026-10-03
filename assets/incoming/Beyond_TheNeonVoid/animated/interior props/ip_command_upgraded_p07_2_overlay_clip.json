@@ -1,0 +1,452 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_command_upgraded_p07_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  329,
+  398
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 1,
+   "x": 329,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 2,
+   "x": 658,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 3,
+   "x": 987,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 4,
+   "x": 1316,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 5,
+   "x": 1645,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 6,
+   "x": 1974,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 7,
+   "x": 2303,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 8,
+   "x": 2632,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 9,
+   "x": 2961,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 10,
+   "x": 3290,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 11,
+   "x": 3619,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 12,
+   "x": 3948,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 13,
+   "x": 4277,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 14,
+   "x": 4606,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 15,
+   "x": 4935,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 16,
+   "x": 5264,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 17,
+   "x": 5593,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 18,
+   "x": 5922,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 19,
+   "x": 6251,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 20,
+   "x": 6580,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 21,
+   "x": 6909,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 22,
+   "x": 7238,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  },
+  {
+   "i": 23,
+   "x": 7567,
+   "y": 0,
+   "w": 329,
+   "h": 398
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  164,
+  393
+ ],
+ "propBBox": [
+  4,
+  4,
+  325,
+  394
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_command_upgraded_p07_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_command_upgraded_p07_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_command_upgraded_p07_2.png",
+  "placementKey": "bldg_interior_indoor_command_upgraded_p07",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Command Upgraded 07 \u2014 holo crystal over projector",
+ "qaGrade": "A-",
+ "qaNote": "holo crystal over projector: shimmer lines",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 106,
+    "y": 137,
+    "warm": false
+   },
+   {
+    "x": 114,
+    "y": 138,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 148,
+    "warm": false
+   },
+   {
+    "x": 79,
+    "y": 158,
+    "warm": false
+   },
+   {
+    "x": 255,
+    "y": 163,
+    "warm": false
+   },
+   {
+    "x": 202,
+    "y": 162,
+    "warm": false
+   },
+   {
+    "x": 137,
+    "y": 170,
+    "warm": false
+   },
+   {
+    "x": 138,
+    "y": 177,
+    "warm": false
+   },
+   {
+    "x": 60,
+    "y": 230,
+    "warm": false
+   },
+   {
+    "x": 264,
+    "y": 236,
+    "warm": true
+   },
+   {
+    "x": 45,
+    "y": 269,
+    "warm": false
+   },
+   {
+    "x": 283,
+    "y": 269,
+    "warm": false
+   },
+   {
+    "x": 266,
+    "y": 292,
+    "warm": false
+   },
+   {
+    "x": 115,
+    "y": 295,
+    "warm": true
+   },
+   {
+    "x": 213,
+    "y": 296,
+    "warm": true
+   },
+   {
+    "x": 260,
+    "y": 295,
+    "warm": false
+   },
+   {
+    "x": 255,
+    "y": 299,
+    "warm": false
+   },
+   {
+    "x": 222,
+    "y": 312,
+    "warm": false
+   },
+   {
+    "x": 243,
+    "y": 318,
+    "warm": true
+   },
+   {
+    "x": 151,
+    "y": 321,
+    "warm": false
+   },
+   {
+    "x": 163,
+    "y": 321,
+    "warm": false
+   },
+   {
+    "x": 273,
+    "y": 324,
+    "warm": false
+   },
+   {
+    "x": 51,
+    "y": 325,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 331,
+    "warm": false
+   },
+   {
+    "x": 46,
+    "y": 329,
+    "warm": false
+   },
+   {
+    "x": 19,
+    "y": 331,
+    "warm": true
+   },
+   {
+    "x": 94,
+    "y": 339,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 340,
+    "warm": true
+   },
+   {
+    "x": 244,
+    "y": 340,
+    "warm": true
+   },
+   {
+    "x": 93,
+    "y": 343,
+    "warm": true
+   },
+   {
+    "x": 227,
+    "y": 342,
+    "warm": true
+   },
+   {
+    "x": 92,
+    "y": 350,
+    "warm": true
+   },
+   {
+    "x": 312,
+    "y": 367,
+    "warm": true
+   },
+   {
+    "x": 44,
+    "y": 369,
+    "warm": true
+   },
+   {
+    "x": 298,
+    "y": 374,
+    "warm": true
+   },
+   {
+    "x": 261,
+    "y": 381,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     268,
+     214,
+     272,
+     235
+    ]
+   },
+   {
+    "bbox": [
+     146,
+     299,
+     179,
+     302
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     72,
+     7,
+     262,
+     296
+    ],
+    "slope": 0.0,
+    "area": 29325
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 36,
+   "strips": 2,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 24665,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_command_upgraded_p07_2",
+ "overlayClip": null
+}

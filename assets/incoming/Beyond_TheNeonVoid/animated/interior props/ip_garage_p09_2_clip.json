@@ -1,0 +1,292 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_garage_p09_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  280,
+  266
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 1,
+   "x": 280,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 2,
+   "x": 560,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 3,
+   "x": 840,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 4,
+   "x": 1120,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 5,
+   "x": 1400,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 6,
+   "x": 1680,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 7,
+   "x": 1960,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 8,
+   "x": 2240,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 9,
+   "x": 2520,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 10,
+   "x": 2800,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 11,
+   "x": 3080,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 12,
+   "x": 3360,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 13,
+   "x": 3640,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 14,
+   "x": 3920,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 15,
+   "x": 4200,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 16,
+   "x": 4480,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 17,
+   "x": 4760,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 18,
+   "x": 5040,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 19,
+   "x": 5320,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 20,
+   "x": 5600,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 21,
+   "x": 5880,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 22,
+   "x": 6160,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  },
+  {
+   "i": 23,
+   "x": 6440,
+   "y": 0,
+   "w": 280,
+   "h": 266
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  140,
+  261
+ ],
+ "propBBox": [
+  4,
+  4,
+  276,
+  262
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_garage_p09_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_garage_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_garage_p09_2.png",
+  "placementKey": "bldg_interior_indoor_garage_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Garage 09 \u2014 twin-screen console",
+ "qaGrade": "B+",
+ "qaNote": "twin-screen console: screens sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 164,
+    "y": 59,
+    "warm": false
+   },
+   {
+    "x": 181,
+    "y": 61,
+    "warm": false
+   },
+   {
+    "x": 145,
+    "y": 147,
+    "warm": false
+   },
+   {
+    "x": 159,
+    "y": 150,
+    "warm": false
+   },
+   {
+    "x": 156,
+    "y": 213,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     63,
+     43,
+     113,
+     74
+    ],
+    "slope": -0.19488158899923635,
+    "area": 784
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     150,
+     63,
+     191,
+     86
+    ],
+    "slope": 0.0,
+    "area": 596
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 5,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 14188,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_garage_p09_2_overlay_clip.json",
+ "paletteCount": 21096
+}

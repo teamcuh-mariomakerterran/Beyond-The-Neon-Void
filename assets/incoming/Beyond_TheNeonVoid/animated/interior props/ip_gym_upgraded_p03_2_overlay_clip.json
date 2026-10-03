@@ -1,0 +1,429 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_gym_upgraded_p03_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  365,
+  392
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 1,
+   "x": 365,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 2,
+   "x": 730,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 3,
+   "x": 1095,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 4,
+   "x": 1460,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 5,
+   "x": 1825,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 6,
+   "x": 2190,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 7,
+   "x": 2555,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 8,
+   "x": 2920,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 9,
+   "x": 3285,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 10,
+   "x": 3650,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 11,
+   "x": 4015,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 12,
+   "x": 4380,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 13,
+   "x": 4745,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 14,
+   "x": 5110,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 15,
+   "x": 5475,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 16,
+   "x": 5840,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 17,
+   "x": 6205,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 18,
+   "x": 6570,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 19,
+   "x": 6935,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 20,
+   "x": 7300,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 21,
+   "x": 7665,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 22,
+   "x": 8030,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  },
+  {
+   "i": 23,
+   "x": 8395,
+   "y": 0,
+   "w": 365,
+   "h": 392
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  184,
+  389
+ ],
+ "propBBox": [
+  4,
+  4,
+  363,
+  390
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_gym_upgraded_p03_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_gym_upgraded_p03_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_gym_upgraded_p03_2.png",
+  "placementKey": "bldg_interior_indoor_gym_upgraded_p03",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Gym Upgraded 03 \u2014 treadmill",
+ "qaGrade": "B",
+ "qaNote": "treadmill: console + rail lights pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 215,
+    "y": 60,
+    "warm": true
+   },
+   {
+    "x": 305,
+    "y": 70,
+    "warm": false
+   },
+   {
+    "x": 311,
+    "y": 84,
+    "warm": false
+   },
+   {
+    "x": 224,
+    "y": 86,
+    "warm": true
+   },
+   {
+    "x": 307,
+    "y": 90,
+    "warm": false
+   },
+   {
+    "x": 231,
+    "y": 91,
+    "warm": true
+   },
+   {
+    "x": 185,
+    "y": 95,
+    "warm": true
+   },
+   {
+    "x": 260,
+    "y": 94,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 108,
+    "warm": false
+   },
+   {
+    "x": 301,
+    "y": 117,
+    "warm": true
+   },
+   {
+    "x": 312,
+    "y": 136,
+    "warm": false
+   },
+   {
+    "x": 260,
+    "y": 137,
+    "warm": true
+   },
+   {
+    "x": 195,
+    "y": 149,
+    "warm": false
+   },
+   {
+    "x": 200,
+    "y": 164,
+    "warm": false
+   },
+   {
+    "x": 179,
+    "y": 204,
+    "warm": true
+   },
+   {
+    "x": 278,
+    "y": 275,
+    "warm": false
+   },
+   {
+    "x": 264,
+    "y": 282,
+    "warm": false
+   },
+   {
+    "x": 317,
+    "y": 284,
+    "warm": true
+   },
+   {
+    "x": 172,
+    "y": 305,
+    "warm": true
+   },
+   {
+    "x": 190,
+    "y": 320,
+    "warm": false
+   },
+   {
+    "x": 187,
+    "y": 331,
+    "warm": false
+   },
+   {
+    "x": 183,
+    "y": 341,
+    "warm": false
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     185,
+     112,
+     194,
+     143
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     183,
+     29,
+     207,
+     57
+    ],
+    "slope": -0.6,
+    "area": 297
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     223,
+     31,
+     269,
+     62
+    ],
+    "slope": 0.31304985337243396,
+    "area": 654
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     278,
+     61,
+     302,
+     91
+    ],
+    "slope": -0.6,
+    "area": 391
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     310,
+     145,
+     337,
+     221
+    ],
+    "slope": 0.6,
+    "area": 513
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     194,
+     283,
+     258,
+     340
+    ],
+    "slope": -0.5,
+    "area": 1577
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     37,
+     318,
+     107,
+     356
+    ],
+    "slope": 0.5,
+    "area": 587
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 22,
+   "strips": 1,
+   "screens": 6,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 7089,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_gym_upgraded_p03_2",
+ "overlayClip": null
+}
