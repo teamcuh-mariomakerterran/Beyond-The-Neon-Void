@@ -1,0 +1,392 @@
+{
+  "name": "combat_shots",
+  "version": 1,
+  "description": "Weapon shot FX (rifle/smg/shotgun/lmg/laser/plasma/charge/twin/flame) tiers 1-3",
+  "generators": [
+    "fx.shot_rifle",
+    "fx.shot_rifle_suppressed",
+    "fx.shot_smg",
+    "fx.shot_shotgun",
+    "fx.shot_lmg",
+    "fx.shot_laser_beam",
+    "fx.shot_plasma_bolt",
+    "fx.shot_charge_cannon",
+    "fx.shot_twin_muzzle",
+    "fx.shot_flame_burst"
+  ],
+  "entries": [
+    {
+      "name": "bd_shot_rifle_t1",
+      "type": "rifle",
+      "tier": 1,
+      "generator": "fx.shot_rifle",
+      "strip": "bd_shot_rifle_t1_strip.png",
+      "guns": [
+        2,
+        6,
+        9
+      ],
+      "tint": "cyan",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_rifle_t2",
+      "type": "rifle",
+      "tier": 2,
+      "generator": "fx.shot_rifle",
+      "strip": "bd_shot_rifle_t2_strip.png",
+      "guns": [
+        2,
+        6,
+        9
+      ],
+      "tint": "cyan",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_rifle_t3",
+      "type": "rifle",
+      "tier": 3,
+      "generator": "fx.shot_rifle",
+      "strip": "bd_shot_rifle_t3_strip.png",
+      "guns": [
+        2,
+        6,
+        9
+      ],
+      "tint": "cyan",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_rifle_suppressed_t1",
+      "type": "rifle_suppressed",
+      "tier": 1,
+      "generator": "fx.shot_rifle_suppressed",
+      "strip": "bd_shot_rifle_suppressed_t1_strip.png",
+      "guns": [
+        8,
+        14
+      ],
+      "tint": "cyan",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_rifle_suppressed_t2",
+      "type": "rifle_suppressed",
+      "tier": 2,
+      "generator": "fx.shot_rifle_suppressed",
+      "strip": "bd_shot_rifle_suppressed_t2_strip.png",
+      "guns": [
+        8,
+        14
+      ],
+      "tint": "cyan",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_rifle_suppressed_t3",
+      "type": "rifle_suppressed",
+      "tier": 3,
+      "generator": "fx.shot_rifle_suppressed",
+      "strip": "bd_shot_rifle_suppressed_t3_strip.png",
+      "guns": [
+        8,
+        14
+      ],
+      "tint": "cyan",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_smg_t1",
+      "type": "smg",
+      "tier": 1,
+      "generator": "fx.shot_smg",
+      "strip": "bd_shot_smg_t1_strip.png",
+      "guns": [
+        4,
+        5,
+        12,
+        15
+      ],
+      "tint": "teal",
+      "fps": 16
+    },
+    {
+      "name": "bd_shot_smg_t2",
+      "type": "smg",
+      "tier": 2,
+      "generator": "fx.shot_smg",
+      "strip": "bd_shot_smg_t2_strip.png",
+      "guns": [
+        4,
+        5,
+        12,
+        15
+      ],
+      "tint": "teal",
+      "fps": 16
+    },
+    {
+      "name": "bd_shot_smg_t3",
+      "type": "smg",
+      "tier": 3,
+      "generator": "fx.shot_smg",
+      "strip": "bd_shot_smg_t3_strip.png",
+      "guns": [
+        4,
+        5,
+        12,
+        15
+      ],
+      "tint": "teal",
+      "fps": 16
+    },
+    {
+      "name": "bd_shot_shotgun_t1",
+      "type": "shotgun",
+      "tier": 1,
+      "generator": "fx.shot_shotgun",
+      "strip": "bd_shot_shotgun_t1_strip.png",
+      "guns": [
+        7
+      ],
+      "tint": "green",
+      "fps": 10
+    },
+    {
+      "name": "bd_shot_shotgun_t2",
+      "type": "shotgun",
+      "tier": 2,
+      "generator": "fx.shot_shotgun",
+      "strip": "bd_shot_shotgun_t2_strip.png",
+      "guns": [
+        7
+      ],
+      "tint": "green",
+      "fps": 10
+    },
+    {
+      "name": "bd_shot_shotgun_t3",
+      "type": "shotgun",
+      "tier": 3,
+      "generator": "fx.shot_shotgun",
+      "strip": "bd_shot_shotgun_t3_strip.png",
+      "guns": [
+        7
+      ],
+      "tint": "green",
+      "fps": 10
+    },
+    {
+      "name": "bd_shot_lmg_t1",
+      "type": "lmg",
+      "tier": 1,
+      "generator": "fx.shot_lmg",
+      "strip": "bd_shot_lmg_t1_strip.png",
+      "guns": [
+        1
+      ],
+      "tint": "orange",
+      "fps": 14
+    },
+    {
+      "name": "bd_shot_lmg_t2",
+      "type": "lmg",
+      "tier": 2,
+      "generator": "fx.shot_lmg",
+      "strip": "bd_shot_lmg_t2_strip.png",
+      "guns": [
+        1
+      ],
+      "tint": "orange",
+      "fps": 14
+    },
+    {
+      "name": "bd_shot_lmg_t3",
+      "type": "lmg",
+      "tier": 3,
+      "generator": "fx.shot_lmg",
+      "strip": "bd_shot_lmg_t3_strip.png",
+      "guns": [
+        1
+      ],
+      "tint": "orange",
+      "fps": 14
+    },
+    {
+      "name": "bd_shot_laser_beam_t1",
+      "type": "laser_beam",
+      "tier": 1,
+      "generator": "fx.shot_laser_beam",
+      "strip": "bd_shot_laser_beam_t1_strip.png",
+      "guns": [
+        3
+      ],
+      "tint": "red",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_laser_beam_t2",
+      "type": "laser_beam",
+      "tier": 2,
+      "generator": "fx.shot_laser_beam",
+      "strip": "bd_shot_laser_beam_t2_strip.png",
+      "guns": [
+        3
+      ],
+      "tint": "red",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_laser_beam_t3",
+      "type": "laser_beam",
+      "tier": 3,
+      "generator": "fx.shot_laser_beam",
+      "strip": "bd_shot_laser_beam_t3_strip.png",
+      "guns": [
+        3
+      ],
+      "tint": "red",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_plasma_bolt_t1",
+      "type": "plasma_bolt",
+      "tier": 1,
+      "generator": "fx.shot_plasma_bolt",
+      "strip": "bd_shot_plasma_bolt_t1_strip.png",
+      "guns": [
+        10
+      ],
+      "tint": "blue",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_plasma_bolt_t2",
+      "type": "plasma_bolt",
+      "tier": 2,
+      "generator": "fx.shot_plasma_bolt",
+      "strip": "bd_shot_plasma_bolt_t2_strip.png",
+      "guns": [
+        10
+      ],
+      "tint": "blue",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_plasma_bolt_t3",
+      "type": "plasma_bolt",
+      "tier": 3,
+      "generator": "fx.shot_plasma_bolt",
+      "strip": "bd_shot_plasma_bolt_t3_strip.png",
+      "guns": [
+        10
+      ],
+      "tint": "blue",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_charge_cannon_t1",
+      "type": "charge_cannon",
+      "tier": 1,
+      "generator": "fx.shot_charge_cannon",
+      "strip": "bd_shot_charge_cannon_t1_strip.png",
+      "guns": [
+        13
+      ],
+      "tint": "teal",
+      "fps": 10
+    },
+    {
+      "name": "bd_shot_charge_cannon_t2",
+      "type": "charge_cannon",
+      "tier": 2,
+      "generator": "fx.shot_charge_cannon",
+      "strip": "bd_shot_charge_cannon_t2_strip.png",
+      "guns": [
+        13
+      ],
+      "tint": "teal",
+      "fps": 10
+    },
+    {
+      "name": "bd_shot_charge_cannon_t3",
+      "type": "charge_cannon",
+      "tier": 3,
+      "generator": "fx.shot_charge_cannon",
+      "strip": "bd_shot_charge_cannon_t3_strip.png",
+      "guns": [
+        13
+      ],
+      "tint": "teal",
+      "fps": 10
+    },
+    {
+      "name": "bd_shot_twin_muzzle_t1",
+      "type": "twin_muzzle",
+      "tier": 1,
+      "generator": "fx.shot_twin_muzzle",
+      "strip": "bd_shot_twin_muzzle_t1_strip.png",
+      "guns": [
+        11
+      ],
+      "tint": "silver",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_twin_muzzle_t2",
+      "type": "twin_muzzle",
+      "tier": 2,
+      "generator": "fx.shot_twin_muzzle",
+      "strip": "bd_shot_twin_muzzle_t2_strip.png",
+      "guns": [
+        11
+      ],
+      "tint": "silver",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_twin_muzzle_t3",
+      "type": "twin_muzzle",
+      "tier": 3,
+      "generator": "fx.shot_twin_muzzle",
+      "strip": "bd_shot_twin_muzzle_t3_strip.png",
+      "guns": [
+        11
+      ],
+      "tint": "silver",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_flame_burst_t1",
+      "type": "flame_burst",
+      "tier": 1,
+      "generator": "fx.shot_flame_burst",
+      "strip": "bd_shot_flame_burst_t1_strip.png",
+      "guns": [],
+      "tint": "orange",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_flame_burst_t2",
+      "type": "flame_burst",
+      "tier": 2,
+      "generator": "fx.shot_flame_burst",
+      "strip": "bd_shot_flame_burst_t2_strip.png",
+      "guns": [],
+      "tint": "orange",
+      "fps": 12
+    },
+    {
+      "name": "bd_shot_flame_burst_t3",
+      "type": "flame_burst",
+      "tier": 3,
+      "generator": "fx.shot_flame_burst",
+      "strip": "bd_shot_flame_burst_t3_strip.png",
+      "guns": [],
+      "tint": "orange",
+      "fps": 12
+    }
+  ],
+  "qa": "qa_shots.png"
+}
