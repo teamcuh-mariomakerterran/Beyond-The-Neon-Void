@@ -1,0 +1,95 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "fx_rocket_inflight_S",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "fx_rocket_8dir (Lattice, from the library launcher rocket)",
+ "cell": [
+  18,
+  54
+ ],
+ "frames": 6,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 18,
+   "h": 54
+  },
+  {
+   "i": 1,
+   "x": 18,
+   "y": 0,
+   "w": 18,
+   "h": 54
+  },
+  {
+   "i": 2,
+   "x": 36,
+   "y": 0,
+   "w": 18,
+   "h": 54
+  },
+  {
+   "i": 3,
+   "x": 54,
+   "y": 0,
+   "w": 18,
+   "h": 54
+  },
+  {
+   "i": 4,
+   "x": 72,
+   "y": 0,
+   "w": 18,
+   "h": 54
+  },
+  {
+   "i": 5,
+   "x": 90,
+   "y": 0,
+   "w": 18,
+   "h": 54
+  }
+ ],
+ "fps": 14,
+ "frameMs": 71,
+ "holds": null,
+ "tickSequence": null,
+ "facing": "S",
+ "dirs": null,
+ "dirOrder": [
+  "N",
+  "NE",
+  "E",
+  "SE",
+  "S",
+  "SW",
+  "W",
+  "NW"
+ ],
+ "dirOrderSource": "Forge SHEET_DIR_ORDER (pixel-forge-app/src/lib/sheetImport.js:26); Lattice UnitKit takes the same order from unit.kit.json `facings` (src/js/39_unitkit.js)",
+ "dirIndex": 4,
+ "anchor": [
+  8,
+  49
+ ],
+ "spawn": [
+  8,
+  49
+ ],
+ "travelVector": [
+  0.0,
+  1.0
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "textures": {
+  "strip": "fx_rocket_inflight_S_strip.png"
+ },
+ "source": "LATTICE",
+ "suggestedUse": "Looping in-flight rocket toward S (engine moves it along travelVector): anchor = rocket nose, flame flicker + short smoke stub behind."
+}

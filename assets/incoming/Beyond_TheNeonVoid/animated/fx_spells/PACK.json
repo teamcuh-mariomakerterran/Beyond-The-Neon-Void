@@ -1,0 +1,1370 @@
+{
+ "format": "lattice.fx_spells.pack.v1",
+ "version": 1,
+ "name": "fx_spells",
+ "source": "LATTICE",
+ "built": "2026-10-03",
+ "note": "Wave 12 spell pack: sci-fi tech-magic for Black Doctrine (84x84 units, 64x32 iso tiles) and the FFT-style Godot game. Staged cast -> travel -> impact: caster circles/charge/channel on the caster tile, plasma bolts / arc beams per diagonal (NE/SE/SW/NW, separate files, no mirroring), elemental tiers 1/2/3 on the target tile (tier 3 = 3x3), support/status effects on a unit, big spells (orbital laser, kinetic rod, missile barrage, mech drop, drone swarm, map-wide 7x7 limit break), and Brian's sigil-head summon (summon, hold loop, dismiss, life steal in 4 diagonals + heal received). Clip JSON uses only existing lattice.clip fields. anchor = ground point of the target (or centre) tile = bottom vertex of its 64x32 diamond; config.tileCentre = that tile centre; config.footprintTiles = area in map tiles. hits[] = frame + point where the hit lands (tile centre for tile spells, beam/bolt end for projectiles). Hard alpha, normal blending, selective outlines (each colour outlined by its own darkest shade; black only inside the void singularity).",
+ "facings": 4,
+ "groups": [
+  "caster",
+  "plasma",
+  "cryo",
+  "arc",
+  "void",
+  "toxic",
+  "projectiles",
+  "support",
+  "big",
+  "summon"
+ ],
+ "counts": {
+  "clips": 63,
+  "caster": 10,
+  "plasma": 3,
+  "cryo": 3,
+  "arc": 3,
+  "void": 3,
+  "toxic": 3,
+  "projectiles": 8,
+  "support": 16,
+  "big": 6,
+  "summon": 8
+ },
+ "grades": {
+  "A-": 25,
+  "B+": 33,
+  "B": 5
+ },
+ "qa": {
+  "gifs": "samples/ui/qa_wave12/spl_*.gif",
+  "families": "samples/ui/qa_wave12/family_*.gif",
+  "contact": "samples/ui/qa_wave12.png",
+  "vignette": "samples/ui/qa_wave12_vignette.gif"
+ },
+ "effects": [
+  {
+   "id": "spl_cast_circle_cyan",
+   "label": "Cast circle (hex/circuit runes) \u2014 cyan",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    64
+   ],
+   "frames": 16,
+   "strip": "caster/spl_cast_circle_cyan_strip.png",
+   "clip": "caster/spl_cast_circle_cyan_clip.json",
+   "anchor": [
+    48,
+    56
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_cast_circle_plasma",
+   "label": "Cast circle (hex/circuit runes) \u2014 plasma",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    64
+   ],
+   "frames": 16,
+   "strip": "caster/spl_cast_circle_plasma_strip.png",
+   "clip": "caster/spl_cast_circle_plasma_clip.json",
+   "anchor": [
+    48,
+    56
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_cast_circle_toxic",
+   "label": "Cast circle (hex/circuit runes) \u2014 toxic",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    64
+   ],
+   "frames": 16,
+   "strip": "caster/spl_cast_circle_toxic_strip.png",
+   "clip": "caster/spl_cast_circle_toxic_clip.json",
+   "anchor": [
+    48,
+    56
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_cast_circle_void",
+   "label": "Cast circle (hex/circuit runes) \u2014 void",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    64
+   ],
+   "frames": 16,
+   "strip": "caster/spl_cast_circle_void_strip.png",
+   "clip": "caster/spl_cast_circle_void_clip.json",
+   "anchor": [
+    48,
+    56
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_channel_cyan",
+   "label": "Channel loop \u2014 cyan",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 12,
+   "strip": "caster/spl_channel_cyan_strip.png",
+   "clip": "caster/spl_channel_cyan_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_channel_void",
+   "label": "Channel loop \u2014 void",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 12,
+   "strip": "caster/spl_channel_void_strip.png",
+   "clip": "caster/spl_channel_void_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_charge_cyan",
+   "label": "Charge-up \u2014 cyan",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    112
+   ],
+   "frames": 16,
+   "strip": "caster/spl_charge_cyan_strip.png",
+   "clip": "caster/spl_charge_cyan_clip.json",
+   "anchor": [
+    48,
+    104
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_charge_plasma",
+   "label": "Charge-up \u2014 plasma",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    112
+   ],
+   "frames": 16,
+   "strip": "caster/spl_charge_plasma_strip.png",
+   "clip": "caster/spl_charge_plasma_clip.json",
+   "anchor": [
+    48,
+    104
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_charge_toxic",
+   "label": "Charge-up \u2014 toxic",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    112
+   ],
+   "frames": 16,
+   "strip": "caster/spl_charge_toxic_strip.png",
+   "clip": "caster/spl_charge_toxic_clip.json",
+   "anchor": [
+    48,
+    104
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_charge_void",
+   "label": "Charge-up \u2014 void",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    112
+   ],
+   "frames": 16,
+   "strip": "caster/spl_charge_void_strip.png",
+   "clip": "caster/spl_charge_void_clip.json",
+   "anchor": [
+    48,
+    104
+   ],
+   "dir": null,
+   "group": "caster",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_plasma_t1",
+   "label": "Plasma (tier 1) \u2014 plasma bolt drops, flame burst on the tile",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    120
+   ],
+   "frames": 14,
+   "strip": "plasma/spl_plasma_t1_strip.png",
+   "clip": "plasma/spl_plasma_t1_clip.json",
+   "anchor": [
+    48,
+    112
+   ],
+   "dir": null,
+   "group": "plasma",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_plasma_t2",
+   "label": "Plasmara (tier 2) \u2014 glyph ignites, plasma pillar erupts on the tile",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    112,
+    152
+   ],
+   "frames": 18,
+   "strip": "plasma/spl_plasma_t2_strip.png",
+   "clip": "plasma/spl_plasma_t2_clip.json",
+   "anchor": [
+    56,
+    136
+   ],
+   "dir": null,
+   "group": "plasma",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_plasma_t3_3x3",
+   "label": "Plasmaga (tier 3, 3x3) \u2014 target grid lights, plasma pillars erupt across 9 tiles, firestorm + shock",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    200
+   ],
+   "frames": 24,
+   "strip": "plasma/spl_plasma_t3_3x3_strip.png",
+   "clip": "plasma/spl_plasma_t3_3x3_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "plasma",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_cryo_t1",
+   "label": "Cryo (tier 1) \u2014 frost bloom, ice shards spike up and shatter",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    120
+   ],
+   "frames": 14,
+   "strip": "cryo/spl_cryo_t1_strip.png",
+   "clip": "cryo/spl_cryo_t1_clip.json",
+   "anchor": [
+    48,
+    112
+   ],
+   "dir": null,
+   "group": "cryo",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_cryo_t2",
+   "label": "Cryora (tier 2) \u2014 cryo glyph, crystal cluster encases the tile, glint, shatters",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    112,
+    152
+   ],
+   "frames": 18,
+   "strip": "cryo/spl_cryo_t2_strip.png",
+   "clip": "cryo/spl_cryo_t2_clip.json",
+   "anchor": [
+    56,
+    136
+   ],
+   "dir": null,
+   "group": "cryo",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_cryo_t3_3x3",
+   "label": "Cryoga (tier 3, 3x3) \u2014 frost sweeps the area, shard field erupts in waves, central spire, mass shatter",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    200
+   ],
+   "frames": 24,
+   "strip": "cryo/spl_cryo_t3_3x3_strip.png",
+   "clip": "cryo/spl_cryo_t3_3x3_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "cryo",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_arc_t1",
+   "label": "Arc (tier 1) \u2014 lightning strikes the tile (leader, double strike), ground arcs, sparks",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    120
+   ],
+   "frames": 13,
+   "strip": "arc/spl_arc_t1_strip.png",
+   "clip": "arc/spl_arc_t1_clip.json",
+   "anchor": [
+    48,
+    112
+   ],
+   "dir": null,
+   "group": "arc",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_arc_t2",
+   "label": "Arcra (tier 2) \u2014 three bolts converge into a crackling ball, which discharges into the tile",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    112,
+    152
+   ],
+   "frames": 17,
+   "strip": "arc/spl_arc_t2_strip.png",
+   "clip": "arc/spl_arc_t2_clip.json",
+   "anchor": [
+    56,
+    136
+   ],
+   "dir": null,
+   "group": "arc",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_arc_t3_3x3",
+   "label": "Arcga (tier 3, 3x3) \u2014 chain storm: strikes hop across all 9 tiles, then a mega bolt arcs out to every tile",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    200
+   ],
+   "frames": 22,
+   "strip": "arc/spl_arc_t3_3x3_strip.png",
+   "clip": "arc/spl_arc_t3_3x3_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "arc",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_void_t1",
+   "label": "Grav (tier 1) \u2014 singularity seed opens over the tile, crushes inward, implodes with a violet snap",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    120
+   ],
+   "frames": 14,
+   "strip": "void/spl_void_t1_strip.png",
+   "clip": "void/spl_void_t1_clip.json",
+   "anchor": [
+    48,
+    112
+   ],
+   "dir": null,
+   "group": "void",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_void_t2",
+   "label": "Gravra (tier 2) \u2014 gravity well: ground cracks, debris tears up and spirals in, crush pulse, outward blast",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    112,
+    152
+   ],
+   "frames": 18,
+   "strip": "void/spl_void_t2_strip.png",
+   "clip": "void/spl_void_t2_clip.json",
+   "anchor": [
+    56,
+    136
+   ],
+   "dir": null,
+   "group": "void",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_void_t3_3x3",
+   "label": "Gravga (tier 3, 3x3) \u2014 event horizon: accretion disc over the area, debris from all 9 tiles, crush, violet nova",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    200
+   ],
+   "frames": 24,
+   "strip": "void/spl_void_t3_3x3_strip.png",
+   "clip": "void/spl_void_t3_3x3_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "void",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_toxic_t1",
+   "label": "Nanite (tier 1) \u2014 nanite swarm streams in, bursts into a toxic cloud that buzzes and thins",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    120
+   ],
+   "frames": 16,
+   "strip": "toxic/spl_toxic_t1_strip.png",
+   "clip": "toxic/spl_toxic_t1_clip.json",
+   "anchor": [
+    48,
+    112
+   ],
+   "dir": null,
+   "group": "toxic",
+   "qaGrade": "B"
+  },
+  {
+   "id": "spl_toxic_t2",
+   "label": "Nanitra (tier 2) \u2014 canister cracks, nanite cloud billows, a glitch skull flickers in the haze",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    112,
+    152
+   ],
+   "frames": 20,
+   "strip": "toxic/spl_toxic_t2_strip.png",
+   "clip": "toxic/spl_toxic_t2_clip.json",
+   "anchor": [
+    56,
+    136
+   ],
+   "dir": null,
+   "group": "toxic",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_toxic_t3_3x3",
+   "label": "Nanitga (tier 3, 3x3) \u2014 nanite storm blankets 9 tiles: billowing cloud, swarm, giant glitch skull",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    200
+   ],
+   "frames": 24,
+   "strip": "toxic/spl_toxic_t3_3x3_strip.png",
+   "clip": "toxic/spl_toxic_t3_3x3_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "toxic",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_arc_beam_NE",
+   "label": "Arc beam \u2014 lightning lance NE",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_arc_beam_NE_strip.png",
+   "clip": "projectiles/spl_arc_beam_NE_clip.json",
+   "anchor": [
+    26,
+    82
+   ],
+   "dir": "NE",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_arc_beam_NW",
+   "label": "Arc beam \u2014 lightning lance NW",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_arc_beam_NW_strip.png",
+   "clip": "projectiles/spl_arc_beam_NW_clip.json",
+   "anchor": [
+    122,
+    82
+   ],
+   "dir": "NW",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_arc_beam_SE",
+   "label": "Arc beam \u2014 lightning lance SE",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_arc_beam_SE_strip.png",
+   "clip": "projectiles/spl_arc_beam_SE_clip.json",
+   "anchor": [
+    26,
+    34
+   ],
+   "dir": "SE",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_arc_beam_SW",
+   "label": "Arc beam \u2014 lightning lance SW",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_arc_beam_SW_strip.png",
+   "clip": "projectiles/spl_arc_beam_SW_clip.json",
+   "anchor": [
+    122,
+    34
+   ],
+   "dir": "SW",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_plasma_bolt_NE",
+   "label": "Plasma bolt \u2014 travels NE",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_plasma_bolt_NE_strip.png",
+   "clip": "projectiles/spl_plasma_bolt_NE_clip.json",
+   "anchor": [
+    26,
+    82
+   ],
+   "dir": "NE",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_plasma_bolt_NW",
+   "label": "Plasma bolt \u2014 travels NW",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_plasma_bolt_NW_strip.png",
+   "clip": "projectiles/spl_plasma_bolt_NW_clip.json",
+   "anchor": [
+    122,
+    82
+   ],
+   "dir": "NW",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_plasma_bolt_SE",
+   "label": "Plasma bolt \u2014 travels SE",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_plasma_bolt_SE_strip.png",
+   "clip": "projectiles/spl_plasma_bolt_SE_clip.json",
+   "anchor": [
+    26,
+    34
+   ],
+   "dir": "SE",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_plasma_bolt_SW",
+   "label": "Plasma bolt \u2014 travels SW",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    148,
+    108
+   ],
+   "frames": 12,
+   "strip": "projectiles/spl_plasma_bolt_SW_strip.png",
+   "clip": "projectiles/spl_plasma_bolt_SW_clip.json",
+   "anchor": [
+    122,
+    34
+   ],
+   "dir": "SW",
+   "group": "projectiles",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_barrier_loop",
+   "label": "Energy barrier (loop) \u2014 dome holds, shimmer band sweeps, cells twinkle",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 12,
+   "strip": "support/spl_barrier_loop_strip.png",
+   "clip": "support/spl_barrier_loop_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_barrier_raise",
+   "label": "Energy barrier \u2014 hex-cell dome builds up from a ground ring, locks with a flash",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 14,
+   "strip": "support/spl_barrier_raise_strip.png",
+   "clip": "support/spl_barrier_raise_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_buff_aura",
+   "label": "Buff aura (loop) \u2014 warm gold ground ring, up-arrows climb the unit",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 12,
+   "strip": "support/spl_buff_aura_strip.png",
+   "clip": "support/spl_buff_aura_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_cleanse",
+   "label": "Cleanse \u2014 a white-cyan purge ring sweeps up the unit, dark ailment motes are torn out and dissolve into sparks",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 14,
+   "strip": "support/spl_cleanse_strip.png",
+   "clip": "support/spl_cleanse_clip.json",
+   "anchor": [
+    48,
+    114
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_debuff_aura",
+   "label": "Debuff aura (loop) \u2014 warning-red ground ring, down-arrows sink through the unit",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 12,
+   "strip": "support/spl_debuff_aura_strip.png",
+   "clip": "support/spl_debuff_aura_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_doom",
+   "label": "Doom (curse) \u2014 the glitching blue skull materialises over the target, ticks a countdown, then bites down in a red flash",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    150
+   ],
+   "frames": 20,
+   "strip": "support/spl_doom_strip.png",
+   "clip": "support/spl_doom_clip.json",
+   "anchor": [
+    48,
+    142
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_emp",
+   "label": "Stun / EMP \u2014 EMP blast rings out with crackling arcs, static locks the unit",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    128,
+    144
+   ],
+   "frames": 14,
+   "strip": "support/spl_emp_strip.png",
+   "clip": "support/spl_emp_clip.json",
+   "anchor": [
+    64,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B"
+  },
+  {
+   "id": "spl_haste",
+   "label": "Haste \u2014 speed chevrons climb, fast clock ring spins, motion streaks",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 14,
+   "strip": "support/spl_haste_strip.png",
+   "clip": "support/spl_haste_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_nanoheal",
+   "label": "Nano-heal (single) \u2014 repair nanites spiral down the unit, + motes rise, green-mint pulse",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 16,
+   "strip": "support/spl_nanoheal_strip.png",
+   "clip": "support/spl_nanoheal_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_nanoheal_area",
+   "label": "Nano-heal (area 3x3) \u2014 repair grid lights the area, nanite columns rise on every tile, + motes",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    192
+   ],
+   "frames": 20,
+   "strip": "support/spl_nanoheal_area_strip.png",
+   "clip": "support/spl_nanoheal_area_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_protect",
+   "label": "Protect \u2014 gold armour plates orbit in and lock into a ring, shield sigil flashes",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 14,
+   "strip": "support/spl_protect_strip.png",
+   "clip": "support/spl_protect_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_revive",
+   "label": "Revive pulse \u2014 gold beam drops, ECG trace spikes, three defib ping rings, life sparks rise",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    128,
+    160
+   ],
+   "frames": 21,
+   "strip": "support/spl_revive_strip.png",
+   "clip": "support/spl_revive_clip.json",
+   "anchor": [
+    64,
+    136
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_scan",
+   "label": "Scan / reveal \u2014 radar ping arcs sweep the 3x3 area, sweep beam turns, target brackets lock with a ! marker",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    192
+   ],
+   "frames": 20,
+   "strip": "support/spl_scan_strip.png",
+   "clip": "support/spl_scan_clip.json",
+   "anchor": [
+    112,
+    152
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_shell",
+   "label": "Shell \u2014 teal hex sigil, bubble shell ripples around the unit (energy defence)",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 14,
+   "strip": "support/spl_shell_strip.png",
+   "clip": "support/spl_shell_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B"
+  },
+  {
+   "id": "spl_slow",
+   "label": "Slow \u2014 violet hourglass, sluggish tick ring, sand motes sink",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 16,
+   "strip": "support/spl_slow_strip.png",
+   "clip": "support/spl_slow_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B"
+  },
+  {
+   "id": "spl_stunned_loop",
+   "label": "Stunned (loop) \u2014 bolt icons orbit overhead, static sparks flicker on the unit",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 10,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 12,
+   "strip": "support/spl_stunned_loop_strip.png",
+   "clip": "support/spl_stunned_loop_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "support",
+   "qaGrade": "B"
+  },
+  {
+   "id": "spl_kinetic_rod",
+   "label": "Kinetic rod \u2014 orbital tungsten rod streaks down with a plasma sheath + smoke trail, white-out impact, dust shockwave, crater",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    300
+   ],
+   "frames": 24,
+   "strip": "big/spl_kinetic_rod_strip.png",
+   "clip": "big/spl_kinetic_rod_clip.json",
+   "anchor": [
+    112,
+    252
+   ],
+   "dir": null,
+   "group": "big",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_limit_doctrine",
+   "label": "Limit break: DOCTRINE PROTOCOL (map-wide 7x7) \u2014 circuit grid floods the battlefield, the glitch skull rises, orbital lances rain on the field, white-out",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    480,
+    340
+   ],
+   "frames": 30,
+   "strip": "big/spl_limit_doctrine_strip.png",
+   "clip": "big/spl_limit_doctrine_clip.json",
+   "anchor": [
+    240,
+    236
+   ],
+   "dir": null,
+   "group": "big",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_missile_barrage",
+   "label": "Missile barrage \u2014 a salvo arcs in with smoke trails, rockets hit tile by tile across the 3x3, flashes + shock rings",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    240
+   ],
+   "frames": 26,
+   "strip": "big/spl_missile_barrage_strip.png",
+   "clip": "big/spl_missile_barrage_clip.json",
+   "anchor": [
+    112,
+    192
+   ],
+   "dir": null,
+   "group": "big",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_orbital_laser",
+   "label": "Orbital strike \u2014 satellite laser: red lock-on, beam slams the 3x3, molten ground, smoke column",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    300
+   ],
+   "frames": 28,
+   "strip": "big/spl_orbital_laser_strip.png",
+   "clip": "big/spl_orbital_laser_clip.json",
+   "anchor": [
+    112,
+    252
+   ],
+   "dir": null,
+   "group": "big",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_summon_drones",
+   "label": "Summon: drone swarm \u2014 a V of strike drones descends, rings the target, strafes it with red tracers, peels away",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    224,
+    220
+   ],
+   "frames": 26,
+   "strip": "big/spl_summon_drones_strip.png",
+   "clip": "big/spl_summon_drones_clip.json",
+   "anchor": [
+    112,
+    204
+   ],
+   "dir": null,
+   "group": "big",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_summon_mech",
+   "label": "Summon: mech drop \u2014 gold mech g02 (SE) descends on retro-thrusters, dust blast, heavy landing shock, visor glow",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    160,
+    256
+   ],
+   "frames": 24,
+   "strip": "big/spl_summon_mech_strip.png",
+   "clip": "big/spl_summon_mech_clip.json",
+   "anchor": [
+    80,
+    228
+   ],
+   "dir": null,
+   "group": "big",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_head_lifesteal_NE",
+   "label": "Sigil head: life steal NE \u2014 the head stops spinning, faces the target 2 tiles NE and opens its jaw; violet soul streams rip out of the target into its mouth (glitch slices, flaring eyes), then a heal pulse runs down the beam into the sigil and it spins back to idle",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    216,
+    240
+   ],
+   "frames": 32,
+   "strip": "summon/spl_head_lifesteal_NE_strip.png",
+   "clip": "summon/spl_head_lifesteal_NE_clip.json",
+   "anchor": [
+    108,
+    196
+   ],
+   "dir": "NE",
+   "group": "summon",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_head_lifesteal_NW",
+   "label": "Sigil head: life steal NW \u2014 the head stops spinning, faces the target 2 tiles NW and opens its jaw; violet soul streams rip out of the target into its mouth (glitch slices, flaring eyes), then a heal pulse runs down the beam into the sigil and it spins back to idle",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    216,
+    240
+   ],
+   "frames": 32,
+   "strip": "summon/spl_head_lifesteal_NW_strip.png",
+   "clip": "summon/spl_head_lifesteal_NW_clip.json",
+   "anchor": [
+    108,
+    196
+   ],
+   "dir": "NW",
+   "group": "summon",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_head_lifesteal_SE",
+   "label": "Sigil head: life steal SE \u2014 the head stops spinning, faces the target 2 tiles SE and opens its jaw; violet soul streams rip out of the target into its mouth (glitch slices, flaring eyes), then a heal pulse runs down the beam into the sigil and it spins back to idle",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    216,
+    240
+   ],
+   "frames": 32,
+   "strip": "summon/spl_head_lifesteal_SE_strip.png",
+   "clip": "summon/spl_head_lifesteal_SE_clip.json",
+   "anchor": [
+    108,
+    196
+   ],
+   "dir": "SE",
+   "group": "summon",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_head_lifesteal_SW",
+   "label": "Sigil head: life steal SW \u2014 the head stops spinning, faces the target 2 tiles SW and opens its jaw; violet soul streams rip out of the target into its mouth (glitch slices, flaring eyes), then a heal pulse runs down the beam into the sigil and it spins back to idle",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    216,
+    240
+   ],
+   "frames": 32,
+   "strip": "summon/spl_head_lifesteal_SW_strip.png",
+   "clip": "summon/spl_head_lifesteal_SW_clip.json",
+   "anchor": [
+    108,
+    196
+   ],
+   "dir": "SW",
+   "group": "summon",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_lifesteal_heal",
+   "label": "Life steal: heal received \u2014 violet soul motes stream in and turn mint, + motes rise, pulse ring (play on the summoner)",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    96,
+    128
+   ],
+   "frames": 16,
+   "strip": "summon/spl_lifesteal_heal_strip.png",
+   "clip": "summon/spl_lifesteal_heal_clip.json",
+   "anchor": [
+    48,
+    120
+   ],
+   "dir": null,
+   "group": "summon",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_sigil_head_dismiss",
+   "label": "Sigil head (dismiss) \u2014 the head glitches apart and sinks into the sigil, the beam collapses into the ground, the sigil glitches out",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    128,
+    216
+   ],
+   "frames": 16,
+   "strip": "summon/spl_sigil_head_dismiss_strip.png",
+   "clip": "summon/spl_sigil_head_dismiss_clip.json",
+   "anchor": [
+    64,
+    196
+   ],
+   "dir": null,
+   "group": "summon",
+   "qaGrade": "B+"
+  },
+  {
+   "id": "spl_sigil_head_loop",
+   "label": "Sigil head (loop) \u2014 the head floats ~2 tiles up, spinning and bobbing on the violet beam; sigil spins on the glowing tile",
+   "kind": "ambient",
+   "loop": true,
+   "fps": 12,
+   "cell": [
+    128,
+    216
+   ],
+   "frames": 16,
+   "strip": "summon/spl_sigil_head_loop_strip.png",
+   "clip": "summon/spl_sigil_head_loop_clip.json",
+   "anchor": [
+    64,
+    196
+   ],
+   "dir": null,
+   "group": "summon",
+   "qaGrade": "A-"
+  },
+  {
+   "id": "spl_summon_sigil_head",
+   "label": "Summon: sigil head \u2014 Brian's circuit sigil glitches onto the tile, spins twice, a violet neon beam erupts from the ground and the spinning ghoul head rides it up to float ~2 tiles above the tile",
+   "kind": "fx",
+   "loop": false,
+   "fps": 12,
+   "cell": [
+    128,
+    216
+   ],
+   "frames": 46,
+   "strip": "summon/spl_summon_sigil_head_strip.png",
+   "clip": "summon/spl_summon_sigil_head_clip.json",
+   "anchor": [
+    64,
+    196
+   ],
+   "dir": null,
+   "group": "summon",
+   "qaGrade": "A-"
+  }
+ ]
+}

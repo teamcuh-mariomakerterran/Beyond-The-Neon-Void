@@ -1,0 +1,123 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "fx_rocket_backblast_W",
+ "kind": "fx",
+ "loop": false,
+ "generator": "fx_rocket_8dir (Lattice, from the library launcher rocket)",
+ "cell": [
+  32,
+  34
+ ],
+ "frames": 10,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 1,
+   "x": 32,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 2,
+   "x": 64,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 3,
+   "x": 96,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 4,
+   "x": 128,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 5,
+   "x": 160,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 6,
+   "x": 192,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 7,
+   "x": 224,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 8,
+   "x": 256,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "i": 9,
+   "x": 288,
+   "y": 0,
+   "w": 32,
+   "h": 34
+  }
+ ],
+ "fps": 14,
+ "frameMs": 71,
+ "holds": null,
+ "tickSequence": null,
+ "facing": "W",
+ "dirs": null,
+ "dirOrder": [
+  "N",
+  "NE",
+  "E",
+  "SE",
+  "S",
+  "SW",
+  "W",
+  "NW"
+ ],
+ "dirOrderSource": "Forge SHEET_DIR_ORDER (pixel-forge-app/src/lib/sheetImport.js:26); Lattice UnitKit takes the same order from unit.kit.json `facings` (src/js/39_unitkit.js)",
+ "dirIndex": 6,
+ "anchor": [
+  4,
+  21
+ ],
+ "spawn": [
+  4,
+  21
+ ],
+ "travelVector": [
+  -1.0,
+  0.0
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "textures": {
+  "strip": "fx_rocket_backblast_W_strip.png"
+ },
+ "source": "LATTICE",
+ "suggestedUse": "Optional launcher backblast for a shot toward W: FIRE cone + billowing smoke out of the rear (opposite travelVector). Attach anchor to the launcher rear exhaust."
+}

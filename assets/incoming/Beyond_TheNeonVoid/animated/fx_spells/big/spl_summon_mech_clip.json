@@ -1,0 +1,230 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "spl_summon_mech",
+ "cell": [
+  160,
+  256
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 1,
+   "x": 160,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 2,
+   "x": 320,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 3,
+   "x": 480,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 4,
+   "x": 640,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 5,
+   "x": 800,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 6,
+   "x": 960,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 7,
+   "x": 1120,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 8,
+   "x": 1280,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 9,
+   "x": 1440,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 10,
+   "x": 1600,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 11,
+   "x": 1760,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 12,
+   "x": 1920,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 13,
+   "x": 2080,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 14,
+   "x": 2240,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 15,
+   "x": 2400,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 16,
+   "x": 2560,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 17,
+   "x": 2720,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 18,
+   "x": 2880,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 19,
+   "x": 3040,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 20,
+   "x": 3200,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 21,
+   "x": 3360,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 22,
+   "x": 3520,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  },
+  {
+   "i": 23,
+   "x": 3680,
+   "y": 0,
+   "w": 160,
+   "h": 256
+  }
+ ],
+ "textures": {
+  "strip": "spl_summon_mech_strip.png"
+ },
+ "source": "LATTICE + gold_vehicles/mechs/gv_g02_SE_idle (frame 0, Brian's painted art, composited unmodified)",
+ "generator": "fx_spells v1 (wave 12)",
+ "title": "Summon: mech drop \u2014 gold mech g02 (SE) descends on retro-thrusters, dust blast, heavy landing shock, visor glow",
+ "qaGrade": "B+",
+ "qaNote": "gold mech g02 (SE, Brian's art unmodified) drops on cyan retro-thrusters, dust blast, landing shock, visor glint",
+ "kind": "fx",
+ "loop": false,
+ "fps": 12,
+ "frameMs": 83,
+ "holds": null,
+ "facing": null,
+ "anchor": [
+  80,
+  228
+ ],
+ "group": "big",
+ "tags": [
+  "spell",
+  "big"
+ ],
+ "config": {
+  "footprintTiles": [
+   1,
+   1
+  ],
+  "tileCentre": [
+   80,
+   212
+  ],
+  "family": "big"
+ },
+ "suggestedUse": "Big spell; anchor on the target (centre) tile ground point. Beams/rods/rockets enter from the top of the cell (the sky).",
+ "layering": "Anchor = ground point of the CENTRE tile of the 1x1 area (bottom vertex of its 64x32 diamond). Draw over units.",
+ "groundPoint": [
+  80,
+  228
+ ],
+ "sortBias": 3,
+ "depthKey": "fx_over",
+ "hits": [
+  {
+   "frame": 11,
+   "x": 80,
+   "y": 212
+  }
+ ]
+}

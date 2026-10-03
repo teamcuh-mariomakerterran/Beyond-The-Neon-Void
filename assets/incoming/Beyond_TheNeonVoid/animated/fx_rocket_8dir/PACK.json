@@ -1,0 +1,584 @@
+{
+ "format": "lattice.fx_rocket_8dir.pack.v1",
+ "version": 1,
+ "name": "fx_rocket_8dir",
+ "source": "LATTICE",
+ "note": "Reusable rocket + smoke-trail shot in 8 directions, built from the library launcher/MLRS rocket style (rocket greys, Lattice FIRE/SPARK/SMOKE palettes, hard alpha, integer pixels).",
+ "dirOrder": [
+  "N",
+  "NE",
+  "E",
+  "SE",
+  "S",
+  "SW",
+  "W",
+  "NW"
+ ],
+ "dirOrderSource": "Forge SHEET_DIR_ORDER (pixel-forge-app/src/lib/sheetImport.js:26); Lattice UnitKit takes the same order from unit.kit.json `facings` (src/js/39_unitkit.js)",
+ "projection": "2:1 dimetric battle plane (64x32 tiles). travelVector is screen-space (y down), unit length.",
+ "fps": 14,
+ "frameMs": 71,
+ "hookup": {
+  "flight": "place clip so `spawn` (= anchor) sits on the launcher muzzle tip for the firing facing; play once; rocketPath gives the nose position per frame (null after it leaves range)",
+  "inflight": "optional: once flight reaches rocketGoneFrame, spawn the matching inflight loop at the projectile position and move it along travelVector in the engine",
+  "backblast": "optional: attach its anchor to the launcher rear exhaust on frame 0 of the flight clip"
+ },
+ "qa": {
+  "gifs": "samples/ui/qa_fx_rocket_8dir/<id>.gif (4x) + compass_flight.gif",
+  "contact": "samples/ui/qa_fx_rocket_8dir.png"
+ },
+ "effects": [
+  {
+   "id": "fx_rocket_flight_N",
+   "kind": "fx",
+   "dir": "N",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    20,
+    142
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_N_strip.png",
+   "clip": "fx_rocket_flight_N_clip.json",
+   "spawn": [
+    9,
+    130
+   ],
+   "travelVector": [
+    0.0,
+    -1.0
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_N",
+   "kind": "ambient",
+   "dir": "N",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    18,
+    54
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_N_strip.png",
+   "clip": "fx_rocket_inflight_N_clip.json",
+   "spawn": [
+    8,
+    11
+   ],
+   "travelVector": [
+    0.0,
+    -1.0
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_N",
+   "kind": "fx",
+   "dir": "N",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    24,
+    42
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_N_strip.png",
+   "clip": "fx_rocket_backblast_N_clip.json",
+   "spawn": [
+    11,
+    14
+   ],
+   "travelVector": [
+    0.0,
+    -1.0
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_NE",
+   "kind": "fx",
+   "dir": "NE",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    124,
+    88
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_NE_strip.png",
+   "clip": "fx_rocket_flight_NE_clip.json",
+   "spawn": [
+    13,
+    73
+   ],
+   "travelVector": [
+    0.8944,
+    -0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_NE",
+   "kind": "ambient",
+   "dir": "NE",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    52,
+    44
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_NE_strip.png",
+   "clip": "fx_rocket_inflight_NE_clip.json",
+   "spawn": [
+    42,
+    16
+   ],
+   "travelVector": [
+    0.8944,
+    -0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_NE",
+   "kind": "fx",
+   "dir": "NE",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    40,
+    46
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_NE_strip.png",
+   "clip": "fx_rocket_backblast_NE_clip.json",
+   "spawn": [
+    29,
+    22
+   ],
+   "travelVector": [
+    0.8944,
+    -0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_E",
+   "kind": "fx",
+   "dir": "E",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    130,
+    32
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_E_strip.png",
+   "clip": "fx_rocket_flight_E_clip.json",
+   "spawn": [
+    10,
+    21
+   ],
+   "travelVector": [
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_E",
+   "kind": "ambient",
+   "dir": "E",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    48,
+    24
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_E_strip.png",
+   "clip": "fx_rocket_inflight_E_clip.json",
+   "spawn": [
+    42,
+    15
+   ],
+   "travelVector": [
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_E",
+   "kind": "fx",
+   "dir": "E",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    32,
+    34
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_E_strip.png",
+   "clip": "fx_rocket_backblast_E_clip.json",
+   "spawn": [
+    26,
+    21
+   ],
+   "travelVector": [
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_SE",
+   "kind": "fx",
+   "dir": "SE",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    124,
+    88
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_SE_strip.png",
+   "clip": "fx_rocket_flight_SE_clip.json",
+   "spawn": [
+    13,
+    25
+   ],
+   "travelVector": [
+    0.8944,
+    0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_SE",
+   "kind": "ambient",
+   "dir": "SE",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    52,
+    44
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_SE_strip.png",
+   "clip": "fx_rocket_inflight_SE_clip.json",
+   "spawn": [
+    42,
+    33
+   ],
+   "travelVector": [
+    0.8944,
+    0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_SE",
+   "kind": "fx",
+   "dir": "SE",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    40,
+    46
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_SE_strip.png",
+   "clip": "fx_rocket_backblast_SE_clip.json",
+   "spawn": [
+    29,
+    32
+   ],
+   "travelVector": [
+    0.8944,
+    0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_S",
+   "kind": "fx",
+   "dir": "S",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    20,
+    142
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_S_strip.png",
+   "clip": "fx_rocket_flight_S_clip.json",
+   "spawn": [
+    9,
+    22
+   ],
+   "travelVector": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_S",
+   "kind": "ambient",
+   "dir": "S",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    18,
+    54
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_S_strip.png",
+   "clip": "fx_rocket_inflight_S_clip.json",
+   "spawn": [
+    8,
+    49
+   ],
+   "travelVector": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_S",
+   "kind": "fx",
+   "dir": "S",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    24,
+    42
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_S_strip.png",
+   "clip": "fx_rocket_backblast_S_clip.json",
+   "spawn": [
+    11,
+    36
+   ],
+   "travelVector": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_SW",
+   "kind": "fx",
+   "dir": "SW",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    124,
+    88
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_SW_strip.png",
+   "clip": "fx_rocket_flight_SW_clip.json",
+   "spawn": [
+    110,
+    25
+   ],
+   "travelVector": [
+    -0.8944,
+    0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_SW",
+   "kind": "ambient",
+   "dir": "SW",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    52,
+    44
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_SW_strip.png",
+   "clip": "fx_rocket_inflight_SW_clip.json",
+   "spawn": [
+    8,
+    33
+   ],
+   "travelVector": [
+    -0.8944,
+    0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_SW",
+   "kind": "fx",
+   "dir": "SW",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    40,
+    46
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_SW_strip.png",
+   "clip": "fx_rocket_backblast_SW_clip.json",
+   "spawn": [
+    9,
+    32
+   ],
+   "travelVector": [
+    -0.8944,
+    0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_W",
+   "kind": "fx",
+   "dir": "W",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    130,
+    32
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_W_strip.png",
+   "clip": "fx_rocket_flight_W_clip.json",
+   "spawn": [
+    118,
+    21
+   ],
+   "travelVector": [
+    -1.0,
+    0.0
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_W",
+   "kind": "ambient",
+   "dir": "W",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    48,
+    24
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_W_strip.png",
+   "clip": "fx_rocket_inflight_W_clip.json",
+   "spawn": [
+    4,
+    15
+   ],
+   "travelVector": [
+    -1.0,
+    0.0
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_W",
+   "kind": "fx",
+   "dir": "W",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    32,
+    34
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_W_strip.png",
+   "clip": "fx_rocket_backblast_W_clip.json",
+   "spawn": [
+    4,
+    21
+   ],
+   "travelVector": [
+    -1.0,
+    0.0
+   ]
+  },
+  {
+   "id": "fx_rocket_flight_NW",
+   "kind": "fx",
+   "dir": "NW",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    124,
+    88
+   ],
+   "frames": 18,
+   "strip": "fx_rocket_flight_NW_strip.png",
+   "clip": "fx_rocket_flight_NW_clip.json",
+   "spawn": [
+    110,
+    73
+   ],
+   "travelVector": [
+    -0.8944,
+    -0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_inflight_NW",
+   "kind": "ambient",
+   "dir": "NW",
+   "loop": true,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    52,
+    44
+   ],
+   "frames": 6,
+   "strip": "fx_rocket_inflight_NW_strip.png",
+   "clip": "fx_rocket_inflight_NW_clip.json",
+   "spawn": [
+    8,
+    16
+   ],
+   "travelVector": [
+    -0.8944,
+    -0.4472
+   ]
+  },
+  {
+   "id": "fx_rocket_backblast_NW",
+   "kind": "fx",
+   "dir": "NW",
+   "loop": false,
+   "fps": 14,
+   "frameMs": 71,
+   "cell": [
+    40,
+    46
+   ],
+   "frames": 10,
+   "strip": "fx_rocket_backblast_NW_strip.png",
+   "clip": "fx_rocket_backblast_NW_clip.json",
+   "spawn": [
+    9,
+    22
+   ],
+   "travelVector": [
+    -0.8944,
+    -0.4472
+   ]
+  }
+ ]
+}
