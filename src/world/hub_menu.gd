@@ -355,6 +355,37 @@ func _tab_crew() -> void:
 			ProgressionSystem.change_class(c, jc.id)
 			_show("crew"), not unlocked, "%s\n%s\nRequires: %s" % [jc.display_name, jc.description, req if req != "" else "—"])
 		jb.custom_minimum_size.x = 210
+	_h("LOADOUT", NeonTheme.MAGENTA)
+	_p("Secondary command set from another job, plus one Reaction, Support and Movement passive (learned at the terminal below).")
+	var secs: Array = ["(none)"]
+	for jc2 in ClassLibrary.get_all_classes():
+		if jc2.id != c.class_id and c.get_class_level(jc2.id) > 0:
+			secs.append(jc2.display_name)
+	var sec_row := _row()
+	sec_row.add_child(NeonTheme.label("SECONDARY", 14, NeonTheme.TEXT_DIM))
+	var sec_cls := ContentDB.get_class_res(c.secondary_class_id)
+	sec_row.add_child(ForgeForm._option(secs, sec_cls.display_name if sec_cls else "(none)", func(nm: String) -> void:
+		var cid := ""
+		for jc3 in ClassLibrary.get_all_classes():
+			if jc3.display_name == nm:
+				cid = jc3.id
+		ProgressionSystem.set_secondary(c, cid)
+		_show("crew")))
+	for slot: String in ["reaction", "support", "movement"]:
+		var names: Array = ["(none)"]
+		var ids: Array = [""]
+		for pp: PassiveResource in ContentDB.get_all("passives"):
+			if pp.slot == slot and c.learned_ability_ids.has(pp.id):
+				names.append(pp.display_name)
+				ids.append(pp.id)
+		var cur := ContentDB.get_passive(str(c.get(slot + "_id")))
+		var srow := _row()
+		srow.add_child(NeonTheme.label(slot.to_upper(), 14, NeonTheme.TEXT_DIM))
+		srow.add_child(ForgeForm._option(names, cur.display_name if cur else "(none)", func(nm: String) -> void:
+			ProgressionSystem.equip_passive(c, slot, str(ids[names.find(nm)]))
+			_show("crew")))
+		if cur:
+			srow.add_child(NeonTheme.label(cur.description, 13, NeonTheme.TEXT_DIM))
 	_h("TERMINAL  —  SLOT MICROCHIPS", NeonTheme.VIOLET)
 	_p("Every chip was pried from someone who used to know this. Try not to think about it.")
 	if cls:
@@ -370,6 +401,16 @@ func _tab_crew() -> void:
 				_show("crew")
 				_toast(err if err != "" else "%s learned %s." % [c.display_name, a.display_name]), known or a.absorb_only or GameManager.microchips < a.chip_cost)
 			r.add_child(NeonTheme.label("%s — %s" % [a.display_name, a.description], 14, NeonTheme.TEXT if known else NeonTheme.TEXT_DIM))
+		for pp2: PassiveResource in ContentDB.get_all("passives"):
+			if pp2.class_id != cls.id:
+				continue
+			var pr := _row()
+			var pknown := c.learned_ability_ids.has(pp2.id)
+			_btn(pr, "LEARNED" if pknown else "LEARN (%d chips)" % pp2.chip_cost, func() -> void:
+				var err := ProgressionSystem.learn_passive(c, pp2.id)
+				_show("crew")
+				_toast(err if err != "" else "%s learned %s." % [c.display_name, pp2.display_name]), pknown or GameManager.microchips < pp2.chip_cost)
+			pr.add_child(NeonTheme.label("[%s] %s — %s" % [pp2.slot.to_upper(), pp2.display_name, pp2.description], 14, NeonTheme.TEXT if pknown else NeonTheme.TEXT_DIM))
 
 
 func _tab_shops() -> void:

@@ -87,7 +87,7 @@ func get_unit_at(cell: Vector2i) -> Node:
 func move_cells_for(unit: Node) -> Array[Vector2i]:
 	if unit == null or not unit.can_move():
 		return []
-	return grid.reachable_cells(unit.cell, unit.get_stat("move"), unit.get_stat("jump"), unit.team)
+	return grid.reachable_cells(unit.cell, unit.get_stat("move"), unit.get_stat("jump"), unit.team, Passives.phases(unit))
 
 
 func target_cells_for(unit: Node, ability: Ability) -> Array[Vector2i]:
@@ -245,13 +245,14 @@ func request_move(unit: Node, cell: Vector2i) -> bool:
 		return false
 	if not unit.can_move():
 		return false
-	var flooded := grid.flood(unit.cell, unit.get_stat("move"), unit.get_stat("jump"), unit.team)
+	var flooded := grid.flood(unit.cell, unit.get_stat("move"), unit.get_stat("jump"), unit.team, Passives.phases(unit))
 	if not flooded.has(cell) or (grid.get_occupant(cell) != null and cell != unit.cell):
 		return false
 	var path := IsometricGrid.path_from_flood(flooded, unit.cell, cell)
 	var prev := state
 	state = State.EXECUTING
 	await unit.move_along(path, animate)
+	await Passives.after_move(self, unit)
 	if state == State.EXECUTING:
 		state = prev
 	_check_battle_end()
@@ -313,6 +314,7 @@ func _execute(unit: Node, ability: Ability, cell: Vector2i, extra_cells: Array[V
 	elif animate and map_node and map_node.has_method("play_ability_fx"):
 		await map_node.play_ability_fx(unit, ability, cell)
 	var results: Array[Dictionary] = unit.job_handler.execute_ability(ability, ctx)
+	await Passives.after_action(self, unit, ability, results, ctx)
 	if ability.special != "echo":
 		_last_team_action[unit.team] = {"ability": ability, "cell": cell, "caster": unit}
 	for r in results:

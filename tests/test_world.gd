@@ -24,6 +24,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_status_looks()
 	await test_signage()
 	await test_cues()
+	await test_passives()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -934,4 +935,112 @@ func test_cues() -> void:
 	Cues.fired.disconnect(probe)
 	u.queue_free()
 	await tree.process_frame
-	check(ContentDB.get_character("doctrine_warden").is_boss, "boss flag loads from data")
+	var boss_cd := CharacterData.new()
+	boss_cd.apply_dict({"id": "t_boss", "is_boss": true, "boss_title": "Test Title"})
+	check(boss_cd.is_boss and boss_cd.boss_title == "Test Title", "boss flag loads from data")
+
+
+func _pu(g: IsometricGrid, team: int, cell: Vector2i, slots: Dictionary = {}) -> Unit:
+	var cd: CharacterData = (ContentDB.get_all("characters")[0] as CharacterData).duplicate(true)
+	cd.ai_controlled = false
+	for k: String in slots:
+		cd.set(k, slots[k])
+	var u := Unit.new()
+	u.setup(cd, team, 8)
+	u.grid = g
+	tree.root.add_child(u)
+	u.place_at(cell)
+	return u
+
+
+func test_passives() -> void:
+	check(ContentDB.get_passive("counter_hack") != null and ContentDB.get_all("passives").size() >= 18, "passives load (%d)" % ContentDB.get_all("passives").size())
+	for p: PassiveResource in ContentDB.get_all("passives"):
+		check(p.slot in ["reaction", "support", "movement"] and ClassLibrary.get_class_res(p.class_id) != null, "passive %s: valid slot + class" % p.id)
+	var g := IsometricGrid.new()
+	g.setup(10, 10)
+	var keep := {}
+	for id: String in ["counter_hack", "firewall", "overwatch", "reroute"]:
+		keep[id] = ContentDB.get_passive(id).chance
+		ContentDB.get_passive(id).chance = 1.0
+	# Supports + movement.
+	var mage := _pu(g, Unit.Team.PLAYER, Vector2i(1, 1), {"support_id": "overclock_cooling", "movement_id": "move_plus_2"})
+	var gunner := _pu(g, Unit.Team.PLAYER, Vector2i(2, 1), {"support_id": "quickdraw"})
+	var plain := _pu(g, Unit.Team.PLAYER, Vector2i(1, 3))
+	var spell: Ability = null
+	var heavy: Ability = null
+	for a: Ability in ContentDB.get_all("abilities"):
+		if spell == null and a.kind == Ability.Kind.MAGIC and a.mp_cost >= 10:
+			spell = a
+		if heavy == null and a.kind == Ability.Kind.ATTACK and a.ap_cost >= 2:
+			heavy = a
+	check(mage.mp_cost_of(spell) == roundi(spell.mp_cost * 0.7) and plain.mp_cost_of(spell) == spell.mp_cost, "Overclock Cooling: tech costs 30% less MP")
+	check(gunner.ap_cost_of(heavy) == 1 and gunner.ap_cost_of(spell) == spell.ap_cost, "Quickdraw: heavy attacks cost 1 AP, nothing else changes")
+	check(mage.get_stat("move") == plain.get_stat("move") + 2, "Move +2")
+	var brute := _pu(g, Unit.Team.ENEMY, Vector2i(5, 5), {"support_id": "killer_instinct"})
+	var tank := _pu(g, Unit.Team.PLAYER, Vector2i(5, 6), {"support_id": "hardened_chrome"})
+	var hit := ContentDB.get_ability("basic_attack")
+	check(is_equal_approx(Passives.damage_mult(brute, tank, hit), 1.15 * 0.85), "damage dealt / taken supports stack")
+	# Firewall blocks enemy debuffs, not friendly ones.
+	var fw := _pu(g, Unit.Team.PLAYER, Vector2i(8, 8), {"reaction_id": "firewall"})
+	check(not fw.apply_status("slow", brute) and not fw.has_status("slow"), "Firewall rejects an enemy debuff")
+	check(fw.apply_status("slow", tank), "…but not one from an ally")
+	# Counter-Hack: the target strikes back.
+	CombatManager.grid = g
+	CombatManager.units.clear()
+	CombatManager.units.append_array([mage, plain, brute, tank, fw])
+	CombatManager.animate = false
+	CombatManager.rng.seed = 7
+	var samurai := _pu(g, Unit.Team.PLAYER, Vector2i(3, 3), {"reaction_id": "counter_hack"})
+	var thug := _pu(g, Unit.Team.ENEMY, Vector2i(3, 4))
+	CombatManager.units.append_array([samurai, thug])
+	var hp0 := thug.current_hp
+	samurai.current_hp = samurai.get_stat("max_hp")
+	await CombatManager._execute(thug, hit, samurai.cell)
+	check(thug.current_hp < hp0, "Counter-Hack hits back (%d → %d)" % [hp0, thug.current_hp])
+	# Overwatch: shoots a mover that stops in range, once per round.
+	var sniper := _pu(g, Unit.Team.PLAYER, Vector2i(0, 9), {"reaction_id": "overwatch"})
+	var runner := _pu(g, Unit.Team.ENEMY, Vector2i(1, 9))
+	CombatManager.units.append_array([sniper, runner])
+	var rhp := runner.current_hp
+	await Passives.after_move(CombatManager, runner)
+	check(runner.current_hp < rhp and sniper.get_meta("overwatch_spent", false), "Overwatch fires on an enemy ending its move in range")
+	rhp = runner.current_hp
+	await Passives.after_move(CombatManager, runner)
+	check(runner.current_hp == rhp, "…once per round")
+	sniper.begin_turn()
+	check(not sniper.get_meta("overwatch_spent", true), "re-arms on its own turn")
+	# Phase Step: walk through a unit blocking a corridor.
+	var lane := IsometricGrid.new()
+	lane.setup(6, 1)
+	var ghost := _pu(lane, Unit.Team.PLAYER, Vector2i(0, 0), {"movement_id": "phase_step"})
+	var wall := _pu(lane, Unit.Team.ENEMY, Vector2i(1, 0))
+	var walker := _pu(lane, Unit.Team.PLAYER, Vector2i(5, 0))
+	check(lane.reachable_cells(ghost.cell, 4, 2, ghost.team, Passives.phases(ghost)).has(Vector2i(2, 0)), "Phase Step passes through a blocker")
+	check(not lane.reachable_cells(ghost.cell, 4, 2, ghost.team, false).has(Vector2i(2, 0)), "…which normally blocks the lane")
+	# Auto-Patch: once, under half HP.
+	var medic := _pu(g, Unit.Team.PLAYER, Vector2i(7, 2), {"reaction_id": "auto_patch"})
+	var foe := _pu(g, Unit.Team.ENEMY, Vector2i(7, 3))
+	medic.current_hp = int(medic.get_stat("max_hp") * 0.3)
+	var before := medic.current_hp
+	var ctx := Ability.Context.new()
+	await Passives.after_action(CombatManager, foe, hit, [{"unit": medic, "kind": "damage", "amount": 1, "crit": false}], ctx)
+	check(medic.current_hp > before and medic.has_meta("patched"), "Auto-Patch heals under half HP")
+	# Learning + equipping.
+	var rookie: CharacterData = (ContentDB.get_all("characters")[0] as CharacterData).duplicate(true)
+	rookie.class_levels["signal_thief"] = 1
+	var chips := GameManager.microchips
+	GameManager.microchips = 10
+	check(ProgressionSystem.learn_passive(rookie, "move_plus_2") == "Class not unlocked.", "can't learn from a locked class")
+	check(ProgressionSystem.learn_passive(rookie, "reroute") == "" and GameManager.microchips == 10 - ContentDB.get_passive("reroute").chip_cost, "learn with microchips")
+	check(not ProgressionSystem.equip_passive(rookie, "support", "reroute") and ProgressionSystem.equip_passive(rookie, "reaction", "reroute") and rookie.reaction_id == "reroute", "equip only in its own slot")
+	check(not ProgressionSystem.equip_passive(rookie, "movement", "move_plus_1"), "can't equip unlearned")
+	GameManager.microchips = chips
+	check(ContentDB.get_character("choir_enforcer").reaction_id == "firewall", "enemy templates carry passives")
+	for id: String in keep:
+		ContentDB.get_passive(id).chance = keep[id]
+	CombatManager.units.clear()
+	CombatManager.grid = null
+	for u: Node in [mage, gunner, plain, brute, tank, fw, samurai, thug, sniper, runner, ghost, wall, walker, medic, foe]:
+		u.queue_free()
+	await tree.process_frame

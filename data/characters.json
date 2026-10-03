@@ -300,9 +300,7 @@
 			"weapon": "wpn_baton_1"
 		},
 		"ai_behavior": "aggressive",
-		"learned_ability_ids": [],
-		"is_boss": true,
-		"boss_title": "Keeper of the Night Hymn"
+		"learned_ability_ids": []
 	},
 	{
 		"id": "choir_enforcer",
@@ -323,7 +321,8 @@
 			"weapon": "wpn_sword_1"
 		},
 		"ai_behavior": "tactical",
-		"learned_ability_ids": []
+		"learned_ability_ids": [],
+		"reaction_id": "firewall"
 	},
 	{
 		"id": "cantor_adept",

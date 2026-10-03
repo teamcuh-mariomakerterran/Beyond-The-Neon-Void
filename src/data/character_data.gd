@@ -23,6 +23,11 @@ extends GameResource
 
 @export_group("Abilities")
 @export var learned_ability_ids: Array[String] = []
+## FFT loadout slots (ids in data/passives.json). Learned passives live in
+## learned_ability_ids too.
+@export var reaction_id: String = ""
+@export var support_id: String = ""
+@export var movement_id: String = ""
 ## Sync Blade: times each Addition chain was performed (drives chain mastery).
 @export var addition_uses: Dictionary = {}
 

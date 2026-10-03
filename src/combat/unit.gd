@@ -132,6 +132,11 @@ func refresh_stats() -> void:
 			flat[k] = int(flat.get(k, 0)) + int(eff.stat_flat[k]) * inst.stacks
 		if eff.prevents_move:
 			flat["move"] = int(flat.get("move", 0)) - 99
+	var pm := Passives.stat_mods(self)
+	for k: Variant in pm[0]:
+		flat[k] = int(flat.get(k, 0)) + int(pm[0][k])
+	for k: Variant in pm[1]:
+		mult[k] = float(mult.get(k, 1.0)) * float(pm[1][k])
 	stats.calculate(class_res(), equipment.get_total_bonus(), mult, flat)
 	current_hp = mini(current_hp, get_stat("max_hp"))
 	current_mp = mini(current_mp, get_stat("max_mp"))
@@ -185,13 +190,22 @@ func hp_cost_of(ability: Ability) -> int:
 	return roundi(get_stat("max_hp") * ability.hp_cost_pct)
 
 
+## AP after support passives (Overclock Cooling).
+func ap_cost_of(ability: Ability) -> int:
+	return Passives.ap_cost(self, ability)
+
+
+func mp_cost_of(ability: Ability) -> int:
+	return Passives.mp_cost(self, ability)
+
+
 func can_afford(ability: Ability) -> bool:
-	return current_ap >= ability.ap_cost and current_mp >= ability.mp_cost and (ability.hp_cost_pct <= 0.0 or current_hp > hp_cost_of(ability))
+	return current_ap >= ap_cost_of(ability) and current_mp >= mp_cost_of(ability) and (ability.hp_cost_pct <= 0.0 or current_hp > hp_cost_of(ability))
 
 
 func spend_for(ability: Ability) -> void:
-	current_ap = maxi(current_ap - ability.ap_cost, 0)
-	current_mp = maxi(current_mp - ability.mp_cost, 0)
+	current_ap = maxi(current_ap - ap_cost_of(ability), 0)
+	current_mp = maxi(current_mp - mp_cost_of(ability), 0)
 	if ability.hp_cost_pct > 0.0:
 		current_hp = maxi(current_hp - hp_cost_of(ability), 1)
 	has_acted = true
@@ -206,6 +220,7 @@ func begin_turn() -> Dictionary:
 	has_moved = false
 	has_acted = false
 	move_streak = 0
+	set_meta("overwatch_spent", false)
 	current_ap = get_stat("max_ap")
 	var skip := is_disabled()
 	var total_dot := 0
@@ -323,6 +338,8 @@ func apply_status(status_id: String, source: Node = null, payload: Dictionary = 
 	var eff := ContentDB.get_status(status_id)
 	if eff == null or not is_alive():
 		return false
+	if eff.type == StatusEffect.EffectType.DEBUFF and Passives.blocks_debuff(self, source, CombatManager):
+		return false  # Firewall
 	var existing := get_status(status_id)
 	if existing:
 		existing.turns_left = maxi(existing.turns_left, eff.duration_turns)

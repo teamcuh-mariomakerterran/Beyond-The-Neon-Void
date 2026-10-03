@@ -26,6 +26,7 @@ var CATALOG := {
 	"dispatch_missions": DispatchMission,
 	"quests": QuestResource,
 	"npcs": NPCResource,
+	"passives": PassiveResource,
 }
 
 var ABILITY_SCRIPTS := {
@@ -144,6 +145,10 @@ func get_ability(id: String) -> Ability:
 
 func get_card(id: String) -> CardResource:
 	return get_entry("cards", id) as CardResource
+
+
+func get_passive(id: String) -> PassiveResource:
+	return get_entry("passives", id) as PassiveResource
 
 
 func get_status(id: String) -> StatusEffect:

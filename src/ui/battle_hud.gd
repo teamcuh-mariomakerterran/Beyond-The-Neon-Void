@@ -211,8 +211,8 @@ func show_unit(unit: Node, commands_enabled: bool) -> void:
 	move_btn.pressed.connect(func() -> void: move_pressed.emit())
 	for a: Ability in unit.get_abilities():
 		var cost := []
-		if a.ap_cost > 0: cost.append("%dAP" % a.ap_cost)
-		if a.mp_cost > 0: cost.append("%dMP" % a.mp_cost)
+		if a.ap_cost > 0: cost.append("%dAP" % (unit.ap_cost_of(a) if unit and unit.has_method("ap_cost_of") else a.ap_cost))
+		if a.mp_cost > 0: cost.append("%dMP" % (unit.mp_cost_of(a) if unit and unit.has_method("mp_cost_of") else a.mp_cost))
 		if a.hp_cost_pct > 0: cost.append("%d%%HP" % roundi(a.hp_cost_pct * 100))
 		if a.charge_ticks > 0: cost.append("⌛%d" % a.charge_ticks)
 		var label := a.display_name.to_upper()

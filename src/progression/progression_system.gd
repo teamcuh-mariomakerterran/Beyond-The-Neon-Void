@@ -99,6 +99,43 @@ static func learn_block_reason(character: CharacterData, ability_id: String) -> 
 	return ""
 
 
+## Learn a Reaction / Support / Movement passive with microchips.
+static func learn_passive(character: CharacterData, passive_id: String) -> String:
+	var p := ContentDB.get_passive(passive_id)
+	if p == null:
+		return "Unknown passive."
+	if character.learned_ability_ids.has(passive_id):
+		return "Already learned."
+	if p.class_id != "" and character.get_class_level(p.class_id) == 0:
+		return "Class not unlocked."
+	if GameManager.microchips < p.chip_cost:
+		return "Need %d microchips." % p.chip_cost
+	GameManager.add_microchips(-p.chip_cost)
+	character.learned_ability_ids.append(passive_id)
+	EventBus.ability_unlocked.emit(character.id, passive_id)
+	return ""
+
+
+## Equip a learned passive in its slot ("" clears `slot`).
+static func equip_passive(character: CharacterData, slot: String, passive_id: String) -> bool:
+	if not slot in ["reaction", "support", "movement"]:
+		return false
+	if passive_id != "":
+		var p := ContentDB.get_passive(passive_id)
+		if p == null or p.slot != slot or not character.learned_ability_ids.has(passive_id):
+			return false
+	character.set(slot + "_id", passive_id)
+	return true
+
+
+## FFT secondary command set: any class the character has levels in.
+static func set_secondary(character: CharacterData, class_id: String) -> bool:
+	if class_id != "" and (class_id == character.class_id or character.get_class_level(class_id) == 0):
+		return false
+	character.secondary_class_id = class_id
+	return true
+
+
 ## Switch jobs (only to unlocked classes).
 static func change_class(character: CharacterData, class_id: String) -> bool:
 	if character.get_class_level(class_id) == 0 and not ClassLibrary.is_unlocked_for(class_id, character):

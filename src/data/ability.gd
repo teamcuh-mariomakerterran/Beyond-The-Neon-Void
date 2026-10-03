@@ -88,6 +88,8 @@ class Context extends RefCounted:
 	var power_mult: float = 1.0
 	## Additions always connect; the chain decides how hard.
 	var force_hit: bool = false
+	## Counters / overwatch shots: never trigger further reactions.
+	var is_reaction: bool = false
 
 	func log_result(unit: Node, kind: String, amount: int = 0, crit: bool = false) -> void:
 		results.append({"unit": unit, "kind": kind, "amount": amount, "crit": crit})
@@ -113,7 +115,7 @@ func _valid_corpse(grid: IsometricGrid, cell: Vector2i, caster: Node) -> bool:
 
 func effective_range_max(caster: Node = null) -> int:
 	if uses_weapon_range and caster != null:
-		return maxi(caster.equipment.weapon_range(), range_max)
+		return maxi(caster.equipment.weapon_range(), range_max) + Passives.range_plus(caster)
 	return range_max
 
 

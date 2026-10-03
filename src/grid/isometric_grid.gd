@@ -264,9 +264,9 @@ func flood(start: Vector2i, move: int, jump: int, team: int, ignore_units: bool 
 
 
 ## Cells a unit can end its move on (unoccupied, reachable).
-func reachable_cells(start: Vector2i, move: int, jump: int, team: int) -> Array[Vector2i]:
+func reachable_cells(start: Vector2i, move: int, jump: int, team: int, ignore_units: bool = false) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
-	var flooded := flood(start, move, jump, team)
+	var flooded := flood(start, move, jump, team, ignore_units)
 	for cell: Vector2i in flooded:
 		if cell == start or get_occupant(cell) == null:
 			out.append(cell)
@@ -274,8 +274,8 @@ func reachable_cells(start: Vector2i, move: int, jump: int, team: int) -> Array[
 
 
 ## Path from start to goal (inclusive of both), or [] if unreachable within `move`.
-func find_path(start: Vector2i, goal: Vector2i, move: int, jump: int, team: int) -> Array[Vector2i]:
-	var flooded := flood(start, move, jump, team)
+func find_path(start: Vector2i, goal: Vector2i, move: int, jump: int, team: int, ignore_units: bool = false) -> Array[Vector2i]:
+	var flooded := flood(start, move, jump, team, ignore_units)
 	return path_from_flood(flooded, start, goal)
 
 

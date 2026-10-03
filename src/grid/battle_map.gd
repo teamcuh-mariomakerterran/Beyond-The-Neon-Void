@@ -390,7 +390,7 @@ func _update_hover(cell: Vector2i) -> void:
 	else:
 		highlights.clear_layer("aoe")
 	if mode == Mode.MOVE and u and _valid_cells.has(cell):
-		highlights.set_layer("path", grid.find_path(u.cell, cell, u.get_stat("move"), u.get_stat("jump"), u.team), HighlightManager.PATH)
+		highlights.set_layer("path", grid.find_path(u.cell, cell, u.get_stat("move"), u.get_stat("jump"), u.team, Passives.phases(u)), HighlightManager.PATH)
 	else:
 		highlights.clear_layer("path")
 	hud.show_inspect(_inspect_text(cell))

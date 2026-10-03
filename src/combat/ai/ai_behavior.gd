@@ -51,7 +51,7 @@ func plan_turn(unit: Node, battle: Node) -> Dictionary:
 
 	var moves: Array[Vector2i] = [origin]
 	if unit.can_move():
-		moves = grid.reachable_cells(origin, unit.get_stat("move"), unit.get_stat("jump"), unit.team)
+		moves = grid.reachable_cells(origin, unit.get_stat("move"), unit.get_stat("jump"), unit.team, Passives.phases(unit))
 		if moves.size() > MAX_CANDIDATE_CELLS:
 			moves.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return _nearest_dist(a, foes) < _nearest_dist(b, foes))
 			moves = moves.slice(0, MAX_CANDIDATE_CELLS)

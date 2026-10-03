@@ -81,6 +81,7 @@ static func damage(attacker: Node, target: Node, ability: Ability, grid: Isometr
 	raw *= COVER_DMG_MULT[_cover(target, attacker, ability, grid)]
 	if target.has_method("element_mult"):
 		raw *= target.element_mult(ability.damage_type)
+	raw *= Passives.damage_mult(attacker, target, ability)
 	if target.has_method("has_status_tag") and target.has_status_tag("stone"):
 		raw *= STONE_SHATTER_MULT
 	if crit:
