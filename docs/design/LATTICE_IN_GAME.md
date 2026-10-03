@@ -36,3 +36,13 @@ Not used yet: `kind`, `holds` (until confirmed), `facing` / `dirs`, `depthKey`, 
 
 ## Where clips go
 Upload clips with the intake bot into `E:\Beyond_TheNeonVoid\animated\...`. Keep each `.json` next to its `_strip.png`, and its `_overlay_clip.json` next to the overlay strip. In the World Painter they appear in the Objects palette with a ▶ icon.
+
+## Requesting a specific animation from Lattice
+Give Lattice these numbers along with the request:
+
+- **Grid.** World and city maps use 128×64 iso tiles (64×32 on the classic battle maps). A unit stands on one tile, and its feet (`anchor`) are the tile's centre.
+- **Units, bosses and vehicles.** Battles need 4 diagonal facings (NE, NW, SE, SW). Cutscenes can use all 8. Ideally there's one clip per action: `idle`, `walk`, `attack`, `cast`, `hit`, `death`, `victory`. List the frames for each facing in `dirs`, e.g. `{"se": [0, 7], "sw": [8, 15], …}`. If only 2 facings are drawn, say `"mirror": true` and the game flips the other two.
+- **FX** (spells, hits, summons). Use `kind: "fx"` and a transparent background. Add `"blend": "add"` if the effect is meant to glow additively. `eventFrames` marks the impact frame (`{"6": "hit"}`), so the damage number lands on the impact.
+- **Props and items.** These follow the same rules as buildings. Loops should be seamless, and the game desyncs copies on its own.
+
+Anything outside these rules is still fine. Send it over, and the game gets an importer for it.
