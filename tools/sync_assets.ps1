@@ -170,7 +170,7 @@ try {
         foreach ($f in @(git -c core.quotepath=off ls-files --others --modified --exclude-standard -- "$($j.Dst)")) { if ($f) { $queue.Add($f) } }
         if ($queue.Count -eq 0) { Say "  $($j.Dst): already up to date" "DarkGray"; continue }
         Say ("Uploading {0} file(s) in {1}..." -f $queue.Count, $j.Dst)
-        $n = 1; $fails = 0
+        $n = 1; $fails = 0; $streak = 0
         while ($queue.Count -gt 0) {
             $batch = @(); $bytes = 0
             foreach ($f in $queue) {
@@ -186,19 +186,26 @@ try {
             foreach ($try in 1..3) {
                 # Retries fall back to HTTP/1.1 + OpenSSL: some connections mangle
                 # long uploads (SEC_E_MESSAGE_ALTERED / "bad record mac").
-                if ($try -ge 2) { git -c http.version=HTTP/1.1 -c http.sslBackend=openssl push -q origin $Branch }
-                else { git push -q origin $Branch }
+                # A big postBuffer sends each upload in one piece, so git can
+                # resend it after a hiccup ("unable to rewind rpc post data").
+                if ($try -ge 2) { git -c http.version=HTTP/1.1 -c http.sslBackend=openssl -c http.postBuffer=524288000 push -q origin $Branch }
+                else { git -c http.postBuffer=524288000 push -q origin $Branch }
                 if ($LASTEXITCODE -eq 0) { $ok = $true; break }
                 Start-Sleep -Seconds ([math]::Pow(2, $try))
             }
             if ($ok) {
                 Say ("  part {0}: {1} file(s), {2:N1} MB uploaded ({3} left)" -f $n, $batch.Count, ($bytes / 1MB), ($queue.Count - $batch.Count)) "Green"
-                $queue.RemoveRange(0, $batch.Count); $n++; $fails = 0
+                $queue.RemoveRange(0, $batch.Count); $n++; $fails = 0; $streak++
+                # A run of clean uploads: grow the batches back toward the full size.
+                if ($streak -ge 4 -and ($limitMB -lt $ChunkMB -or $limitFiles -lt $MaxFiles)) {
+                    $limitMB = [math]::Min($ChunkMB, $limitMB * 2); $limitFiles = [math]::Min($MaxFiles, $limitFiles * 2); $streak = 0
+                    Say "  going well - batches back up to $limitMB MB / $limitFiles files" "DarkGray"
+                }
                 continue
             }
             # Too big for this connection: undo the commit, halve the batch, try again.
             git reset -q HEAD~1
-            $fails++
+            $fails++; $streak = 0
             if ($limitMB -le 5 -and $limitFiles -le 10 -and $fails -ge 3) {
                 Say "  Upload keeps failing even in small pieces. Check the internet connection, then run the bot again - it resumes where it stopped." "Red"
                 Read-Host "Enter to close"; exit 1
