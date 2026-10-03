@@ -1,0 +1,361 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_power_upgraded_p05_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  244,
+  290
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 1,
+   "x": 244,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 2,
+   "x": 488,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 3,
+   "x": 732,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 4,
+   "x": 976,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 5,
+   "x": 1220,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 6,
+   "x": 1464,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 7,
+   "x": 1708,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 8,
+   "x": 1952,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 9,
+   "x": 2196,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 10,
+   "x": 2440,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 11,
+   "x": 2684,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 12,
+   "x": 2928,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 13,
+   "x": 3172,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 14,
+   "x": 3416,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 15,
+   "x": 3660,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 16,
+   "x": 3904,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 17,
+   "x": 4148,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 18,
+   "x": 4392,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 19,
+   "x": 4636,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 20,
+   "x": 4880,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 21,
+   "x": 5124,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 22,
+   "x": 5368,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  },
+  {
+   "i": 23,
+   "x": 5612,
+   "y": 0,
+   "w": 244,
+   "h": 290
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  122,
+  286
+ ],
+ "propBBox": [
+  4,
+  4,
+  240,
+  287
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_power_upgraded_p05_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_power_upgraded_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_power_upgraded_p05_2.png",
+  "placementKey": "bldg_interior_indoor_power_upgraded_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Power Upgraded 05 \u2014 energised cable spool",
+ "qaGrade": "B",
+ "qaNote": "energised cable spool: light band sweeps over the glowing coil + clamp LED",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 159,
+    "y": 9,
+    "warm": true
+   },
+   {
+    "x": 202,
+    "y": 28,
+    "warm": true
+   },
+   {
+    "x": 206,
+    "y": 32,
+    "warm": true
+   },
+   {
+    "x": 213,
+    "y": 39,
+    "warm": true
+   },
+   {
+    "x": 216,
+    "y": 43,
+    "warm": true
+   },
+   {
+    "x": 219,
+    "y": 50,
+    "warm": true
+   },
+   {
+    "x": 206,
+    "y": 101,
+    "warm": true
+   },
+   {
+    "x": 175,
+    "y": 219,
+    "warm": true
+   },
+   {
+    "x": 167,
+    "y": 223,
+    "warm": true
+   },
+   {
+    "x": 186,
+    "y": 224,
+    "warm": false
+   },
+   {
+    "x": 167,
+    "y": 232,
+    "warm": true
+   },
+   {
+    "x": 220,
+    "y": 242,
+    "warm": true
+   },
+   {
+    "x": 182,
+    "y": 243,
+    "warm": true
+   },
+   {
+    "x": 187,
+    "y": 253,
+    "warm": true
+   },
+   {
+    "x": 195,
+    "y": 258,
+    "warm": false
+   },
+   {
+    "x": 179,
+    "y": 259,
+    "warm": true
+   },
+   {
+    "x": 171,
+    "y": 276,
+    "warm": true
+   },
+   {
+    "x": 212,
+    "y": 280,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 282,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     158,
+     240,
+     182,
+     255
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     24,
+     105,
+     236,
+     279
+    ],
+    "slope": 0.0,
+    "area": 20136
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 19,
+   "strips": 1,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 6429,
+ "config": {
+  "warmlit": true
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_power_upgraded_p05_2",
+ "overlayClip": null
+}

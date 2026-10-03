@@ -1,0 +1,320 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_observation_p06_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  358,
+  224
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 1,
+   "x": 358,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 2,
+   "x": 716,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 3,
+   "x": 1074,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 4,
+   "x": 1432,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 5,
+   "x": 1790,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 6,
+   "x": 2148,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 7,
+   "x": 2506,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 8,
+   "x": 2864,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 9,
+   "x": 3222,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 10,
+   "x": 3580,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 11,
+   "x": 3938,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 12,
+   "x": 4296,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 13,
+   "x": 4654,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 14,
+   "x": 5012,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 15,
+   "x": 5370,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 16,
+   "x": 5728,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 17,
+   "x": 6086,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 18,
+   "x": 6444,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 19,
+   "x": 6802,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 20,
+   "x": 7160,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 21,
+   "x": 7518,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 22,
+   "x": 7876,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  },
+  {
+   "i": 23,
+   "x": 8234,
+   "y": 0,
+   "w": 358,
+   "h": 224
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  179,
+  219
+ ],
+ "propBBox": [
+  4,
+  4,
+  354,
+  220
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_observation_p06_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_observation_p06_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_observation_p06_2.png",
+  "placementKey": "bldg_interior_indoor_observation_p06",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Observation 06 \u2014 console",
+ "qaGrade": "B",
+ "qaNote": "console: small screen sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 164,
+    "y": 44,
+    "warm": false
+   },
+   {
+    "x": 174,
+    "y": 46,
+    "warm": false
+   },
+   {
+    "x": 129,
+    "y": 52,
+    "warm": false
+   },
+   {
+    "x": 160,
+    "y": 50,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 52,
+    "warm": false
+   },
+   {
+    "x": 156,
+    "y": 57,
+    "warm": false
+   },
+   {
+    "x": 167,
+    "y": 59,
+    "warm": false
+   },
+   {
+    "x": 82,
+    "y": 73,
+    "warm": false
+   },
+   {
+    "x": 98,
+    "y": 76,
+    "warm": false
+   },
+   {
+    "x": 205,
+    "y": 85,
+    "warm": true
+   },
+   {
+    "x": 238,
+    "y": 86,
+    "warm": false
+   },
+   {
+    "x": 197,
+    "y": 93,
+    "warm": false
+   },
+   {
+    "x": 33,
+    "y": 124,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     116,
+     36,
+     157,
+     51
+    ],
+    "slope": 0.0,
+    "area": 390
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 13,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 23584,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_observation_p06_2",
+ "overlayClip": null
+}

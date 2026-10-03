@@ -1,0 +1,355 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_power_back_sw_p09_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  201,
+  278
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 1,
+   "x": 201,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 2,
+   "x": 402,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 3,
+   "x": 603,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 4,
+   "x": 804,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 5,
+   "x": 1005,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 6,
+   "x": 1206,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 7,
+   "x": 1407,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 8,
+   "x": 1608,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 9,
+   "x": 1809,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 10,
+   "x": 2010,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 11,
+   "x": 2211,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 12,
+   "x": 2412,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 13,
+   "x": 2613,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 14,
+   "x": 2814,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 15,
+   "x": 3015,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 16,
+   "x": 3216,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 17,
+   "x": 3417,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 18,
+   "x": 3618,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 19,
+   "x": 3819,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 20,
+   "x": 4020,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 21,
+   "x": 4221,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 22,
+   "x": 4422,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  },
+  {
+   "i": 23,
+   "x": 4623,
+   "y": 0,
+   "w": 201,
+   "h": 278
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  100,
+  274
+ ],
+ "propBBox": [
+  4,
+  4,
+  197,
+  275
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_power_back_sw_p09_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_power_back_sw_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_power_back_sw_p09_2.png",
+  "placementKey": "bldg_interior_indoor_power_back_sw_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Power Back Sw 09 \u2014 warning beacon",
+ "qaGrade": "B",
+ "qaNote": "warning beacon: light band sweeps round the amber dome + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 142,
+    "y": 187,
+    "warm": false
+   },
+   {
+    "x": 141,
+    "y": 207,
+    "warm": false
+   },
+   {
+    "x": 8,
+    "y": 226,
+    "warm": true
+   },
+   {
+    "x": 13,
+    "y": 229,
+    "warm": true
+   },
+   {
+    "x": 18,
+    "y": 232,
+    "warm": true
+   },
+   {
+    "x": 29,
+    "y": 238,
+    "warm": true
+   },
+   {
+    "x": 36,
+    "y": 241,
+    "warm": true
+   },
+   {
+    "x": 41,
+    "y": 244,
+    "warm": true
+   },
+   {
+    "x": 47,
+    "y": 247,
+    "warm": true
+   },
+   {
+    "x": 53,
+    "y": 250,
+    "warm": true
+   },
+   {
+    "x": 58,
+    "y": 253,
+    "warm": true
+   },
+   {
+    "x": 64,
+    "y": 256,
+    "warm": true
+   },
+   {
+    "x": 70,
+    "y": 259,
+    "warm": true
+   },
+   {
+    "x": 75,
+    "y": 262,
+    "warm": true
+   },
+   {
+    "x": 81,
+    "y": 265,
+    "warm": true
+   },
+   {
+    "x": 86,
+    "y": 268,
+    "warm": true
+   }
+  ],
+  "energyStrips": [
+   {
+    "bbox": [
+     52,
+     162,
+     56,
+     196
+    ]
+   }
+  ],
+  "panels": [
+   {
+    "kind": "beacon",
+    "bbox": [
+     55,
+     6,
+     140,
+     115
+    ],
+    "slope": 0.0,
+    "area": 6623
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 16,
+   "strips": 1,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 1
+  }
+ },
+ "phaseSeed": 54501,
+ "config": {
+  "warmlit": true,
+  "beacons": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_power_back_sw_p09_2_overlay_clip.json",
+ "paletteCount": 17728
+}

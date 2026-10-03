@@ -1,0 +1,325 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_observation_p05_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  284,
+  252
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 1,
+   "x": 284,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 2,
+   "x": 568,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 3,
+   "x": 852,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 4,
+   "x": 1136,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 5,
+   "x": 1420,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 6,
+   "x": 1704,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 7,
+   "x": 1988,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 8,
+   "x": 2272,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 9,
+   "x": 2556,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 10,
+   "x": 2840,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 11,
+   "x": 3124,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 12,
+   "x": 3408,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 13,
+   "x": 3692,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 14,
+   "x": 3976,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 15,
+   "x": 4260,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 16,
+   "x": 4544,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 17,
+   "x": 4828,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 18,
+   "x": 5112,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 19,
+   "x": 5396,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 20,
+   "x": 5680,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 21,
+   "x": 5964,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 22,
+   "x": 6248,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  },
+  {
+   "i": 23,
+   "x": 6532,
+   "y": 0,
+   "w": 284,
+   "h": 252
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  142,
+  247
+ ],
+ "propBBox": [
+  3,
+  4,
+  280,
+  248
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_observation_p05_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_observation_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_observation_p05_2.png",
+  "placementKey": "bldg_interior_indoor_observation_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Observation 05 \u2014 radar console",
+ "qaGrade": "A",
+ "qaNote": "radar console: rotating radar sweep wedge + blinking LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 190,
+    "y": 54,
+    "warm": true
+   },
+   {
+    "x": 82,
+    "y": 78,
+    "warm": false
+   },
+   {
+    "x": 96,
+    "y": 93,
+    "warm": false
+   },
+   {
+    "x": 223,
+    "y": 145,
+    "warm": false
+   },
+   {
+    "x": 23,
+    "y": 148,
+    "warm": false
+   },
+   {
+    "x": 24,
+    "y": 161,
+    "warm": false
+   },
+   {
+    "x": 160,
+    "y": 163,
+    "warm": false
+   },
+   {
+    "x": 81,
+    "y": 170,
+    "warm": false
+   },
+   {
+    "x": 169,
+    "y": 173,
+    "warm": false
+   },
+   {
+    "x": 171,
+    "y": 176,
+    "warm": false
+   },
+   {
+    "x": 55,
+    "y": 193,
+    "warm": true
+   },
+   {
+    "x": 188,
+    "y": 207,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "radar",
+    "bbox": [
+     53,
+     49,
+     198,
+     203
+    ],
+    "slope": 0.0,
+    "area": 17343
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 12,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 1,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 57977,
+ "config": {
+  "radars": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_observation_p05_2_overlay_clip.json",
+ "paletteCount": 51478
+}

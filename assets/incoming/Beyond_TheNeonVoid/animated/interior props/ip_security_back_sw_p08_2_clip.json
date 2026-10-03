@@ -1,0 +1,380 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_security_back_sw_p08_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  228,
+  287
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 1,
+   "x": 228,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 2,
+   "x": 456,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 3,
+   "x": 684,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 4,
+   "x": 912,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 5,
+   "x": 1140,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 6,
+   "x": 1368,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 7,
+   "x": 1596,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 8,
+   "x": 1824,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 9,
+   "x": 2052,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 10,
+   "x": 2280,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 11,
+   "x": 2508,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 12,
+   "x": 2736,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 13,
+   "x": 2964,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 14,
+   "x": 3192,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 15,
+   "x": 3420,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 16,
+   "x": 3648,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 17,
+   "x": 3876,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 18,
+   "x": 4104,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 19,
+   "x": 4332,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 20,
+   "x": 4560,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 21,
+   "x": 4788,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 22,
+   "x": 5016,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  },
+  {
+   "i": 23,
+   "x": 5244,
+   "y": 0,
+   "w": 228,
+   "h": 287
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  114,
+  282
+ ],
+ "propBBox": [
+  4,
+  4,
+  224,
+  283
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_security_back_sw_p08_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_security_back_sw_p08_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_security_back_sw_p08_2.png",
+  "placementKey": "bldg_interior_indoor_security_back_sw_p08",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Security Back Sw 08 \u2014 security monitor",
+ "qaGrade": "B+",
+ "qaNote": "security monitor: sweep + glitch",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 42,
+    "y": 112,
+    "warm": false
+   },
+   {
+    "x": 128,
+    "y": 135,
+    "warm": false
+   },
+   {
+    "x": 85,
+    "y": 142,
+    "warm": false
+   },
+   {
+    "x": 99,
+    "y": 201,
+    "warm": true
+   },
+   {
+    "x": 105,
+    "y": 201,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     37,
+     54,
+     71,
+     103
+    ],
+    "slope": 0.6,
+    "area": 854
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     71,
+     64,
+     91,
+     81
+    ],
+    "slope": 0.30109890109889914,
+    "area": 257
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     81,
+     71,
+     123,
+     110
+    ],
+    "slope": -0.6,
+    "area": 673
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     123,
+     80,
+     167,
+     121
+    ],
+    "slope": 0.0,
+    "area": 1010
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     52,
+     109,
+     66,
+     124
+    ],
+    "slope": 0.22121212121212047,
+    "area": 171
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     82,
+     112,
+     112,
+     134
+    ],
+    "slope": 0.30827067669172875,
+    "area": 383
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     37,
+     124,
+     72,
+     146
+    ],
+    "slope": 0.24538461538461537,
+    "area": 417
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     142,
+     126,
+     167,
+     144
+    ],
+    "slope": 0.3198529411764689,
+    "area": 304
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     100,
+     140,
+     112,
+     156
+    ],
+    "slope": 0.0,
+    "area": 168
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     123,
+     144,
+     167,
+     165
+    ],
+    "slope": 0.0,
+    "area": 463
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 5,
+   "strips": 0,
+   "screens": 10,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 24069,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_security_back_sw_p08_2_overlay_clip.json",
+ "paletteCount": 27246
+}
