@@ -1,0 +1,444 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_brig_p08_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  498,
+  360
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 1,
+   "x": 498,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 2,
+   "x": 996,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 3,
+   "x": 1494,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 4,
+   "x": 1992,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 5,
+   "x": 2490,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 6,
+   "x": 2988,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 7,
+   "x": 3486,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 8,
+   "x": 3984,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 9,
+   "x": 4482,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 10,
+   "x": 4980,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 11,
+   "x": 5478,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 12,
+   "x": 5976,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 13,
+   "x": 6474,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 14,
+   "x": 6972,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 15,
+   "x": 7470,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 16,
+   "x": 7968,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 17,
+   "x": 8466,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 18,
+   "x": 8964,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 19,
+   "x": 9462,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 20,
+   "x": 9960,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 21,
+   "x": 10458,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 22,
+   "x": 10956,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  },
+  {
+   "i": 23,
+   "x": 11454,
+   "y": 0,
+   "w": 498,
+   "h": 360
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  248,
+  355
+ ],
+ "propBBox": [
+  3,
+  4,
+  494,
+  356
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_brig_p08_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_brig_p08_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_brig_p08_2.png",
+  "placementKey": "bldg_interior_indoor_brig_p08",
+  "footprint": {
+   "w": 2,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Brig 08 \u2014 control desk",
+ "qaGrade": "B+",
+ "qaNote": "control desk: screens sweep + buttons blink",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 162,
+    "y": 60,
+    "warm": false
+   },
+   {
+    "x": 128,
+    "y": 64,
+    "warm": false
+   },
+   {
+    "x": 175,
+    "y": 63,
+    "warm": false
+   },
+   {
+    "x": 147,
+    "y": 68,
+    "warm": false
+   },
+   {
+    "x": 166,
+    "y": 72,
+    "warm": false
+   },
+   {
+    "x": 222,
+    "y": 74,
+    "warm": false
+   },
+   {
+    "x": 340,
+    "y": 99,
+    "warm": false
+   },
+   {
+    "x": 86,
+    "y": 102,
+    "warm": false
+   },
+   {
+    "x": 400,
+    "y": 101,
+    "warm": false
+   },
+   {
+    "x": 369,
+    "y": 105,
+    "warm": false
+   },
+   {
+    "x": 109,
+    "y": 106,
+    "warm": false
+   },
+   {
+    "x": 338,
+    "y": 109,
+    "warm": false
+   },
+   {
+    "x": 73,
+    "y": 112,
+    "warm": false
+   },
+   {
+    "x": 131,
+    "y": 112,
+    "warm": false
+   },
+   {
+    "x": 397,
+    "y": 111,
+    "warm": false
+   },
+   {
+    "x": 367,
+    "y": 116,
+    "warm": false
+   },
+   {
+    "x": 393,
+    "y": 122,
+    "warm": false
+   },
+   {
+    "x": 5,
+    "y": 146,
+    "warm": true
+   },
+   {
+    "x": 366,
+    "y": 151,
+    "warm": false
+   },
+   {
+    "x": 9,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 330,
+    "y": 157,
+    "warm": false
+   },
+   {
+    "x": 490,
+    "y": 162,
+    "warm": true
+   },
+   {
+    "x": 318,
+    "y": 169,
+    "warm": false
+   },
+   {
+    "x": 486,
+    "y": 166,
+    "warm": true
+   },
+   {
+    "x": 19,
+    "y": 258,
+    "warm": true
+   },
+   {
+    "x": 489,
+    "y": 273,
+    "warm": true
+   },
+   {
+    "x": 480,
+    "y": 280,
+    "warm": true
+   },
+   {
+    "x": 411,
+    "y": 326,
+    "warm": true
+   },
+   {
+    "x": 391,
+    "y": 340,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     121,
+     40,
+     183,
+     61
+    ],
+    "slope": 0.20387326796856,
+    "area": 535
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     209,
+     60,
+     260,
+     94
+    ],
+    "slope": 0.2540616246498598,
+    "area": 568
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     264,
+     72,
+     300,
+     104
+    ],
+    "slope": 0.23673913043478148,
+    "area": 634
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     334,
+     85,
+     386,
+     101
+    ],
+    "slope": 0.20257400257400196,
+    "area": 327
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     170,
+     128,
+     192,
+     140
+    ],
+    "slope": 0.0,
+    "area": 163
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 29,
+   "strips": 0,
+   "screens": 5,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 35685,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_brig_p08_2",
+ "overlayClip": null
+}

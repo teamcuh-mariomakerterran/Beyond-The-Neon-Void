@@ -1,0 +1,284 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_upgraded_p05_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  322,
+  298
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 1,
+   "x": 322,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 2,
+   "x": 644,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 3,
+   "x": 966,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 4,
+   "x": 1288,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 5,
+   "x": 1610,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 6,
+   "x": 1932,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 7,
+   "x": 2254,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 8,
+   "x": 2576,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 9,
+   "x": 2898,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 10,
+   "x": 3220,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 11,
+   "x": 3542,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 12,
+   "x": 3864,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 13,
+   "x": 4186,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 14,
+   "x": 4508,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 15,
+   "x": 4830,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 16,
+   "x": 5152,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 17,
+   "x": 5474,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 18,
+   "x": 5796,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 19,
+   "x": 6118,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 20,
+   "x": 6440,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 21,
+   "x": 6762,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 22,
+   "x": 7084,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  },
+  {
+   "i": 23,
+   "x": 7406,
+   "y": 0,
+   "w": 322,
+   "h": 298
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  161,
+  293
+ ],
+ "propBBox": [
+  4,
+  4,
+  318,
+  294
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_upgraded_p05_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_upgraded_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_upgraded_p05_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_upgraded_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Upgraded 05 \u2014 neon sign",
+ "qaGrade": "B+",
+ "qaNote": "neon sign: magenta panel scanline + cyan frame pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 6,
+    "y": 29,
+    "warm": false
+   },
+   {
+    "x": 303,
+    "y": 195,
+    "warm": true
+   },
+   {
+    "x": 304,
+    "y": 202,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     51,
+     69,
+     250,
+     227
+    ],
+    "slope": 0.2871170463472116,
+    "area": 20613
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     28,
+     132,
+     272,
+     256
+    ],
+    "slope": 0.2928767700950853,
+    "area": 3053
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 3,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 8320,
+ "config": {
+  "pinklit": true
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_cantina_upgraded_p05_2_overlay_clip.json",
+ "paletteCount": 54183
+}

@@ -1,0 +1,263 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_brig_p04_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  329,
+  315
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 1,
+   "x": 329,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 2,
+   "x": 658,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 3,
+   "x": 987,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 4,
+   "x": 1316,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 5,
+   "x": 1645,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 6,
+   "x": 1974,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 7,
+   "x": 2303,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 8,
+   "x": 2632,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 9,
+   "x": 2961,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 10,
+   "x": 3290,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 11,
+   "x": 3619,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 12,
+   "x": 3948,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 13,
+   "x": 4277,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 14,
+   "x": 4606,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 15,
+   "x": 4935,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 16,
+   "x": 5264,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 17,
+   "x": 5593,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 18,
+   "x": 5922,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 19,
+   "x": 6251,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 20,
+   "x": 6580,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 21,
+   "x": 6909,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 22,
+   "x": 7238,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  },
+  {
+   "i": 23,
+   "x": 7567,
+   "y": 0,
+   "w": 329,
+   "h": 315
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  164,
+  310
+ ],
+ "propBBox": [
+  3,
+  3,
+  325,
+  311
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_brig_p04_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_brig_p04_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_brig_p04_2.png",
+  "placementKey": "bldg_interior_indoor_brig_p04",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Brig 04 \u2014 glass window",
+ "qaGrade": "B+",
+ "qaNote": "glass window: soft specular sheen sweep",
+ "emitters": {
+  "statusLights": [],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     56,
+     72,
+     263,
+     246
+    ],
+    "slope": 0.20739532597524468,
+    "area": 28127
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 0,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 29185,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_brig_p04_2",
+ "overlayClip": null
+}

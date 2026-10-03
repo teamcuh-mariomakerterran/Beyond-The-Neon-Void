@@ -1,0 +1,284 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_back_sw_p02_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  240,
+  381
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 1,
+   "x": 240,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 2,
+   "x": 480,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 3,
+   "x": 720,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 4,
+   "x": 960,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 5,
+   "x": 1200,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 6,
+   "x": 1440,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 7,
+   "x": 1680,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 8,
+   "x": 1920,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 9,
+   "x": 2160,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 10,
+   "x": 2400,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 11,
+   "x": 2640,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 12,
+   "x": 2880,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 13,
+   "x": 3120,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 14,
+   "x": 3360,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 15,
+   "x": 3600,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 16,
+   "x": 3840,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 17,
+   "x": 4080,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 18,
+   "x": 4320,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 19,
+   "x": 4560,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 20,
+   "x": 4800,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 21,
+   "x": 5040,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 22,
+   "x": 5280,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  },
+  {
+   "i": 23,
+   "x": 5520,
+   "y": 0,
+   "w": 240,
+   "h": 381
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  120,
+  376
+ ],
+ "propBBox": [
+  4,
+  4,
+  236,
+  377
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_back_sw_p02_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_back_sw_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_back_sw_p02_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_back_sw_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Back Sw 02 \u2014 drinks fridge",
+ "qaGrade": "B+",
+ "qaNote": "drinks fridge: glass sheen + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 40,
+    "y": 25,
+    "warm": true
+   },
+   {
+    "x": 21,
+    "y": 34,
+    "warm": true
+   },
+   {
+    "x": 6,
+    "y": 44,
+    "warm": true
+   },
+   {
+    "x": 134,
+    "y": 278,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     30,
+     100,
+     136,
+     312
+    ],
+    "slope": 0.2651697858383172,
+    "area": 12677
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 4,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 42827,
+ "config": {
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_cantina_back_sw_p02_2",
+ "overlayClip": null
+}

@@ -1,0 +1,284 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_back_sw_p05_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  305,
+  276
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 1,
+   "x": 305,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 2,
+   "x": 610,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 3,
+   "x": 915,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 4,
+   "x": 1220,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 5,
+   "x": 1525,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 6,
+   "x": 1830,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 7,
+   "x": 2135,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 8,
+   "x": 2440,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 9,
+   "x": 2745,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 10,
+   "x": 3050,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 11,
+   "x": 3355,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 12,
+   "x": 3660,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 13,
+   "x": 3965,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 14,
+   "x": 4270,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 15,
+   "x": 4575,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 16,
+   "x": 4880,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 17,
+   "x": 5185,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 18,
+   "x": 5490,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 19,
+   "x": 5795,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 20,
+   "x": 6100,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 21,
+   "x": 6405,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 22,
+   "x": 6710,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  },
+  {
+   "i": 23,
+   "x": 7015,
+   "y": 0,
+   "w": 305,
+   "h": 276
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  152,
+  271
+ ],
+ "propBBox": [
+  4,
+  4,
+  301,
+  272
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_back_sw_p05_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_back_sw_p05_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_back_sw_p05_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_back_sw_p05",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Back Sw 05 \u2014 neon sign",
+ "qaGrade": "B+",
+ "qaNote": "neon sign: magenta panel scanline + cyan frame pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 113,
+    "y": 24,
+    "warm": false
+   },
+   {
+    "x": 130,
+    "y": 28,
+    "warm": false
+   },
+   {
+    "x": 297,
+    "y": 80,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     47,
+     63,
+     248,
+     213
+    ],
+    "slope": 0.2553165544824893,
+    "area": 19670
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     27,
+     121,
+     265,
+     239
+    ],
+    "slope": 0.26121601429743374,
+    "area": 2703
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 3,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 45518,
+ "config": {
+  "pinklit": true
+ },
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_cantina_back_sw_p05_2_overlay_clip.json",
+ "paletteCount": 43063
+}

@@ -1,0 +1,290 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_cantina_upgraded_p10_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  136,
+  253
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 1,
+   "x": 136,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 2,
+   "x": 272,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 3,
+   "x": 408,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 4,
+   "x": 544,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 5,
+   "x": 680,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 6,
+   "x": 816,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 7,
+   "x": 952,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 8,
+   "x": 1088,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 9,
+   "x": 1224,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 10,
+   "x": 1360,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 11,
+   "x": 1496,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 12,
+   "x": 1632,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 13,
+   "x": 1768,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 14,
+   "x": 1904,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 15,
+   "x": 2040,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 16,
+   "x": 2176,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 17,
+   "x": 2312,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 18,
+   "x": 2448,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 19,
+   "x": 2584,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 20,
+   "x": 2720,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 21,
+   "x": 2856,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 22,
+   "x": 2992,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  },
+  {
+   "i": 23,
+   "x": 3128,
+   "y": 0,
+   "w": 136,
+   "h": 253
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  68,
+  248
+ ],
+ "propBBox": [
+  3,
+  4,
+  133,
+  249
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_cantina_upgraded_p10_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_cantina_upgraded_p10_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_cantina_upgraded_p10_2.png",
+  "placementKey": "bldg_interior_indoor_cantina_upgraded_p10",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Cantina Upgraded 10 \u2014 amber lantern",
+ "qaGrade": "B",
+ "qaNote": "amber lantern: glass sheen glides over the glow",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 41,
+    "y": 15,
+    "warm": true
+   },
+   {
+    "x": 101,
+    "y": 33,
+    "warm": true
+   },
+   {
+    "x": 118,
+    "y": 112,
+    "warm": true
+   },
+   {
+    "x": 117,
+    "y": 159,
+    "warm": true
+   },
+   {
+    "x": 112,
+    "y": 169,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     22,
+     80,
+     71,
+     180
+    ],
+    "slope": 0.25100267379679053,
+    "area": 4053
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 5,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 1,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 34062,
+ "config": {
+  "warmlit": true,
+  "glasss": [
+   [
+    0,
+    0,
+    9999,
+    9999
+   ]
+  ]
+ },
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_cantina_upgraded_p10_2",
+ "overlayClip": null
+}
