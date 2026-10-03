@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_FactionB_Skyscraper_09",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    187,
+    422
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 1,
+      "x": 187,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 2,
+      "x": 374,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 3,
+      "x": 561,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 4,
+      "x": 748,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 5,
+      "x": 935,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 6,
+      "x": 1122,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 7,
+      "x": 1309,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 8,
+      "x": 1496,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 9,
+      "x": 1683,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 10,
+      "x": 1870,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    },
+    {
+      "i": 11,
+      "x": 2057,
+      "y": 0,
+      "w": 187,
+      "h": 422
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    93,
+    374
+  ],
+  "ruinAnchor": [
+    704,
+    1407
+  ],
+  "sourceSize": [
+    1408,
+    1408
+  ],
+  "ruinSize": [
+    1408,
+    1408
+  ],
+  "smolderEmitters": [
+    {
+      "x": 535,
+      "y": 556
+    },
+    {
+      "x": 736,
+      "y": 355
+    },
+    {
+      "x": 937,
+      "y": 576
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_FactionB_Skyscraper_09_strip.png",
+    "ruin": "bd_destroy_FactionB_Skyscraper_09_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of FactionB_Skyscraper_09",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_FactionB_Skyscraper_09_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_FactionB_Skyscraper_09_ruin.png",
+      "static": true,
+      "anchor": [
+        704,
+        1407
+      ]
+    }
+  }
+}
