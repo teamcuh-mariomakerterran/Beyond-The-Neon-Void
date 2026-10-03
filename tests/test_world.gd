@@ -23,6 +23,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_cables()
 	await test_status_looks()
 	await test_signage()
+	await test_cues()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -897,3 +898,40 @@ func test_signage() -> void:
 	await tree.process_frame
 	DirAccess.remove_absolute(dir + "/b.png")
 	DirAccess.remove_absolute(dir)
+
+
+func test_cues() -> void:
+	check(Cues.resolve("hit.crit.fire") == "hit.crit" and Cues.resolve("hit.weird") == "hit" and Cues.resolve("nothing.here") == "", "cue names fall back to their parent")
+	var got := {"id": "", "key": ""}
+	var probe := func(id: String, key: String, _c: Dictionary) -> void:
+		got["id"] = id
+		got["key"] = key
+	Cues.fired.connect(probe)
+	Cues.fire("status.petrified", {})
+	check(got["key"] == "status.petrified" and Cues.history[-1] == "status.petrified", "fire runs the defined cue and logs it")
+	# Override stack: the slowest time scale wins; base comes back after.
+	var base := Engine.time_scale
+	Cues.push("time_scale", 0.5, 0.3)
+	Cues.push("time_scale", 0.05, 0.06)
+	check(is_equal_approx(Cues.effective("time_scale", 1.0), 0.05), "hit-stop beats slow-mo while both run")
+	await tree.create_timer(0.12, true, false, true).timeout
+	check(is_equal_approx(Cues.effective("time_scale", 1.0), 0.5), "hit-stop ends, slow-mo still holds")
+	await tree.create_timer(0.35, true, false, true).timeout
+	await tree.process_frame
+	check(is_equal_approx(Engine.time_scale, base), "time scale restored when the stack empties")
+	Cues.push("zoom", 1.2, 0.4, "punch")
+	await tree.create_timer(0.08, true, false, true).timeout
+	check(Cues.effective("zoom", 1.0) > 1.05, "zoom punch snaps in")
+	# Gameplay events become cues.
+	var cd: CharacterData = ContentDB.get_all("characters")[0]
+	var u := Unit.new()
+	u.setup(cd, Unit.Team.ENEMY, 1)
+	tree.root.add_child(u)
+	u.take_damage(1)
+	check(str(got["id"]).begins_with("hit"), "damage fires a hit cue (%s)" % got["id"])
+	u.apply_status("banished")
+	check(got["id"] == "status.banished", "status cue")
+	Cues.fired.disconnect(probe)
+	u.queue_free()
+	await tree.process_frame
+	check(ContentDB.get_character("doctrine_warden").is_boss, "boss flag loads from data")

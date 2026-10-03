@@ -37,6 +37,9 @@ extends GameResource
 @export var ai_behavior: String = "aggressive"
 ## Fights on its team but is driven by the AI (droids, summons, guests).
 @export var ai_controlled: bool = false
+## Bosses get the intro card (Cues "boss.intro") and a bigger death.
+@export var is_boss: bool = false
+@export var boss_title: String = ""
 ## Per-character elemental modifiers, layered over the class's.
 @export var element_modifiers: Dictionary = {}
 

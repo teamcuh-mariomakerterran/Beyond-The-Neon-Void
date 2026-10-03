@@ -10,6 +10,8 @@ extends Camera2D
 @export var max_zoom: float = 2.4
 
 var target_zoom: float = 1.3
+## Zoom punch from Cues (1 = none). Applied on top of the player's zoom.
+var punch: float = 1.0
 var bounds: Rect2 = Rect2(-2000, -2000, 4000, 4000)
 var _dragging: bool = false
 var _manual_until: float = 0.0
@@ -27,7 +29,9 @@ func _process(delta: float) -> void:
 	elif follow_target and is_instance_valid(follow_target) and Time.get_ticks_msec() / 1000.0 > _manual_until:
 		global_position = global_position.lerp(follow_target.global_position, clampf(lerp_speed * delta, 0.0, 1.0))
 	global_position = global_position.clamp(bounds.position, bounds.end)
-	zoom = zoom.lerp(Vector2(target_zoom, target_zoom), clampf(delta * 10.0, 0.0, 1.0))
+	var real := delta / maxf(Engine.time_scale, 0.001)  # punches keep pace through slow-mo
+	var goal := target_zoom * punch
+	zoom = zoom.lerp(Vector2(goal, goal), clampf(real * (24.0 if punch != 1.0 else 10.0), 0.0, 1.0))
 
 
 func _unhandled_input(event: InputEvent) -> void:
