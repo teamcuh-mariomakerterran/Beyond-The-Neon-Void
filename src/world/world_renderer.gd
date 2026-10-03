@@ -31,6 +31,7 @@ var _particles_root: Node2D
 var _lights_root: Node2D
 var _fx: FxLayer
 var cables: CableNet
+var signage: Signage
 var _ambient: CanvasModulate
 ## Preview the map's ambient tint + neon lights (on in game, toggleable in the editor).
 var show_lighting: bool = true
@@ -70,6 +71,8 @@ func _ready() -> void:
 	cables = CableNet.new()
 	cables.renderer = self
 	add_child(cables)
+	signage = Signage.new()
+	add_child(signage)
 	_fx = FxLayer.new()
 	_fx.renderer = self
 	_fx.z_as_relative = false
@@ -613,6 +616,8 @@ class WorldSprite extends Node2D:
 	var _foot: int = 1
 	var _clip: Dictionary = {}  # LatticeClip (Grok building/prop animation), if the asset is one
 	var _overlay: Dictionary = {}
+	var _screen: Signage.ScreenQuad
+	var _screen_light: NeonLight
 
 	func refresh() -> void:
 		var w := renderer.world
@@ -663,7 +668,54 @@ class WorldSprite extends Node2D:
 		position = w.to_screen(cell_f, z) + Vector2(float(off[0]), float(off[1]))
 		z_index = order * 2 + 1
 		set_process(_frames.size() > 1 or bool(_clip.get("ok", false)))
+		_refresh_screen()
 		queue_redraw()
+
+	## Living signage: a screen quad (and its glow) if the object has one.
+	func _refresh_screen() -> void:
+		var scr: Variant = data.get("screen")
+		if not (scr is Dictionary) or renderer.signage == null:
+			if _screen:
+				_screen.queue_free()
+				_screen = null
+			if _screen_light:
+				_screen_light.queue_free()
+				_screen_light = null
+			return
+		if _screen == null:
+			_screen = Signage.ScreenQuad.new()
+			add_child(_screen)
+			_screen_light = NeonLight.new()
+			_screen_light.texture = WorldRenderer.light_texture()
+			_screen_light.blend_mode = Light2D.BLEND_MODE_ADD
+			_screen_light.flicker = 0.05
+			add_child(_screen_light)
+		var feed := str(scr.get("feed", "news"))
+		_screen.setup(scr, float(absi(hash(str(data.get("id", "")))) % 100) / 10.0)
+		_screen.tex = renderer.signage.channel(feed, str(scr.get("text", ""))).get_texture()
+		_screen_light.color = Signage.FEED_COLORS.get(feed, Color.WHITE)
+		_screen_light.base_energy = 0.55 * float(scr.get("bright", 1.6)) / 1.6
+		_screen_light.energy = _screen_light.base_energy
+		_screen_light.texture_scale = 0.7 * renderer.world.tile_width / 128.0
+
+	## Corners follow the sprite's visible box (set while drawing).
+	func _place_screen() -> void:
+		if _screen == null or _rect.size.x <= 1.0:
+			return
+		var corners: Array = data["screen"].get("corners", Signage.DEFAULT_CORNERS)
+		var pts := PackedVector2Array()
+		var flip := bool(data.get("flip", false))
+		for c: Variant in corners:
+			var p := _rect.position + Vector2(float(c[0]), float(c[1])) * _rect.size
+			pts.append(Vector2(-p.x, p.y) if flip else p)
+		if pts != _screen.points:
+			_screen.points = pts
+			_screen.queue_redraw()
+			var mid := Vector2.ZERO
+			for p in pts:
+				mid += p
+			_screen_light.position = mid / maxf(pts.size(), 1.0) + Vector2(0, renderer.world.tile_height * 0.4)
+		_screen_light.visible = renderer.show_lighting
 
 	## Per-instance clock offset: the clip's own seed plus this object's id.
 	func _clip_phase() -> float:
@@ -687,6 +739,7 @@ class WorldSprite extends Node2D:
 		draw_set_transform(Vector2.ZERO)
 		var bb: Array = _clip.get("bbox", [0, 0, cell.x, cell.y])
 		_rect = Rect2(base - anchor * sc + Vector2(float(bb[0]), float(bb[1])) * sc, Vector2(float(bb[2]) - float(bb[0]), float(bb[3]) - float(bb[1])) * sc)
+		_place_screen()
 		if selected:
 			draw_rect(_rect.grow(3), Color(0.3, 2.0, 1.0), false, 2.0)
 
@@ -775,6 +828,7 @@ class WorldSprite extends Node2D:
 			draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1 if flip else 1, 1))
 			draw_texture_rect_region(tex, _rect, used, tint)
 			draw_set_transform(Vector2.ZERO)
+			_place_screen()
 		if selected:
 			draw_rect(_rect.grow(3), Color(0.3, 2.0, 1.0), false, 2.0)
 

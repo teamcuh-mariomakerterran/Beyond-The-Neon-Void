@@ -1500,6 +1500,97 @@ func _update_hover(local: Vector2) -> void:
 	_hover_z = layer
 
 
+## Screen corner placement: 0–3 = next corner to click (TL, TR, BR, BL), -1 = off.
+var screen_edit := -1
+
+
+func _place_screen_corner() -> bool:
+	if selected.is_empty() or not (selected.get("screen") is Dictionary):
+		screen_edit = -1
+		return false
+	var node := _renderer.object_node(str(selected.get("id", "")))
+	if node == null or node._rect.size.x <= 1.0:
+		return false
+	var uv := (_hover_world - node.position) 
+	if bool(selected.get("flip", false)):
+		uv.x = -uv.x
+	uv = (uv - node._rect.position) / node._rect.size
+	if screen_edit == 0:
+		_push_undo()
+	var corners: Array = (selected["screen"].get("corners", Signage.DEFAULT_CORNERS) as Array).duplicate(true)
+	corners[screen_edit] = [snappedf(clampf(uv.x, 0, 1), 0.001), snappedf(clampf(uv.y, 0, 1), 0.001)]
+	selected["screen"]["corners"] = corners
+	screen_edit = screen_edit + 1 if screen_edit < 3 else -1
+	status.emit("Screen corner %d set. %s" % [mini(screen_edit, 4) if screen_edit >= 0 else 4, "Next: " + ["top-left", "top-right", "bottom-right", "bottom-left"][screen_edit] if screen_edit >= 0 else "Done."], NeonTheme.CYAN)
+	_renderer.refresh_object(selected)
+	dirty = true
+	if screen_edit < 0:
+		_show_inspector()
+	return true
+
+
+## Living signage settings for one object.
+func _screen_editor(o: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_child(_section("SCREEN", NeonTheme.MAGENTA))
+	var has := CheckBox.new()
+	has.text = "This object has a screen"
+	has.button_pressed = o.get("screen") is Dictionary
+	has.toggled.connect(func(on: bool) -> void:
+		_push_undo()
+		if on:
+			o["screen"] = {"corners": Signage.DEFAULT_CORNERS.duplicate(true), "feed": "news", "mode": "led"}
+		else:
+			o.erase("screen")
+		_renderer.refresh_object(o)
+		dirty = true
+		_show_inspector())
+	box.add_child(has)
+	if not (o.get("screen") is Dictionary):
+		return box
+	var scr: Dictionary = o["screen"]
+	var apply := func() -> void:
+		_renderer.refresh_object(o)
+		dirty = true
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_child(NeonTheme.label("Feed", 12, NeonTheme.TEXT_DIM))
+	grid.add_child(ForgeForm._option(Signage.FEEDS, str(scr.get("feed", "news")), func(k: String) -> void:
+		scr["feed"] = k
+		apply.call()))
+	grid.add_child(NeonTheme.label("Display", 12, NeonTheme.TEXT_DIM))
+	grid.add_child(ForgeForm._option(Signage.MODES, str(scr.get("mode", "led")), func(k: String) -> void:
+		scr["mode"] = k
+		apply.call()))
+	grid.add_child(NeonTheme.label("Brightness", 12, NeonTheme.TEXT_DIM))
+	grid.add_child(ForgeForm._spin(float(scr.get("bright", 1.6)), false, func(v: float) -> void:
+		scr["bright"] = clampf(v, 0.2, 6.0)
+		apply.call()))
+	grid.add_child(NeonTheme.label("Panel res", 12, NeonTheme.TEXT_DIM))
+	grid.add_child(ForgeForm._spin(float(scr.get("cells", 64)), true, func(v: float) -> void:
+		scr["cells"] = clampi(int(v), 8, 256)
+		apply.call()))
+	box.add_child(grid)
+	var txt := LineEdit.new()
+	txt.placeholder_text = "Custom text (feed: custom)"
+	txt.text = str(scr.get("text", ""))
+	txt.text_submitted.connect(func(t: String) -> void:
+		scr["text"] = t
+		apply.call())
+	box.add_child(txt)
+	var edit := Button.new()
+	edit.text = "✎ SET CORNERS (click 4)"
+	edit.tooltip_text = "Click the screen's top-left, top-right, bottom-right, bottom-left on the sprite."
+	edit.pressed.connect(func() -> void:
+		screen_edit = 0
+		status.emit("Click the screen's TOP-LEFT corner on the sprite.", NeonTheme.CYAN))
+	box.add_child(edit)
+	var tip := NeonTheme.label("Feeds: news (live headlines), propaganda, ads (+ PNGs in assets/signage/ads), stats (live numbers), gossip, custom. Screens glow onto the street.", 11, NeonTheme.TEXT_DIM)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(tip)
+	return box
+
+
 ## Cable anchor editing: click on the selected building's sprite to add a
 ## roof anchor, Shift+click to remove the nearest one.
 var anchor_edit := false
@@ -1553,6 +1644,8 @@ func _on_view_input(event: InputEvent) -> void:
 				return
 			if mb.pressed:
 				if anchor_edit and _place_anchor(mb.shift_pressed):
+					return
+				if screen_edit >= 0 and _place_screen_corner():
 					return
 				if mb.double_click and mode == Mode.OBJECTS:
 					var o := _renderer.pick_sprite(_hover_world)
@@ -2485,6 +2578,7 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 		_inspector.add_child(_anim_editor(o, detail))
 	if not detail:
 		_inspector.add_child(_cable_editor(o))
+		_inspector.add_child(_screen_editor(o))
 		var loc := Button.new()
 		loc.text = "⌖ LOCATION LINK…" if not (o.get("location") is Dictionary) else "⌖ EDIT LOCATION: " + str(o["location"].get("name", ""))
 		loc.tooltip_text = "Make this a city / point of interest / door that leads to another map."

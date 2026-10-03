@@ -1,0 +1,29 @@
+{
+	"_note": "Text for in-world screens (Signage). news = live headlines (EventBus.broadcast_line 'news'/'rumor') + news rumors. stats lines use {soul_coins}, {leader}, {party_size}, {time}. Ad images: drop PNGs in res://assets/signage/ads/.",
+	"propaganda": [
+		"ATTENDANCE IS DEVOTION",
+		"DEVOTION IS RECORDED",
+		"THE CHOIR HEARS ALL",
+		"SING. OBEY. ASCEND.",
+		"YOUR HYMN NUMBER IS YOUR NAME",
+		"THE DOCTRINE PROVIDES",
+		"REPORT UNLICENSED MEMORY",
+		"SILENCE IS DISSENT"
+	],
+	"ads": [
+		"KITSUNE NOODLE · 24/7 · NOW WITH REAL SALT",
+		"NEUROLACE 9 — FORGET ON PURPOSE",
+		"CHROME YOUR SOUL · 0% FINANCING",
+		"HALO TAXI — WE DON'T LOOK DOWN",
+		"MEMORY BACKUP: 3 FOR 2",
+		"SYNTHGIN: DRINK THE FUTURE",
+		"VOIDWEAR · BE NOBODY IN STYLE",
+		"DREAMBOOTH: RENT A BETTER PAST"
+	],
+	"stats": [
+		"SOUL COINS {soul_coins}",
+		"WANTED: {leader}",
+		"CREW STRENGTH {party_size}",
+		"LOCAL TIME {time}"
+	]
+}

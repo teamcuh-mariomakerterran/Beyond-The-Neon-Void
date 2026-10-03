@@ -22,6 +22,7 @@ func run(p_tree: SceneTree) -> int:
 	test_location_graph()
 	await test_cables()
 	await test_status_looks()
+	await test_signage()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -856,3 +857,43 @@ func test_status_looks() -> void:
 	check(u.has_status_tag("stone") and u.is_disabled(), "petrified: stone and can't act")
 	u.queue_free()
 	await tree.process_frame
+
+
+func test_signage() -> void:
+	check(Signage.fill("SOUL COINS {soul_coins}") == "SOUL COINS %d" % GameManager.soul_coins, "stats lines fill live numbers")
+	check(not Signage.items("propaganda").is_empty() and not Signage.items("ads").is_empty(), "propaganda + ads have content")
+	EventBus.broadcast_line.emit("news", "T-HEADLINE: test unit wins")
+	check(str(Signage.items("news")[0]["text"]) == "T-HEADLINE: test unit wins", "live headlines lead the news feed")
+	check(str(Signage.items("custom", "OPEN 24H")[0]["text"]) == "OPEN 24H", "custom text")
+	var w := _map()
+	for x in 6:
+		for y in 6:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	var dir := "user://t_sign"
+	DirAccess.make_dir_recursive_absolute(dir)
+	var img := Image.create(64, 96, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0.2, 0.2, 0.3))
+	img.save_png(dir + "/b.png")
+	var o := w.add_object(dir + "/b.png", Vector2i(2, 2), 0, "structure")
+	o["screen"] = {"corners": [[0.2, 0.2], [0.8, 0.25], [0.8, 0.5], [0.2, 0.45]], "feed": "news", "mode": "crt"}
+	var o2 := w.add_object(dir + "/b.png", Vector2i(4, 2), 0, "structure")
+	o2["screen"] = {"feed": "news"}
+	var r := WorldRenderer.new()
+	r.world = w
+	tree.root.add_child(r)
+	for i in 3:
+		await tree.process_frame
+	var n1 := r.object_node(str(o["id"]))
+	var n2 := r.object_node(str(o2["id"]))
+	check(n1._screen != null and n1._screen.points.size() == 4 and n1._screen.tex != null, "screen quad placed on the sprite")
+	check(n1._screen.points[0].is_equal_approx(n1._rect.position + Vector2(0.2, 0.2) * n1._rect.size), "corners follow the sprite box")
+	check(n1._screen.tex == n2._screen.tex, "same feed shares one render")
+	check(n1._screen_light != null and n1._screen_light.color == Signage.FEED_COLORS["news"], "screen glows in its feed colour")
+	o.erase("screen")
+	r.refresh_object(o)
+	await tree.process_frame
+	check(n1._screen == null, "removing the screen removes the quad")
+	r.queue_free()
+	await tree.process_frame
+	DirAccess.remove_absolute(dir + "/b.png")
+	DirAccess.remove_absolute(dir)
