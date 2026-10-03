@@ -274,5 +274,29 @@
 		"description": "Dozes off mid-fight, flying toasters and all. Can't act or move until it wears off.",
 		"prevents_action": true,
 		"prevents_move": true
+	},
+	{
+		"id": "petrified",
+		"display_name": "Petrified",
+		"type": "DEBUFF",
+		"duration_turns": 3,
+		"description": "Turned to stone: can't move or act until cured or it wears off. Hits on stone deal +50% (shatter).",
+		"prevents_action": true,
+		"prevents_move": true,
+		"tags": [
+			"stone"
+		]
+	},
+	{
+		"id": "banished",
+		"display_name": "Banished",
+		"type": "DEBUFF",
+		"duration_turns": 2,
+		"description": "Dragged out of reality: can't act and can't be targeted until it returns.",
+		"prevents_action": true,
+		"prevents_move": true,
+		"tags": [
+			"untouchable"
+		]
 	}
 ]

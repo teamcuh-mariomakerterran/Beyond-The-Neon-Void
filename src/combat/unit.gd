@@ -136,6 +136,8 @@ func refresh_stats() -> void:
 	current_hp = mini(current_hp, get_stat("max_hp"))
 	current_mp = mini(current_mp, get_stat("max_mp"))
 	_update_hud()
+	if not statuses.is_empty() or material != null:
+		StatusLook.update(self)
 
 
 func get_stat(stat: String) -> int:
@@ -154,6 +156,14 @@ func _on_equipment_changed() -> void:
 
 func is_alive() -> bool:
 	return current_hp > 0
+
+
+## True if any active status carries `tag` (e.g. "stone", "untouchable").
+func has_status_tag(tag: String) -> bool:
+	for inst in statuses:
+		if tag in inst.effect.tags:
+			return true
+	return false
 
 
 func is_disabled() -> bool:
@@ -515,6 +525,7 @@ func _try_load_sprite() -> void:
 			_lattice = {}
 			return
 		sprite = AnimatedSprite2D.new()
+		sprite.use_parent_material = true  # status looks (StatusLook) shade the sprite too
 		sprite.sprite_frames = _lattice["frames"]
 		# Lattice packs are drawn for 64×32 tiles; scale to this grid.
 		var s := (grid.tile_width if grid else 64.0) / 64.0
@@ -526,6 +537,7 @@ func _try_load_sprite() -> void:
 	var frames := ResourceLoader.load(data.sprite_frames_path, "SpriteFrames") as SpriteFrames
 	if frames:
 		sprite = AnimatedSprite2D.new()
+		sprite.use_parent_material = true  # status looks (StatusLook) shade the sprite too
 		sprite.sprite_frames = frames
 		sprite.offset = Vector2(0, -24)
 		add_child(sprite)

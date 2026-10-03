@@ -21,6 +21,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_lattice_clip()
 	test_location_graph()
 	await test_cables()
+	await test_status_looks()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -824,3 +825,34 @@ func test_cables() -> void:
 	await tree.process_frame
 	DirAccess.remove_absolute(dir + "/tower.png")
 	DirAccess.remove_absolute(dir)
+
+
+func test_status_looks() -> void:
+	var c := StatusLook.combine(["poisoned", "petrified"])
+	check(c["grey"] == 1.0 and c["crack"] == 1.0 and c["freeze"], "petrify: grey, cracked, frozen")
+	check(c["tint"] == Color("#7dff4a"), "tint from the only tinted status")
+	var c2 := StatusLook.combine(["poisoned", "burning"])
+	check(c2["tint"] == Color("#ff7a2a") and c2["pulse_speed"] == 1.2 and c2["heat"] == 0.8, "stacked: highest-priority tint, strongest numbers")
+	check(StatusLook.combine([])["grey"] == 0.0, "no statuses, no look")
+	for id: String in StatusLook.looks():
+		check(ContentDB.get_status(id) != null, "status look '%s' matches a real status" % id)
+	# On a unit: material appears with the status, sprite inherits it.
+	var cd: CharacterData = ContentDB.get_all("characters")[0]
+	var u := Unit.new()
+	u.setup(cd, Unit.Team.PLAYER, 1)
+	tree.root.add_child(u)
+	await tree.process_frame
+	check(u.material == null, "healthy unit: no status shader")
+	u.apply_status("banished")
+	var mat := u.material as ShaderMaterial
+	check(mat != null and mat.shader == StatusLook.SHADER, "status shader attached")
+	await tree.create_timer(1.0).timeout
+	check(float(mat.get_shader_parameter("sink_px")) > 40.0, "banish sinks the unit into the floor (%s px)" % str(mat.get_shader_parameter("sink_px")))
+	check(u.has_status_tag("untouchable") and DamageCalculator.hit_chance(u, u, ContentDB.get_all("abilities")[0], null) == 0.0, "banished: can't be hit")
+	u.remove_status("banished")
+	await tree.create_timer(1.0).timeout
+	check(float(mat.get_shader_parameter("sink_px")) < 1.0, "returns from banishment")
+	u.apply_status("petrified")
+	check(u.has_status_tag("stone") and u.is_disabled(), "petrified: stone and can't act")
+	u.queue_free()
+	await tree.process_frame

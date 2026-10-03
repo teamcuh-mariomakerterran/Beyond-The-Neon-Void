@@ -39,7 +39,13 @@ static func _cover(target: Node, attacker: Node, ability: Ability, grid: Isometr
 	return grid.cover_against(target.cell, attacker.cell)
 
 
+## Petrified units crack under hits.
+const STONE_SHATTER_MULT := 1.5
+
+
 static func hit_chance(attacker: Node, target: Node, ability: Ability, grid: IsometricGrid) -> float:
+	if target.has_method("has_status_tag") and target.has_status_tag("untouchable"):
+		return 0.0  # banished: not in this reality right now
 	if ability.is_healing() or ability.target in [Ability.Target.ALLY, Ability.Target.SELF]:
 		return 1.0
 	var chance: float = (attacker.get_stat("accuracy") - target.get_stat("evasion")) / 100.0
@@ -75,6 +81,8 @@ static func damage(attacker: Node, target: Node, ability: Ability, grid: Isometr
 	raw *= COVER_DMG_MULT[_cover(target, attacker, ability, grid)]
 	if target.has_method("element_mult"):
 		raw *= target.element_mult(ability.damage_type)
+	if target.has_method("has_status_tag") and target.has_status_tag("stone"):
+		raw *= STONE_SHATTER_MULT
 	if crit:
 		raw *= CRIT_MULT
 	return clampi(roundi(raw), 1, UnitStats.HP_MAX)
