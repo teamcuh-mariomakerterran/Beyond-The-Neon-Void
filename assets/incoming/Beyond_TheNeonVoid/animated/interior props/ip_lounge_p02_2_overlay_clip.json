@@ -1,0 +1,265 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lounge_p02_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  310,
+  365
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 1,
+   "x": 310,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 2,
+   "x": 620,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 3,
+   "x": 930,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 4,
+   "x": 1240,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 5,
+   "x": 1550,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 6,
+   "x": 1860,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 7,
+   "x": 2170,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 8,
+   "x": 2480,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 9,
+   "x": 2790,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 10,
+   "x": 3100,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 11,
+   "x": 3410,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 12,
+   "x": 3720,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 13,
+   "x": 4030,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 14,
+   "x": 4340,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 15,
+   "x": 4650,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 16,
+   "x": 4960,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 17,
+   "x": 5270,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 18,
+   "x": 5580,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 19,
+   "x": 5890,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 20,
+   "x": 6200,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 21,
+   "x": 6510,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 22,
+   "x": 6820,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  },
+  {
+   "i": 23,
+   "x": 7130,
+   "y": 0,
+   "w": 310,
+   "h": 365
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  155,
+  360
+ ],
+ "propBBox": [
+  4,
+  4,
+  306,
+  361
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lounge_p02_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lounge_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lounge_p02_2.png",
+  "placementKey": "bldg_interior_indoor_lounge_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lounge 02 \u2014 desktop monitor",
+ "qaGrade": "B",
+ "qaNote": "desktop monitor: screen glare sweep",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 175,
+    "y": 297,
+    "warm": false
+   },
+   {
+    "x": 190,
+    "y": 304,
+    "warm": false
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     55,
+     97,
+     149,
+     161
+    ],
+    "slope": 0.5,
+    "area": 2190
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 2,
+   "strips": 0,
+   "screens": 1,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 33581,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_lounge_p02_2",
+ "overlayClip": null
+}

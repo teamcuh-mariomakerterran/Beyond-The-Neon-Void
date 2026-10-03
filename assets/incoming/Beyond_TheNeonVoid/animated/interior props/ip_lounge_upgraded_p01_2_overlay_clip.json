@@ -1,0 +1,443 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_lounge_upgraded_p01_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  370,
+  340
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 1,
+   "x": 370,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 2,
+   "x": 740,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 3,
+   "x": 1110,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 4,
+   "x": 1480,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 5,
+   "x": 1850,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 6,
+   "x": 2220,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 7,
+   "x": 2590,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 8,
+   "x": 2960,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 9,
+   "x": 3330,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 10,
+   "x": 3700,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 11,
+   "x": 4070,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 12,
+   "x": 4440,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 13,
+   "x": 4810,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 14,
+   "x": 5180,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 15,
+   "x": 5550,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 16,
+   "x": 5920,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 17,
+   "x": 6290,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 18,
+   "x": 6660,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 19,
+   "x": 7030,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 20,
+   "x": 7400,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 21,
+   "x": 7770,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 22,
+   "x": 8140,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  },
+  {
+   "i": 23,
+   "x": 8510,
+   "y": 0,
+   "w": 370,
+   "h": 340
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  184,
+  337
+ ],
+ "propBBox": [
+  2,
+  3,
+  367,
+  338
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_lounge_upgraded_p01_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_lounge_upgraded_p01_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_lounge_upgraded_p01_2.png",
+  "placementKey": "bldg_interior_indoor_lounge_upgraded_p01",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Lounge Upgraded 01 \u2014 sofa neon piping",
+ "qaGrade": "B",
+ "qaNote": "sofa neon piping: travelling pulse",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 186,
+    "y": 27,
+    "warm": true
+   },
+   {
+    "x": 218,
+    "y": 28,
+    "warm": true
+   },
+   {
+    "x": 139,
+    "y": 49,
+    "warm": true
+   },
+   {
+    "x": 231,
+    "y": 61,
+    "warm": false
+   },
+   {
+    "x": 280,
+    "y": 60,
+    "warm": true
+   },
+   {
+    "x": 277,
+    "y": 69,
+    "warm": true
+   },
+   {
+    "x": 75,
+    "y": 79,
+    "warm": true
+   },
+   {
+    "x": 105,
+    "y": 83,
+    "warm": true
+   },
+   {
+    "x": 65,
+    "y": 85,
+    "warm": true
+   },
+   {
+    "x": 116,
+    "y": 105,
+    "warm": false
+   },
+   {
+    "x": 110,
+    "y": 106,
+    "warm": false
+   },
+   {
+    "x": 213,
+    "y": 111,
+    "warm": false
+   },
+   {
+    "x": 333,
+    "y": 113,
+    "warm": true
+   },
+   {
+    "x": 130,
+    "y": 118,
+    "warm": true
+   },
+   {
+    "x": 122,
+    "y": 121,
+    "warm": true
+   },
+   {
+    "x": 117,
+    "y": 124,
+    "warm": true
+   },
+   {
+    "x": 55,
+    "y": 126,
+    "warm": true
+   },
+   {
+    "x": 113,
+    "y": 127,
+    "warm": true
+   },
+   {
+    "x": 13,
+    "y": 148,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 152,
+    "warm": true
+   },
+   {
+    "x": 22,
+    "y": 153,
+    "warm": true
+   },
+   {
+    "x": 61,
+    "y": 157,
+    "warm": true
+   },
+   {
+    "x": 18,
+    "y": 171,
+    "warm": true
+   },
+   {
+    "x": 352,
+    "y": 180,
+    "warm": true
+   },
+   {
+    "x": 318,
+    "y": 207,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 245,
+    "warm": false
+   },
+   {
+    "x": 61,
+    "y": 244,
+    "warm": true
+   },
+   {
+    "x": 17,
+    "y": 256,
+    "warm": true
+   },
+   {
+    "x": 191,
+    "y": 282,
+    "warm": false
+   },
+   {
+    "x": 140,
+    "y": 305,
+    "warm": true
+   },
+   {
+    "x": 108,
+    "y": 308,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "glass",
+    "bbox": [
+     220,
+     75,
+     339,
+     236
+    ],
+    "slope": 0.6,
+    "area": 4035
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     290,
+     93,
+     316,
+     111
+    ],
+    "slope": 0.5,
+    "area": 156
+   },
+   {
+    "kind": "glass",
+    "bbox": [
+     109,
+     131,
+     222,
+     302
+    ],
+    "slope": 0.5,
+    "area": 4050
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     36,
+     256,
+     94,
+     295
+    ],
+    "slope": 0.5,
+    "area": 429
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 31,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 2,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 61797,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_lounge_upgraded_p01_2",
+ "overlayClip": null
+}

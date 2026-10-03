@@ -1,0 +1,407 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_medbay_upgraded_p02_2",
+ "kind": "ambient",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  288,
+  395
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 1,
+   "x": 288,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 2,
+   "x": 576,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 3,
+   "x": 864,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 4,
+   "x": 1152,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 5,
+   "x": 1440,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 6,
+   "x": 1728,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 7,
+   "x": 2016,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 8,
+   "x": 2304,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 9,
+   "x": 2592,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 10,
+   "x": 2880,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 11,
+   "x": 3168,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 12,
+   "x": 3456,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 13,
+   "x": 3744,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 14,
+   "x": 4032,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 15,
+   "x": 4320,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 16,
+   "x": 4608,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 17,
+   "x": 4896,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 18,
+   "x": 5184,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 19,
+   "x": 5472,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 20,
+   "x": 5760,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 21,
+   "x": 6048,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 22,
+   "x": 6336,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  },
+  {
+   "i": 23,
+   "x": 6624,
+   "y": 0,
+   "w": 288,
+   "h": 395
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  144,
+  390
+ ],
+ "propBBox": [
+  3,
+  4,
+  284,
+  391
+ ],
+ "sortBias": 0,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_medbay_upgraded_p02_2_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_medbay_upgraded_p02_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_medbay_upgraded_p02_2.png",
+  "placementKey": "bldg_interior_indoor_medbay_upgraded_p02",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Medbay Upgraded 02 \u2014 heart monitor",
+ "qaGrade": "B+",
+ "qaNote": "heart monitor: ECG screen sweep + glitch + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 159,
+    "y": 93,
+    "warm": false
+   },
+   {
+    "x": 159,
+    "y": 106,
+    "warm": false
+   },
+   {
+    "x": 155,
+    "y": 118,
+    "warm": true
+   },
+   {
+    "x": 163,
+    "y": 120,
+    "warm": true
+   },
+   {
+    "x": 60,
+    "y": 120,
+    "warm": false
+   },
+   {
+    "x": 70,
+    "y": 123,
+    "warm": false
+   },
+   {
+    "x": 81,
+    "y": 126,
+    "warm": false
+   },
+   {
+    "x": 93,
+    "y": 129,
+    "warm": false
+   },
+   {
+    "x": 103,
+    "y": 132,
+    "warm": false
+   },
+   {
+    "x": 114,
+    "y": 135,
+    "warm": false
+   },
+   {
+    "x": 124,
+    "y": 137,
+    "warm": false
+   },
+   {
+    "x": 133,
+    "y": 140,
+    "warm": false
+   },
+   {
+    "x": 49,
+    "y": 184,
+    "warm": false
+   },
+   {
+    "x": 84,
+    "y": 194,
+    "warm": true
+   },
+   {
+    "x": 49,
+    "y": 197,
+    "warm": false
+   },
+   {
+    "x": 233,
+    "y": 196,
+    "warm": false
+   },
+   {
+    "x": 232,
+    "y": 208,
+    "warm": false
+   },
+   {
+    "x": 84,
+    "y": 208,
+    "warm": true
+   },
+   {
+    "x": 232,
+    "y": 225,
+    "warm": true
+   },
+   {
+    "x": 178,
+    "y": 254,
+    "warm": true
+   },
+   {
+    "x": 47,
+    "y": 275,
+    "warm": false
+   },
+   {
+    "x": 135,
+    "y": 272,
+    "warm": true
+   },
+   {
+    "x": 83,
+    "y": 273,
+    "warm": true
+   },
+   {
+    "x": 82,
+    "y": 286,
+    "warm": true
+   },
+   {
+    "x": 257,
+    "y": 298,
+    "warm": true
+   },
+   {
+    "x": 233,
+    "y": 311,
+    "warm": true
+   },
+   {
+    "x": 19,
+    "y": 318,
+    "warm": true
+   },
+   {
+    "x": 129,
+    "y": 358,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     54,
+     73,
+     142,
+     123
+    ],
+    "slope": 0.2444151153098083,
+    "area": 701
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     38,
+     256,
+     59,
+     269
+    ],
+    "slope": 0.5,
+    "area": 155
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 28,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 62618,
+ "config": null,
+ "layering": "Drop-in replacement for the static prop sprite: same canvas, same anchor, same alpha (silhouette never changes).",
+ "overlayOf": null,
+ "overlayClip": "ip_medbay_upgraded_p02_2_overlay_clip.json",
+ "paletteCount": 31347
+}
