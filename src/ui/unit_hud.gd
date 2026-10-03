@@ -23,8 +23,14 @@ func _ready() -> void:
 	z_index = 4000
 
 
+var _shake: float = 0.0
+
+
 func refresh(unit: Unit) -> void:
 	var max_hp := maxi(unit.get_stat("max_hp"), 1)
+	var new_ratio := clampf(float(unit.current_hp) / max_hp, 0.0, 1.0)
+	if new_ratio < _hp_ratio - 0.001:
+		_shake = 1.0  # bar jolts when it takes a hit
 	var max_mp := maxi(unit.get_stat("max_mp"), 1)
 	_hp_ratio = clampf(float(unit.current_hp) / max_hp, 0.0, 1.0)
 	_mp_ratio = clampf(float(unit.current_mp) / max_mp, 0.0, 1.0)
@@ -43,16 +49,19 @@ func refresh(unit: Unit) -> void:
 	queue_redraw()
 
 
-func _process(_delta: float) -> void:
-	if not is_equal_approx(_hp_shown, _hp_ratio):
+func _process(delta: float) -> void:
+	if not is_equal_approx(_hp_shown, _hp_ratio) or _shake > 0.0 or is_active_turn:
 		queue_redraw()
+	_shake = maxf(_shake - delta * 4.0, 0.0)
 
 
 func _draw() -> void:
 	if not _alive:
 		return
-	var x := -WIDTH * 0.5
+	var x := -WIDTH * 0.5 + (randf_range(-2.0, 2.0) * _shake)
 	draw_rect(Rect2(x - 1, Y - 1, WIDTH + 2, 9), Color(0, 0, 0, 0.75))
+	if _shake > 0.5:
+		draw_rect(Rect2(x - 1, Y - 1, WIDTH + 2, 9), Color(1.6, 1.6, 1.6, (_shake - 0.5)), false, 1.5)
 	var hp_col := Color("39ff9f") if _hp_ratio > 0.6 else Color("ffd23f") if _hp_ratio > 0.3 else Color("ff3b5c")
 	draw_rect(Rect2(x, Y, WIDTH * _hp_shown, 4), Color(1, 1, 1, 0.55))
 	draw_rect(Rect2(x, Y, WIDTH * _hp_ratio, 4), hp_col)
@@ -60,5 +69,8 @@ func _draw() -> void:
 	for i in _status_colors.size():
 		draw_circle(Vector2(x + 3 + i * 7, Y - 5), 2.5, _status_colors[i])
 	if is_active_turn:
-		var tri := PackedVector2Array([Vector2(-6, Y - 16), Vector2(6, Y - 16), Vector2(0, Y - 8)])
-		draw_colored_polygon(tri, _team_color)
+		# Bobbing, glowing turn marker.
+		var b := sin(Time.get_ticks_msec() / 1000.0 * 5.0) * 2.5
+		var tri := PackedVector2Array([Vector2(-7, Y - 18 + b), Vector2(7, Y - 18 + b), Vector2(0, Y - 9 + b)])
+		draw_colored_polygon(tri, Color(_team_color.r * 1.6, _team_color.g * 1.6, _team_color.b * 1.6))
+		draw_polyline(PackedVector2Array([tri[0], tri[1], tri[2], tri[0]]), Color(1, 1, 1, 0.6), 1.0)

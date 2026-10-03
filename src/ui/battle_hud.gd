@@ -300,12 +300,17 @@ func add_log(text: String) -> void:
 func show_banner(text: String, color: Color = NeonTheme.GREEN, hold: float = 0.8) -> void:
 	_banner.text = text
 	_banner.add_theme_color_override("font_color", color)
+	# Stamp in (wide + flat → full), hold, then squeeze out.
+	_banner.pivot_offset = _banner.size * 0.5
 	var t := create_tween()
 	_banner.modulate.a = 0.0
-	_banner.scale = Vector2(1.2, 1.2)
-	t.tween_property(_banner, "modulate:a", 1.0, 0.15)
+	_banner.scale = Vector2(1.8, 0.15)
+	t.tween_property(_banner, "modulate:a", 1.0, 0.08)
+	t.parallel().tween_property(_banner, "scale", Vector2(0.94, 1.08), 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	t.tween_property(_banner, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	t.tween_interval(hold)
-	t.tween_property(_banner, "modulate:a", 0.0, 0.35)
+	t.tween_property(_banner, "scale", Vector2(1.25, 0.0), 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	t.parallel().tween_property(_banner, "modulate:a", 0.0, 0.18)
 
 
 func show_notification(text: String) -> void:

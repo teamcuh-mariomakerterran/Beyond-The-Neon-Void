@@ -222,7 +222,7 @@ func take_damage(amount: int, is_critical: bool = false) -> int:
 	current_hp -= dealt
 	health_changed.emit(current_hp, get_stat("max_hp"))
 	EventBus.unit_damaged.emit(self, dealt, is_critical)
-	hit_flash()
+	hit_flash(Color(2.0, 0.4, 0.6), is_critical or dealt >= get_stat("max_hp") * 0.25)
 	_update_hud()
 	if current_hp <= 0:
 		die()
@@ -396,9 +396,17 @@ func move_along(path: Array[Vector2i], animate: bool = true) -> void:
 			z_index = maxi(IsometricGrid.draw_order(next), IsometricGrid.draw_order(cell)) * 2 + 1
 			var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			var hop := grid.get_height(next) != grid.get_height(cell)
-			t.tween_property(self, "position", grid.grid_to_world(next), 0.16 if not hop else 0.22)
+			if hop:
+				# Jump arc: up and over, then land with a squash.
+				var mid := (position + grid.grid_to_world(next)) * 0.5 + Vector2(0, -grid.height_step * 1.1)
+				t.tween_property(self, "position", mid, 0.11).set_ease(Tween.EASE_OUT)
+				t.tween_property(self, "position", grid.grid_to_world(next), 0.11).set_ease(Tween.EASE_IN)
+			else:
+				t.tween_property(self, "position", grid.grid_to_world(next), 0.16)
 			cell = next
 			await t.finished
+			if hop:
+				land_squash()
 	else:
 		face_towards(goal)
 	cell = goal
@@ -445,12 +453,31 @@ func play_animation(anim_name: String) -> void:
 		sprite.play(anim_name)
 
 
-func hit_flash(color: Color = Color(2.0, 0.4, 0.6)) -> void:
+func hit_flash(color: Color = Color(2.0, 0.4, 0.6), heavy: bool = false) -> void:
 	if not is_inside_tree():
 		return
 	var t := create_tween()
 	modulate = color
 	t.tween_property(self, "modulate", Color.WHITE, 0.18)
+	# Hit reaction: squash at the feet, spring back; heavy hits also wobble.
+	var s := create_tween()
+	s.tween_property(self, "scale", Vector2(1.18, 0.8) if heavy else Vector2(1.1, 0.88), 0.05)
+	s.tween_property(self, "scale", Vector2(0.94, 1.07), 0.08)
+	s.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	if heavy:
+		var r := create_tween()
+		r.tween_property(self, "rotation", 0.12, 0.05)
+		r.tween_property(self, "rotation", -0.08, 0.07)
+		r.tween_property(self, "rotation", 0.0, 0.1)
+
+
+## Little squash when landing after a hop / jump.
+func land_squash() -> void:
+	if not is_inside_tree():
+		return
+	var s := create_tween()
+	s.tween_property(self, "scale", Vector2(1.14, 0.86), 0.05)
+	s.tween_property(self, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func _try_load_sprite() -> void:

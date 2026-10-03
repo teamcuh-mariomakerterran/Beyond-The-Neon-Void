@@ -221,7 +221,7 @@ func _connect_events() -> void:
 	CombatManager.battle_finished.connect(_on_battle_finished)
 	EventBus.turn_started.connect(_on_turn_started)
 	EventBus.turn_order_changed.connect(func(_f: Array) -> void: hud.update_turn_order(CombatManager.turn_forecast(10)))
-	EventBus.unit_damaged.connect(func(u: Node, amt: int, crit: bool) -> void: _float(u, str(amt), Color(2.0, 0.5, 0.7), crit))
+	EventBus.unit_damaged.connect(func(u: Node, amt: int, crit: bool) -> void: _float(u, str(amt), Color(2.0, 0.5, 0.7), crit, float(amt) / maxf(float(u.get_stat("max_hp")), 1.0) * 2.5))
 	EventBus.unit_healed.connect(func(u: Node, amt: int) -> void: _float(u, "+%d" % amt, Color(0.5, 2.0, 1.0)) if amt > 0 else null)
 	EventBus.unit_missed.connect(func(u: Node) -> void: _float(u, "MISS", Color(0.7, 0.7, 0.9)))
 	EventBus.unit_status_applied.connect(func(u: Node, sid: String) -> void: _float(u, ContentDB.get_status(sid).display_name.to_upper() if ContentDB.get_status(sid) else sid, Color(1.8, 1.4, 0.4)))
@@ -230,9 +230,9 @@ func _connect_events() -> void:
 	EventBus.unit_moved.connect(func(u: Node, _a: Vector2i, _b: Vector2i) -> void: if u == CombatManager.active_unit: hud.refresh_unit(u))
 
 
-func _float(u: Node, text: String, color: Color, crit: bool = false) -> void:
+func _float(u: Node, text: String, color: Color, crit: bool = false, weight: float = 0.3) -> void:
 	if is_instance_valid(u):
-		DamageText.spawn(world, u.position, text, color, crit)
+		DamageText.spawn(world, u.position, text, color, crit, weight)
 		if u == CombatManager.active_unit:
 			hud.refresh_unit(u)
 
