@@ -31,8 +31,8 @@ Not used yet: `kind`, `holds` (until confirmed), `facing` / `dirs`, `depthKey`, 
 3. **A light budget.** A short `"lights": [{x, y, color, radius, flicker}]` list (3–6 entries) marking the lights *you* think should glow onto the world. If it's present, the game uses it instead of guessing from beacons and windows.
 4. **`facing` / `dirs` for units and vehicles.** For 8-direction characters (the submarine, tanks, bosses), list which frame range is which facing. Battles use the **4 diagonals** (screen NE, NW, SE, SW), and cutscenes use all 8.
 5. **`kind`.** It already ships (`ambient`, `ambient_overlay`). If it could also say `building | prop | item | unit | vehicle | fx`, the game could file each clip in the right palette automatically.
-7. **Footprint in game tiles.** `sourceArt.footprint` is `1×1` on bl_036_04, a full courtyard block, so it's placed about 1.4 tiles wide. If a building should cover more of our grid, a `"gameFootprint": {"w": 2, "h": 2}` would let us size it right. The painter can also override this per object.
 6. **`eventFrames`.** Frames where something happens, e.g. `{"7": "door_open", "15": "steam_burst"}`. The game can play sounds or trigger effects on those frames.
+7. **Footprint in game tiles.** `sourceArt.footprint` is `1×1` on bl_036_04, a full courtyard block, so it's placed about 1.4 tiles wide. If a building should cover more of our grid, a `"gameFootprint": {"w": 2, "h": 2}` would let us size it right. The painter can also override this per object.
 
 ## Where clips go
 Upload clips with the intake bot into `E:\Beyond_TheNeonVoid\animated\...`. Keep each `.json` next to its `_strip.png`, and its `_overlay_clip.json` next to the overlay strip. In the World Painter they appear in the Objects palette with a ▶ icon.
