@@ -1,0 +1,158 @@
+{
+  "format": "lattice.effects.wave.inventory.v1",
+  "wave": 9,
+  "version": 1,
+  "count": 10,
+  "effects": [
+    {
+      "id": "supply_crate_drop",
+      "label": "supply crate drop",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "supply_crate_drop_strip.png",
+      "clip": "supply_crate_drop_clip.json",
+      "suggestedUse": "supply crate parachute drop + landing puff"
+    },
+    {
+      "id": "turret_deploy",
+      "label": "turret deploy",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "turret_deploy_strip.png",
+      "clip": "turret_deploy_clip.json",
+      "suggestedUse": "turret unfold + barrel snap flash"
+    },
+    {
+      "id": "muzzle_smoke",
+      "label": "muzzle smoke",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "muzzle_smoke_strip.png",
+      "clip": "muzzle_smoke_clip.json",
+      "suggestedUse": "small after-shot muzzle smoke puff"
+    },
+    {
+      "id": "casing_eject",
+      "label": "casing eject",
+      "kind": "fx",
+      "loop": false,
+      "fps": 14,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "casing_eject_strip.png",
+      "clip": "casing_eject_clip.json",
+      "suggestedUse": "brass casing eject arc + glint"
+    },
+    {
+      "id": "vehicle_exhaust",
+      "label": "vehicle exhaust",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "vehicle_exhaust_strip.png",
+      "clip": "vehicle_exhaust_clip.json",
+      "suggestedUse": "vehicle exhaust puff loop"
+    },
+    {
+      "id": "reload_click",
+      "label": "reload click",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "reload_click_strip.png",
+      "clip": "reload_click_clip.json",
+      "suggestedUse": "magazine seat click + spark"
+    },
+    {
+      "id": "heal_ground_aura",
+      "label": "heal ground aura",
+      "kind": "fx",
+      "loop": false,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "heal_ground_aura_strip.png",
+      "clip": "heal_ground_aura_clip.json",
+      "suggestedUse": "flat green ground heal ring aura"
+    },
+    {
+      "id": "banner_capture_spin",
+      "label": "banner capture spin",
+      "kind": "ambient",
+      "loop": true,
+      "fps": 10,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 12,
+      "strip": "banner_capture_spin_strip.png",
+      "clip": "banner_capture_spin_clip.json",
+      "suggestedUse": "spinning capture banner on pole"
+    },
+    {
+      "id": "ally_mark_ping",
+      "label": "ally mark ping",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "ally_mark_ping_strip.png",
+      "clip": "ally_mark_ping_clip.json",
+      "suggestedUse": "cyan ally mark diamond + rings"
+    },
+    {
+      "id": "fortify_plate",
+      "label": "fortify plate",
+      "kind": "fx",
+      "loop": false,
+      "fps": 12,
+      "cell": [
+        96,
+        96
+      ],
+      "frames": 10,
+      "strip": "fortify_plate_strip.png",
+      "clip": "fortify_plate_clip.json",
+      "suggestedUse": "armor plate fortify slam flash"
+    }
+  ]
+}
