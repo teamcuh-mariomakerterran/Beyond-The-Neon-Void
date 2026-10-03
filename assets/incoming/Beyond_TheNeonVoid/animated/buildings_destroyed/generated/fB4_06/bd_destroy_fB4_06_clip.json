@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_fB4_06",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    423,
+    403
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 1,
+      "x": 423,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 2,
+      "x": 846,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 3,
+      "x": 1269,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 4,
+      "x": 1692,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 5,
+      "x": 2115,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 6,
+      "x": 2538,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 7,
+      "x": 2961,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 8,
+      "x": 3384,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 9,
+      "x": 3807,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 10,
+      "x": 4230,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    },
+    {
+      "i": 11,
+      "x": 4653,
+      "y": 0,
+      "w": 423,
+      "h": 403
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    211,
+    357
+  ],
+  "ruinAnchor": [
+    704,
+    1407
+  ],
+  "sourceSize": [
+    1408,
+    1408
+  ],
+  "ruinSize": [
+    1408,
+    1408
+  ],
+  "smolderEmitters": [
+    {
+      "x": 277,
+      "y": 571
+    },
+    {
+      "x": 716,
+      "y": 435
+    },
+    {
+      "x": 1155,
+      "y": 556
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_fB4_06_strip.png",
+    "ruin": "bd_destroy_fB4_06_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of fB4_06",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_fB4_06_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_fB4_06_ruin.png",
+      "static": true,
+      "anchor": [
+        704,
+        1407
+      ]
+    }
+  }
+}
