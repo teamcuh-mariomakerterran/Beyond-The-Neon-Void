@@ -33,23 +33,32 @@ static func find_for_png(png: String) -> String:
 
 ## Parsed clip (cached): {ok, tex, rects, seq, ms, total, loop, anchor, cell,
 ## footprint, phase, emitters, overlay, title, bbox}.
-static func load_clip(path: String) -> Dictionary:
-	if _cache.has(path):
-		return _cache[path]
+## `dir` picks one facing out of a "dirs-rows" sheet (N, NE … NW).
+## Rules follow Lattice's CLIP_FORMAT_GUIDE: holds are tick multipliers,
+## missing loop = false, anchor falls back to pivot then bottom-centre.
+static func load_clip(path: String, facing_dir: String = "") -> Dictionary:
+	var key := path + "#" + facing_dir
+	if _cache.has(key):
+		return _cache[key]
 	var out := {"ok": false}
 	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
-	if not (d is Dictionary) or str(d.get("format", "")) != FORMAT:
-		_cache[path] = out
+	if not (d is Dictionary) or str(d.get("format", "")) != FORMAT or str(d.get("kind", "")) == "combined":
+		_cache[key] = out
 		return out
 	var dir := path.get_base_dir()
 	var strip := str((d.get("textures", {}) as Dictionary).get("strip", ""))
 	var tex := ForgeStore.load_texture(dir.path_join(strip)) if strip != "" else null
 	if tex == null:
-		_cache[path] = out
+		_cache[key] = out
 		return out
 	var cell: Array = d.get("cell", [tex.get_width(), tex.get_height()])
 	var rects: Array[Rect2] = []
+	var rows := str(d.get("layout", "")) == "dirs-rows"
+	if rows and facing_dir == "":
+		facing_dir = str((d.get("dirOrder", ["SE"]) as Array)[3 if (d.get("dirOrder", []) as Array).size() > 3 else 0])
 	for r: Dictionary in d.get("rects", []):
+		if rows and str(r.get("dir", "")) != facing_dir:
+			continue
 		rects.append(Rect2(float(r["x"]), float(r["y"]), float(r["w"]), float(r["h"])))
 	if rects.is_empty():
 		# No rects: slice a horizontal (or vertical) strip by cell size.
@@ -57,6 +66,9 @@ static func load_clip(path: String) -> Dictionary:
 		var vertical := str(d.get("layout", "horizontal")) == "vertical"
 		for i in n:
 			rects.append(Rect2(0 if vertical else i * float(cell[0]), i * float(cell[1]) if vertical else 0, float(cell[0]), float(cell[1])))
+	if rects.is_empty():
+		_cache[key] = out
+		return out
 	tex = _keyed(path, tex, d, rects)
 	var frame_ms := float(d.get("frameMs", 1000.0 / maxf(float(d.get("fps", 10)), 0.1)))
 	var seq: Array = d.get("tickSequence") if d.get("tickSequence") is Array else range(rects.size())
@@ -64,9 +76,9 @@ static func load_clip(path: String) -> Dictionary:
 	var ms: Array = []
 	for k in seq.size():
 		var h := frame_ms
-		if holds is Array and k < (holds as Array).size():
-			var v := float(holds[k])
-			h = v if v > 10.0 else frame_ms * maxf(v, 0.0)  # ms, or a multiplier of frameMs
+		var fi := int(seq[k])
+		if holds is Array and fi < (holds as Array).size() and holds[fi] != null:
+			h = frame_ms * maxf(roundf(float(holds[fi])), 1.0)  # ticks, never ms
 		ms.append(h)
 	var total := 0.0
 	for m: float in ms:
@@ -74,18 +86,65 @@ static func load_clip(path: String) -> Dictionary:
 	var foot: Dictionary = (d.get("sourceArt", {}) as Dictionary).get("footprint", {}) if d.get("sourceArt") is Dictionary else {}
 	if d.get("gameFootprint") is Dictionary:  # our grid's tiles, if the animator sets it
 		foot = d["gameFootprint"]
-	var anchor: Array = d.get("anchor", [float(cell[0]) * 0.5, float(cell[1])])
+	var anchor := anchor_of(d)
 	var bbox: Array = d.get("buildingBBox", [0, 0, cell[0], cell[1]])
 	out = {"ok": true, "tex": tex, "rects": rects, "seq": seq, "ms": ms, "total": maxf(total, 1.0),
-		"loop": bool(d.get("loop", true)), "anchor": Vector2(float(anchor[0]), float(anchor[1])),
+		"loop": d.get("loop") == true, "anchor": anchor, "kind": base_kind(d), "facing": str(d.get("facing")) if d.get("facing") != null else facing_dir,
+		"is_overlay": overlay_flag(d), "next": str(d.get("endsOn", d.get("next", ""))) if (d.get("endsOn", d.get("next")) is String) else "",
 		"cell": Vector2(float(cell[0]), float(cell[1])), "footprint": maxi(int(foot.get("w", 1)), int(foot.get("h", 1))),
-		"phase": float(d.get("phaseSeed", 0)) / 1000.0, "emitters": d.get("emitters", {}) if d.get("emitters") is Dictionary else {},
+		"frame_ms": frame_ms, "phase": float(d.get("phaseSeed", 0)) / 1000.0, "emitters": d.get("emitters", {}) if d.get("emitters") is Dictionary else {},
 		"overlay": "", "title": str(d.get("title", d.get("name", ""))), "bbox": bbox, "sort_bias": int(d.get("sortBias", 0))}
 	var ov := str(d.get("overlayClip", "")) if d.get("overlayClip") != null else ""
 	if ov != "" and is_clip(dir.path_join(ov)):
 		out["overlay"] = dir.path_join(ov)
-	_cache[path] = out
+	_cache[key] = out
 	return out
+
+
+## Ground-contact pixel: anchor, else pivot ([x,y] or {x,y}), else bottom-centre.
+static func anchor_of(d: Dictionary) -> Vector2:
+	var a: Variant = d.get("anchor")
+	if a == null:
+		a = d.get("pivot")
+	if a is Array and (a as Array).size() >= 2:
+		return Vector2(float(a[0]), float(a[1]))
+	if a is Dictionary:
+		return Vector2(float(a.get("x", 0)), float(a.get("y", 0)))
+	var cell: Array = d.get("cell", [0, 0])
+	return Vector2(int(cell[0]) >> 1, int(cell[1]) - 1)
+
+
+## Kind with "_overlay" dropped and Lattice's aliases folded:
+## attack/aim/fire → aim_fire, research/upgrading → ambient, destroying/destroyed → building_destroy.
+static func base_kind(d: Dictionary) -> String:
+	var k := str(d.get("kind", "")) if d.get("kind") != null else ""
+	k = k.trim_suffix("_overlay")
+	match k:
+		"attack", "aim", "fire": return "aim_fire"
+		"research", "upgrading": return "ambient"
+		"destroying", "destroyed": return "building_destroy"
+	return k
+
+
+static func overlay_flag(d: Dictionary) -> bool:
+	return str(d.get("kind", "")).ends_with("_overlay") or d.get("overlay") == true or d.get("overlayOf") != null
+
+
+## FX-only twins (overlays, damage stages) shouldn't show up as placeable objects.
+static func is_overlay(path: String) -> bool:
+	if path.ends_with("_overlay_clip.json"):
+		return true
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+	return d is Dictionary and overlay_flag(d)
+
+
+## [x,y], {x,y} or {frame,x,y} → Vector2.
+static func point(v: Variant) -> Vector2:
+	if v is Array and (v as Array).size() >= 2:
+		return Vector2(float(v[0]), float(v[1]))
+	if v is Dictionary:
+		return Vector2(float(v.get("x", 0)), float(v.get("y", 0)))
+	return Vector2.INF
 
 
 ## Opaque strips ("Background is the art's own opaque near-black", or a
@@ -211,8 +270,12 @@ static func light_points(clip: Dictionary, max_lights: int = 6) -> Array:
 	var em: Dictionary = clip.get("emitters", {})
 	var pts: Array = []
 	for key in ["beacons", "windows"]:
-		for p: Array in em.get(key, []):
-			pts.append(Vector2(float(p[0]), float(p[1])))
+		var lst: Variant = em.get(key, [])
+		if lst is Array:
+			for p: Variant in lst:
+				var v := point(p)
+				if v != Vector2.INF:
+					pts.append(v)
 	if pts.is_empty():
 		return out
 	var img: Image = (clip["tex"] as Texture2D).get_image()
@@ -234,3 +297,138 @@ static func light_points(clip: Dictionary, max_lights: int = 6) -> Array:
 		out.append({"pos": p, "color": col})
 		i += step
 	return out
+
+
+# ── Units: a folder of per-action, per-facing clips → one SpriteFrames ──
+
+const FACINGS := ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+static var _units: Dictionary = {}
+static var _name_rx: RegEx
+
+
+## Our action name for a clip kind (or file token): aim_fire → attack, hurt → hit.
+static func action_name(kind: String) -> String:
+	match kind:
+		"aim_fire", "attack", "fire", "aim": return "attack"
+		"hurt": return "hit"
+	return kind
+
+
+## Splits "gv_g04_SE_idle_clip.json" → ["gv_g04", "SE", "idle"], or [] if it
+## doesn't follow the <unit>_<FACING>_<action>_clip.json naming.
+static func split_name(file: String) -> Array:
+	if _name_rx == null:
+		_name_rx = RegEx.create_from_string("^(.+)_(N|NE|E|SE|S|SW|W|NW)_([A-Za-z0-9_]+?)_clip\\.json$")
+	var m := _name_rx.search(file)
+	return [] if m == null else [m.get_string(1), m.get_string(2), m.get_string(3)]
+
+
+## Every clip for the unit that `json_path` belongs to: sibling files with the
+## same prefix (plus the matching gold_vehicles_damage pack, if it exists), or
+## all facings of a dirs-rows sheet. Overlays are skipped (full clips already
+## contain them). Returns {ok, frames: SpriteFrames, anchors {anim: Vector2},
+## cells {anim: Vector2}, next {anim: anim}}; anims are "<action>_<FACING>",
+## or just "<action>" for facing-agnostic clips.
+static func unit_set(json_path: String) -> Dictionary:
+	if _units.has(json_path):
+		return _units[json_path]
+	var out := {"ok": false, "frames": SpriteFrames.new(), "anchors": {}, "cells": {}, "next": {}}
+	var sf: SpriteFrames = out["frames"]
+	if sf.has_animation(&"default"):
+		sf.remove_animation(&"default")
+	var files: Array[String] = []
+	var parts := split_name(json_path.get_file())
+	if parts.is_empty():
+		files.append(json_path)
+	else:
+		var sources := [[json_path.get_base_dir(), str(parts[0])]]
+		var dmg_dir := json_path.get_base_dir().replace("gold_vehicles", "gold_vehicles_damage")
+		if dmg_dir != json_path.get_base_dir():
+			sources.append([dmg_dir, str(parts[0]).replace("gv_", "gvd_")])
+		for src: Array in sources:
+			if not DirAccess.dir_exists_absolute(str(src[0])):
+				continue
+			for f in DirAccess.get_files_at(str(src[0])):
+				var p := split_name(f)
+				if not p.is_empty() and p[0] == src[1]:
+					files.append(str(src[0]).path_join(f))
+	for f in files:
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(f))
+		if not (d is Dictionary) or overlay_flag(d):
+			continue
+		var dirs: Array = [""]
+		if str(d.get("layout", "")) == "dirs-rows":
+			dirs = d.get("dirOrder", FACINGS)
+		for dir: String in dirs:
+			var c := load_clip(f, dir)
+			if not c.get("ok", false):
+				continue
+			var p := split_name(f.get_file())
+			var action := action_name(str(c["kind"]) if str(c["kind"]) != "" else (str(p[2]) if not p.is_empty() else "idle"))
+			var facing := str(c["facing"]) if str(c["facing"]) != "" else (str(p[1]) if not p.is_empty() else "")
+			var anim := action + ("_" + facing if facing != "" else "")
+			if sf.has_animation(anim):
+				continue
+			sf.add_animation(anim)
+			sf.set_animation_speed(anim, 1000.0 / float(c["frame_ms"]))
+			sf.set_animation_loop(anim, bool(c["loop"]))
+			var seq: Array = c["seq"]
+			for k in seq.size():
+				sf.add_frame(anim, frame_texture(c, int(seq[k])), float(c["ms"][k]) / float(c["frame_ms"]))
+			out["anchors"][anim] = c["anchor"]
+			out["cells"][anim] = c["cell"]
+			if str(c["next"]) != "":
+				var np := split_name(str(c["next"]) + "_clip.json")
+				if not np.is_empty():
+					out["next"][anim] = action_name(str(np[2])) + "_" + str(np[1])
+	out["ok"] = not sf.get_animation_names().is_empty()
+	_units[json_path] = out
+	return out
+
+
+## Grid direction (battle facing) → screen diagonal of the 2:1 iso projection.
+static func facing_of(dir: Vector2i) -> String:
+	match dir:
+		Vector2i(1, 0): return "SE"
+		Vector2i(0, 1): return "SW"
+		Vector2i(-1, 0): return "NW"
+		Vector2i(0, -1): return "NE"
+	return "SE"
+
+
+const MIRROR := {"SE": "SW", "SW": "SE", "NE": "NW", "NW": "NE", "E": "W", "W": "E"}
+
+
+## Best animation in `set` for `action` facing `facing`: [anim, flip_h], or
+## ["", false]. Falls back to the mirrored diagonal (flipped), then any
+## facing, then a facing-agnostic clip. "cast" falls back to "attack".
+static func resolve(us: Dictionary, action: String, facing: String) -> Array:
+	var sf: SpriteFrames = us["frames"]
+	for a in [action, "attack"] if action == "cast" else [action]:
+		if sf.has_animation(a + "_" + facing):
+			return [a + "_" + facing, false]
+		if MIRROR.has(facing) and sf.has_animation(a + "_" + str(MIRROR[facing])):
+			return [a + "_" + str(MIRROR[facing]), true]
+		for f in ["SE", "SW", "NE", "NW", "S", "E", "W", "N"]:
+			if sf.has_animation(a + "_" + f):
+				return [a + "_" + f, false]
+		if sf.has_animation(a):
+			return [a, false]
+	return ["", false]
+
+
+## Plays `action` on a sprite built from unit_set(): picks the facing, and
+## offsets so the clip's anchor pixel sits on the node origin (mirrored too).
+static func play_on(spr: AnimatedSprite2D, us: Dictionary, action: String, facing: String) -> bool:
+	var r := resolve(us, action, facing)
+	if str(r[0]) == "":
+		return false
+	var anim := str(r[0])
+	var anchor: Vector2 = us["anchors"][anim]
+	var cell: Vector2 = us["cells"][anim]
+	spr.centered = false
+	spr.flip_h = bool(r[1])
+	spr.offset = -Vector2(cell.x - anchor.x if spr.flip_h else anchor.x, anchor.y)
+	if spr.animation != anim or not spr.is_playing():
+		spr.play(anim)
+	return true

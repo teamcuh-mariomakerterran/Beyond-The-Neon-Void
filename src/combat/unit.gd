@@ -22,7 +22,12 @@ var team: int = Team.PLAYER
 var is_player_controlled: bool = true
 
 var cell: Vector2i = Vector2i.ZERO
-var facing: Vector2i = Vector2i(1, 0)
+var facing: Vector2i = Vector2i(1, 0):
+	set(v):
+		if v != facing:
+			facing = v
+			if not _lattice.is_empty() and _action != "death":
+				play_animation(_action)
 var ct: int = 0
 var current_hp: int = 1
 var current_mp: int = 0
@@ -44,6 +49,8 @@ var job_handler: JobHandler
 var equipment: EquipmentManager
 var hud: UnitHUD
 var sprite: AnimatedSprite2D
+var _lattice: Dictionary = {}  # LatticeClip.unit_set() when the art is a Lattice pack
+var _action: String = "idle"
 var grid: IsometricGrid
 
 
@@ -278,6 +285,9 @@ func die() -> void:
 			grid.add_corpse(cell, self)
 	died.emit()
 	EventBus.unit_died.emit(self)
+	if not _lattice.is_empty() and LatticeClip.resolve(_lattice, "death", "SE")[0] != "":
+		play_animation("death")  # the clip (and its wreck loop) is the death
+		return
 	var t := create_tween() if is_inside_tree() else null
 	if t:
 		t.tween_property(self, "modulate:a", 0.25, 0.4)
@@ -449,13 +459,29 @@ func force_move(to_cell: Vector2i, animate: bool = true) -> void:
 
 
 func play_animation(anim_name: String) -> void:
+	if sprite and not _lattice.is_empty():
+		if LatticeClip.play_on(sprite, _lattice, anim_name, LatticeClip.facing_of(facing)):
+			_action = anim_name
+		return
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
 		sprite.play(anim_name)
+
+
+## Lattice one-shots: death chains to its wreck loop (endsOn), anything else
+## returns to idle.
+func _on_clip_finished() -> void:
+	var nxt := str((_lattice.get("next", {}) as Dictionary).get(sprite.animation, ""))
+	if nxt != "" and sprite.sprite_frames.has_animation(nxt):
+		sprite.play(nxt)
+	elif _action != "death":
+		play_animation("idle")
 
 
 func hit_flash(color: Color = Color(2.0, 0.4, 0.6), heavy: bool = false) -> void:
 	if not is_inside_tree():
 		return
+	if not _lattice.is_empty() and _action == "idle":
+		play_animation("hit")
 	var t := create_tween()
 	modulate = color
 	t.tween_property(self, "modulate", Color.WHITE, 0.18)
@@ -482,6 +508,20 @@ func land_squash() -> void:
 
 func _try_load_sprite() -> void:
 	if data == null or data.sprite_frames_path == "" or not FileAccess.file_exists(data.sprite_frames_path):
+		return
+	if data.sprite_frames_path.ends_with(".json") and LatticeClip.is_clip(data.sprite_frames_path):
+		_lattice = LatticeClip.unit_set(data.sprite_frames_path)
+		if not _lattice.get("ok", false):
+			_lattice = {}
+			return
+		sprite = AnimatedSprite2D.new()
+		sprite.sprite_frames = _lattice["frames"]
+		# Lattice packs are drawn for 64×32 tiles; scale to this grid.
+		var s := (grid.tile_width if grid else 64.0) / 64.0
+		sprite.scale = Vector2(s, s)
+		sprite.animation_finished.connect(_on_clip_finished)
+		add_child(sprite)
+		play_animation("idle")
 		return
 	var frames := ResourceLoader.load(data.sprite_frames_path, "SpriteFrames") as SpriteFrames
 	if frames:

@@ -893,7 +893,7 @@ static func _clips_under(dir: String, out: Array[String]) -> void:
 	if not DirAccess.dir_exists_absolute(dir):
 		return
 	for f in DirAccess.get_files_at(dir):
-		if f.ends_with(".json") and LatticeClip.is_clip(dir.path_join(f)) and not f.ends_with("_overlay_clip.json"):
+		if f.ends_with(".json") and LatticeClip.is_clip(dir.path_join(f)) and not LatticeClip.is_overlay(dir.path_join(f)):
 			out.append(dir.path_join(f))
 	for d in DirAccess.get_directories_at(dir):
 		_clips_under(dir.path_join(d), out)

@@ -100,7 +100,13 @@ func _make_avatar() -> Node2D:
 	var root := Node2D.new()
 	var party := GameManager.get_party_members()
 	var frames_path := party[0].sprite_frames_path if not party.is_empty() else ""
-	if frames_path != "" and ResourceLoader.exists(frames_path):
+	if frames_path.ends_with(".json") and LatticeClip.is_clip(frames_path) and LatticeClip.unit_set(frames_path)["ok"]:
+		var ls := AnimatedSprite2D.new()
+		ls.sprite_frames = LatticeClip.unit_set(frames_path)["frames"]
+		ls.scale = Vector2.ONE * world.tile_width / 64.0
+		LatticeClip.play_on(ls, LatticeClip.unit_set(frames_path), "idle", "SE")
+		root.add_child(ls)
+	elif frames_path != "" and ResourceLoader.exists(frames_path):
 		var spr := AnimatedSprite2D.new()
 		spr.sprite_frames = load(frames_path)
 		spr.offset = Vector2(0, -spr.sprite_frames.get_frame_texture(spr.sprite_frames.get_animation_names()[0], 0).get_height() * 0.5)

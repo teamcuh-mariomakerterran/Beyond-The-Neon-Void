@@ -665,7 +665,7 @@ class WorldSprite extends Node2D:
 		var anchor: Vector2 = _clip["anchor"]
 		var cell: Vector2 = _clip["cell"]
 		var tint := Color(str(data.get("tint", "#ffffff")))
-		var base := Vector2(0, w.tile_height * (0.5 * _foot - 0.25))
+		var base := Vector2(0, w.tile_height * 0.5 * _foot)  # anchor = front vertex of the footprint (Lattice convention)
 		_rect = Rect2(base - anchor * sc, cell * sc)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1 if bool(data.get("flip", false)) else 1, 1))
 		var t := WorldRenderer.now()
@@ -809,7 +809,7 @@ func rebuild_lighting() -> void:
 			continue
 		var sc := float(o2.get("scale", 1.0))
 		var flip := -1.0 if bool(o2.get("flip", false)) else 1.0
-		var base := Vector2(0, world.tile_height * (0.5 * node._foot - 0.25))
+		var base := Vector2(0, world.tile_height * 0.5 * node._foot)
 		for lp: Dictionary in LatticeClip.light_points(node._clip, int(o2.get("clip_light_count", 5))):
 			var rel: Vector2 = (lp["pos"] - node._clip["anchor"]) * sc
 			var cl := NeonLight.new()

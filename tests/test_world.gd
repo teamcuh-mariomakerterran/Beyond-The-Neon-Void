@@ -389,6 +389,7 @@ func test_lattice_clip() -> void:
 		DirAccess.remove_absolute(dir + "/" + fn)
 	DirAccess.remove_absolute(dir)
 	await test_lattice_real_export()
+	await test_lattice_units()
 
 
 ## The animator's real bl_036_04 JSONs (tests/fixtures/lattice) with stand-in
@@ -627,3 +628,93 @@ func test_explore() -> void:
 	ex.queue_free()
 	ContentDB.maps.erase(w.id)
 	await tree.process_frame
+
+
+func _write_clip(path: String, d: Dictionary, w: int, h: int, frames: int, rows: int = 1) -> void:
+	var img := Image.create(w * frames, h * rows, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(2, 2, w - 4, h - 4), Color(0.5, 0.8, 1.0))
+	img.save_png(path.get_base_dir().path_join(str(d["textures"]["strip"])))
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(d))
+	f.close()
+
+
+## Lattice CLIP_FORMAT_GUIDE rules + unit packs (gold_vehicles naming).
+func test_lattice_units() -> void:
+	var root := "user://t_units"
+	var gv := root + "/gold_vehicles/tanks"
+	var gvd := root + "/gold_vehicles_damage/tanks"
+	DirAccess.make_dir_recursive_absolute(gv)
+	DirAccess.make_dir_recursive_absolute(gvd)
+	var base := {"format": "lattice.clip", "version": 1, "layout": "horizontal", "fps": 10, "frameMs": 100, "holds": null}
+	var mk := func(dir: String, name: String, extra: Dictionary, w: int, h: int, n: int) -> void:
+		var d := base.duplicate(true)
+		d.merge(extra, true)
+		d["name"] = name
+		d["cell"] = [w, h]
+		d["frames"] = n
+		d["textures"] = {"strip": name + "_strip.png"}
+		_write_clip(dir + "/" + name + "_clip.json", d, w, h, n)
+	mk.call(gv, "gv_g04_SE_idle", {"kind": "idle", "facing": "SE", "loop": true, "anchor": [46, 60]}, 136, 63, 4)
+	mk.call(gv, "gv_g04_NW_idle", {"kind": "idle", "facing": "NW", "loop": true, "anchor": [30, 50]}, 73, 84, 4)
+	mk.call(gv, "gv_g04_SE_fire", {"kind": "attack", "facing": "SE", "loop": false, "holds": [1, 1, 2, 3], "anchor": [46, 60]}, 136, 63, 4)
+	mk.call(gv, "gv_g04_SE_fire_overlay", {"kind": "attack_overlay", "facing": "SE", "overlayOf": "gv_g04_SE_fire"}, 136, 63, 4)
+	mk.call(gvd, "gvd_g04_SE_death", {"kind": "death", "facing": "SE", "loop": false, "endsOn": "gvd_g04_SE_wreck", "anchor": [60, 70]}, 160, 80, 3)
+	mk.call(gvd, "gvd_g04_SE_wreck", {"kind": "wreck", "facing": "SE", "loop": true, "anchor": [60, 70]}, 160, 80, 2)
+	mk.call(gvd, "gvd_g04_SE_dmg_light", {"kind": "damage_overlay", "facing": "SE", "overlay": true, "loop": true}, 160, 80, 2)
+	# Guide rules.
+	var fire := LatticeClip.load_clip(gv + "/gv_g04_SE_fire_clip.json")
+	check(is_equal_approx(float(fire["total"]), 700.0) and not fire["loop"] and fire["kind"] == "aim_fire", "holds are ticks (1+1+2+3 × 100 ms), attack ≡ aim_fire, one-shot")
+	var noloop := base.duplicate(true)
+	noloop.merge({"name": "x", "cell": [8, 8], "frames": 2, "textures": {"strip": "x_strip.png"}, "pivot": {"x": 3, "y": 7}})
+	_write_clip(root + "/x_clip.json", noloop, 8, 8, 2)
+	var xc := LatticeClip.load_clip(root + "/x_clip.json")
+	check(xc["ok"] and not xc["loop"] and xc["anchor"] == Vector2(3, 7), "missing loop = false; {x,y} pivot is the anchor")
+	check(LatticeClip.is_overlay(gvd + "/gvd_g04_SE_dmg_light_clip.json") and LatticeClip.is_overlay(gv + "/gv_g04_SE_fire_overlay_clip.json") and not LatticeClip.is_overlay(gv + "/gv_g04_SE_idle_clip.json"), "overlay / damage_overlay clips recognised")
+	check(LatticeClip.point({"x": 4, "y": 5}) == Vector2(4, 5) and LatticeClip.point({"frame": 1, "x": 4, "y": 5}) == Vector2(4, 5) and LatticeClip.point([1, 2]) == Vector2(1, 2), "emitter points in every shape")
+	# dirs-rows: rows = N..NW, pick one facing.
+	var rows := base.duplicate(true)
+	var rr: Array = []
+	for di in 8:
+		for fi in 3:
+			rr.append({"i": di * 3 + fi, "dir": LatticeClip.FACINGS[di], "frame": fi, "x": fi * 16, "y": di * 20, "w": 16, "h": 20})
+	rows.merge({"name": "walk84", "kind": "walk", "loop": true, "layout": "dirs-rows", "dirOrder": LatticeClip.FACINGS, "cell": [16, 20], "frames": 3, "rects": rr, "textures": {"strip": "walk84_strip.png"}}, true)
+	_write_clip(root + "/walk84_clip.json", rows, 16, 20, 3, 8)
+	var sw := LatticeClip.load_clip(root + "/walk84_clip.json", "SW")
+	check(sw["ok"] and (sw["rects"] as Array).size() == 3 and (sw["rects"][0] as Rect2).position.y == 100.0, "dirs-rows: SW is row 5")
+	var rs := LatticeClip.unit_set(root + "/walk84_clip.json")
+	check(rs["ok"] and (rs["frames"] as SpriteFrames).has_animation("walk_NE") and (rs["frames"] as SpriteFrames).get_animation_names().size() == 8, "dirs-rows sheet → 8 walk facings")
+	# Unit set across gold_vehicles + gold_vehicles_damage.
+	var us := LatticeClip.unit_set(gv + "/gv_g04_SE_idle_clip.json")
+	var sf: SpriteFrames = us["frames"]
+	check(us["ok"] and sf.has_animation("idle_SE") and sf.has_animation("idle_NW") and sf.has_animation("attack_SE") and sf.has_animation("death_SE") and sf.has_animation("wreck_SE"), "unit pack: idle/attack/death/wreck gathered (%s)" % str(sf.get_animation_names()))
+	check(sf.get_animation_names().size() == 5, "overlays and damage stages left out")
+	check(is_equal_approx(sf.get_frame_duration("attack_SE", 3), 3.0) and is_equal_approx(sf.get_animation_speed("attack_SE"), 10.0), "holds carried into SpriteFrames")
+	check(str(us["next"].get("death_SE", "")) == "wreck_SE", "death chains to wreck (endsOn)")
+	check(LatticeClip.facing_of(Vector2i(1, 0)) == "SE" and LatticeClip.facing_of(Vector2i(0, -1)) == "NE", "grid facing → screen diagonal")
+	check(LatticeClip.resolve(us, "idle", "NE") == ["idle_NW", true], "missing NE idle mirrors NW")
+	check(LatticeClip.resolve(us, "attack", "SW") == ["attack_SE", true] and LatticeClip.resolve(us, "cast", "SE")[0] == "attack_SE", "attack mirrors; cast falls back to attack")
+	var spr := AnimatedSprite2D.new()
+	spr.sprite_frames = sf
+	LatticeClip.play_on(spr, us, "idle", "SW")
+	check(spr.flip_h and spr.offset == -Vector2(136 - 46, 60), "mirrored anchor offset")
+	spr.free()
+	# A unit wearing the pack.
+	var cd := CharacterData.new()
+	cd.sprite_frames_path = gv + "/gv_g04_SE_idle_clip.json"
+	var u := Unit.new()
+	u.data = cd
+	tree.root.add_child(u)
+	await tree.process_frame
+	check(u.sprite != null and str(u.sprite.animation) == "idle_SE", "unit plays its Lattice idle (%s)" % (str(u.sprite.animation) if u.sprite else "no sprite"))
+	u.facing = Vector2i(-1, 0)
+	check(str(u.sprite.animation) == "idle_NW" and not u.sprite.flip_h, "turning swaps facing clip")
+	u.play_animation("attack")
+	check(str(u.sprite.animation) == "attack_SE" and not u.sprite.flip_h, "NW attack (no NW/NE clip) falls back to SE")
+	u.queue_free()
+	await tree.process_frame
+	for d in [gv, gvd, root + "/gold_vehicles", root + "/gold_vehicles_damage", root]:
+		for fn in DirAccess.get_files_at(d):
+			DirAccess.remove_absolute(d + "/" + fn)
+	for d in [gv, gvd, root + "/gold_vehicles", root + "/gold_vehicles_damage", root]:
+		DirAccess.remove_absolute(d)

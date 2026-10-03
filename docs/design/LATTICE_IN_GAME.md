@@ -1,5 +1,7 @@
 # Lattice clips in Beyond: The Neon Void
 
+_Full format reference from Lattice: [LATTICE_CLIP_FORMAT_GUIDE.md](LATTICE_CLIP_FORMAT_GUIDE.md). The loader follows its canonical rules: holds are ticks, missing `loop` = false, anchor → pivot → bottom-centre, and overlays and `damage_overlay` are kept out of the palette._
+
 _A handoff for the Lattice animator: how the game reads `lattice.clip` exports, and a few optional extras that would make them shine even more. Reader code: `src/vfx/lattice_clip.gd`. Renderer: `src/world/world_renderer.gd` (WorldSprite)._
 
 ## What the game uses today
@@ -40,9 +42,10 @@ Upload clips with the intake bot into `E:\Beyond_TheNeonVoid\animated\...`. Keep
 ## Requesting a specific animation from Lattice
 Give Lattice these numbers along with the request:
 
-- **Grid.** World and city maps use 128×64 iso tiles (64×32 on the classic battle maps). A unit stands on one tile, and its feet (`anchor`) are the tile's centre.
-- **Units, bosses and vehicles.** Battles need 4 diagonal facings (NE, NW, SE, SW). Cutscenes can use all 8. Ideally there's one clip per action: `idle`, `walk`, `attack`, `cast`, `hit`, `death`, `victory`. List the frames for each facing in `dirs`, e.g. `{"se": [0, 7], "sw": [8, 15], …}`. If only 2 facings are drawn, say `"mirror": true` and the game flips the other two.
-- **FX** (spells, hits, summons). Use `kind: "fx"` and a transparent background. Add `"blend": "add"` if the effect is meant to glow additively. `eventFrames` marks the impact frame (`{"6": "hit"}`), so the damage number lands on the impact.
+- **Grid.** Build everything at **64×32**, the same tile your packs already use. Battle maps are 64×32. The bigger 128×64 world maps scale the art ×2 themselves. The `anchor` lands on the bottom tip of the tile diamond, as in Lattice's own scene.
+- **Units and bosses.** Battles need the 4 diagonals (NE, NW, SE, SW), and cutscenes can use all 8. Keep your own layout: one file per action per facing, named `<unit>_<FACING>_<action>_clip.json`, or a `dirs-rows` sheet. Your kinds work as they are. The game maps `aim_fire`/`attack` → attack, `hurt` → hit, plus `idle`, `walk`, `death`, and `wreck` (via `endsOn`). `cast` falls back to attack until a cast clip exists. A missing diagonal is borrowed by flipping its pair (SE↔SW, NE↔NW).
+- **FX** (spells, hits, summons). Use `kind: "fx"` with a transparent background and normal blending. The impact rule follows your guide: frame 0 for `fx_impact`, `hits[]` when present.
+- **Status effects done by the game.** The game itself sinks the unit during **banish** and greys it out for full **petrify**, using the timing written in the clip files.
 - **Props and items.** These follow the same rules as buildings. Loops should be seamless, and the game desyncs copies on its own.
 
 Anything outside these rules is still fine. Send it over, and the game gets an importer for it.
