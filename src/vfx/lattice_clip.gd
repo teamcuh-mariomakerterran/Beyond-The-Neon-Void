@@ -72,6 +72,8 @@ static func load_clip(path: String) -> Dictionary:
 	for m: float in ms:
 		total += m
 	var foot: Dictionary = (d.get("sourceArt", {}) as Dictionary).get("footprint", {}) if d.get("sourceArt") is Dictionary else {}
+	if d.get("gameFootprint") is Dictionary:  # our grid's tiles, if the animator sets it
+		foot = d["gameFootprint"]
 	var anchor: Array = d.get("anchor", [float(cell[0]) * 0.5, float(cell[1])])
 	var bbox: Array = d.get("buildingBBox", [0, 0, cell[0], cell[1]])
 	out = {"ok": true, "tex": tex, "rects": rects, "seq": seq, "ms": ms, "total": maxf(total, 1.0),
