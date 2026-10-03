@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_24_energy_reactor",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "core_meltdown",
+  "cell": [
+    465,
+    448
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 1,
+      "x": 465,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 2,
+      "x": 930,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 3,
+      "x": 1395,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 4,
+      "x": 1860,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 5,
+      "x": 2325,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 6,
+      "x": 2790,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 7,
+      "x": 3255,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 8,
+      "x": 3720,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 9,
+      "x": 4185,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 10,
+      "x": 4650,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    },
+    {
+      "i": 11,
+      "x": 5115,
+      "y": 0,
+      "w": 465,
+      "h": 448
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    232,
+    397
+  ],
+  "ruinAnchor": [
+    459,
+    938
+  ],
+  "sourceSize": [
+    918,
+    939
+  ],
+  "ruinSize": [
+    918,
+    939
+  ],
+  "smolderEmitters": [
+    {
+      "x": 165,
+      "y": 335
+    },
+    {
+      "x": 459,
+      "y": 345
+    },
+    {
+      "x": 752,
+      "y": 402
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_24_energy_reactor_strip.png",
+    "ruin": "bd_destroy_24_energy_reactor_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Core Meltdown destroy of 24_energy_reactor",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_24_energy_reactor_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_24_energy_reactor_ruin.png",
+      "static": true,
+      "anchor": [
+        459,
+        938
+      ]
+    }
+  }
+}
