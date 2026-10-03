@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_59_memorial_spire",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    217,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 217,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 434,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 651,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 868,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 1085,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 1302,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 1519,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 1736,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 1953,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 2170,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 2387,
+      "y": 0,
+      "w": 217,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    108,
+    394
+  ],
+  "ruinAnchor": [
+    253,
+    1080
+  ],
+  "sourceSize": [
+    506,
+    1081
+  ],
+  "ruinSize": [
+    506,
+    1081
+  ],
+  "smolderEmitters": [
+    {
+      "x": 91,
+      "y": 408
+    },
+    {
+      "x": 253,
+      "y": 293
+    },
+    {
+      "x": 414,
+      "y": 474
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_59_memorial_spire_strip.png",
+    "ruin": "bd_destroy_59_memorial_spire_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 59_memorial_spire",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_59_memorial_spire_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_59_memorial_spire_ruin.png",
+      "static": true,
+      "anchor": [
+        253,
+        1080
+      ]
+    }
+  }
+}

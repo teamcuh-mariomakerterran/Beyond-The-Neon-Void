@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_58_airbase_hangar",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    474,
+    426
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 1,
+      "x": 474,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 2,
+      "x": 948,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 3,
+      "x": 1422,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 4,
+      "x": 1896,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 5,
+      "x": 2370,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 6,
+      "x": 2844,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 7,
+      "x": 3318,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 8,
+      "x": 3792,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 9,
+      "x": 4266,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 10,
+      "x": 4740,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    },
+    {
+      "i": 11,
+      "x": 5214,
+      "y": 0,
+      "w": 474,
+      "h": 426
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    236,
+    378
+  ],
+  "ruinAnchor": [
+    361,
+    693
+  ],
+  "sourceSize": [
+    722,
+    694
+  ],
+  "ruinSize": [
+    722,
+    694
+  ],
+  "smolderEmitters": [
+    {
+      "x": 129,
+      "y": 225
+    },
+    {
+      "x": 361,
+      "y": 209
+    },
+    {
+      "x": 592,
+      "y": 269
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_58_airbase_hangar_strip.png",
+    "ruin": "bd_destroy_58_airbase_hangar_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of 58_airbase_hangar",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_58_airbase_hangar_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_58_airbase_hangar_ruin.png",
+      "static": true,
+      "anchor": [
+        361,
+        693
+      ]
+    }
+  }
+}
