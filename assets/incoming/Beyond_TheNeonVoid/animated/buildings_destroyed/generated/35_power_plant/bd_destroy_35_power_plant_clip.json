@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_35_power_plant",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "core_meltdown",
+  "cell": [
+    388,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 388,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 776,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 1164,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 1552,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 1940,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 2328,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 2716,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 3104,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 3492,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 3880,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 4268,
+      "y": 0,
+      "w": 388,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    193,
+    394
+  ],
+  "ruinAnchor": [
+    378,
+    918
+  ],
+  "sourceSize": [
+    756,
+    919
+  ],
+  "ruinSize": [
+    756,
+    919
+  ],
+  "smolderEmitters": [
+    {
+      "x": 136,
+      "y": 354
+    },
+    {
+      "x": 378,
+      "y": 233
+    },
+    {
+      "x": 619,
+      "y": 305
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_35_power_plant_strip.png",
+    "ruin": "bd_destroy_35_power_plant_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Core Meltdown destroy of 35_power_plant",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_35_power_plant_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_35_power_plant_ruin.png",
+      "static": true,
+      "anchor": [
+        378,
+        918
+      ]
+    }
+  }
+}
