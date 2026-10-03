@@ -1,0 +1,296 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_utility_upgraded_p01_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  302,
+  360
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 1,
+   "x": 302,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 2,
+   "x": 604,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 3,
+   "x": 906,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 4,
+   "x": 1208,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 5,
+   "x": 1510,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 6,
+   "x": 1812,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 7,
+   "x": 2114,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 8,
+   "x": 2416,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 9,
+   "x": 2718,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 10,
+   "x": 3020,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 11,
+   "x": 3322,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 12,
+   "x": 3624,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 13,
+   "x": 3926,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 14,
+   "x": 4228,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 15,
+   "x": 4530,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 16,
+   "x": 4832,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 17,
+   "x": 5134,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 18,
+   "x": 5436,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 19,
+   "x": 5738,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 20,
+   "x": 6040,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 21,
+   "x": 6342,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 22,
+   "x": 6644,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  },
+  {
+   "i": 23,
+   "x": 6946,
+   "y": 0,
+   "w": 302,
+   "h": 360
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  150,
+  355
+ ],
+ "propBBox": [
+  3,
+  4,
+  298,
+  356
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_utility_upgraded_p01_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_utility_upgraded_p01_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_utility_upgraded_p01_2.png",
+  "placementKey": "bldg_interior_indoor_utility_upgraded_p01",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Utility Upgraded 01 \u2014 cart with glowing crates",
+ "qaGrade": "B",
+ "qaNote": "cart with glowing crates: sweep + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 57,
+    "y": 40,
+    "warm": true
+   },
+   {
+    "x": 52,
+    "y": 42,
+    "warm": true
+   },
+   {
+    "x": 46,
+    "y": 45,
+    "warm": true
+   },
+   {
+    "x": 25,
+    "y": 57,
+    "warm": true
+   },
+   {
+    "x": 10,
+    "y": 216,
+    "warm": true
+   },
+   {
+    "x": 7,
+    "y": 219,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [
+   {
+    "kind": "screen",
+    "bbox": [
+     68,
+     22,
+     171,
+     98
+    ],
+    "slope": 0.0,
+    "area": 4208
+   },
+   {
+    "kind": "screen",
+    "bbox": [
+     140,
+     49,
+     239,
+     125
+    ],
+    "slope": 0.0,
+    "area": 3859
+   }
+  ],
+  "addedLights": [],
+  "counts": {
+   "lights": 6,
+   "strips": 0,
+   "screens": 2,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 27325,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_utility_upgraded_p01_2",
+ "overlayClip": null
+}

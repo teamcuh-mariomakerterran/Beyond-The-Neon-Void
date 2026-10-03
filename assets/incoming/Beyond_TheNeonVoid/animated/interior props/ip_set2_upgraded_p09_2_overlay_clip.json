@@ -1,0 +1,463 @@
+{
+ "format": "lattice.clip",
+ "version": 1,
+ "name": "ip_set2_upgraded_p09_2_overlay",
+ "kind": "ambient_overlay",
+ "loop": true,
+ "generator": "interior_props_life v1 (Brian interior prop, own painted-lit pixels animated + in-silhouette FX)",
+ "cell": [
+  308,
+  281
+ ],
+ "frames": 24,
+ "layout": "horizontal",
+ "rects": [
+  {
+   "i": 0,
+   "x": 0,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 1,
+   "x": 308,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 2,
+   "x": 616,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 3,
+   "x": 924,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 4,
+   "x": 1232,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 5,
+   "x": 1540,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 6,
+   "x": 1848,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 7,
+   "x": 2156,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 8,
+   "x": 2464,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 9,
+   "x": 2772,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 10,
+   "x": 3080,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 11,
+   "x": 3388,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 12,
+   "x": 3696,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 13,
+   "x": 4004,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 14,
+   "x": 4312,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 15,
+   "x": 4620,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 16,
+   "x": 4928,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 17,
+   "x": 5236,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 18,
+   "x": 5544,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 19,
+   "x": 5852,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 20,
+   "x": 6160,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 21,
+   "x": 6468,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 22,
+   "x": 6776,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  },
+  {
+   "i": 23,
+   "x": 7084,
+   "y": 0,
+   "w": 308,
+   "h": 281
+  }
+ ],
+ "fps": 10,
+ "frameMs": 100,
+ "holds": null,
+ "tickSequence": null,
+ "facing": null,
+ "dirs": null,
+ "anchor": [
+  154,
+  276
+ ],
+ "propBBox": [
+  4,
+  3,
+  304,
+  277
+ ],
+ "sortBias": 1,
+ "depthKey": "share_base",
+ "hover": false,
+ "textures": {
+  "strip": "ip_set2_upgraded_p09_2_overlay_strip.png"
+ },
+ "source": "LATTICE",
+ "sourceArt": {
+  "file": "library/interior_structures/pieces/indoor_set2_upgraded_p09_2.png",
+  "gamePath": "/assets/all_structures/interior/interior_structures/pieces/indoor_set2_upgraded_p09_2.png",
+  "placementKey": "bldg_interior_indoor_set2_upgraded_p09",
+  "footprint": {
+   "w": 1,
+   "h": 1
+  },
+  "venue": "indoor",
+  "identicalFiles": []
+ },
+ "title": "Set2 Upgraded 09 \u2014 security camera",
+ "qaGrade": "B",
+ "qaNote": "security camera: lens pulse + LEDs",
+ "emitters": {
+  "statusLights": [
+   {
+    "x": 193,
+    "y": 44,
+    "warm": true
+   },
+   {
+    "x": 196,
+    "y": 54,
+    "warm": true
+   },
+   {
+    "x": 190,
+    "y": 56,
+    "warm": true
+   },
+   {
+    "x": 181,
+    "y": 66,
+    "warm": true
+   },
+   {
+    "x": 168,
+    "y": 76,
+    "warm": true
+   },
+   {
+    "x": 199,
+    "y": 87,
+    "warm": true
+   },
+   {
+    "x": 187,
+    "y": 94,
+    "warm": true
+   },
+   {
+    "x": 182,
+    "y": 98,
+    "warm": true
+   },
+   {
+    "x": 178,
+    "y": 100,
+    "warm": true
+   },
+   {
+    "x": 175,
+    "y": 102,
+    "warm": true
+   },
+   {
+    "x": 169,
+    "y": 106,
+    "warm": true
+   },
+   {
+    "x": 278,
+    "y": 111,
+    "warm": true
+   },
+   {
+    "x": 162,
+    "y": 110,
+    "warm": true
+   },
+   {
+    "x": 144,
+    "y": 117,
+    "warm": true
+   },
+   {
+    "x": 285,
+    "y": 120,
+    "warm": true
+   },
+   {
+    "x": 164,
+    "y": 121,
+    "warm": true
+   },
+   {
+    "x": 48,
+    "y": 127,
+    "warm": false
+   },
+   {
+    "x": 64,
+    "y": 133,
+    "warm": false
+   },
+   {
+    "x": 175,
+    "y": 131,
+    "warm": true
+   },
+   {
+    "x": 164,
+    "y": 139,
+    "warm": true
+   },
+   {
+    "x": 50,
+    "y": 143,
+    "warm": false
+   },
+   {
+    "x": 150,
+    "y": 146,
+    "warm": true
+   },
+   {
+    "x": 56,
+    "y": 146,
+    "warm": false
+   },
+   {
+    "x": 158,
+    "y": 143,
+    "warm": true
+   },
+   {
+    "x": 66,
+    "y": 150,
+    "warm": false
+   },
+   {
+    "x": 280,
+    "y": 149,
+    "warm": true
+   },
+   {
+    "x": 163,
+    "y": 157,
+    "warm": true
+   },
+   {
+    "x": 170,
+    "y": 163,
+    "warm": true
+   },
+   {
+    "x": 219,
+    "y": 170,
+    "warm": true
+   },
+   {
+    "x": 230,
+    "y": 171,
+    "warm": true
+   },
+   {
+    "x": 193,
+    "y": 173,
+    "warm": true
+   },
+   {
+    "x": 202,
+    "y": 182,
+    "warm": true
+   },
+   {
+    "x": 234,
+    "y": 183,
+    "warm": true
+   },
+   {
+    "x": 206,
+    "y": 186,
+    "warm": true
+   },
+   {
+    "x": 183,
+    "y": 190,
+    "warm": true
+   },
+   {
+    "x": 201,
+    "y": 189,
+    "warm": true
+   },
+   {
+    "x": 187,
+    "y": 207,
+    "warm": true
+   },
+   {
+    "x": 146,
+    "y": 232,
+    "warm": true
+   },
+   {
+    "x": 237,
+    "y": 237,
+    "warm": true
+   },
+   {
+    "x": 216,
+    "y": 236,
+    "warm": true
+   },
+   {
+    "x": 209,
+    "y": 239,
+    "warm": true
+   },
+   {
+    "x": 292,
+    "y": 243,
+    "warm": true
+   },
+   {
+    "x": 269,
+    "y": 252,
+    "warm": true
+   },
+   {
+    "x": 288,
+    "y": 252,
+    "warm": true
+   }
+  ],
+  "energyStrips": [],
+  "panels": [],
+  "addedLights": [],
+  "counts": {
+   "lights": 44,
+   "strips": 0,
+   "screens": 0,
+   "glasss": 0,
+   "holos": 0,
+   "tanks": 0,
+   "radars": 0,
+   "beacons": 0
+  }
+ },
+ "phaseSeed": 53188,
+ "config": null,
+ "layering": "Draw over the static prop sprite with the same canvas origin/anchor. Transparent except pixels that change this frame (hard alpha; overlay-over-static == full frame).",
+ "overlayOf": "ip_set2_upgraded_p09_2",
+ "overlayClip": null
+}
