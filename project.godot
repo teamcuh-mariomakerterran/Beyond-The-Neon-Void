@@ -31,6 +31,7 @@ DispatchManager="*res://src/autoload/dispatch_manager.gd"
 ForgeManager="*res://src/autoload/forge_manager.gd"
 VendorSystem="*res://src/autoload/vendor_system.gd"
 UIManager="*res://src/autoload/ui_manager.gd"
+DevConsole="*res://src/autoload/dev_console.gd"
 
 [display]
 

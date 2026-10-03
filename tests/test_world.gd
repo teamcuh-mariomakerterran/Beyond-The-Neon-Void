@@ -25,6 +25,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_signage()
 	await test_cues()
 	await test_passives()
+	test_dev_console()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1044,3 +1045,32 @@ func test_passives() -> void:
 	for u: Node in [mage, gunner, plain, brute, tank, fw, samurai, thug, sniper, runner, ghost, wall, walker, medic, foe]:
 		u.queue_free()
 	await tree.process_frame
+
+
+func test_dev_console() -> void:
+	var dc := DevConsole
+	check(dc.run("1 + 2") == "3", "expressions evaluate")
+	check(dc.run("Engine.time_scale") == str(Engine.time_scale), "Engine / OS / Time are in scope")
+	var coins := GameManager.soul_coins
+	check(dc.run("GameManager.soul_coins") == str(coins), "autoloads are in scope")
+	dc.run("coins 50")
+	check(GameManager.soul_coins == coins + 50, "coins command")
+	dc.run("flag t_console_flag")
+	check(GameManager.check_story_flag("t_console_flag"), "flag command")
+	GameManager.story_flags.erase("t_console_flag")
+	var item_id: String = (ContentDB.get_all("items")[0] as GameResource).id
+	var before := GameManager.get_stack_count(item_id)
+	dc.run("give %s 2" % item_id)
+	check(GameManager.get_stack_count(item_id) >= before, "give command runs")
+	check(dc.run("give not_an_item").contains("Unknown item"), "bad ids are reported, not crashed on")
+	check(dc.run("nonsense_token(").contains("color=#ff4f7a"), "bad expressions are reported")
+	check(dc.complete("pa") == ["passive"], "Tab completes commands")
+	check(dc.complete("status petr") == ["petrified"], "Tab completes content ids")
+	dc.run("set GameManager.microchips 7")
+	check(GameManager.microchips == 7, "set Autoload.property")
+	dc.run("watch 2 * 21")
+	dc._process(0.0)
+	check(dc._watch_label.text.contains("= 42"), "watches update live")
+	dc.run("unwatch")
+	check(dc.run("cue hit.crit").contains("hit.crit"), "cue command fires a cue")
+	check(dc.history.size() >= 10, "history kept")
