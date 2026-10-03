@@ -16,7 +16,8 @@ param(
     [string]$Repo          = "C:\godot and game projects\Beyond-The-Neon-Void",
     [string]$RepoUrl       = "https://github.com/teamcuh-mariomakerterran/Beyond-The-Neon-Void.git",
     [string]$Branch        = "claude/optimistic-fermat-pie49w",
-    [int]$ChunkMB          = 90,
+    [int]$ChunkMB          = 40,
+    [int]$MaxFiles         = 100,
     # Dump mode: copy this whole folder (all subfolders, names as-is) into
     # assets\incoming\<folder name>; Claude sorts/renames/indexes from there.
     [string]$Dump          = "",
@@ -87,7 +88,20 @@ try {
         $Dump = $Dump.Trim('"', ' ').TrimEnd('\')
         if (-not (Test-Path -LiteralPath $Dump -PathType Container)) { Say "Dump folder not found: $Dump" "Red"; Read-Host "Enter to close"; exit 1 }
         $leaf = Split-Path $Dump -Leaf
-        $jobs += [pscustomobject]@{ Src = $Dump; Dst = "assets\incoming\$leaf"; Label = "dump" }
+        # Converted audio wins: if "music_ogg" sits next to "music", the WAV
+        # folder is skipped (and any copy of it already in the repo removed).
+        $skipDirs = @()
+        foreach ($d in Get-ChildItem -LiteralPath $Dump -Recurse -Directory | Where-Object { $_.Name -like "*_ogg" }) {
+            $orig = Join-Path $d.Parent.FullName ($d.Name -replace '_ogg$', '')
+            if (Test-Path -LiteralPath $orig -PathType Container) {
+                $skipDirs += $orig
+                $rel = $orig.Substring($Dump.Length).TrimStart('\')
+                $stale = Join-Path $Repo "assets\incoming\$leaf\$rel"
+                if (Test-Path -LiteralPath $stale) { Remove-Item -LiteralPath $stale -Recurse -Force }
+                Say "  Using $($d.Name) instead of the WAVs in $rel" "DarkGray"
+            }
+        }
+        $jobs += [pscustomobject]@{ Src = $Dump; Dst = "assets\incoming\$leaf"; Label = "dump"; Skip = $skipDirs }
         $count = (Get-ChildItem -LiteralPath $Dump -Recurse -File | Measure-Object).Count
         $mb = (Get-ChildItem -LiteralPath $Dump -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1MB
         Say ("Dump mode: {0} files ({1:N0} MB) from {2}" -f $count, $mb, $Dump) "Magenta"
@@ -126,9 +140,12 @@ try {
     foreach ($j in $jobs) {
         $dst = Join-Path $Repo $j.Dst
         Say "Copying  $($j.Src)  ->  $($j.Dst)"
-        $tooBig += Get-ChildItem -Path $j.Src -Recurse -File | Where-Object { $_.Length -gt 95MB }
+        $skip = @($j.Skip | Where-Object { $_ })
+        $tooBig += Get-ChildItem -Path $j.Src -Recurse -File | Where-Object { $_.Length -gt 95MB } |
+            Where-Object { $f = $_.FullName; -not ($skip | Where-Object { $f.StartsWith($_ + '\', [StringComparison]::OrdinalIgnoreCase) }) }
         # /E = subfolders, /XO = skip older, /MAX = size cap. No /MOV, /MIR or /PURGE: sources are never touched.
-        robocopy "$($j.Src)" "$dst" /E /XO /MAX:99614720 /R:1 /W:1 /NP /NFL /NDL /NJH /NJS | Out-Null
+        $xd = @(); if ($skip.Count) { $xd = @('/XD') + $skip }
+        robocopy "$($j.Src)" "$dst" /E /XO /MAX:99614720 /R:1 /W:1 /NP /NFL /NDL /NJH /NJS @xd | Out-Null
         if ($LASTEXITCODE -ge 8) { Say "  robocopy reported an error for $($j.Src)" "Red" }
     }
     if ($tooBig.Count -gt 0) {
@@ -139,35 +156,55 @@ try {
     if ($NoPush) { Say "Copied. (-NoPush set: not uploading.)" "Green"; exit 0 }
 
     # --- 5. upload in chunks ----------------------------------------------------------
+    # Un-stick a previous run: asset batches committed but never pushed go back
+    # to plain files so they're re-split into smaller uploads.
+    git fetch -q origin $Branch 2>$null
+    $ahead = @(git log --format=%s "origin/$Branch..HEAD" 2>$null)
+    if ($ahead.Count -gt 0 -and -not ($ahead | Where-Object { -not ($_.StartsWith("Add assets") -or $_.StartsWith("Merge")) })) {
+        Say "  Re-splitting $($ahead.Count) upload(s) that didn't make it last time." "DarkGray"
+        git reset -q "origin/$Branch"
+    }
+    $limitMB = $ChunkMB; $limitFiles = $MaxFiles
     foreach ($j in $jobs) {
-        $files = @(git -c core.quotepath=off ls-files --others --modified --exclude-standard -- "$($j.Dst)")
-        if ($files.Count -eq 0) { Say "  $($j.Dst): already up to date" "DarkGray"; continue }
-        Say ("Uploading {0} file(s) in {1}..." -f $files.Count, $j.Dst)
-        $batch = @(); $bytes = 0; $n = 1
-        foreach ($f in $files + @($null)) {
-            if ($f) {
+        $queue = [System.Collections.Generic.List[string]]::new()
+        foreach ($f in @(git -c core.quotepath=off ls-files --others --modified --exclude-standard -- "$($j.Dst)")) { if ($f) { $queue.Add($f) } }
+        if ($queue.Count -eq 0) { Say "  $($j.Dst): already up to date" "DarkGray"; continue }
+        Say ("Uploading {0} file(s) in {1}..." -f $queue.Count, $j.Dst)
+        $n = 1; $fails = 0
+        while ($queue.Count -gt 0) {
+            $batch = @(); $bytes = 0
+            foreach ($f in $queue) {
                 $size = (Get-Item -LiteralPath $f).Length
+                if ($batch.Count -gt 0 -and ($bytes + $size -gt $limitMB * 1MB -or $batch.Count -ge $limitFiles)) { break }
                 $batch += $f; $bytes += $size
             }
-            if ((-not $f -and $batch.Count) -or $bytes -ge ($ChunkMB * 1MB) -or $batch.Count -ge 150) {
-                $list = Join-Path $env:TEMP "bnv_batch.txt"
-                [IO.File]::WriteAllLines($list, [string[]]$batch)
-                git add --pathspec-from-file="$list"
-                git commit -q -m ("Add assets: {0} (part {1})" -f $j.Dst.Replace('\', '/'), $n)
-                $ok = $false
-                foreach ($try in 1..5) {
-                    # Later tries fall back to HTTP/1.1 + OpenSSL: Windows' schannel
-                    # sometimes drops big uploads (SEC_E_MESSAGE_ALTERED).
-                    if ($try -ge 3) { git -c http.version=HTTP/1.1 -c http.sslBackend=openssl -c http.postBuffer=524288000 push -q origin $Branch }
-                    else { git -c http.postBuffer=524288000 push -q origin $Branch }
-                    if ($LASTEXITCODE -eq 0) { $ok = $true; break }
-                    Say "  push failed, retrying in $([math]::Pow(2,$try)) s..." "Yellow"
-                    Start-Sleep -Seconds ([math]::Pow(2, $try))
-                }
-                if (-not $ok) { Say "  Upload failed. Run the bot again later - it resumes where it stopped." "Red"; Read-Host "Enter to close"; exit 1 }
-                Say ("  part {0}: {1} file(s), {2:N1} MB uploaded" -f $n, $batch.Count, ($bytes / 1MB)) "Green"
-                $batch = @(); $bytes = 0; $n++
+            $list = Join-Path $env:TEMP "bnv_batch.txt"
+            [IO.File]::WriteAllLines($list, [string[]]$batch)
+            git add --pathspec-from-file="$list"
+            git commit -q -m ("Add assets: {0} (part {1})" -f $j.Dst.Replace('\', '/'), $n)
+            $ok = $false
+            foreach ($try in 1..3) {
+                # Retries fall back to HTTP/1.1 + OpenSSL: some connections mangle
+                # long uploads (SEC_E_MESSAGE_ALTERED / "bad record mac").
+                if ($try -ge 2) { git -c http.version=HTTP/1.1 -c http.sslBackend=openssl push -q origin $Branch }
+                else { git push -q origin $Branch }
+                if ($LASTEXITCODE -eq 0) { $ok = $true; break }
+                Start-Sleep -Seconds ([math]::Pow(2, $try))
             }
+            if ($ok) {
+                Say ("  part {0}: {1} file(s), {2:N1} MB uploaded ({3} left)" -f $n, $batch.Count, ($bytes / 1MB), ($queue.Count - $batch.Count)) "Green"
+                $queue.RemoveRange(0, $batch.Count); $n++; $fails = 0
+                continue
+            }
+            # Too big for this connection: undo the commit, halve the batch, try again.
+            git reset -q HEAD~1
+            $fails++
+            if ($limitMB -le 5 -and $limitFiles -le 10 -and $fails -ge 3) {
+                Say "  Upload keeps failing even in small pieces. Check the internet connection, then run the bot again - it resumes where it stopped." "Red"
+                Read-Host "Enter to close"; exit 1
+            }
+            $limitMB = [math]::Max(5, [int]($limitMB / 2)); $limitFiles = [math]::Max(10, [int]($limitFiles / 2))
+            Say "  push failed - retrying in smaller pieces (up to $limitMB MB / $limitFiles files)..." "Yellow"
         }
     }
     Say "All done. Tell Claude the assets are in!" "Green"
