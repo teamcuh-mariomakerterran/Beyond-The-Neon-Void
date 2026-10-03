@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_grok-c41f4307-f9eb-4050-a986-0e708e8beabd (1)",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "overload_crumble",
+  "cell": [
+    378,
+    450
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 1,
+      "x": 378,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 2,
+      "x": 756,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 3,
+      "x": 1134,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 4,
+      "x": 1512,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 5,
+      "x": 1890,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 6,
+      "x": 2268,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 7,
+      "x": 2646,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 8,
+      "x": 3024,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 9,
+      "x": 3402,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 10,
+      "x": 3780,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    },
+    {
+      "i": 11,
+      "x": 4158,
+      "y": 0,
+      "w": 378,
+      "h": 450
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    188,
+    399
+  ],
+  "ruinAnchor": [
+    383,
+    972
+  ],
+  "sourceSize": [
+    766,
+    973
+  ],
+  "ruinSize": [
+    766,
+    973
+  ],
+  "smolderEmitters": [
+    {
+      "x": 137,
+      "y": 406
+    },
+    {
+      "x": 383,
+      "y": 260
+    },
+    {
+      "x": 628,
+      "y": 375
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_grok-c41f4307-f9eb-4050-a986-0e708e8beabd (1)_strip.png",
+    "ruin": "bd_destroy_grok-c41f4307-f9eb-4050-a986-0e708e8beabd (1)_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Overload Crumble destroy of grok-c41f4307-f9eb-4050-a986-0e708e8beabd (1)",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_grok-c41f4307-f9eb-4050-a986-0e708e8beabd (1)_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_grok-c41f4307-f9eb-4050-a986-0e708e8beabd (1)_ruin.png",
+      "static": true,
+      "anchor": [
+        383,
+        972
+      ]
+    }
+  }
+}
