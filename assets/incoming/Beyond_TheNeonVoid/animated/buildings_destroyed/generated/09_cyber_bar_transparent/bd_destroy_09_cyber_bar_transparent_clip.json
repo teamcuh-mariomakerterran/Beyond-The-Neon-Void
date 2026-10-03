@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_09_cyber_bar_transparent",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "blue_flame_burnout",
+  "cell": [
+    402,
+    444
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 1,
+      "x": 402,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 2,
+      "x": 804,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 3,
+      "x": 1206,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 4,
+      "x": 1608,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 5,
+      "x": 2010,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 6,
+      "x": 2412,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 7,
+      "x": 2814,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 8,
+      "x": 3216,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 9,
+      "x": 3618,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 10,
+      "x": 4020,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    },
+    {
+      "i": 11,
+      "x": 4422,
+      "y": 0,
+      "w": 402,
+      "h": 444
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    200,
+    394
+  ],
+  "ruinAnchor": [
+    353,
+    828
+  ],
+  "sourceSize": [
+    706,
+    829
+  ],
+  "ruinSize": [
+    706,
+    829
+  ],
+  "smolderEmitters": [
+    {
+      "x": 127,
+      "y": 275
+    },
+    {
+      "x": 353,
+      "y": 275
+    },
+    {
+      "x": 578,
+      "y": 376
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_09_cyber_bar_transparent_strip.png",
+    "ruin": "bd_destroy_09_cyber_bar_transparent_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Blue Flame Burnout destroy of 09_cyber_bar_transparent",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_09_cyber_bar_transparent_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_09_cyber_bar_transparent_ruin.png",
+      "static": true,
+      "anchor": [
+        353,
+        828
+      ]
+    }
+  }
+}

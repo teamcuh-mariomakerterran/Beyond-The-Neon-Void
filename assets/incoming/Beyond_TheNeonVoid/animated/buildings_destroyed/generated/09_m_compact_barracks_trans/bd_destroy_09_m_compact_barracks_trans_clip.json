@@ -1,0 +1,173 @@
+{
+  "format": "lattice.clip",
+  "version": 1,
+  "name": "bd_destroy_09_m_compact_barracks_trans",
+  "kind": "building_destroy",
+  "loop": false,
+  "generator": "destroy.building",
+  "preset": "blue_flame_burnout",
+  "cell": [
+    426,
+    441
+  ],
+  "frames": 12,
+  "layout": "horizontal",
+  "rects": [
+    {
+      "i": 0,
+      "x": 0,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 1,
+      "x": 426,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 2,
+      "x": 852,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 3,
+      "x": 1278,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 4,
+      "x": 1704,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 5,
+      "x": 2130,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 6,
+      "x": 2556,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 7,
+      "x": 2982,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 8,
+      "x": 3408,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 9,
+      "x": 3834,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 10,
+      "x": 4260,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    },
+    {
+      "i": 11,
+      "x": 4686,
+      "y": 0,
+      "w": 426,
+      "h": 441
+    }
+  ],
+  "fps": 10,
+  "holds": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3
+  ],
+  "tickSequence": null,
+  "palette": "Meridian Authority",
+  "facing": null,
+  "dirs": null,
+  "anchor": [
+    212,
+    391
+  ],
+  "ruinAnchor": [
+    338,
+    745
+  ],
+  "sourceSize": [
+    677,
+    746
+  ],
+  "ruinSize": [
+    677,
+    746
+  ],
+  "smolderEmitters": [
+    {
+      "x": 121,
+      "y": 261
+    },
+    {
+      "x": 338,
+      "y": 291
+    },
+    {
+      "x": 555,
+      "y": 277
+    }
+  ],
+  "sortBias": 0,
+  "depthKey": "share_base",
+  "dirOrderNote": "Facing-agnostic building destroy \u2014 no character DIR_ORDER.",
+  "textures": {
+    "strip": "bd_destroy_09_m_compact_barracks_trans_strip.png",
+    "ruin": "bd_destroy_09_m_compact_barracks_trans_ruin.png"
+  },
+  "source": "LATTICE",
+  "suggestedUse": "Blue Flame Burnout destroy of 09_m_compact_barracks_trans",
+  "states": {
+    "destroying": {
+      "clip": "bd_destroy_09_m_compact_barracks_trans_clip.json",
+      "kind": "building_destroy"
+    },
+    "destroyed": {
+      "texture": "bd_destroy_09_m_compact_barracks_trans_ruin.png",
+      "static": true,
+      "anchor": [
+        338,
+        745
+      ]
+    }
+  }
+}
