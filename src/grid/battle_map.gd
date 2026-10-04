@@ -94,6 +94,7 @@ func _setup_environment() -> void:
 	bg.layer = -10
 	var rect := ColorRect.new()
 	rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE  # backdrop must never eat board clicks
 	rect.material = _backdrop_material()
 	bg.add_child(rect)
 	add_child(bg)
