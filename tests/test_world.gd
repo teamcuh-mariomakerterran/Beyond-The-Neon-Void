@@ -27,6 +27,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_passives()
 	test_dev_console()
 	await test_pixel_matrix()
+	test_ui_icons()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1126,3 +1127,28 @@ func test_pixel_matrix() -> void:
 		DirAccess.remove_absolute(d)
 	for d: String in [root, gear, "user://t_pm"]:
 		DirAccess.remove_absolute(d)
+
+
+func test_ui_icons() -> void:
+	var miss := {}
+	for bucket: String in ["classes", "status_effects", "abilities", "items", "passives"]:
+		miss[bucket] = []
+		for r: GameResource in ContentDB.get_all(bucket):
+			var t: Texture2D = null
+			match bucket:
+				"classes": t = UIIcons.get_icon("class", r.id)
+				"status_effects": t = UIIcons.status(r.id)
+				"abilities": t = UIIcons.ability(r as Ability)
+				"items": t = UIIcons.item(r as ItemResource)
+				"passives": t = UIIcons.passive(r as PassiveResource)
+			if t == null:
+				miss[bucket].append(r.id)
+	check(miss["abilities"].is_empty() and miss["items"].is_empty() and miss["passives"].is_empty(), "every ability, item and passive has an icon (missing %s)" % str(miss))
+	check(miss["status_effects"].size() <= 2, "status icons (missing %s)" % str(miss["status_effects"]))
+	check(miss["classes"].size() <= 12, "class icons: %d missing (enemy chassis fall back)" % miss["classes"].size())
+	check(UIIcons.get_icon("cmd", "move") != null and UIIcons.get_icon("cmd", "end_turn") != null, "command icons")
+	var painted := UIIcons.find("burning")
+	SettingsFlags.icon_style = "framed"
+	var framed := UIIcons.find("burning")
+	SettingsFlags.icon_style = "painted"
+	check(painted.contains("/painted/") and framed.contains("/framed/"), "style setting picks the pack")

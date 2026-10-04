@@ -16,6 +16,8 @@ signal continue_pressed
 var _order_row: HBoxContainer
 var _unit_panel: PanelContainer
 var _unit_name: Label
+var _unit_icon: TextureRect
+var _status_icons: HBoxContainer
 var _unit_class: Label
 var _hp_bar: ProgressBar
 var _hp_label: Label
@@ -86,8 +88,16 @@ func _build_unit_panel(root: Control) -> void:
 	_unit_panel.add_child(v)
 	_unit_name = NeonTheme.label("—", 24)
 	_unit_class = NeonTheme.label("", 13, NeonTheme.TEXT_DIM)
-	v.add_child(_unit_name)
-	v.add_child(_unit_class)
+	var name_row := HBoxContainer.new()
+	name_row.add_theme_constant_override("separation", 8)
+	_unit_icon = _icon_rect(40)
+	name_row.add_child(_unit_icon)
+	var name_col := VBoxContainer.new()
+	name_col.add_theme_constant_override("separation", 0)
+	name_col.add_child(_unit_name)
+	name_col.add_child(_unit_class)
+	name_row.add_child(name_col)
+	v.add_child(name_row)
 	var hp_row := HBoxContainer.new()
 	_hp_bar = NeonTheme.bar(NeonTheme.GREEN, 12)
 	_hp_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -110,6 +120,9 @@ func _build_unit_panel(root: Control) -> void:
 	v.add_child(_ap_row)
 	_stats_label = NeonTheme.label("", 13, NeonTheme.TEXT_DIM)
 	v.add_child(_stats_label)
+	_status_icons = HBoxContainer.new()
+	_status_icons.add_theme_constant_override("separation", 3)
+	v.add_child(_status_icons)
 	_status_label = NeonTheme.label("", 13, NeonTheme.AMBER)
 	v.add_child(_status_label)
 	_unit_panel.visible = false
@@ -200,13 +213,14 @@ func show_unit(unit: Node, commands_enabled: bool) -> void:
 	var col := NeonTheme.team_color(unit.team)
 	_unit_panel.add_theme_stylebox_override("panel", NeonTheme.panel_box(col))
 	_unit_name.text = unit.display_name()
+	_unit_icon.texture = UIIcons.get_icon("unit", unit.data.id) if unit.get("data") else null
 	_unit_name.add_theme_color_override("font_color", col)
 	var cls: ClassResource = unit.class_res()
 	_unit_class.text = "LV %d  %s  //  %s" % [unit.get_stat("level"), cls.display_name.to_upper() if cls else "?", ["CREW", "DOCTRINE", "NEUTRAL"][clampi(unit.team, 0, 2)]]
 	refresh_unit(unit)
 	if not commands_enabled:
 		return
-	var move_btn := _cmd("MOVE", "Move up to %d tiles (jump %d)." % [unit.get_stat("move"), unit.get_stat("jump")])
+	var move_btn := _cmd("MOVE", "Move up to %d tiles (jump %d)." % [unit.get_stat("move"), unit.get_stat("jump")], UIIcons.get_icon("cmd", "move"))
 	move_btn.disabled = not unit.can_move()
 	move_btn.pressed.connect(func() -> void: move_pressed.emit())
 	for a: Ability in unit.get_abilities():
@@ -219,17 +233,21 @@ func show_unit(unit: Node, commands_enabled: bool) -> void:
 		if a is CardResource:
 			label = "🂠 " + label
 		var tip := "%s\n%s\nRange %d-%d%s" % [a.display_name, a.description, a.range_min, a.effective_range_max(unit), ("  AoE %d" % a.aoe_radius) if a.aoe_radius > 0 else ""]
-		var b := _cmd("%s  %s" % [label, " ".join(cost)], tip)
+		var b := _cmd("%s  %s" % [label, " ".join(cost)], tip, UIIcons.ability(a))
 		b.disabled = not unit.can_act() or not unit.can_afford(a)
 		b.pressed.connect(func() -> void: ability_pressed.emit(a))
-	var end := _cmd("END TURN", "Finish this unit's turn. Waiting without acting returns you sooner on the CT clock.")
+	var end := _cmd("END TURN", "Finish this unit's turn. Waiting without acting returns you sooner on the CT clock.", UIIcons.get_icon("cmd", "end_turn"))
 	end.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(0.2, 0.03, 0.1, 0.95), NeonTheme.MAGENTA))
 	end.pressed.connect(func() -> void: end_turn_pressed.emit())
 
 
-func _cmd(text: String, tip: String) -> Button:
+func _cmd(text: String, tip: String, icon: Texture2D = null) -> Button:
 	var b := Button.new()
 	b.text = text
+	if icon:
+		b.icon = icon
+		b.add_theme_constant_override("icon_max_width", 26)
+		b.add_theme_constant_override("h_separation", 6)
 	b.tooltip_text = tip
 	b.focus_mode = Control.FOCUS_NONE
 	b.add_theme_font_size_override("font_size", 14)
@@ -260,6 +278,24 @@ func refresh_unit(unit: Node) -> void:
 	for inst in unit.statuses:
 		st.append("%s(%d)" % [inst.effect.display_name, inst.turns_left] if not inst.effect.is_permanent else inst.effect.display_name)
 	_status_label.text = "  ".join(st)
+	for c in _status_icons.get_children():
+		c.queue_free()
+	for inst in unit.statuses:
+		var ic := _icon_rect(24)
+		ic.texture = UIIcons.status(inst.effect.id)
+		ic.tooltip_text = "%s — %s" % [inst.effect.display_name, inst.effect.description]
+		ic.mouse_filter = Control.MOUSE_FILTER_PASS
+		_status_icons.add_child(ic)
+
+
+func _icon_rect(px: int) -> TextureRect:
+	var t := TextureRect.new()
+	t.custom_minimum_size = Vector2(px, px)
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return t
 
 
 func set_mode_hint(text: String) -> void:
@@ -282,8 +318,20 @@ func update_turn_order(forecast: Array) -> void:
 			var cast: Dictionary = entry["cast"]
 			text = "⌛ " + (cast["ability"] as Ability).display_name.left(12)
 		chip.add_theme_stylebox_override("panel", NeonTheme.button_box(Color(col, 0.18) if i > 0 else Color(col, 0.45), col))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 4)
+		var tex: Texture2D = null
+		if who and is_instance_valid(who) and who.get("data") != null:
+			tex = UIIcons.get_icon("unit", who.data.id)
+		elif entry.has("cast"):
+			tex = UIIcons.ability(entry["cast"]["ability"])
+		if tex:
+			var ic := _icon_rect(20 if i > 0 else 26)
+			ic.texture = tex
+			row.add_child(ic)
 		var l := NeonTheme.label(text, 13 if i > 0 else 15, NeonTheme.TEXT)
-		chip.add_child(l)
+		row.add_child(l)
+		chip.add_child(row)
 		_order_row.add_child(chip)
 		i += 1
 

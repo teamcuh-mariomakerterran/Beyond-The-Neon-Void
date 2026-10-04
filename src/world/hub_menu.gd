@@ -146,6 +146,24 @@ func _btn(parent: Control, text: String, cb: Callable, disabled: bool = false, t
 	return b
 
 
+## Small pixel icon at the start of a row (UIIcons).
+func _ic(parent: Control, tex: Texture2D, px: int = 28) -> void:
+	var t := TextureRect.new()
+	t.texture = tex
+	t.custom_minimum_size = Vector2(px, px)
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	parent.add_child(t)
+
+
+func _with_icon(b: Button, tex: Texture2D) -> Button:
+	if tex:
+		b.icon = tex
+		b.add_theme_constant_override("icon_max_width", 24)
+	return b
+
+
 func _row() -> HBoxContainer:
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 8)
@@ -316,7 +334,7 @@ func _tab_crew() -> void:
 	for id: String in GameManager.roster:
 		var c: CharacterData = GameManager.roster[id]
 		var in_party := GameManager.active_party.has(id)
-		var b := _btn(pick, ("★ " if in_party else "") + c.display_name.split(" ")[0] + (" (out)" if c.is_dispatched else ""), func() -> void: _selected_char = id; _show("crew"))
+		var b := _with_icon(_btn(pick, ("★ " if in_party else "") + c.display_name.split(" ")[0] + (" (out)" if c.is_dispatched else ""), func() -> void: _selected_char = id; _show("crew")), UIIcons.get_icon("class", c.class_id))
 		if id == _selected_char:
 			b.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(NeonTheme.GREEN, 0.25), NeonTheme.GREEN))
 	var c := GameManager.get_character(_selected_char)
@@ -355,6 +373,7 @@ func _tab_crew() -> void:
 			ProgressionSystem.change_class(c, jc.id)
 			_show("crew"), not unlocked, "%s\n%s\nRequires: %s" % [jc.display_name, jc.description, req if req != "" else "—"])
 		jb.custom_minimum_size.x = 210
+		_with_icon(jb, UIIcons.get_icon("class", jc.id))
 	_h("LOADOUT", NeonTheme.MAGENTA)
 	_p("Secondary command set from another job, plus one Reaction, Support and Movement passive (learned at the terminal below).")
 	var secs: Array = ["(none)"]
@@ -385,6 +404,7 @@ func _tab_crew() -> void:
 			ProgressionSystem.equip_passive(c, slot, str(ids[names.find(nm)]))
 			_show("crew")))
 		if cur:
+			_ic(srow, UIIcons.passive(cur), 24)
 			srow.add_child(NeonTheme.label(cur.description, 13, NeonTheme.TEXT_DIM))
 	_h("TERMINAL  —  SLOT MICROCHIPS", NeonTheme.VIOLET)
 	_p("Every chip was pried from someone who used to know this. Try not to think about it.")
@@ -400,6 +420,7 @@ func _tab_crew() -> void:
 				var err := ProgressionSystem.learn_ability(c, aid)
 				_show("crew")
 				_toast(err if err != "" else "%s learned %s." % [c.display_name, a.display_name]), known or a.absorb_only or GameManager.microchips < a.chip_cost)
+			_ic(r, UIIcons.ability(a))
 			r.add_child(NeonTheme.label("%s — %s" % [a.display_name, a.description], 14, NeonTheme.TEXT if known else NeonTheme.TEXT_DIM))
 		for pp2: PassiveResource in ContentDB.get_all("passives"):
 			if pp2.class_id != cls.id:
@@ -410,6 +431,7 @@ func _tab_crew() -> void:
 				var err := ProgressionSystem.learn_passive(c, pp2.id)
 				_show("crew")
 				_toast(err if err != "" else "%s learned %s." % [c.display_name, pp2.display_name]), pknown or GameManager.microchips < pp2.chip_cost)
+			_ic(pr, UIIcons.passive(pp2))
 			pr.add_child(NeonTheme.label("[%s] %s — %s" % [pp2.slot.to_upper(), pp2.display_name, pp2.description], 14, NeonTheme.TEXT if pknown else NeonTheme.TEXT_DIM))
 
 
@@ -434,6 +456,7 @@ func _tab_shops() -> void:
 				var err := VendorSystem.buy_item(vid, sid)
 				_show("shops")
 				_toast(err if err != "" else "Bought %s." % nm), GameManager.soul_coins < int(s["price"]))
+			_ic(r, UIIcons.item(item) if item else UIIcons.named("cards"))
 			r.add_child(NeonTheme.label("%s%s — %s" % [nm, "" if int(s["qty_left"]) < 0 else " (%d left)" % s["qty_left"], desc], 14))
 	_h("SELL JUNK", NeonTheme.VIOLET)
 	for id: String in GameManager.stack_items:
@@ -442,6 +465,7 @@ func _tab_shops() -> void:
 			continue
 		var r := _row()
 		_btn(r, "SELL 1  ◈%d" % roundi(item.value * 0.5), func() -> void: VendorSystem.sell_stack(id, 1); _show("shops"))
+		_ic(r, UIIcons.item(item))
 		r.add_child(NeonTheme.label("%s x%d%s" % [item.display_name, GameManager.stack_items[id], "  (junk)" if item.material_grade == 0 else ""], 14))
 
 

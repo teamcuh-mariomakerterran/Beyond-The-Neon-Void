@@ -11,6 +11,7 @@ var _hp_shown: float = 1.0
 var _mp_ratio: float = 1.0
 var _team_color: Color = Color.WHITE
 var _status_colors: Array[Color] = []
+var _status_icons: Array[Texture2D] = []
 var _alive: bool = true
 var is_active_turn: bool = false:
 	set(v):
@@ -37,8 +38,10 @@ func refresh(unit: Unit) -> void:
 	_team_color = Unit.TEAM_COLORS.get(unit.team, Color.WHITE)
 	_alive = unit.is_alive()
 	_status_colors.clear()
+	_status_icons.clear()
 	for inst in unit.statuses:
 		var eff: StatusEffect = inst.effect
+		_status_icons.append(UIIcons.status(eff.id))
 		_status_colors.append(Color("39ff9f") if eff.type == StatusEffect.EffectType.BUFF else Color("ff5c5c") if eff.type == StatusEffect.EffectType.DEBUFF else Color("c9b3ff"))
 	if is_inside_tree():
 		var t := create_tween()
@@ -67,7 +70,14 @@ func _draw() -> void:
 	draw_rect(Rect2(x, Y, WIDTH * _hp_ratio, 4), hp_col)
 	draw_rect(Rect2(x, Y + 5, WIDTH * _mp_ratio, 2), Color("8a5cff"))
 	for i in _status_colors.size():
-		draw_circle(Vector2(x + 3 + i * 7, Y - 5), 2.5, _status_colors[i])
+		var tex: Texture2D = _status_icons[i] if i < _status_icons.size() else null
+		if tex:
+			# Little status icons over the bar, tinted edge = buff / debuff.
+			var r := Rect2(x + i * 13 - 1, Y + 10, 12, 12)  # under the bars, clear of the turn marker
+			draw_rect(r.grow(1), Color(_status_colors[i], 0.8), false, 1.0)
+			draw_texture_rect(tex, r, false)
+		else:
+			draw_circle(Vector2(x + 3 + i * 7, Y - 5), 2.5, _status_colors[i])
 	if is_active_turn:
 		# Bobbing, glowing turn marker.
 		var b := sin(Time.get_ticks_msec() / 1000.0 * 5.0) * 2.5
