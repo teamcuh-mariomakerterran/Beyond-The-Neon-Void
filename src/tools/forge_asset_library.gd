@@ -103,15 +103,28 @@ func _build_categories() -> void:
 	_cat_bar.add_child(links)
 
 
+var _pending_icons: Array[int] = []
+
+
+func _process(_d: float) -> void:
+	var n := 0
+	while not _pending_icons.is_empty() and n < 12:
+		var i: int = _pending_icons.pop_front()
+		if i < _grid.item_count and i < _grid.paths.size():
+			_grid.set_item_icon(i, ForgeStore.load_texture(_grid.paths[i]))
+		n += 1
+
+
 func refresh() -> void:
 	_grid.clear()
 	_grid.paths.clear()
+	_pending_icons.clear()
 	var lbl := find_child("DropLabel", true, false) as Label
 	if lbl:
 		lbl.text = "DROP FILES ANYWHERE ON THIS WINDOW  ▸  copied into assets/%s — your originals stay put" % category
 	for p in ForgeStore.list_assets(category):
 		var ext := p.get_extension().to_lower()
-		var icon: Texture2D = ForgeStore.load_texture(p) if ext in ForgeStore.IMAGE_EXT else null
+		var icon: Texture2D = null  # loaded a few per frame in _process (big packs)
 		var label := p.get_file().get_basename()
 		var sub := p.get_base_dir().trim_prefix(str(ForgeStore.ASSET_CATEGORIES[category]["dir"])).trim_prefix("/")
 		if sub != "":
@@ -122,6 +135,8 @@ func refresh() -> void:
 			label = "⧉ " + label
 		_grid.add_item(label, icon)
 		_grid.paths.append(p)
+		if ext in ForgeStore.IMAGE_EXT:
+			_pending_icons.append(_grid.item_count - 1)
 	if _grid.item_count == 0:
 		_grid.add_item("Nothing here yet — drop some %s in." % str(ForgeStore.ASSET_CATEGORIES[category]["label"]).to_lower())
 		_grid.set_item_disabled(0, true)

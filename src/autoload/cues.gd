@@ -94,7 +94,14 @@ func fire(cue_id: String, ctx: Dictionary = {}) -> void:
 			_run(step, ctx)
 
 
+## Steps that only make sense on screen. Battles resolved without animation
+## (auto-resolve, tests) skip them so game speed and camera are never touched.
+const PRESENTATION := ["shake", "hitstop", "slowmo", "zoom", "flash", "letterbox", "title", "vfx", "sfx"]
+
+
 func _run(step: Dictionary, ctx: Dictionary) -> void:
+	if not CombatManager.animate and str(step.get("do", "")) in PRESENTATION:
+		return
 	var fn: Callable = handlers.get(str(step.get("do", "")), Callable())
 	if fn.is_valid():
 		fn.call(step, ctx)

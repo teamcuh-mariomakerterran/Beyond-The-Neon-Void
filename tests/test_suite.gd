@@ -667,10 +667,11 @@ func test_vfx_library() -> void:
 	# Self-driven: unpaused effects run on _process and free themselves.
 	VFX.paused = false
 	var live := VFX.spawn(host, "rain_splash", Vector2.ZERO)
-	for f in 60:
+	# Wait on real time, not a frame count: headless frames can be far
+	# shorter than the effect's ~0.4 s lifetime.
+	var deadline := Time.get_ticks_msec() + 2000
+	while is_instance_valid(live) and Time.get_ticks_msec() < deadline:
 		await process_frame
-		if not is_instance_valid(live):
-			break
 	check(not is_instance_valid(live), "unpaused vfx frees itself on its own")
 	await process_frame
 	var alive := 0

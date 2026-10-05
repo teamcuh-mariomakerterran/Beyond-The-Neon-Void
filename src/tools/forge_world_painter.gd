@@ -798,6 +798,9 @@ func pick_recent(i: int) -> void:
 		status.emit("Tile %d: %s" % [i + 1, sel_tiles[0].get_file()], NeonTheme.CYAN)
 
 
+var _open_groups: Dictionary = {}  # tile groups expanded past the first 40
+
+
 func _palette_tiles() -> void:
 	if not recent_tiles.is_empty():
 		_palette.add_child(_section("RECENT  (keys 1–9)", NeonTheme.CYAN))
@@ -847,18 +850,19 @@ func _palette_tiles() -> void:
 		_palette.add_child(_section("%s (%d)" % [g.to_upper() if g != "" else "TILES", ids.size()], NeonTheme.TEXT_DIM))
 		var grid := GridContainer.new()
 		grid.columns = 5
-		for id: String in ids:
+		var cap: int = ids.size() if _open_groups.has(g) else mini(ids.size(), 40)
+		for id: String in ids.slice(0, cap):
 			var b := Button.new()
 			b.custom_minimum_size = Vector2(50, 50)
 			b.tooltip_text = "%s\nclick: select · shift+click: add to cycle" % id
-			var frames := WorldRenderer.tile_frames(id)
-			if frames.is_empty():
+			if id.begins_with("terrain:"):
 				var img := Image.create(40, 40, false, Image.FORMAT_RGBA8)
 				img.fill(Color(str(ContentDB.terrain.get(WorldMap.terrain_of(id), {}).get("color", "#333333"))))
 				b.icon = ImageTexture.create_from_image(img)
 			else:
-				b.icon = frames[0]
-				if frames.size() > 1:
+				_queue_thumb(b, "tile:" + id)
+				var te: Variant = (ContentDB.get("tiles") as Dictionary).get(id) if ContentDB.get("tiles") is Dictionary else null
+				if te is Dictionary and not (te.get("frames", []) as Array).is_empty():
 					b.text = "≈"
 			b.expand_icon = true
 			b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -879,6 +883,14 @@ func _palette_tiles() -> void:
 				_build_palette())
 			grid.add_child(b)
 		_palette.add_child(grid)
+		if cap < ids.size():
+			var all := Button.new()
+			all.text = "SHOW ALL %d" % ids.size()
+			var gg := g
+			all.pressed.connect(func() -> void:
+				_open_groups[gg] = true
+				_build_palette())
+			_palette.add_child(all)
 	if ContentDB.get("tiles") == null or (ContentDB.get("tiles") as Dictionary).is_empty():
 		var t := NeonTheme.label("No tile art indexed yet. Drop tiles into assets/tiles (the sync bot does this) and press RESCAN. Flat colour terrain works meanwhile.", 12, NeonTheme.AMBER)
 		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -924,28 +936,73 @@ func _asset_paths(category: String) -> Array[String]:
 	return out
 
 
+## Thumbnails load a few per frame so big folders (thousands of
+## structures) never freeze the editor. [Button, path] pairs.
+var _thumb_queue: Array = []
+const THUMBS_PER_FRAME := 10
+const PAGE := 160
+
+
+func _queue_thumb(b: Button, path: String) -> void:
+	_thumb_queue.append([b, path])
+
+
+func _load_thumbs() -> void:
+	var n := 0
+	while not _thumb_queue.is_empty() and n < THUMBS_PER_FRAME:
+		var job: Array = _thumb_queue.pop_front()
+		if not is_instance_valid(job[0]):
+			continue  # palette was rebuilt; this button is gone
+		var b: Button = job[0]
+		if not b.is_inside_tree():
+			continue
+		var p: String = job[1]
+		if p.begins_with("tile:"):
+			var frames := WorldRenderer.tile_frames(p.substr(5))
+			if not frames.is_empty():
+				b.icon = frames[0]
+		else:
+			b.icon = ForgeStore.load_texture(p)  # clips preview as their first frame
+		n += 1
+
+
 func _palette_assets(category: String, pick: Callable, current: Callable) -> void:
 	var paths := _asset_paths(category)
+	var root_dir := str(ForgeStore.ASSET_CATEGORIES.get(category, {}).get("dir", "res://assets/" + category))
+	var row := HBoxContainer.new()
 	var filter := LineEdit.new()
 	filter.placeholder_text = "filter %d %s…" % [paths.size(), category]
-	_palette.add_child(filter)
+	filter.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(filter)
+	# Folder picker: browse one subfolder of a big pack at a time.
+	var folders: Array = ["(all folders)"]
+	for p: String in paths:
+		var sub := p.get_base_dir().trim_prefix(root_dir).trim_prefix("/")
+		if sub != "" and not folders.has(sub):
+			folders.append(sub)
+	var st := {"q": "", "folder": "(all folders)", "limit": PAGE}
 	var grid := GridContainer.new()
 	grid.columns = 4
-	_palette.add_child(grid)
-	var fill := func(q: String) -> void:
+	var more := Button.new()
+	var fill := func() -> void:
 		for c in grid.get_children():
 			c.queue_free()
+		var shown := 0
+		var matched := 0
 		for p: String in paths:
-			if q != "" and not p.to_lower().contains(q.to_lower()):
+			if st["q"] != "" and not p.to_lower().contains(str(st["q"]).to_lower()):
 				continue
+			if st["folder"] != "(all folders)" and p.get_base_dir().trim_prefix(root_dir).trim_prefix("/") != st["folder"]:
+				continue
+			matched += 1
+			if shown >= int(st["limit"]):
+				continue
+			shown += 1
 			var b := Button.new()
 			b.custom_minimum_size = Vector2(62, 62)
 			if p.ends_with(".json"):
-				var clip := LatticeClip.load_clip(p)
-				b.icon = LatticeClip.frame_texture(clip, 0) if clip.get("ok", false) else null
 				b.text = "▶"
-			else:
-				b.icon = ForgeStore.load_texture(p)
+			_queue_thumb(b, p)
 			b.expand_icon = true
 			b.tooltip_text = p.trim_prefix("res://assets/")
 			_style_toggle(b, current.call() == p)
@@ -957,8 +1014,27 @@ func _palette_assets(category: String, pick: Callable, current: Callable) -> voi
 				for c2: Button in grid.get_children():
 					_style_toggle(c2, c2.tooltip_text == pp.trim_prefix("res://assets/")))
 			grid.add_child(b)
-	filter.text_changed.connect(fill)
-	fill.call("")
+		more.visible = matched > shown
+		more.text = "SHOW MORE  (%d of %d)" % [shown, matched]
+	filter.text_changed.connect(func(q: String) -> void:
+		st["q"] = q
+		st["limit"] = PAGE
+		fill.call())
+	if folders.size() > 1:
+		var fo := ForgeForm._option(folders, "(all folders)", func(f: String) -> void:
+			st["folder"] = f
+			st["limit"] = PAGE
+			fill.call())
+		fo.custom_minimum_size.x = 120
+		fo.clip_text = true
+		row.add_child(fo)
+	_palette.add_child(row)
+	_palette.add_child(grid)
+	more.pressed.connect(func() -> void:
+		st["limit"] = int(st["limit"]) + PAGE
+		fill.call())
+	_palette.add_child(more)
+	fill.call()
 	if paths.is_empty():
 		var t := NeonTheme.label("Nothing in assets/%s yet — drop files onto the Forge window to add some." % category, 12, NeonTheme.AMBER)
 		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -1281,6 +1357,7 @@ func _zoom(f: float) -> void:
 
 
 func _process(delta: float) -> void:
+	_load_thumbs()
 	if _cam == null:
 		return
 	if _post and _vpc.size.y > 0:
