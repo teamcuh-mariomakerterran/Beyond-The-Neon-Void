@@ -15,5 +15,11 @@
 	"defeat": [{"do": "slowmo", "scale": 0.3, "dur": 1.4}, {"do": "flash", "color": "#000000", "alpha": 0.4, "dur": 1.2}],
 	"status.petrified": [{"do": "shake", "amp": 4, "dur": 0.2}, {"do": "flash", "color": "#c0c0d0", "alpha": 0.14, "dur": 0.3}],
 	"status.banished": [{"do": "flash", "color": "#7a3cff", "alpha": 0.25, "dur": 0.45}, {"do": "shake", "amp": 5, "dur": 0.35}],
-	"status.stop": [{"do": "flash", "color": "#7fd8ff", "alpha": 0.15, "dur": 0.3}]
+	"status.stop": [{"do": "flash", "color": "#7fd8ff", "alpha": 0.15, "dur": 0.3}],
+	"sequence.step": [{"do": "shake", "amp": 2, "dur": 0.1}],
+	"sequence.complete": [{"do": "flash", "color": "#ffd23f", "alpha": 0.25, "dur": 0.3}, {"do": "shake", "amp": 5, "dur": 0.25}, {"do": "headline", "text": "SEQUENCE COMPLETE"}],
+	"sequence.fail": [{"do": "flash", "color": "#ff2e88", "alpha": 0.2, "dur": 0.25}],
+	"shield.down": [{"do": "hitstop", "ms": 80}, {"do": "shake", "amp": 7, "dur": 0.3}, {"do": "headline", "text": "{name}: SHIELD DOWN"}],
+	"trap.spring": [{"do": "shake", "amp": 6, "dur": 0.2}, {"do": "flash", "color": "#ff5a2e", "alpha": 0.3, "dur": 0.2}],
+	"door": [{"do": "shake", "amp": 2, "dur": 0.15}]
 }

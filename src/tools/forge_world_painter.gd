@@ -25,11 +25,13 @@ extends HSplitContainer
 
 signal status(text: String, color: Color)
 
-enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY, REGIONS }
+enum Mode { TILES, DETAILS, PARTICLES, OBJECTS, GAMEPLAY, REGIONS, MASKS }
 enum Tool { BRUSH, RECT, FILL, PICK, SELECT, PAN, ERASE, COPY, STAMP, SCULPT, RAMP }
 enum Play { SPAWN, ENEMY, BLOCK, COVER, SIGHT }
+## Tactical masks: per-cell battle rules + interaction anchors.
+enum Mask { IMPASSABLE, FULL, HALF, SIGHT, GROUP, CLEAR, ANCHOR }
 
-const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY", "REGIONS"]
+const MODE_NAMES := ["TILES", "DETAILS", "PARTICLES", "OBJECTS", "GAMEPLAY", "REGIONS", "MASKS"]
 const TRIGGER_ON := ["enter", "exit", "interact"]
 const TRIGGER_DO := ["toast", "dialog", "cutscene", "battle", "flag", "music", "teleport"]
 const TRIGGER_HINT := {"toast": "text to show", "dialog": "NPC id", "cutscene": "res://data/cutscenes/….json",
@@ -51,6 +53,17 @@ const TOOL_KEYS := {KEY_B: Tool.BRUSH, KEY_R: Tool.RECT, KEY_G: Tool.FILL, KEY_I
 const SCULPT_MODES := ["raise", "lower", "flatten", "smooth"]
 const RAMP_DIRS := ["x+", "y+", "x-", "y-"]
 const PLAY_NAMES := ["PLAYER SPAWN", "ENEMY", "BLOCK WALK", "COVER", "SIGHT"]
+const MASK_NAMES := ["IMPASSABLE", "FULL COVER", "HALF COVER", "SIGHT WALL", "DOOR GROUP", "CLEAR", "ANCHOR"]
+const MASK_INFO := [
+	"Units can't stand on or walk through it. On city / interior maps use it to mark cells a building or prop occupies.",
+	"Tall cover. Blocks 100% of shots from straight across it (no line of sight), 66% from the side angles.",
+	"Low cover. Head-on it cuts hit chance by ~23% and damage by 20%; from the side about half that.",
+	"Blocks line of sight through the cell for every ability (glass walls, smoke stacks) without stopping movement.",
+	"Tags cells with a door group (below). They start sealed (impassable + full cover); a switch / terminal action 'open <group>' clears them and hides objects with the same group.",
+	"Wipe every mask from the cell.",
+	"Click to drop / select an interaction anchor of the kind below (yellow). Erase removes it.",
+]
+const MASK_COLORS := [Color(2.0, 0.25, 0.3), Color(0.3, 0.9, 2.2), Color(0.3, 1.8, 1.4), Color(1.4, 0.4, 2.0), Color(2.0, 1.2, 0.2), Color(1.2, 1.2, 1.2), Color(2.0, 1.7, 0.2)]
 const OBJECT_SOURCES := ["structures", "props", "units", "items", "vfx", "portraits", "incoming"]
 const GHOST := Color(0.25, 1.9, 0.75)
 
@@ -58,6 +71,10 @@ var world: WorldMap = WorldMap.new()
 var mode: Mode = Mode.TILES
 var tool: Tool = Tool.BRUSH
 var play_tool: Play = Play.SPAWN
+var mask_tool: Mask = Mask.IMPASSABLE
+var mask_group: String = "door_a"
+var anchor_kind: String = "terminal"
+var sel_anchor: Dictionary = {}
 var layer: int = 0
 var brush_size: int = 1
 ## Off: tiles land only on the stack layer. On: the column below is filled
@@ -167,6 +184,8 @@ class GhostLayer extends Node2D:
 			_draw_regions(font)
 		if p.mode == Mode.GAMEPLAY or p.mode == Mode.OBJECTS:
 			_draw_gameplay(font)
+		if p.mode == Mode.MASKS:
+			_draw_masks(font)
 		if not w.in_bounds(p._hover_cell) and p.tool != Tool.SELECT:
 			return
 		var cells := p.target_cells()
@@ -234,6 +253,10 @@ class GhostLayer extends Node2D:
 			Mode.GAMEPLAY, Mode.REGIONS:
 				for cell: Vector2i in cells:
 					_prism(w, cell, w.top_z(cell, p.layer), col)
+			Mode.MASKS:
+				var mc: Color = col if erase else MASK_COLORS[p.mask_tool]
+				for cell: Vector2i in cells:
+					_prism(w, cell, w.top_z(cell, p.layer), mc)
 		_hover_info(font, w)
 
 	func _hover_info(font: Font, w: WorldMap) -> void:
@@ -310,6 +333,95 @@ class GhostLayer extends Node2D:
 				if dh != 0 and g.is_walkable(n):
 					var at2 := w.to_screen(Vector2(n), w.top_z(n))
 					draw_string(font, at2 + Vector2(-10, 5), "%+d" % dh, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(2.0, 0.4, 0.5) if absi(dh) > p.tactics_jump else Color(1.6, 1.6, 1.6))
+
+	## Tactical masks: colour-coded diamonds per cell, door groups, and the
+	## yellow interaction anchors with wires to whatever they open.
+	func _draw_masks(font: Font) -> void:
+		var w := p.world
+		var group_mid := {}
+		for cell: Vector2i in w.gameplay:
+			var g: Dictionary = w.gameplay[cell]
+			var z := w.top_z(cell)
+			var d := WorldRenderer.diamond(w, Vector2(cell), z)
+			var outline := d.duplicate()
+			outline.append(d[0])
+			var at := w.to_screen(Vector2(cell), z)
+			var walk_block := g.has("walkable") and not bool(g["walkable"])
+			var cv := int(g.get("cover", 0))
+			if walk_block:
+				draw_colored_polygon(d, Color(0.9, 0.05, 0.1, 0.28))
+				draw_line(d[0].lerp(d[2], 0.2), d[0].lerp(d[2], 0.8), Color(2.0, 0.25, 0.3), 2.0)
+				draw_line(d[1].lerp(d[3], 0.2), d[1].lerp(d[3], 0.8), Color(2.0, 0.25, 0.3), 2.0)
+			if cv > 0:
+				var cc: Color = MASK_COLORS[Mask.FULL if cv >= 2 else Mask.HALF]
+				var rise := Vector2(0, -w.height_step * (1.2 if cv >= 2 else 0.6))
+				draw_colored_polygon(PackedVector2Array([d[0] + rise, d[1] + rise, d[2] + rise, d[3] + rise]), Color(cc.r * 0.3, cc.g * 0.3, cc.b * 0.3, 0.35))
+				for i in 4:
+					draw_line(d[i], d[i] + rise, cc, 1.4)
+				var top := PackedVector2Array([d[0] + rise, d[1] + rise, d[2] + rise, d[3] + rise, d[0] + rise])
+				draw_polyline(top, cc, 2.0)
+			if bool(g.get("blocks_los", false)):
+				draw_circle(at + Vector2(0, -w.tile_height * 0.1), w.tile_height * 0.18, Color(1.4, 0.4, 2.0, 0.85))
+				draw_circle(at + Vector2(0, -w.tile_height * 0.1), w.tile_height * 0.07, Color(0.05, 0.0, 0.1))
+			var grp := str(g.get("group", ""))
+			if grp != "":
+				draw_polyline(outline, MASK_COLORS[Mask.GROUP], 2.4)
+				if not group_mid.has(grp):
+					group_mid[grp] = [Vector2.ZERO, 0]
+				group_mid[grp][0] += at
+				group_mid[grp][1] += 1
+			elif not walk_block and cv == 0 and not bool(g.get("blocks_los", false)):
+				continue
+			if not walk_block and cv == 0:
+				draw_polyline(outline, Color(1, 1, 1, 0.35), 1.0)
+		for grp: String in group_mid:
+			var mid: Vector2 = group_mid[grp][0] / float(group_mid[grp][1])
+			group_mid[grp] = mid
+			draw_string(font, mid + Vector2(-grp.length() * 3.6, -w.tile_height * 0.9), grp.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, MASK_COLORS[Mask.GROUP])
+		var seqs := {}
+		for a: Dictionary in w.anchors:
+			var c := Interactions.cell_of(a)
+			var at2 := w.to_screen(Vector2(c), w.top_z(c)) + Vector2(0, -w.tile_height * 0.55)
+			var info := Interactions.kind_info(str(a.get("kind", "")))
+			var col: Color = info["color"]
+			var sel := a == p.sel_anchor
+			# Wires to the door groups this anchor opens / closes.
+			for act: Variant in a.get("actions", []):
+				if act is Dictionary and str(act.get("do", "")) in ["open", "close", "toggle"] and group_mid.has(str(act.get("arg", ""))):
+					var to: Vector2 = group_mid[str(act["arg"])]
+					draw_dashed_line(at2, to + Vector2(0, -w.tile_height * 0.5), Color(2.0, 1.6, 0.2, 0.7), 1.6, 8.0)
+				elif act is Dictionary and str(act.get("do", "")) in ["enable", "disable", "arm"]:
+					var other := w.anchor_by_id(str(act.get("arg", "")))
+					if not other.is_empty():
+						var oc := Interactions.cell_of(other)
+						draw_dashed_line(at2, w.to_screen(Vector2(oc), w.top_z(oc)) + Vector2(0, -w.tile_height * 0.55), Color(1.2, 1.8, 2.0, 0.6), 1.4, 6.0)
+			var seq := str(a.get("sequence", ""))
+			if seq != "":
+				if not seqs.has(seq):
+					seqs[seq] = []
+				seqs[seq].append([int(a.get("step", 0)), at2])
+			draw_line(at2, at2 + Vector2(0, w.tile_height * 0.5), Color(col, 0.8), 2.0)
+			var r := w.tile_height * (0.3 if sel else 0.24)
+			if bool(a.get("hidden", false)):
+				draw_arc(at2, r, 0, TAU, 24, col, 2.5)
+			else:
+				draw_circle(at2, r, Color(col.r * 1.6, col.g * 1.6, col.b * 1.4, 0.95))
+			if sel:
+				draw_arc(at2, r + 5, 0, TAU, 28, Color(2.0, 2.0, 2.0), 2.0)
+			if not bool(a.get("enabled", true)):
+				draw_line(at2 + Vector2(-r, -r), at2 + Vector2(r, r), NeonTheme.MAGENTA, 2.0)
+			var glyph := str(info["glyph"])
+			draw_string(font, at2 + Vector2(-6, 6), glyph, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, col if bool(a.get("hidden", false)) else NeonTheme.BG)
+			var tag := Interactions.title(a)
+			if seq != "":
+				tag += "  [%s #%d]" % [seq, int(a.get("step", 0))]
+			draw_string(font, at2 + Vector2(r + 4, 5), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, col)
+		# Sequence order: numbered chain between switches.
+		for seq: String in seqs:
+			var pts: Array = seqs[seq]
+			pts.sort_custom(func(x: Array, y: Array) -> bool: return x[0] < y[0])
+			for i in range(1, pts.size()):
+				draw_dashed_line(pts[i - 1][1], pts[i][1], Color(2.0, 0.9, 0.2, 0.55), 1.2, 4.0)
 
 	func _draw_gameplay(font: Font) -> void:
 		var w := p.world
@@ -730,6 +842,7 @@ func _build_palette() -> void:
 		Mode.OBJECTS: _palette_objects()
 		Mode.GAMEPLAY: _palette_gameplay()
 		Mode.REGIONS: _palette_regions()
+		Mode.MASKS: _palette_masks()
 
 
 func _tile_groups() -> Dictionary:
@@ -1256,6 +1369,284 @@ func _palette_gameplay() -> void:
 	_palette.add_child(t)
 
 
+func _palette_masks() -> void:
+	var grid := GridContainer.new()
+	grid.columns = 2
+	for i in MASK_NAMES.size():
+		var b := Button.new()
+		b.text = MASK_NAMES[i]
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.add_theme_color_override("font_color", MASK_COLORS[i].clamp(Color(0, 0, 0), Color(1, 1, 1)))
+		_style_toggle(b, mask_tool == i)
+		b.tooltip_text = MASK_INFO[i]
+		var mi := i
+		b.pressed.connect(func() -> void:
+			mask_tool = mi as Mask
+			set_tool(Tool.BRUSH)
+			_build_palette())
+		grid.add_child(b)
+	_palette.add_child(grid)
+	var info := NeonTheme.label(MASK_INFO[mask_tool], 12, NeonTheme.TEXT_DIM)
+	info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_palette.add_child(info)
+	if mask_tool == Mask.GROUP:
+		_palette.add_child(NeonTheme.label("Door group", 12, NeonTheme.TEXT_DIM))
+		var ge := LineEdit.new()
+		ge.text = mask_group
+		ge.placeholder_text = "door_a"
+		ge.text_changed.connect(func(t: String) -> void: mask_group = t.strip_edges())
+		_palette.add_child(ge)
+		var groups := {}
+		for c: Vector2i in world.gameplay:
+			if str(world.gameplay[c].get("group", "")) != "":
+				groups[str(world.gameplay[c]["group"])] = true
+		if not groups.is_empty():
+			_palette.add_child(NeonTheme.label("On this map: " + ", ".join(PackedStringArray(groups.keys())), 12, NeonTheme.AMBER))
+	if mask_tool == Mask.ANCHOR:
+		_palette.add_child(_section("ANCHOR KIND", NeonTheme.AMBER))
+		var kg := GridContainer.new()
+		kg.columns = 2
+		for k: String in Interactions.KINDS:
+			var kb := Button.new()
+			var ki: Dictionary = Interactions.KINDS[k]
+			kb.text = "%s %s" % [ki["glyph"], ki["name"]]
+			kb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			_style_toggle(kb, anchor_kind == k)
+			kb.pressed.connect(func() -> void:
+				anchor_kind = k
+				_build_palette())
+			kg.add_child(kb)
+		_palette.add_child(kg)
+	if not sel_anchor.is_empty() and world.anchors.has(sel_anchor):
+		_palette.add_child(_anchor_editor(sel_anchor))
+	elif not world.anchors.is_empty():
+		_palette.add_child(_section("ANCHORS ON THIS MAP", NeonTheme.AMBER))
+		for a: Dictionary in world.anchors:
+			var ab := Button.new()
+			var c := Interactions.cell_of(a)
+			ab.text = "%s %s  (%d,%d)" % [Interactions.kind_info(str(a["kind"]))["glyph"], Interactions.title(a), c.x, c.y]
+			ab.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			ab.pressed.connect(func() -> void:
+				sel_anchor = a
+				mask_tool = Mask.ANCHOR
+				_build_palette())
+			_palette.add_child(ab)
+	var t := NeonTheme.label("Masks override the tile's terrain rules in battle and block walking on explore maps. Cover is directional: it only counts against shots coming across it.", 12, NeonTheme.TEXT_DIM)
+	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_palette.add_child(t)
+
+
+func _anchor_editor(a: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	var info := Interactions.kind_info(str(a.get("kind", "")))
+	box.add_child(_section("%s  %s" % [info["glyph"], str(info["name"]).to_upper()], info["color"]))
+	box.add_child(NeonTheme.label("id: %s   cell %d,%d" % [a.get("id", ""), int(a["cell"][0]), int(a["cell"][1])], 11, NeonTheme.TEXT_DIM))
+	var mark := func() -> void: dirty = true
+	var kinds: Array = Interactions.KINDS.keys()
+	box.add_child(_row("Kind", ForgeForm._option(kinds, str(a.get("kind", "terminal")), func(v: String) -> void:
+		a["kind"] = v
+		if v == "trap" and not a.has("trap"):
+			a["trap"] = (Interactions.make(Vector2i.ZERO, "trap")["trap"] as Dictionary).duplicate()
+		dirty = true
+		_build_palette())))
+	box.add_child(_row("Label", _line(a, "label", "shown in the prompt")))
+	if str(a.get("kind", "")) == "npc":
+		box.add_child(_row("NPC", ForgeForm._ref_picker("npcs", str(a.get("npc_id", "")), func(v: String) -> void:
+			a["npc_id"] = v
+			mark.call())))
+		var nh := NeonTheme.label("Dialog stages, shop, quests and fights are set on the NPC (NPCS tab). The anchor switches them on here.", 11, NeonTheme.TEXT_DIM)
+		nh.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		box.add_child(nh)
+	box.add_child(_row("Used in", ForgeForm._option(["both", "battle", "explore"], str(a.get("scope", "both")), func(v: String) -> void:
+		a["scope"] = v
+		mark.call())))
+	var nums := HBoxContainer.new()
+	nums.add_child(NeonTheme.label("AP", 12, NeonTheme.TEXT_DIM))
+	nums.add_child(ForgeForm._spin(int(a.get("ap", 1)), true, func(n: float) -> void:
+		a["ap"] = clampi(int(n), 0, 9)
+		mark.call()))
+	nums.add_child(NeonTheme.label("Reach", 12, NeonTheme.TEXT_DIM))
+	nums.add_child(ForgeForm._spin(int(a.get("reach", 1)), true, func(n: float) -> void:
+		a["reach"] = clampi(int(n), 0, 6)
+		mark.call()))
+	box.add_child(nums)
+	var checks := HBoxContainer.new()
+	for f: String in ["hidden", "once", "enabled"]:
+		var cb := CheckBox.new()
+		cb.text = f
+		cb.button_pressed = bool(a.get(f, f == "enabled"))
+		cb.tooltip_text = {"hidden": "No marker until found / scanned (hidden loot, wire traps).",
+			"once": "Used up after one go (remembered between visits on explore maps).",
+			"enabled": "Off = offline until another anchor's 'enable' action turns it on."}[f]
+		cb.toggled.connect(func(on: bool) -> void:
+			a[f] = on
+			mark.call())
+		checks.add_child(cb)
+	box.add_child(checks)
+	box.add_child(_row("Needs flag", _line(a, "requires_flag", "story flag (optional)")))
+	box.add_child(_row("Needs item", _line(a, "requires_item", "item id, e.g. a keycard")))
+	var cons := CheckBox.new()
+	cons.text = "uses the item up"
+	cons.button_pressed = bool(a.get("consume_item", false))
+	cons.toggled.connect(func(on: bool) -> void:
+		a["consume_item"] = on
+		mark.call())
+	box.add_child(cons)
+	box.add_child(_section("SEQUENCE (press in order)", NeonTheme.AMBER))
+	var sq := HBoxContainer.new()
+	var sqe := _line(a, "sequence", "name, e.g. boss_core")
+	sqe.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sq.add_child(sqe)
+	sq.add_child(NeonTheme.label("step", 12, NeonTheme.TEXT_DIM))
+	sq.add_child(ForgeForm._spin(int(a.get("step", 0)), true, func(n: float) -> void:
+		a["step"] = maxi(int(n), 0)
+		mark.call()))
+	box.add_child(sq)
+	if str(a.get("kind", "")) == "trap":
+		var t: Dictionary = a.get("trap", {})
+		a["trap"] = t
+		box.add_child(_section("TRAP", NeonTheme.MAGENTA))
+		var tr := HBoxContainer.new()
+		tr.add_child(NeonTheme.label("Dmg", 12, NeonTheme.TEXT_DIM))
+		tr.add_child(ForgeForm._spin(int(t.get("damage", 25)), true, func(n: float) -> void:
+			t["damage"] = maxi(int(n), 0)
+			mark.call()))
+		tr.add_child(NeonTheme.label("Disarm %", 12, NeonTheme.TEXT_DIM))
+		tr.add_child(ForgeForm._spin(float(t.get("disarm", 0.75)) * 100.0, true, func(n: float) -> void:
+			t["disarm"] = clampf(n / 100.0, 0.0, 1.0)
+			mark.call()))
+		box.add_child(tr)
+		box.add_child(_row("Status", ForgeForm._option([""] + ContentDB.get_ids("status_effects"), str(t.get("status", "")), func(v: String) -> void:
+			t["status"] = v
+			mark.call())))
+		box.add_child(_row("Hurts", ForgeForm._option(["player", "enemy", "none"], str(t.get("hostile", "player")), func(v: String) -> void:
+			t["hostile"] = v
+			mark.call())))
+	box.add_child(_action_list(a, "actions", "WHEN USED"))
+	if str(a.get("sequence", "")) != "":
+		box.add_child(_action_list(a, "fail_actions", "WRONG ORDER"))
+	var del := Button.new()
+	del.text = "DELETE ANCHOR"
+	del.pressed.connect(func() -> void:
+		_push_undo()
+		world.anchors.erase(a)
+		sel_anchor = {}
+		_build_palette())
+	box.add_child(del)
+	return box
+
+
+func _action_list(a: Dictionary, key: String, heading: String) -> Control:
+	var box := VBoxContainer.new()
+	box.add_child(_section(heading, NeonTheme.AMBER))
+	var list: Array = a.get(key, [])
+	a[key] = list
+	for i in list.size():
+		var act: Dictionary = list[i]
+		var line := HBoxContainer.new()
+		line.add_child(ForgeForm._option(Interactions.ACTIONS, str(act.get("do", "toast")), func(v: String) -> void:
+			act["do"] = v
+			dirty = true
+			_build_palette()))
+		var arg := LineEdit.new()
+		arg.text = str(act.get("arg", ""))
+		arg.placeholder_text = str(Interactions.ACTION_HINT.get(str(act.get("do", "")), ""))
+		arg.tooltip_text = arg.placeholder_text
+		arg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		arg.text_changed.connect(func(v: String) -> void:
+			act["arg"] = v
+			dirty = true)
+		line.add_child(arg)
+		var x := Button.new()
+		x.text = "✕"
+		var ii := i
+		x.pressed.connect(func() -> void:
+			list.remove_at(ii)
+			dirty = true
+			_build_palette())
+		line.add_child(x)
+		box.add_child(line)
+	var add := Button.new()
+	add.text = "＋ ACTION"
+	add.pressed.connect(func() -> void:
+		list.append({"do": "open", "arg": mask_group})
+		dirty = true
+		_build_palette())
+	box.add_child(add)
+	return box
+
+
+func _row(label: String, c: Control) -> HBoxContainer:
+	var h := HBoxContainer.new()
+	var l := NeonTheme.label(label, 12, NeonTheme.TEXT_DIM)
+	l.custom_minimum_size.x = 78
+	h.add_child(l)
+	c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(c)
+	return h
+
+
+func _line(d: Dictionary, key: String, hint: String) -> LineEdit:
+	var e := LineEdit.new()
+	e.text = str(d.get(key, ""))
+	e.placeholder_text = hint
+	e.text_changed.connect(func(t: String) -> void:
+		d[key] = t.strip_edges()
+		dirty = true)
+	return e
+
+
+## Paint (or erase) one tactical mask on a cell.
+func apply_mask(c: Vector2i, m: int, erase: bool) -> void:
+	var g: Dictionary = world.gameplay.get(c, {})
+	match m:
+		Mask.IMPASSABLE:
+			if erase: g.erase("walkable")
+			else: g["walkable"] = false
+		Mask.FULL:
+			if erase: g.erase("cover")
+			else: g["cover"] = IsometricGrid.COVER_FULL
+		Mask.HALF:
+			if erase: g.erase("cover")
+			else: g["cover"] = IsometricGrid.COVER_HALF
+		Mask.SIGHT:
+			if erase: g.erase("blocks_los")
+			else: g["blocks_los"] = true
+		Mask.GROUP:
+			if erase or mask_group == "":
+				g.erase("group")
+			else:
+				g["group"] = mask_group
+				if not g.has("walkable"): g["walkable"] = false
+				if not g.has("cover"): g["cover"] = IsometricGrid.COVER_FULL
+		Mask.CLEAR:
+			for k in ["walkable", "cover", "blocks_los", "group"]:
+				g.erase(k)
+	if g.is_empty():
+		world.gameplay.erase(c)
+	else:
+		world.gameplay[c] = g
+
+
+func _apply_anchor(c: Vector2i, erase: bool) -> void:
+	if not world.in_bounds(c):
+		return
+	var here := world.anchors_at(c)
+	if erase:
+		for a: Dictionary in here:
+			world.anchors.erase(a)
+		sel_anchor = {}
+	elif not here.is_empty():
+		var i := here.find(sel_anchor)
+		sel_anchor = here[(i + 1) % here.size()]  # click again to cycle a stack
+	else:
+		sel_anchor = world.add_anchor(c, anchor_kind)
+		if anchor_kind in ["door", "switch", "terminal"]:
+			sel_anchor["actions"] = [{"do": "toggle", "arg": mask_group}]
+	dirty = true
+	_build_palette()
+
+
 # --- Map lifecycle ---------------------------------------------------------
 
 func load_map(id: String) -> void:
@@ -1475,6 +1866,7 @@ func _restore(d: Dictionary) -> void:
 	_edit_count += 1
 	selected = {}
 	sel_region = {}
+	sel_anchor = {}
 	_renderer.rebuild()
 	_minimap.mark_dirty()
 	_snap_cam(cam, zoom.x)
@@ -1567,7 +1959,7 @@ func _update_hover(local: Vector2) -> void:
 			_hover_cell = hit[0]
 			_hover_z = int(hit[1]) + (1 if mode == Mode.TILES else 0)
 			return
-	if mode in [Mode.OBJECTS, Mode.DETAILS, Mode.GAMEPLAY]:
+	if mode in [Mode.OBJECTS, Mode.DETAILS, Mode.GAMEPLAY, Mode.MASKS]:
 		var hit2 := world.pick_top(_hover_world)
 		if not hit2.is_empty():
 			_hover_cell = hit2[0]
@@ -1768,7 +2160,7 @@ func target_cells() -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
 	if tool in [Tool.RECT, Tool.COPY] and _down:
 		return _rect_cells()
-	var single := mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]
+	var single := (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]) or (mode == Mode.MASKS and mask_tool == Mask.ANCHOR)
 	if single or tool in [Tool.PICK, Tool.SELECT, Tool.PAN, Tool.FILL, Tool.STAMP] or mode in [Mode.OBJECTS, Mode.DETAILS] and tool != Tool.ERASE:
 		if world.in_bounds(_hover_cell):
 			out.append(_hover_cell)
@@ -1864,7 +2256,7 @@ func _drag() -> void:
 		sculpt(target_cells())
 	elif tool == Tool.RAMP:
 		place_ramps(target_cells())
-	elif tool in [Tool.BRUSH, Tool.ERASE] and mode in [Mode.TILES, Mode.PARTICLES, Mode.GAMEPLAY, Mode.REGIONS] and not (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]):
+	elif tool in [Tool.BRUSH, Tool.ERASE] and mode in [Mode.TILES, Mode.PARTICLES, Mode.GAMEPLAY, Mode.REGIONS, Mode.MASKS] and not (mode == Mode.GAMEPLAY and play_tool in [Play.SPAWN, Play.ENEMY]) and not (mode == Mode.MASKS and mask_tool == Mask.ANCHOR):
 		_apply(target_cells())
 
 
@@ -2247,6 +2639,14 @@ func _apply(cells: Array[Vector2i]) -> void:
 					continue
 				_last_applied[k2] = true
 				_apply_gameplay(c, erase)
+		Mode.MASKS:
+			if mask_tool == Mask.ANCHOR:
+				if not cells.is_empty():
+					_apply_anchor(cells[0], erase)
+				return
+			for c: Vector2i in with_mirrors(cells):
+				if world.in_bounds(c):
+					apply_mask(c, mask_tool, erase)
 	dirty = true
 
 

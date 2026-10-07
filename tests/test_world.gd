@@ -28,6 +28,8 @@ func run(p_tree: SceneTree) -> int:
 	test_dev_console()
 	await test_pixel_matrix()
 	test_ui_icons()
+	test_cover()
+	test_masks_and_anchors()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1127,6 +1129,154 @@ func test_pixel_matrix() -> void:
 		DirAccess.remove_absolute(d)
 	for d: String in [root, gear, "user://t_pm"]:
 		DirAccess.remove_absolute(d)
+
+
+func test_cover() -> void:
+	var g := IsometricGrid.new()
+	g.setup(12, 12)
+	var t := Vector2i(5, 5)
+	g.get_cell(Vector2i(6, 5)).cover = IsometricGrid.COVER_FULL  # wall on the +x side
+	check(is_equal_approx(g.cover_fraction(t, Vector2i(10, 5)), 1.0), "full cover head-on blocks 100%")
+	check(is_equal_approx(g.cover_fraction(t, Vector2i(9, 7)), IsometricGrid.FULL_FLANK), "full cover from the side angle: 66%%  (%s)" % g.cover_fraction(t, Vector2i(9, 7)))
+	check(g.cover_fraction(t, Vector2i(5, 10)) == 0.0 and g.cover_fraction(t, Vector2i(1, 5)) == 0.0, "no cover from the open sides / behind")
+	g.get_cell(Vector2i(5, 4)).cover = IsometricGrid.COVER_FULL
+	check(g.cover_fraction(t, Vector2i(5, 3)) == 1.0 and g.cover_fraction(t, Vector2i(4, 5)) == 0.0, "melee (adjacent) ignores cover")
+	g.get_cell(Vector2i(5, 4)).cover = IsometricGrid.COVER_NONE
+	g.get_cell(Vector2i(6, 5)).cover = IsometricGrid.COVER_HALF
+	check(is_equal_approx(g.cover_fraction(t, Vector2i(10, 5)), IsometricGrid.HALF_FRONT) and is_equal_approx(g.cover_fraction(t, Vector2i(9, 7)), IsometricGrid.HALF_FLANK), "half cover: 50% head-on, 25% flank")
+	g.get_cell(Vector2i(10, 5)).height = 4
+	check(is_equal_approx(g.cover_fraction(t, Vector2i(10, 5)), IsometricGrid.HALF_FRONT * 0.5), "shooting from 3+ levels up halves cover")
+	g.get_cell(Vector2i(10, 5)).height = 0
+	g.get_cell(Vector2i(6, 5)).cover = IsometricGrid.COVER_FULL
+	var shooter := _pu(g, Unit.Team.ENEMY, Vector2i(10, 5))
+	var target := _pu(g, Unit.Team.PLAYER, t)
+	var gun: Ability = null
+	for a: Ability in ContentDB.get_all("abilities"):
+		if a.kind == Ability.Kind.ATTACK and not DamageCalculator.is_magical(a) and not a.ignores_cover and a.range_max >= 4:
+			gun = a
+			break
+	check(DamageCalculator.hit_chance(shooter, target, gun, g) == 0.0 and DamageCalculator.is_blocked(target, shooter, gun, g), "no line of sight through full cover head-on")
+	shooter.place_at(Vector2i(9, 7))
+	var flank_hit := DamageCalculator.hit_chance(shooter, target, gun, g)
+	g.get_cell(Vector2i(6, 5)).cover = IsometricGrid.COVER_NONE
+	var open_hit := DamageCalculator.hit_chance(shooter, target, gun, g)
+	check(flank_hit > 0.0 and flank_hit < open_hit, "flanking full cover: a shot, but a worse one (%.2f vs %.2f)" % [flank_hit, open_hit])
+	target.apply_status("cloaked")
+	check(DamageCalculator.hit_chance(shooter, target, gun, g) == 0.0, "cloaked: can't be hit from range")
+	target.apply_status("shielded")
+	shooter.place_at(Vector2i(5, 6))
+	check(DamageCalculator.hit_chance(shooter, target, gun, g) == 0.0, "shielded: untouchable")
+	shooter.queue_free()
+	target.queue_free()
+
+
+class IxHost:
+	var toasts: Array = []
+	var units: Array = []
+	var groups: Array = []
+	func ix_toast(text: String, _c: Color) -> void: toasts.append(text)
+	func ix_units() -> Array: return units
+	func ix_group_changed(group: String, open: bool) -> void: groups.append([group, open])
+
+
+func test_masks_and_anchors() -> void:
+	var w := _map()
+	for x in 8:
+		for y in 8:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	# Painter masks.
+	var p := ForgeWorldPainter.new()
+	p.world = w
+	p.apply_mask(Vector2i(1, 1), ForgeWorldPainter.Mask.IMPASSABLE, false)
+	p.apply_mask(Vector2i(2, 1), ForgeWorldPainter.Mask.FULL, false)
+	p.apply_mask(Vector2i(3, 1), ForgeWorldPainter.Mask.HALF, false)
+	p.apply_mask(Vector2i(4, 1), ForgeWorldPainter.Mask.SIGHT, false)
+	p.mask_group = "vault"
+	p.apply_mask(Vector2i(4, 4), ForgeWorldPainter.Mask.GROUP, false)
+	p.apply_mask(Vector2i(4, 5), ForgeWorldPainter.Mask.GROUP, false)
+	p.apply_mask(Vector2i(5, 5), ForgeWorldPainter.Mask.HALF, false)
+	p.apply_mask(Vector2i(5, 5), ForgeWorldPainter.Mask.CLEAR, false)
+	var g := w.to_grid()
+	check(not g.is_walkable(Vector2i(1, 1)) and g.get_cell(Vector2i(2, 1)).cover == 2 and g.get_cell(Vector2i(3, 1)).cover == 1 and g.get_cell(Vector2i(4, 1)).blocks_los, "mask brushes reach the battle grid")
+	check(not g.is_walkable(Vector2i(4, 4)) and w.group_cells("vault").size() == 2 and not w.gameplay.has(Vector2i(5, 5)), "door group starts sealed; CLEAR wipes a cell")
+	p.free()
+	# Anchors save and load.
+	var term := w.add_anchor(Vector2i(2, 4), "terminal")
+	term["actions"] = [{"do": "open", "arg": "vault"}]
+	var loot := w.add_anchor(Vector2i(6, 6), "loot")
+	loot["actions"] = [{"do": "chips", "arg": "2"}]
+	var trap := w.add_anchor(Vector2i(4, 6), "trap")
+	var s1 := w.add_anchor(Vector2i(0, 7), "switch")
+	var s2 := w.add_anchor(Vector2i(1, 7), "switch")
+	var s3 := w.add_anchor(Vector2i(2, 7), "switch")
+	for i in 3:
+		var sw: Dictionary = [s1, s2, s3][i]
+		sw["sequence"] = "core"
+		sw["step"] = i + 1
+		sw["actions"] = []
+	s3["actions"] = [{"do": "unshield", "arg": ""}]
+	var w2 := WorldMap.from_dict(w.to_dict())
+	check(w2.anchors.size() == 6 and str(w2.anchor_by_id(str(term["id"]))["kind"]) == "terminal" and w2.anchors_at(Vector2i(6, 6)).size() == 1, "anchors round-trip")
+	# Runtime.
+	var host := IxHost.new()
+	var ix := Interactions.new().setup(w, g, host, "battle")
+	var hero := _pu(g, Unit.Team.PLAYER, Vector2i(2, 3))
+	var boss := _pu(g, Unit.Team.ENEMY, Vector2i(7, 0))
+	var sneak := _pu(g, Unit.Team.ENEMY, Vector2i(7, 3))
+	host.units = [hero, boss, sneak]
+	boss.apply_status("shielded")
+	sneak.apply_status("cloaked")
+	check(ix.usable_from(Vector2i(2, 3), hero).has(term) and not ix.usable_from(Vector2i(0, 0), hero).has(term), "terminal usable from the next cell only")
+	check(not ix.is_visible(loot) and not ix.is_visible(trap) and ix.is_visible(term), "hidden loot / traps have no marker")
+	var ap0 := hero.current_ap
+	ix.interact(term, hero)
+	check(hero.current_ap == ap0 - 1 and g.is_walkable(Vector2i(4, 4)) and g.get_cell(Vector2i(4, 4)).cover == 0 and host.groups == [["vault", true]], "terminal opens the door group (costs 1 AP)")
+	var chips0 := GameManager.microchips if "microchips" in GameManager else 0
+	hero.current_ap = 2
+	check(not ix.usable_from(Vector2i(6, 5), hero).has(loot) and ix.usable_from(Vector2i(6, 6), hero).has(loot), "hidden loot: stand on it to search")
+	ix.interact(loot, hero)
+	check(ix.is_used(loot) and ix.blocker(loot) != "", "loot is one-shot")
+	if "microchips" in GameManager:
+		check(GameManager.microchips == chips0 + 2, "loot pays out")
+	# Switch sequence: wrong order resets, right order drops the boss shield.
+	hero.current_ap = 9
+	ix.interact(s2, hero)
+	check(int(ix.progress.get("core", 1)) == 1 and host.toasts.has("WRONG ORDER — SEQUENCE RESET"), "out-of-order switch resets the sequence")
+	ix.interact(s1, hero)
+	check(ix.is_lit(s1) and not ix.is_lit(s2), "pressed switches stay lit")
+	ix.interact(s2, hero)
+	check(boss.has_status("shielded"), "shield holds until the last switch")
+	ix.interact(s3, hero)
+	check(not boss.has_status("shielded"), "sequence complete: boss shield down")
+	# Traps: hurt the side they're wired against; rewire turns them around.
+	var hp0 := hero.current_hp
+	check(ix.on_enter(Vector2i(4, 6), sneak).is_empty(), "trap ignores the side that set it")
+	ix.trap_hostile.erase(str(trap["id"]))
+	var fired := ix.on_enter(Vector2i(4, 6), hero)
+	check(fired.size() == 1 and hero.current_hp < hp0 and ix.is_visible(trap) == false, "stepping on a trap springs it once")
+	var trap2 := w.add_anchor(Vector2i(5, 6), "trap")
+	ix.revealed[str(trap2["id"])] = true
+	ix.interact(trap2, hero, "rewire")
+	check(ix.hostile_to(trap2) == "enemy" and ix.on_enter(Vector2i(5, 6), hero).is_empty(), "rewired trap spares the team that rewired it")
+	check(ix.on_enter(Vector2i(5, 6), sneak).size() == 1, "…and goes off under the enemy")
+	# Smoke device reveals cloaked units and hidden anchors nearby.
+	var smoke := w.add_anchor(Vector2i(6, 3), "device")
+	ix.interact(smoke, hero)
+	check(not sneak.has_status("cloaked"), "smoke device strips cloaking")
+	# Offline anchors and requirements.
+	var gate := w.add_anchor(Vector2i(0, 0), "terminal")
+	gate["enabled"] = false
+	check(ix.blocker(gate) == "Offline.", "disabled anchors are offline")
+	ix.run_action("enable", str(gate["id"]))
+	check(ix.blocker(gate) == "", "another anchor can bring one online")
+	gate["requires_item"] = "no_such_keycard"
+	check(ix.blocker(gate).begins_with("Needs"), "keycard requirement")
+	var st := ix.get_state()
+	var ix2 := Interactions.new().setup(w, w.to_grid(), null, "explore")
+	ix2.set_state(st)
+	check(ix2.is_open("vault") and ix2.grid.is_walkable(Vector2i(4, 4)) and ix2.is_used(loot), "interaction state carries over")
+	for u: Node in [hero, boss, sneak]:
+		u.queue_free()
 
 
 func test_ui_icons() -> void:

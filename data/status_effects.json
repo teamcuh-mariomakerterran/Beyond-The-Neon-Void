@@ -298,5 +298,27 @@
 		"tags": [
 			"untouchable"
 		]
+	},
+	{
+		"id": "shielded",
+		"display_name": "Shielded",
+		"type": "BUFF",
+		"duration_turns": 99,
+		"is_permanent": true,
+		"description": "Wrapped in a shield nothing gets through — find what powers it (switches, terminals) and shut it down.",
+		"tags": [
+			"untouchable"
+		]
+	},
+	{
+		"id": "cloaked",
+		"display_name": "Cloaked",
+		"type": "BUFF",
+		"duration_turns": 99,
+		"is_permanent": true,
+		"description": "Optical camo: can't be targeted from range, melee lands half as often. Smoke or a scan strips it.",
+		"tags": [
+			"cloaked"
+		]
 	}
 ]

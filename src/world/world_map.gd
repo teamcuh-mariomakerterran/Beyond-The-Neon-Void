@@ -43,6 +43,9 @@ var legacy_props: Array = []
 var regions: Array = []
 ## Overhead cable settings (CableNet.settings_of fills the defaults).
 var cables: Dictionary = {}
+## Interaction anchors (terminals, switches, hidden loot, traps, doors, NPC
+## hooks…). Schema and runtime: src/world/interactions.gd.
+var anchors: Array = []
 var _uid: int = 0
 
 
@@ -200,7 +203,7 @@ func particle_groups() -> Dictionary:
 
 func next_id(prefix: String) -> String:
 	var taken := {}
-	for o: Dictionary in objects + details + regions:
+	for o: Dictionary in objects + details + regions + anchors:
 		taken[str(o.get("id", ""))] = true
 	while true:
 		_uid += 1
@@ -216,6 +219,38 @@ func add_object(asset: String, cell: Vector2i, z: int, kind_name: String = "prop
 		"loot_item_id": "", "found_text": "", "empty_text": "", "dialog_npc": "", "location": null}
 	objects.append(o)
 	return o
+
+
+## New interaction anchor of `kind` on `cell` (Interactions.make fills it).
+func add_anchor(cell: Vector2i, kind_name: String) -> Dictionary:
+	var a := Interactions.make(cell, kind_name)
+	a["id"] = next_id("anc")
+	anchors.append(a)
+	return a
+
+
+func anchors_at(cell: Vector2i) -> Array:
+	var out: Array = []
+	for a: Dictionary in anchors:
+		if int(a["cell"][0]) == cell.x and int(a["cell"][1]) == cell.y:
+			out.append(a)
+	return out
+
+
+func anchor_by_id(anchor_id: String) -> Dictionary:
+	for a: Dictionary in anchors:
+		if str(a.get("id", "")) == anchor_id:
+			return a
+	return {}
+
+
+## Cells painted with a mask group (doors / shutters a switch can open).
+func group_cells(group: String) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for cell: Vector2i in gameplay:
+		if str(gameplay[cell].get("group", "")) == group:
+			out.append(cell)
+	return out
 
 
 func add_detail(asset: String, pos: Vector2, z: int) -> Dictionary:
@@ -293,6 +328,7 @@ func load_dict(d: Dictionary) -> void:
 	legacy_props = d.get("props", []).duplicate(true)
 	regions = d.get("regions", []).duplicate(true)
 	cables = (d.get("cables") as Dictionary).duplicate(true) if d.get("cables") is Dictionary else {}
+	anchors = (d.get("anchors") as Array).duplicate(true) if d.get("anchors") is Array else []
 	tiles.clear()
 	particles.clear()
 	gameplay.clear()
@@ -372,6 +408,8 @@ func to_dict() -> Dictionary:
 		out["regions"] = regions
 	if not cables.is_empty():
 		out["cables"] = cables
+	if not anchors.is_empty():
+		out["anchors"] = anchors
 	return out
 
 

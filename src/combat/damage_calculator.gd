@@ -13,8 +13,10 @@ const HEIGHT_PENALTY_PER_LEVEL := 0.05
 const HEIGHT_PENALTY_MAX := 0.15
 const BACK_HIT_BONUS := 0.20
 const SIDE_HIT_BONUS := 0.10
-const COVER_HIT_PENALTY := [0.0, 0.15, 0.30]
-const COVER_DMG_MULT := [1.0, 0.8, 0.6]
+## Cover (0–1, IsometricGrid.cover_fraction) takes up to this much off the
+## hit chance / damage. Full cover head-on (1.0) blocks the shot outright.
+const COVER_HIT_WEIGHT := 0.45
+const COVER_DMG_WEIGHT := 0.4
 const MAGICAL_TYPES := ["tech", "void", "essence", "electric", "plasma", "cryo"]
 
 
@@ -33,10 +35,19 @@ static func attack_angle(attacker_cell: Vector2i, target_cell: Vector2i, target_
 	return "side"
 
 
-static func _cover(target: Node, attacker: Node, ability: Ability, grid: IsometricGrid) -> int:
-	if grid == null or ability.ignores_cover or is_magical(ability):
-		return IsometricGrid.COVER_NONE
-	return grid.cover_against(target.cell, attacker.cell)
+## Cover fraction for this attack. Tech/magic ignores everything except a
+## full wall head-on (no line of sight); ignores_cover abilities ignore all.
+static func cover(target: Node, attacker: Node, ability: Ability, grid: IsometricGrid) -> float:
+	if grid == null or ability.ignores_cover or ability.is_healing():
+		return 0.0
+	var f := grid.cover_fraction(target.cell, attacker.cell)
+	if is_magical(ability):
+		return 1.0 if f >= 0.999 else 0.0
+	return f
+
+
+static func is_blocked(target: Node, attacker: Node, ability: Ability, grid: IsometricGrid) -> bool:
+	return cover(target, attacker, ability, grid) >= 0.999
 
 
 ## Petrified units crack under hits.
@@ -53,13 +64,22 @@ static func hit_chance(attacker: Node, target: Node, ability: Ability, grid: Iso
 	match attack_angle(attacker.cell, target.cell, target.facing):
 		"back": chance += BACK_HIT_BONUS
 		"side": chance += SIDE_HIT_BONUS
-	chance -= COVER_HIT_PENALTY[_cover(target, attacker, ability, grid)]
+	var cv := cover(target, attacker, ability, grid)
+	if cv >= 0.999:
+		return 0.0  # full cover head-on: no line of sight
+	chance -= cv * COVER_HIT_WEIGHT
 	if grid:
 		var dh := grid.get_height(attacker.cell) - grid.get_height(target.cell)
 		chance += clampf(dh * 0.03, -0.09, 0.09)
 	if target.has_method("is_disabled") and target.is_disabled():
 		chance = 1.0
-	return clampf(chance, 0.05, 0.99)
+	chance = clampf(chance, 0.05, 0.99)
+	# Optical camo: nothing to aim at from range, a swing in the dark up close.
+	if target.has_method("has_status_tag") and target.has_status_tag("cloaked"):
+		if absi(attacker.cell.x - target.cell.x) + absi(attacker.cell.y - target.cell.y) > 1:
+			return 0.0
+		chance *= 0.5
+	return chance
 
 
 static func crit_chance(attacker: Node, ability: Ability) -> float:
@@ -78,7 +98,7 @@ static func damage(attacker: Node, target: Node, ability: Ability, grid: Isometr
 			raw *= 1.0 - minf(-dh * HEIGHT_PENALTY_PER_LEVEL, HEIGHT_PENALTY_MAX)
 	if attack_angle(attacker.cell, target.cell, target.facing) == "back":
 		raw *= 1.15
-	raw *= COVER_DMG_MULT[_cover(target, attacker, ability, grid)]
+	raw *= 1.0 - cover(target, attacker, ability, grid) * COVER_DMG_WEIGHT
 	if target.has_method("element_mult"):
 		raw *= target.element_mult(ability.damage_type)
 	raw *= Passives.damage_mult(attacker, target, ability)

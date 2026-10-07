@@ -30,5 +30,7 @@
 	"rewind_anchor": {"priority": 33, "scan": 0.4, "tint": "#c49bff", "tint_amt": 0.2},
 	"stitched": {"priority": 28, "tint": "#ff9db8", "tint_amt": 0.15},
 	"dualcast": {"priority": 14, "tint": "#d08cff", "tint_amt": 0.15, "pulse_speed": 2.0, "pulse_amt": 0.5},
-	"buzzed": {"priority": 16, "tint": "#ffb347", "tint_amt": 0.2, "pulse_speed": 0.6, "pulse_amt": 0.5}
+	"buzzed": {"priority": 16, "tint": "#ffb347", "tint_amt": 0.2, "pulse_speed": 0.6, "pulse_amt": 0.5},
+	"shielded": {"priority": 92, "tint": "#ffd23f", "tint_amt": 0.35, "scan": 0.7, "pulse_speed": 1.4, "pulse_amt": 0.6},
+	"cloaked": {"priority": 85, "shimmer": 1.0, "dissolve": 0.45, "tint": "#66ccff", "tint_amt": 0.2}
 }

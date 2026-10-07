@@ -329,33 +329,55 @@ func has_line_of_sight(a: Vector2i, b: Vector2i) -> bool:
 	return true
 
 
+## How much cover (0–1) the target has against this attacker. Each cover
+## cell next to the target is judged by where the shot comes from:
+##   full cover: head-on (attacker beyond the cover) 1.0 = no line of sight,
+##               from a side angle FULL_FLANK (0.66)
+##   half cover: head-on HALF_FRONT (0.5), side angle HALF_FLANK (0.25)
+## Terrain rising 2+ levels counts as full cover, 1 level as half. Melee
+## (adjacent) ignores cover; shooting from 3+ levels above halves it.
+const FULL_FLANK := 0.66
+const HALF_FRONT := 0.5
+const HALF_FLANK := 0.25
+const HEAD_ON := 0.92  # alignment (cos, ~22°) that counts as "straight across the cover"
+
+
+func cover_fraction(target_cell: Vector2i, attacker_cell: Vector2i) -> float:
+	if distance(target_cell, attacker_cell) <= 1:
+		return 0.0
+	var v := Vector2(attacker_cell - target_cell).normalized()
+	var th := get_height(target_cell)
+	var best := 0.0
+	for dir: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		var c := get_cell(target_cell + dir)
+		if c == null:
+			continue
+		var level := c.cover
+		var rise := c.height - th
+		if rise >= 2:
+			level = COVER_FULL
+		elif rise == 1:
+			level = maxi(level, COVER_HALF)
+		if level == COVER_NONE:
+			continue
+		var align := v.dot(Vector2(dir))
+		var f := 0.0
+		if align >= HEAD_ON:
+			f = 1.0 if level == COVER_FULL else HALF_FRONT
+		elif align > 0.2:
+			f = FULL_FLANK if level == COVER_FULL else HALF_FLANK
+		best = maxf(best, f)
+	if get_height(attacker_cell) - th >= 3:
+		best *= 0.5
+	return best
+
+
 ## Directional cover the target gets against the attacker (XCOM-style): the
 ## neighbouring cell on the attacker's side must hold cover or rise above the
 ## target. Returns COVER_NONE / COVER_HALF / COVER_FULL.
 func cover_against(target_cell: Vector2i, attacker_cell: Vector2i) -> int:
-	if distance(target_cell, attacker_cell) <= 1:
-		return COVER_NONE  # melee range: cover doesn't help
-	var best := COVER_NONE
-	var d := attacker_cell - target_cell
-	var dirs: Array[Vector2i] = []
-	if d.x != 0: dirs.append(Vector2i(signi(d.x), 0))
-	if d.y != 0: dirs.append(Vector2i(0, signi(d.y)))
-	var th := get_height(target_cell)
-	for dir in dirs:
-		var c := get_cell(target_cell + dir)
-		if c == null:
-			continue
-		var cover := c.cover
-		var rise := c.height - th
-		if rise >= 2:
-			cover = COVER_FULL
-		elif rise == 1:
-			cover = maxi(cover, COVER_HALF)
-		best = maxi(best, cover)
-	# Attackers standing well above the target shoot over cover.
-	if get_height(attacker_cell) - th >= 3:
-		best = maxi(best - 1, COVER_NONE)
-	return best
+	var f := cover_fraction(target_cell, attacker_cell)
+	return COVER_FULL if f >= FULL_FLANK else (COVER_HALF if f > 0.0 else COVER_NONE)
 
 
 # --- Hazards ---------------------------------------------------------------

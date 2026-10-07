@@ -412,7 +412,12 @@ func _inspect_text(cell: Vector2i) -> String:
 		var u := CombatManager.active_unit
 		if mode == Mode.TARGET and u and selected_ability and _valid_cells.has(cell) and occ != u:
 			var f := DamageCalculator.forecast(u, occ, selected_ability, grid)
-			if f["damage"] > 0:
+			if f["damage"] > 0 and f["hit"] <= 0.0 and DamageCalculator.is_blocked(occ, u, selected_ability, grid):
+				lines.append("[color=#ff2e88]▶ BLOCKED BY COVER — no line of sight[/color]")
+			elif f["damage"] > 0:
+				var cv := DamageCalculator.cover(occ, u, selected_ability, grid)
+				if cv > 0.0:
+					lines.append("[color=#8f84ad]Target in cover: %d%%[/color]" % roundi(cv * 100))
 				lines.append("[color=#ffd23f]▶ HIT %d%%   DMG %d   CRIT %d%%%s[/color]" % [roundi(f["hit"] * 100), f["damage"], roundi(f["crit"] * 100), "   KILL" if f["kill"] else ""])
 			elif f["damage"] < 0:
 				lines.append("[color=#39ff9f]▶ HEAL %d[/color]" % -f["damage"])

@@ -102,8 +102,15 @@ static func ability_like(res: Resource, id: String) -> Texture2D:
 	return named(id)
 
 
+## Statuses without their own art borrow a close one.
+const STATUS_FALLBACK := {"shielded": "shield", "cloaked": "hidden"}
+
+
 static func status(id: String) -> Texture2D:
-	return ability_like(ContentDB.get_status(id), id)
+	var t := ability_like(ContentDB.get_status(id), id)
+	if t == null and STATUS_FALLBACK.has(id):
+		return named(STATUS_FALLBACK[id])
+	return t
 
 
 ## Own art, else the ability's type icon (attack, magic, heal…).

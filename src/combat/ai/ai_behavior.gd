@@ -21,6 +21,9 @@ extends Resource
 @export var distance_weight: float = 1.0
 @export var ally_cohesion: float = 0.0
 @export var hazard_penalty: float = 15.0
+## Standing where foes sit behind full cover head-on (no shot at them)
+## costs up to this much: units work around walls instead of camping.
+@export var flank_weight: float = 4.0
 ## Bonus per % of the target's HP missing — focus fire on the wounded.
 @export var focus_fire: float = 0.15
 ## How hard to close distance when nothing is in reach this turn.
@@ -75,9 +78,10 @@ func plan_turn(unit: Node, battle: Node) -> Dictionary:
 	var any_action := false
 	for c in moves:
 		acts[c] = _best_action_from(unit, c, abilities, grid)
-		if acts[c]["ability"] != null and acts[c]["score"] > 1.0:
+		if acts[c]["ability"] != null and acts[c]["score"] > 1.0 and (acts[c]["ability"] as Ability).is_offensive():
 			any_action = true
-	# Nothing in reach anywhere: march toward the enemy instead of idling in cover.
+	# No attack in reach anywhere (buffing friends doesn't count): march toward
+	# the enemy instead of idling in cover.
 	if not any_action and not foes.is_empty():
 		for c in moves:
 			pos_scores[c] -= approach_weight * _nearest_dist(c, foes)
@@ -177,10 +181,14 @@ func score_position(unit: Node, c: Vector2i, grid: IsometricGrid, foes: Array[No
 	if not foes.is_empty():
 		var cover_sum := 0.0
 		var h_sum := 0.0
+		var walled := 0
 		for f in foes:
 			cover_sum += grid.cover_against(c, f.cell)
 			h_sum += grid.get_height(c) - grid.get_height(f.cell)
+			if grid.cover_fraction(f.cell, c) >= 0.999:
+				walled += 1
 		s += cover_weight * cover_sum / foes.size() * 0.5
+		s -= flank_weight * aggression * float(walled) / foes.size()
 		s += height_weight * clampf(h_sum / foes.size(), -3.0, 3.0)
 		var nd := _nearest_dist(c, foes)
 		s -= distance_weight * absi(nd - preferred_distance)

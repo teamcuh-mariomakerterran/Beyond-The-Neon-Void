@@ -341,7 +341,7 @@ func test_battles() -> void:
 				var res := await _run_battle(m, rosters[r], 100 + r * 10 + s)
 				total += 1
 				check(res["ended"], "%s roster %d seed %d ended (turns %d)" % [m, r, s, res["turns"]])
-				check(res["turns"] < CombatManager.MAX_TURNS, "%s roster %d finished before turn cap" % [m, r])
+				check(res["turns"] < CombatManager.MAX_TURNS, "%s roster %d seed %d finished before turn cap (turns %d)" % [m, r, s, res["turns"]])
 				if res["victory"]:
 					wins += 1
 				print("  %s roster %d seed %d: %s in %d turns" % [m, r, s, "WIN " if res["victory"] else "loss", res["turns"]])
