@@ -27,6 +27,9 @@ var _ap_row: HBoxContainer
 var _stats_label: Label
 var _status_label: Label
 var _cmd_bar: HBoxContainer
+## Map-supplied commands shown before END TURN (interaction anchors):
+## [{text, tip, icon?, disabled?, call: Callable}]. Set before show_unit.
+var extra_commands: Array = []
 var _inspect_panel: PanelContainer
 var _inspect_text: RichTextLabel
 var _log: RichTextLabel
@@ -236,6 +239,11 @@ func show_unit(unit: Node, commands_enabled: bool) -> void:
 		var b := _cmd("%s  %s" % [label, " ".join(cost)], tip, UIIcons.ability(a))
 		b.disabled = not unit.can_act() or not unit.can_afford(a)
 		b.pressed.connect(func() -> void: ability_pressed.emit(a))
+	for extra: Dictionary in extra_commands:
+		var xb := _cmd(str(extra["text"]), str(extra.get("tip", "")), extra.get("icon"))
+		xb.disabled = bool(extra.get("disabled", false))
+		xb.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(0.22, 0.17, 0.02, 0.95), NeonTheme.AMBER))
+		xb.pressed.connect(extra["call"])
 	var end := _cmd("END TURN", "Finish this unit's turn. Waiting without acting returns you sooner on the CT clock.", UIIcons.get_icon("cmd", "end_turn"))
 	end.add_theme_stylebox_override("normal", NeonTheme.button_box(Color(0.2, 0.03, 0.1, 0.95), NeonTheme.MAGENTA))
 	end.pressed.connect(func() -> void: end_turn_pressed.emit())

@@ -26,6 +26,7 @@ const REFS := {
 	"stock.id": "items_and_cards", "from": "items", "to": "items",
 	"loot_item_id": "items_and_cards", "terrain": "terrain",
 	"intro_cutscene": "cutscenes", "outro_cutscene": "cutscenes", "cutscene": "cutscenes",
+	"offer_quest_id": "quests", "chain_quest_id": "quests", "give_item_id": "items_and_cards", "stage_cutscene": "cutscenes",
 }
 ## Dictionary fields: key source / value source.
 const DICT_KEYS := {
@@ -35,11 +36,12 @@ const DICT_KEYS := {
 	"reward_items": "items_and_cards", "crafting_materials": "items", "materials": "items",
 	"equipment": "slots", "element_modifiers": "elements", "stat_weights": "primary_stats",
 	"base_stats": "stat_block",
+	"fetch_items": "items", "fetch_reward_items_each": "items_and_cards", "fetch_reward_items_done": "items_and_cards",
 }
 const DICT_VALUES := {"equipment": "items"}
 ## New-row templates for Array[Dictionary] fields.
 const TEMPLATES := {
-	"enemies": {"character_id": "", "cell": [0, 0], "level": 1, "ai": ""},
+	"enemies": {"character_id": "", "cell": [0, 0], "level": 1, "ai": "", "statuses": []},
 	"guests": {"character_id": "", "cell": [0, 0], "level": 1},
 	"entries": {"item_id": "", "weight": 10, "min": 1, "max": 1},
 	"objectives": {"type": "complete_mission", "target": "", "count": 1, "text": ""},
@@ -50,6 +52,7 @@ const TEMPLATES := {
 	"props": {"id": "", "cell": [0, 0], "asset": "", "loot_item_id": "", "found_text": "", "empty_text": ""},
 }
 const CHOICES := {
+	"after_talk": ["none", "shop", "quest", "chain", "fetch", "battle", "cutscene"],
 	"type": ["complete_mission", "collect_item", "talk_to", "find_loot", "flag", "defeat_character"],
 	"ai": ["", "aggressive", "cautious", "tactical", "support"],
 	"ai_behavior": ["aggressive", "cautious", "tactical", "support"],

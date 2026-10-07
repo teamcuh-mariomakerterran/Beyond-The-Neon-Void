@@ -29,6 +29,42 @@ extends GameResource
 ## The NPC only shows up once this story flag is set (empty = always).
 @export var required_flag: String = ""
 
+@export_group("Interaction stages")
+## What happens when an interaction anchor (or E in explore) hooks this NPC.
+## Runtime: src/world/npc_stages.gd. First talk: intro → gift → after_talk →
+## closing. Later talks: after_talk again, or the repeat lines once nothing
+## else is left to do.
+## First meeting (empty = the dialog graph above).
+@export var intro_lines: Array[String] = []
+## Said on later visits when nothing else is attached / left (cycles).
+@export var repeat_lines: Array[String] = []
+## Handed over once, right after the first talk.
+@export var give_item_id: String = ""
+@export var give_item_qty: int = 1
+## After the first talk: none | shop | quest | chain | fetch | battle | cutscene.
+@export var after_talk: String = "none"
+## quest: offered, then turned in here when it's done.
+@export var offer_quest_id: String = ""
+## chain: the next quest of a chain, offered once every requirement holds.
+## Requirements: "flag_name", "quest:<id>" (completed), "mission:<id>"
+## (cleared), "item:<id>" or "item:<id>:<qty>" (carried).
+@export var chain_quest_id: String = ""
+@export var chain_requires: Array[String] = []
+## Said while the chain requirements aren't met yet.
+@export var chain_locked_lines: Array[String] = []
+## fetch: items wanted {item_id: qty}. Hand some in on any visit; each return
+## pays the "each" reward, the last one pays the "done" reward.
+@export var fetch_items: Dictionary = {}
+@export var fetch_reward_coins_each: int = 0
+@export var fetch_reward_items_each: Dictionary = {}
+@export var fetch_reward_coins_done: int = 0
+@export var fetch_reward_chips_done: int = 0
+@export var fetch_reward_items_done: Dictionary = {}
+## cutscene: played after the talk (res://data/cutscenes/….json).
+@export var stage_cutscene: String = ""
+## Last words before the box closes (and before a fight / cutscene starts).
+@export var closing_lines: Array[String] = []
+
 
 func is_present() -> bool:
 	return required_flag == "" or GameManager.check_story_flag(required_flag)

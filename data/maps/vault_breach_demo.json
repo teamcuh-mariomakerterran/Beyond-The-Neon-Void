@@ -1,0 +1,2048 @@
+{
+	"format": 2,
+	"id": "vault_breach_demo",
+	"name": "Supply Works Vault",
+	"kind": "encounter",
+	"width": 16,
+	"depth": 14,
+	"tile_width": 128,
+	"tile_height": 64,
+	"height_step": 32,
+	"tiles": {
+		"0,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"0,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"1,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,3": [
+			[
+				0,
+				"terrain:concrete"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"2,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,10": [
+			[
+				0,
+				"terrain:concrete"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"2,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"2,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"3,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,6": [
+			[
+				0,
+				"terrain:concrete"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"4,7": [
+			[
+				0,
+				"terrain:concrete"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"4,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"4,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"5,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,4": [
+			[
+				0,
+				"terrain:concrete"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"6,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,9": [
+			[
+				0,
+				"terrain:concrete"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"6,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"6,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"7,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"7,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"7,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,1": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,2": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,3": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,4": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,5": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,6": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,7": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,8": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,9": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,10": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,11": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,12": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"8,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"9,0": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"9,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"9,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"9,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"9,13": [
+			[
+				0,
+				"terrain:concrete"
+			]
+		],
+		"10,0": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"10,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"10,13": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"11,0": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"11,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"11,13": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"12,0": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"12,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"12,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"12,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"12,13": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"13,0": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"13,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"13,13": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"14,0": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"14,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"14,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:crate"
+			]
+		],
+		"14,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"14,13": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"15,0": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		],
+		"15,1": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,2": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,3": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,4": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,5": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,6": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,7": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,8": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,9": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,10": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,11": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,12": [
+			[
+				0,
+				"terrain:metal_grate"
+			]
+		],
+		"15,13": [
+			[
+				0,
+				"terrain:metal_grate"
+			],
+			[
+				1,
+				"terrain:metal_grate"
+			],
+			[
+				2,
+				"terrain:metal_grate"
+			]
+		]
+	},
+	"details": [],
+	"particles": {},
+	"objects": [],
+	"spawns": {
+		"player": [
+			[
+				1,
+				5
+			],
+			[
+				1,
+				7
+			],
+			[
+				2,
+				6
+			],
+			[
+				0,
+				8
+			],
+			[
+				2,
+				8
+			]
+		],
+		"enemy": []
+	},
+	"gameplay": {
+		"9,1": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,2": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,3": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,4": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,5": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,6": {
+			"walkable": false,
+			"cover": 2,
+			"group": "vault_door"
+		},
+		"9,7": {
+			"walkable": false,
+			"cover": 2,
+			"group": "vault_door"
+		},
+		"9,8": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,9": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,10": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,11": {
+			"walkable": false,
+			"cover": 2
+		},
+		"9,12": {
+			"walkable": false,
+			"cover": 2
+		},
+		"10,0": {
+			"walkable": false,
+			"cover": 2
+		},
+		"10,13": {
+			"walkable": false,
+			"cover": 2
+		},
+		"11,0": {
+			"walkable": false,
+			"cover": 2
+		},
+		"11,13": {
+			"walkable": false,
+			"cover": 2
+		},
+		"12,0": {
+			"walkable": false,
+			"cover": 2
+		},
+		"12,13": {
+			"walkable": false,
+			"cover": 2
+		},
+		"13,0": {
+			"walkable": false,
+			"cover": 2
+		},
+		"13,13": {
+			"walkable": false,
+			"cover": 2
+		},
+		"14,0": {
+			"walkable": false,
+			"cover": 2
+		},
+		"14,13": {
+			"walkable": false,
+			"cover": 2
+		},
+		"15,0": {
+			"walkable": false,
+			"cover": 2
+		},
+		"15,13": {
+			"walkable": false,
+			"cover": 2
+		},
+		"4,6": {
+			"walkable": false,
+			"cover": 1
+		},
+		"4,7": {
+			"walkable": false,
+			"cover": 1
+		},
+		"6,4": {
+			"walkable": false,
+			"cover": 1
+		},
+		"6,9": {
+			"walkable": false,
+			"cover": 1
+		},
+		"2,3": {
+			"walkable": false,
+			"cover": 1
+		},
+		"2,10": {
+			"walkable": false,
+			"cover": 1
+		},
+		"7,2": {
+			"walkable": false,
+			"cover": 2
+		},
+		"7,11": {
+			"walkable": false,
+			"cover": 2
+		},
+		"5,6": {
+			"blocks_los": true
+		},
+		"12,4": {
+			"walkable": false,
+			"cover": 1
+		},
+		"12,9": {
+			"walkable": false,
+			"cover": 1
+		},
+		"14,6": {
+			"walkable": false,
+			"cover": 1
+		},
+		"14,7": {
+			"walkable": false,
+			"cover": 1
+		}
+	},
+	"anchors": [
+		{
+			"id": "anc_vault_breach_demo_1",
+			"cell": [
+				8,
+				9
+			],
+			"kind": "terminal",
+			"label": "Shutter Terminal",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": false,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [
+				{
+					"do": "open",
+					"arg": "vault_door"
+				},
+				{
+					"do": "news",
+					"arg": "Supply Works vault shutter opened without authorisation."
+				}
+			],
+			"fail_actions": []
+		},
+		{
+			"id": "anc_vault_breach_demo_2",
+			"cell": [
+				3,
+				1
+			],
+			"kind": "switch",
+			"label": "Core Relay",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": false,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "core",
+			"step": 1,
+			"actions": [],
+			"fail_actions": [
+				{
+					"do": "damage",
+					"arg": "10%"
+				},
+				{
+					"do": "toast",
+					"arg": "FEEDBACK SURGE"
+				}
+			]
+		},
+		{
+			"id": "anc_vault_breach_demo_3",
+			"cell": [
+				5,
+				12
+			],
+			"kind": "switch",
+			"label": "Core Relay",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": false,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "core",
+			"step": 2,
+			"actions": [],
+			"fail_actions": [
+				{
+					"do": "damage",
+					"arg": "10%"
+				},
+				{
+					"do": "toast",
+					"arg": "FEEDBACK SURGE"
+				}
+			]
+		},
+		{
+			"id": "anc_vault_breach_demo_4",
+			"cell": [
+				8,
+				1
+			],
+			"kind": "switch",
+			"label": "Core Relay",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": false,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "core",
+			"step": 3,
+			"actions": [
+				{
+					"do": "unshield",
+					"arg": "foreman_grisk"
+				},
+				{
+					"do": "cue",
+					"arg": "shield.down"
+				}
+			],
+			"fail_actions": [
+				{
+					"do": "damage",
+					"arg": "10%"
+				},
+				{
+					"do": "toast",
+					"arg": "FEEDBACK SURGE"
+				}
+			]
+		},
+		{
+			"id": "anc_vault_breach_demo_5",
+			"cell": [
+				1,
+				6
+			],
+			"kind": "device",
+			"label": "Smoke Generator",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": true,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [
+				{
+					"do": "reveal",
+					"arg": ""
+				}
+			],
+			"fail_actions": []
+		},
+		{
+			"id": "anc_vault_breach_demo_6",
+			"cell": [
+				6,
+				7
+			],
+			"kind": "trap",
+			"label": "Tripwire",
+			"hidden": true,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": true,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [],
+			"fail_actions": [],
+			"trap": {
+				"damage": 30,
+				"status": "shocked",
+				"hostile": "player",
+				"disarm": 0.75
+			}
+		},
+		{
+			"id": "anc_vault_breach_demo_7",
+			"cell": [
+				1,
+				12
+			],
+			"kind": "loot",
+			"label": "Loose Floor Panel",
+			"hidden": true,
+			"scope": "both",
+			"ap": 1,
+			"reach": 0,
+			"once": true,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [
+				{
+					"do": "give",
+					"arg": "con_synth_stew:2"
+				},
+				{
+					"do": "coins",
+					"arg": "150"
+				}
+			],
+			"fail_actions": []
+		},
+		{
+			"id": "anc_vault_breach_demo_8",
+			"cell": [
+				0,
+				1
+			],
+			"kind": "medstation",
+			"label": "Med Station",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": true,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [
+				{
+					"do": "heal",
+					"arg": "40%"
+				}
+			],
+			"fail_actions": []
+		},
+		{
+			"id": "anc_vault_breach_demo_9",
+			"cell": [
+				15,
+				6
+			],
+			"kind": "intel",
+			"label": "Vault Cache",
+			"hidden": false,
+			"scope": "both",
+			"ap": 1,
+			"reach": 1,
+			"once": true,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [
+				{
+					"do": "chips",
+					"arg": "2"
+				},
+				{
+					"do": "flag",
+					"arg": "vault_cache_taken"
+				}
+			],
+			"fail_actions": []
+		}
+	],
+	"post": "neon_noir"
+}

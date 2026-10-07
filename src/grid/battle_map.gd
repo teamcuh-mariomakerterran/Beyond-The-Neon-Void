@@ -31,6 +31,10 @@ var hovered_cell: Vector2i = Vector2i(-1, -1)
 var _valid_cells: Array[Vector2i] = []
 var _busy: bool = false
 var _show_threat: bool = false
+## Format-2 maps: the painted world and its interaction anchors.
+var world_map: WorldMap
+var ix: Interactions
+var _anchor_marks: AnchorMarks
 
 
 func _ready() -> void:
@@ -131,6 +135,7 @@ func _build_grid() -> void:
 		# Format 2 (World Painter): the renderer draws the stacked tiles, details,
 		# objects and particles; the battle grid is the top of every column.
 		var wm := WorldMap.from_dict(map_data)
+		world_map = wm
 		grid.load_dict(wm.to_grid().to_dict(), ContentDB.terrain)
 		var renderer := WorldRenderer.new()
 		renderer.world = wm
@@ -154,6 +159,18 @@ func _build_grid() -> void:
 	highlights.tiles = tiles
 	for prop: Dictionary in map_data.get("props", []):
 		_spawn_prop(prop)
+	if world_map and not world_map.anchors.is_empty():
+		ix = Interactions.new().setup(world_map, grid, self, "battle")
+		_anchor_marks = AnchorMarks.new()
+		_anchor_marks.ix = ix
+		_anchor_marks.to_pos = func(c: Vector2i) -> Vector2: return grid.grid_to_world(c)
+		_anchor_marks.actor_cell = func() -> Vector2i:
+			var au := CombatManager.active_unit
+			return au.cell if au and is_instance_valid(au) and au.is_player_controlled else Vector2i(-999, -999)
+		_anchor_marks.lift = grid.tile_height * 1.1
+		_anchor_marks.size = clampf(grid.tile_width / 64.0, 1.0, 3.0)
+		_anchor_marks.z_index = 3000
+		world.add_child(_anchor_marks)
 
 
 func _spawn_prop(prop: Dictionary) -> void:
@@ -189,7 +206,11 @@ func _spawn_units() -> Array[Node]:
 	for e: Dictionary in mission.enemies:
 		var data := ContentDB.get_character(str(e["character_id"]))
 		if data:
-			out.append(_make_unit(data, Unit.Team.ENEMY, Vector2i(e["cell"][0], e["cell"][1]), int(e.get("level", 1))))
+			var eu := _make_unit(data, Unit.Team.ENEMY, Vector2i(e["cell"][0], e["cell"][1]), int(e.get("level", 1)))
+			# Painted extras: a boss that starts shielded, cloaked ambushers…
+			for sid: Variant in e.get("statuses", []):
+				eu.apply_status(str(sid))
+			out.append(eu)
 	for g: Dictionary in mission.guests:
 		var gdata := ContentDB.get_character(str(g["character_id"]))
 		if gdata:
@@ -274,6 +295,7 @@ func _on_player_input_needed(unit: Node) -> void:
 
 func _refresh_commands() -> void:
 	var u := CombatManager.active_unit
+	hud.extra_commands = _interact_commands(u) if CombatManager.is_player_turn() else []
 	hud.show_unit(u, CombatManager.is_player_turn())
 	hud.update_turn_order(CombatManager.turn_forecast(10))
 
@@ -426,6 +448,14 @@ func _inspect_text(cell: Vector2i) -> String:
 				lines.append("[color=#39ff9f]%s ATTACK[/color]" % angle.to_upper())
 	elif grid.get_corpse(cell):
 		lines.append("[color=#b14dff]Fallen: %s[/color]" % grid.get_corpse(cell).display_name())
+	if ix:
+		for a: Dictionary in world_map.anchors_at(cell):
+			if ix.is_visible(a):
+				var info := Interactions.kind_info(str(a.get("kind", "")))
+				var why := ix.blocker(a, CombatManager.active_unit)
+				lines.append("[color=#ffd23f]%s %s[/color]%s" % [info["glyph"], Interactions.title(a).to_upper(), ("  [color=#8f84ad](%s)[/color]" % why) if why != "" else ("  %dAP — stand next to it" % ix.ap_cost(a))])
+				if str(a.get("kind", "")) == "trap":
+					lines.append("[color=#8f84ad]Click: disarm   Shift+click: rewire it against them[/color]")
 	return "\n".join(lines)
 
 
@@ -450,10 +480,12 @@ func _on_click(cell: Vector2i) -> void:
 				_after_action()
 		Mode.NONE:
 			var occ := grid.get_occupant(cell)
-			if occ == u and u.can_move():
+			if occ == u and u.can_move() and (ix == null or ix.usable_from(u.cell, u).filter(func(a: Dictionary) -> bool: return Interactions.cell_of(a) == cell).is_empty()):
 				_enter_move_mode()
 			else:
-				_try_search(u, cell)
+				var handled: bool = await _try_anchor(u, cell)
+				if not handled:
+					_try_search(u, cell)
 
 
 ## Hidden loot: click a prop next to the active unit to search it (free action).
@@ -465,6 +497,142 @@ func _try_search(u: Node, cell: Vector2i) -> void:
 				return
 			hud.show_notification(t.interact())
 			return
+
+
+# --- Interaction anchors ---------------------------------------------------------
+
+## INTERACT buttons for anchors the active unit can reach (up to three).
+func _interact_commands(u: Node) -> Array:
+	var out: Array = []
+	if ix == null or u == null:
+		return out
+	for a: Dictionary in ix.usable_from(u.cell, null).slice(0, 3):
+		var info := Interactions.kind_info(str(a.get("kind", "")))
+		var cost := ix.ap_cost(a)
+		var why := ix.blocker(a, u)
+		var what := "%s %s %s" % [info["glyph"], info["verb"], Interactions.title(a).to_upper()] if ix.is_visible(a) else "✦ SEARCH HERE"
+		out.append({"text": "%s%s" % [what, ("  %dAP" % cost) if cost > 0 else ""],
+			"tip": why if why != "" else "Use the %s next to you." % str(info["name"]).to_lower(),
+			"disabled": why != "" or _busy,
+			"call": func() -> void: _use_anchor(u, a)})
+	return out
+
+
+## Click on an anchor cell next to the active unit. Returns true if handled.
+func _try_anchor(u: Node, cell: Vector2i) -> bool:
+	if ix == null:
+		return false
+	for a: Dictionary in world_map.anchors_at(cell):
+		if not ix.is_visible(a):
+			continue
+		if not ix.in_reach(a, u.cell):
+			hud.show_notification("Get next to the %s to use it." % Interactions.title(a).to_lower())
+			return true
+		await _use_anchor(u, a)
+		return true
+	return false
+
+
+func _use_anchor(u: Node, a: Dictionary, verb: String = "") -> void:
+	if _busy or u != CombatManager.active_unit:
+		return
+	_busy = true
+	highlights.clear_highlights()
+	if Interactions.cell_of(a) != u.cell:
+		u.face_towards(Interactions.cell_of(a))
+	u.play_animation("cast")
+	if str(a.get("kind", "")) == "trap" and verb == "":
+		verb = "rewire" if Input.is_key_pressed(KEY_SHIFT) else "disarm"
+	var res := ix.interact(a, u, verb)
+	hud.add_log("[color=#ffd23f]%s %s %s[/color]" % [u.display_name(), "uses" if res["ok"] else "fails at", Interactions.title(a)])
+	if CombatManager.animate:
+		await get_tree().create_timer(0.35).timeout
+	_busy = false
+	CombatManager._check_battle_end()
+	_after_action()
+
+
+## CombatManager: a unit finished walking `path` (traps along the way go off).
+func on_unit_path(unit: Node, path: Array) -> void:
+	if ix == null:
+		return
+	for c: Vector2i in path:
+		if not unit.is_alive():
+			return
+		if not ix.on_enter(c, unit).is_empty():
+			_float(unit, "TRAP!", Color(2.0, 0.6, 0.2), true, 0.6)
+			if CombatManager.animate:
+				await get_tree().create_timer(0.25).timeout
+
+
+func ix_toast(text: String, color: Color) -> void:
+	hud.show_notification(text)
+	hud.add_log("[color=#%s]%s[/color]" % [color.to_html(false), text])
+
+
+func ix_units() -> Array:
+	return CombatManager.get_units().filter(func(x: Node) -> bool: return is_instance_valid(x) and x.is_alive())
+
+
+func ix_group_changed(group: String, open: bool) -> void:
+	var cells: Array = world_map.group_cells(group)
+	EventBus.grid_changed.emit(cells)
+	if world_renderer:
+		for o: Dictionary in world_map.objects:
+			if str(o.get("mask_group", "")) == group:
+				var node := world_renderer.object_node(str(o["id"]))
+				if node:
+					create_tween().tween_property(node, "modulate:a", 0.0 if open else 1.0, 0.35)
+	_refresh_commands_if_idle()
+
+
+func ix_anchor_changed(_a: Dictionary) -> void:
+	if _anchor_marks:
+		_anchor_marks.queue_redraw()
+
+
+func ix_spawn(character_id: String, cell: Vector2i, team: String) -> void:
+	var lvl := 1
+	for e: Dictionary in mission.enemies:
+		lvl = maxi(lvl, int(e.get("level", 1)))
+	var u := CombatManager.spawn_unit(character_id, cell, Unit.Team.PLAYER if team == "player" else Unit.Team.ENEMY, lvl, team != "player")
+	if u:
+		_float(u, "REINFORCEMENTS", Color(2.0, 0.5, 0.6), true, 0.5)
+
+
+func ix_teleport_local(actor: Node, cell: Vector2i) -> void:
+	if actor and grid.in_bounds(cell) and grid.get_occupant(cell) == null and grid.is_walkable(cell):
+		actor.force_move(cell, CombatManager.animate)
+
+
+func ix_npc(npc_id: String) -> void:
+	var npc := ContentDB.get_npc(npc_id)
+	if npc:
+		await NpcStages.run(npc, self)
+
+
+## Explore-style actions that also make sense mid-fight.
+func run_trigger(what: String, arg: String) -> void:
+	match what:
+		"dialog":
+			var npc := ContentDB.get_npc(arg)
+			if npc:
+				UIManager.get_dialogue_box().play_npc(npc)
+			else:
+				UIManager.get_dialogue_box().say("", arg)
+		"cutscene":
+			await play_cutscene(arg, {"PLACE": str(map_data.get("name", ""))})
+		"music":
+			var stream := ForgeStore.load_audio(arg)
+			if stream and AudioManager.has_method("play_music"):
+				AudioManager.call("play_music", stream)
+		_:
+			hud.add_log("[color=#8f84ad](%s %s only works on explore maps)[/color]" % [what, arg])
+
+
+func _refresh_commands_if_idle() -> void:
+	if CombatManager.is_player_turn() and not _busy:
+		_refresh_commands()
 
 
 func _after_action() -> void:

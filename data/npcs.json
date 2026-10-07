@@ -497,5 +497,80 @@
 		"quest_ids": [
 			"q_benno_grisks_stash"
 		]
+	},
+	{
+		"id": "ma_rivet",
+		"display_name": "Ma Rivet",
+		"description": "Runs a scrap stall out of a shopping cart. Knows every wire in the block and who cut it.",
+		"portrait_path": "",
+		"sprite_path": "",
+		"location_id": "neon_block_demo",
+		"is_vendor": false,
+		"vendor_id": "",
+		"quest_ids": [],
+		"required_flag": "",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "Hold it, chrome. You're standing on my inventory.",
+				"next": "ask"
+			},
+			{
+				"id": "ask",
+				"text": "...You've got hands. Good. My knees don't do stairs anymore.",
+				"choices": [
+					{
+						"text": "What do you need?",
+						"next": "need"
+					},
+					{
+						"text": "Inventory?",
+						"next": "inv"
+					}
+				]
+			},
+			{
+				"id": "inv",
+				"text": "Everything in this gutter is inventory if you squint. Even you.",
+				"next": "need"
+			},
+			{
+				"id": "need",
+				"text": "Scrap wire and dead batteries. Three and two. Storm drains are full of both. Here — gin for the road."
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Ma Rivet, to a rat: 'You again. Rent's due, Gerald.'"
+			},
+			{
+				"text": "Ma Rivet, sorting wire: 'Red to red, blue to blue, Doctrine cable to the gutter where it belongs.'"
+			},
+			{
+				"text": "Ma Rivet, under her breath: 'Core relays in the Works hum in a three-four time. Always did.'"
+			}
+		],
+		"intro_lines": [],
+		"repeat_lines": [
+			"Wire, batteries, the usual. Nothing's free in the Void.",
+			"That shutter in the Supply Works? Hums on the same circuit as the core relays. Order matters, kid."
+		],
+		"give_item_id": "con_neon_gin",
+		"give_item_qty": 1,
+		"after_talk": "fetch",
+		"fetch_items": {
+			"mat_scrap_wire": 3,
+			"mat_dead_battery": 2
+		},
+		"fetch_reward_coins_each": 40,
+		"fetch_reward_items_each": {},
+		"fetch_reward_coins_done": 120,
+		"fetch_reward_chips_done": 2,
+		"fetch_reward_items_done": {
+			"acc_jump_boots": 1
+		},
+		"closing_lines": [
+			"Now scram. You're scaring off the rats, and the rats are customers."
+		]
 	}
 ]

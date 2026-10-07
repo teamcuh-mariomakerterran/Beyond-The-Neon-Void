@@ -94,6 +94,7 @@ var object_source: String = "structures"
 var mission_id: String = ""
 var enemy_id: String = "doctrine_warden"
 var enemy_level: int = 2
+var enemy_status: String = ""
 
 var selected: Dictionary = {}
 var sel_region: Dictionary = {}
@@ -1357,6 +1358,8 @@ func _palette_gameplay() -> void:
 		play_tool = Play.ENEMY))
 	_palette.add_child(NeonTheme.label("Level", 12, NeonTheme.TEXT_DIM))
 	_palette.add_child(ForgeForm._spin(enemy_level, true, func(n: float) -> void: enemy_level = int(n)))
+	_palette.add_child(NeonTheme.label("Starts with (e.g. shielded boss, cloaked ambusher)", 12, NeonTheme.TEXT_DIM))
+	_palette.add_child(ForgeForm._option([""] + ContentDB.get_ids("status_effects"), enemy_status, func(v: String) -> void: enemy_status = v))
 	_palette.add_child(_section("TACTICS VIEW (◇ in the top bar)"))
 	var mj := HBoxContainer.new()
 	mj.add_child(NeonTheme.label("Move", 12, NeonTheme.TEXT_DIM))
@@ -1431,6 +1434,20 @@ func _palette_masks() -> void:
 				mask_tool = Mask.ANCHOR
 				_build_palette())
 			_palette.add_child(ab)
+	var fp := Button.new()
+	fp.text = "FOOTPRINTS → IMPASSABLE"
+	fp.tooltip_text = "Mark every cell under a structure / location (and the selected object) impassable, so explore maps and battles agree with the art."
+	fp.pressed.connect(func() -> void:
+		_push_undo()
+		var n := 0
+		for o: Dictionary in world.objects:
+			if str(o.get("kind", "")) in ["structure", "location"] or o == selected:
+				for c: Vector2i in WorldMap.footprint_cells(o):
+					if world.in_bounds(c):
+						apply_mask(c, Mask.IMPASSABLE, false)
+						n += 1
+		status.emit("%d cells marked impassable." % n, NeonTheme.AMBER))
+	_palette.add_child(fp)
 	var t := NeonTheme.label("Masks override the tile's terrain rules in battle and block walking on explore maps. Cover is directional: it only counts against shots coming across it.", 12, NeonTheme.TEXT_DIM)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_palette.add_child(t)
@@ -2676,7 +2693,10 @@ func _apply_gameplay(c: Vector2i, erase: bool) -> void:
 			if ei >= 0:
 				m.enemies.remove_at(ei)
 			if not erase:
-				m.enemies.append({"character_id": enemy_id, "cell": [c.x, c.y], "level": enemy_level})
+				var ne := {"character_id": enemy_id, "cell": [c.x, c.y], "level": enemy_level}
+				if enemy_status != "":
+					ne["statuses"] = [enemy_status]
+				m.enemies.append(ne)
 			dirty_missions = true
 		Play.BLOCK:
 			if erase: g.erase("walkable")
@@ -3034,9 +3054,9 @@ func _sprite_inspector(o: Dictionary, detail: bool) -> void:
 	var keys: Array = ["asset", "z", "scale", "flip"]
 	if not detail:
 		o["footprint"] = WorldMap.footprint(o)
-	keys += ["pos", "rot", "tint"] if detail else ["cell", "footprint", "offset", "layer", "kind", "loot_item_id", "found_text", "empty_text", "dialog_npc", "character_id"]
+	keys += ["pos", "rot", "tint"] if detail else ["cell", "footprint", "offset", "layer", "kind", "loot_item_id", "found_text", "empty_text", "dialog_npc", "character_id", "mask_group"]
 	for k: String in keys:
-		if o.has(k) or k in ["character_id"]:
+		if o.has(k) or k in ["character_id", "mask_group"]:
 			fields[k] = o.get(k, "")
 	var form := ForgeForm.new()
 	form.build_dict(fields, "details" if detail else "world_object", true)

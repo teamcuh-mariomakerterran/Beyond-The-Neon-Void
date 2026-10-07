@@ -111,5 +111,80 @@
 		"story_flags_on_win": [
 			"m02_done"
 		]
+	},
+	{
+		"id": "demo_vault_breach",
+		"display_name": "Vault Breach (tactics demo)",
+		"chapter": 1,
+		"map_id": "vault_breach_demo",
+		"music_id": "battle_supply_works",
+		"briefing": "The Foreman is hiding behind a core shield in the vault. Hack the shutter terminal (yellow), throw the three Core Relays in order to drop his shield, and light the smoke generator — something cloaked is waiting on the approach. Full cover blocks shots head-on; flank it.",
+		"enemies": [
+			{
+				"character_id": "foreman_grisk",
+				"cell": [
+					13,
+					7
+				],
+				"level": 3,
+				"statuses": [
+					"shielded"
+				]
+			},
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					11,
+					5
+				],
+				"level": 2
+			},
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					11,
+					8
+				],
+				"level": 2
+			},
+			{
+				"character_id": "factory_marksman",
+				"cell": [
+					13,
+					2
+				],
+				"level": 2
+			},
+			{
+				"character_id": "choir_enforcer",
+				"cell": [
+					6,
+					2
+				],
+				"level": 2,
+				"statuses": [
+					"cloaked"
+				]
+			},
+			{
+				"character_id": "choir_enforcer",
+				"cell": [
+					6,
+					11
+				],
+				"level": 2,
+				"statuses": [
+					"cloaked"
+				]
+			}
+		],
+		"win_condition": "defeat_all",
+		"soul_coin_reward": 300,
+		"xp_reward": 160,
+		"loot_table_id": "loot_supply_works",
+		"microchip_reward": 2,
+		"story_flags_on_win": [
+			"demo_vault_breach_done"
+		]
 	}
 ]

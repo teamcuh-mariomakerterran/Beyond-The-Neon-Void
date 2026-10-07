@@ -252,7 +252,10 @@ func request_move(unit: Node, cell: Vector2i) -> bool:
 	var prev := state
 	state = State.EXECUTING
 	await unit.move_along(path, animate)
-	await Passives.after_move(self, unit)
+	if map_node and map_node.has_method("on_unit_path"):
+		await map_node.on_unit_path(unit, path)
+	if unit.is_alive():
+		await Passives.after_move(self, unit)
 	if state == State.EXECUTING:
 		state = prev
 	_check_battle_end()

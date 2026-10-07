@@ -30,6 +30,8 @@ func run(p_tree: SceneTree) -> int:
 	test_ui_icons()
 	test_cover()
 	test_masks_and_anchors()
+	test_npc_stages()
+	test_vault_demo()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1277,6 +1279,74 @@ func test_masks_and_anchors() -> void:
 	check(ix2.is_open("vault") and ix2.grid.is_walkable(Vector2i(4, 4)) and ix2.is_used(loot), "interaction state carries over")
 	for u: Node in [hero, boss, sneak]:
 		u.queue_free()
+
+
+func test_npc_stages() -> void:
+	GameManager.new_game()
+	var ma := ContentDB.get_npc("ma_rivet")
+	check(ma != null and NpcStages.has_stages(ma) and ma.after_talk == "fetch", "Ma Rivet: NPC with interaction stages loads")
+	var coins0 := GameManager.soul_coins
+	var r := NpcStages.fetch_turn_in(ma)
+	check(r["delivered"].is_empty() and not r["done"] and str(r["lines"][0]).begins_with("Bring me"), "fetch: nothing carried, she says what she wants")
+	GameManager.give_item("mat_scrap_wire", 2)
+	r = NpcStages.fetch_turn_in(ma)
+	check(int(r["delivered"].get("mat_scrap_wire", 0)) == 2 and GameManager.soul_coins == coins0 + 40 and GameManager.get_stack_count("mat_scrap_wire") == 0, "fetch: partial return pays the per-return reward")
+	check(NpcStages.fetch_left(ma).size() == 2, "fetch: still wants 1 wire + 2 batteries (%s)" % str(NpcStages.fetch_left(ma)))
+	GameManager.give_item("mat_scrap_wire", 5)
+	GameManager.give_item("mat_dead_battery", 2)
+	var chips0 := GameManager.microchips
+	r = NpcStages.fetch_turn_in(ma)
+	check(r["done"] and GameManager.get_stack_count("mat_scrap_wire") == 4 and GameManager.microchips == chips0 + 2 and GameManager.get_stack_count("acc_jump_boots") + GameManager.item_instances.size() > 0, "fetch: completing pays the final reward, keeps the extras")
+	check(NpcStages.fetch_turn_in(ma)["done"] and NpcStages.fetch_turn_in(ma)["delivered"].is_empty(), "fetch: finished stays finished")
+	# Chains gate on flags / quests / missions / items.
+	var n := NPCResource.new()
+	n.id = "t_chain"
+	n.after_talk = "chain"
+	n.chain_requires = ["t_chain_flag", "item:mat_neon_ink:2"]
+	check(NpcStages.chain_missing(n).size() == 2, "chain: both requirements missing")
+	GameManager.set_story_flag("t_chain_flag")
+	GameManager.give_item("mat_neon_ink", 2)
+	check(NpcStages.chain_ready(n), "chain: unlocked once the flag + items are in hand")
+	var qid: String = ContentDB.get_ids("quests")[0]
+	var lines := NpcStages.quest_step(qid)
+	check(QuestManager.get_state(qid) in [QuestManager.ACTIVE, QuestManager.LOCKED] and lines.size() == 1, "quest stage offers the quest (%s)" % QuestManager.get_state(qid))
+	GameManager.new_game()
+
+
+func test_vault_demo() -> void:
+	var m := ContentDB.get_mission("demo_vault_breach")
+	var d := ContentDB.get_map("vault_breach_demo")
+	check(m != null and not d.is_empty(), "Vault Breach demo mission + map load")
+	if m == null or d.is_empty():
+		return
+	var w := WorldMap.from_dict(d)
+	var g := w.to_grid()
+	check(not g.is_walkable(Vector2i(9, 6)) and g.get_cell(Vector2i(9, 6)).cover == 2 and w.group_cells("vault_door").size() == 2, "vault shutter starts sealed")
+	var boss_entry: Dictionary = m.enemies[0]
+	check(str(boss_entry["character_id"]) == "foreman_grisk" and (boss_entry.get("statuses", []) as Array).has("shielded"), "the Foreman starts shielded")
+	var host := IxHost.new()
+	var ix := Interactions.new().setup(w, g, host, "battle")
+	var hero := _pu(g, Unit.Team.PLAYER, Vector2i(8, 8))
+	var boss := _pu(g, Unit.Team.ENEMY, Vector2i(13, 7))
+	boss.data.id = "foreman_grisk"
+	boss.apply_status("shielded")
+	host.units = [hero, boss]
+	hero.current_ap = 99
+	var term: Dictionary = ix.usable_from(hero.cell, hero)[0]
+	ix.interact(term, hero)
+	check(g.is_walkable(Vector2i(9, 6)) and g.is_walkable(Vector2i(9, 7)), "terminal opens the shutter")
+	var relays := w.anchors.filter(func(a: Dictionary) -> bool: return str(a.get("sequence", "")) == "core")
+	relays.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a["step"]) < int(b["step"]))
+	var hp0 := hero.current_hp
+	ix.interact(relays[2], hero)
+	check(hero.current_hp < hp0 and boss.has_status("shielded"), "wrong relay first: feedback shock, shield holds")
+	for a: Dictionary in relays:
+		ix.interact(a, hero)
+	check(not boss.has_status("shielded"), "relays in order drop the Foreman's shield")
+	var block := WorldMap.from_dict(ContentDB.get_map("neon_block_demo"))
+	check(block.anchors.size() >= 3 and str(block.anchor_by_id("anc_neon_block_demo_1").get("npc_id", "")) == "ma_rivet", "Neon Block demo: Ma Rivet + vault entrance anchors")
+	hero.queue_free()
+	boss.queue_free()
 
 
 func test_ui_icons() -> void:

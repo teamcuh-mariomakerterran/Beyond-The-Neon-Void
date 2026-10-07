@@ -56,3 +56,10 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
 - ✅ Lattice format guide adopted (holds = ticks, dirs-rows, unit packs, overlays)
 - ⬜ Mega-tile ground (on hold, by request)
 
+## Built 2026-10-07
+- ✅ Tactical masks: directional cover, impassable / sight / door-group brushes, footprints → impassable
+- ✅ Interaction anchors in battle + explore (terminals, switch sequences, traps, loot, doors, smoke devices, NPC hooks)
+- ✅ Shielded / cloaked statuses; AI flanks walls
+- ✅ NPC interaction stages (intro, gift, shop, quest, chain, fetch, fight, cutscene, repeat, closing)
+- ✅ Vault Breach demo + Ma Rivet fetch quest on the Neon Block
+

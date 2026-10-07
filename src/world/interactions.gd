@@ -260,6 +260,8 @@ func interact(a: Dictionary, actor: Node = null, verb: String = "") -> Dictionar
 			_cue("sequence.step", actor)
 	_mark_used(a)
 	run_actions(a.get("actions", []), actor, a)
+	if str(a.get("kind", "")) == "npc" and str(a.get("npc_id", "")) != "" and host and host.has_method("ix_npc"):
+		host.ix_npc(str(a["npc_id"]))  # the NPC's own stages (NPCS tab)
 	_changed(a)
 	return {"ok": true, "text": title(a)}
 

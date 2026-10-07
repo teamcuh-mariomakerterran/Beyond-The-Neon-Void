@@ -29,6 +29,9 @@ var _post: HD2DPost
 ## Region ids the player currently stands in (enter / exit triggers).
 var _inside: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
+## Interaction anchors (terminals, doors, hidden loot, NPC hooks…). State
+## carries between visits in GameManager.story_flags["ixstate:<map>"].
+var ix: Interactions
 
 
 func _ready() -> void:
@@ -64,6 +67,19 @@ func _ready() -> void:
 	if _post:
 		add_child(_post)
 	_build_labels()
+	ix = Interactions.new().setup(world, grid, self, "explore")
+	var saved: Variant = GameManager.story_flags.get(_ix_key())
+	if saved is Dictionary:
+		ix.set_state(saved)
+	if not world.anchors.is_empty():
+		var marks := AnchorMarks.new()
+		marks.ix = ix
+		marks.to_pos = func(c: Vector2i) -> Vector2: return world.to_screen(Vector2(c), grid.get_height(c))
+		marks.actor_cell = func() -> Vector2i: return cell
+		marks.lift = world.tile_height * 1.4
+		marks.size = clampf(world.tile_width / 64.0, 1.0, 3.0)
+		marks.z_index = 3000
+		add_child(marks)
 	_place_avatar()
 	_cam.reset_smoothing()
 	if world.music != "":
@@ -224,7 +240,30 @@ func _interactable() -> Dictionary:
 	return best
 
 
+func _ix_key() -> String:
+	return "ixstate:" + world.id
+
+
+func _save_ix() -> void:
+	GameManager.story_flags[_ix_key()] = ix.get_state()
+
+
+## Anchor the player can use from here (standing on it beats next to it).
+func _anchor_here() -> Dictionary:
+	if ix == null:
+		return {}
+	var list := ix.usable_from(cell)
+	return list[0] if not list.is_empty() else {}
+
+
 func _interact() -> void:
+	var anc := _anchor_here()
+	if not anc.is_empty() and (Interactions.cell_of(anc) == cell or _interactable().is_empty()):
+		_busy = true
+		ix.interact(anc, null)
+		_save_ix()
+		_busy = false
+		return
 	var o := _interactable()
 	if o.is_empty():
 		for r: Dictionary in world.regions_at(cell):
@@ -233,9 +272,7 @@ func _interact() -> void:
 	if o.get("location") is Dictionary:
 		_enter(o)
 	elif str(o.get("dialog_npc", "")) != "":
-		var npc := ContentDB.get_npc(str(o["dialog_npc"]))
-		if npc:
-			UIManager.get_dialogue_box().play_npc(npc)
+		await ix_npc(str(o["dialog_npc"]))
 	else:
 		var flag := "looted:%s:%s" % [world.id, str(o["id"])]
 		var item := str(o.get("loot_item_id", ""))
@@ -326,6 +363,36 @@ func fire_triggers(region: Dictionary, on: String) -> void:
 		await run_trigger(str(t.get("do", "toast")), str(t.get("arg", "")))
 
 
+# --- Interaction host ------------------------------------------------------------
+
+func ix_toast(text: String, color: Color) -> void:
+	_toast_text(text, color)
+
+
+func ix_group_changed(group: String, open: bool) -> void:
+	for o: Dictionary in world.objects:
+		if str(o.get("mask_group", "")) == group:
+			var node := _renderer.object_node(str(o["id"]))
+			if node:
+				create_tween().tween_property(node, "modulate:a", 0.0 if open else 1.0, 0.35)
+	_save_ix()
+
+
+func ix_teleport_local(_actor: Node, to: Vector2i) -> void:
+	if grid.in_bounds(to) and grid.is_walkable(to):
+		cell = to
+		_place_avatar()
+		_cam.reset_smoothing()
+
+
+func ix_npc(npc_id: String) -> void:
+	var npc := ContentDB.get_npc(npc_id)
+	if npc:
+		_busy = true
+		await NpcStages.run(npc, self)
+		_busy = false
+
+
 func run_trigger(action: String, arg: String) -> void:
 	match action:
 		"toast":
@@ -399,6 +466,8 @@ func _step(dir: Vector2i) -> void:
 	await tw.finished
 	_avatar.z_index = (cell.x + cell.y) * 2 + 1
 	_moving = false
+	if ix and not ix.on_enter(cell, null).is_empty():
+		_save_ix()
 	await _update_regions()
 
 
@@ -414,7 +483,11 @@ func _process(_delta: float) -> void:
 		var sp := get_viewport().get_canvas_transform() * _avatar.position
 		_post.set_focus(sp.y / maxf(get_viewport().get_visible_rect().size.y, 1.0) - 0.04)
 	var o := _interactable()
-	if o.is_empty():
+	var anc := _anchor_here()
+	if not anc.is_empty() and (Interactions.cell_of(anc) == cell or o.is_empty()):
+		var info := Interactions.kind_info(str(anc.get("kind", "")))
+		_prompt.text = "E  ·  %s %s" % [info["verb"], Interactions.title(anc).to_upper()] if ix.is_visible(anc) else "E  ·  SEARCH"
+	elif o.is_empty():
 		_prompt.text = ""
 	elif o.get("location") is Dictionary:
 		_prompt.text = "E  ·  ENTER " + (str(o["location"].get("name", "")).to_upper() if is_known(o) else "???")
