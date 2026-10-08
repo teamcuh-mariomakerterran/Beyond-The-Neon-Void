@@ -8,6 +8,12 @@ extends Node2D
 ## Draw order follows the battle convention: column = draw_order*2, anything
 ## standing on a column (details, objects, units) = draw_order*2 + 1.
 ##
+## Big maps stream: past STREAM_MIN_CELLS columns the map is cut into
+## CHUNK×CHUNK chunks and only the ones around the camera are built (tile
+## strips, objects, details, particles, lights), nearest first, a few per frame;
+## chunks the camera leaves are freed. A one-pixel-per-column overview
+## (LodLayer) sits underneath, so a zoomed-out view never shows holes.
+##
 ## Tile art is auto-fitted: the opaque bounding box of each image is scaled to
 ## the map's tile width and its top pinned to the diamond's north point, so
 ## slightly-off tiles still snap to the world angle.
@@ -20,7 +26,7 @@ var show_objects: bool = true
 var show_details: bool = true
 var dim_above: int = 999  # layers above this are drawn faded (painter focus)
 
-var _columns: Dictionary = {}  # strip key (order, segment) -> StripView
+var _columns: Dictionary = {}  # strip key (order, chunk x, chunk y) -> StripView
 var _obj_nodes: Dictionary = {}  # id -> WorldSprite
 var _detail_nodes: Dictionary = {}
 var _particle_nodes: Dictionary = {}  # "preset|z" -> Node2D
@@ -41,6 +47,26 @@ var editor_markers: bool = false
 var _pops: Dictionary = {}
 
 const POP_TIME := 0.22
+
+# --- Streaming ---
+const CHUNK := 32
+## Maps with at least this many columns stream (smaller ones build at once).
+const STREAM_MIN_CELLS := 96 * 96
+## On for big maps (set in rebuild); force_streaming turns it on for any size.
+var streaming: bool = false
+var force_streaming: bool = false
+## Chunks built per frame (each is up to 1024 columns plus its objects).
+var chunks_per_frame: int = 2
+## Most chunks kept at once (zoomed far out the overview fills the rest).
+var max_chunks: int = 80
+## Extra ring of chunks around the view, built before they scroll in.
+var margin_chunks: int = 1
+## chunk -> {objs: [ids], dets: [ids], fx: Node2D (particles), lights: Node2D}
+var _chunks: Dictionary = {}
+var _lod: LodLayer
+## While a chunk loads, strips collect here and refresh once at the end.
+var _batch: Dictionary = {}
+var _batching: bool = false
 const LIGHT_PRESETS := {
 	"neon_pink": {"color": "#ff3fb4", "energy": 1.4, "radius": 3.0, "flicker": 0.1},
 	"neon_cyan": {"color": "#3ff6ff", "energy": 1.3, "radius": 3.0, "flicker": 0.05},
@@ -66,6 +92,11 @@ func _ready() -> void:
 	_objects_root = Node2D.new()
 	_particles_root = Node2D.new()
 	_lights_root = Node2D.new()
+	_lod = LodLayer.new()
+	_lod.renderer = self
+	_lod.z_as_relative = false
+	_lod.z_index = -4090
+	add_child(_lod)
 	for n: Node2D in [_columns_root, _details_root, _objects_root, _particles_root, _lights_root]:
 		add_child(n)
 	cables = CableNet.new()
@@ -105,6 +136,15 @@ func rebuild() -> void:
 	_obj_nodes.clear()
 	_detail_nodes.clear()
 	_particle_nodes.clear()
+	_chunks.clear()
+	streaming = force_streaming or world.tiles.size() >= STREAM_MIN_CELLS
+	_lod.visible = streaming
+	set_process(streaming)
+	if streaming:
+		_lod.rebuild()
+		rebuild_lighting()  # ambient only; lights come with their chunks
+		update_stream(8)  # what's on screen right away
+		return
 	for cell: Vector2i in world.tiles:
 		refresh_column(cell)
 	rebuild_details()
@@ -119,11 +159,21 @@ func rebuild() -> void:
 const STRIP_LEN := 32
 
 
-static func strip_key(cell: Vector2i) -> Vector2i:
-	return Vector2i(cell.x + cell.y, floori(float(cell.x) / STRIP_LEN))
+## Strips never cross a chunk, so a chunk frees exactly its own strips.
+static func strip_key(cell: Vector2i) -> Vector3i:
+	return Vector3i(cell.x + cell.y, floori(float(cell.x) / CHUNK), floori(float(cell.y) / CHUNK))
+
+
+static func chunk_of(cell: Vector2i) -> Vector2i:
+	return Vector2i(floori(float(cell.x) / CHUNK), floori(float(cell.y) / CHUNK))
 
 
 func refresh_column(cell: Vector2i) -> void:
+	if streaming:
+		if not _batching:
+			_lod.mark(cell)
+		if not _chunks.has(chunk_of(cell)):
+			return  # built when its chunk streams in
 	var key := strip_key(cell)
 	var sv: StripView = _columns.get(key)
 	if sv == null:
@@ -142,7 +192,10 @@ func refresh_column(cell: Vector2i) -> void:
 		sv.queue_free()
 		_columns.erase(key)
 		return
-	sv.refresh()
+	if _batching:
+		_batch[sv] = true
+	else:
+		sv.refresh()
 
 
 func refresh_columns(cells: Array) -> void:
@@ -207,7 +260,7 @@ func set_cutaway(focus: Vector2, order: int, z: int) -> void:
 	cutaway_focus = focus
 	cutaway_order = order
 	cutaway_z = z
-	for key: Vector2i in _columns:
+	for key: Vector3i in _columns:
 		if (key.x > old and key.x <= old + 12) or (key.x > order and key.x <= order + 12):
 			(_columns[key] as StripView).queue_redraw()
 	for n: WorldSprite in _obj_nodes.values():
@@ -448,11 +501,20 @@ func rebuild_details() -> void:
 		c.queue_free()
 	_detail_nodes.clear()
 	for d: Dictionary in world.details:
-		refresh_detail(d)
+		refresh_detail(d)  # streaming: only loaded chunks build nodes
+
+
+static func _cell_of(d: Dictionary, detail: bool) -> Vector2i:
+	var a: Array = d.get("pos" if detail else "cell", [0, 0])
+	return Vector2i(floori(float(a[0]) + 0.5), floori(float(a[1]) + 0.5))
 
 
 func refresh_detail(d: Dictionary) -> void:
 	var node: WorldSprite = _detail_nodes.get(str(d["id"]))
+	if streaming and not _chunks.has(chunk_of(_cell_of(d, true))):
+		if node:
+			remove_detail(d)
+		return
 	if node == null:
 		node = WorldSprite.new()
 		node.renderer = self
@@ -483,6 +545,10 @@ func rebuild_objects() -> void:
 
 func refresh_object(o: Dictionary) -> void:
 	var node: WorldSprite = _obj_nodes.get(str(o["id"]))
+	if streaming and not _chunks.has(chunk_of(_cell_of(o, false))):
+		if node:
+			remove_object(o)
+		return
 	if node == null:
 		node = WorldSprite.new()
 		node.renderer = self
@@ -533,7 +599,37 @@ func rebuild_particles() -> void:
 	_particle_nodes.clear()
 	if not show_particles:
 		return
-	var groups := world.particle_groups()
+	if streaming:
+		for ch: Vector2i in _chunks:
+			_build_chunk_particles(ch)
+		return
+	_add_particles(world.particle_groups(), _particles_root)
+
+
+## Particle volumes for one chunk (streaming), under the chunk's own node.
+func _build_chunk_particles(ch: Vector2i) -> void:
+	var info: Dictionary = _chunks[ch]
+	if info.get("fx") is Node:
+		(info["fx"] as Node).queue_free()
+	var fx := Node2D.new()
+	_particles_root.add_child(fx)
+	info["fx"] = fx
+	if not show_particles:
+		return
+	var groups := {}
+	for x in range(ch.x * CHUNK, ch.x * CHUNK + CHUNK):
+		for y in range(ch.y * CHUNK, ch.y * CHUNK + CHUNK):
+			var c := Vector2i(x, y)
+			if world.particles.has(c):
+				for e: Array in world.particles[c]:
+					var k := "%s|%d" % [e[1], int(e[0])]
+					if not groups.has(k):
+						groups[k] = []
+					groups[k].append(c)
+	_add_particles(groups, fx)
+
+
+func _add_particles(groups: Dictionary, parent: Node) -> void:
 	for k: String in groups:
 		var parts := k.split("|")
 		var preset := parts[0]
@@ -549,13 +645,226 @@ func rebuild_particles() -> void:
 		# Low particles (fog in a valley) sort with the terrain; high ones
 		# (clouds, rain) float over everything.
 		node.z_index = max_order * 2 + 1 if z <= 4 else 4000
-		_particles_root.add_child(node)
-		_particle_nodes[k] = node
+		parent.add_child(node)
+		if parent == _particles_root:
+			_particle_nodes[k] = node
+
+
+# --- Streaming -----------------------------------------------------------------
+
+func _process(_d: float) -> void:
+	if streaming and world:
+		update_stream(chunks_per_frame)
+
+
+## Chunks the camera can see (plus the margin), nearest to the view centre first.
+func wanted_chunks() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if world == null or not is_inside_tree():
+		return out
+	var vp := get_viewport()
+	var to_local := get_global_transform_with_canvas().affine_inverse()
+	var r := vp.get_visible_rect()
+	# Tall stacks and buildings below the bottom edge still reach into view.
+	var reach := world.height_step * 8.0 + world.tile_height * 6.0
+	var pts := [to_local * r.position, to_local * Vector2(r.end.x, r.position.y), to_local * r.end, to_local * Vector2(r.position.x, r.end.y)]
+	var lo := Vector2(INF, INF)
+	var hi := Vector2(-INF, -INF)
+	for pt: Vector2 in pts:
+		for dy: float in [-world.height_step * 4.0, reach]:
+			var f := world.from_screen(pt + Vector2(0, dy), 0)
+			lo = lo.min(f)
+			hi = hi.max(f)
+	var c0 := chunk_of(Vector2i(floori(lo.x), floori(lo.y))) - Vector2i(margin_chunks, margin_chunks)
+	var c1 := chunk_of(Vector2i(ceili(hi.x), ceili(hi.y))) + Vector2i(margin_chunks, margin_chunks)
+	var last := chunk_of(Vector2i(world.width - 1, world.depth - 1))
+	c0 = c0.clamp(Vector2i.ZERO, last)
+	c1 = c1.clamp(Vector2i.ZERO, last)
+	var mid_f := world.from_screen(to_local * r.get_center(), 0)
+	var mid := Vector2(mid_f.x / CHUNK - 0.5, mid_f.y / CHUNK - 0.5)
+	for cx in range(c0.x, c1.x + 1):
+		for cy in range(c0.y, c1.y + 1):
+			out.append(Vector2i(cx, cy))
+	out.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return Vector2(a).distance_squared_to(mid) < Vector2(b).distance_squared_to(mid))
+	if out.size() > max_chunks:
+		out.resize(max_chunks)
+	return out
+
+
+## Builds up to `budget` missing chunks and frees the ones out of view.
+func update_stream(budget: int) -> void:
+	var want := wanted_chunks()
+	var keep := {}
+	for ch: Vector2i in want:
+		keep[ch] = true
+	for ch: Vector2i in _chunks.keys():
+		if not keep.has(ch):
+			unload_chunk(ch)
+	var built := 0
+	for ch: Vector2i in want:
+		if built >= budget:
+			break
+		if not _chunks.has(ch):
+			load_chunk(ch)
+			built += 1
+
+
+func load_chunk(ch: Vector2i) -> void:
+	if _chunks.has(ch):
+		return
+	var info := {"objs": [], "dets": [], "fx": null, "lights": null}
+	_chunks[ch] = info
+	_batching = true
+	for x in range(ch.x * CHUNK, ch.x * CHUNK + CHUNK):
+		for y in range(ch.y * CHUNK, ch.y * CHUNK + CHUNK):
+			var c := Vector2i(x, y)
+			if world.tiles.has(c):
+				refresh_column(c)
+	_batching = false
+	for sv: StripView in _batch:
+		sv.refresh()
+	_batch.clear()
+	if show_objects:
+		for o: Dictionary in world.objects:
+			if chunk_of(_cell_of(o, false)) == ch:
+				refresh_object(o)
+				info["objs"].append(str(o["id"]))
+	if show_details:
+		for d: Dictionary in world.details:
+			if chunk_of(_cell_of(d, true)) == ch:
+				refresh_detail(d)
+				info["dets"].append(str(d["id"]))
+	_build_chunk_particles(ch)
+	_build_chunk_lights(ch)
+	if cables:
+		cables.mark_dirty()
+
+
+func unload_chunk(ch: Vector2i) -> void:
+	var info: Dictionary = _chunks.get(ch, {})
+	if info.is_empty():
+		return
+	_chunks.erase(ch)
+	for key: Vector3i in _columns.keys():
+		if key.y == ch.x and key.z == ch.y:
+			(_columns[key] as Node).queue_free()
+			_columns.erase(key)
+	for id: String in info["objs"]:
+		var n: WorldSprite = _obj_nodes.get(id)
+		if n and not _chunks.has(chunk_of(_cell_of(n.data, false))):
+			n.queue_free()
+			_obj_nodes.erase(id)
+	for id: String in info["dets"]:
+		var n2: WorldSprite = _detail_nodes.get(id)
+		if n2 and not _chunks.has(chunk_of(_cell_of(n2.data, true))):
+			n2.queue_free()
+			_detail_nodes.erase(id)
+	for k: String in ["fx", "lights"]:
+		if info[k] is Node:
+			(info[k] as Node).queue_free()
+	if cables:
+		cables.mark_dirty()
+
+
+func loaded_chunks() -> Array:
+	return _chunks.keys()
+
+
+## Top-tile colour of a tile id (minimap + streaming overview).
+static var _tile_colors: Dictionary = {}
+
+
+static func tile_color(tile_id: String) -> Color:
+	if _tile_colors.has(tile_id):
+		return _tile_colors[tile_id]
+	var col := Color(str(ContentDB.terrain.get(WorldMap.terrain_of(tile_id), {}).get("color", "#444455")))
+	var frames := tile_frames(tile_id)
+	if not frames.is_empty():
+		var img: Image = (frames[0] as Texture2D).get_image()
+		if img:
+			if img.is_compressed():
+				img = img.duplicate()
+				img.decompress()
+			# Average a few points across the top face.
+			var r := fit_rect(frames[0])
+			var acc := Color(0, 0, 0, 0)
+			var n := 0
+			for pt: Vector2 in [Vector2(0.5, 0.25), Vector2(0.3, 0.25), Vector2(0.7, 0.25), Vector2(0.5, 0.12), Vector2(0.5, 0.38)]:
+				var px := Vector2i(int(r.position.x + r.size.x * pt.x), int(r.position.y + r.size.x * 0.5 * pt.y * 2.0))
+				px = px.clamp(Vector2i.ZERO, img.get_size() - Vector2i.ONE)
+				var c := img.get_pixelv(px)
+				if c.a > 0.3:
+					acc += c
+					n += 1
+			if n > 0:
+				col = Color(acc.r / n, acc.g / n, acc.b / n)
+	_tile_colors[tile_id] = col
+	return col
+
+
+## One pixel per column, skewed onto the ground plane: the whole map at a
+## glance under the streamed chunks (heights shade lighter / darker).
+class LodLayer extends Node2D:
+	var renderer: WorldRenderer
+	var _img: Image
+	var _tex: ImageTexture
+	var _dirty: Dictionary = {}
+
+	func rebuild() -> void:
+		var w := renderer.world
+		_img = Image.create(maxi(w.width, 1), maxi(w.depth, 1), false, Image.FORMAT_RGBA8)
+		_img.fill(Color(0, 0, 0, 0))
+		for cell: Vector2i in w.tiles:
+			_paint(cell)
+		_tex = ImageTexture.create_from_image(_img)
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		# Pixel (x, y) → the diamond of cell (x, y) on layer 0.
+		transform = Transform2D(Vector2(w.tile_width * 0.5, w.tile_height * 0.5), Vector2(-w.tile_width * 0.5, w.tile_height * 0.5), w.to_screen(Vector2(-0.5, -0.5), 0))
+		_dirty.clear()
+		set_process(false)
+		queue_redraw()
+
+	func _paint(cell: Vector2i) -> void:
+		var w := renderer.world
+		if not w.in_bounds(cell):
+			return
+		if not w.tiles.has(cell):
+			_img.set_pixelv(cell, Color(0, 0, 0, 0))
+			return
+		var c := WorldRenderer.tile_color(w.top_tile(cell))
+		var h := w.top_z(cell)
+		c = c.lightened(clampf(h * 0.04, 0.0, 0.5)) if h >= 0 else c.darkened(clampf(-h * 0.08, 0.0, 0.6))
+		_img.set_pixelv(cell, c.darkened(0.25))
+
+	## An edited column: repainted on the next frame (batched).
+	func mark(cell: Vector2i) -> void:
+		if _img == null:
+			return
+		_dirty[cell] = true
+		set_process(true)
+
+	func _ready() -> void:
+		set_process(false)
+
+	func _process(_d: float) -> void:
+		if _tex == null:
+			set_process(false)
+			return
+		for c: Vector2i in _dirty:
+			_paint(c)
+		_dirty.clear()
+		_tex.update(_img)
+		set_process(false)
+		queue_redraw()
+
+	func _draw() -> void:
+		if _tex:
+			draw_texture(_tex, Vector2.ZERO)
 
 
 class StripView extends Node2D:
 	var renderer: WorldRenderer
-	var key: Vector2i
+	var key: Vector3i
 	var cells: Dictionary = {}  # Vector2i -> true
 	var _animated: bool = false
 
@@ -867,8 +1176,34 @@ func rebuild_lighting() -> void:
 	_ambient.visible = show_lighting
 	if not show_lighting:
 		return
+	if streaming:
+		for ch: Vector2i in _chunks:
+			_chunks[ch]["lights"] = null
+			_build_chunk_lights(ch)
+		return
+	_add_lights(world.objects, _lights_root)
+
+
+func _build_chunk_lights(ch: Vector2i) -> void:
+	var info: Dictionary = _chunks[ch]
+	if info.get("lights") is Node:
+		(info["lights"] as Node).queue_free()
+	var root := Node2D.new()
+	_lights_root.add_child(root)
+	info["lights"] = root
+	if not show_lighting:
+		return
+	var objs: Array = []
+	for id: String in info["objs"]:
+		var n: WorldSprite = _obj_nodes.get(id)
+		if n:
+			objs.append(n.data)
+	_add_lights(objs, root)
+
+
+func _add_lights(objects: Array, parent: Node) -> void:
 	# Animated buildings light their surroundings from their own beacons/windows.
-	for o2: Dictionary in world.objects:
+	for o2: Dictionary in objects:
 		var node: WorldSprite = _obj_nodes.get(str(o2.get("id", "")))
 		if node == null or not node._clip.get("ok", false) or not bool(o2.get("clip_lights", true)):
 			continue
@@ -887,8 +1222,8 @@ func rebuild_lighting() -> void:
 			cl.blend_mode = Light2D.BLEND_MODE_ADD
 			cl.position = node.position + base + Vector2(rel.x * flip, rel.y)
 			cl.seed_phase = float(hash(str(o2.get("id", "")) + str(lp["pos"])) % 1000) / 100.0
-			_lights_root.add_child(cl)
-	for o: Dictionary in world.objects:
+			parent.add_child(cl)
+	for o: Dictionary in objects:
 		if not (o.get("light") is Dictionary):
 			continue
 		var l: Dictionary = o["light"]
@@ -905,7 +1240,7 @@ func rebuild_lighting() -> void:
 		var off: Array = o.get("offset", [0, 0])
 		pl.position = world.to_screen(Vector2(float(c[0]), float(c[1])), float(o.get("z", 0)) + float(l.get("height", 1.0))) + Vector2(float(off[0]), float(off[1]))
 		pl.seed_phase = float(hash(str(o.get("id", ""))) % 1000) / 100.0
-		_lights_root.add_child(pl)
+		parent.add_child(pl)
 
 
 ## Point light with optional neon flicker (buzzing tubes, fires).

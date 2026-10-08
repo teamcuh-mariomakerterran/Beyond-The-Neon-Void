@@ -46,6 +46,9 @@ var cables: Dictionary = {}
 ## Interaction anchors (terminals, switches, hidden loot, traps, doors, NPC
 ## hooks…). Schema and runtime: src/world/interactions.gd.
 var anchors: Array = []
+## Undo journal (big maps): while set, the first change to a column stores its
+## old stack here (cell -> stack copy, or null if it was empty).
+var journal: Variant = null
 var _uid: int = 0
 
 
@@ -133,9 +136,15 @@ func top_tile(cell: Vector2i) -> String:
 ## `opts` (optional, stored as the 3rd entry): {"flip": bool, "tint": "#rrggbb",
 ## "ramp": "x+"|"x-"|"y+"|"y-" (slopes up toward that grid direction),
 ## "stairs": bool (draw the ramp as steps)}.
+func journal_touch(cell: Vector2i) -> void:
+	if journal is Dictionary and not (journal as Dictionary).has(cell):
+		journal[cell] = (tiles[cell] as Array).duplicate(true) if tiles.has(cell) else null
+
+
 func set_tile(cell: Vector2i, z: int, tile_id: String, opts: Dictionary = {}) -> void:
 	if not in_bounds(cell):
 		return
+	journal_touch(cell)
 	z = clampi(z, MIN_Z, MAX_Z)
 	var s: Array = tiles.get(cell, [])
 	for e: Array in s:
@@ -152,6 +161,7 @@ func set_tile(cell: Vector2i, z: int, tile_id: String, opts: Dictionary = {}) ->
 
 
 func remove_tile(cell: Vector2i, z: int) -> bool:
+	journal_touch(cell)
 	var s: Array = tiles.get(cell, [])
 	for i in s.size():
 		if int(s[i][0]) == z:
@@ -313,7 +323,9 @@ func locations() -> Array:
 
 # --- Serialisation -----------------------------------------------------------
 
-func load_dict(d: Dictionary) -> void:
+## `keep_tiles`: everything but the tile stacks (big-map undo restores those
+## column by column).
+func load_dict(d: Dictionary, keep_tiles: bool = false) -> void:
 	id = str(d.get("id", id))
 	name = str(d.get("name", id))
 	kind = str(d.get("kind", "encounter"))
@@ -329,14 +341,15 @@ func load_dict(d: Dictionary) -> void:
 	regions = d.get("regions", []).duplicate(true)
 	cables = (d.get("cables") as Dictionary).duplicate(true) if d.get("cables") is Dictionary else {}
 	anchors = (d.get("anchors") as Array).duplicate(true) if d.get("anchors") is Array else []
-	tiles.clear()
+	if not keep_tiles:
+		tiles.clear()
 	particles.clear()
 	gameplay.clear()
 	if int(d.get("format", 1)) >= 2:
 		tile_width = float(d.get("tile_width", 128))
 		tile_height = float(d.get("tile_height", tile_width * 0.5))
 		height_step = float(d.get("height_step", tile_width * 0.25))
-		var t: Dictionary = d.get("tiles", {})
+		var t: Dictionary = {} if keep_tiles else d.get("tiles", {})
 		for k: String in t:
 			var s: Array = []
 			for e: Array in t[k]:
@@ -344,8 +357,10 @@ func load_dict(d: Dictionary) -> void:
 					s.append([int(e[0]), str(e[1]), (e[2] as Dictionary).duplicate()])
 				else:
 					s.append([int(e[0]), str(e[1])])
-			s.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
-			tiles[parse_key(k)] = s
+			if s.size() > 1:
+				s.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
+			var comma := k.find(",")
+			tiles[Vector2i(k.to_int() if comma < 0 else k.left(comma).to_int(), k.substr(comma + 1).to_int())] = s
 		var p: Dictionary = d.get("particles", {})
 		for k: String in p:
 			var s2: Array = []
@@ -380,9 +395,9 @@ func load_dict(d: Dictionary) -> void:
 		objects = []
 
 
-func to_dict() -> Dictionary:
+func to_dict(with_tiles: bool = true) -> Dictionary:
 	var t := {}
-	var cells: Array = tiles.keys()
+	var cells: Array = tiles.keys() if with_tiles else []
 	cells.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x))
 	for cell: Vector2i in cells:
 		t[key(cell)] = tiles[cell]
@@ -424,44 +439,68 @@ static func terrain_of(tile_id: String) -> String:
 
 
 ## Flattens the top of every column into the battle grid. Empty columns are
-## holes (not walkable).
-func to_grid() -> IsometricGrid:
+## holes (not walkable). `lazy` (huge explore maps) builds each cell the first
+## time it's asked for instead of all of them up front.
+func to_grid(lazy: bool = false) -> IsometricGrid:
 	var g := IsometricGrid.new()
-	g.setup(width, depth)
 	g.tile_width = tile_width
 	g.tile_height = tile_height
 	g.height_step = height_step
+	var foot := _footprint_rules()
+	if lazy:
+		g.setup_lazy(width, depth, func(cell: Vector2i) -> IsometricGrid.Cell: return _rules_cell(cell, foot))
+		return g
+	g.setup(width, depth)
 	for cell in g.all_cells():
-		var c := g.get_cell(cell)
-		if not tiles.has(cell):
-			c.walkable = false
-			c.terrain = "void"
-			continue
-		var top := top_tile(cell)
-		c.height = clampi(top_z(cell), IsometricGrid.MIN_HEIGHT, IsometricGrid.MAX_HEIGHT)
-		c.terrain = terrain_of(top)
-		IsometricGrid.apply_terrain_defaults(c, ContentDB.terrain)
-		if top.begins_with("terrain:"):
-			c.tile_id = ""
-		var over: Dictionary = gameplay.get(cell, {})
-		if over.has("walkable"): c.walkable = bool(over["walkable"])
-		if over.has("cover"): c.cover = int(over["cover"])
-		if over.has("blocks_los"): c.blocks_los = bool(over["blocks_los"])
-		if over.has("cost"): c.move_cost = int(over["cost"])
-		if over.has("hazard"): c.hazard = str(over["hazard"])
+		_apply_rules(g.get_cell(cell), foot)
+	return g
+
+
+## Cells under objects: {cell: "structure" | prop id}.
+func _footprint_rules() -> Dictionary:
+	var out := {}
 	for o: Dictionary in objects:
 		var kind_o := str(o.get("kind", ""))
 		for oc in footprint_cells(o):
-			var cell_o := g.get_cell(oc)
-			if cell_o == null:
-				continue
 			if kind_o in ["structure", "location"]:
-				cell_o.walkable = false
-				cell_o.blocks_los = true
-				cell_o.cover = IsometricGrid.COVER_FULL
-			elif kind_o in ["prop", "loot"]:
-				cell_o.prop_id = str(o["id"])
-	return g
+				out[oc] = "structure"
+			elif kind_o in ["prop", "loot"] and not out.has(oc):
+				out[oc] = str(o["id"])
+	return out
+
+
+func _rules_cell(cell: Vector2i, foot: Dictionary) -> IsometricGrid.Cell:
+	var c := IsometricGrid.Cell.new()
+	c.coords = cell
+	_apply_rules(c, foot)
+	return c
+
+
+func _apply_rules(c: IsometricGrid.Cell, foot: Dictionary) -> void:
+	var cell := c.coords
+	if not tiles.has(cell):
+		c.walkable = false
+		c.terrain = "void"
+		return
+	var top := top_tile(cell)
+	c.height = clampi(top_z(cell), IsometricGrid.MIN_HEIGHT, IsometricGrid.MAX_HEIGHT)
+	c.terrain = terrain_of(top)
+	IsometricGrid.apply_terrain_defaults(c, ContentDB.terrain)
+	if top.begins_with("terrain:"):
+		c.tile_id = ""
+	var over: Dictionary = gameplay.get(cell, {})
+	if over.has("walkable"): c.walkable = bool(over["walkable"])
+	if over.has("cover"): c.cover = int(over["cover"])
+	if over.has("blocks_los"): c.blocks_los = bool(over["blocks_los"])
+	if over.has("cost"): c.move_cost = int(over["cost"])
+	if over.has("hazard"): c.hazard = str(over["hazard"])
+	var f: Variant = foot.get(cell)
+	if f == "structure":
+		c.walkable = false
+		c.blocks_los = true
+		c.cover = IsometricGrid.COVER_FULL
+	elif f != null:
+		c.prop_id = str(f)
 
 
 static func from_dict(d: Dictionary) -> WorldMap:

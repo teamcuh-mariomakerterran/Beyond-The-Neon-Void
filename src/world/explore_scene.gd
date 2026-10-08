@@ -41,7 +41,7 @@ func _ready() -> void:
 		push_error("ExploreScene: no map to explore")
 		return
 	world = WorldMap.from_dict(d)
-	grid = world.to_grid()
+	grid = world.to_grid(world.tiles.size() >= WorldRenderer.STREAM_MIN_CELLS)  # huge maps: cells on demand
 	var bg := ColorRect.new()
 	bg.color = Color(0.02, 0.01, 0.05)
 	bg.size = Vector2(60000, 60000)

@@ -94,14 +94,57 @@ func _instantiate(bucket: String, entry: Dictionary) -> GameResource:
 	return CATALOG[bucket].new()
 
 
+## Map files bigger than this load the first time they're asked for (a 512²
+## world is ~2 s to parse); until then `maps` holds a small stub
+## {id, name, kind, format, _path, _stub: true}.
+const LAZY_MAP_BYTES := 4 * 1024 * 1024
+## Most big maps kept parsed at once (oldest fall back to a stub).
+const MAX_BIG_MAPS := 2
+var _big_loaded: Array[String] = []
+
+
 func _load_maps(dir: String) -> void:
 	if not DirAccess.dir_exists_absolute(dir):
 		return
 	for f in DirAccess.get_files_at(dir):
 		if f.ends_with(".json"):
-			var d := _read_dict(dir.path_join(f))
+			var path := dir.path_join(f)
+			var fa := FileAccess.open(path, FileAccess.READ)
+			if fa and fa.get_length() > LAZY_MAP_BYTES:
+				var id := f.get_basename()
+				maps[id] = _stub(id, path, fa)
+				continue
+			var d := _read_dict(path)
 			if not d.is_empty():
 				maps[str(d.get("id", f.get_basename()))] = d
+
+
+## Name / kind / format from the first few KB (keys before "tiles"), so lists
+## and pickers work without parsing the whole map.
+func _stub(id: String, path: String, fa: FileAccess) -> Dictionary:
+	var head := fa.get_buffer(4096).get_string_from_utf8()
+	var st := {"id": id, "name": id, "kind": "world", "format": 2, "_path": path, "_stub": true}
+	for k: String in ["name", "kind"]:
+		var m := RegEx.create_from_string('"%s"\\s*:\\s*"([^"]*)"' % k).search(head)
+		if m:
+			st[k] = m.get_string(1)
+	for k2: String in ["format", "width", "depth"]:
+		var m2 := RegEx.create_from_string('"%s"\\s*:\\s*(\\d+)' % k2).search(head)
+		if m2:
+			st[k2] = int(m2.get_string(1))
+	return st
+
+
+func is_map_stub(id: String) -> bool:
+	return bool((maps.get(id, {}) as Dictionary).get("_stub", false))
+
+
+## Every map fully parsed (link graph, validators). Slow with big maps.
+func full_maps() -> Dictionary:
+	var out := {}
+	for id: String in maps.keys():
+		out[id] = get_map(id)
+	return out
 
 
 func _read_json(path: String) -> Variant:
@@ -184,7 +227,24 @@ func get_npc(id: String) -> NPCResource:
 
 
 func get_map(id: String) -> Dictionary:
-	return maps.get(id, {})
+	var d: Dictionary = maps.get(id, {})
+	if not bool(d.get("_stub", false)):
+		return d
+	var full := _read_dict(str(d["_path"]))
+	if full.is_empty():
+		return {}
+	full["_path"] = d["_path"]
+	maps[id] = full
+	_big_loaded.erase(id)
+	_big_loaded.append(id)
+	while _big_loaded.size() > MAX_BIG_MAPS:
+		var old: String = _big_loaded.pop_front()
+		var od: Dictionary = maps.get(old, {})
+		if od.has("_path"):
+			var fa := FileAccess.open(str(od["_path"]), FileAccess.READ)
+			if fa:
+				maps[old] = _stub(old, str(od["_path"]), fa)
+	return full
 
 
 # --- Editor injection ------------------------------------------------------
@@ -336,6 +396,8 @@ func _validate_npcs(problems: Array[String]) -> void:
 ## find_loot targets are InteractionTrigger ids, i.e. prop ids in data/maps.
 func _map_prop_exists(prop_id: String) -> bool:
 	for m: Dictionary in maps.values():
+		if bool(m.get("_stub", false)):
+			continue  # big world maps use objects / anchors, not legacy props
 		for p: Variant in m.get("props", []):
 			if p is Dictionary and str(p.get("id", "")) == prop_id:
 				return true

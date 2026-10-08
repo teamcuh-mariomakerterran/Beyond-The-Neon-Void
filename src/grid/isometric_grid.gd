@@ -25,6 +25,9 @@ var height_step: float = 16.0
 var origin: Vector2 = Vector2.ZERO
 
 var _cells: Dictionary = {}  # Vector2i -> Cell
+## Lazy grids (huge explore maps): cells are built by `source` (Vector2i ->
+## Cell) the first time something asks for them, instead of all up front.
+var source: Callable
 ## Fallen units by cell — targets for revive / reanimate.
 var _corpses: Dictionary = {}
 
@@ -74,11 +77,27 @@ func in_bounds(cell: Vector2i) -> bool:
 
 
 func get_cell(cell: Vector2i) -> Cell:
-	return _cells.get(cell)
+	var c: Cell = _cells.get(cell)
+	if c == null and source.is_valid() and in_bounds(cell):
+		c = source.call(cell)
+		_cells[cell] = c
+	return c
+
+
+func setup_lazy(p_width: int, p_depth: int, p_source: Callable) -> void:
+	width = p_width
+	depth = p_depth
+	_cells.clear()
+	source = p_source
 
 
 func all_cells() -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
+	if source.is_valid():
+		for x in width:
+			for y in depth:
+				out.append(Vector2i(x, y))
+		return out
 	out.assign(_cells.keys())
 	return out
 

@@ -33,6 +33,7 @@ func run(p_tree: SceneTree) -> int:
 	test_npc_stages()
 	test_vault_demo()
 	test_campaign_fixes()
+	await test_streaming()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -215,8 +216,8 @@ func test_strips_and_cutaway() -> void:
 	var r := WorldRenderer.new()
 	r.world = w
 	tree.root.add_child(r)
-	# 6400 columns → strips per diagonal of ≤32 columns (far fewer nodes).
-	check(r._columns.size() < 400 and r._columns.size() >= 159, "strip renderer: %d nodes for 6400 columns" % r._columns.size())
+	# 6400 columns → strips per diagonal within each 32×32 chunk (far fewer nodes).
+	check(r._columns.size() < 520 and r._columns.size() >= 159, "strip renderer: %d nodes for 6400 columns" % r._columns.size())
 	w.remove_tile(Vector2i(3, 4), 0)
 	r.refresh_column(Vector2i(3, 4))
 	var sv: WorldRenderer.StripView = r._columns[WorldRenderer.strip_key(Vector2i(3, 4))]
@@ -1384,6 +1385,58 @@ func test_campaign_fixes() -> void:
 	AudioManager.play_music("res://assets/music/does_not_exist.ogg")
 	check(AudioManager.current_music_id == "res://assets/music/does_not_exist.ogg", "music accepts a file path without erroring")
 	AudioManager.play_music("")
+
+
+func test_streaming() -> void:
+	var w := WorldMap.new()
+	w.id = "t_stream"
+	w.width = 100
+	w.depth = 100
+	for x in 100:
+		for y in 100:
+			w.set_tile(Vector2i(x, y), (x + y) % 3, "terrain:concrete")
+	w.add_object("", Vector2i(5, 5), 0, "structure")
+	w.add_object("", Vector2i(90, 90), 0, "prop")
+	# Lazy grid = same rules as the full grid, built on demand.
+	var full := w.to_grid()
+	var lazy := w.to_grid(true)
+	var same := true
+	for c: Vector2i in [Vector2i(5, 5), Vector2i(0, 0), Vector2i(42, 17), Vector2i(90, 90), Vector2i(99, 99)]:
+		var a := full.get_cell(c)
+		var b := lazy.get_cell(c)
+		same = same and a.walkable == b.walkable and a.height == b.height and a.cover == b.cover and a.prop_id == b.prop_id
+	check(same and lazy._cells.size() == 5 and not lazy.is_walkable(Vector2i(5, 5)), "lazy grid matches the full one, cells built on demand")
+	# Streaming renderer: only chunks near the camera exist; scrolling swaps them.
+	var r := WorldRenderer.new()
+	r.world = w
+	r.max_chunks = 4
+	r.margin_chunks = 0
+	var cam := Camera2D.new()
+	tree.root.add_child(cam)
+	cam.position = w.to_screen(Vector2(8, 8), 0)
+	cam.zoom = Vector2(2, 2)
+	cam.make_current()
+	tree.root.add_child(r)
+	for i in 4:
+		await tree.process_frame
+	check(r.streaming and r.loaded_chunks().has(Vector2i(0, 0)) and not r.loaded_chunks().has(Vector2i(3, 3)), "big map streams: chunk around the camera built, far chunk not (%s)" % str(r.loaded_chunks()))
+	check(r.object_node(str(w.objects[0]["id"])) != null and r.object_node(str(w.objects[1]["id"])) == null, "objects build with their chunk")
+	cam.position = w.to_screen(Vector2(92, 92), 0)
+	for i in 6:
+		await tree.process_frame
+	check(r.loaded_chunks().has(Vector2i(2, 2)) and not r.loaded_chunks().has(Vector2i(0, 0)) and r.object_node(str(w.objects[1]["id"])) != null, "scrolling loads the new chunk and frees the old one (%s)" % str(r.loaded_chunks()))
+	var strips_ok := true
+	for k: Vector3i in r._columns:
+		strips_ok = strips_ok and r.loaded_chunks().has(Vector2i(k.y, k.z))
+	check(strips_ok, "no tile strips left over from freed chunks")
+	r.queue_free()
+	cam.queue_free()
+	# Undo journal records old stacks once per column.
+	w.journal = {}
+	w.set_tile(Vector2i(1, 1), 5, "terrain:lava")
+	w.set_tile(Vector2i(1, 1), 6, "terrain:lava")
+	check((w.journal as Dictionary).size() == 1 and ((w.journal as Dictionary)[Vector2i(1, 1)] as Array).size() == 1, "undo journal keeps the column as it was before the stroke")
+	w.journal = null
 
 
 func test_ui_icons() -> void:

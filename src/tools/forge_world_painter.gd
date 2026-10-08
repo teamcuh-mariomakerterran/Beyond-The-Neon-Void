@@ -1869,11 +1869,54 @@ func _new_map_dialog() -> void:
 # --- Undo --------------------------------------------------------------------
 
 func _push_undo() -> void:
-	_undo.append(world.to_dict())
+	_undo.append(_snapshot())
 	if _undo.size() > 40:
 		_undo.pop_front()
 	_redo.clear()
 	dirty = true
+
+
+## Small maps: a full copy. Big (streamed) maps: everything but the tiles,
+## plus a journal the map fills with each column's old stack as it changes.
+func _snapshot() -> Dictionary:
+	if not _renderer or not _renderer.streaming:
+		world.journal = null
+		return world.to_dict()
+	var j := {}
+	world.journal = j
+	return {"_delta": true, "rest": world.to_dict(false), "cols": j}
+
+
+## Applies a snapshot; returns the matching one for the other direction.
+func _apply_snapshot(d: Dictionary) -> Dictionary:
+	if not bool(d.get("_delta", false)):
+		var back := world.to_dict()
+		_restore(d)
+		return back
+	var cols: Dictionary = d["cols"]
+	var now_cols := {}
+	for c: Vector2i in cols:
+		now_cols[c] = (world.tiles[c] as Array).duplicate(true) if world.tiles.has(c) else null
+		if cols[c] == null:
+			world.tiles.erase(c)
+		else:
+			world.tiles[c] = (cols[c] as Array).duplicate(true)
+	var back2 := {"_delta": true, "rest": world.to_dict(false), "cols": now_cols}
+	world.journal = null
+	world.load_dict(d["rest"], true)
+	_edit_count += 1
+	selected = {}
+	sel_region = {}
+	sel_anchor = {}
+	_renderer.refresh_columns(cols.keys())
+	_renderer.rebuild_objects()
+	_renderer.rebuild_details()
+	_renderer.rebuild_particles()
+	_renderer.rebuild_lighting()
+	_minimap.mark_dirty()
+	_show_inspector()
+	_refresh_objects_list()
+	return back2
 
 
 func _restore(d: Dictionary) -> void:
@@ -1894,16 +1937,14 @@ func _restore(d: Dictionary) -> void:
 func undo_last() -> void:
 	if _undo.is_empty():
 		return
-	_redo.append(world.to_dict())
-	_restore(_undo.pop_back())
+	_redo.append(_apply_snapshot(_undo.pop_back()))
 	status.emit("Undone.", NeonTheme.AMBER)
 
 
 func redo_last() -> void:
 	if _redo.is_empty():
 		return
-	_undo.append(world.to_dict())
-	_restore(_redo.pop_back())
+	_undo.append(_apply_snapshot(_redo.pop_back()))
 	status.emit("Redone.", NeonTheme.AMBER)
 
 
@@ -2909,7 +2950,7 @@ func show_links() -> AcceptDialog:
 	var g := LocationGraph.new()
 	g.theme = NeonTheme.get_theme()
 	g.current = world.id
-	g.build(ContentDB.maps, world.to_dict())
+	g.build(ContentDB.full_maps(), world.to_dict())
 	g.map_chosen.connect(func(id: String) -> void:
 		dlg.queue_free()
 		if id != world.id:
@@ -3445,8 +3486,6 @@ class Minimap extends Control:
 	var _tex: ImageTexture
 	var _dirty: bool = true
 	var _last_build: float = 0.0
-	static var _tile_colors: Dictionary = {}
-
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		clip_contents = true
@@ -3456,34 +3495,16 @@ class Minimap extends Control:
 		_dirty = true
 
 	static func tile_color(tile_id: String) -> Color:
-		if _tile_colors.has(tile_id):
-			return _tile_colors[tile_id]
-		var col := Color(str(ContentDB.terrain.get(WorldMap.terrain_of(tile_id), {}).get("color", "#444455")))
-		var frames := WorldRenderer.tile_frames(tile_id)
-		if not frames.is_empty():
-			var img: Image = (frames[0] as Texture2D).get_image()
-			if img:
-				if img.is_compressed():
-					img = img.duplicate()
-					img.decompress()
-				# Average a few points across the top face.
-				var r := WorldRenderer.fit_rect(frames[0])
-				var acc := Color(0, 0, 0, 0)
-				var n := 0
-				for pt: Vector2 in [Vector2(0.5, 0.25), Vector2(0.3, 0.25), Vector2(0.7, 0.25), Vector2(0.5, 0.12), Vector2(0.5, 0.38)]:
-					var px := Vector2i(int(r.position.x + r.size.x * pt.x), int(r.position.y + r.size.x * 0.5 * pt.y * 2.0))
-					px = px.clamp(Vector2i.ZERO, img.get_size() - Vector2i.ONE)
-					var c := img.get_pixelv(px)
-					if c.a > 0.3:
-						acc += c
-						n += 1
-				if n > 0:
-					col = Color(acc.r / n, acc.g / n, acc.b / n)
-		_tile_colors[tile_id] = col
-		return col
+		return WorldRenderer.tile_color(tile_id)
 
 	func _rebuild() -> void:
 		var w := p.world
+		# Streamed maps: the renderer's overview already holds every column.
+		if p._renderer and p._renderer.streaming and p._renderer._lod._tex:
+			_tex = p._renderer._lod._tex
+			_dirty = false
+			_last_build = WorldRenderer.now()
+			return
 		var img := Image.create(maxi(w.width, 1), maxi(w.depth, 1), false, Image.FORMAT_RGBA8)
 		img.fill(Color(0, 0, 0, 0))
 		for cell: Vector2i in w.tiles:
@@ -3571,6 +3592,7 @@ func generate_terrain(region: Rect2i, max_height: int, roughness: float, water: 
 				continue
 			var v := (noise.get_noise_2d(x, y) + 1.0) * 0.5  # 0..1
 			if replace:
+				world.journal_touch(c)
 				world.tiles.erase(c)
 			if v < water:
 				world.set_tile(c, 0, sel_tiles[0])
