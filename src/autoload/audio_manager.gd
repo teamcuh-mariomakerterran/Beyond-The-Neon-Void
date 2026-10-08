@@ -38,11 +38,17 @@ func _find(dir: String, id: String) -> AudioStream:
 	return null
 
 
+## `music_id` is a name under assets/music ("battle_supply_works") or a full
+## path ("res://assets/music/x.ogg", what maps and region triggers store).
 func play_music(music_id: String, fade: float = 1.2) -> void:
 	if music_id == current_music_id:
 		return
 	current_music_id = music_id
-	var stream := _find(MUSIC_DIR, music_id) if music_id != "" else null
+	var stream: AudioStream = null
+	if music_id.begins_with("res://") or music_id.begins_with("user://"):
+		stream = ForgeStore.load_audio(music_id)
+	elif music_id != "":
+		stream = _find(MUSIC_DIR, music_id)
 	var old := _music_a if _music_a.playing else _music_b
 	var nxt := _music_b if old == _music_a else _music_a
 	if old.playing:

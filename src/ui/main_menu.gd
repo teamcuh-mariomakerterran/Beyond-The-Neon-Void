@@ -65,7 +65,7 @@ func _new_game() -> void:
 
 func _continue() -> void:
 	if SaveManager.load_game():
-		CampaignManager.return_to_hub()
+		CampaignManager.resume()
 
 
 func _quick_battle(mission_id: String) -> void:

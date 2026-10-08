@@ -80,6 +80,11 @@ func setup(p_data: CharacterData, p_team: int, level_override: int = 0) -> void:
 	is_player_controlled = p_team == Team.PLAYER and not p_data.ai_controlled
 	stats = p_data.get_stats()
 	if level_override > 0:
+		# Mission / summon levels grow the primaries too (class growth per
+		# level), not just the level number that HP / MP scale from.
+		var grow_cls := ClassLibrary.get_class_res(p_data.class_id)
+		while stats.level < mini(level_override, UnitStats.LEVEL_MAX):
+			stats.level_up(grow_cls)
 		stats.level = level_override
 	job_handler.learned_ability_ids = p_data.learned_ability_ids.duplicate()
 	job_handler.current_job = ClassLibrary.get_class_res(p_data.class_id)

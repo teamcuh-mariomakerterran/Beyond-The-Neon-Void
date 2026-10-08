@@ -52,6 +52,7 @@ func _ready() -> void:
 	_renderer.world = world
 	add_child(_renderer)
 	cell = _start_cell(info)
+	CampaignManager.current_explore["at"] = cell
 	_avatar = _make_avatar()
 	add_child(_avatar)
 	_cam = Camera2D.new()
@@ -83,9 +84,7 @@ func _ready() -> void:
 	_place_avatar()
 	_cam.reset_smoothing()
 	if world.music != "":
-		var stream := ForgeStore.load_audio(world.music)
-		if stream and AudioManager.has_method("play_music"):
-			AudioManager.call("play_music", stream)
+		AudioManager.play_music(world.music)
 	_toast_text(world.name.to_upper(), NeonTheme.CYAN)
 	_rng.randomize()
 	for r: Dictionary in world.regions_at(cell):
@@ -381,6 +380,7 @@ func ix_group_changed(group: String, open: bool) -> void:
 func ix_teleport_local(_actor: Node, to: Vector2i) -> void:
 	if grid.in_bounds(to) and grid.is_walkable(to):
 		cell = to
+		CampaignManager.current_explore["at"] = cell
 		_place_avatar()
 		_cam.reset_smoothing()
 
@@ -416,9 +416,7 @@ func run_trigger(action: String, arg: String) -> void:
 			if ContentDB.get_mission(arg):
 				CampaignManager.start_mission(arg)
 		"music":
-			var stream := ForgeStore.load_audio(arg)
-			if stream and AudioManager.has_method("play_music"):
-				AudioManager.call("play_music", stream)
+			AudioManager.play_music(arg)
 		"teleport":
 			var parts := arg.split(":")
 			if parts.size() > 0 and not ContentDB.get_map(parts[0]).is_empty():
@@ -463,6 +461,7 @@ func _step(dir: Vector2i) -> void:
 	else:
 		tw.tween_property(_avatar, "position", to_pos, STEP_TIME)
 	cell = to
+	CampaignManager.current_explore["at"] = cell
 	await tw.finished
 	_avatar.z_index = (cell.x + cell.y) * 2 + 1
 	_moving = false

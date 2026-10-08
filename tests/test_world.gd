@@ -32,6 +32,7 @@ func run(p_tree: SceneTree) -> int:
 	test_masks_and_anchors()
 	test_npc_stages()
 	test_vault_demo()
+	test_campaign_fixes()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1347,6 +1348,42 @@ func test_vault_demo() -> void:
 	check(block.anchors.size() >= 3 and str(block.anchor_by_id("anc_neon_block_demo_1").get("npc_id", "")) == "ma_rivet", "Neon Block demo: Ma Rivet + vault entrance anchors")
 	hero.queue_free()
 	boss.queue_free()
+
+
+func test_campaign_fixes() -> void:
+	# Mission levels grow the primaries, not just HP / MP.
+	var cd := ContentDB.get_character("doctrine_warden")
+	var lo := Unit.new()
+	lo.setup(cd, Unit.Team.ENEMY, 1)
+	var hi := Unit.new()
+	hi.setup(cd, Unit.Team.ENEMY, 10)
+	check(hi.get_stat("attack") > lo.get_stat("attack") and hi.get_stat("speed") >= lo.get_stat("speed") and hi.get_stat("level") == 10, "enemy level 10 hits harder than level 1 (%d vs %d)" % [hi.get_stat("attack"), lo.get_stat("attack")])
+	check(ContentDB.get_character("doctrine_warden").get_stats().level == cd.get_stats().level, "levelling an enemy never touches its template")
+	lo.free()
+	hi.free()
+	# Shop stock survives a save.
+	VendorSystem.stock_left = {"armor_vendor": {"arm_x": 2}}
+	var vs := VendorSystem.get_state_data()
+	VendorSystem.reset()
+	VendorSystem.load_state_data(JSON.parse_string(JSON.stringify(vs)))
+	check(int(VendorSystem.stock_left.get("armor_vendor", {}).get("arm_x", -1)) == 2, "limited shop stock saves and loads")
+	VendorSystem.reset()
+	# Explore position + battle return survive a save, and a battle started
+	# from a map hands you back to it.
+	var keep_explore := CampaignManager.current_explore.duplicate()
+	CampaignManager.current_explore = {"map_id": "neon_block_demo", "spawn": -1, "at": Vector2i(8, 6)}
+	CampaignManager.battle_return = CampaignManager.current_explore.duplicate()
+	var cdata: Dictionary = JSON.parse_string(JSON.stringify(CampaignManager.get_campaign_data()))
+	CampaignManager.current_explore = {}
+	CampaignManager.battle_return = {}
+	CampaignManager.load_campaign_data(cdata)
+	check(CampaignManager.current_explore.get("at") == Vector2i(8, 6) and str(CampaignManager.battle_return.get("map_id", "")) == "neon_block_demo", "explore cell + battle return round-trip through a save")
+	CampaignManager.current_explore = keep_explore
+	CampaignManager.battle_return = {}
+	# Region music triggers store paths: the audio system takes them as is.
+	AudioManager.play_music("res://assets/music/does_not_exist.ogg")
+	check(AudioManager.current_music_id == "res://assets/music/does_not_exist.ogg", "music accepts a file path without erroring")
+	AudioManager.play_music("")
 
 
 func test_ui_icons() -> void:

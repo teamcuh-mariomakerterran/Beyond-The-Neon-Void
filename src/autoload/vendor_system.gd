@@ -87,3 +87,22 @@ func sell_stack(item_id: String, qty: int = 1) -> String:
 	GameManager.add_soul_coins(price)
 	sold.emit(item_id, price)
 	return ""
+
+
+# --- Save hooks ------------------------------------------------------------
+
+func reset() -> void:
+	stock_left.clear()
+
+
+func get_state_data() -> Dictionary:
+	return {"stock_left": stock_left.duplicate(true)}
+
+
+func load_state_data(d: Dictionary) -> void:
+	stock_left.clear()
+	var s: Dictionary = d.get("stock_left", {})
+	for v: String in s:
+		stock_left[v] = {}
+		for item: String in s[v]:
+			stock_left[v][item] = int(s[v][item])

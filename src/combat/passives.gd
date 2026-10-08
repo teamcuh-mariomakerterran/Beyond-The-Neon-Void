@@ -87,7 +87,7 @@ static func phases(unit: Node) -> bool:
 # --- Reactions -----------------------------------------------------------------
 
 static func _roll(battle: Node, p: PassiveResource) -> bool:
-	var rng: RandomNumberGenerator = battle.get("rng") if battle and battle.get("rng") else RandomNumberGenerator.new()
+	var rng: RandomNumberGenerator = battle.get("rng") if battle and battle.get("rng") else CombatManager.rng
 	return rng.randf() < p.chance
 
 

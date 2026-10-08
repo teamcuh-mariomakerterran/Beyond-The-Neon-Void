@@ -17,7 +17,12 @@ var current_mission_id: String = ""
 var world_clock: int = 0
 var last_battle_report: Dictionary = {}
 ## Where exploration drops the party: {map_id, spawn, at, from_forge}.
+## ExploreScene keeps "at" on the player's cell, so saves and battles know
+## exactly where you were.
 var current_explore: Dictionary = {}
+## Set when a battle starts from an explore map (encounter, NPC fight,
+## anchor): the battle hands you back there instead of the hub.
+var battle_return: Dictionary = {}
 
 
 func current_mission() -> MissionResource:
@@ -39,7 +44,45 @@ func start_mission(mission_id: String) -> void:
 		push_error("CampaignManager: unknown mission " + mission_id)
 		return
 	current_mission_id = mission_id
+	var from_explore := SceneManager.current_scene_path == EXPLORE_SCENE and not current_explore.is_empty()
+	battle_return = current_explore.duplicate() if from_explore else {}
 	SceneManager.change_scene(BATTLE_SCENE)
+
+
+## After a battle: back to the explore cell it started from, else the hub.
+func after_battle() -> void:
+	if not battle_return.is_empty() and not ContentDB.get_map(str(battle_return.get("map_id", ""))).is_empty():
+		var r := battle_return
+		battle_return = {}
+		explore(str(r["map_id"]), int(r.get("spawn", -1)), _cell(r.get("at")), bool(r.get("from_forge", false)))
+	else:
+		battle_return = {}
+		return_to_hub()
+
+
+## Continue from a save: the explore map and cell you saved on, else the hub.
+func resume() -> void:
+	if SceneManager.current_scene_path == EXPLORE_SCENE and not ContentDB.get_map(str(current_explore.get("map_id", ""))).is_empty():
+		explore(str(current_explore["map_id"]), int(current_explore.get("spawn", -1)), _cell(current_explore.get("at")))
+	elif SceneManager.current_scene_path == BATTLE_SCENE and not battle_return.is_empty():
+		after_battle()  # saved mid-fight: wake up where the fight started
+	else:
+		return_to_hub()
+
+
+static func _cell(v: Variant) -> Vector2i:
+	if v is Vector2i:
+		return v
+	if v is Array and (v as Array).size() >= 2:
+		return Vector2i(int(v[0]), int(v[1]))
+	return Vector2i(-1, -1)
+
+
+static func _explore_to_json(d: Dictionary) -> Dictionary:
+	if d.is_empty():
+		return {}
+	var c := _cell(d.get("at"))
+	return {"map_id": str(d.get("map_id", "")), "spawn": int(d.get("spawn", -1)), "at": [c.x, c.y]}
 
 
 ## Walk a world / city / hub / interior map. `spawn` indexes the map's player
@@ -60,8 +103,8 @@ func advance_clock(hours: int = 1) -> void:
 func process_mission_completion(victory: bool, mission: MissionResource, survivors: Array[String]) -> Dictionary:
 	var report := {"victory": victory, "mission_id": mission.id if mission else "", "soul_coins": 0, "xp": 0, "items": {}, "microchips": 0, "level_ups": {}}
 	if mission and victory:
-		var rng := RandomNumberGenerator.new()
-		rng.randomize()
+		# Same stream as the battle: a seeded battle replays to the same loot.
+		var rng: RandomNumberGenerator = CombatManager.rng
 		report["soul_coins"] = mission.soul_coin_reward
 		report["xp"] = mission.xp_reward
 		report["microchips"] = mission.microchip_reward
@@ -104,6 +147,8 @@ func get_campaign_data() -> Dictionary:
 		"completed_missions": completed_missions.duplicate(),
 		"current_mission_id": current_mission_id,
 		"world_clock": world_clock,
+		"explore": _explore_to_json(current_explore),
+		"battle_return": _explore_to_json(battle_return),
 	}
 
 
@@ -112,3 +157,7 @@ func load_campaign_data(data: Dictionary) -> void:
 	completed_missions.assign(data.get("completed_missions", []))
 	current_mission_id = str(data.get("current_mission_id", ""))
 	world_clock = int(data.get("world_clock", 0))
+	current_explore = data.get("explore", {}) if data.get("explore") is Dictionary else {}
+	if current_explore.has("at"):
+		current_explore["at"] = _cell(current_explore["at"])
+	battle_return = data.get("battle_return", {}) if data.get("battle_return") is Dictionary else {}

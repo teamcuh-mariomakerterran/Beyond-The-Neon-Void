@@ -126,7 +126,10 @@ func setup(p_world: WorldMap, p_grid: IsometricGrid, p_host: Object = null, p_sc
 	grid = p_grid
 	host = p_host
 	scene = p_scene
-	rng.randomize()
+	if scene == "battle":
+		rng = CombatManager.rng  # trap disarms replay with the battle seed
+	else:
+		rng.randomize()
 	return self
 
 

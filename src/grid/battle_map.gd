@@ -623,9 +623,7 @@ func run_trigger(what: String, arg: String) -> void:
 		"cutscene":
 			await play_cutscene(arg, {"PLACE": str(map_data.get("name", ""))})
 		"music":
-			var stream := ForgeStore.load_audio(arg)
-			if stream and AudioManager.has_method("play_music"):
-				AudioManager.call("play_music", stream)
+			AudioManager.play_music(arg)
 		_:
 			hud.add_log("[color=#8f84ad](%s %s only works on explore maps)[/color]" % [what, arg])
 
@@ -816,4 +814,4 @@ func _on_battle_finished(victory: bool) -> void:
 
 func _on_continue() -> void:
 	CombatManager.stop_battle()
-	CampaignManager.return_to_hub()
+	CampaignManager.after_battle()

@@ -68,6 +68,9 @@ func new_game() -> void:
 	var quests := get_node_or_null("/root/QuestManager")
 	if quests:
 		quests.reset()
+	var vendors := get_node_or_null("/root/VendorSystem")
+	if vendors:
+		vendors.reset()
 	party_changed.emit()
 
 

@@ -18,7 +18,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("quick_load"):
 		if has_save_file(QUICK_SLOT):
 			load_game(QUICK_SLOT)
-			SceneManager.load_game_state()
+			CampaignManager.resume()
 
 
 func slot_path(slot: int) -> String:
@@ -38,6 +38,7 @@ func save_game(slot: int = QUICK_SLOT) -> bool:
 		"campaign": CampaignManager.get_campaign_data(),
 		"dispatch": DispatchManager.get_state_data(),
 		"quests": QuestManager.get_state_data(),
+		"vendors": VendorSystem.get_state_data(),
 		"scene": SceneManager.current_scene_path,
 	}
 	var tmp_path := slot_path(slot) + ".tmp"
@@ -65,6 +66,7 @@ func load_game(slot: int = QUICK_SLOT) -> bool:
 	CampaignManager.load_campaign_data(data.get("campaign", {}))
 	DispatchManager.load_state_data(data.get("dispatch", {}))
 	QuestManager.load_state_data(data.get("quests", {}))  # older saves: no key -> fresh quest log
+	VendorSystem.load_state_data(data.get("vendors", {}))  # older saves: full stock
 	SceneManager.current_scene_path = str(data.get("scene", ""))
 	game_loaded.emit(slot)
 	return true
