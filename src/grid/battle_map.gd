@@ -215,7 +215,8 @@ func _spawn_units() -> Array[Node]:
 		var gdata := ContentDB.get_character(str(g["character_id"]))
 		if gdata:
 			var gu := _make_unit(gdata, Unit.Team.PLAYER, Vector2i(g["cell"][0], g["cell"][1]), int(g.get("level", 1)))
-			gu.is_player_controlled = false
+			# "controlled": the player commands this guest (test units, story cameos).
+			gu.is_player_controlled = bool(g.get("controlled", false))
 			out.append(gu)
 	return out
 
@@ -683,7 +684,7 @@ func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	var ranged: bool = IsometricGrid.distance(unit.cell, cell) > 1 and not self_cast
 	var plan := VFX.plan_for_ability(ability, ranged)
 	var cells := ability.get_affected_cells(grid, unit.cell, cell)
-	unit.play_animation("attack")
+	unit.play_animation(unit.anim_for(ability))
 	if plan["cast"] != "" and not self_cast:
 		VFX.spawn(world, plan["cast"], from, _vfx_params(unit.cell))
 	if plan["travel"] != "" and ranged and plan["mode"] == "point":

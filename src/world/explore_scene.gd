@@ -32,6 +32,10 @@ var _rng := RandomNumberGenerator.new()
 ## Interaction anchors (terminals, doors, hidden loot, NPC hooks…). State
 ## carries between visits in GameManager.story_flags["ixstate:<map>"].
 var ix: Interactions
+## Animated avatar (Lattice / PixelMatrix / PixelLab set): walks and turns.
+var _avatar_sprite: AnimatedSprite2D
+var _avatar_set: Dictionary = {}
+var _avatar_facing: String = "SE"
 
 
 func _ready() -> void:
@@ -115,13 +119,21 @@ func _make_avatar() -> Node2D:
 	var root := Node2D.new()
 	var party := GameManager.get_party_members()
 	var frames_path := party[0].sprite_frames_path if not party.is_empty() else ""
-	var uset: Dictionary = PixelMatrix.unit_set(frames_path) if PixelMatrix.is_root(frames_path) else (LatticeClip.unit_set(frames_path) if frames_path.ends_with(".json") and LatticeClip.is_clip(frames_path) else {})
+	var uset: Dictionary = {}
+	if PixelLab.is_root(frames_path):
+		uset = PixelLab.unit_set(frames_path)
+	elif PixelMatrix.is_root(frames_path):
+		uset = PixelMatrix.unit_set(frames_path)
+	elif frames_path.ends_with(".json") and LatticeClip.is_clip(frames_path):
+		uset = LatticeClip.unit_set(frames_path)
 	if uset.get("ok", false):
 		var ls := AnimatedSprite2D.new()
 		ls.sprite_frames = uset["frames"]
-		ls.scale = Vector2.ONE * world.tile_width / 64.0
+		ls.scale = Vector2.ONE * world.tile_width * float(uset.get("per_tile", 1.0 / 64.0))
 		LatticeClip.play_on(ls, uset, "idle", "SE")
 		root.add_child(ls)
+		_avatar_sprite = ls
+		_avatar_set = uset
 	elif frames_path != "" and ResourceLoader.exists(frames_path):
 		var spr := AnimatedSprite2D.new()
 		spr.sprite_frames = load(frames_path)
@@ -450,7 +462,10 @@ func _step(dir: Vector2i) -> void:
 	var from_pos := _avatar.position
 	var to_pos := world.to_screen(Vector2(to), grid.get_height(to))
 	_avatar.z_index = maxi(cell.x + cell.y, to.x + to.y) * 2 + 1
-	if to_pos.x != from_pos.x:
+	if _avatar_sprite:
+		_avatar_facing = LatticeClip.facing_of(dir)
+		LatticeClip.play_on(_avatar_sprite, _avatar_set, "walk", _avatar_facing)
+	elif to_pos.x != from_pos.x:
 		_avatar.scale.x = -1 if to_pos.x < from_pos.x else 1
 	var tw := create_tween()
 	var hop := grid.get_height(to) != grid.get_height(cell)
@@ -465,6 +480,8 @@ func _step(dir: Vector2i) -> void:
 	await tw.finished
 	_avatar.z_index = (cell.x + cell.y) * 2 + 1
 	_moving = false
+	if _avatar_sprite and _path.is_empty() and not _dir_held():
+		LatticeClip.play_on(_avatar_sprite, _avatar_set, "idle", _avatar_facing)
 	if ix and not ix.on_enter(cell, null).is_empty():
 		_save_ix()
 	await _update_regions()
@@ -508,6 +525,11 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D): dir = Vector2i(1, 0)
 	if dir != Vector2i.ZERO:
 		_step(dir)
+
+
+func _dir_held() -> bool:
+	return Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") \
+		or Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_D)
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -68,6 +68,10 @@ enum Shape { SINGLE, DIAMOND, LINE, CROSS }
 
 @export_group("Presentation")
 @export var vfx_id: String = ""
+## Unit animation to play (e.g. "roundhouse_kick", "uppercut", "cast"). Empty:
+## heals / buffs / items play "cast", everything else "attack". Missing on a
+## unit's sprite set → falls back to the default.
+@export var anim: String = ""
 ## Optional PARALLAX close-up played when this ability is used (vars: ATTACKER,
 ## TARGET, ABILITY, DAMAGE; slot ATTACKER is bound to the caster's name).
 @export var cutscene: String = ""

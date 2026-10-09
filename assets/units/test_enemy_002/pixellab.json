@@ -1,0 +1,5 @@
+{
+	"_note": "PixelLab picks (see src/vfx/pixel_lab.gd). The plain walk, not the upgraded-costume one.",
+	"actions": {"walk": "walking_forward/Walking"},
+	"fps": 10
+}

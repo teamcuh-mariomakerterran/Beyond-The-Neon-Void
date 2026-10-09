@@ -34,6 +34,7 @@ func run(p_tree: SceneTree) -> int:
 	test_vault_demo()
 	test_campaign_fixes()
 	await test_streaming()
+	test_pixellab()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1437,6 +1438,45 @@ func test_streaming() -> void:
 	w.set_tile(Vector2i(1, 1), 6, "terrain:lava")
 	check((w.journal as Dictionary).size() == 1 and ((w.journal as Dictionary)[Vector2i(1, 1)] as Array).size() == 1, "undo journal keeps the column as it was before the stroke")
 	w.journal = null
+
+
+func test_pixellab() -> void:
+	check(PixelLab.classify("attack_kick", "Roundhouse_Kick") == "attack" and PixelLab.classify("attack_kick", "Taking_Hit") == "hit"
+		and PixelLab.classify("throwing_up_item_to_heal", "The_right_hand_reaches") == "cast" and PixelLab.classify("run", "Running") == "run"
+		and PixelLab.classify("walking_forward", "Walking") == "walk" and PixelLab.classify("idle_breathing", "Breathing_Idle") == "idle", "PixelLab names map to game actions")
+	var dir := "res://assets/units/test_enemy_001"
+	if not PixelLab.is_root(dir):
+		check(false, "test_enemy_001 PixelLab export present")
+		return
+	var us := PixelLab.unit_set(dir)
+	var sf: SpriteFrames = us["frames"]
+	check(us["ok"] and sf.has_animation("walk_SE") and sf.has_animation("attack_NW") and sf.has_animation("hit_SW") and sf.has_animation("idle_S"), "Bulwark Brawler: walk / attack / hit by facing, idle in all 8")
+	check(sf.has_animation("roundhouse_kick_SE") and sf.has_animation("uppercut_NE"), "extra animations keep their own names for abilities")
+	check(not sf.get_animation_loop("attack_SE") and sf.get_animation_loop("walk_SE"), "attacks play once, walks loop")
+	var a: Vector2 = us["anchors"]["walk_SE"]
+	var cell: Vector2 = us["cells"]["walk_SE"]
+	check(a.x == cell.x * 0.5 and a.y > cell.y * 0.6 and a.y < cell.y, "anchor on the feet (%s in %s)" % [a, cell])
+	var g := IsometricGrid.new()
+	g.setup(6, 6)
+	g.tile_width = 128.0
+	var cd := (ContentDB.get_character("test_enemy_001") as CharacterData)
+	var u := Unit.new()
+	u.setup(cd, Unit.Team.ENEMY, 3)
+	u.grid = g
+	tree.root.add_child(u)
+	u.place_at(Vector2i(2, 2))
+	check(u.sprite != null and is_equal_approx(u.sprite.scale.x, 1.5), "PixelLab unit drawn at 1.5× on 128-wide tiles")
+	var kick := ContentDB.get_ability("tx_roundhouse_kick")
+	check(kick != null and u.anim_for(kick) == "roundhouse_kick" and u.anim_for(ContentDB.get_ability("basic_attack")) == "attack", "abilities pick their animation (kick → roundhouse_kick)")
+	var gunner := Unit.new()
+	gunner.setup(ContentDB.get_character("test_enemy_002"), Unit.Team.ENEMY, 3)
+	gunner.grid = g
+	tree.root.add_child(gunner)
+	check(gunner.anim_for(ContentDB.get_ability("tx_field_patch")) == "cast" and str(PixelLab.unit_set("res://assets/units/test_enemy_002")["actions"]["walk"]).begins_with("walking_forward"), "Corp Gunner: patch plays the item animation, plain walk pinned by pixellab.json")
+	u.queue_free()
+	gunner.queue_free()
+	var m := ContentDB.get_mission("test_pixellab_skirmish")
+	check(m != null and bool(m.guests[0].get("controlled", false)) and ContentDB.get_npc("kade") != null and ContentDB.vendors.has("test_vendor"), "test skirmish, Kade and his shop are in")
 
 
 func test_ui_icons() -> void:

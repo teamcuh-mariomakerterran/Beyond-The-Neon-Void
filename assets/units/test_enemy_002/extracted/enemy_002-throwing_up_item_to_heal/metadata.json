@@ -1,0 +1,85 @@
+{
+  "group_id": "54941d74-7628-43b7-884c-ff90c5e15f08",
+  "states": [
+    {
+      "character": {
+        "id": "d52964a7-15c5-42c5-88e4-6760353790fb",
+        "name": "throwing up item to heal",
+        "prompt": "cyberpunk male soldier, isometric 2:1 perspective, clean and crisp black 1 pixel outlines",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-17T11:56:55.393800+00:00"
+      },
+      "folder": "throwing_up_item_to_heal",
+      "frames": {
+        "rotations": {
+          "south": "throwing_up_item_to_heal/rotations/south.png",
+          "south-east": "throwing_up_item_to_heal/rotations/south-east.png",
+          "east": "throwing_up_item_to_heal/rotations/east.png",
+          "north-east": "throwing_up_item_to_heal/rotations/north-east.png",
+          "north": "throwing_up_item_to_heal/rotations/north.png",
+          "north-west": "throwing_up_item_to_heal/rotations/north-west.png",
+          "west": "throwing_up_item_to_heal/rotations/west.png",
+          "south-west": "throwing_up_item_to_heal/rotations/south-west.png"
+        },
+        "animations": {
+          "The_right_hand_reaches_down_to_the_hip_pocket_to_g": {
+            "south-west": [
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_000.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_001.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_002.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_003.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_004.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_005.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_006.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_007.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-west/frame_008.png"
+            ],
+            "north-west": [
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_000.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_001.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_002.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_003.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_004.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_005.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_006.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_007.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_008.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_009.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-west/frame_010.png"
+            ],
+            "north-east": [
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_000.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_001.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_002.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_003.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_004.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_005.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_006.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_007.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/north-east/frame_008.png"
+            ],
+            "south-east": [
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_000.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_001.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_002.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_003.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_004.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_005.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_006.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_007.png",
+              "throwing_up_item_to_heal/animations/The_right_hand_reaches_down_to_the_hip_pocket_to_g/south-east/frame_008.png"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-08T14:28:19.116413"
+}

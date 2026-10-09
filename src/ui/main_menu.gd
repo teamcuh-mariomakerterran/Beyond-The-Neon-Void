@@ -34,6 +34,10 @@ func _ready() -> void:
 	var cont := _button(center, "CONTINUE", _continue)
 	cont.disabled = not SaveManager.has_save_file()
 	_button(center, "QUICK BATTLE — THE BREW PLAN", func() -> void: _quick_battle("m01_the_brew_plan"))
+	if ContentDB.get_mission("test_pixellab_skirmish"):
+		_button(center, "TEST UNITS — SKIRMISH", func() -> void: _quick_battle("test_pixellab_skirmish"))
+	if ContentDB.get_character("test_hero") and not ContentDB.get_map("neon_block_demo").is_empty():
+		_button(center, "TEST UNITS — WALK THE NEON BLOCK", _test_walk)
 	var forge := _button(center, "NEON FORGE  ·  EDITOR  (F1)", func() -> void: SceneManager.change_scene(FORGE_SCENE))
 	forge.add_theme_color_override("font_color", NeonTheme.AMBER)
 	_button(center, "QUIT", func() -> void: get_tree().quit())
@@ -66,6 +70,18 @@ func _new_game() -> void:
 func _continue() -> void:
 	if SaveManager.load_game():
 		CampaignManager.resume()
+
+
+## New game led by the Test Runner, dropped on the Neon Block (Kade's stall,
+## Ma Rivet, the vault entrance).
+func _test_walk() -> void:
+	GameManager.new_game()
+	var hero := GameManager.add_character_to_roster(ContentDB.get_character("test_hero"))
+	if hero:
+		var party: Array[String] = [hero.id]
+		party.append_array(GameManager.active_party.slice(0, GameManager.MAX_PARTY_SIZE - 1))
+		GameManager.set_active_party(party)
+	CampaignManager.explore("neon_block_demo")
 
 
 func _quick_battle(mission_id: String) -> void:

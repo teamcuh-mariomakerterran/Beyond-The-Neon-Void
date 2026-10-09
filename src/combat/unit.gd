@@ -432,6 +432,7 @@ func move_along(path: Array[Vector2i], animate: bool = true) -> void:
 	var goal := path[path.size() - 1]
 	grid.clear_occupant(start, self)
 	if animate and is_inside_tree():
+		play_animation("walk")
 		for i in range(1, path.size()):
 			var next := path[i]
 			face_towards(next)
@@ -449,6 +450,8 @@ func move_along(path: Array[Vector2i], animate: bool = true) -> void:
 			await t.finished
 			if hop:
 				land_squash()
+		if _action == "walk":
+			play_animation("idle")
 	else:
 		face_towards(goal)
 	cell = goal
@@ -488,6 +491,21 @@ func force_move(to_cell: Vector2i, animate: bool = true) -> void:
 	else:
 		position = grid.grid_to_world(cell)
 	EventBus.unit_moved.emit(self, from, to_cell)
+
+
+## Which animation an ability plays on this unit (see Ability.anim).
+func anim_for(ability: Ability) -> String:
+	if ability.anim != "" and has_anim(ability.anim):
+		return ability.anim
+	if ability.kind in [Ability.Kind.HEAL, Ability.Kind.BUFF, Ability.Kind.UTILITY] or (ability.target in [Ability.Target.ALLY, Ability.Target.SELF] and not ability.is_offensive()):
+		return "cast" if has_anim("cast") else "attack"
+	return "attack"
+
+
+func has_anim(action: String) -> bool:
+	if not _lattice.is_empty():
+		return str(LatticeClip.resolve(_lattice, action, LatticeClip.facing_of(facing))[0]) != ""
+	return sprite != null and sprite.sprite_frames != null and sprite.sprite_frames.has_animation(action)
 
 
 func play_animation(anim_name: String) -> void:
@@ -541,19 +559,21 @@ func land_squash() -> void:
 func _try_load_sprite() -> void:
 	if data == null or data.sprite_frames_path == "":
 		return
-	var pm := PixelMatrix.is_root(data.sprite_frames_path)
-	if not pm and not FileAccess.file_exists(data.sprite_frames_path):
+	var pl := PixelLab.is_root(data.sprite_frames_path)
+	var pm := not pl and PixelMatrix.is_root(data.sprite_frames_path)
+	if not pm and not pl and not FileAccess.file_exists(data.sprite_frames_path):
 		return
-	if pm or (data.sprite_frames_path.ends_with(".json") and LatticeClip.is_clip(data.sprite_frames_path)):
-		_lattice = PixelMatrix.unit_set(data.sprite_frames_path) if pm else LatticeClip.unit_set(data.sprite_frames_path)
+	if pl or pm or (data.sprite_frames_path.ends_with(".json") and LatticeClip.is_clip(data.sprite_frames_path)):
+		_lattice = PixelLab.unit_set(data.sprite_frames_path) if pl else (PixelMatrix.unit_set(data.sprite_frames_path) if pm else LatticeClip.unit_set(data.sprite_frames_path))
 		if not _lattice.get("ok", false):
 			_lattice = {}
 			return
 		sprite = AnimatedSprite2D.new()
 		sprite.use_parent_material = true  # status looks (StatusLook) shade the sprite too
 		sprite.sprite_frames = _lattice["frames"]
-		# Lattice packs are drawn for 64×32 tiles; scale to this grid.
-		var s := (grid.tile_width if grid else 64.0) / 64.0
+		# Lattice packs are drawn for 64×32 tiles; PixelLab sets carry their own
+		# scale per tile width. Scale to this grid.
+		var s := (grid.tile_width if grid else 64.0) * float(_lattice.get("per_tile", 1.0 / 64.0))
 		sprite.scale = Vector2(s, s)
 		sprite.animation_finished.connect(_on_clip_finished)
 		add_child(sprite)

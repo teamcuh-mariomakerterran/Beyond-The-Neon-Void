@@ -1,0 +1,92 @@
+{
+  "group_id": "54941d74-7628-43b7-884c-ff90c5e15f08",
+  "states": [
+    {
+      "character": {
+        "id": "bd4a28ba-5ca5-439a-a903-8e67dbdb7c38",
+        "name": "lifting gun and shooting_add a shooting effect",
+        "prompt": "cyberpunk male soldier, isometric 2:1 perspective, clean and crisp black 1 pixel outlines",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-08T08:50:28.281726+00:00"
+      },
+      "folder": "lifting_gun_and_shooting_add_a_shooting_effect",
+      "frames": {
+        "rotations": {
+          "south": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/south.png",
+          "south-east": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/south-east.png",
+          "east": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/east.png",
+          "north-east": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/north-east.png",
+          "north": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/north.png",
+          "north-west": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/north-west.png",
+          "west": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/west.png",
+          "south-west": "lifting_gun_and_shooting_add_a_shooting_effect/rotations/south-west.png"
+        },
+        "animations": {
+          "The_character_shifts_weight_while_bracing_the_tors": {
+            "north-west-04ffe800": [
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_000.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_001.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_002.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_003.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_004.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_005.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_006.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_007.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-04ffe800/frame_008.png"
+            ],
+            "south-west": [
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_000.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_001.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_002.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_003.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_004.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_005.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_006.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_007.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-west/frame_008.png"
+            ],
+            "north-west-65e1a978": [
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_000.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_001.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_002.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_003.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_004.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_005.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_006.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_007.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-west-65e1a978/frame_008.png"
+            ],
+            "north-east": [
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_000.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_001.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_002.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_003.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_004.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_005.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_006.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_007.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/north-east/frame_008.png"
+            ],
+            "south-east": [
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_000.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_001.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_002.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_003.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_004.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_005.png",
+              "lifting_gun_and_shooting_add_a_shooting_effect/animations/The_character_shifts_weight_while_bracing_the_tors/south-east/frame_006.png"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-08T14:28:14.486173"
+}

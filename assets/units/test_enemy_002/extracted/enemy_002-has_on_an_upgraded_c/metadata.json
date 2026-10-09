@@ -1,0 +1,85 @@
+{
+  "group_id": "54941d74-7628-43b7-884c-ff90c5e15f08",
+  "states": [
+    {
+      "character": {
+        "id": "27e5e046-8037-4ae2-87ca-e8620cdb2888",
+        "name": "has on an upgraded c",
+        "prompt": "cyberpunk male soldier, isometric 2:1 perspective, clean and crisp black 1 pixel outlines",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-17T11:51:40.263714+00:00"
+      },
+      "folder": "has_on_an_upgraded_c",
+      "frames": {
+        "rotations": {
+          "south": "has_on_an_upgraded_c/rotations/south.png",
+          "south-east": "has_on_an_upgraded_c/rotations/south-east.png",
+          "east": "has_on_an_upgraded_c/rotations/east.png",
+          "north-east": "has_on_an_upgraded_c/rotations/north-east.png",
+          "north": "has_on_an_upgraded_c/rotations/north.png",
+          "north-west": "has_on_an_upgraded_c/rotations/north-west.png",
+          "west": "has_on_an_upgraded_c/rotations/west.png",
+          "south-west": "has_on_an_upgraded_c/rotations/south-west.png"
+        },
+        "animations": {
+          "The_character_maintains_a_steady_rhythmic_walking": {
+            "north-east": [
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_000.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_001.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_002.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_003.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_004.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_005.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_006.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_007.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-east/frame_008.png"
+            ],
+            "south-west": [
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_000.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_001.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_002.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_003.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_004.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_005.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_006.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_007.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_008.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_009.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-west/frame_010.png"
+            ],
+            "north-west": [
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_000.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_001.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_002.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_003.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_004.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_005.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_006.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_007.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/north-west/frame_008.png"
+            ],
+            "south-east": [
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_000.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_001.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_002.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_003.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_004.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_005.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_006.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_007.png",
+              "has_on_an_upgraded_c/animations/The_character_maintains_a_steady_rhythmic_walking/south-east/frame_008.png"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-08T14:28:04.226690"
+}

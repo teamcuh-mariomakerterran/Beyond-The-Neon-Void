@@ -1,0 +1,586 @@
+{
+  "group_id": "a0c1f1c3-d7ef-4bca-aca1-64a75ffdad72",
+  "states": [
+    {
+      "character": {
+        "id": "a718d3d4-bb0a-4ece-9bd1-4f22353d4adc",
+        "name": "idle breathing",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 80,
+          "height": 80
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-10T14:08:47.989016+00:00"
+      },
+      "folder": "idle_breathing",
+      "frames": {
+        "rotations": {
+          "south": "idle_breathing/rotations/south.png",
+          "south-east": "idle_breathing/rotations/south-east.png",
+          "east": "idle_breathing/rotations/east.png",
+          "north-east": "idle_breathing/rotations/north-east.png",
+          "north": "idle_breathing/rotations/north.png",
+          "north-west": "idle_breathing/rotations/north-west.png",
+          "west": "idle_breathing/rotations/west.png",
+          "south-west": "idle_breathing/rotations/south-west.png"
+        },
+        "animations": {
+          "Breathing_Idle": {
+            "north-east": [
+              "idle_breathing/animations/Breathing_Idle/north-east/frame_000.png",
+              "idle_breathing/animations/Breathing_Idle/north-east/frame_001.png",
+              "idle_breathing/animations/Breathing_Idle/north-east/frame_002.png",
+              "idle_breathing/animations/Breathing_Idle/north-east/frame_003.png"
+            ],
+            "north-west": [
+              "idle_breathing/animations/Breathing_Idle/north-west/frame_000.png",
+              "idle_breathing/animations/Breathing_Idle/north-west/frame_001.png",
+              "idle_breathing/animations/Breathing_Idle/north-west/frame_002.png",
+              "idle_breathing/animations/Breathing_Idle/north-west/frame_003.png"
+            ],
+            "south-west": [
+              "idle_breathing/animations/Breathing_Idle/south-west/frame_000.png",
+              "idle_breathing/animations/Breathing_Idle/south-west/frame_001.png",
+              "idle_breathing/animations/Breathing_Idle/south-west/frame_002.png",
+              "idle_breathing/animations/Breathing_Idle/south-west/frame_003.png"
+            ],
+            "south-east": [
+              "idle_breathing/animations/Breathing_Idle/south-east/frame_000.png",
+              "idle_breathing/animations/Breathing_Idle/south-east/frame_001.png",
+              "idle_breathing/animations/Breathing_Idle/south-east/frame_002.png",
+              "idle_breathing/animations/Breathing_Idle/south-east/frame_003.png"
+            ]
+          }
+        }
+      },
+      "portrait": {
+        "path": "idle_breathing/portrait.png",
+        "size": 128,
+        "generated_at": "2026-09-13T14:05:07.727867"
+      },
+      "vocal_animation": {
+        "path": "idle_breathing/vocal/grid.png",
+        "moods": [
+          "happy",
+          "angry",
+          "sad",
+          "surprised"
+        ],
+        "visemes": [
+          "rest",
+          "closed",
+          "small_open",
+          "medium_open",
+          "wide_open",
+          "round",
+          "teeth"
+        ],
+        "viseme_count": 7,
+        "width": 896,
+        "height": 512,
+        "generated_at": "2026-09-13T14:13:16.032323",
+        "layout": "grid",
+        "columns": "visemes",
+        "rows": "moods"
+      }
+    },
+    {
+      "character": {
+        "id": "19ba2998-53e0-48d9-9d98-0710ac193251",
+        "name": "walking forward v2",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 160,
+          "height": 160
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-12T00:05:00.650538+00:00"
+      },
+      "folder": "walking_forward_v2",
+      "frames": {
+        "rotations": {
+          "south": "walking_forward_v2/rotations/south.png",
+          "south-east": "walking_forward_v2/rotations/south-east.png",
+          "east": "walking_forward_v2/rotations/east.png",
+          "north-east": "walking_forward_v2/rotations/north-east.png",
+          "north": "walking_forward_v2/rotations/north.png",
+          "north-west": "walking_forward_v2/rotations/north-west.png",
+          "west": "walking_forward_v2/rotations/west.png",
+          "south-west": "walking_forward_v2/rotations/south-west.png"
+        },
+        "animations": {
+          "The_armored_figure_strides_forward_with_a_steady_c": {
+            "north-west": [
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_000.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_001.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_002.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_003.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_004.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_005.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_006.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_007.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_008.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_009.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-west/frame_010.png"
+            ],
+            "north-east": [
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_000.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_001.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_002.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_003.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_004.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_005.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_006.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_007.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_008.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_009.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/north-east/frame_010.png"
+            ],
+            "south-east": [
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_000.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_001.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_002.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_003.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_004.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_005.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_006.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_007.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_008.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_009.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-east/frame_010.png"
+            ],
+            "south-west": [
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_000.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_001.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_002.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_003.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_004.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_005.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_006.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_007.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_008.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_009.png",
+              "walking_forward_v2/animations/The_armored_figure_strides_forward_with_a_steady_c/south-west/frame_010.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "character": {
+        "id": "bd865a9f-5b90-4cc3-8861-c94f3cc15887",
+        "name": "jumping",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 160,
+          "height": 160
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-02T00:34:56.155650+00:00"
+      },
+      "folder": "jumping",
+      "frames": {
+        "rotations": {
+          "south": "jumping/rotations/south.png",
+          "south-east": "jumping/rotations/south-east.png",
+          "east": "jumping/rotations/east.png",
+          "north-east": "jumping/rotations/north-east.png",
+          "north": "jumping/rotations/north.png",
+          "north-west": "jumping/rotations/north-west.png",
+          "west": "jumping/rotations/west.png",
+          "south-west": "jumping/rotations/south-west.png"
+        },
+        "animations": {
+          "Jumping": {
+            "north-east": [
+              "jumping/animations/Jumping/north-east/frame_000.png",
+              "jumping/animations/Jumping/north-east/frame_001.png",
+              "jumping/animations/Jumping/north-east/frame_002.png",
+              "jumping/animations/Jumping/north-east/frame_003.png",
+              "jumping/animations/Jumping/north-east/frame_004.png",
+              "jumping/animations/Jumping/north-east/frame_005.png",
+              "jumping/animations/Jumping/north-east/frame_006.png",
+              "jumping/animations/Jumping/north-east/frame_007.png",
+              "jumping/animations/Jumping/north-east/frame_008.png"
+            ],
+            "south-west": [
+              "jumping/animations/Jumping/south-west/frame_000.png",
+              "jumping/animations/Jumping/south-west/frame_001.png",
+              "jumping/animations/Jumping/south-west/frame_002.png",
+              "jumping/animations/Jumping/south-west/frame_003.png",
+              "jumping/animations/Jumping/south-west/frame_004.png",
+              "jumping/animations/Jumping/south-west/frame_005.png",
+              "jumping/animations/Jumping/south-west/frame_006.png",
+              "jumping/animations/Jumping/south-west/frame_007.png",
+              "jumping/animations/Jumping/south-west/frame_008.png"
+            ],
+            "north-west": [
+              "jumping/animations/Jumping/north-west/frame_000.png",
+              "jumping/animations/Jumping/north-west/frame_001.png",
+              "jumping/animations/Jumping/north-west/frame_002.png",
+              "jumping/animations/Jumping/north-west/frame_003.png",
+              "jumping/animations/Jumping/north-west/frame_004.png",
+              "jumping/animations/Jumping/north-west/frame_005.png",
+              "jumping/animations/Jumping/north-west/frame_006.png",
+              "jumping/animations/Jumping/north-west/frame_007.png",
+              "jumping/animations/Jumping/north-west/frame_008.png"
+            ],
+            "south-east": [
+              "jumping/animations/Jumping/south-east/frame_000.png",
+              "jumping/animations/Jumping/south-east/frame_001.png",
+              "jumping/animations/Jumping/south-east/frame_002.png",
+              "jumping/animations/Jumping/south-east/frame_003.png",
+              "jumping/animations/Jumping/south-east/frame_004.png",
+              "jumping/animations/Jumping/south-east/frame_005.png",
+              "jumping/animations/Jumping/south-east/frame_006.png",
+              "jumping/animations/Jumping/south-east/frame_007.png",
+              "jumping/animations/Jumping/south-east/frame_008.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "character": {
+        "id": "580131a7-5d73-4156-bcd7-ab380ea9d579",
+        "name": "walking forward",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 160,
+          "height": 160
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-02T01:10:06.985207+00:00"
+      },
+      "folder": "walking_forward",
+      "frames": {
+        "rotations": {
+          "south": "walking_forward/rotations/south.png",
+          "south-east": "walking_forward/rotations/south-east.png",
+          "east": "walking_forward/rotations/east.png",
+          "north-east": "walking_forward/rotations/north-east.png",
+          "north": "walking_forward/rotations/north.png",
+          "north-west": "walking_forward/rotations/north-west.png",
+          "west": "walking_forward/rotations/west.png",
+          "south-west": "walking_forward/rotations/south-west.png"
+        },
+        "animations": {
+          "Walking": {
+            "north-east": [
+              "walking_forward/animations/Walking/north-east/frame_000.png",
+              "walking_forward/animations/Walking/north-east/frame_001.png",
+              "walking_forward/animations/Walking/north-east/frame_002.png",
+              "walking_forward/animations/Walking/north-east/frame_003.png",
+              "walking_forward/animations/Walking/north-east/frame_004.png",
+              "walking_forward/animations/Walking/north-east/frame_005.png",
+              "walking_forward/animations/Walking/north-east/frame_006.png",
+              "walking_forward/animations/Walking/north-east/frame_007.png"
+            ],
+            "north-west": [
+              "walking_forward/animations/Walking/north-west/frame_000.png",
+              "walking_forward/animations/Walking/north-west/frame_001.png",
+              "walking_forward/animations/Walking/north-west/frame_002.png",
+              "walking_forward/animations/Walking/north-west/frame_003.png",
+              "walking_forward/animations/Walking/north-west/frame_004.png",
+              "walking_forward/animations/Walking/north-west/frame_005.png",
+              "walking_forward/animations/Walking/north-west/frame_006.png",
+              "walking_forward/animations/Walking/north-west/frame_007.png"
+            ],
+            "south-east": [
+              "walking_forward/animations/Walking/south-east/frame_000.png",
+              "walking_forward/animations/Walking/south-east/frame_001.png",
+              "walking_forward/animations/Walking/south-east/frame_002.png",
+              "walking_forward/animations/Walking/south-east/frame_003.png",
+              "walking_forward/animations/Walking/south-east/frame_004.png",
+              "walking_forward/animations/Walking/south-east/frame_005.png",
+              "walking_forward/animations/Walking/south-east/frame_006.png",
+              "walking_forward/animations/Walking/south-east/frame_007.png"
+            ],
+            "south-west": [
+              "walking_forward/animations/Walking/south-west/frame_000.png",
+              "walking_forward/animations/Walking/south-west/frame_001.png",
+              "walking_forward/animations/Walking/south-west/frame_002.png",
+              "walking_forward/animations/Walking/south-west/frame_003.png",
+              "walking_forward/animations/Walking/south-west/frame_004.png",
+              "walking_forward/animations/Walking/south-west/frame_005.png",
+              "walking_forward/animations/Walking/south-west/frame_006.png",
+              "walking_forward/animations/Walking/south-west/frame_007.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "character": {
+        "id": "ebd7b410-31c9-4e63-87f0-636847a64425",
+        "name": "attack blast",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 160,
+          "height": 160
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-02T01:21:07.693251+00:00"
+      },
+      "folder": "attack_blast",
+      "frames": {
+        "rotations": {
+          "south": "attack_blast/rotations/south.png",
+          "south-east": "attack_blast/rotations/south-east.png",
+          "east": "attack_blast/rotations/east.png",
+          "north-east": "attack_blast/rotations/north-east.png",
+          "north": "attack_blast/rotations/north.png",
+          "north-west": "attack_blast/rotations/north-west.png",
+          "west": "attack_blast/rotations/west.png",
+          "south-west": "attack_blast/rotations/south-west.png"
+        },
+        "animations": {
+          "Pull_back_arms_into_a_tight_wind-up_then_rapidly_t": {
+            "south-east": [
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_000.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_001.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_002.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_003.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_004.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_005.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_006.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_007.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_008.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_009.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_010.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_011.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-east/frame_012.png"
+            ],
+            "north-east": [
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_000.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_001.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_002.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_003.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_004.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_005.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_006.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_007.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_008.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_009.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_010.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_011.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-east/frame_012.png"
+            ],
+            "north-west": [
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_000.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_001.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_002.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_003.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_004.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_005.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_006.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_007.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_008.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_009.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_010.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_011.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/north-west/frame_012.png"
+            ],
+            "south-west": [
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_000.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_001.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_002.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_003.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_004.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_005.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_006.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_007.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_008.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_009.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_010.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_011.png",
+              "attack_blast/animations/Pull_back_arms_into_a_tight_wind-up_then_rapidly_t/south-west/frame_012.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "character": {
+        "id": "72a2c6af-5fbb-468f-aa2d-0e378024a697",
+        "name": "walking forward (copy 2)",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 160,
+          "height": 160
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-03T02:35:52.656841+00:00"
+      },
+      "folder": "walking_forward_copy_2",
+      "frames": {
+        "rotations": {
+          "south": "walking_forward_copy_2/rotations/south.png",
+          "south-east": "walking_forward_copy_2/rotations/south-east.png",
+          "east": "walking_forward_copy_2/rotations/east.png",
+          "north-east": "walking_forward_copy_2/rotations/north-east.png",
+          "north": "walking_forward_copy_2/rotations/north.png",
+          "north-west": "walking_forward_copy_2/rotations/north-west.png",
+          "west": "walking_forward_copy_2/rotations/west.png",
+          "south-west": "walking_forward_copy_2/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "2ea690bb-e7c6-455e-b1ea-d603947bf5e9",
+        "name": "attack kick",
+        "prompt": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  clean crisp black outlines",
+        "size": {
+          "width": 160,
+          "height": 160
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-08T08:24:48.026103+00:00"
+      },
+      "folder": "attack_kick",
+      "frames": {
+        "rotations": {
+          "south": "attack_kick/rotations/south.png",
+          "south-east": "attack_kick/rotations/south-east.png",
+          "east": "attack_kick/rotations/east.png",
+          "north-east": "attack_kick/rotations/north-east.png",
+          "north": "attack_kick/rotations/north.png",
+          "north-west": "attack_kick/rotations/north-west.png",
+          "west": "attack_kick/rotations/west.png",
+          "south-west": "attack_kick/rotations/south-west.png"
+        },
+        "animations": {
+          "Roundhouse_Kick": {
+            "north-west": [
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_000.png",
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_001.png",
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_002.png",
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_003.png",
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_004.png",
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_005.png",
+              "attack_kick/animations/Roundhouse_Kick/north-west/frame_006.png"
+            ],
+            "north-east": [
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_000.png",
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_001.png",
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_002.png",
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_003.png",
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_004.png",
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_005.png",
+              "attack_kick/animations/Roundhouse_Kick/north-east/frame_006.png"
+            ],
+            "south-east": [
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_000.png",
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_001.png",
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_002.png",
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_003.png",
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_004.png",
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_005.png",
+              "attack_kick/animations/Roundhouse_Kick/south-east/frame_006.png"
+            ],
+            "south-west": [
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_000.png",
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_001.png",
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_002.png",
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_003.png",
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_004.png",
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_005.png",
+              "attack_kick/animations/Roundhouse_Kick/south-west/frame_006.png"
+            ]
+          },
+          "Taking_Hit": {
+            "north-west": [
+              "attack_kick/animations/Taking_Hit/north-west/frame_000.png",
+              "attack_kick/animations/Taking_Hit/north-west/frame_001.png",
+              "attack_kick/animations/Taking_Hit/north-west/frame_002.png",
+              "attack_kick/animations/Taking_Hit/north-west/frame_003.png",
+              "attack_kick/animations/Taking_Hit/north-west/frame_004.png",
+              "attack_kick/animations/Taking_Hit/north-west/frame_005.png"
+            ],
+            "south-west": [
+              "attack_kick/animations/Taking_Hit/south-west/frame_000.png",
+              "attack_kick/animations/Taking_Hit/south-west/frame_001.png",
+              "attack_kick/animations/Taking_Hit/south-west/frame_002.png",
+              "attack_kick/animations/Taking_Hit/south-west/frame_003.png",
+              "attack_kick/animations/Taking_Hit/south-west/frame_004.png",
+              "attack_kick/animations/Taking_Hit/south-west/frame_005.png"
+            ],
+            "north-east": [
+              "attack_kick/animations/Taking_Hit/north-east/frame_000.png",
+              "attack_kick/animations/Taking_Hit/north-east/frame_001.png",
+              "attack_kick/animations/Taking_Hit/north-east/frame_002.png",
+              "attack_kick/animations/Taking_Hit/north-east/frame_003.png",
+              "attack_kick/animations/Taking_Hit/north-east/frame_004.png",
+              "attack_kick/animations/Taking_Hit/north-east/frame_005.png"
+            ],
+            "south-east": [
+              "attack_kick/animations/Taking_Hit/south-east/frame_000.png",
+              "attack_kick/animations/Taking_Hit/south-east/frame_001.png",
+              "attack_kick/animations/Taking_Hit/south-east/frame_002.png",
+              "attack_kick/animations/Taking_Hit/south-east/frame_003.png",
+              "attack_kick/animations/Taking_Hit/south-east/frame_004.png",
+              "attack_kick/animations/Taking_Hit/south-east/frame_005.png"
+            ]
+          },
+          "Uppercut": {
+            "south-east": [
+              "attack_kick/animations/Uppercut/south-east/frame_000.png",
+              "attack_kick/animations/Uppercut/south-east/frame_001.png",
+              "attack_kick/animations/Uppercut/south-east/frame_002.png",
+              "attack_kick/animations/Uppercut/south-east/frame_003.png",
+              "attack_kick/animations/Uppercut/south-east/frame_004.png",
+              "attack_kick/animations/Uppercut/south-east/frame_005.png",
+              "attack_kick/animations/Uppercut/south-east/frame_006.png"
+            ],
+            "south-west": [
+              "attack_kick/animations/Uppercut/south-west/frame_000.png",
+              "attack_kick/animations/Uppercut/south-west/frame_001.png",
+              "attack_kick/animations/Uppercut/south-west/frame_002.png",
+              "attack_kick/animations/Uppercut/south-west/frame_003.png",
+              "attack_kick/animations/Uppercut/south-west/frame_004.png",
+              "attack_kick/animations/Uppercut/south-west/frame_005.png",
+              "attack_kick/animations/Uppercut/south-west/frame_006.png"
+            ],
+            "north-west": [
+              "attack_kick/animations/Uppercut/north-west/frame_000.png",
+              "attack_kick/animations/Uppercut/north-west/frame_001.png",
+              "attack_kick/animations/Uppercut/north-west/frame_002.png",
+              "attack_kick/animations/Uppercut/north-west/frame_003.png",
+              "attack_kick/animations/Uppercut/north-west/frame_004.png",
+              "attack_kick/animations/Uppercut/north-west/frame_005.png",
+              "attack_kick/animations/Uppercut/north-west/frame_006.png"
+            ],
+            "north-east": [
+              "attack_kick/animations/Uppercut/north-east/frame_000.png",
+              "attack_kick/animations/Uppercut/north-east/frame_001.png",
+              "attack_kick/animations/Uppercut/north-east/frame_002.png",
+              "attack_kick/animations/Uppercut/north-east/frame_003.png",
+              "attack_kick/animations/Uppercut/north-east/frame_004.png",
+              "attack_kick/animations/Uppercut/north-east/frame_005.png",
+              "attack_kick/animations/Uppercut/north-east/frame_006.png"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-08T14:14:13.270741"
+}

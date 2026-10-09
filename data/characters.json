@@ -424,5 +424,8 @@
 		},
 		"ai_behavior": "tactical",
 		"learned_ability_ids": []
-	}
+	},
+	{"id": "test_hero", "display_name": "Test Runner", "class_id": "gunslinger", "team": 0, "is_unique": true, "bio": "PixelLab test character: run, walk, shoot, wave.", "base_stats": {"strength": 11, "agility": 13, "intelligence": 9, "vitality": 11, "level": 3}, "weapon_specialties": ["pistol"], "equipment": {"weapon": "wpn_pistol_1"}, "ai_behavior": "tactical", "learned_ability_ids": [], "sprite_frames_path": "res://assets/units/test_character_001", "portrait_path": "res://assets/units/test_character_001/extracted/cyberpunk_male_isometric-run/run/portrait.png"},
+	{"id": "test_enemy_001", "display_name": "Bulwark Brawler", "class_id": "doctrine_warden", "team": 1, "is_unique": false, "bio": "PixelLab test enemy: armored close-quarters bruiser.", "base_stats": {"strength": 14, "agility": 8, "intelligence": 6, "vitality": 15, "level": 3}, "weapon_specialties": [], "equipment": {}, "ai_behavior": "aggressive", "learned_ability_ids": ["tx_roundhouse_kick", "tx_uppercut", "tx_force_blast"], "sprite_frames_path": "res://assets/units/test_enemy_001", "portrait_path": "res://assets/units/test_enemy_001/extracted/Enemy_001/idle_breathing/portrait.png"},
+	{"id": "test_enemy_002", "display_name": "Corp Gunner", "class_id": "factory_marksman", "team": 1, "is_unique": false, "bio": "PixelLab test enemy: rifle, and a med-patch for emergencies.", "base_stats": {"strength": 10, "agility": 12, "intelligence": 9, "vitality": 10, "level": 3}, "weapon_specialties": [], "equipment": {"weapon": "wpn_rifle_1"}, "ai_behavior": "cautious", "learned_ability_ids": ["tx_field_patch"], "sprite_frames_path": "res://assets/units/test_enemy_002"}
 ]

@@ -572,5 +572,54 @@
 		"closing_lines": [
 			"Now scram. You're scaring off the rats, and the rats are customers."
 		]
+	},
+	{
+		"id": "kade",
+		"display_name": "Kade Vos",
+		"description": "Sells prototype gear off a fold-out table. Never looks up from his tablet for long.",
+		"portrait_path": "res://assets/units/test_vendorNPC_001/extracted/cyberpunk_male_isometric_2_1_perspective_18/Idle/rotations/south.png",
+		"sprite_path": "res://assets/units/test_vendorNPC_001",
+		"location_id": "neon_block_demo",
+		"is_vendor": true,
+		"vendor_id": "test_vendor",
+		"quest_ids": [],
+		"required_flag": "",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "Hm? Oh. Customer. Hang on, finishing a bid.",
+				"next": "look"
+			},
+			{
+				"id": "look",
+				"text": "There. Prototype stock, fell off a corp truck. Several trucks.",
+				"next": "pitch"
+			},
+			{
+				"id": "pitch",
+				"text": "Prices are fair. Fair for me. Browse."
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Kade, to his tablet: 'Outbid by a drone. A drone, again.'"
+			},
+			{
+				"text": "Kade, not looking up: 'If it's warm, it's new. If it's sparking, that's a feature.'"
+			},
+			{
+				"text": "Kade, quietly: 'Corp gunners pay double for med-patches. I know because I sell them the patches.'"
+			}
+		],
+		"intro_lines": [],
+		"repeat_lines": [
+			"Back again? Stock rotates. Sometimes. When trucks fall."
+		],
+		"give_item_id": "",
+		"give_item_qty": 1,
+		"after_talk": "shop",
+		"closing_lines": [
+			"Pleasure. Don't tell anyone where you got it."
+		]
 	}
 ]

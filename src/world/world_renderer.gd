@@ -928,6 +928,9 @@ class WorldSprite extends Node2D:
 	var _overlay: Dictionary = {}
 	var _screen: Signage.ScreenQuad
 	var _screen_light: NeonLight
+	## Characters placed as objects: a whole unit sprite set (PixelLab folder)
+	## standing there playing "unit_anim" (default idle) toward "facing".
+	var _unit_spr: AnimatedSprite2D
 
 	func refresh() -> void:
 		var w := renderer.world
@@ -978,8 +981,27 @@ class WorldSprite extends Node2D:
 		position = w.to_screen(cell_f, z) + Vector2(float(off[0]), float(off[1]))
 		z_index = order * 2 + 1
 		set_process(_frames.size() > 1 or bool(_clip.get("ok", false)))
+		_refresh_unit(asset)
 		_refresh_screen()
 		queue_redraw()
+
+	func _refresh_unit(asset: String) -> void:
+		var us: Dictionary = PixelLab.unit_set(asset) if not is_detail and PixelLab.is_root(asset) else {}
+		if not us.get("ok", false):
+			if _unit_spr:
+				_unit_spr.queue_free()
+				_unit_spr = null
+			return
+		if _unit_spr == null:
+			_unit_spr = AnimatedSprite2D.new()
+			add_child(_unit_spr)
+		_unit_spr.sprite_frames = us["frames"]
+		var s := renderer.world.tile_width * float(us.get("per_tile", 1.0 / 64.0)) * float(data.get("scale", 1.0))
+		_unit_spr.scale = Vector2(s, s)
+		LatticeClip.play_on(_unit_spr, us, str(data.get("unit_anim", "idle")), str(data.get("facing", "SW")))
+		var tex := _unit_spr.sprite_frames.get_frame_texture(_unit_spr.animation, 0)
+		var sz := (tex.get_size() if tex else Vector2(64, 64)) * s
+		_rect = Rect2(Vector2(-sz.x * 0.5, -sz.y * 0.8), Vector2(sz.x, sz.y * 0.8))
 
 	## Living signage: a screen quad (and its glow) if the object has one.
 	func _refresh_screen() -> void:
@@ -1086,6 +1108,8 @@ class WorldSprite extends Node2D:
 		if _clip.get("ok", false):
 			_draw_clip()
 			return
+		if _unit_spr:
+			return  # the AnimatedSprite2D child draws the character
 		var tex := _current()
 		var w := renderer.world
 		var sc := float(data.get("scale", 1.0))

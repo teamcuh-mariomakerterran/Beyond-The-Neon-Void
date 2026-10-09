@@ -3069,6 +3069,30 @@
 				"flicker": 0.9,
 				"height": 1.0
 			}
+		},
+		{
+			"id": "obj_test_kade",
+			"asset": "res://assets/units/test_vendorNPC_001",
+			"cell": [
+				6,
+				9
+			],
+			"z": 0,
+			"offset": [
+				0,
+				0
+			],
+			"scale": 1.0,
+			"flip": false,
+			"layer": 0,
+			"kind": "character",
+			"facing": "SW",
+			"anim": null,
+			"loot_item_id": "",
+			"found_text": "",
+			"empty_text": "",
+			"dialog_npc": "",
+			"location": null
 		}
 	],
 	"spawns": {
@@ -3080,7 +3104,11 @@
 		],
 		"enemy": []
 	},
-	"gameplay": {},
+	"gameplay": {
+		"6,9": {
+			"walkable": false
+		}
+	},
 	"anchors": [
 		{
 			"id": "anc_neon_block_demo_1",
@@ -3161,6 +3189,29 @@
 					"arg": "mat_dead_battery:2"
 				}
 			],
+			"fail_actions": []
+		},
+		{
+			"id": "anc_test_kade",
+			"cell": [
+				6,
+				9
+			],
+			"kind": "npc",
+			"npc_id": "kade",
+			"label": "Kade's Stall",
+			"hidden": false,
+			"scope": "both",
+			"ap": 0,
+			"reach": 1,
+			"once": false,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [],
 			"fail_actions": []
 		}
 	]

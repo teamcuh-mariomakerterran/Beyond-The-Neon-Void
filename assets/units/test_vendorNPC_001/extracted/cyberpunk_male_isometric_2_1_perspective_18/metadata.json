@@ -1,0 +1,253 @@
+{
+  "group_id": "a9974ce4-ee32-454f-ad7c-cafa40224817",
+  "states": [
+    {
+      "character": {
+        "id": "f0febfb1-adb9-40e7-ab1e-5e4555017c2d",
+        "name": "Idle",
+        "prompt": "cyberpunk male, isometric 2:1 perspective, black 1 pixel outline. ",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-08T02:29:48.678390+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "south-east": "Idle/rotations/south-east.png",
+          "east": "Idle/rotations/east.png",
+          "north-east": "Idle/rotations/north-east.png",
+          "north": "Idle/rotations/north.png",
+          "north-west": "Idle/rotations/north-west.png",
+          "west": "Idle/rotations/west.png",
+          "south-west": "Idle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "e715e55c-3a57-44e6-9bfe-3b3823c466c3",
+        "name": "looking down at his",
+        "prompt": "cyberpunk male, isometric 2:1 perspective, black 1 pixel outline. ",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-10T13:21:29.322341+00:00"
+      },
+      "folder": "looking_down_at_his",
+      "frames": {
+        "rotations": {
+          "south": "looking_down_at_his/rotations/south.png",
+          "south-east": "looking_down_at_his/rotations/south-east.png",
+          "east": "looking_down_at_his/rotations/east.png",
+          "north-east": "looking_down_at_his/rotations/north-east.png",
+          "north": "looking_down_at_his/rotations/north.png",
+          "north-west": "looking_down_at_his/rotations/north-west.png",
+          "west": "looking_down_at_his/rotations/west.png",
+          "south-west": "looking_down_at_his/rotations/south-west.png"
+        },
+        "animations": {
+          "The_character_lifts_his_head_from_the_tablet_to_ga": {
+            "north-west": [
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_000.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_001.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_002.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_003.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_004.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_005.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_006.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_007.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_008.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_009.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_010.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_011.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_012.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_013.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_014.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_015.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-west/frame_016.png"
+            ],
+            "south-west": [
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_000.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_001.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_002.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_003.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_004.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_005.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_006.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_007.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_008.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_009.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_010.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_011.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_012.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_013.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_014.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_015.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-west/frame_016.png"
+            ],
+            "south-east": [
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_000.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_001.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_002.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_003.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_004.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_005.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_006.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_007.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_008.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_009.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_010.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_011.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_012.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_013.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_014.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_015.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/south-east/frame_016.png"
+            ],
+            "north-east": [
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_000.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_001.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_002.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_003.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_004.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_005.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_006.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_007.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_008.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_009.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_010.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_011.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_012.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_013.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_014.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_015.png",
+              "looking_down_at_his/animations/The_character_lifts_his_head_from_the_tablet_to_ga/north-east/frame_016.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "character": {
+        "id": "9b45bac5-e694-4fe6-8e37-5ad515a21431",
+        "name": "walking forward",
+        "prompt": "cyberpunk male, isometric 2:1 perspective, black 1 pixel outline. ",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-10T13:21:45.812729+00:00"
+      },
+      "folder": "walking_forward",
+      "frames": {
+        "rotations": {
+          "south": "walking_forward/rotations/south.png",
+          "south-east": "walking_forward/rotations/south-east.png",
+          "east": "walking_forward/rotations/east.png",
+          "north-east": "walking_forward/rotations/north-east.png",
+          "north": "walking_forward/rotations/north.png",
+          "north-west": "walking_forward/rotations/north-west.png",
+          "west": "walking_forward/rotations/west.png",
+          "south-west": "walking_forward/rotations/south-west.png"
+        },
+        "animations": {
+          "The_character_walks_with_a_steady_rhythmic_stride": {
+            "north-west": [
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_000.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_001.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_002.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_003.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_004.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_005.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_006.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_007.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-west/frame_008.png"
+            ],
+            "south-east": [
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_000.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_001.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_002.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_003.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_004.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_005.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_006.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_007.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-east/frame_008.png"
+            ],
+            "north-east": [
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_000.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_001.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_002.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_003.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_004.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_005.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_006.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_007.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_008.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_009.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/north-east/frame_010.png"
+            ],
+            "south-west": [
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_000.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_001.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_002.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_003.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_004.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_005.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_006.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_007.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_008.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_009.png",
+              "walking_forward/animations/The_character_walks_with_a_steady_rhythmic_stride/south-west/frame_010.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "character": {
+        "id": "2bb8e30e-cdbd-4193-a0a5-0347bc0a2421",
+        "name": "standing idle positi",
+        "prompt": "cyberpunk male, isometric 2:1 perspective, black 1 pixel outline. ",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-10-08T14:46:48.263248+00:00"
+      },
+      "folder": "standing_idle_positi",
+      "frames": {
+        "rotations": {
+          "south": "standing_idle_positi/rotations/south.png",
+          "south-east": "standing_idle_positi/rotations/south-east.png",
+          "east": "standing_idle_positi/rotations/east.png",
+          "north-east": "standing_idle_positi/rotations/north-east.png",
+          "north": "standing_idle_positi/rotations/north.png",
+          "north-west": "standing_idle_positi/rotations/north-west.png",
+          "west": "standing_idle_positi/rotations/west.png",
+          "south-west": "standing_idle_positi/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-08T14:55:24.149869"
+}

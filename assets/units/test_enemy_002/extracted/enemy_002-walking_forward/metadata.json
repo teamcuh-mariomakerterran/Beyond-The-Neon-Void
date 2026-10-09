@@ -1,0 +1,79 @@
+{
+  "group_id": "54941d74-7628-43b7-884c-ff90c5e15f08",
+  "states": [
+    {
+      "character": {
+        "id": "011f1174-0b08-452f-be09-c710d991ce96",
+        "name": "walking forward",
+        "prompt": "cyberpunk male soldier, isometric 2:1 perspective, clean and crisp black 1 pixel outlines",
+        "size": {
+          "width": 84,
+          "height": 84
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "high top-down",
+        "created_at": "2026-09-17T11:57:16.776439+00:00"
+      },
+      "folder": "walking_forward",
+      "frames": {
+        "rotations": {
+          "south": "walking_forward/rotations/south.png",
+          "south-east": "walking_forward/rotations/south-east.png",
+          "east": "walking_forward/rotations/east.png",
+          "north-east": "walking_forward/rotations/north-east.png",
+          "north": "walking_forward/rotations/north.png",
+          "north-west": "walking_forward/rotations/north-west.png",
+          "west": "walking_forward/rotations/west.png",
+          "south-west": "walking_forward/rotations/south-west.png"
+        },
+        "animations": {
+          "Walking": {
+            "south-west": [
+              "walking_forward/animations/Walking/south-west/frame_000.png",
+              "walking_forward/animations/Walking/south-west/frame_001.png",
+              "walking_forward/animations/Walking/south-west/frame_002.png",
+              "walking_forward/animations/Walking/south-west/frame_003.png",
+              "walking_forward/animations/Walking/south-west/frame_004.png",
+              "walking_forward/animations/Walking/south-west/frame_005.png",
+              "walking_forward/animations/Walking/south-west/frame_006.png",
+              "walking_forward/animations/Walking/south-west/frame_007.png"
+            ],
+            "north-east": [
+              "walking_forward/animations/Walking/north-east/frame_000.png",
+              "walking_forward/animations/Walking/north-east/frame_001.png",
+              "walking_forward/animations/Walking/north-east/frame_002.png",
+              "walking_forward/animations/Walking/north-east/frame_003.png",
+              "walking_forward/animations/Walking/north-east/frame_004.png",
+              "walking_forward/animations/Walking/north-east/frame_005.png",
+              "walking_forward/animations/Walking/north-east/frame_006.png",
+              "walking_forward/animations/Walking/north-east/frame_007.png"
+            ],
+            "south-east": [
+              "walking_forward/animations/Walking/south-east/frame_000.png",
+              "walking_forward/animations/Walking/south-east/frame_001.png",
+              "walking_forward/animations/Walking/south-east/frame_002.png",
+              "walking_forward/animations/Walking/south-east/frame_003.png",
+              "walking_forward/animations/Walking/south-east/frame_004.png",
+              "walking_forward/animations/Walking/south-east/frame_005.png",
+              "walking_forward/animations/Walking/south-east/frame_006.png",
+              "walking_forward/animations/Walking/south-east/frame_007.png"
+            ],
+            "north-west": [
+              "walking_forward/animations/Walking/north-west/frame_000.png",
+              "walking_forward/animations/Walking/north-west/frame_001.png",
+              "walking_forward/animations/Walking/north-west/frame_002.png",
+              "walking_forward/animations/Walking/north-west/frame_003.png",
+              "walking_forward/animations/Walking/north-west/frame_004.png",
+              "walking_forward/animations/Walking/north-west/frame_005.png",
+              "walking_forward/animations/Walking/north-west/frame_006.png",
+              "walking_forward/animations/Walking/north-west/frame_007.png"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-08T14:27:51.903897"
+}
