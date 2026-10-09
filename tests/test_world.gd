@@ -1495,9 +1495,12 @@ func test_barks_lies_evidence() -> void:
 	for u: Unit in [rook, warden, relay]:
 		u.grid = g
 		tree.root.add_child(u)
+	var texts := func(key: String, ev: String) -> Array:
+		return (ContentDB.barks[key][ev] as Array).map(func(l: Variant) -> String: return str(l["text"]) if l is Dictionary else str(l))
 	var rk := Barks.lines_for(rook, "crit")
-	check(not rk.is_empty() and str(rk[0]["text"]) in (ContentDB.barks["rook"]["crit"] as Array), "Rook has his own crit lines")
-	check(str(Barks.lines_for(warden, "kill")[0]["text"]) in (ContentDB.barks["team:1"]["kill"] as Array), "Doctrine troops fall back to team barks")
+	check(not rk.is_empty() and str(rk[0]["text"]) in texts.call("rook", "crit") and str(rk[0]["voice"]).ends_with("rook_crit_1.ogg"), "Rook has his own crit lines (with a voice file)")
+	check(str(Barks.lines_for(warden, "kill")[0]["text"]) in texts.call("team:1", "kill"), "Doctrine troops fall back to team barks")
+	check(Barks.voice_file("res://assets/voice/barks/rook_crit_1.ogg") == "", "no recording yet: a silent bubble")
 	check(Barks.lines_for(relay, "battle_start")[0]["text"] == "ATTENTION: ALL FIGURES ARE CERTIFIED.", "a character's own barks field wins")
 	var b := Barks.new()
 	tree.root.add_child(b)
