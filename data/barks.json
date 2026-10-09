@@ -1,65 +1,361 @@
 {
 	"_note": "Battle barks (src/combat/barks.gd). Keys: a character id, 'class:<class_id>', 'team:0' (crew) or 'team:1' (Doctrine). Events: battle_start, turn_start, crit, kill, ally_down, low_hp, big_hit, miss, heal, victory, buzzed, shield_down. A line is text, or {text, voice (res://… recording), chance}. A character's own lines win over its class, then its team. Lines on a character's 'barks' field (CHARACTERS tab) win over everything here.",
 	"rook": {
-		"battle_start": ["Okay. Plan. We have a plan. Mostly.", "Everybody act like this was the idea."],
-		"crit": ["Called it. Didn't call it. Still counts.", "That's the plan working!"],
-		"kill": ["Off the clock.", "Shift's over for you."],
-		"low_hp": ["This is fine. This is a strategic bleed.", "Patch? Patch!"],
-		"ally_down": ["No no no — we're not leaving anyone at this bar!"],
-		"miss": ["The plan had that one hitting."],
-		"victory": ["Drinks are on Brannoc."]
+		"battle_start": [
+			{
+				"text": "Okay. Plan. We have a plan. Mostly.",
+				"voice": "res://assets/voice/barks/rook_battle_start_1.ogg"
+			},
+			{
+				"text": "Everybody act like this was the idea.",
+				"voice": "res://assets/voice/barks/rook_battle_start_2.ogg"
+			}
+		],
+		"crit": [
+			{
+				"text": "Called it. Didn't call it. Still counts.",
+				"voice": "res://assets/voice/barks/rook_crit_1.ogg"
+			},
+			{
+				"text": "That's the plan working!",
+				"voice": "res://assets/voice/barks/rook_crit_2.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "Off the clock.",
+				"voice": "res://assets/voice/barks/rook_kill_1.ogg"
+			},
+			{
+				"text": "Shift's over for you.",
+				"voice": "res://assets/voice/barks/rook_kill_2.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "This is fine. This is a strategic bleed.",
+				"voice": "res://assets/voice/barks/rook_low_hp_1.ogg"
+			},
+			{
+				"text": "Patch? Patch!",
+				"voice": "res://assets/voice/barks/rook_low_hp_2.ogg"
+			}
+		],
+		"ally_down": [
+			{
+				"text": "No no no — we're not leaving anyone at this bar!",
+				"voice": "res://assets/voice/barks/rook_ally_down_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "The plan had that one hitting.",
+				"voice": "res://assets/voice/barks/rook_miss_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "Drinks are on Brannoc.",
+				"voice": "res://assets/voice/barks/rook_victory_1.ogg"
+			}
+		]
 	},
 	"mags": {
-		"battle_start": ["I know every blind spot on this floor. Follow me.", "Eyes up. Their sightlines suck."],
-		"crit": ["Right through the gap.", "Fifteen years on the line. I know where the seams are."],
-		"kill": ["Clocked out.", "Quota met."],
-		"low_hp": ["Not dying on a Tuesday."],
-		"miss": ["Wind. There's no wind indoors. Shut up."],
-		"victory": ["That's a full shift."]
+		"battle_start": [
+			{
+				"text": "I know every blind spot on this floor. Follow me.",
+				"voice": "res://assets/voice/barks/mags_battle_start_1.ogg"
+			},
+			{
+				"text": "Eyes up. Their sightlines suck.",
+				"voice": "res://assets/voice/barks/mags_battle_start_2.ogg"
+			}
+		],
+		"crit": [
+			{
+				"text": "Right through the gap.",
+				"voice": "res://assets/voice/barks/mags_crit_1.ogg"
+			},
+			{
+				"text": "Fifteen years on the line. I know where the seams are.",
+				"voice": "res://assets/voice/barks/mags_crit_2.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "Clocked out.",
+				"voice": "res://assets/voice/barks/mags_kill_1.ogg"
+			},
+			{
+				"text": "Quota met.",
+				"voice": "res://assets/voice/barks/mags_kill_2.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "Not dying on a Tuesday.",
+				"voice": "res://assets/voice/barks/mags_low_hp_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "Wind. There's no wind indoors. Shut up.",
+				"voice": "res://assets/voice/barks/mags_miss_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "That's a full shift.",
+				"voice": "res://assets/voice/barks/mags_victory_1.ogg"
+			}
+		]
 	},
 	"dizzy": {
-		"battle_start": ["Ooh, they've got firewalls. Cute.", "I wrote this exploit on a napkin. The napkin was wet."],
-		"crit": ["Segfault! Their face, I mean.", "Oops. Infinite loop. In you."],
-		"kill": ["Process terminated.", "Ctrl-alt-defeat."],
-		"low_hp": ["I'd like to roll back to an earlier save."],
-		"buzzed": ["Everything's in hex now. It's beautiful."],
-		"miss": ["Undefined behavior! Undefined!"],
-		"victory": ["Patch notes: we won."]
+		"battle_start": [
+			{
+				"text": "Ooh, they've got firewalls. Cute.",
+				"voice": "res://assets/voice/barks/dizzy_battle_start_1.ogg"
+			},
+			{
+				"text": "I wrote this exploit on a napkin. The napkin was wet.",
+				"voice": "res://assets/voice/barks/dizzy_battle_start_2.ogg"
+			}
+		],
+		"crit": [
+			{
+				"text": "Segfault! Their face, I mean.",
+				"voice": "res://assets/voice/barks/dizzy_crit_1.ogg"
+			},
+			{
+				"text": "Oops. Infinite loop. In you.",
+				"voice": "res://assets/voice/barks/dizzy_crit_2.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "Process terminated.",
+				"voice": "res://assets/voice/barks/dizzy_kill_1.ogg"
+			},
+			{
+				"text": "Ctrl-alt-defeat.",
+				"voice": "res://assets/voice/barks/dizzy_kill_2.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "I'd like to roll back to an earlier save.",
+				"voice": "res://assets/voice/barks/dizzy_low_hp_1.ogg"
+			}
+		],
+		"buzzed": [
+			{
+				"text": "Everything's in hex now. It's beautiful.",
+				"voice": "res://assets/voice/barks/dizzy_buzzed_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "Undefined behavior! Undefined!",
+				"voice": "res://assets/voice/barks/dizzy_miss_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "Patch notes: we won.",
+				"voice": "res://assets/voice/barks/dizzy_victory_1.ogg"
+			}
+		]
 	},
 	"brannoc": {
-		"battle_start": ["I'm sorry in advance.", "Please don't make me."],
-		"crit": ["Oh no. Did I do that?", "Sorry! Sorry. Good punch though."],
-		"kill": ["…he'll be okay. Right? He'll be okay."],
-		"low_hp": ["I'm not crying. It's the smoke."],
-		"ally_down": ["HEY. Nobody touches my friends."],
-		"victory": ["Can we play the sad song on the jukebox?"]
+		"battle_start": [
+			{
+				"text": "I'm sorry in advance.",
+				"voice": "res://assets/voice/barks/brannoc_battle_start_1.ogg"
+			},
+			{
+				"text": "Please don't make me.",
+				"voice": "res://assets/voice/barks/brannoc_battle_start_2.ogg"
+			}
+		],
+		"crit": [
+			{
+				"text": "Oh no. Did I do that?",
+				"voice": "res://assets/voice/barks/brannoc_crit_1.ogg"
+			},
+			{
+				"text": "Sorry! Sorry. Good punch though.",
+				"voice": "res://assets/voice/barks/brannoc_crit_2.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "…he'll be okay. Right? He'll be okay.",
+				"voice": "res://assets/voice/barks/brannoc_kill_1.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "I'm not crying. It's the smoke.",
+				"voice": "res://assets/voice/barks/brannoc_low_hp_1.ogg"
+			}
+		],
+		"ally_down": [
+			{
+				"text": "HEY. Nobody touches my friends.",
+				"voice": "res://assets/voice/barks/brannoc_ally_down_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "Can we play the sad song on the jukebox?",
+				"voice": "res://assets/voice/barks/brannoc_victory_1.ogg"
+			}
+		]
 	},
 	"patch": {
-		"battle_start": ["Read the labels. Nobody reads the labels.", "Try not to need me."],
-		"heal": ["Hold still.", "That's twice today. I'm keeping a tab."],
-		"low_hp": ["Medic's down to her last bandage. Mine."],
-		"ally_down": ["Stay with me — I'm coming!"],
-		"kill": ["First, do no harm. Second, do harm."],
-		"victory": ["Everyone line up. Shots. The medical kind."]
+		"battle_start": [
+			{
+				"text": "Read the labels. Nobody reads the labels.",
+				"voice": "res://assets/voice/barks/patch_battle_start_1.ogg"
+			},
+			{
+				"text": "Try not to need me.",
+				"voice": "res://assets/voice/barks/patch_battle_start_2.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "Hold still.",
+				"voice": "res://assets/voice/barks/patch_heal_1.ogg"
+			},
+			{
+				"text": "That's twice today. I'm keeping a tab.",
+				"voice": "res://assets/voice/barks/patch_heal_2.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "Medic's down to her last bandage. Mine.",
+				"voice": "res://assets/voice/barks/patch_low_hp_1.ogg"
+			}
+		],
+		"ally_down": [
+			{
+				"text": "Stay with me — I'm coming!",
+				"voice": "res://assets/voice/barks/patch_ally_down_1.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "First, do no harm. Second, do harm.",
+				"voice": "res://assets/voice/barks/patch_kill_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "Everyone line up. Shots. The medical kind.",
+				"voice": "res://assets/voice/barks/patch_victory_1.ogg"
+			}
+		]
 	},
 	"foreman_grisk": {
-		"battle_start": ["The quota does not care about your feelings.", "Back to your stations."],
-		"low_hp": ["This will be docked from your pay!"],
-		"shield_down": ["My shield! That was company property!"],
-		"kill": ["Insubordination: resolved."]
+		"battle_start": [
+			{
+				"text": "The quota does not care about your feelings.",
+				"voice": "res://assets/voice/barks/foreman_grisk_battle_start_1.ogg"
+			},
+			{
+				"text": "Back to your stations.",
+				"voice": "res://assets/voice/barks/foreman_grisk_battle_start_2.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "This will be docked from your pay!",
+				"voice": "res://assets/voice/barks/foreman_grisk_low_hp_1.ogg"
+			}
+		],
+		"shield_down": [
+			{
+				"text": "My shield! That was company property!",
+				"voice": "res://assets/voice/barks/foreman_grisk_shield_down_1.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "Insubordination: resolved.",
+				"voice": "res://assets/voice/barks/foreman_grisk_kill_1.ogg"
+			}
+		]
 	},
 	"team:0": {
-		"crit": ["Yes!", "Nice!"],
-		"kill": ["Down!", "One less."],
-		"low_hp": ["I need a hand here!"],
-		"ally_down": ["Man down!"]
+		"crit": [
+			"Yes!",
+			"Nice!"
+		],
+		"kill": [
+			"Down!",
+			"One less."
+		],
+		"low_hp": [
+			"I need a hand here!"
+		],
+		"ally_down": [
+			"Man down!"
+		]
 	},
 	"team:1": {
-		"battle_start": ["By the Hymn — hold the line!", "Unregistered persons on the floor!"],
-		"crit": ["For the Doctrine!", "Compliance achieved."],
-		"kill": ["Citizen corrected.", "Report filed."],
-		"low_hp": ["Requesting relief!", "The Hymn… sustains…"],
-		"ally_down": ["Brother down! Sing louder!"],
-		"miss": ["Hold still, heretic!"]
+		"battle_start": [
+			{
+				"text": "By the Hymn — hold the line!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_battle_start_1.ogg"
+			},
+			{
+				"text": "Unregistered persons on the floor!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_battle_start_2.ogg"
+			}
+		],
+		"crit": [
+			{
+				"text": "For the Doctrine!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_crit_1.ogg"
+			},
+			{
+				"text": "Compliance achieved.",
+				"voice": "res://assets/voice/barks/doctrine_trooper_crit_2.ogg"
+			}
+		],
+		"kill": [
+			{
+				"text": "Citizen corrected.",
+				"voice": "res://assets/voice/barks/doctrine_trooper_kill_1.ogg"
+			},
+			{
+				"text": "Report filed.",
+				"voice": "res://assets/voice/barks/doctrine_trooper_kill_2.ogg"
+			}
+		],
+		"low_hp": [
+			{
+				"text": "Requesting relief!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_low_hp_1.ogg"
+			},
+			{
+				"text": "The Hymn… sustains…",
+				"voice": "res://assets/voice/barks/doctrine_trooper_low_hp_2.ogg"
+			}
+		],
+		"ally_down": [
+			{
+				"text": "Brother down! Sing louder!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_ally_down_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "Hold still, heretic!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_miss_1.ogg"
+			}
+		]
 	}
 }

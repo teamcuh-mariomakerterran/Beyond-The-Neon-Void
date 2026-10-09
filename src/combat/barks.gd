@@ -102,13 +102,25 @@ func say(unit: Node, event: String, force: bool = false) -> Dictionary:
 		b.position = (unit as Node2D).position + Vector2(0, -unit_height(unit))
 		b.z_index = 3500
 		world.add_child(b)
-		var vp := str(line.get("voice", ""))
+		var vp := voice_file(str(line.get("voice", "")))
 		if vp != "":
 			var stream := ForgeStore.load_audio(vp)
 			if stream:
 				_voice.stream = stream
 				_voice.play()
 	return line
+
+
+## The recording for a line: the path as given, or the same name as .ogg /
+## .wav / .mp3 (whatever the export came out as). "" if none exists yet.
+static func voice_file(path: String) -> String:
+	if path == "":
+		return ""
+	var base := path.get_basename()
+	for p: String in [path, base + ".ogg", base + ".wav", base + ".mp3"]:
+		if FileAccess.file_exists(p) or ResourceLoader.exists(p):
+			return p
+	return ""
 
 
 static func unit_height(unit: Node) -> float:
