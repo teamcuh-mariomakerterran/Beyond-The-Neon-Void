@@ -34,6 +34,14 @@ var item_instances: Dictionary = {}
 var cards: Dictionary = {}
 var _uid_counter: int = 0
 
+# --- Crew life (see Bonds) ---
+## "a|b" -> bond xp
+var bonds: Dictionary = {}
+## Last Call: character -> drink item ordered for the next mission.
+var drinks: Dictionary = {}
+## character -> true while hungover (dispatch penalty).
+var hungover: Dictionary = {}
+
 
 func _enter_tree() -> void:
 	InputActions.register()
@@ -56,6 +64,9 @@ func new_game() -> void:
 	stack_items.clear()
 	item_instances.clear()
 	cards.clear()
+	bonds.clear()
+	drinks.clear()
+	hungover.clear()
 	_uid_counter = 0
 	for cid in STARTING_ROSTER:
 		var template := ContentDB.get_character(cid)
@@ -253,6 +264,9 @@ func get_state_data() -> Dictionary:
 		"item_instances": item_instances.duplicate(true),
 		"cards": cards.duplicate(),
 		"uid_counter": _uid_counter,
+		"bonds": bonds.duplicate(),
+		"drinks": drinks.duplicate(),
+		"hungover": hungover.duplicate(),
 	}
 
 
@@ -279,6 +293,9 @@ func load_state_data(d: Dictionary) -> void:
 		inst["xp"] = int(inst.get("xp", 0))
 	cards = _int_values(d.get("cards", {}))
 	_uid_counter = int(d.get("uid_counter", item_instances.size()))
+	bonds = _int_values(d.get("bonds", {}))
+	drinks = (d.get("drinks", {}) as Dictionary).duplicate()
+	hungover = (d.get("hungover", {}) as Dictionary).duplicate()
 	party_changed.emit()
 	currency_changed.emit()
 

@@ -37,6 +37,8 @@ extends GameResource
 ## The Lying HUD (InfoFilter): the warped zone's Doctrine Relay skews what the
 ## HUD shows until it's hacked or destroyed.
 @export var lying_hud: bool = false
+## Winning this closes its chapter (story_chapter + 1, Hangover Morning).
+@export var ends_chapter: bool = false
 
 
 func get_total_reward_text() -> String:

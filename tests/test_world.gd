@@ -36,6 +36,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_streaming()
 	test_pixellab()
 	test_barks_lies_evidence()
+	test_bonds_and_hangover()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1558,6 +1559,90 @@ func test_barks_lies_evidence() -> void:
 	check(n1["id"] == "a" and n2["id"] == "c", "dialog nodes can wait for evidence")
 	for u: Unit in [rook, warden, relay]:
 		u.queue_free()
+	GameManager.new_game()
+
+
+func test_bonds_and_hangover() -> void:
+	GameManager.new_game()
+	check(Bonds.key("rook", "mags") == Bonds.key("mags", "rook") and Bonds.level("rook", "mags") == 0, "bonds start at Strangers")
+	check(Bonds.add("rook", "mags", 25) == 1 and Bonds.level_name("mags", "rook") == "Drinking Buddies", "20 XP: Drinking Buddies")
+	check(Bonds.add("rook", "mags", -100) == -1 and Bonds.xp("rook", "mags") == 0, "bond XP floors at 0")
+	# Last Call: drink → buzzed fight → hungover → dispatch penalty.
+	check(Bonds.drink_options().has("con_neon_gin"), "the starting stash has gin")
+	var gin0 := GameManager.get_stack_count("con_neon_gin")
+	check(Bonds.order_drink("rook", "con_neon_gin") == "" and GameManager.get_stack_count("con_neon_gin") == gin0 - 1, "ordering a drink uses one")
+	check(Bonds.order_drink("rook", "con_neon_gin") != "", "one drink per mission")
+	Bonds.cancel_drink("rook")
+	check(GameManager.get_stack_count("con_neon_gin") == gin0 and not GameManager.drinks.has("rook"), "cancel puts it back")
+	Bonds.order_drink("rook", "con_neon_gin")
+	var ups := Bonds.after_mission(true, ["rook", "mags", "dizzy"])
+	check(GameManager.hungover.has("rook") and GameManager.drinks.is_empty() and Bonds.xp("rook", "dizzy") == Bonds.WIN_XP and ups.is_empty(), "after the job: hangover, and a win bonds everyone who made it")
+	var dm := ContentDB.get_all("dispatch_missions")
+	if not dm.is_empty():
+		var rook := GameManager.get_character("rook")
+		var hung := DispatchManager.success_chance(dm[0], rook)
+		GameManager.hungover.erase("rook")
+		var sober := DispatchManager.success_chance(dm[0], rook)
+		check(hung < sober or sober <= 0.1 + Bonds.HUNGOVER_DISPATCH, "a hangover rides into the next dispatch (%.2f vs %.2f)" % [hung, sober])
+	# Buzzed: Stumble; bonded + adjacent + both buzzed: Duo Tech.
+	var g := IsometricGrid.new()
+	g.setup(6, 6)
+	var a := Unit.new()
+	a.setup(GameManager.get_character("rook"), Unit.Team.PLAYER, 0)
+	var b := Unit.new()
+	b.setup(GameManager.get_character("brannoc"), Unit.Team.PLAYER, 0)
+	for u: Unit in [a, b]:
+		u.grid = g
+		tree.root.add_child(u)
+	a.place_at(Vector2i(2, 2))
+	b.place_at(Vector2i(3, 2))
+	var ids := func(u: Unit) -> Array: return u.get_abilities().map(func(x: Ability) -> String: return x.id)
+	check(not ids.call(a).has("stumble"), "sober: no Stumble")
+	a.apply_status("buzzed")
+	b.apply_status("buzzed")
+	check(ids.call(a).has("stumble") and not ids.call(a).has(Bonds.DUO_TECH), "buzzed: Stumble; not bonded enough for a Duo Tech yet")
+	Bonds.add("rook", "brannoc", 60)
+	check(ids.call(a).has(Bonds.DUO_TECH) and a.duo_partner() == b, "Thick as Thieves + both buzzed + side by side: Duo Tech")
+	b.place_at(Vector2i(5, 5))
+	check(not ids.call(a).has(Bonds.DUO_TECH), "…only while they stand together")
+	a.queue_free()
+	b.queue_free()
+	# Hangover Morning rules.
+	GameManager.new_game()
+	var hm := HangoverMorning.new()
+	hm.setup(["rook", "mags", "dizzy", "brannoc", "patch"])
+	check(HangoverMorning.neighbors(1) == [0, 2, 4] and HangoverMorning.neighbors(3) == [4, 0], "seats: next to you and across")
+	hm.swap(0, 5)
+	check(hm.seats[5] == "rook" and hm.seats[0] == "", "seating swaps")
+	hm.swap(0, 5)
+	hm.toast(1)
+	check(Bonds.xp("mags", "rook") == HangoverMorning.TOAST_XP and Bonds.xp("mags", "patch") == HangoverMorning.TOAST_XP and Bonds.xp("mags", "brannoc") == 0, "a toast bonds neighbours and whoever's across")
+	Bonds.add("rook", "mags", 20)
+	var r: Array = hm.roast(0, 1)
+	check(int(r[1]) == HangoverMorning.ROAST_FRIEND_XP, "roasting a friend lands")
+	var coins := GameManager.soul_coins
+	hm.buy_round(2)
+	check(GameManager.soul_coins == coins - HangoverMorning.ROUND_COST and Bonds.xp("dizzy", "patch") == 4, "a round: everyone +2, the buyer +2 more")
+	GameManager.hungover["patch"] = true
+	hm.nurse(4)
+	check(not GameManager.hungover.has("patch"), "nursing it clears the hangover")
+	hm.first_turn()
+	var turns := 0
+	while hm.phase == HangoverMorning.Phase.ROUNDS and turns < 40:
+		hm.advance()
+		turns += 1
+	check(hm.phase == HangoverMorning.Phase.RESULTS and turns == 3 * 5, "three rounds, everyone seated takes a turn (%d)" % turns)
+	check(not hm.changes().is_empty(), "the results list who got closer")
+	Bonds.add("rook", "brannoc", 25)
+	var st := HangoverMorning.stories_ready().map(func(x: Dictionary) -> String: return str(x["id"]))
+	check(st.has("rook_brannoc_1") and not st.has("rook_brannoc_2"), "bar stories unlock by bond level (%s)" % str(st))
+	hm.free()
+	# Chapter turnover: Shift Change ends chapter 1.
+	var m2 := ContentDB.get_mission("m02_shift_change")
+	check(m2.ends_chapter, "Shift Change closes chapter 1")
+	var rep := CampaignManager.process_mission_completion(true, m2, [] as Array[String])
+	check(GameManager.story_chapter == 2 and GameManager.check_story_flag("hangover_pending") and int(rep.get("chapter_up", 0)) == 2, "winning it: chapter 2 and a Hangover Morning waiting")
+	CampaignManager.load_campaign_data({})
 	GameManager.new_game()
 
 

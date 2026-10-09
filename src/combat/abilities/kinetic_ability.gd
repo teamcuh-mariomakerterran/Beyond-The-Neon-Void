@@ -58,6 +58,12 @@ func _repulse(ctx: Context) -> void:
 	if target == null or not target.is_alive():
 		return
 	var dir := IsometricGrid.cardinal_direction(ctx.caster.cell, target.cell)
+	if bool(params.get("random_dir", false)):
+		# A drunk shove: anywhere but back into the shover.
+		var dirs: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+		dirs.erase(-dir)
+		var r: RandomNumberGenerator = ctx.rng if ctx.rng else RandomNumberGenerator.new()
+		dir = dirs[r.randi() % dirs.size()]
 	var distance := int(params.get("distance", 2))
 	var dest: Vector2i = target.cell
 	var slammed := false

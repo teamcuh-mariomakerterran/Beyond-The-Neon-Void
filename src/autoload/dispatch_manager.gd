@@ -44,7 +44,8 @@ func success_chance(mission: DispatchMission, character: CharacterData) -> float
 		weights += w
 	var score := (total / weights if weights > 0.0 else 0.0) + stats.level * 2.0
 	score += float(mission.class_affinity.get(character.class_id, 0))
-	return clampf(0.5 + (score - mission.difficulty) / 100.0, 0.1, 0.95)
+	# Last Call's bill: a hangover rides into the next dispatch.
+	return clampf(0.5 + (score - mission.difficulty) / 100.0 - Bonds.dispatch_penalty(character.id), 0.1, 0.95)
 
 
 func can_dispatch(mission_id: String, character_id: String) -> String:
@@ -109,6 +110,7 @@ func resolve(assignment_id: String, rng: RandomNumberGenerator = null) -> Dictio
 	if m == null or c == null:
 		return {}
 	var success := rng.randf() < success_chance(m, c)
+	GameManager.hungover.erase(c.id)  # the dispatch sweats it out
 	var rewards := {"soul_coins": 0, "items": {}, "xp": 0, "text": m.success_text if success else m.failure_text, "rumor": ""}
 	var table := ContentDB.get_loot_table(m.loot_table_id)
 	if success:

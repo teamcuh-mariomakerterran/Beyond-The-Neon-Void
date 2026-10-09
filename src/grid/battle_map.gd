@@ -213,7 +213,10 @@ func _spawn_units() -> Array[Node]:
 	for c in GameManager.get_party_members().slice(0, mission.max_party_size):
 		if i >= spawns.size():
 			break
-		out.append(_make_unit(c, Unit.Team.PLAYER, Vector2i(spawns[i][0], spawns[i][1]), 0))
+		var pu := _make_unit(c, Unit.Team.PLAYER, Vector2i(spawns[i][0], spawns[i][1]), 0)
+		if GameManager.drinks.has(c.id):
+			pu.apply_status("buzzed")  # Last Call
+		out.append(pu)
 		i += 1
 	for e: Dictionary in mission.enemies:
 		var data := ContentDB.get_character(str(e["character_id"]))
@@ -726,6 +729,13 @@ func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	var plan := VFX.plan_for_ability(ability, ranged)
 	var cells := ability.get_affected_cells(grid, unit.cell, cell)
 	unit.play_animation(unit.anim_for(ability))
+	if ability.id == Bonds.DUO_TECH:
+		var partner: Node = unit.duo_partner()
+		if partner:
+			partner.face_towards(cell)
+			partner.play_animation("attack")
+			hud.add_log("[color=#ffd23f]%s and %s pull off a Duo Tech![/color]" % [unit.display_name(), partner.display_name()])
+			Cues.fire("duo", {"unit": unit})
 	if plan["cast"] != "" and not self_cast:
 		VFX.spawn(world, plan["cast"], from, _vfx_params(unit.cell))
 	if plan["travel"] != "" and ranged and plan["mode"] == "point":

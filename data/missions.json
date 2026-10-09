@@ -112,7 +112,8 @@
 		"story_flags_on_win": [
 			"m02_done",
 			"evidence:shift_roster"
-		]
+		],
+		"ends_chapter": true
 	},
 	{
 		"id": "demo_vault_breach",

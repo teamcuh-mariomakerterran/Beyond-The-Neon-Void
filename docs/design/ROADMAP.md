@@ -3,10 +3,10 @@
 Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the world-map research.
 
 ## Story / systems
-- **Lying HUD:** **only in one warped zone**, not the whole game. It ties into the code-layer sight mechanic.
-- **Propaganda:** works through NPCs. Find enough **evidence** and new dialogue unlocks, which gives a reason to go back to early areas. It can lead to new side quests and items.
-- **Hangover morning:** yes.
-- **Voice barks:** yes. Brian is recording voices for the other characters; lines get written when we reach that point.
+- ✅ **Lying HUD:** **only in one warped zone** (Relay District), not the whole game. It ties into the code-layer sight mechanic.
+- ✅ **Propaganda:** works through NPCs. Find enough **evidence** and new dialogue unlocks, which gives a reason to go back to early areas. It can lead to new side quests and items.
+- ✅ **Hangover morning:** built 2026-10-09 (after a chapter's last job).
+- ✅ **Voice barks:** built. Lines are in `data/barks.json`; add your recordings as `voice` / `voice_path`.
 - **Sync Blade:** BUILT (Stardust unlock, Additions).
 
 ## World map (see `docs/research/WORLD_MAP_FF8_FF9.md`)
@@ -69,4 +69,11 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
 - ✅ **Voice barks:** crits, kills, ally down, low HP, big hits, misses, heals, battle start / victory, buzzed, shield down. Lines live in data/barks.json or on a character's Voice → barks field (with your recordings as voice_path).
 - ✅ **Lying HUD**, in the one warped zone only (Relay District, `lying_hud`): forecasts skew up to 25% in the Doctrine's favour and some troops show as "Civilian". Clear Eyes chip, a relay terminal (anchor action `relay`) or killing the Doctrine Relay drops it with a glitch.
 - ✅ **Propaganda through NPCs:** evidence (data/evidence.json) found in caches, drains and mission rewards; the hub case board; NPC evidence talks unlock new lines, items and quests (Otto, Benno, the Drunken Oracle); dialog nodes can need N pieces of evidence.
+- ✅ **Last Call + Hangover Morning:**
+  - **Bonds** grow between crew pairs.
+  - **Last Call:** order a drink before a job. Buzzed crew get Stumble, and bonded pairs who are both buzzed get a Duo Tech. The hangover hurts their next dispatch.
+  - **Chapter end:** the last mission of a chapter (`ends_chapter`) moves the story to the next chapter and opens a Hangover Morning.
+  - **Hangover Morning:** seating chart, then Toast / Roast / Buy a Round / Nurse It. It ends with level-ups and Bar Stories (`data/bar_stories.json`).
+
+![Hangover Morning](../screenshots/hangover_morning.png)
 

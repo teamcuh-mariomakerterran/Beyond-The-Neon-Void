@@ -224,7 +224,30 @@ func spend_for(ability: Ability) -> void:
 
 
 func get_abilities() -> Array[Ability]:
-	return job_handler.get_ability_list()
+	var out := job_handler.get_ability_list()
+	# Last Call: buzzed crew can Stumble, and a bonded buzzed pair standing
+	# side by side gets their Duo Tech.
+	if has_status("buzzed"):
+		var st := ContentDB.get_ability(Bonds.STUMBLE)
+		if st and not out.has(st):
+			out.append(st)
+		if duo_partner() != null:
+			var duo := ContentDB.get_ability(Bonds.DUO_TECH)
+			if duo and not out.has(duo):
+				out.append(duo)
+	return out
+
+
+## A bonded (Thick as Thieves+), buzzed ally right next to this unit, or null.
+func duo_partner() -> Node:
+	if grid == null or data == null or not has_status("buzzed"):
+		return null
+	for n in grid.neighbors(cell):
+		var u: Node = grid.get_occupant(n)
+		if u and u != self and u.team == team and u.is_alive() and u.has_status("buzzed") and u.data \
+				and Bonds.level(data.id, u.data.id) >= Bonds.DUO_LEVEL:
+			return u
+	return null
 
 
 func begin_turn() -> Dictionary:

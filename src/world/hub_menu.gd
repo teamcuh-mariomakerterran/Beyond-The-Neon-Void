@@ -194,8 +194,14 @@ func _show(tab: String) -> void:
 # --- Tabs ------------------------------------------------------------------
 
 func _tab_missions() -> void:
+	if GameManager.check_story_flag("hangover_pending"):
+		var hb := _btn(_content, "☀  HANGOVER MORNING — the crew is still at the bar from last night", func() -> void:
+			SceneManager.change_scene(HangoverMorning.SCENE))
+		hb.add_theme_color_override("font_color", NeonTheme.AMBER)
+		hb.custom_minimum_size.y = 46
 	_h("JOB BOARD")
 	_p("Pinned behind the bar under a coaster that says 'NOT A JOB BOARD'.")
+	_last_call()
 	for mid in CampaignManager.unlocked_missions:
 		var m := ContentDB.get_mission(mid)
 		if m == null:
@@ -210,6 +216,47 @@ func _tab_missions() -> void:
 		v.add_child(brief)
 		v.add_child(NeonTheme.label("%s   //   Win: %s" % [m.get_total_reward_text(), m.win_condition.replace("_", " ")], 13, NeonTheme.AMBER))
 		_btn(v, "DEPLOY THE CREW", func() -> void: CampaignManager.start_mission(mid), GameManager.get_party_members().is_empty())
+
+
+## Last Call: a drink for whoever wants one before the next job. They start
+## the fight buzzed (Stumble, Duo Techs) and wake up hungover (Bonds).
+func _last_call() -> void:
+	var panel := PanelContainer.new()
+	_content.add_child(panel)
+	var v := VBoxContainer.new()
+	panel.add_child(v)
+	v.add_child(NeonTheme.label("LAST CALL", 18, NeonTheme.AMBER))
+	var hint := NeonTheme.label("Buzzed crew hit harder, aim worse, can Stumble-shove enemies off ledges, and bonded pairs get Duo Techs. The hangover rides into their next dispatch.", 13, NeonTheme.TEXT_DIM)
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(hint)
+	var opts := Bonds.drink_options()
+	for c: CharacterData in GameManager.get_party_members():
+		var r := HBoxContainer.new()
+		r.add_theme_constant_override("separation", 8)
+		v.add_child(r)
+		var tag := ""
+		if GameManager.drinks.has(c.id):
+			var it := ContentDB.get_item(str(GameManager.drinks[c.id]))
+			tag = "  🍸 %s" % (it.display_name if it else str(GameManager.drinks[c.id]))
+		if GameManager.hungover.has(c.id):
+			tag += "  (hungover)"
+		var nl := NeonTheme.label(c.display_name + tag, 14, NeonTheme.TEXT)
+		nl.custom_minimum_size.x = 340
+		r.add_child(nl)
+		if GameManager.drinks.has(c.id):
+			_btn(r, "CANCEL", func() -> void:
+				Bonds.cancel_drink(c.id)
+				_show("missions"))
+		else:
+			for d: String in opts.slice(0, 3):
+				var it2 := ContentDB.get_item(d)
+				_btn(r, "%s ×%d" % [it2.display_name if it2 else d, GameManager.get_stack_count(d)], func() -> void:
+					var why := Bonds.order_drink(c.id, d)
+					if why != "":
+						_toast(why)
+					_show("missions"))
+	if opts.is_empty() and GameManager.drinks.is_empty():
+		v.add_child(NeonTheme.label("Nothing behind the bar. Otto sells drinks (BAR & SHOPS).", 13, NeonTheme.TEXT_DIM))
 
 
 func _tab_regulars() -> void:

@@ -38,6 +38,10 @@ func _ready() -> void:
 		_button(center, "TEST UNITS — SKIRMISH", func() -> void: _quick_battle("test_pixellab_skirmish"))
 	if ContentDB.get_character("test_hero") and not ContentDB.get_map("neon_block_demo").is_empty():
 		_button(center, "TEST UNITS — WALK THE NEON BLOCK", _test_walk)
+	_button(center, "TEST — HANGOVER MORNING", func() -> void:
+		GameManager.new_game()
+		GameManager.hungover["dizzy"] = true
+		SceneManager.change_scene(HangoverMorning.SCENE))
 	if ContentDB.get_mission("relay_district"):
 		_button(center, "WARPED ZONE — RELAY DISTRICT (LYING HUD)", func() -> void: _quick_battle("relay_district"))
 	var forge := _button(center, "NEON FORGE  ·  EDITOR  (F1)", func() -> void: SceneManager.change_scene(FORGE_SCENE))

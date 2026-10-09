@@ -1,0 +1,29 @@
+{
+	"_note": "Bar Stories (Hangover Morning results): unlocked when the pair's bond reaches `level` (1 Drinking Buddies, 2 Thick as Thieves, 3 Ride or Die). Lines: {who: character id, text}.",
+	"stories": [
+		{"id": "rook_brannoc_1", "a": "rook", "b": "brannoc", "level": 1, "title": "The Jukebox Incident",
+		 "lines": [{"who": "rook", "text": "Tell them about the jukebox."}, {"who": "brannoc", "text": "No."},
+			{"who": "rook", "text": "He put in a coin, it played the wrong song, and he apologised to it. For ten minutes."},
+			{"who": "brannoc", "text": "It was trying its best, Rook."}]},
+		{"id": "rook_brannoc_2", "a": "rook", "b": "brannoc", "level": 2, "title": "Who Carried Who",
+		 "lines": [{"who": "brannoc", "text": "First job. Rook says 'I'll handle the guard.'"},
+			{"who": "rook", "text": "I did handle the guard."}, {"who": "brannoc", "text": "You handed me the guard."},
+			{"who": "rook", "text": "Delegation. It's a leadership skill."}]},
+		{"id": "mags_patch_1", "a": "mags", "b": "patch", "level": 1, "title": "Twenty Stitches, No Labels",
+		 "lines": [{"who": "patch", "text": "She came in with a rivet through her hand and asked if it was 'a whole thing'."},
+			{"who": "mags", "text": "It wasn't a whole thing. I clocked back in after."}, {"who": "patch", "text": "That's the problem, Mags."}]},
+		{"id": "dizzy_rook_1", "a": "dizzy", "b": "rook", "level": 1, "title": "The Napkin",
+		 "lines": [{"who": "dizzy", "text": "I wrote our whole exit route on a napkin."}, {"who": "rook", "text": "And then?"},
+			{"who": "dizzy", "text": "And then I needed a napkin."}]},
+		{"id": "brannoc_patch_1", "a": "brannoc", "b": "patch", "level": 1, "title": "Gentle Hands",
+		 "lines": [{"who": "patch", "text": "He holds the bandages for me. Every time."}, {"who": "brannoc", "text": "Somebody should be gentle in this crew."},
+			{"who": "patch", "text": "He means him. He's the gentle one. He also broke a door with his face last week."}]},
+		{"id": "dizzy_mags_1", "a": "dizzy", "b": "mags", "level": 1, "title": "Blind Spots",
+		 "lines": [{"who": "mags", "text": "Every camera on the floor has a blind spot. I know all of them."},
+			{"who": "dizzy", "text": "I know all the ones in the code. Together we're basically invisible."},
+			{"who": "mags", "text": "Together we're basically a fire hazard."}]},
+		{"id": "rook_mags_2", "a": "rook", "b": "mags", "level": 2, "title": "Fifteen Years",
+		 "lines": [{"who": "mags", "text": "Fifteen years on that line, Rook. You walked in with a plan on a beer mat."},
+			{"who": "rook", "text": "And?"}, {"who": "mags", "text": "And it's the first plan in fifteen years that wasn't theirs."}]}
+	]
+}

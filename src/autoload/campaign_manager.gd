@@ -127,10 +127,20 @@ func process_mission_completion(victory: bool, mission: MissionResource, survivo
 					report["level_ups"][id] = lv
 		for flag in mission.story_flags_on_win:
 			GameManager.set_story_flag(flag)
+		# A chapter's last job: the chapter turns over, and the morning after
+		# is a Hangover Morning at the bar.
+		if mission.ends_chapter and mission.chapter >= GameManager.story_chapter:
+			GameManager.story_chapter = mission.chapter + 1
+			GameManager.set_story_flag("hangover_pending")
+			report["chapter_up"] = GameManager.story_chapter
 		for mid in mission.unlocks_mission_ids:
 			unlock_mission(mid)
 		if not completed_missions.has(mission.id):
 			completed_missions.append(mission.id)
+	if mission:
+		var ups := Bonds.after_mission(victory, survivors)
+		if not ups.is_empty():
+			report["bond_ups"] = ups
 	advance_clock(6)
 	last_battle_report = report
 	mission_completed.emit(report["mission_id"], victory)
