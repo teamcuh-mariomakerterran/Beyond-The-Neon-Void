@@ -3187,6 +3187,10 @@
 				{
 					"do": "give",
 					"arg": "mat_dead_battery:2"
+				},
+				{
+					"do": "evidence",
+					"arg": "storm_drain_tapes"
 				}
 			],
 			"fail_actions": []

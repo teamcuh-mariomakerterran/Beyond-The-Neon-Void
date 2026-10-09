@@ -49,10 +49,13 @@ const TEMPLATES := {
 	"choices": {"text": "", "next": "", "correct": false, "sets_flag": ""},
 	"eavesdrop_lines": {"text": "", "voice_path": "", "requires_flag": ""},
 	"stock": {"id": "", "price": 0, "required_flag": ""},
+	"barks": {"event": "crit", "text": "", "voice_path": "", "chance": 0.7},
+	"evidence_talk": {"needs": 1, "evidence": [], "lines": [], "sets_flag": "", "give_item_id": "", "quest_id": ""},
 	"props": {"id": "", "cell": [0, 0], "asset": "", "loot_item_id": "", "found_text": "", "empty_text": ""},
 }
 const CHOICES := {
 	"after_talk": ["none", "shop", "quest", "chain", "fetch", "battle", "cutscene"],
+	"event": ["battle_start", "turn_start", "crit", "kill", "ally_down", "low_hp", "big_hit", "miss", "heal", "victory", "buzzed", "shield_down"],
 	"type": ["complete_mission", "collect_item", "talk_to", "find_loot", "flag", "defeat_character"],
 	"ai": ["", "aggressive", "cautious", "tactical", "support"],
 	"ai_behavior": ["aggressive", "cautious", "tactical", "support"],

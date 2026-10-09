@@ -36,6 +36,11 @@ func refresh(unit: Unit) -> void:
 	_hp_ratio = clampf(float(unit.current_hp) / max_hp, 0.0, 1.0)
 	_mp_ratio = clampf(float(unit.current_mp) / max_mp, 0.0, 1.0)
 	_team_color = Unit.TEAM_COLORS.get(unit.team, Color.WHITE)
+	if unit.disguise != "":
+		# The overlay paints Doctrine troops as bystanders: neutral, unhurt.
+		_team_color = Color(0.7, 0.7, 0.75)
+		_hp_ratio = 1.0
+		_shake = 0.0
 	_alive = unit.is_alive()
 	_status_colors.clear()
 	_status_icons.clear()

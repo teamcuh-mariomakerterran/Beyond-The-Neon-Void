@@ -1,0 +1,65 @@
+{
+	"_note": "Battle barks (src/combat/barks.gd). Keys: a character id, 'class:<class_id>', 'team:0' (crew) or 'team:1' (Doctrine). Events: battle_start, turn_start, crit, kill, ally_down, low_hp, big_hit, miss, heal, victory, buzzed, shield_down. A line is text, or {text, voice (res://… recording), chance}. A character's own lines win over its class, then its team. Lines on a character's 'barks' field (CHARACTERS tab) win over everything here.",
+	"rook": {
+		"battle_start": ["Okay. Plan. We have a plan. Mostly.", "Everybody act like this was the idea."],
+		"crit": ["Called it. Didn't call it. Still counts.", "That's the plan working!"],
+		"kill": ["Off the clock.", "Shift's over for you."],
+		"low_hp": ["This is fine. This is a strategic bleed.", "Patch? Patch!"],
+		"ally_down": ["No no no — we're not leaving anyone at this bar!"],
+		"miss": ["The plan had that one hitting."],
+		"victory": ["Drinks are on Brannoc."]
+	},
+	"mags": {
+		"battle_start": ["I know every blind spot on this floor. Follow me.", "Eyes up. Their sightlines suck."],
+		"crit": ["Right through the gap.", "Fifteen years on the line. I know where the seams are."],
+		"kill": ["Clocked out.", "Quota met."],
+		"low_hp": ["Not dying on a Tuesday."],
+		"miss": ["Wind. There's no wind indoors. Shut up."],
+		"victory": ["That's a full shift."]
+	},
+	"dizzy": {
+		"battle_start": ["Ooh, they've got firewalls. Cute.", "I wrote this exploit on a napkin. The napkin was wet."],
+		"crit": ["Segfault! Their face, I mean.", "Oops. Infinite loop. In you."],
+		"kill": ["Process terminated.", "Ctrl-alt-defeat."],
+		"low_hp": ["I'd like to roll back to an earlier save."],
+		"buzzed": ["Everything's in hex now. It's beautiful."],
+		"miss": ["Undefined behavior! Undefined!"],
+		"victory": ["Patch notes: we won."]
+	},
+	"brannoc": {
+		"battle_start": ["I'm sorry in advance.", "Please don't make me."],
+		"crit": ["Oh no. Did I do that?", "Sorry! Sorry. Good punch though."],
+		"kill": ["…he'll be okay. Right? He'll be okay."],
+		"low_hp": ["I'm not crying. It's the smoke."],
+		"ally_down": ["HEY. Nobody touches my friends."],
+		"victory": ["Can we play the sad song on the jukebox?"]
+	},
+	"patch": {
+		"battle_start": ["Read the labels. Nobody reads the labels.", "Try not to need me."],
+		"heal": ["Hold still.", "That's twice today. I'm keeping a tab."],
+		"low_hp": ["Medic's down to her last bandage. Mine."],
+		"ally_down": ["Stay with me — I'm coming!"],
+		"kill": ["First, do no harm. Second, do harm."],
+		"victory": ["Everyone line up. Shots. The medical kind."]
+	},
+	"foreman_grisk": {
+		"battle_start": ["The quota does not care about your feelings.", "Back to your stations."],
+		"low_hp": ["This will be docked from your pay!"],
+		"shield_down": ["My shield! That was company property!"],
+		"kill": ["Insubordination: resolved."]
+	},
+	"team:0": {
+		"crit": ["Yes!", "Nice!"],
+		"kill": ["Down!", "One less."],
+		"low_hp": ["I need a hand here!"],
+		"ally_down": ["Man down!"]
+	},
+	"team:1": {
+		"battle_start": ["By the Hymn — hold the line!", "Unregistered persons on the floor!"],
+		"crit": ["For the Doctrine!", "Compliance achieved."],
+		"kill": ["Citizen corrected.", "Report filed."],
+		"low_hp": ["Requesting relief!", "The Hymn… sustains…"],
+		"ally_down": ["Brother down! Sing louder!"],
+		"miss": ["Hold still, heretic!"]
+	}
+}

@@ -33,6 +33,9 @@ var _busy: bool = false
 var _show_threat: bool = false
 ## Format-2 maps: the painted world and its interaction anchors.
 var world_map: WorldMap
+var barks: Barks
+## The Lying HUD for the warped zone (MissionResource.lying_hud).
+var info := InfoFilter.new()
 var ix: Interactions
 var _anchor_marks: AnchorMarks
 
@@ -63,6 +66,9 @@ func _ready() -> void:
 	hud.end_turn_pressed.connect(_end_turn)
 	hud.continue_pressed.connect(_on_continue)
 	_connect_events()
+	barks = Barks.new()
+	barks.world = world
+	add_child(barks)
 	var units := _spawn_units()
 	AudioManager.play_music(mission.music_id)
 	hud.show_banner(mission.display_name.to_upper(), NeonTheme.CYAN, 1.2)
@@ -71,6 +77,12 @@ func _ready() -> void:
 	CombatManager.autobattle = false
 	await get_tree().create_timer(0.4).timeout
 	await play_cutscene(mission.intro_cutscene, {"PLACE": str(map_data.get("name", mission.display_name)).to_upper(), "MISSION": mission.display_name})
+	if mission.lying_hud:
+		info.active = true
+		info.disguise(units)
+		for u2: Node in units:
+			u2._update_hud()
+		hud.set_overlay(true)
 	CombatManager.start_battle(grid, units, mission, self)
 
 
@@ -250,6 +262,9 @@ func _connect_events() -> void:
 	EventBus.unit_status_applied.connect(func(u: Node, sid: String) -> void: _float(u, ContentDB.get_status(sid).display_name.to_upper() if ContentDB.get_status(sid) else sid, Color(1.8, 1.4, 0.4)))
 	EventBus.grid_changed.connect(_on_grid_changed)
 	EventBus.unit_died.connect(func(_u: Node) -> void: _refresh_tile_corpses())
+	EventBus.unit_died.connect(func(u: Node) -> void:
+		if info.active and u.get("data") and (u.data as CharacterData).id == InfoFilter.RELAY_ID:
+			relay_down("destroyed"))
 	EventBus.unit_moved.connect(func(u: Node, _a: Vector2i, _b: Vector2i) -> void: if u == CombatManager.active_unit: hud.refresh_unit(u))
 
 
@@ -430,11 +445,14 @@ func _inspect_text(cell: Vector2i) -> String:
 	var occ := grid.get_occupant(cell)
 	if occ:
 		var col := NeonTheme.team_color(occ.team).to_html(false)
-		lines.append("[color=#%s][b]%s[/b][/color]  LV%d %s" % [col, occ.display_name(), occ.get_stat("level"), occ.class_res().display_name if occ.class_res() else ""])
-		lines.append("HP %d/%d   MP %d/%d   SPD %d   CT %d" % [occ.current_hp, occ.get_stat("max_hp"), occ.current_mp, occ.get_stat("max_mp"), occ.get_stat("speed"), occ.ct])
+		if occ.disguise != "":
+			lines.append("[color=#b8b8c0][b]%s[/b][/color]  Registered bystander. Probably." % occ.display_name())
+		else:
+			lines.append("[color=#%s][b]%s[/b][/color]  LV%d %s" % [col, occ.display_name(), occ.get_stat("level"), occ.class_res().display_name if occ.class_res() else ""])
+			lines.append("HP %d/%d   MP %d/%d   SPD %d   CT %d" % [occ.current_hp, occ.get_stat("max_hp"), occ.current_mp, occ.get_stat("max_mp"), occ.get_stat("speed"), occ.ct])
 		var u := CombatManager.active_unit
 		if mode == Mode.TARGET and u and selected_ability and _valid_cells.has(cell) and occ != u:
-			var f := DamageCalculator.forecast(u, occ, selected_ability, grid)
+			var f := info.skew(DamageCalculator.forecast(u, occ, selected_ability, grid), u, occ, u)
 			if f["damage"] > 0 and f["hit"] <= 0.0 and DamageCalculator.is_blocked(occ, u, selected_ability, grid):
 				lines.append("[color=#ff2e88]▶ BLOCKED BY COVER — no line of sight[/color]")
 			elif f["damage"] > 0:
@@ -444,6 +462,8 @@ func _inspect_text(cell: Vector2i) -> String:
 				lines.append("[color=#ffd23f]▶ HIT %d%%   DMG %d   CRIT %d%%%s[/color]" % [roundi(f["hit"] * 100), f["damage"], roundi(f["crit"] * 100), "   KILL" if f["kill"] else ""])
 			elif f["damage"] < 0:
 				lines.append("[color=#39ff9f]▶ HEAL %d[/color]" % -f["damage"])
+			if f.get("lie", false):
+				lines.append("[color=#8a5cff][i]Figures certified by the Doctrine Overlay.[/i][/color]")
 			var angle := DamageCalculator.attack_angle(u.cell, occ.cell, occ.facing)
 			if angle != "front":
 				lines.append("[color=#39ff9f]%s ATTACK[/color]" % angle.to_upper())
@@ -564,6 +584,27 @@ func on_unit_path(unit: Node, path: Array) -> void:
 			_float(unit, "TRAP!", Color(2.0, 0.6, 0.2), true, 0.6)
 			if CombatManager.animate:
 				await get_tree().create_timer(0.25).timeout
+
+
+## The relay is hacked / destroyed: masks off, the HUD glitches to the truth.
+func relay_down(how: String = "hacked") -> void:
+	if not info.active:
+		return
+	info.drop()
+	for u: Node in CombatManager.get_units():
+		if is_instance_valid(u):
+			u._update_hud()
+	hud.set_overlay(false)
+	hud.add_log("[color=#ff2e88]Doctrine Relay %s. The overlay drops: true numbers.[/color]" % how)
+	Cues.fire("relay.down", {})
+	if CombatManager.animate:
+		hud.show_banner("OVERLAY OFFLINE", NeonTheme.MAGENTA, 0.9)
+		Glitch.play(self, 0.9)
+	_refresh_commands_if_idle()
+
+
+func ix_relay_down() -> void:
+	relay_down("hacked")
 
 
 func ix_toast(text: String, color: Color) -> void:

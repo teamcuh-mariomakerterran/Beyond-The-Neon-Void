@@ -1037,5 +1037,15 @@
 		"description": "A pinch of glittering dust that hums in time with your pulse. Whoever carries it can learn the Sync Blade.",
 		"lore_text": "Found where nobody looks, by somebody who looks everywhere. It keeps time better than any clock in the city.",
 		"grants_flag": "found_stardust"
+	},
+	{
+		"id": "acc_clear_eyes",
+		"display_name": "Clear Eyes",
+		"category": "ACCESSORY",
+		"value": 420,
+		"description": "A bootleg optic chip. Filters the Doctrine Overlay: whoever wears it reads the true numbers, and sees the 'civilians' for what they are.",
+		"stat_modifiers": {
+			"accuracy": 3
+		}
 	}
 ]

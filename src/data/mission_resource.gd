@@ -34,6 +34,9 @@ extends GameResource
 @export var microchip_reward: int = 1
 @export var story_flags_on_win: Array[String] = []
 @export var unlocks_mission_ids: Array[String] = []
+## The Lying HUD (InfoFilter): the warped zone's Doctrine Relay skews what the
+## HUD shows until it's hacked or destroyed.
+@export var lying_hud: bool = false
 
 
 func get_total_reward_text() -> String:

@@ -6,6 +6,7 @@ extends RefCounted
 ## Node: {"id", "text", "speaker"?, "voice_path"?, "requires_flag"?, "sets_flag"?,
 ##        "next"?, "choices"?: [{"text", "next", "correct"?, "sets_flag"?}]}
 ## - A node whose requires_flag isn't set is skipped by following its "next".
+##   "requires_evidence": N skips it until N pieces of evidence are found.
 ## - Entering a node sets its sets_flag.
 ## - A choice with a "correct" key feeds GameManager.record_hub_visit(correct),
 ##   which drives the Drunken Oracle's five-in-a-row secret unlock.
@@ -81,7 +82,8 @@ func _goto(node_id: String) -> Dictionary:
 		if n.is_empty():
 			return current
 		var req := str(n.get("requires_flag", ""))
-		if req != "" and not GameManager.check_story_flag(req):
+		var ev := int(n.get("requires_evidence", 0))
+		if (req != "" and not GameManager.check_story_flag(req)) or (ev > 0 and Evidence.count() < ev):
 			node_id = str(n.get("next", ""))
 			continue
 		current = n

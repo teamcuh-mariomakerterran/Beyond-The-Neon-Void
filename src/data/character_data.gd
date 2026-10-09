@@ -38,6 +38,12 @@ extends GameResource
 @export var weapon_specialties: Array[String] = []
 @export var deck: Dictionary = {}
 
+@export_group("Voice")
+## Battle barks: {"event": "crit", "text": "...", "voice_path": "res://...", "chance": 0.7}.
+## Events: battle_start, turn_start, crit, kill, ally_down, low_hp, big_hit,
+## miss, heal, victory, buzzed, shield_down. These win over data/barks.json.
+@export var barks: Array[Dictionary] = []
+
 @export_group("AI (enemies / guests)")
 @export var ai_behavior: String = "aggressive"
 ## Fights on its team but is driven by the AI (droids, summons, guests).

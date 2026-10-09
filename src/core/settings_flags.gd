@@ -8,3 +8,5 @@ static var fast_battles: bool = false
 static var auto_additions: bool = false
 ## Icon style: "painted" (detailed, frameless) or "framed" (orange bevel tiles).
 static var icon_style: String = "painted"
+## Battle barks: speech bubbles (and recorded voice lines) on crits, kills…
+static var barks: bool = true

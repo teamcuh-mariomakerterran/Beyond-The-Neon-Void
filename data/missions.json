@@ -46,7 +46,8 @@
 		"loot_table_id": "loot_supply_works",
 		"microchip_reward": 2,
 		"story_flags_on_win": [
-			"m01_done"
+			"m01_done",
+			"evidence:quota_memo"
 		],
 		"unlocks_mission_ids": [
 			"m02_shift_change"
@@ -109,7 +110,8 @@
 		"loot_table_id": "loot_supply_works",
 		"microchip_reward": 3,
 		"story_flags_on_win": [
-			"m02_done"
+			"m02_done",
+			"evidence:shift_roster"
 		]
 	},
 	{
@@ -238,5 +240,65 @@
 		"loot_table_id": "loot_supply_works",
 		"microchip_reward": 1,
 		"story_flags_on_win": []
+	},
+	{
+		"id": "relay_district",
+		"display_name": "Relay District",
+		"chapter": 2,
+		"map_id": "supply_works_dock",
+		"music_id": "battle_supply_works",
+		"briefing": "The warped zone. A Doctrine Relay mast rewrites your HUD here: hit chances and damage are 'certified', and some of those 'civilians' are carrying rifles. Break the mast, or bring Clear Eyes.",
+		"lying_hud": true,
+		"enemies": [
+			{
+				"character_id": "doctrine_relay",
+				"cell": [
+					9,
+					1
+				],
+				"level": 3
+			},
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					10,
+					2
+				],
+				"level": 3
+			},
+			{
+				"character_id": "factory_marksman",
+				"cell": [
+					11,
+					4
+				],
+				"level": 3
+			},
+			{
+				"character_id": "doctrine_warden",
+				"cell": [
+					8,
+					9
+				],
+				"level": 3
+			},
+			{
+				"character_id": "choir_enforcer",
+				"cell": [
+					10,
+					10
+				],
+				"level": 3
+			}
+		],
+		"win_condition": "defeat_all",
+		"soul_coin_reward": 320,
+		"xp_reward": 180,
+		"loot_table_id": "loot_supply_works",
+		"microchip_reward": 2,
+		"story_flags_on_win": [
+			"relay_district_done",
+			"evidence:hymn_rewrites"
+		]
 	}
 ]

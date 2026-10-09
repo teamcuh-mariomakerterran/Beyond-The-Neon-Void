@@ -64,6 +64,10 @@ extends GameResource
 @export var stage_cutscene: String = ""
 ## Last words before the box closes (and before a fight / cutscene starts).
 @export var closing_lines: Array[String] = []
+## Propaganda cracks: new talk once you've found enough evidence (Evidence).
+## [{"needs": 2, "evidence": ["id"], "lines": ["..."], "sets_flag": "",
+##   "give_item_id": "", "quest_id": ""}]
+@export var evidence_talk: Array[Dictionary] = []
 
 
 func is_present() -> bool:

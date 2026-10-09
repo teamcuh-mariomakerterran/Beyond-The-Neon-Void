@@ -114,7 +114,13 @@ func setup(p_data: CharacterData, p_team: int, level_override: int = 0) -> void:
 	current_ap = get_stat("max_ap")
 
 
+## What the HUD calls this unit while the Doctrine Overlay lies (InfoFilter).
+var disguise: String = ""
+
+
 func display_name() -> String:
+	if disguise != "":
+		return disguise
 	return data.display_name if data and data.display_name != "" else String(name)
 
 
@@ -600,7 +606,7 @@ func _update_hud() -> void:
 func _draw() -> void:
 	if sprite:
 		return
-	var col: Color = TEAM_COLORS.get(team, Color.WHITE)
+	var col: Color = TEAM_COLORS.get(team, Color.WHITE) if disguise == "" else Color(0.7, 0.7, 0.75)
 	var dim := col.darkened(0.55)
 	# Ground ring + facing notch (drawn in iso space).
 	var ring := PackedVector2Array()

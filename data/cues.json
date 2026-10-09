@@ -21,5 +21,7 @@
 	"sequence.fail": [{"do": "flash", "color": "#ff2e88", "alpha": 0.2, "dur": 0.25}],
 	"shield.down": [{"do": "hitstop", "ms": 80}, {"do": "shake", "amp": 7, "dur": 0.3}, {"do": "headline", "text": "{name}: SHIELD DOWN"}],
 	"trap.spring": [{"do": "shake", "amp": 6, "dur": 0.2}, {"do": "flash", "color": "#ff5a2e", "alpha": 0.3, "dur": 0.2}],
-	"door": [{"do": "shake", "amp": 2, "dur": 0.15}]
+	"door": [{"do": "shake", "amp": 2, "dur": 0.15}],
+	"relay.down": [{"do": "hitstop", "ms": 90}, {"do": "shake", "amp": 6, "dur": 0.35}, {"do": "flash", "color": "#ff2e88", "alpha": 0.3, "dur": 0.35}, {"do": "headline", "text": "DOCTRINE OVERLAY OFFLINE"}],
+	"evidence": [{"do": "flash", "color": "#ffd23f", "alpha": 0.18, "dur": 0.3}, {"do": "headline", "text": "EVIDENCE FOUND"}]
 }

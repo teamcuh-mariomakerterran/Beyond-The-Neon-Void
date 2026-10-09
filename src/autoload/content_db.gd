@@ -39,6 +39,10 @@ var _db: Dictionary = {}  # bucket -> {id: Resource}
 ## Plain-dictionary content that doesn't need a Resource class (yet).
 var terrain: Dictionary = {}
 var vendors: Dictionary = {}
+## Battle barks by character / class / team (data/barks.json; see Barks).
+var barks: Dictionary = {}
+## Evidence against the Doctrine (data/evidence.json; see Evidence).
+var evidence: Dictionary = {}
 var rumors: Dictionary = {}
 var recipes: Dictionary = {}
 var maps: Dictionary = {}
@@ -63,6 +67,8 @@ func reload() -> void:
 			_load_bucket(dir, bucket)
 		terrain.merge(_read_dict(dir.path_join("terrain.json")), true)
 		vendors.merge(_read_dict(dir.path_join("vendors.json")), true)
+		barks.merge(_read_dict(dir.path_join("barks.json")), true)
+		evidence.merge(_read_dict(dir.path_join("evidence.json")), true)
 		rumors.merge(_read_dict(dir.path_join("rumors.json")), true)
 		recipes.merge(_read_dict(dir.path_join("recipes.json")), true)
 		particles.merge(_read_dict(dir.path_join("particles.json")), true)

@@ -215,6 +215,7 @@ func _tab_missions() -> void:
 func _tab_regulars() -> void:
 	_h("THE REGULARS")
 	_p("Same stools, same faces, same tabs. Listen long enough and you'll hear the whole war — just never the true version.")
+	_case_board()
 	for npc: NPCResource in ContentDB.get_all("npcs"):
 		if npc.location_id != "neon_gutter" or not npc.is_present():
 			continue
@@ -232,6 +233,9 @@ func _tab_regulars() -> void:
 		v.add_child(r)
 		_btn(r, "TALK", func() -> void: _talk(npc), npc.dialog.is_empty())
 		_btn(r, "EAVESDROP", func() -> void: _eavesdrop(npc), npc.eligible_eavesdrops().is_empty())
+		if not Evidence.ready_talks(npc).is_empty():
+			var eb := _btn(r, "◆ NEW: SHOW EVIDENCE", func() -> void: _show_evidence(npc), false, "You've found something they'll want to see.")
+			eb.add_theme_color_override("font_color", NeonTheme.AMBER)
 		var quests := _visible_quests(npc.id)
 		var turn_ins := quests.filter(func(q: QuestResource) -> bool: return QuestManager.is_ready_to_complete(q.id))
 		if not quests.is_empty():
@@ -306,6 +310,24 @@ func _turn_in_quest(npc: NPCResource, q: QuestResource) -> void:
 	_toast("Quest complete: %s. %s" % [q.display_name, q.get_reward_text()])
 	if q.complete_text != "":
 		UIManager.get_dialogue_box().say(npc.display_name, q.complete_text)
+
+
+## Evidence against the Doctrine, pinned under the bar (Evidence).
+func _case_board() -> void:
+	var ids := Evidence.found()
+	var total := ContentDB.evidence.keys().filter(func(k: String) -> bool: return not k.begins_with("_")).size()
+	_h("CASE BOARD  ·  %d / %d" % [ids.size(), total], NeonTheme.AMBER)
+	if ids.is_empty():
+		_p("Nothing yet. Everything the Doctrine says has a second version somewhere: data caches, drains, desks.")
+		return
+	for id in ids:
+		var e := Evidence.info(id)
+		_p("◆ %s — %s" % [str(e["title"]).to_upper(), str(e["description"])], NeonTheme.TEXT)
+
+
+func _show_evidence(npc: NPCResource) -> void:
+	await Evidence.play_ready(npc, self)
+	_show("regulars")
 
 
 func _talk(npc: NPCResource) -> void:

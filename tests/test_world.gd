@@ -35,6 +35,7 @@ func run(p_tree: SceneTree) -> int:
 	test_campaign_fixes()
 	await test_streaming()
 	test_pixellab()
+	test_barks_lies_evidence()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1477,6 +1478,87 @@ func test_pixellab() -> void:
 	gunner.queue_free()
 	var m := ContentDB.get_mission("test_pixellab_skirmish")
 	check(m != null and bool(m.guests[0].get("controlled", false)) and ContentDB.get_npc("kade") != null and ContentDB.vendors.has("test_vendor"), "test skirmish, Kade and his shop are in")
+
+
+func test_barks_lies_evidence() -> void:
+	GameManager.new_game()
+	var g := IsometricGrid.new()
+	g.setup(8, 8)
+	# Barks: own lines → id in barks.json → class → team.
+	var rook := Unit.new()
+	rook.setup(ContentDB.get_character("rook"), Unit.Team.PLAYER, 3)
+	var warden := Unit.new()
+	warden.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.ENEMY, 3)
+	var relay := Unit.new()
+	relay.setup(ContentDB.get_character("doctrine_relay"), Unit.Team.ENEMY, 3)
+	for u: Unit in [rook, warden, relay]:
+		u.grid = g
+		tree.root.add_child(u)
+	var rk := Barks.lines_for(rook, "crit")
+	check(not rk.is_empty() and str(rk[0]["text"]) in (ContentDB.barks["rook"]["crit"] as Array), "Rook has his own crit lines")
+	check(str(Barks.lines_for(warden, "kill")[0]["text"]) in (ContentDB.barks["team:1"]["kill"] as Array), "Doctrine troops fall back to team barks")
+	check(Barks.lines_for(relay, "battle_start")[0]["text"] == "ATTENTION: ALL FIGURES ARE CERTIFIED.", "a character's own barks field wins")
+	var b := Barks.new()
+	tree.root.add_child(b)
+	var keep_anim := CombatManager.animate
+	CombatManager.animate = false
+	var said := b.say(rook, "crit", true)
+	check(not said.is_empty() and b.last["event"] == "crit" and b.say(rook, "crit").is_empty(), "a bark fires, then the unit cools down")
+	SettingsFlags.barks = false
+	check(b.say(warden, "kill", true).is_empty(), "barks can be switched off")
+	SettingsFlags.barks = true
+	b.queue_free()
+	CombatManager.animate = keep_anim
+	# Lying HUD: skewed in the Doctrine's favour, Clear Eyes sees through.
+	var info := InfoFilter.new()
+	var f := {"hit": 0.8, "damage": 40, "crit": 0.1, "kill": false}
+	check(info.skew(f, rook, warden) == f, "no relay, no lies")
+	info.active = true
+	var lie := info.skew(f, rook, warden)
+	check(float(lie["hit"]) < 0.8 and float(lie["hit"]) >= 0.8 - InfoFilter.SKEW - 0.001 and int(lie["damage"]) < 40 and lie["lie"], "crew attacks look worse under the overlay (%s)" % str(lie))
+	var lie2 := info.skew(f, warden, rook, rook)
+	check(float(lie2["hit"]) > 0.8 and int(lie2["damage"]) > 40, "Doctrine attacks look surer")
+	check(info.skew(f, rook, warden) == lie, "the lie is stable while you hover")
+	rook.equipment.slots["accessory"] = {"uid": "", "item_id": "acc_clear_eyes", "level": 1, "xp": 0, "potential": 1.0, "bonus": {}}
+	check(info.skew(f, rook, warden) == f and InfoFilter.sees_truth(rook), "Clear Eyes reads true numbers")
+	var crowd: Array = [relay]
+	for i in 9:
+		var w2 := Unit.new()
+		w2.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.ENEMY, 2)
+		w2.name = "warden_%d" % i
+		crowd.append(w2)
+	info.disguise(crowd)
+	check(not info.disguised.is_empty() and info.disguised.size() < 9 and relay.disguise == "" and (info.disguised[0] as Unit).display_name() == "Civilian", "some troops show up as civilians (%d of 9), never the relay" % info.disguised.size())
+	info.drop()
+	check(not info.active and crowd.all(func(x: Unit) -> bool: return x.disguise == ""), "relay down: masks off")
+	for x in crowd.slice(1):
+		x.free()
+	check(ContentDB.get_mission("relay_district").lying_hud and ContentDB.get_item("acc_clear_eyes") != null, "Relay District is the warped zone; Clear Eyes exists")
+	# Evidence: flags, NPC talk unlocks, rewards.
+	check(Evidence.count() == 0 and ContentDB.evidence.has("casualty_ledger"), "evidence starts empty")
+	var benno := ContentDB.get_npc("benno")
+	check(Evidence.ready_talks(benno).is_empty(), "Benno has nothing new to say yet")
+	check(Evidence.give("quota_memo") and not Evidence.give("quota_memo") and Evidence.has("quota_memo"), "finding evidence once")
+	check(Evidence.ready_talks(benno) == [0], "one piece: Benno's first evidence talk unlocks")
+	Evidence.reward(benno, 0)
+	check(GameManager.check_story_flag("benno_ears_open") and Evidence.ready_talks(benno).is_empty(), "heard once, it stays heard")
+	Evidence.give("shift_roster")
+	Evidence.give("casualty_ledger")
+	check(Evidence.ready_talks(benno) == [1], "three pieces incl. the ledger: Benno's second talk")
+	Evidence.reward(benno, 1)
+	check(GameManager.get_stack_count("acc_shift_badge") + GameManager.item_instances.size() > 0, "…and he hands over his shift badge")
+	var oracle := ContentDB.get_npc("drunken_oracle")
+	check(Evidence.ready_talks(oracle).is_empty(), "the Oracle wants four pieces")
+	var ix := Interactions.new()
+	ix.run_action("evidence", "storm_drain_tapes")
+	check(Evidence.count() == 4 and Evidence.ready_talks(oracle) == [0], "an anchor's evidence action counts; the Oracle opens up")
+	var dg := DialogGraph.new([{"id": "a", "text": "hi", "next": "b"}, {"id": "b", "text": "secret", "requires_evidence": 5, "next": "c"}, {"id": "c", "text": "bye"}])
+	var n1 := dg.start("")
+	var n2 := dg.advance()
+	check(n1["id"] == "a" and n2["id"] == "c", "dialog nodes can wait for evidence")
+	for u: Unit in [rook, warden, relay]:
+		u.queue_free()
+	GameManager.new_game()
 
 
 func test_ui_icons() -> void:

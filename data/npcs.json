@@ -70,6 +70,20 @@
 				"text": "Otto, flipping the TV to the Mael Rho sermon: 'Sleep well, children of the Choir. Report at the fifth bell. Pay your tab at the sixth.'"
 			}
 		],
+		"evidence_talk": [
+			{
+				"needs": 2,
+				"evidence": [],
+				"lines": [
+					"You're bringing paper into my bar now? …Let me see.",
+					"Nine clocked in, six sent upstairs. My cousin's boy was on that shift.",
+					"This round's on the house. Don't make it a habit. Don't stop, either."
+				],
+				"sets_flag": "otto_believes",
+				"give_item_id": "con_void_vodka",
+				"quest_id": ""
+			}
+		],
 		"quest_ids": [
 			"q_otto_the_tab"
 		],
@@ -427,6 +441,20 @@
 				"text": "The Oracle, to you, suddenly: 'Drank from the Weeping Circuit once. Woke up remembering someone else's wedding. Better than mine. Better cake.'"
 			}
 		],
+		"evidence_talk": [
+			{
+				"needs": 4,
+				"evidence": [],
+				"lines": [
+					"Four pieces. Four truths. And every one of them has a twin.",
+					"You want to see the numbers the way they are? Not the way they're sung?",
+					"…Wear this. Don't thank me. Thank the bartender who never charges me."
+				],
+				"sets_flag": "oracle_clear_eyes",
+				"give_item_id": "acc_clear_eyes",
+				"quest_id": ""
+			}
+		],
 		"quest_ids": []
 	},
 	{
@@ -492,6 +520,36 @@
 			{
 				"text": "Benno, raising a glass: 'Explosion at the Supply Works. Omen-Six suspected. Again. To Omen-Six! Best coworker I never had!'",
 				"requires_flag": "m01_done"
+			}
+		],
+		"evidence_talk": [
+			{
+				"needs": 1,
+				"evidence": [
+					"quota_memo"
+				],
+				"lines": [
+					"'Voluntary overtime.' That's what they called Hesketh's arm.",
+					"I signed that log. I signed it.",
+					"…Keep digging. I'll keep my ears open on the line."
+				],
+				"sets_flag": "benno_ears_open",
+				"give_item_id": "",
+				"quest_id": ""
+			},
+			{
+				"needs": 3,
+				"evidence": [
+					"casualty_ledger"
+				],
+				"lines": [
+					"Those border numbers. The before column.",
+					"Kid in my brother's legion is on page two. They said he was on leave.",
+					"Take this. Shift badge. Gets you past the Works turnstiles without a scan."
+				],
+				"sets_flag": "benno_turned",
+				"give_item_id": "acc_shift_badge",
+				"quest_id": ""
 			}
 		],
 		"quest_ids": [

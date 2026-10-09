@@ -35,7 +35,7 @@ const KINDS := {
 }
 const ACTIONS := ["open", "close", "toggle", "reveal", "unshield", "status", "cleanse", "give", "take",
 	"coins", "chips", "damage", "heal", "ap", "spawn", "flag", "unflag", "enable", "disable", "arm",
-	"toast", "news", "cue", "dialog", "npc", "cutscene", "battle", "teleport", "music"]
+	"toast", "news", "cue", "dialog", "npc", "cutscene", "battle", "teleport", "music", "relay", "evidence"]
 const ACTION_HINT := {
 	"open": "mask group (door cells)", "close": "mask group", "toggle": "mask group",
 	"reveal": "radius in cells (empty = whole map): strips cloaked / hidden",
@@ -50,6 +50,8 @@ const ACTION_HINT := {
 	"dialog": "NPC id or a line of text", "npc": "NPC id (runs its stages)",
 	"cutscene": "res://data/cutscenes/….json", "battle": "mission id",
 	"teleport": "map_id, map_id:spawn#, or x,y on this map", "music": "res://assets/music/….ogg",
+	"relay": "(no arg) hack the Doctrine Relay: the Lying HUD drops",
+	"evidence": "evidence id (data/evidence.json)",
 }
 const CLOAK_STATUSES := ["cloaked", "hidden"]
 
@@ -430,6 +432,13 @@ func run_action(what: String, arg: String, actor: Node = null, a: Dictionary = {
 		"toast": _toast(arg if arg != "" else title(a), NeonTheme.CYAN)
 		"news": EventBus.broadcast_line.emit("news", arg)
 		"cue": _cue(arg, actor)
+		"evidence":
+			if Evidence.give(arg):
+				_toast("EVIDENCE: " + str(Evidence.info(arg)["title"]).to_upper(), YELLOW)
+				_cue("evidence", actor)
+		"relay":
+			if host and host.has_method("ix_relay_down"):
+				host.ix_relay_down()
 		"npc":
 			if host and host.has_method("ix_npc"):
 				host.ix_npc(arg if arg != "" else str(a.get("npc_id", "")))

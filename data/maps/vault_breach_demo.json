@@ -2039,6 +2039,10 @@
 				{
 					"do": "flag",
 					"arg": "vault_cache_taken"
+				},
+				{
+					"do": "evidence",
+					"arg": "casualty_ledger"
 				}
 			],
 			"fail_actions": []

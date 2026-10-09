@@ -13,7 +13,7 @@ static func flag(npc: NPCResource, what: String) -> String:
 
 static func has_stages(npc: NPCResource) -> bool:
 	return not npc.intro_lines.is_empty() or not npc.repeat_lines.is_empty() or npc.give_item_id != "" \
-		or npc.after_talk != "none" or not npc.closing_lines.is_empty()
+		or npc.after_talk != "none" or not npc.closing_lines.is_empty() or not npc.evidence_talk.is_empty()
 
 
 ## Plays the whole visit. `host` is the scene (for cutscenes / toasts).
@@ -36,6 +36,8 @@ static func run(npc: NPCResource, host: Node) -> void:
 			GameManager.set_story_flag(flag(npc, "gift"))
 			var it := ContentDB.get_item(npc.give_item_id)
 			_toast(host, "RECEIVED: %s%s" % [it.display_name if it else npc.give_item_id, ("  ×%d" % npc.give_item_qty) if npc.give_item_qty > 1 else ""])
+	# Evidence you've found cracks the propaganda: new talk first.
+	var ev_heard: int = await Evidence.play_ready(npc, host)
 	var lines: Array[String] = []
 	var after := ""  # battle / cutscene start after the closing lines
 	match npc.after_talk:
@@ -63,7 +65,7 @@ static func run(npc: NPCResource, host: Node) -> void:
 			if npc.stage_cutscene != "":
 				after = "cutscene"
 	# Nothing new to say? The repeat lines (cycled) fill the visit.
-	if not first and lines.is_empty() and after == "" and npc.after_talk in ["none", "quest", "chain", "fetch"] and not npc.repeat_lines.is_empty():
+	if not first and ev_heard == 0 and lines.is_empty() and after == "" and npc.after_talk in ["none", "quest", "chain", "fetch"] and not npc.repeat_lines.is_empty():
 		var i := int(GameManager.story_flags.get(flag(npc, "repeat"), 0))
 		lines = [npc.repeat_lines[i % npc.repeat_lines.size()]]
 		GameManager.story_flags[flag(npc, "repeat")] = i + 1

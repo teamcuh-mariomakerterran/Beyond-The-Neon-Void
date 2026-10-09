@@ -88,7 +88,7 @@ anchor(6, 7, "trap", label="Tripwire", hidden=True, once=True,
 anchor(1, 12, "loot", label="Loose Floor Panel", hidden=True, once=True, reach=0,
        actions=[{"do": "give", "arg": "con_synth_stew:2"}, {"do": "coins", "arg": "150"}])
 anchor(0, 1, "medstation", label="Med Station", once=True, actions=[{"do": "heal", "arg": "40%"}])
-anchor(15, 6, "intel", label="Vault Cache", once=True, actions=[{"do": "chips", "arg": "2"}, {"do": "flag", "arg": "vault_cache_taken"}])
+anchor(15, 6, "intel", label="Vault Cache", once=True, actions=[{"do": "chips", "arg": "2"}, {"do": "flag", "arg": "vault_cache_taken"}, {"do": "evidence", "arg": "casualty_ledger"}])
 
 world = {
     "format": 2, "id": MAP_ID, "name": "Supply Works Vault", "kind": "encounter",
@@ -179,7 +179,7 @@ block["anchors"] = [
     {"id": "anc_neon_block_demo_3", "cell": [0, 7], "kind": "loot", "label": "Storm Drain", "hidden": True,
      "scope": "both", "ap": 0, "reach": 0, "once": True, "enabled": True, "requires_flag": "", "requires_item": "",
      "consume_item": False, "sequence": "", "step": 0,
-     "actions": [{"do": "give", "arg": "mat_scrap_wire:3"}, {"do": "give", "arg": "mat_dead_battery:2"}], "fail_actions": []},
+     "actions": [{"do": "give", "arg": "mat_scrap_wire:3"}, {"do": "give", "arg": "mat_dead_battery:2"}, {"do": "evidence", "arg": "storm_drain_tapes"}], "fail_actions": []},
 ]
 open("data/maps/neon_block_demo.json", "w").write(json.dumps(block, indent="\t") + "\n")
 print("Ma Rivet (fetch quest) + vault entrance + hidden storm drain added to neon_block_demo")

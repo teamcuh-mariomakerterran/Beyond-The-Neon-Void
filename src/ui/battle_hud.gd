@@ -36,6 +36,7 @@ var _log: RichTextLabel
 var _banner: Label
 var _results: PanelContainer
 var _toast: Label
+var _overlay_tag: Label
 var _mode_label: Label
 
 
@@ -52,6 +53,7 @@ func _ready() -> void:
 	_build_inspector(root)
 	_build_log(root)
 	_build_banner(root)
+
 	UIManager.register_hud(self)
 	EventBus.log_message.connect(add_log)
 
@@ -75,6 +77,12 @@ func _build_turn_order(root: Control) -> void:
 	_order_row = HBoxContainer.new()
 	_order_row.add_theme_constant_override("separation", 6)
 	v.add_child(_order_row)
+	# The Lying HUD's tag lives under the turn order (shown by set_overlay).
+	_overlay_tag = NeonTheme.label("◆ DOCTRINE OVERLAY ACTIVE — all figures certified by the Ministry", 13, Color(1.4, 0.5, 2.0))
+	_overlay_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_overlay_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_overlay_tag.visible = false
+	v.add_child(_overlay_tag)
 
 
 func _build_unit_panel(root: Control) -> void:
@@ -320,7 +328,7 @@ func update_turn_order(forecast: Array) -> void:
 		var text := ""
 		var col := NeonTheme.AMBER
 		if who and is_instance_valid(who):
-			col = NeonTheme.team_color(who.team)
+			col = NeonTheme.team_color(who.team) if str(who.get("disguise")) == "" else Color(0.7, 0.7, 0.75)
 			text = who.display_name().split(" ")[0].left(10)
 		elif entry.has("cast"):
 			var cast: Dictionary = entry["cast"]
@@ -367,6 +375,19 @@ func show_banner(text: String, color: Color = NeonTheme.GREEN, hold: float = 0.8
 	t.tween_interval(hold)
 	t.tween_property(_banner, "scale", Vector2(1.25, 0.0), 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	t.parallel().tween_property(_banner, "modulate:a", 0.0, 0.18)
+
+
+## The Lying HUD tag: shown while the Doctrine Relay stands.
+func set_overlay(on: bool) -> void:
+	if _overlay_tag:
+		_overlay_tag.visible = on
+
+
+func _process(_d: float) -> void:
+	if _overlay_tag and _overlay_tag.visible:
+		# A propaganda feed never quite holds a steady signal.
+		var t := Time.get_ticks_msec() / 1000.0
+		_overlay_tag.modulate.a = 0.75 + 0.25 * sin(t * 3.1) - (0.5 if fmod(t, 4.7) < 0.06 else 0.0)
 
 
 func show_notification(text: String) -> void:

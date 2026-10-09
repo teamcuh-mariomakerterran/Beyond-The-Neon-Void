@@ -15,7 +15,7 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
   - **submarine** (shown half out of the water, 8-direction sheet, 4 diagonals used)
   - **land** vehicle (later)
   - **air** vehicle (later)
-- **Must come first:** a chunked renderer and chunk streaming (today it's one node per column, which can't handle 512² maps).
+- ✅ **Must come first:** a chunked renderer and chunk streaming. Built 2026-10-08: 32×32 chunks stream around the camera, with a lazy walk grid and big map files loading on first use.
 
 ## Editor: approved
 - ✅ Scatter brush (built)
@@ -62,4 +62,11 @@ Decisions on `docs/research/EDITOR_IDEAS.md`, `docs/design/BIG_IDEAS.md` and the
 - ✅ Shielded / cloaked statuses; AI flanks walls
 - ✅ NPC interaction stages (intro, gift, shop, quest, chain, fetch, fight, cutscene, repeat, closing)
 - ✅ Vault Breach demo + Ma Rivet fetch quest on the Neon Block
+
+## Built 2026-10-08 / 09
+- ✅ Chunk streaming for big maps; campaign fixes (battles hand you back to the explore cell, saved explore position, shop stock saved, seeded RNG paths, enemy level growth)
+- ✅ PixelLab units (zips drop in and play), test skirmish, Kade the test vendor
+- ✅ **Voice barks:** crits, kills, ally down, low HP, big hits, misses, heals, battle start / victory, buzzed, shield down. Lines live in data/barks.json or on a character's Voice → barks field (with your recordings as voice_path).
+- ✅ **Lying HUD**, in the one warped zone only (Relay District, `lying_hud`): forecasts skew up to 25% in the Doctrine's favour and some troops show as "Civilian". Clear Eyes chip, a relay terminal (anchor action `relay`) or killing the Doctrine Relay drops it with a glitch.
+- ✅ **Propaganda through NPCs:** evidence (data/evidence.json) found in caches, drains and mission rewards; the hub case board; NPC evidence talks unlock new lines, items and quests (Otto, Benno, the Drunken Oracle); dialog nodes can need N pieces of evidence.
 
