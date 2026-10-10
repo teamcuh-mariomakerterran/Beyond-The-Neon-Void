@@ -94,5 +94,13 @@
 	"r_nyra_denial": {
 		"channel": "news",
 		"text": "PSALTER SPIRES: The Cantorate reminds citizens that there is no 'High Oracle.' Rumors of an Oracle are Veil disinformation. Report rumors."
+	},
+	"r_ceasefire_cue": {
+		"channel": "news",
+		"text": "BORDER DESK: Ceasefire talks collapse for the ninth time, again within the hour of opening. Both delegations blame 'an unforeseen provocation.'"
+	},
+	"r_same_words": {
+		"channel": "gossip",
+		"text": "Swear to the Queen, I heard a Veil broadcast on a bootleg set last night. Same words as ours. 'Peace through vigilance.' Word for word. Weird, right?"
 	}
 }
