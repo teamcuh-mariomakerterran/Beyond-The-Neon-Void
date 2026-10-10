@@ -10,3 +10,6 @@ static var auto_additions: bool = false
 static var icon_style: String = "painted"
 ## Battle barks: speech bubbles (and recorded voice lines) on crits, kills…
 static var barks: bool = true
+## Sound effects + ambience on/off, and their volume offset (dB).
+static var sfx: bool = true
+static var sfx_db: float = 0.0

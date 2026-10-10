@@ -71,6 +71,7 @@ func _ready() -> void:
 	add_child(barks)
 	var units := _spawn_units()
 	AudioManager.play_music(mission.music_id)
+	AudioManager.play_ambience(Sfx.ambience_for_map(map_data), -16.0)
 	hud.show_banner(mission.display_name.to_upper(), NeonTheme.CYAN, 1.2)
 	hud.add_log("[color=#8f84ad]%s[/color]" % mission.briefing)
 	CombatManager.animate = true
@@ -262,6 +263,12 @@ func _connect_events() -> void:
 	EventBus.unit_damaged.connect(func(u: Node, amt: int, crit: bool) -> void: _float(u, str(amt), Color(2.0, 0.5, 0.7), crit, float(amt) / maxf(float(u.get_stat("max_hp")), 1.0) * 2.5))
 	EventBus.unit_healed.connect(func(u: Node, amt: int) -> void: _float(u, "+%d" % amt, Color(0.5, 2.0, 1.0)) if amt > 0 else null)
 	EventBus.unit_missed.connect(func(u: Node) -> void: _float(u, "MISS", Color(0.7, 0.7, 0.9)))
+	EventBus.unit_missed.connect(func(_u: Node) -> void: Sfx.event("miss", -8.0, 1.3))
+	EventBus.unit_damaged.connect(func(_u: Node, _amt: int, crit: bool) -> void:
+		Sfx.event("hit", -3.0)
+		if crit:
+			Sfx.event("crit", -6.0, 1.2))
+	EventBus.unit_died.connect(func(_u: Node) -> void: Sfx.event("death", -4.0))
 	EventBus.unit_status_applied.connect(func(u: Node, sid: String) -> void: _float(u, ContentDB.get_status(sid).display_name.to_upper() if ContentDB.get_status(sid) else sid, Color(1.8, 1.4, 0.4)))
 	EventBus.grid_changed.connect(_on_grid_changed)
 	EventBus.unit_died.connect(func(_u: Node) -> void: _refresh_tile_corpses())
@@ -729,6 +736,7 @@ func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	var plan := VFX.plan_for_ability(ability, ranged)
 	var cells := ability.get_affected_cells(grid, unit.cell, cell)
 	unit.play_animation(unit.anim_for(ability))
+	AudioManager.play_sfx(Sfx.ability_sound(ability, unit, ranged), -2.0)
 	if ability.id == Bonds.DUO_TECH:
 		var partner: Node = unit.duo_partner()
 		if partner:

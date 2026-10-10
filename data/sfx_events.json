@@ -1,0 +1,22 @@
+{
+	"_note": "Which sound plays when (src/audio/sfx.gd). Values are sound families in assets/sfx: 'gun_smg' plays a random gun_smg_N. Swap any of them freely. An ability's own sfx_id (Forge) wins over these.",
+	"weapon": {
+		"pistol": "laser", "laser_gun": "laser", "rifle": "gun_sniper", "heavy": "gun_mg", "light": "gun_smg",
+		"cyberdeck": "magic", "controller": "magic", "synth": "magic", "codex": "magic", "rod": "magic", "staff": "magic",
+		"injector": "hit", "knife": "hit", "knuckles": "hit", "katana": "hit", "sword": "hit", "heavy_blade": "hit",
+		"lance": "hit", "baton": "hit", "wrench": "hit", "ribbon": "hit", "shield": "hit"
+	},
+	"damage_type": {"tech": "magic", "void": "magic", "essence": "magic", "electric": "magic", "cryo": "magic", "plasma": "laser", "kinetic": "explosion"},
+	"ranged_default": "gun_smg",
+	"melee_default": "hit",
+	"area": "explosion",
+	"events": {
+		"hit": "hit", "crit": "explosion", "miss": "ui_tone", "death": "scream", "heal": "heal", "buff": "magic", "debuff": "glitch",
+		"coins": "coin", "loot": "loot_found", "level_up": "sting_epic", "victory": "sting_dramatic", "defeat": "ui_error",
+		"door": "security_door", "terminal": "terminal", "switch": "ui_tone", "trap": "explosion", "evidence": "loot_found",
+		"relay_down": "static", "shield_down": "glitch", "sequence_fail": "ui_error", "sequence_complete": "power_up",
+		"boss": "sting_dramatic", "shop_buy": "coin", "denied": "ui_error", "duo_tech": "sting_epic", "slam": "explosion",
+		"turret": "gun_mg", "drone": "ufo", "droid_step": "mech_step"
+	},
+	"ambience": {"hub": "amb_bar", "hangover_morning": "amb_bar", "rain": "amb_rain", "city": "amb_crowd", "wind": "amb_wind"}
+}

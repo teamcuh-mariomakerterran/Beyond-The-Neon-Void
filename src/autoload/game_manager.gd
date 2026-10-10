@@ -130,6 +130,8 @@ func set_active_party(ids: Array[String]) -> bool:
 
 func add_soul_coins(amount: int) -> void:
 	soul_coins = clampi(soul_coins + amount, 0, 99_999_999)
+	if amount > 0 and is_inside_tree() and get_node_or_null("/root/AudioManager"):
+		Sfx.event("coins", -6.0)
 	currency_changed.emit()
 	EventBus.soul_coins_changed.emit(soul_coins)
 

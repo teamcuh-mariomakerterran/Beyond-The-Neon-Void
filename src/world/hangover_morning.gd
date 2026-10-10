@@ -50,6 +50,7 @@ func _ready() -> void:
 	_build_ui()
 	_refresh()
 	AudioManager.play_music("neon_gutter")
+	Sfx.ambience("hangover_morning")
 
 
 ## Seats the crew (first SEATS of them) in party order. Public for tests.

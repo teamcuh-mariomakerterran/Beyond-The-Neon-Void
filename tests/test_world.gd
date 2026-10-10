@@ -37,6 +37,7 @@ func run(p_tree: SceneTree) -> int:
 	test_pixellab()
 	test_barks_lies_evidence()
 	test_bonds_and_hangover()
+	test_sfx()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1647,6 +1648,33 @@ func test_bonds_and_hangover() -> void:
 	check(GameManager.story_chapter == 2 and GameManager.check_story_flag("hangover_pending") and int(rep.get("chapter_up", 0)) == 2, "winning it: chapter 2 and a Hangover Morning waiting")
 	CampaignManager.load_campaign_data({})
 	GameManager.new_game()
+
+
+func test_sfx() -> void:
+	check(AudioManager.variants("hit").size() == 13 and AudioManager.variants("gun_smg").size() == 4 and AudioManager.variants("scream").size() == 12, "SFX families found (hit %d, gun_smg %d, scream %d)" % [AudioManager.variants("hit").size(), AudioManager.variants("gun_smg").size(), AudioManager.variants("scream").size()])
+	var picks := {}
+	for i in 20:
+		picks[AudioManager._variant("hit")] = true
+	check(picks.size() > 3, "random variants, not one sound on repeat (%d different)" % picks.size())
+	check(Sfx.event_sound("door") == "security_door" and not AudioManager.variants(Sfx.event_sound("death")).is_empty(), "event map points at real sounds")
+	for ev: String in (Sfx.map()["events"] as Dictionary):
+		var fam := Sfx.event_sound(ev)
+		check(not AudioManager.variants(fam).is_empty() or ResourceLoader.exists("res://assets/sfx/%s.ogg" % fam) or ResourceLoader.exists("res://assets/sfx/%s.wav" % fam), "sfx event %s → %s exists" % [ev, fam])
+	var g := IsometricGrid.new()
+	g.setup(4, 4)
+	var hero := Unit.new()
+	hero.setup(ContentDB.get_character("test_hero"), Unit.Team.PLAYER, 3)
+	hero.grid = g
+	check(Sfx.weapon_type(hero) == "pistol" and Sfx.ability_sound(ContentDB.get_ability("basic_attack"), hero, true) == "laser", "a pistol attack sounds like a laser shot")
+	var spell: Ability = null
+	for a: Ability in ContentDB.get_all("abilities"):
+		if a.kind == Ability.Kind.MAGIC and a.aoe_radius == 0 and a.damage_type in ["tech", "void"] and a.sfx_id == "":
+			spell = a
+			break
+	check(spell != null and Sfx.ability_sound(spell, hero, true) == "magic", "tech magic sounds like synth zaps")
+	check(Sfx.ability_sound(ContentDB.get_ability("tx_field_patch"), hero, false) == "heal", "heals sound like heals")
+	hero.free()
+	check(Sfx.ambience_for_map(ContentDB.get_map("neon_block_demo")) == "amb_rain" and Sfx.ambience_for_map(ContentDB.get_map("vault_breach_demo")) == "", "rainy maps get rain ambience")
 
 
 func test_ui_icons() -> void:

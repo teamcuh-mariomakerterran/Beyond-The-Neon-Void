@@ -63,6 +63,7 @@ func buy_item(vendor_id: String, item_id: String, equip_to: CharacterData = null
 		return "Not in stock."
 	var price := int(entry["price"])
 	if not GameManager.spend_soul_coins(price):
+		Sfx.event("denied")
 		return "Not enough soul coins."
 	if int(entry["qty_left"]) > 0:
 		if not stock_left.has(vendor_id):
@@ -76,6 +77,7 @@ func buy_item(vendor_id: String, item_id: String, equip_to: CharacterData = null
 	else:
 		GameManager.give_item(item_id, 1)
 	purchased.emit(vendor_id, item_id, price)
+	Sfx.event("shop_buy")
 	return ""
 
 

@@ -90,6 +90,7 @@ func _ready() -> void:
 	if world.music != "":
 		AudioManager.play_music(world.music)
 	_toast_text(world.name.to_upper(), NeonTheme.CYAN)
+	AudioManager.play_ambience(Sfx.ambience_for_map(d))
 	_rng.randomize()
 	for r: Dictionary in world.regions_at(cell):
 		_inside[str(r["id"])] = r

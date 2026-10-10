@@ -70,7 +70,7 @@ func _warp(ctx: Context) -> Array[Vector2i]:
 		ua.force_move(b, ctx.battle.animate)
 	if ub:
 		ub.force_move(a, ctx.battle.animate)
-	EventBus.play_sfx.emit("warp")
+	EventBus.play_sfx.emit("magic")
 	return [a, b] as Array[Vector2i]
 
 

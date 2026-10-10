@@ -67,6 +67,7 @@ func _ready() -> void:
 	DispatchManager.assignment_resolved.connect(func(_a: Dictionary, _s: bool, _r: Dictionary) -> void: if _tab == "dispatch": _show("dispatch"))
 	GameManager.hub_visits_count += 1
 	AudioManager.play_music("neon_gutter")
+	Sfx.ambience("hub")
 	_selected_char = GameManager.active_party[0] if not GameManager.active_party.is_empty() else ""
 	_show("missions")
 

@@ -52,6 +52,7 @@ func _ready() -> void:
 	ver.position -= Vector2(260, 30)
 	add_child(ver)
 	AudioManager.play_music("title")
+	AudioManager.play_ambience("")
 	var t := create_tween().set_loops()
 	t.tween_property(title, "modulate", Color(1.2, 1.2, 1.2), 1.6).set_trans(Tween.TRANS_SINE)
 	t.tween_property(title, "modulate", Color(0.85, 0.85, 0.85), 1.6).set_trans(Tween.TRANS_SINE)

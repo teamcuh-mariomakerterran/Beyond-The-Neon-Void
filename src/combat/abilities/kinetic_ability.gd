@@ -49,7 +49,7 @@ func _gravitational_pull(ctx: Context) -> void:
 		if dest != c:
 			u.force_move(dest, ctx.battle.animate)
 			ctx.log_result(u, "pulled")
-	EventBus.play_sfx.emit("kinetic_pull")
+	EventBus.play_sfx.emit("power_up")
 	EventBus.camera_shake.emit(3.0, 0.2)
 
 
