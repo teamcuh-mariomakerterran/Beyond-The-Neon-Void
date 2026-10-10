@@ -128,6 +128,11 @@ The **Veil-1 document** says the Great Download happened **in stages**. Human mi
   - **Crown Engineers.** They maintain ancient Queen-linked hardware. **[BNV PROPOSAL] This is the most natural home for our digimancer.**
   - **Null Heretics.** They believe the Queen is broken and must be *freed*, not obeyed. Their cells hide in Kharrowdeep Pyramid.
   - **The Tender Circuit.** Underground caretakers who rescue civilians from both sides.
+- **[BNV CANON, creator 2026-10-10] High Oracle Nyra is real, and hidden.** This settles §10.1 #10.
+  - **Public layer:** **High Cantor Mael Rho** leads the faith, reads the Queen's dreams and gives the orders. The Cantorate officially denies any "High Oracle" exists ("Veil disinformation. Report rumors.").
+  - **Rumor layer:** citizens and barflies talk about Nyra the way real people talk about a shadow government or the Illuminati: "Rho's just the mouthpiece."
+  - **True layer:** "Nyra" is a **synthetic oracle system that writes the dreams** the Cantors receive and broadcast. The faith's god-voice is authored: the dreams are real broadcasts *and* manufactured, another two truths. Its seat is **Obsidian Choir**, a capital nobody admits to having visited. (Alternatives the creator considered: a real mystic who edits the dreams before Rho sees them, or a lucid fragment of QN-0 steering its own church. Keep both deniable in early chapters.)
+  - **[BNV PROPOSAL] The managed war:** the two hidden layers talk. The Archduchess's Court and Nyra quietly coordinate to keep the war going forever, because the Queen's broken mind feeds on conflict data (§3.5) and peace might break her or set her loose. Late-game reveal: both sides' public leaders are puppets, and the war is managed. Not canon until the creator signs off.
 - **NOX variant:** the Doctrine's supreme spiritual authority is **High Oracle Nyra**, a synthetic mystic. Its philosophy is "truth can only be understood through uncertainty," it opposes dependence on archives, and its capital is **Obsidian Choir**. It sees Anera Vale as "a cautionary figure."
 - **Hymn** (FWB/COMP §15). Useful as factory PA audio or drunk singalong fodder:
   > We march where the mother cannot wake, / We sing for the code no crown can break. / If she is dream, then let us sleep. / If she is wound, then let us bleed.
@@ -143,6 +148,11 @@ The **Veil-1 document** says the Great Download happened **in stages**. Human mi
 - **Internal bodies:** the **Luminant Court** (royal-civic rule), the **Ocular Guard** (elite military intelligence), the **Ministry of Clear History** (edits records "for social stability"), the **Open Hand** (humanitarians), and the **Greywrithe** (a deniable sabotage network).
 - **Civic oath:** "I stand in light. I name what is known. I guard the living record. I cut away the dark."
 - **NOX variant:** the **Republic of Veil**, led by **Chief Executive Archon Serix**, who believes "democracy survives only through careful manipulation." Its capital is **Aurum Prime**.
+- **[BNV CANON, creator 2026-10-10] Both are true: a republic on top, a monarchy underneath.** This settles the FWB/COMP vs NOX split (§10.1 #9).
+  - **Public layer:** the **Republic of Veil**. Citizens vote, **Archon Serix** governs from Aurum Prime, and the schoolbooks say the Crown was abolished centuries ago.
+  - **True layer:** the **Luminant Court** never left. The "abolition" is itself a Ministry of Clear History edit.
+  - **How it works:** elections only ever offer Court-approved candidates (Serix's "democracy survives only through careful manipulation" is his job description). The **Ocular Guard** answers to **Archduchess Elian Voss**, not the Archon. Every Archon swears to "the Light"; the public hears a slogan, insiders know it means the Court.
+  - **Tells / evidence hooks:** a faint crown watermark under the republic's seal on old coins and documents ("Crown Watermark"), Ocular Guard orders signed by nobody elected.
 - **Role in BNV:** Veil is **the enemy on the TV**. Doctrine news will present Veil as a sterile tyranny of erasers. **[BNV PROPOSAL]** A Greywrithe false-flag is the obvious official scapegoat for the crew's factory explosion.
 
 ### 3.3 The Digital Libraries (FWB/COMP §5C; NOX "Great Libraries")
@@ -246,6 +256,12 @@ The **Veil-1 document** says the Great Download happened **in stages**. Human mi
 
 ### 6.2 Veil territory (only on the news)
 Solenne Gate (capital of courts and memory tribunals), Aurel Prism (seat of the Luminant Court and military command), Lumen Veld (garden refuge city that secretly holds displaced Doctrine children), Starfane Dock (orbital shipyard), the Cooling Crown (reactor tower powering Veil's shields). All FWB/COMP. From NOX: **Aurum Prime** (population about 12M; Civic Core, Founders Plaza, Commerce Ring, Beacon Heights, Iron Markets; Hall of Governance, Monument of Renewal, Central Memory Exchange).
+
+### 6.2.1 [BNV CANON, creator 2026-10-10] The Kades of the Lantern Wards
+- **The custom:** nearly everyone from Veil's **Lantern Wards** ("Lantern Wards" is a working name) shares the family name **Kade**. Like Korea's Kim, the family name comes **first** and the second name is the personal one: **Kade Sol** (the Veil councillor), **Kade Rennick** (the test vendor on the Neon Block), Kade Ostrin, Kade Imbri…
+- **Two truths:** most Kades think it's a proud regional name. The older truth is that the Wards once had a hundred family names, and the **Ministry of Clear History** re-registered the whole district under one, "simpler for the records." Erasure by paperwork.
+- **In game:** Kade Rennick explains it if you ask "Kade? Like the Veil politician?" (flag `heard_kade_name`). News casualty lists are full of Kades, barflies gossip about it, and someone sprayed WE HAD NAMES BEFORE KADE. Keep a few more Kades around (news, casualties, NPCs) so the pattern reads as deliberate.
+- **Possible evidence:** the Ministry's original re-registration form.
 
 ### 6.3 Neutral, wild and legendary places
 - **Clyphnot Library.** Central archive tower surrounded by floating drive-books. BD's first truth-reveal. (FWB/COMP)
@@ -357,7 +373,7 @@ The game code defines 20+ cyberpunk jobs (`ClassLibrary.gd`), card resources wit
 | **Tallow Saint-3** | Tender Circuit rescue unit mistaken for a battlefield ghost. (FWB/COMP) | **[RUMOR]** | "Ghost of the border who carries the dying." Perfect ghost-story gossip. |
 | **Vera-12** | One of the oldest conscious beings. Tends the Black Gardens. (FWB §21) | **[RUMOR]** | "Old machine lady in the grief gardens." Her memories of the Queen are BD lore. |
 | **The Mourning Prince** | Legendary Doctrine commander believed dead, sabotaging truth-seekers. (FWB §20) | **[RUMOR]** | A great conspiracy-barfly topic: "He's not dead, he's out there." |
-| **High Oracle Nyra** | Supreme spiritual authority of the Doctrine (NOX only). | **[DO NOT USE]** for now | Conflicts with Mael Rho as head of faith. Wait until the creator reconciles them. |
+| **High Oracle Nyra** | The Doctrine's hidden puppet master: a synthetic oracle system that writes the dreams the Cantors broadcast (see §3.1). | **[RUMOR]** (late-game reveal) | Officially denied. Barfly conspiracy fodder now, the truth much later. |
 
 ### 8.3 Veil figures
 | Character | Canon summary (source) | Tag | Reason |
@@ -367,7 +383,7 @@ The game code defines 20+ cyberpunk jobs (`ClassLibrary.gd`), card resources wit
 | **Captain Veyra Sol** | Ocular Guard tactician secretly addicted to battle-sim memories. (FWB/COMP) | **[NEWS BROADCAST]** | An enemy-commander name for battle reports. |
 | **Praetor Lume Cass** | Ministry of Clear History censor who calls edits "memory hygiene." (FWB/COMP) | **[NEWS BROADCAST]** | Doctrine propaganda loves mocking Veil's censors. |
 | **Kestral Omen-Six** | Greywrithe saboteur "rumored to be a dozen different agents." (FWB/COMP) | **[RUMOR]** + **[NEWS BROADCAST]** | **The official scapegoat for the crew's factory explosion.** A comedy engine: the crew hears itself blamed on a legendary Veil super-spy. |
-| **Kade Sol** | Veil politician who wants a predictive-AI third faction. (FWB §20) | **[NEWS BROADCAST]** | Background politics. |
+| **Kade Sol** | Veil politician who wants a predictive-AI third faction. (FWB §20) | **[NEWS BROADCAST]** | Background politics. A Kade of the Lantern Wards (§6.2.1). |
 | **Torrick Blade** | Veil weapons engineer who secretly adds safety features. (FWB §21) | **[NEWS BROADCAST]** | "Veil's new Blade-pattern weapons" in war reports. His secret stays unmentioned. |
 | **Lyra Voss** | Rebellious daughter of an elite Veil family. (FWB §21) | **[NEWS BROADCAST]** | Tabloid fodder about enemy elites. |
 | **Sister-Captain Ruen Alis** | Veil border medic who saves Doctrine civilians. (FWB/COMP) | **[RUMOR]** | "A Veil medic saved my cousin." Humanizes the enemy. Low risk. |
@@ -446,8 +462,8 @@ Radio and jukebox:
 6. **What the Great Download was.** FWB/COMP: consciousness *ignites in machines* ("unborn figures"), sparked by QN-0. NOX and the FWB appendix: billions of *human minds uploaded* from a dying Earth. These are partly reconcilable (Veil-1's "staged download"), but they are still different creation stories.
 7. **Founding dates.** Libraries: LY 420 (FWB) vs Year 240 (NOX). Veil: LY 1,400 vs Year 420. Doctrine: LY 1,700 vs Year 454.
 8. **Is there peace?** FWB/COMP: an endless war since LY 2,300, with the only peace (LY 6,800) sabotaged. NOX: "Archive Wars" from Year 500 to a "formal peace agreement" in Year 527. BNV follows the README and FWB: **the war is ongoing.**
-9. **Veil's government.** FWB/COMP: a **surveillance monarchy** (Luminant Court, Archduchess, royal legitimacy). NOX: the **Republic of Veil** led by **Archon Serix** and "democracy."
-10. **Doctrine leadership and capital.** FWB/COMP: High Cantor Mael Rho is the leading religious figure, Vantablack Morrow is the mustering city, and no capital is named. NOX: **High Oracle Nyra** is the supreme authority and **Obsidian Choir** is the capital.
+9. **Veil's government.** FWB/COMP: a **surveillance monarchy** (Luminant Court, Archduchess, royal legitimacy). NOX: the **Republic of Veil** led by **Archon Serix** and "democracy." **RESOLVED (2026-10-10):** both: a public republic over a hidden monarchy (§3.2).
+10. **Doctrine leadership and capital.** FWB/COMP: High Cantor Mael Rho is the leading religious figure, Vantablack Morrow is the mustering city, and no capital is named. NOX: **High Oracle Nyra** is the supreme authority and **Obsidian Choir** is the capital. **RESOLVED (2026-10-10):** Rho is the public head; Nyra is the hidden oracle behind him (§3.1).
 11. **Doctrine philosophy.** FWB/COMP: pain must be remembered, identity is self-chosen, the Queen's dreams are commands. NOX: society survives "through uncertainty," the Doctrine is anti-archive, and its enemies are "radical technocrats." They are compatible in spirit but differ in emphasis.
 12. **Anera Vale.** FWB/COMP: an organic architect who co-created the Download with QN-0, **erased** by Veil, the Doctrine and the Libraries alike. NOX: creator of the Global Preservation Initiative and the Libraries' precursor, venerated as a **saint** by the Libraries, a **cautionary figure** by the Doctrine, and a **founder** by Veil. In other words, publicly known rather than erased.
 13. **Where the Queen or Creator is.** "Sarcophagus **Crown**" (§14) vs "Sarcophagus **Drive**" (archive table and Act V). Also, the Sarcophagus Drive is "under the oldest Library-machine temple," but the Unindexed Verge "may contain the **Creator's chamber**" and is the "final act location." NOX's "Year 734: first evidence QN-0 may still exist" implies QN-0 was thought gone, which is at odds with a Queen worshipped for millennia.
@@ -456,6 +472,7 @@ Radio and jukebox:
 
 ### 10.2 Naming overlaps to avoid confusion (FWB internal)
 - **Veyra Mourn** (Doctrine war hero) vs **Captain Veyra Sol** (Veil tactician) vs **Kade Sol** (Veil politician).
+- **Kade** is shared on purpose (§6.2.1). Vendor surnames stay clear of Voss.
 - **Mourning Prince** vs **Mourning Canticle** vs **Veyra Mourn**.
 - **Jorren Quill** (historian) vs **Judge Seraphex Quill** (Library magistrate).
 - **Vale:** Anera Vale, Mender Zero Vale, Nyxen Vale-Child. This may be intentional; nobody says.

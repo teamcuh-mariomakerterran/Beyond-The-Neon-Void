@@ -13,7 +13,7 @@ Run from the repo root: python3 tools/demo/make_test_units.py
 import json
 
 npc = {
-    "id": "kade", "display_name": "Kade Vos",
+    "id": "kade", "display_name": "Kade Rennick",
     "description": "Sells prototype gear off a fold-out table. Never looks up from his tablet for long.",
     "portrait_path": "res://assets/units/test_vendorNPC_001/extracted/cyberpunk_male_isometric_2_1_perspective_18/Idle/rotations/south.png",
     "sprite_path": "res://assets/units/test_vendorNPC_001", "location_id": "neon_block_demo",
@@ -21,12 +21,18 @@ npc = {
     "dialog": [
         {"id": "greet", "text": "Hm? Oh. Customer. Hang on, finishing a bid.", "next": "look"},
         {"id": "look", "text": "There. Prototype stock, fell off a corp truck. Several trucks.", "next": "pitch"},
-        {"id": "pitch", "text": "Prices are fair. Fair for me. Browse."},
+        {"id": "pitch", "text": "Prices are fair. Fair for me. Browse.",
+         "choices": [{"text": "Kade? Like the Veil politician?", "next": "name"}, {"text": "Just browsing.", "next": ""}]},
+        {"id": "name", "text": "Kade Sol? No relation. Well. Every relation. Half the Lantern Wards are Kades.", "next": "name2"},
+        {"id": "name2", "text": "Kade's the family name, it goes first. The second one's yours. Rennick. That one's mine.", "next": "name3"},
+        {"id": "name3", "text": "Grandmother said the Wards used to have a hundred family names. Then the Ministry of Clear History came through with one form.", "next": "name4"},
+        {"id": "name4", "text": "'Simpler for the records,' they said. Everyone you meet from home is a Kade. Funny how nobody remembers what we were before.", "sets_flag": "heard_kade_name"},
     ],
     "eavesdrop_lines": [
         {"text": "Kade, to his tablet: 'Outbid by a drone. A drone, again.'"},
         {"text": "Kade, not looking up: 'If it's warm, it's new. If it's sparking, that's a feature.'"},
         {"text": "Kade, quietly: 'Corp gunners pay double for med-patches. I know because I sell them the patches.'"},
+        {"text": "Kade, on a call: 'No, the OTHER Kade. Kade Ostrin. From the Wards. …They're all from the Wards.'"},
     ],
     "intro_lines": [],
     "repeat_lines": ["Back again? Stock rotates. Sometimes. When trucks fall."],

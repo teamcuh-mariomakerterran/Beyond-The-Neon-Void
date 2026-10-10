@@ -70,5 +70,29 @@
 	"r_still_waiting": {
 		"channel": "graffiti",
 		"text": "We are still here. We are still waiting."
+	},
+	"r_kade_sol": {
+		"channel": "news",
+		"text": "VEIL WATCH: Councillor Kade Sol proposes a 'predictive third chamber.' Cantors call it fortune-telling with a budget."
+	},
+	"r_kade_casualty": {
+		"channel": "news",
+		"text": "BORDER LIST (RECONCILED): Kade Imbri, Kade Torvald, Kade Ash, Kade Ostrin… Veil's dead, named by the Ministry. Most of them are Kades. Nobody on air asks why."
+	},
+	"r_kade_gossip": {
+		"channel": "gossip",
+		"text": "Ever notice everyone from the Lantern Wards is a Kade? My uncle says the Ministry gave the whole district one name so it'd be easier to forget."
+	},
+	"r_kade_graffiti": {
+		"channel": "graffiti",
+		"text": "WE HAD NAMES BEFORE KADE"
+	},
+	"r_nyra_gossip": {
+		"channel": "gossip",
+		"text": "Rho doesn't hear the Queen. Nobody hears the Queen. There's an Oracle up there writing the dreams. Nyra. Ask anyone who's been to Obsidian Choir. …Nobody's been to Obsidian Choir."
+	},
+	"r_nyra_denial": {
+		"channel": "news",
+		"text": "PSALTER SPIRES: The Cantorate reminds citizens that there is no 'High Oracle.' Rumors of an Oracle are Veil disinformation. Report rumors."
 	}
 }

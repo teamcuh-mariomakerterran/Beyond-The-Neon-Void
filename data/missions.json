@@ -191,58 +191,6 @@
 		]
 	},
 	{
-		"id": "test_pixellab_skirmish",
-		"display_name": "Test Units Skirmish",
-		"chapter": 1,
-		"map_id": "supply_works_dock",
-		"music_id": "battle_supply_works",
-		"briefing": "Test fight for the new PixelLab units. The Test Runner (yours) walks, runs and shoots; the Bulwark Brawler kicks (knockback), uppercuts and blasts; Corp Gunners shoot and patch themselves up.",
-		"max_party_size": 2,
-		"guests": [
-			{
-				"character_id": "test_hero",
-				"cell": [
-					0,
-					9
-				],
-				"level": 3,
-				"controlled": true
-			}
-		],
-		"enemies": [
-			{
-				"character_id": "test_enemy_001",
-				"cell": [
-					8,
-					9
-				],
-				"level": 3
-			},
-			{
-				"character_id": "test_enemy_002",
-				"cell": [
-					10,
-					2
-				],
-				"level": 3
-			},
-			{
-				"character_id": "test_enemy_002",
-				"cell": [
-					11,
-					4
-				],
-				"level": 2
-			}
-		],
-		"win_condition": "defeat_all",
-		"soul_coin_reward": 100,
-		"xp_reward": 60,
-		"loot_table_id": "loot_supply_works",
-		"microchip_reward": 1,
-		"story_flags_on_win": []
-	},
-	{
 		"id": "relay_district",
 		"display_name": "Relay District",
 		"chapter": 2,
@@ -301,5 +249,57 @@
 			"relay_district_done",
 			"evidence:hymn_rewrites"
 		]
+	},
+	{
+		"id": "test_pixellab_skirmish",
+		"display_name": "Test Units Skirmish",
+		"chapter": 1,
+		"map_id": "supply_works_dock",
+		"music_id": "battle_supply_works",
+		"briefing": "Test fight for the new PixelLab units. The Test Runner (yours) walks, runs and shoots; the Bulwark Brawler kicks (knockback), uppercuts and blasts; Corp Gunners shoot and patch themselves up.",
+		"max_party_size": 2,
+		"guests": [
+			{
+				"character_id": "test_hero",
+				"cell": [
+					0,
+					9
+				],
+				"level": 3,
+				"controlled": true
+			}
+		],
+		"enemies": [
+			{
+				"character_id": "test_enemy_001",
+				"cell": [
+					8,
+					9
+				],
+				"level": 3
+			},
+			{
+				"character_id": "test_enemy_002",
+				"cell": [
+					10,
+					2
+				],
+				"level": 3
+			},
+			{
+				"character_id": "test_enemy_002",
+				"cell": [
+					11,
+					4
+				],
+				"level": 2
+			}
+		],
+		"win_condition": "defeat_all",
+		"soul_coin_reward": 100,
+		"xp_reward": 60,
+		"loot_table_id": "loot_supply_works",
+		"microchip_reward": 1,
+		"story_flags_on_win": []
 	}
 ]
