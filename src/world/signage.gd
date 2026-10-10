@@ -35,6 +35,18 @@ static func push_headline(text: String) -> void:
 		headlines.resize(24)
 
 
+## The screen a prop comes with: <asset>.screen.json beside the image
+## (written by ArtCutter), or {} if it has none.
+static func asset_screen(asset: String) -> Dictionary:
+	var p := asset.get_basename() + ".screen.json"
+	if asset == "" or not FileAccess.file_exists(p):
+		return {}
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(p))
+	if not (d is Dictionary) or not ((d as Dictionary).get("corners") is Array):
+		return {}
+	return d
+
+
 static func _on_broadcast(channel: String, text: String) -> void:
 	if channel in ["news", "rumor"]:
 		push_headline(text)

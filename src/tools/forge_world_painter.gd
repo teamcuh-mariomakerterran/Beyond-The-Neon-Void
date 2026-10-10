@@ -2066,7 +2066,8 @@ func _screen_editor(o: Dictionary) -> Control:
 	has.toggled.connect(func(on: bool) -> void:
 		_push_undo()
 		if on:
-			o["screen"] = {"corners": Signage.DEFAULT_CORNERS.duplicate(true), "feed": "news", "mode": "led"}
+			var own := Signage.asset_screen(str(o.get("asset", "")))
+			o["screen"] = own if not own.is_empty() else {"corners": Signage.DEFAULT_CORNERS.duplicate(true), "feed": "news", "mode": "led"}
 		else:
 			o.erase("screen")
 		_renderer.refresh_object(o)

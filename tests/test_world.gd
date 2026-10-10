@@ -38,6 +38,7 @@ func run(p_tree: SceneTree) -> int:
 	test_barks_lies_evidence()
 	test_bonds_and_hangover()
 	test_sfx()
+	test_art_cutter()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1700,3 +1701,43 @@ func test_ui_icons() -> void:
 	var framed := UIIcons.find("burning")
 	SettingsFlags.icon_style = "painted"
 	check(painted.contains("/painted/") and framed.contains("/framed/"), "style setting picks the pack")
+
+
+func test_art_cutter() -> void:
+	# A magenta sheet: a crate with a painted shadow, a bottle with a loose cap,
+	# and a display (grey frame, dark glass leaning like an isometric panel).
+	var img := Image.create(200, 120, false, Image.FORMAT_RGBA8)
+	img.fill(ArtCutter.MAGENTA)
+	img.fill_rect(Rect2i(10, 70, 30, 6), ArtCutter.MAGENTA.darkened(0.5))  # shadow
+	img.fill_rect(Rect2i(10, 40, 30, 30), Color(0.5, 0.35, 0.2))
+	img.fill_rect(Rect2i(60, 30, 10, 40), Color(0.1, 0.3, 0.15))
+	img.fill_rect(Rect2i(62, 25, 6, 3), Color(0.6, 0.6, 0.6))  # cap, 2px above the bottle
+	img.fill_rect(Rect2i(100, 10, 90, 100), Color(0.45, 0.45, 0.5))
+	for x in range(110, 180):
+		var lean := (x - 110) / 5
+		for y in range(20 + lean, 80 + lean):
+			img.set_pixel(x, y, Color(0.04, 0.02, 0.06))
+	var keyed := ArtCutter.key(img)
+	check(keyed.get_pixel(0, 0).a == 0.0 and keyed.get_pixel(15, 50).a == 1.0, "magenta keyed out, art kept")
+	var sh := keyed.get_pixel(20, 72)
+	check(sh.a > 0.2 and sh.a < 0.7 and sh.r < 0.1, "painted shadow becomes soft black (%s)" % sh)
+	var rects := ArtCutter.pieces(keyed)
+	check(rects.size() == 3, "three items (cap folded into its bottle): %d" % rects.size())
+	check(rects.size() == 3 and rects[1].position.y <= 25 and rects[0].position.x < rects[1].position.x, "reading order + bottle includes its cap")
+	var screen := keyed.get_region(rects[2])
+	var c := ArtCutter.screen_corners(screen)
+	check(c.size() == 4, "display glass found")
+	if c.size() == 4:
+		# Glass spans x 10–80 of the 90px box; top edge 10→24, bottom 70→84 of 100.
+		check(absf(c[0][0] - 0.11) < 0.04 and absf(c[1][0] - 0.89) < 0.04, "glass sides (%s)" % [c])
+		check(absf(c[0][1] - 0.10) < 0.04 and absf(c[1][1] - 0.24) < 0.05 and absf(c[2][1] - 0.84) < 0.05 and absf(c[3][1] - 0.70) < 0.04, "glass leans with the panel (%s)" % [c])
+	# Cut to disk: PNGs + the display's .screen.json, picked up on placement.
+	var dir := "user://art_cut_test"
+	img.save_png(dir + "_src.png")
+	var made := ArtCutter.cut_file(ProjectSettings.globalize_path(dir + "_src.png"), ProjectSettings.globalize_path(dir), "kit", PackedStringArray(["crate", "", "billboard"]), true)
+	check(made.size() == 3 and made[0].ends_with("crate.png") and made[1].ends_with("kit_02.png") and made[2].ends_with("billboard.png"), "names from the list, numbers for blanks: %s" % [made])
+	var bill := ProjectSettings.globalize_path(dir).path_join("billboard.png")
+	check(Signage.asset_screen(bill).get("corners", []).size() == 4, "screen sidecar written")
+	var w := WorldMap.new()
+	check(w.add_object(bill, Vector2i(1, 1), 0).get("screen") is Dictionary, "placing a display gives it its screen")
+	check(not w.add_object(ProjectSettings.globalize_path(dir).path_join("crate.png"), Vector2i(2, 2), 0).has("screen"), "a crate stays a crate")

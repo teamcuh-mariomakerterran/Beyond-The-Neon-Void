@@ -227,6 +227,9 @@ func add_object(asset: String, cell: Vector2i, z: int, kind_name: String = "prop
 	var o := {"id": next_id("obj"), "asset": asset, "cell": [cell.x, cell.y], "z": z, "offset": [0, 0],
 		"scale": 1.0, "flip": false, "layer": 0, "kind": kind_name, "anim": null,
 		"loot_item_id": "", "found_text": "", "empty_text": "", "dialog_npc": "", "location": null}
+	var scr := Signage.asset_screen(asset)
+	if not scr.is_empty():
+		o["screen"] = scr
 	objects.append(o)
 	return o
 
