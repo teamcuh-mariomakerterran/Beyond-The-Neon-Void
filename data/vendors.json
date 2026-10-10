@@ -129,5 +129,5 @@
 			}
 		]
 	},
-	"test_vendor": {"name": "Kade's Back-Alley Stall", "greeting": "Prototype gear, slightly used, mostly legal. Browse fast, the drones circle every ten.", "price_mult": 1.1, "stock": [{"id": "con_neon_gin"}, {"id": "con_synth_stew"}, {"id": "con_detox_patch"}, {"id": "wpn_pistol_2", "qty": 1}, {"id": "acc_jump_boots", "qty": 1}, {"id": "acc_clear_eyes", "qty": 1}, {"id": "mat_scrap_wire"}, {"id": "mat_dead_battery"}]}
+	"test_vendor": {"name": "Kade's Back-Alley Stall", "greeting": "Prototype gear, slightly used, mostly legal. Browse fast, the drones circle every ten.", "price_mult": 1.1, "stock": [{"id": "con_neon_gin"}, {"id": "con_synth_stew"}, {"id": "con_detox_patch"}, {"id": "wpn_pistol_2", "qty": 1}, {"id": "acc_jump_boots", "qty": 1}, {"id": "acc_clear_eyes", "qty": 1}, {"id": "wpn_laser_gun_2", "qty": 1, "required_flag": "npc:kade_brisk:fetched"}, {"id": "acc_neural_shunt", "qty": 1, "required_flag": "npc:kade_brisk:fetched"}, {"id": "mat_scrap_wire"}, {"id": "mat_dead_battery"}]}
 }

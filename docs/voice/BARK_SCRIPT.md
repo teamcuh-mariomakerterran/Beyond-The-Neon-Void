@@ -147,3 +147,14 @@ Every bark line the game has, ready for ElevenLabs. Each character has a **voice
 |---|---|---|
 | `doctrine_relay_battle_start_1.ogg` | battle_start | [monotone announcer] ATTENTION. All figures... are certified. |
 | `doctrine_relay_low_hp_1.ogg` | low_hp | [glitching] SIGNAL... degraded... [static] TRUST... the... [cuts off] |
+## Kade Lusk (Ocular Guard Commander, late-game boss)
+
+**Voice design:** Male or female, 40s. Precise, quiet, clipped officer's voice with the faintest Lantern Wards accent they spent a career sanding off. Never raises it.
+
+**Delivery:** Cold and procedural, like reading from a form. The low_hp line cracks: the Ward accent comes back.
+
+| File | Event | Text for ElevenLabs |
+|---|---|---|
+| `kade_lusk_battle_start_1.ogg` | battle_start | [calm, clinical] Name of record? |
+| `kade_lusk_kill_1.ogg` | kill | [quietly, cold] Struck... for clarity. |
+| `kade_lusk_low_hp_1.ogg` | low_hp | [strained, accent slipping] I was a Kade before I was a Commander. [beat] [softly] Remember that... if you remember anything. |

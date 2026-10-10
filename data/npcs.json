@@ -712,5 +712,137 @@
 		"closing_lines": [
 			"Pleasure. Don't tell anyone where you got it."
 		]
+	},
+	{
+		"id": "kade_torvald",
+		"display_name": "Kade Torvald",
+		"description": "A Veil deserter on the last stool by the door. Very quiet about where he's from. Very loud about the jukebox.",
+		"portrait_path": "",
+		"sprite_path": "",
+		"location_id": "neon_gutter",
+		"is_vendor": false,
+		"vendor_id": "",
+		"quest_ids": [],
+		"required_flag": "",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "You're looking at me like you've seen me on the ticker. You have. I'm dead.",
+				"next": "dead"
+			},
+			{
+				"id": "dead",
+				"text": "Border list, reconciled. Kade Torvald, killed in action. Nobody told me. I found out in this bar.",
+				"choices": [
+					{
+						"text": "You're from Veil?",
+						"next": "veil"
+					},
+					{
+						"text": "Another Kade?",
+						"next": "kade"
+					}
+				]
+			},
+			{
+				"id": "veil",
+				"text": "Lantern Wards. I walked across the line with a mop and a cleaning cart. Nobody stops a mop.",
+				"next": "end"
+			},
+			{
+				"id": "kade",
+				"text": "We're all Kades. Ask Rennick on the Block. Ask the Ministry why. Actually, don't. They'll correct you.",
+				"next": "end"
+			},
+			{
+				"id": "end",
+				"text": "Buy a dead man a drink. It's tax deductible."
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Kade Torvald, to his glass: 'Killed in action. Killed in ACTION. I was in the latrine.'"
+			},
+			{
+				"text": "Kade Torvald, quietly: 'Grandmother kept the old name under the floorboards. On paper. Paper. Can you imagine.'"
+			},
+			{
+				"text": "Kade Torvald, to Benno: 'Your casualty list and ours use the same font. Did you know that? Same font.'"
+			}
+		],
+		"evidence_talk": [
+			{
+				"needs": 1,
+				"evidence": [
+					"casualty_ledger"
+				],
+				"sets_flag": "evidence:kade_form",
+				"give_item_id": "",
+				"quest_id": "",
+				"lines": [
+					"That's the border list. The real one. Before the… reconciling.",
+					"Fine. You've earned this. My grandmother's. Form CH-1. Every family in the Wards signed one.",
+					"Read the line where it says 'prior names.' Then tell me the Republic's a republic."
+				]
+			}
+		]
+	},
+	{
+		"id": "kade_brisk",
+		"display_name": "Kade Brisk",
+		"description": "Rennick's supplier. Moves crates that fall off trucks, sometimes before the trucks arrive.",
+		"portrait_path": "",
+		"sprite_path": "",
+		"location_id": "neon_block_demo",
+		"is_vendor": false,
+		"vendor_id": "",
+		"quest_ids": [],
+		"required_flag": "",
+		"dialog": [
+			{
+				"id": "greet",
+				"text": "Brisk. Kade Brisk. Yes, another one. Rennick sent you?",
+				"next": "pitch"
+			},
+			{
+				"id": "pitch",
+				"text": "Shipment's short. Two corrupted wafers and a memory core went missing between here and the drain.",
+				"next": "deal"
+			},
+			{
+				"id": "deal",
+				"text": "Bring them back and Rennick gets the good stock. Laser rifles. Neural shunts. Things with warranties, almost."
+			}
+		],
+		"eavesdrop_lines": [
+			{
+				"text": "Kade Brisk, counting crates: 'Seven. Six. Seven. Why is it six.'"
+			},
+			{
+				"text": "Kade Brisk, to a drone: 'I don't know any Tamsin. Lots of Kades. No Tamsins. Move along.'"
+			},
+			{
+				"text": "Kade Brisk, under his breath: 'Ward rule one: never sign anything with a stamp older than you.'"
+			}
+		],
+		"intro_lines": [],
+		"repeat_lines": [
+			"Wafers and a core. You'd think they'd be easy to find. Everything's easy to find around here except the stuff you need."
+		],
+		"give_item_id": "",
+		"give_item_qty": 1,
+		"after_talk": "fetch",
+		"fetch_items": {
+			"mat_corrupted_wafer": 2,
+			"mat_memory_core": 1
+		},
+		"fetch_reward_coins_each": 40,
+		"fetch_reward_items_each": {},
+		"fetch_reward_coins_done": 150,
+		"fetch_reward_chips_done": 1,
+		"fetch_reward_items_done": {},
+		"closing_lines": [
+			"Tell Rennick the good shelf is open."
+		]
 	}
 ]

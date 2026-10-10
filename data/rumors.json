@@ -77,7 +77,7 @@
 	},
 	"r_kade_casualty": {
 		"channel": "news",
-		"text": "BORDER LIST (RECONCILED): Kade Imbri, Kade Torvald, Kade Ash, Kade Ostrin… Veil's dead, named by the Ministry. Most of them are Kades. Nobody on air asks why."
+		"text": "BORDER LIST (RECONCILED): Kade Imbri, Kade Torvald, Kade Vell, Kade Marren… Veil's dead, named by the Ministry. Most of them are Kades. Nobody on air asks why."
 	},
 	"r_kade_gossip": {
 		"channel": "gossip",
@@ -102,5 +102,29 @@
 	"r_same_words": {
 		"channel": "gossip",
 		"text": "Swear to the Queen, I heard a Veil broadcast on a bootleg set last night. Same words as ours. 'Peace through vigilance.' Word for word. Weird, right?"
+	},
+	"r_kade_halloway": {
+		"channel": "news",
+		"text": "INTERCEPTED VEIL FEED: '…this is Kade Halloway, reporting from Aurum Prime, where the Republic celebrates another free and fair election.' The Cantorate reminds you that listening to enemy feeds is a sin."
+	},
+	"r_kade_halloway_2": {
+		"channel": "news",
+		"text": "INTERCEPTED VEIL FEED: Kade Halloway calls the ninth collapsed ceasefire 'a regrettable Doctrine provocation.' Our anchors used the same words an hour earlier."
+	},
+	"r_kade_tamsin": {
+		"channel": "news",
+		"text": "WANTED: Greywrithe operative 'Kade Tamsin', suspected in the Supply Works sabotage. Possibly also Kestral Omen-Six. Possibly not a person. Report all Kades."
+	},
+	"r_kade_tamsin_graffiti": {
+		"channel": "graffiti",
+		"text": "TAMSIN WAS HERE (OR WASN'T)"
+	},
+	"r_kade_lusk": {
+		"channel": "news",
+		"text": "BORDER DESK: Ocular Guard Commander Kade Lusk seen at the Solenne Gate. Veil's 'clean war' has a face, citizens. Memorise it."
+	},
+	"r_kade_ash": {
+		"channel": "gossip",
+		"text": "There's a name scratched low on the wall in the Cathedral of Forgotten Names. Kid height. 'Kade Ash.' No dates. Nobody knows who scratched it."
 	}
 }

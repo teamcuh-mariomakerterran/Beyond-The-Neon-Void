@@ -4,5 +4,10 @@
 	"shift_roster": {"title": "Doctored Shift Roster", "source": "Shift Change", "description": "Two rosters for the same night. In one, nine workers clocked in. In the other, the one sent upstairs, six did."},
 	"casualty_ledger": {"title": "Casualty Ledger", "source": "Supply Works vault data cache", "description": "Border casualty figures, before and after 'reconciliation'. The before column is longer. Much longer."},
 	"storm_drain_tapes": {"title": "Storm Drain Tapes", "source": "Neon Block storm drain", "description": "Waterlogged audio reels: a Cantor rehearsing tomorrow's 'spontaneous' crowd chant."},
-	"hymn_rewrites": {"title": "Hymn Rewrites", "source": "Relay District mast", "description": "Hymn sheets with last week's verses crossed out and the war's 'new' start date written in."}
+	"hymn_rewrites": {"title": "Hymn Rewrites", "source": "Relay District mast", "description": "Hymn sheets with last week's verses crossed out and the war's 'new' start date written in."},
+	"kade_form": {
+		"title": "Form CH-1: Ward Re-registration",
+		"source": "Kade Torvald, Neon Gutter",
+		"description": "A Ministry of Clear History form. 'Family name of record (all residents): KADE. Prior names: — (struck for clarity).' The stamp is older than the Republic."
+	}
 }

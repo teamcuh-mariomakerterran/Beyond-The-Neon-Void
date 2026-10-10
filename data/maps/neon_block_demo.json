@@ -3107,6 +3107,9 @@
 	"gameplay": {
 		"6,9": {
 			"walkable": false
+		},
+		"7,11": {
+			"walkable": false
 		}
 	},
 	"anchors": [
@@ -3204,6 +3207,29 @@
 			"kind": "npc",
 			"npc_id": "kade",
 			"label": "Kade's Stall",
+			"hidden": false,
+			"scope": "both",
+			"ap": 0,
+			"reach": 1,
+			"once": false,
+			"enabled": true,
+			"requires_flag": "",
+			"requires_item": "",
+			"consume_item": false,
+			"sequence": "",
+			"step": 0,
+			"actions": [],
+			"fail_actions": []
+		},
+		{
+			"id": "anc_kade_brisk",
+			"cell": [
+				7,
+				11
+			],
+			"kind": "npc",
+			"npc_id": "kade_brisk",
+			"label": "Kade Brisk",
 			"hidden": false,
 			"scope": "both",
 			"ap": 0,
