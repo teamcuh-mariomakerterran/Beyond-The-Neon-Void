@@ -22,6 +22,7 @@ const SECTIONS := [
 	["missions", "MISSIONS", "bucket", "missions"],
 	["classes", "CLASSES", "bucket", "classes"],
 	["abilities", "ABILITIES", "bucket", "abilities"],
+	["passives", "PASSIVES", "bucket", "passives"],
 	["cards", "CARDS", "bucket", "cards"],
 	["items", "ITEMS & GEAR", "bucket", "items"],
 	["status_effects", "STATUS EFFECTS", "bucket", "status_effects"],
