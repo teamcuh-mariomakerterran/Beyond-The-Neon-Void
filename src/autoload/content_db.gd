@@ -141,6 +141,16 @@ func _stub(id: String, path: String, fa: FileAccess) -> Dictionary:
 	return st
 
 
+## A rumour can wait for the story: "required_flag" (set) and / or
+## "hidden_flag" (gone once set). News that reacts to what the crew did.
+static func rumor_ok(r: Variant) -> bool:
+	if not (r is Dictionary):
+		return false
+	var need := str((r as Dictionary).get("required_flag", ""))
+	var hide := str((r as Dictionary).get("hidden_flag", ""))
+	return (need == "" or GameManager.check_story_flag(need)) and (hide == "" or not GameManager.check_story_flag(hide))
+
+
 func is_map_stub(id: String) -> bool:
 	return bool((maps.get(id, {}) as Dictionary).get("_stub", false))
 
@@ -403,8 +413,9 @@ func _validate_npcs(problems: Array[String]) -> void:
 func _map_prop_exists(prop_id: String) -> bool:
 	for m: Dictionary in maps.values():
 		if bool(m.get("_stub", false)):
-			continue  # big world maps use objects / anchors, not legacy props
-		for p: Variant in m.get("props", []):
-			if p is Dictionary and str(p.get("id", "")) == prop_id:
-				return true
+			continue  # big world maps aren't loaded until needed
+		for key: String in ["props", "objects", "anchors"]:
+			for p: Variant in m.get(key, []):
+				if p is Dictionary and str(p.get("id", "")) == prop_id:
+					return true
 	return false

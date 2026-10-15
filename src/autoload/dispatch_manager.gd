@@ -127,8 +127,9 @@ func resolve(assignment_id: String, rng: RandomNumberGenerator = null) -> Dictio
 		GameManager.give_item(item_id, int(rewards["items"][item_id]))
 	if int(rewards["xp"]) > 0:
 		ProgressionSystem.add_xp(c, int(rewards["xp"]))
-	if not m.rumor_ids.is_empty():
-		var rid: String = m.rumor_ids[rng.randi() % m.rumor_ids.size()]
+	var rids := Array(m.rumor_ids).filter(func(id: String) -> bool: return ContentDB.rumor_ok(ContentDB.rumors.get(id)))
+	if not rids.is_empty():
+		var rid: String = rids[rng.randi() % rids.size()]
 		rewards["rumor"] = str(ContentDB.rumors.get(rid, {}).get("text", ""))
 		if rewards["rumor"] != "":
 			EventBus.broadcast_line.emit("rumor", rewards["rumor"])

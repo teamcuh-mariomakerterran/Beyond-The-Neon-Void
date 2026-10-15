@@ -39,6 +39,7 @@ func run(p_tree: SceneTree) -> int:
 	test_bonds_and_hangover()
 	test_sfx()
 	test_art_cutter()
+	test_gap_fixes()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1741,3 +1742,57 @@ func test_art_cutter() -> void:
 	var w := WorldMap.new()
 	check(w.add_object(bill, Vector2i(1, 1), 0).get("screen") is Dictionary, "placing a display gives it its screen")
 	check(not w.add_object(ProjectSettings.globalize_path(dir).path_join("crate.png"), Vector2i(2, 2), 0).has("screen"), "a crate stays a crate")
+
+
+func test_gap_fixes() -> void:
+	# Rumours can wait for the story.
+	GameManager.story_flags.erase("t_news_gate")
+	check(ContentDB.rumor_ok({"text": "x"}) and not ContentDB.rumor_ok({"text": "x", "required_flag": "t_news_gate"}), "gated rumour hidden until its flag")
+	GameManager.set_story_flag("t_news_gate")
+	check(ContentDB.rumor_ok({"text": "x", "required_flag": "t_news_gate"}) and not ContentDB.rumor_ok({"text": "x", "hidden_flag": "t_news_gate"}), "flag set: gated rumour shows, superseded one hides")
+	GameManager.story_flags.erase("t_news_gate")
+	# The hub's STREETS tab: street level first, battle maps never.
+	var streets := HubMenu.street_maps()
+	check(not streets.is_empty() and streets[0]["id"] == "neo_kowloon_hub", "streets start at Neo Kowloon street level")
+	check(streets.all(func(m: Dictionary) -> bool: return m["kind"] in HubMenu.STREET_KINDS), "only world / city / hub maps are walkable from the bar")
+	# Grisk is a boss (boss cues, @boss anchor targets).
+	check(ContentDB.get_character("foreman_grisk").is_boss, "Foreman Grisk is a boss")
+	# Vault relay 4 plays shield.down once (unshield fires it).
+	var vb := ContentDB.get_map("vault_breach_demo")
+	for a: Dictionary in vb.get("anchors", []):
+		if a["id"] == "anc_vault_breach_demo_4":
+			check(not a["actions"].any(func(x: Dictionary) -> bool: return x["do"] == "cue"), "no duplicate shield.down cue")
+	# Prop lookup sees format-2 objects / anchors.
+	check(ContentDB._map_prop_exists("anc_vault_breach_demo_4"), "find_loot targets can be anchors")
+	# Loot anchors report to quests.
+	var heard := []
+	var on_loot := func(src: String, item: String, _m: String) -> void: heard.append([src, item])
+	EventBus.loot_discovered.connect(on_loot)
+	var lw := WorldMap.new()
+	lw.id = "t_lootw"
+	lw.width = 4
+	lw.depth = 4
+	var la := lw.add_anchor(Vector2i(1, 1), "loot")
+	la["actions"] = [{"do": "give", "arg": "wpn_sword_1"}]
+	var ix := Interactions.new().setup(lw, lw.to_grid(), null, "explore")
+	ix.interact(la, null)
+	EventBus.loot_discovered.disconnect(on_loot)
+	la["id"] = str(la["id"])
+	check(heard.size() == 1 and heard[0][0] == str(la["id"]) and heard[0][1] == "wpn_sword_1", "loot anchor emits loot_discovered (%s)" % [heard])
+	GameManager.remove_stack_item("wpn_sword_1", 1)
+	# Stolen coins wait for the end of the fight.
+	CombatManager.spoils = {"soul_coins": 0, "microchips": 0}
+	var before := GameManager.soul_coins
+	CombatManager.spoils["soul_coins"] = 40
+	check(GameManager.soul_coins == before, "steal pays nothing mid-battle")
+	CombatManager.spoils = {"soul_coins": 0, "microchips": 0}
+	# Settings persist.
+	var keep := SettingsFlags.fast_battles
+	SettingsFlags.set_value("fast_battles", true)
+	SettingsFlags.save()
+	SettingsFlags.fast_battles = false
+	SettingsFlags.load_saved()
+	check(SettingsFlags.fast_battles, "settings survive a restart")
+	SettingsFlags.set_value("fast_battles", keep)
+	SettingsFlags.save()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(SettingsFlags.PATH))

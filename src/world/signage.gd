@@ -72,11 +72,11 @@ static func items(feed: String, custom: String = "") -> Array:
 			for h in headlines.slice(0, 6):
 				out.append({"text": h})
 			for r: Variant in ContentDB.rumors.values():
-				if r is Dictionary and str(r.get("channel", "")) == "news":
+				if ContentDB.rumor_ok(r) and str(r.get("channel", "")) == "news":
 					out.append({"text": str(r["text"])})
 		"gossip":
 			for r: Variant in ContentDB.rumors.values():
-				if r is Dictionary and str(r.get("channel", "")) in ["gossip", "graffiti"]:
+				if ContentDB.rumor_ok(r) and str(r.get("channel", "")) in ["gossip", "graffiti"]:
 					out.append({"text": str(r["text"])})
 		"propaganda", "ads", "stats":
 			for t: Variant in text_data().get(feed, []):

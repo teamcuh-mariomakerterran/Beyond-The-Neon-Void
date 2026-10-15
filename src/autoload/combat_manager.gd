@@ -27,6 +27,9 @@ var animate: bool = true
 var autobattle: bool = false
 var turn_number: int = 0
 var victory: bool = false
+## What the crew pocketed mid-fight (steal abilities): paid out when the
+## battle is concluded, never during it (or in headless sims).
+var spoils := {"soul_coins": 0, "microchips": 0}
 var _player_done: bool = false
 
 
@@ -40,6 +43,7 @@ func start_battle(p_grid: IsometricGrid, p_units: Array[Node], p_mission: Missio
 	turn_queue = TurnQueue.new()
 	turn_number = 0
 	victory = false
+	spoils = {"soul_coins": 0, "microchips": 0}
 	active_unit = null
 	state = State.IDLE
 	_player_done = false
@@ -498,4 +502,12 @@ func conclude_battle() -> Dictionary:
 			var weapon: Dictionary = u.equipment.slots.get("weapon", {})
 			if not weapon.is_empty() and u.kills > 0:
 				ForgeManager.add_item_xp(str(weapon.get("uid", "")), u.kills * 25)
-	return CampaignManager.process_mission_completion(victory, mission, survivors)
+	var report := CampaignManager.process_mission_completion(victory, mission, survivors)
+	# Pockets are kept win or lose.
+	if int(spoils["soul_coins"]) > 0:
+		GameManager.add_soul_coins(int(spoils["soul_coins"]))
+	if int(spoils["microchips"]) > 0:
+		GameManager.add_microchips(int(spoils["microchips"]))
+	report["stolen"] = spoils.duplicate()
+	spoils = {"soul_coins": 0, "microchips": 0}
+	return report

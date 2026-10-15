@@ -429,7 +429,10 @@ func show_results(victory: bool, report: Dictionary) -> void:
 		for id: String in lvls:
 			var c := GameManager.get_character(id)
 			v.add_child(NeonTheme.label("  ▲ %s levelled up!" % (c.display_name if c else id), 15, NeonTheme.GREEN))
+	var stolen: Dictionary = report.get("stolen", {})
+	if int(stolen.get("soul_coins", 0)) > 0 or int(stolen.get("microchips", 0)) > 0:
+		v.add_child(NeonTheme.label("Pocketed mid-fight: +%d Soul Coins  +%d Microchips" % [int(stolen.get("soul_coins", 0)), int(stolen.get("microchips", 0))], 15, NeonTheme.AMBER))
 	var b := Button.new()
-	b.text = "BACK TO THE NEON GUTTER"
+	b.text = "BACK TO THE STREETS" if not CampaignManager.battle_return.is_empty() else "BACK TO THE NEON GUTTER"
 	b.pressed.connect(func() -> void: continue_pressed.emit())
 	v.add_child(b)

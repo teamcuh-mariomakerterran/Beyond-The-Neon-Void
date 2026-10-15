@@ -46,12 +46,15 @@ func _ready() -> void:
 		return
 	world = WorldMap.from_dict(d)
 	grid = world.to_grid(world.tiles.size() >= WorldRenderer.STREAM_MIN_CELLS)  # huge maps: cells on demand
+	# Backdrop: one screen-sized rect on its own layer behind the world.
+	var back := CanvasLayer.new()
+	back.layer = -10
 	var bg := ColorRect.new()
 	bg.color = Color(0.02, 0.01, 0.05)
-	bg.size = Vector2(60000, 60000)
-	bg.position = Vector2(-30000, -30000)
-	bg.z_index = -4096
-	add_child(bg)
+	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	back.add_child(bg)
+	add_child(back)
 	_renderer = WorldRenderer.new()
 	_renderer.world = world
 	add_child(_renderer)
@@ -291,6 +294,7 @@ func _interact() -> void:
 		if item != "" and not GameManager.check_story_flag(flag):
 			GameManager.give_item(item)
 			GameManager.set_story_flag(flag)
+			EventBus.loot_discovered.emit(str(o["id"]), item, str(o.get("found_text", "")))  # quests' find_loot
 			var it := ContentDB.get_item(item)
 			_toast_text(str(o.get("found_text", "")) if str(o.get("found_text", "")) != "" else "Found: " + (it.display_name if it else item), NeonTheme.AMBER)
 		else:

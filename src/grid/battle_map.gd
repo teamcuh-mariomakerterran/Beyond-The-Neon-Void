@@ -45,6 +45,8 @@ func _ready() -> void:
 	if mission == null:
 		mission = ContentDB.get_mission(FALLBACK_MISSION)
 	map_data = ContentDB.get_map(mission.map_id)
+	if SettingsFlags.fast_battles:
+		Engine.time_scale = SettingsFlags.FAST_SPEED  # Cues' slow-mo / hit-stop return to this
 	_setup_environment()
 	world = Node2D.new()
 	world.name = "World"
@@ -88,6 +90,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	if SettingsFlags.fast_battles:
+		Engine.time_scale = 1.0
 	if CombatManager.map_node == self:
 		CombatManager.stop_battle()
 
@@ -226,6 +230,8 @@ func _spawn_units() -> Array[Node]:
 			# Painted extras: a boss that starts shielded, cloaked ambushers…
 			for sid: Variant in e.get("statuses", []):
 				eu.apply_status(str(sid))
+			if str(e.get("ai", "")) != "":
+				eu.behavior = AIBehavior.create(str(e["ai"]))  # mission override of the character's own AI
 			out.append(eu)
 	for g: Dictionary in mission.guests:
 		var gdata := ContentDB.get_character(str(g["character_id"]))
@@ -233,6 +239,10 @@ func _spawn_units() -> Array[Node]:
 			var gu := _make_unit(gdata, Unit.Team.PLAYER, Vector2i(g["cell"][0], g["cell"][1]), int(g.get("level", 1)))
 			# "controlled": the player commands this guest (test units, story cameos).
 			gu.is_player_controlled = bool(g.get("controlled", false))
+			for gsid: Variant in g.get("statuses", []):
+				gu.apply_status(str(gsid))
+			if str(g.get("ai", "")) != "":
+				gu.behavior = AIBehavior.create(str(g["ai"]))
 			out.append(gu)
 	return out
 

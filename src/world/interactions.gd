@@ -264,10 +264,18 @@ func interact(a: Dictionary, actor: Node = null, verb: String = "") -> Dictionar
 			_toast("%s  %d / %d" % [title(a).to_upper(), want, total], YELLOW)
 			_cue("sequence.step", actor)
 	_mark_used(a)
-	var kind_sfx := {"terminal": "terminal", "device": "terminal", "intel": "terminal", "switch": "switch", "loot": "loot", "medstation": "heal"}
+	var kind_sfx := {"terminal": "terminal", "device": "terminal", "intel": "terminal", "switch": "switch", "medstation": "heal"}
 	if kind_sfx.has(str(a.get("kind", ""))):
 		Sfx.event(kind_sfx[str(a["kind"])])
 	run_actions(a.get("actions", []), actor, a)
+	if str(a.get("kind", "")) == "loot":
+		# Quests' find_loot can point at the anchor id (this also plays the loot sound).
+		var got := ""
+		for act: Variant in a.get("actions", []):
+			if act is Dictionary and str(act.get("do", "")) == "give" and str(act.get("arg", "")) != "":
+				got = str(act["arg"]).split(":")[0]
+				break
+		EventBus.loot_discovered.emit(str(a.get("id", "")), got, title(a))
 	if str(a.get("kind", "")) == "npc" and str(a.get("npc_id", "")) != "" and host and host.has_method("ix_npc"):
 		host.ix_npc(str(a["npc_id"]))  # the NPC's own stages (NPCS tab)
 	_changed(a)

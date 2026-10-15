@@ -423,6 +423,8 @@
 			"weapon": "wpn_heavy_blade_1"
 		},
 		"ai_behavior": "tactical",
+		"is_boss": true,
+		"boss_title": "Supply Works Foreman",
 		"learned_ability_ids": []
 	},
 	{"id": "test_hero", "display_name": "Test Runner", "class_id": "gunslinger", "team": 0, "is_unique": true, "bio": "PixelLab test character: run, walk, shoot, wave.", "base_stats": {"strength": 11, "agility": 13, "intelligence": 9, "vitality": 11, "level": 3}, "weapon_specialties": ["pistol"], "equipment": {"weapon": "wpn_pistol_1"}, "ai_behavior": "tactical", "learned_ability_ids": [], "sprite_frames_path": "res://assets/units/test_character_001", "portrait_path": "res://assets/units/test_character_001/extracted/cyberpunk_male_isometric-run/run/portrait.png"},

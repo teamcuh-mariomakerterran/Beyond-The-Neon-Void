@@ -1882,10 +1882,6 @@
 				{
 					"do": "unshield",
 					"arg": "foreman_grisk"
-				},
-				{
-					"do": "cue",
-					"arg": "shield.down"
 				}
 			],
 			"fail_actions": [

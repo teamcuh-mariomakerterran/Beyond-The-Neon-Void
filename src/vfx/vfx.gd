@@ -161,6 +161,12 @@ static func hit_stop(duration: float) -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree == null:
 		return
+	# One owner for Engine.time_scale: the Cues override stack (it restores
+	# whatever speed was set before, and stacks with cue hit-stops / slow-mo).
+	var cues := tree.root.get_node_or_null("Cues")
+	if cues and cues.has_method("push"):
+		cues.push("time_scale", 0.03, duration)
+		return
 	var until := Time.get_ticks_msec() + int(duration * 1000.0)
 	if until <= _hit_stop_until:
 		return

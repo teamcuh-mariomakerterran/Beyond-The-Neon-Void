@@ -1,3 +1,4 @@
+class_name HubMenu
 extends Control
 ## The Neon Gutter — the crew's dive bar and the game's hub (menu version).
 ##
@@ -43,7 +44,7 @@ func _ready() -> void:
 	nav.custom_minimum_size.x = 250
 	nav.add_theme_constant_override("separation", 8)
 	body.add_child(nav)
-	for entry in [["missions", "MISSIONS"], ["regulars", "REGULARS"], ["crew", "CREW & TERMINAL"], ["shops", "BAR & SHOPS"], ["dispatch", "DISPATCH"], ["forge", "FORGE"], ["system", "SAVE / QUIT"]]:
+	for entry in [["missions", "MISSIONS"], ["streets", "STREETS"], ["regulars", "REGULARS"], ["crew", "CREW & TERMINAL"], ["shops", "BAR & SHOPS"], ["dispatch", "DISPATCH"], ["forge", "FORGE"], ["system", "SAVE / QUIT"]]:
 		var b := Button.new()
 		b.text = entry[1]
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -101,7 +102,7 @@ func _build_ticker(root: Control) -> void:
 	_ticker = NeonTheme.label("", 15, Color(1.6, 0.6, 1.0))
 	bar.add_child(_ticker)
 	for r: Dictionary in ContentDB.rumors.values():
-		if r.get("channel") == "news":
+		if r.get("channel") == "news" and ContentDB.rumor_ok(r):
 			_ticker_lines.append(str(r["text"]))
 	_ticker_lines.shuffle()
 	_next_ticker()
@@ -184,6 +185,7 @@ func _show(tab: String) -> void:
 	_refresh_top()
 	match tab:
 		"missions": _tab_missions()
+		"streets": _tab_streets()
 		"regulars": _tab_regulars()
 		"crew": _tab_crew()
 		"shops": _tab_shops()
@@ -217,6 +219,34 @@ func _tab_missions() -> void:
 		v.add_child(brief)
 		v.add_child(NeonTheme.label("%s   //   Win: %s" % [m.get_total_reward_text(), m.win_condition.replace("_", " ")], 13, NeonTheme.AMBER))
 		_btn(v, "DEPLOY THE CREW", func() -> void: CampaignManager.start_mission(mid), GameManager.get_party_members().is_empty())
+
+
+## Walkable maps (world / city / hub kinds): the way out of the bar into
+## exploration. Street level first, then the rest by name.
+const STREET_KINDS := ["hub", "city", "world"]
+const FIRST_STREET := "neo_kowloon_hub"
+
+
+static func street_maps() -> Array:
+	var out: Array = []
+	for id: String in ContentDB.maps:
+		var m: Dictionary = ContentDB.maps[id]
+		if str(m.get("kind", "")) in STREET_KINDS:
+			out.append({"id": id, "name": str(m.get("name", id)), "kind": str(m["kind"])})
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if (a["id"] == FIRST_STREET) != (b["id"] == FIRST_STREET):
+			return a["id"] == FIRST_STREET
+		return str(a["name"]) < str(b["name"]))
+	return out
+
+
+func _tab_streets() -> void:
+	_h("STREETS")
+	_p("The door's propped open with a broken drone. Rain, neon, somebody yelling about noodles.")
+	for m: Dictionary in street_maps():
+		var tag: String = {"hub": "STREET LEVEL", "city": "DISTRICT", "world": "THE EXPANSE"}.get(m["kind"], "")
+		var id: String = m["id"]
+		_btn(_content, "%s   //   %s" % [str(m["name"]).to_upper(), tag], func() -> void: CampaignManager.explore(id))
 
 
 ## Last Call: a drink for whoever wants one before the next job. They start
@@ -592,3 +622,30 @@ func _tab_system() -> void:
 	for slot in [1, 2, 3]:
 		_btn(r2, "LOAD SLOT %d" % slot, func() -> void: SaveManager.load_game(slot); _show("missions"), not SaveManager.has_save_file(slot))
 	_btn(_content, "TITLE SCREEN", func() -> void: SceneManager.change_scene(SceneManager.MAIN_MENU))
+	_h("SETTINGS")
+	for opt: Array in [["fast_battles", "Fast battles (animations at %.1f×)" % SettingsFlags.FAST_SPEED],
+			["reduce_motion", "Reduce motion (no shake, zoom punches or slow-mo)"],
+			["barks", "Battle barks (speech bubbles + voice lines)"],
+			["sfx", "Sound effects + ambience"],
+			["auto_additions", "Auto Sync Additions (no timing, ~70% strength)"]]:
+		var key: String = opt[0]
+		var cb := CheckBox.new()
+		cb.text = opt[1]
+		cb.button_pressed = bool(SettingsFlags.value_of(key))
+		cb.toggled.connect(func(on: bool) -> void:
+			SettingsFlags.set_value(key, on)
+			SettingsFlags.save())
+		_content.add_child(cb)
+	var vol := _row()
+	vol.add_child(NeonTheme.label("SFX volume", 14, NeonTheme.TEXT_DIM))
+	var sl := HSlider.new()
+	sl.min_value = -30.0
+	sl.max_value = 6.0
+	sl.step = 1.0
+	sl.value = SettingsFlags.sfx_db
+	sl.custom_minimum_size.x = 260
+	sl.drag_ended.connect(func(_c: bool) -> void:
+		SettingsFlags.sfx_db = sl.value
+		SettingsFlags.save()
+		Sfx.event("loot"))
+	vol.add_child(sl)

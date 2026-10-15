@@ -48,6 +48,7 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	SettingsFlags.load_saved()
 	new_game()
 
 

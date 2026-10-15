@@ -81,7 +81,7 @@ shock = [{"do": "damage", "arg": "10%"}, {"do": "toast", "arg": "FEEDBACK SURGE"
 anchor(3, 1, "switch", label="Core Relay", sequence="core", step=1, fail_actions=shock)
 anchor(5, 12, "switch", label="Core Relay", sequence="core", step=2, fail_actions=shock)
 anchor(8, 1, "switch", label="Core Relay", sequence="core", step=3, fail_actions=shock,
-       actions=[{"do": "unshield", "arg": "foreman_grisk"}, {"do": "cue", "arg": "shield.down"}])
+       actions=[{"do": "unshield", "arg": "foreman_grisk"}])  # unshield fires the shield.down cue itself
 anchor(1, 6, "device", label="Smoke Generator", once=True, actions=[{"do": "reveal", "arg": ""}])
 anchor(6, 7, "trap", label="Tripwire", hidden=True, once=True,
        trap={"damage": 30, "status": "shocked", "hostile": "player", "disarm": 0.75})

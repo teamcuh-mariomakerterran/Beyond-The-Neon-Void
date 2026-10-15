@@ -227,7 +227,8 @@ func _apply_to_unit(ctx: Context, unit: Node) -> void:
 ##  restore_mp   restore params.mp MP to affected allies
 ##  blink        teleport the caster to the target cell (Shadow Step, High-Ground Leap)
 ##  summon       spawn params.character_id on the target cell for the caster's team
-##  steal_coins  pocket params.coins soul coins if the target is an enemy (player only)
+##  steal_coins  pocket params.coins soul coins if the target is an enemy (player only;
+##               paid when the battle ends, see CombatManager.spoils)
 func _resolve_special(ctx: Context) -> void:
 	match special:
 		"cleanse", "restore_mp":
@@ -287,13 +288,13 @@ func _resolve_special(ctx: Context) -> void:
 		"steal_chip":
 			var mark: Node = ctx.grid.get_occupant(ctx.target_cell)
 			if mark and mark.team != ctx.caster.team and ctx.caster.team == 0 and ctx.rng.randf() < float(params.get("chance", 0.5)):
-				GameManager.add_microchips(1)
+				CombatManager.spoils["microchips"] = int(CombatManager.spoils["microchips"]) + 1
 				ctx.log_result(mark, "chip_stolen", 1)
 		"steal_coins":
 			var victim: Node = ctx.grid.get_occupant(ctx.target_cell)
 			if victim and victim.team != ctx.caster.team and ctx.caster.team == 0:
 				var coins := int(params.get("coins", 40))
-				GameManager.add_soul_coins(coins)
+				CombatManager.spoils["soul_coins"] = int(CombatManager.spoils["soul_coins"]) + coins
 				ctx.log_result(victim, "stolen", coins)
 
 
