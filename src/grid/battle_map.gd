@@ -142,7 +142,7 @@ func _build_grid() -> void:
 		# objects and particles; the battle grid is the top of every column.
 		var wm := WorldMap.from_dict(map_data)
 		world_map = wm
-		grid.load_dict(wm.to_grid().to_dict(), ContentDB.terrain)
+		grid.copy_from(wm.to_grid())
 		var renderer := WorldRenderer.new()
 		renderer.world = wm
 		world.add_child(renderer)

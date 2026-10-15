@@ -1818,3 +1818,17 @@ func test_gap_fixes() -> void:
 	hl.show_casts(cg, [{"caster": caster, "ability": charged, "cell": Vector2i(4, 4)}])
 	check((hl._layers["cast_foe"] as Dictionary).is_empty(), "a downed caster's warning goes away")
 	caster.free()
+	# Battle grids copy the painted world exactly: an override equal to the
+	# code default (a walkable bridge over water) survives.
+	var wg := IsometricGrid.new()
+	wg.setup(4, 4)
+	var wc := wg.get_cell(Vector2i(1, 2))
+	wc.terrain = "water"
+	wc.walkable = true
+	wc.height = 3
+	var bg := IsometricGrid.new()
+	bg.copy_from(wg)
+	check(bg.get_cell(Vector2i(1, 2)).walkable and bg.get_cell(Vector2i(1, 2)).terrain == "water" and bg.get_height(Vector2i(1, 2)) == 3 and bg.width == 4, "copy_from keeps the bridge over water")
+	var lossy := IsometricGrid.new()
+	lossy.load_dict(wg.to_dict(), ContentDB.terrain)
+	check(not lossy.get_cell(Vector2i(1, 2)).walkable, "(the old dict round trip did lose it)")

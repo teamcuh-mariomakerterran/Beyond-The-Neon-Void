@@ -447,6 +447,31 @@ func to_dict() -> Dictionary:
 	return {"width": width, "depth": depth, "tile_width": tile_width, "tile_height": tile_height, "height_step": height_step, "cells": cells}
 
 
+## Becomes an exact copy of `other` (cells built eagerly, occupants not
+## copied). Unlike to_dict() -> load_dict() it keeps painted overrides that
+## happen to equal the code defaults (a walkable bridge over water).
+func copy_from(other: IsometricGrid) -> void:
+	setup(other.width, other.depth)
+	tile_width = other.tile_width
+	tile_height = other.tile_height
+	height_step = other.height_step
+	for coords: Vector2i in other.all_cells():
+		var src := other.get_cell(coords)
+		var c := get_cell(coords)
+		if src == null or c == null:
+			continue
+		c.height = src.height
+		c.terrain = src.terrain
+		c.tile_id = src.tile_id
+		c.walkable = src.walkable
+		c.move_cost = src.move_cost
+		c.cover = src.cover
+		c.blocks_los = src.blocks_los
+		c.hazard = src.hazard
+		c.hazard_turns = src.hazard_turns
+		c.prop_id = src.prop_id
+
+
 func load_dict(data: Dictionary, terrain_defs: Dictionary = {}) -> void:
 	setup(int(data.get("width", 12)), int(data.get("depth", 12)), str(data.get("default_terrain", "concrete")))
 	tile_width = float(data.get("tile_width", tile_width))

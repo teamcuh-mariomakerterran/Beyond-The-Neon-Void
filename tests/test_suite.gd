@@ -301,7 +301,10 @@ func _run_battle(mission_id: String, party_classes: Array, seed_value: int) -> D
 	var mission := ContentDB.get_mission(mission_id)
 	var g := IsometricGrid.new()
 	var map := ContentDB.get_map(mission.map_id)
-	g.load_dict(map, ContentDB.terrain)
+	if int(map.get("format", 1)) >= 2:
+		g.copy_from(WorldMap.from_dict(map).to_grid())  # same as BattleMap: walls, masks, overrides
+	else:
+		g.load_dict(map, ContentDB.terrain)
 	var units: Array[Node] = []
 	var spawns: Array = map["spawns"]["player"]
 	var i := 0
