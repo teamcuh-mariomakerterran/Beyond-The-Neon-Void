@@ -258,6 +258,11 @@ func _connect_events() -> void:
 	CombatManager.player_input_needed.connect(_on_player_input_needed)
 	CombatManager.battle_finished.connect(_on_battle_finished)
 	EventBus.turn_started.connect(_on_turn_started)
+	# Charged casts: mark where they'll land until they go off (or the caster drops).
+	EventBus.ability_charging.connect(_refresh_casts.unbind(4))
+	EventBus.ability_used.connect(_refresh_casts.unbind(3))
+	EventBus.unit_died.connect(_refresh_casts.unbind(1))
+	EventBus.turn_started.connect(_refresh_casts.unbind(1))
 	EventBus.turn_order_changed.connect(func(_f: Array) -> void: hud.update_turn_order(CombatManager.turn_forecast(10)))
 	EventBus.unit_damaged.connect(func(u: Node, amt: int, crit: bool) -> void: _float(u, str(amt), Color(2.0, 0.5, 0.7), crit, float(amt) / maxf(float(u.get_stat("max_hp")), 1.0) * 2.5))
 	EventBus.unit_healed.connect(func(u: Node, amt: int) -> void: _float(u, "+%d" % amt, Color(0.5, 2.0, 1.0)) if amt > 0 else null)
@@ -380,6 +385,11 @@ func _end_turn() -> void:
 	hud.show_unit(u, false)
 	hud.show_inspect("")
 	CombatManager.end_active_turn(face)
+
+
+func _refresh_casts() -> void:
+	if CombatManager.turn_queue and grid:
+		highlights.show_casts(grid, CombatManager.turn_queue.pending_casts, Unit.Team.PLAYER)
 
 
 func _draw_threat() -> void:

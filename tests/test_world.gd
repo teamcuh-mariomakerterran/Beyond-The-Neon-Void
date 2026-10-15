@@ -1796,3 +1796,25 @@ func test_gap_fixes() -> void:
 	SettingsFlags.set_value("fast_battles", keep)
 	SettingsFlags.save()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(SettingsFlags.PATH))
+	# Charged casts are marked on the map until they land, and survive cursor clears.
+	var cg := IsometricGrid.new()
+	cg.setup(8, 8)
+	var caster := Unit.new()
+	caster.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.ENEMY, 3)
+	caster.grid = cg
+	caster.cell = Vector2i(1, 1)
+	var charged: Ability = null
+	for aid: String in ContentDB.get_ids("abilities"):
+		if ContentDB.get_ability(aid) and ContentDB.get_ability(aid).charge_ticks > 0:
+			charged = ContentDB.get_ability(aid)
+			break
+	var hl := HighlightManager.new()
+	hl.show_casts(cg, [{"caster": caster, "ability": charged, "cell": Vector2i(4, 4)}])
+	check((hl._layers["cast_foe"] as Dictionary).has(Vector2i(4, 4)) and (hl._layers["cast_ally"] as Dictionary).is_empty(), "enemy charged cast marks its landing cells (%s)" % charged.id)
+	hl.highlight_range([Vector2i(0, 0)], true)
+	hl.clear_highlights()
+	check((hl._layers["cast_foe"] as Dictionary).has(Vector2i(4, 4)) and not hl._layers.has("range"), "cast warning survives clearing the cursor highlights")
+	caster.current_hp = 0
+	hl.show_casts(cg, [{"caster": caster, "ability": charged, "cell": Vector2i(4, 4)}])
+	check((hl._layers["cast_foe"] as Dictionary).is_empty(), "a downed caster's warning goes away")
+	caster.free()
