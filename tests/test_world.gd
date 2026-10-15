@@ -1832,3 +1832,22 @@ func test_gap_fixes() -> void:
 	var lossy := IsometricGrid.new()
 	lossy.load_dict(wg.to_dict(), ContentDB.terrain)
 	check(not lossy.get_cell(Vector2i(1, 2)).walkable, "(the old dict round trip did lose it)")
+	# The AI reads telegraphed casts as danger.
+	var tg := IsometricGrid.new()
+	tg.setup(12, 12)
+	var mage := Unit.new()
+	mage.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.PLAYER, 3)
+	mage.grid = tg
+	mage.cell = Vector2i(0, 0)
+	var keep_tq := CombatManager.turn_queue
+	CombatManager.turn_queue = TurnQueue.new()
+	var ai := AIBehavior.new()
+	var calm: float = float(ai.build_threat_map(tg, [mage]).get(Vector2i(10, 10), 0.0))
+	CombatManager.turn_queue.queue_cast(mage, ContentDB.get_ability("plasma_storm"), Vector2i(10, 10))
+	var hot: float = float(ai.build_threat_map(tg, [mage]).get(Vector2i(10, 10), 0.0))
+	check(hot > calm, "a charged cast's landing cell is danger to the AI (%.0f -> %.0f)" % [calm, hot])
+	CombatManager.turn_queue.pending_casts.clear()
+	CombatManager.turn_queue.queue_cast(mage, ContentDB.get_ability("mend_field"), Vector2i(10, 10))
+	check(float(ai.build_threat_map(tg, [mage]).get(Vector2i(10, 10), 0.0)) == calm, "a charged heal isn't danger")
+	CombatManager.turn_queue = keep_tq
+	mage.free()

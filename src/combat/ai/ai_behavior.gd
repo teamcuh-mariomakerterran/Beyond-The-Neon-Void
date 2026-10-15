@@ -221,6 +221,20 @@ func build_threat_map(grid: IsometricGrid, foes: Array[Node]) -> Dictionary:
 				marked[c] = true
 		for c: Vector2i in marked:
 			threat[c] = float(threat.get(c, 0.0)) + power
+	# Telegraphed charged casts: certain to land where they're marked, so
+	# standing in one counts double (the AI steps out; Tab shows it too).
+	var tq: TurnQueue = CombatManager.turn_queue
+	if tq:
+		for cast: Dictionary in tq.pending_casts:
+			var caster: Node = cast.get("caster")
+			var ab: Ability = cast.get("ability")
+			if caster == null or not is_instance_valid(caster) or not foes.has(caster) or ab == null:
+				continue
+			if not ab.kind in [Ability.Kind.ATTACK, Ability.Kind.MAGIC, Ability.Kind.DEBUFF]:
+				continue
+			var cpow := float(maxi(caster.get_stat("attack"), caster.get_stat("magic"))) * 2.0
+			for c: Vector2i in ab.get_affected_cells(grid, caster.cell, cast["cell"]):
+				threat[c] = float(threat.get(c, 0.0)) + cpow
 	return threat
 
 
