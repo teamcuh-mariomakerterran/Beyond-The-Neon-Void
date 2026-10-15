@@ -649,6 +649,29 @@ func test_explore() -> void:
 	ex._update_labels()
 	check((ex._labels.values()[0] as Label).text == "Rust Harbor", "label shows name after visit")
 	GameManager.story_flags.erase(ExploreScene.visited_flag(w.id, str(o["id"])))
+	# Movement: 8 directions, corners, free walking.
+	check(ExploreScene.snap8(Vector2(1, -1)) == Vector2i(1, -1) and ExploreScene.snap8(Vector2(0, -1)) == Vector2i(0, -1) and ExploreScene.snap8(Vector2.ZERO) == Vector2i.ZERO, "input snaps to the 8 grid steps")
+	check(ex._g2s(Vector2(1, -1)).y == 0.0 and ex._g2s(Vector2(1, -1)).x > 0.0, "two keys (W+D) walk straight right on screen")
+	check(ex._s2g(ex._g2s(Vector2(0.3, -0.7))).distance_to(Vector2(0.3, -0.7)) < 0.001, "screen <-> grid round trip")
+	ex.cell = Vector2i(3, 0)
+	check(ex.can_step(Vector2i(3, 0), Vector2i(3, 1)) and not ex.can_step_dir(Vector2i(3, 0), Vector2i(1, 1)), "no cutting the cliff's corner diagonally")
+	var keep_free := SettingsFlags.free_move
+	SettingsFlags.free_move = true
+	ex.cell = Vector2i(2, 2)
+	ex._place_avatar()
+	for i in 30:
+		ex.free_move(Vector2(1, 0), 1.0 / 60.0)
+	check(ex.fpos.x > 2.6 and ex.cell == Vector2i(roundi(ex.fpos.x), 2) and is_equal_approx(ex.fpos.y, 2.0), "free walk moves smoothly and tracks its cell (%s)" % ex.fpos)
+	ex.cell = Vector2i(4, 3)
+	ex._place_avatar()
+	for i in 120:
+		ex.free_move(Vector2(0, -1), 1.0 / 60.0)
+	check(ex.cell == Vector2i(4, 2) and ex.fpos.y > 1.7, "free walk stops at the cliff (%s)" % ex.fpos)
+	var before_x := ex.fpos.x
+	for i in 8:
+		ex.free_move(Vector2(1, -1).normalized(), 1.0 / 60.0)
+	check(ex.fpos.x > before_x + 0.05 and ex.fpos.y > 1.6, "pushing into it diagonally slides along it instead of sticking (%s)" % ex.fpos)
+	SettingsFlags.free_move = keep_free
 	ex.queue_free()
 	ContentDB.maps.erase(w.id)
 	await tree.process_frame

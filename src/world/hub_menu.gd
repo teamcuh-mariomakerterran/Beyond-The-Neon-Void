@@ -626,7 +626,8 @@ func _tab_system() -> void:
 		_btn(r2, "LOAD SLOT %d" % slot, func() -> void: SaveManager.load_game(slot); _show("missions"), not SaveManager.has_save_file(slot))
 	_btn(_content, "TITLE SCREEN", func() -> void: SceneManager.change_scene(SceneManager.MAIN_MENU))
 	_h("SETTINGS")
-	for opt: Array in [["fast_battles", "Fast battles (animations at %.1f×)" % SettingsFlags.FAST_SPEED],
+	for opt: Array in [["free_move", "Free movement in the streets (M switches in-game)"],
+			["fast_battles", "Fast battles (animations at %.1f×)" % SettingsFlags.FAST_SPEED],
 			["reduce_motion", "Reduce motion (no shake, zoom punches or slow-mo)"],
 			["barks", "Battle barks (speech bubbles + voice lines)"],
 			["sfx", "Sound effects + ambience"],

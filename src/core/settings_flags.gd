@@ -13,11 +13,13 @@ static var barks: bool = true
 ## Sound effects + ambience on/off, and their volume offset (dB).
 static var sfx: bool = true
 static var sfx_db: float = 0.0
+## Exploration: smooth free walking instead of tile-by-tile steps (M in-game).
+static var free_move: bool = false
 ## Battle animations at this speed when fast_battles is on.
 const FAST_SPEED := 1.6
 
 const PATH := "user://settings.cfg"
-const KEYS := ["reduce_motion", "fast_battles", "auto_additions", "icon_style", "barks", "sfx", "sfx_db"]
+const KEYS := ["reduce_motion", "fast_battles", "auto_additions", "icon_style", "barks", "sfx", "sfx_db", "free_move"]
 
 
 ## Settings survive restarts (GameManager loads them at startup).
@@ -46,6 +48,7 @@ static func value_of(k: String) -> Variant:
 		"barks": return barks
 		"sfx": return sfx
 		"sfx_db": return sfx_db
+		"free_move": return free_move
 	return null
 
 
@@ -58,3 +61,4 @@ static func set_value(k: String, v: Variant) -> void:
 		"barks": barks = bool(v)
 		"sfx": sfx = bool(v)
 		"sfx_db": sfx_db = clampf(float(v), -30.0, 6.0)
+		"free_move": free_move = bool(v)

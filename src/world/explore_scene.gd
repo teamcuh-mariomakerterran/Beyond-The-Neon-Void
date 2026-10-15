@@ -2,7 +2,11 @@ class_name ExploreScene
 extends Node2D
 ## Walkable world / city / hub / interior maps (format 2).
 ##
-## WASD / arrows step between columns (or click a tile to walk there). Walking
+## Two movement styles (SettingsFlags.free_move, M switches): CLASSIC steps
+## tile by tile (8 directions: two keys or the stick go straight on screen),
+## FREE walks smoothly and slides along walls; both run with Shift, follow a
+## clicked path, and fire the same per-tile regions / encounters / anchors.
+## WASD / arrows / stick move (or click a tile to walk there). Walking
 ## up to a location shows its name above it — or "?" until the first visit.
 ## Confirm (E / Enter / Space) enters: world-map places play their intro
 ## cutscene on the first visit, inner places only if one is set. Hidden loot
@@ -11,6 +15,13 @@ extends Node2D
 
 const STEP_TIME := 0.16
 const MAX_CLIMB := 2
+## Running (Shift / controller face button): step time and free speed.
+const RUN_MULT := 1.65
+## Free movement speed in screen pixels per second, per pixel of tile width.
+const FREE_SPEED := 3.6
+## Free movement: how far (in cells) the body keeps off blocked tiles.
+const BODY_R := 0.26
+const STICK_DEADZONE := 0.25
 
 var world: WorldMap
 var grid: IsometricGrid
@@ -37,6 +48,11 @@ var ix: Interactions
 var _avatar_sprite: AnimatedSprite2D
 var _avatar_set: Dictionary = {}
 var _avatar_facing: String = "SE"
+## Free movement: the avatar's exact spot in grid space (cell centres are
+## whole numbers) and the height it's drawn at (eases between levels).
+var fpos: Vector2 = Vector2.ZERO
+var _draw_h: float = 0.0
+var _anim_now: String = ""
 
 
 func _ready() -> void:
@@ -185,7 +201,7 @@ func _build_hud() -> void:
 	_prompt.position.y -= 60
 	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hud.add_child(_prompt)
-	var help := NeonTheme.label("WASD / arrows / click: move   ·   E / Enter: enter · search · talk   ·   Esc: leave", 13, NeonTheme.TEXT_DIM)
+	var help := NeonTheme.label("WASD / arrows / stick / click: move   ·   Shift: run   ·   M: free / classic movement   ·   E / Enter: enter · search · talk   ·   Esc: leave", 13, NeonTheme.TEXT_DIM)
 	help.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	help.position += Vector2(16, -28)
 	_hud.add_child(help)
@@ -447,6 +463,8 @@ func run_trigger(action: String, arg: String) -> void:
 # --- Movement ------------------------------------------------------------------
 
 func _place_avatar() -> void:
+	fpos = Vector2(cell)
+	_draw_h = float(grid.get_height(cell))
 	_avatar.position = world.to_screen(Vector2(cell), grid.get_height(cell))
 	_avatar.z_index = (cell.x + cell.y) * 2 + 1
 	_cam.position = _avatar.position
@@ -463,37 +481,163 @@ func can_step(from: Vector2i, to: Vector2i) -> bool:
 	return true
 
 
+## A diagonal step (both axes) also needs both side cells open: no squeezing
+## between two walls through their corner.
+func can_step_dir(from: Vector2i, dir: Vector2i) -> bool:
+	if not can_step(from, from + dir):
+		return false
+	if dir.x != 0 and dir.y != 0:
+		return can_step(from, from + Vector2i(dir.x, 0)) and can_step(from, from + Vector2i(0, dir.y))
+	return true
+
+
 func _step(dir: Vector2i) -> void:
 	var to := cell + dir
-	if _moving or _busy or not can_step(cell, to):
+	if _moving or _busy or not can_step_dir(cell, dir):
 		return
 	_moving = true
 	var from_pos := _avatar.position
 	var to_pos := world.to_screen(Vector2(to), grid.get_height(to))
 	_avatar.z_index = maxi(cell.x + cell.y, to.x + to.y) * 2 + 1
+	var run := is_running()
+	# Same screen speed whichever way you go (a diagonal is a longer hop).
+	var t := STEP_TIME * _g2s(Vector2(dir)).length() / _g2s(Vector2(1, 0)).length() / (RUN_MULT if run else 1.0)
 	if _avatar_sprite:
-		_avatar_facing = LatticeClip.facing_of(dir)
-		LatticeClip.play_on(_avatar_sprite, _avatar_set, "walk", _avatar_facing)
+		_face(_g2s(Vector2(dir)))
+		_play("run" if run else "walk")
 	elif to_pos.x != from_pos.x:
 		_avatar.scale.x = -1 if to_pos.x < from_pos.x else 1
 	var tw := create_tween()
 	var hop := grid.get_height(to) != grid.get_height(cell)
 	if hop:
 		var mid := (from_pos + to_pos) * 0.5 + Vector2(0, -world.height_step * 0.8)
-		tw.tween_property(_avatar, "position", mid, STEP_TIME * 0.5)
-		tw.tween_property(_avatar, "position", to_pos, STEP_TIME * 0.5)
+		tw.tween_property(_avatar, "position", mid, t * 0.5)
+		tw.tween_property(_avatar, "position", to_pos, t * 0.5)
 	else:
-		tw.tween_property(_avatar, "position", to_pos, STEP_TIME)
+		tw.tween_property(_avatar, "position", to_pos, t)
 	cell = to
+	fpos = Vector2(to)
+	_draw_h = float(grid.get_height(to))
 	CampaignManager.current_explore["at"] = cell
 	await tw.finished
 	_avatar.z_index = (cell.x + cell.y) * 2 + 1
 	_moving = false
-	if _avatar_sprite and _path.is_empty() and not _dir_held():
-		LatticeClip.play_on(_avatar_sprite, _avatar_set, "idle", _avatar_facing)
+	if _avatar_sprite and _path.is_empty() and input_vector() == Vector2.ZERO:
+		_play("idle")
+	await _arrived()
+
+
+## Things that happen on reaching a new cell (both movement styles).
+func _arrived() -> void:
 	if ix and not ix.on_enter(cell, null).is_empty():
 		_save_ix()
 	await _update_regions()
+
+
+# --- Input + free movement -------------------------------------------------------
+
+## Where the player wants to go, in GRID space (not normalised). Keys keep the
+## classic layout (W = up-right along the grid; two keys = straight on screen);
+## the stick pushes the way it points on screen.
+func input_vector() -> Vector2:
+	var g := Vector2.ZERO
+	if Input.is_action_pressed("ui_up") or Input.is_key_pressed(KEY_W): g += Vector2(0, -1)
+	if Input.is_action_pressed("ui_down") or Input.is_key_pressed(KEY_S): g += Vector2(0, 1)
+	if Input.is_action_pressed("ui_left") or Input.is_key_pressed(KEY_A): g += Vector2(-1, 0)
+	if Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D): g += Vector2(1, 0)
+	var stick := Vector2(Input.get_joy_axis(0, JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JOY_AXIS_LEFT_Y))
+	if stick.length() > STICK_DEADZONE:
+		g += _s2g(stick.normalized() * world.tile_width * 0.5).normalized() * minf(stick.length(), 1.0)
+	return g
+
+
+func is_running() -> bool:
+	return Input.is_key_pressed(KEY_SHIFT) or Input.is_joy_button_pressed(0, JOY_BUTTON_X) or Input.is_joy_button_pressed(0, JOY_BUTTON_RIGHT_SHOULDER)
+
+
+## Nearest of the 8 grid steps to a grid-space direction.
+static func snap8(g: Vector2) -> Vector2i:
+	if g.length() < 0.2:
+		return Vector2i.ZERO
+	var a := snappedf(g.angle(), PI / 4.0)
+	return Vector2i(roundi(cos(a)), roundi(sin(a)))
+
+
+func _g2s(g: Vector2) -> Vector2:
+	return Vector2((g.x - g.y) * world.tile_width * 0.5, (g.x + g.y) * world.tile_height * 0.5)
+
+
+func _s2g(sv: Vector2) -> Vector2:
+	return Vector2(sv.x / world.tile_width + sv.y / world.tile_height, sv.y / world.tile_height - sv.x / world.tile_width)
+
+
+## Face a screen direction with the nearest diagonal (the facings unit art
+## has); straight left / right keep whichever half you were facing.
+func _face(screen_dir: Vector2) -> void:
+	if screen_dir.length() < 0.01:
+		return
+	var down := screen_dir.y > 0.0 if absf(screen_dir.y) > 0.01 else _avatar_facing.begins_with("S")
+	var right := screen_dir.x > 0.0 if absf(screen_dir.x) > 0.01 else _avatar_facing.ends_with("E")
+	_avatar_facing = ("S" if down else "N") + ("E" if right else "W")
+
+
+func _play(anim: String) -> void:
+	if _avatar_sprite == null:
+		return
+	if anim == "run" and str(LatticeClip.resolve(_avatar_set, "run", _avatar_facing)[0]) == "":
+		anim = "walk"
+	var key := anim + ":" + _avatar_facing
+	if key != _anim_now:
+		_anim_now = key
+		LatticeClip.play_on(_avatar_sprite, _avatar_set, anim, _avatar_facing)
+
+
+## Free movement, one frame. `gdir` is a grid-space direction (input or path).
+func free_move(gdir: Vector2, delta: float) -> void:
+	if gdir.length() < 0.05:
+		_play("idle")
+		return
+	var run := is_running()
+	var sdir := _g2s(gdir).normalized()
+	var speed := world.tile_width * FREE_SPEED * (RUN_MULT if run else 1.0) * minf(gdir.length(), 1.0)
+	var d := _s2g(sdir * speed * delta)
+	# Slide along walls: try the whole move, then each axis on its own.
+	if free_ok(fpos + d):
+		fpos += d
+	elif free_ok(fpos + Vector2(d.x, 0)):
+		fpos.x += d.x
+	elif free_ok(fpos + Vector2(0, d.y)):
+		fpos.y += d.y
+	_face(sdir)
+	_play("run" if run else "walk")
+	var now := Vector2i(roundi(fpos.x), roundi(fpos.y))
+	if now != cell:
+		cell = now
+		CampaignManager.current_explore["at"] = cell
+		_arrived()
+
+
+## True if the body can stand at grid-space point `p` (its centre and the
+## points BODY_R around it are on cells you could step to from here).
+func free_ok(p: Vector2) -> bool:
+	for off: Vector2 in [Vector2.ZERO, Vector2(BODY_R, 0), Vector2(-BODY_R, 0), Vector2(0, BODY_R), Vector2(0, -BODY_R)]:
+		var c := Vector2i(roundi(p.x + off.x), roundi(p.y + off.y))
+		if c != cell and not can_step(cell, c):
+			return false
+	return true
+
+
+func free_mode() -> bool:
+	return SettingsFlags.free_move
+
+
+func toggle_free() -> void:
+	SettingsFlags.free_move = not SettingsFlags.free_move
+	SettingsFlags.save()
+	fpos = Vector2(cell)
+	_path.clear()
+	_place_avatar()
+	_toast_text("MOVEMENT: " + ("FREE" if free_mode() else "CLASSIC (tile steps)"), NeonTheme.CYAN)
 
 
 func _process(_delta: float) -> void:
@@ -520,25 +664,43 @@ func _process(_delta: float) -> void:
 		_prompt.text = "E  ·  TALK"
 	else:
 		_prompt.text = "E  ·  SEARCH"
-	if _moving or _busy:
+	if _busy:
+		return
+	if free_mode():
+		_free_frame(_delta)
+		return
+	if _moving:
 		return
 	if not _path.is_empty():
 		var nxt: Vector2i = _path.pop_front()
 		_step(nxt - cell)
 		return
-	# Screen-aligned keys: up/down walk the screen diagonals of the iso grid.
-	var dir := Vector2i.ZERO
-	if Input.is_action_pressed("ui_up") or Input.is_key_pressed(KEY_W): dir = Vector2i(0, -1)
-	elif Input.is_action_pressed("ui_down") or Input.is_key_pressed(KEY_S): dir = Vector2i(0, 1)
-	elif Input.is_action_pressed("ui_left") or Input.is_key_pressed(KEY_A): dir = Vector2i(-1, 0)
-	elif Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D): dir = Vector2i(1, 0)
+	var dir := snap8(input_vector())
 	if dir != Vector2i.ZERO:
+		if not can_step_dir(cell, dir) and dir.x != 0 and dir.y != 0:
+			# Blocked diagonal: take whichever straight step is open.
+			dir = Vector2i(dir.x, 0) if can_step(cell, cell + Vector2i(dir.x, 0)) else Vector2i(0, dir.y)
 		_step(dir)
 
 
+func _free_frame(delta: float) -> void:
+	var g := input_vector()
+	if g != Vector2.ZERO:
+		_path.clear()  # keys / stick take over from a click
+	elif not _path.is_empty():
+		# Click-to-walk: steer through the path's cell centres.
+		if fpos.distance_to(Vector2(_path[0])) < 0.12:
+			_path.pop_front()
+		if not _path.is_empty():
+			g = (Vector2(_path[0]) - fpos).normalized()
+	free_move(g, delta)
+	_draw_h = move_toward(_draw_h, float(grid.get_height(cell)), delta * 10.0)
+	_avatar.position = world.to_screen(fpos, _draw_h)
+	_avatar.z_index = (cell.x + cell.y) * 2 + 1
+
+
 func _dir_held() -> bool:
-	return Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") \
-		or Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_D)
+	return input_vector() != Vector2.ZERO
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -550,6 +712,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			_interact()
 		elif k.keycode == KEY_ESCAPE:
 			_leave()
+		elif k.keycode == KEY_M:
+			toggle_free()
+	var jb := event as InputEventJoypadButton
+	if jb and jb.pressed and jb.button_index == JOY_BUTTON_A:
+		_interact()
 	var mb := event as InputEventMouseButton
 	if mb and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
 		var hit := world.pick_top(get_global_mouse_position())
