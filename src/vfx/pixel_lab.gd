@@ -7,7 +7,8 @@ extends RefCounted
 ##   <export>/<state>/animations/<Anim>/<direction>/frame_000.png …
 ## Directions are south, south-east, … (animations usually only the four
 ## diagonals, which are exactly the battle facings). Zips dropped in the
-## folder are unpacked once into <folder>/extracted/<zip name>/.
+## folder are unpacked once into <folder>/extracted/<zip name>/, long names
+## cut short (see short_name) so paths stay well under Windows' 260 limit.
 ##
 ## Each animation is matched to a game action from its state / animation name
 ## (walking → walk, shooting / kick / uppercut → attack, taking hit → hit,
@@ -73,13 +74,27 @@ static func _zip_is_pixellab(path: String) -> bool:
 	return ok
 
 
+## Longest folder names when unpacking (PixelLab names folders after the
+## whole prompt; nested three deep they break Windows paths).
+const ZIP_CAP := 24
+const NAME_CAP := 32
+
+
+## `text` if it fits in `cap`, else its start + "_" + 6 hex of its md5
+## (kept unique, and the start keeps words like "shooting" for classify()).
+static func short_name(text: String, cap: int) -> String:
+	if text.length() <= cap:
+		return text
+	return text.left(cap - 7) + "_" + text.md5_text().left(6)
+
+
 ## Unpacks any zips not unpacked yet. Only .png / .json, no path escapes.
 static func unpack(dir: String) -> int:
 	var n := 0
 	for f in DirAccess.get_files_at(dir):
 		if f.get_extension().to_lower() != "zip":
 			continue
-		var target := dir.path_join("extracted").path_join(f.get_basename().replace(" ", "_").replace("(", "").replace(")", ""))
+		var target := dir.path_join("extracted").path_join(short_name(f.get_basename().replace(" ", "_").replace("(", "").replace(")", ""), ZIP_CAP))
 		if DirAccess.dir_exists_absolute(target):
 			continue
 		var z := ZIPReader.new()
@@ -89,7 +104,10 @@ static func unpack(dir: String) -> int:
 			var ext := entry.get_extension().to_lower()
 			if entry.ends_with("/") or not ext in ["png", "json"] or entry.contains("..") or entry.begins_with("/"):
 				continue
-			var out := target.path_join(entry)
+			var parts := entry.split("/")
+			for k in parts.size() - 1:
+				parts[k] = short_name(parts[k], NAME_CAP)
+			var out := target.path_join("/".join(parts))
 			DirAccess.make_dir_recursive_absolute(out.get_base_dir())
 			var fa := FileAccess.open(out, FileAccess.WRITE)
 			if fa:

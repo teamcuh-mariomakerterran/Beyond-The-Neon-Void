@@ -635,7 +635,7 @@
 		"id": "kade",
 		"display_name": "Kade Rennick",
 		"description": "Sells prototype gear off a fold-out table. Never looks up from his tablet for long.",
-		"portrait_path": "res://assets/units/test_vendorNPC_001/extracted/cyberpunk_male_isometric_2_1_perspective_18/Idle/rotations/south.png",
+		"portrait_path": "res://assets/units/test_vendorNPC_001/extracted/cyberpunk_male_is_e2d308/Idle/rotations/south.png",
 		"sprite_path": "res://assets/units/test_vendorNPC_001",
 		"location_id": "neon_block_demo",
 		"is_vendor": true,
