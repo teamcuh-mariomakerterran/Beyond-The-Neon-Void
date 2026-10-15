@@ -99,18 +99,7 @@ func _exit_tree() -> void:
 # --- Construction ----------------------------------------------------------
 
 func _setup_environment() -> void:
-	# HDR 2D glow makes anything brighter than 1.0 bloom — the neon look.
-	var env := Environment.new()
-	env.background_mode = Environment.BG_CANVAS
-	env.glow_enabled = true
-	env.glow_intensity = 0.9
-	env.glow_bloom = 0.05
-	env.glow_hdr_threshold = 1.0
-	env.set_glow_level(1, 1.0)
-	env.set_glow_level(3, 0.6)
-	var we := WorldEnvironment.new()
-	we.environment = env
-	add_child(we)
+	add_child(NeonTheme.glow_environment())  # HDR glow: the neon look
 	var bg := CanvasLayer.new()
 	bg.layer = -10
 	var rect := ColorRect.new()

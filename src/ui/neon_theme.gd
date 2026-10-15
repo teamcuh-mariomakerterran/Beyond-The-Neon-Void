@@ -197,3 +197,19 @@ static func bar(color: Color, height: float = 10.0) -> ProgressBar:
 
 static func team_color(team: int) -> Color:
 	return Unit.TEAM_COLORS.get(team, TEXT)
+
+
+## The neon bloom: HDR 2D glow, so anything brighter than 1.0 blooms. One
+## setup shared by battles and exploration so the same lights look the same.
+static func glow_environment() -> WorldEnvironment:
+	var env := Environment.new()
+	env.background_mode = Environment.BG_CANVAS
+	env.glow_enabled = true
+	env.glow_intensity = 0.9
+	env.glow_bloom = 0.05
+	env.glow_hdr_threshold = 1.0
+	env.set_glow_level(1, 1.0)
+	env.set_glow_level(3, 0.6)
+	var we := WorldEnvironment.new()
+	we.environment = env
+	return we

@@ -22,6 +22,9 @@ uniform float darken : hint_range(0.0, 1.0) = 0.0;
 uniform float sink_px = 0.0;                           // banish: pulled down through the floor
 
 varying vec2 local;
+// The vertex colour (modulate) on its own: in fragment() COLOR already has the
+// texture multiplied in, so sampling TEXTURE again would square it.
+varying vec4 tint_in;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -53,6 +56,7 @@ float crackle(vec2 p) {
 
 void vertex() {
 	local = VERTEX;
+	tint_in = COLOR;
 	VERTEX.y += sink_px;
 }
 
@@ -64,11 +68,11 @@ void fragment() {
 	float row = floor(local.y / 3.0);
 	float shift = (hash(vec2(row, floor(t * 14.0))) - 0.5) * 6.0 * glitch * burst;
 	uv.x += shift * TEXTURE_PIXEL_SIZE.x;
-	vec4 c = texture(TEXTURE, uv) * COLOR;
+	vec4 c = texture(TEXTURE, uv) * tint_in;
 	if (glitch > 0.0) {
 		float split = (1.5 + 2.0 * burst) * glitch * TEXTURE_PIXEL_SIZE.x;
-		c.r = texture(TEXTURE, uv + vec2(split, 0.0)).r * COLOR.r;
-		c.b = texture(TEXTURE, uv - vec2(split, 0.0)).b * COLOR.b;
+		c.r = texture(TEXTURE, uv + vec2(split, 0.0)).r * tint_in.r;
+		c.b = texture(TEXTURE, uv - vec2(split, 0.0)).b * tint_in.b;
 	}
 	float lum = dot(c.rgb, vec3(0.299, 0.587, 0.114));
 	// Tint, breathing with the pulse.

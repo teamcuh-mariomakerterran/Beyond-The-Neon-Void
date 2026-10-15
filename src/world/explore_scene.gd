@@ -46,6 +46,7 @@ func _ready() -> void:
 		return
 	world = WorldMap.from_dict(d)
 	grid = world.to_grid(world.tiles.size() >= WorldRenderer.STREAM_MIN_CELLS)  # huge maps: cells on demand
+	add_child(NeonTheme.glow_environment())  # same neon bloom as battles
 	# Backdrop: one screen-sized rect on its own layer behind the world.
 	var back := CanvasLayer.new()
 	back.layer = -10
