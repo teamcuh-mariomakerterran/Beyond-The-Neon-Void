@@ -627,6 +627,8 @@ func test_explore() -> void:
 		for y in 8:
 			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
 	w.set_tile(Vector2i(4, 1), 3, "terrain:concrete")  # cliff: too tall to climb
+	for wy in 8:
+		w.set_tile(Vector2i(7, wy), 0, "terrain:water")  # a canal down the east edge
 	var o := w.add_object("", Vector2i(6, 6), 0, "location")
 	o["location"] = {"type": "city", "name": "Rust Harbor", "target_map": "", "radius": 1.5}
 	w.spawns["player"] = [[1, 1]]
@@ -672,6 +674,30 @@ func test_explore() -> void:
 		ex.free_move(Vector2(1, -1).normalized(), 1.0 / 60.0)
 	check(ex.fpos.x > before_x + 0.05 and ex.fpos.y > 1.6, "pushing into it diagonally slides along it instead of sticking (%s)" % ex.fpos)
 	SettingsFlags.free_move = keep_free
+	# Mounts: none owned, then a hoverbike on land, then the sub on the canal.
+	for mid: String in Mounts.data():
+		GameManager.story_flags.erase(Mounts.flag(mid))
+	ex.mount_id = ""
+	ex.cell = Vector2i(5, 3)
+	ex._place_avatar()
+	check(ex.toggle_mount() == "You don't have a mount yet.", "no mount, no ride")
+	Mounts.give("hoverbike")
+	check(ex.toggle_mount() == "mounted hoverbike" and ex.mount_id == "hoverbike" and CampaignManager.current_explore["mount"] == "hoverbike", "R rides the hoverbike")
+	check(not ex.can_step(Vector2i(6, 3), Vector2i(7, 3)), "the hoverbike won't drive into the canal")
+	check(Mounts.speed("hoverbike") > 1.5 and Mounts.encounter_mult("hoverbike") < 1.0, "faster, fewer ambushes")
+	check(ex.toggle_mount() == "dismounted" and ex.mount_id == "", "R again: on foot")
+	Mounts.give("submarine")
+	ex.cell = Vector2i(6, 3)
+	ex._place_avatar()
+	check(Mounts.is_water_cell(ex.grid, Vector2i(7, 3)) and not ex.grid.is_walkable(Vector2i(7, 3)), "the canal is water, not walkable on foot")
+	check(ex.mount("submarine") and ex.cell.x == 7, "boarding the sub steps onto the water (%s)" % ex.cell)
+	check(ex.can_step(ex.cell, ex.cell + Vector2i(0, 1)) and not ex.can_step(ex.cell, ex.cell + Vector2i(-1, 0)), "the sub moves along the canal, not onto land")
+	var saved: Dictionary = CampaignManager._explore_to_json(CampaignManager.current_explore)
+	check(saved["mount"] == "submarine" and saved["at"][0] == 7, "riding is saved with the position")
+	check(ex.toggle_mount() == "dismounted" and ex.cell.x == 6 and ex.mount_id == "", "leaving the sub steps ashore")
+	check(not Mounts.allowed_on("hoverbike", "hub") and Mounts.allowed_on("hoverbike", "hub", true), "hubs only if the map allows it")
+	for mid2: String in Mounts.data():
+		GameManager.story_flags.erase(Mounts.flag(mid2))
 	ex.queue_free()
 	ContentDB.maps.erase(w.id)
 	await tree.process_frame

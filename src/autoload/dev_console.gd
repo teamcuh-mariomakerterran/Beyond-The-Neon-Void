@@ -136,6 +136,11 @@ func _register_all() -> void:
 	register("time", "time <scale> — game speed (1 = normal).", func(a: Array) -> String:
 		Engine.time_scale = clampf(float(a[0]) if not a.is_empty() else 1.0, 0.05, 8.0)
 		return "time_scale = %.2f" % Engine.time_scale)
+	register("mount", "mount <id> — own a mount (data/mounts.json); R rides it on world maps.", func(a: Array) -> String:
+		if a.is_empty() or Mounts.get_mount(a[0]).is_empty():
+			return _err("Mounts: " + ", ".join(Mounts.data().keys()))
+		Mounts.give(a[0])
+		return "Got the %s. Press R on a world map." % str(Mounts.get_mount(a[0]).get("name", a[0])))
 	register("tp", "tp <map_id> [x,y] — walk a map (explore).", func(a: Array) -> String:
 		if a.is_empty() or ContentDB.get_map(a[0]).is_empty():
 			return _err("Unknown map.")

@@ -1,0 +1,25 @@
+{
+	"_note": "Overworld mounts (src/world/mounts.gd). art: a PixelLab folder, Lattice unit clip or SpriteFrames (empty = placeholder shape). terrain: land | water | any. speed: x walking speed. climb: max height step (land). encounters: x random-encounter chance while riding. maps: map kinds you can ride on (a map can also set \"mounts\": true). Owned when story flag mount:<id> is set (or starter: true).",
+	"hoverbike": {
+		"name": "Hoverbike",
+		"art": "",
+		"terrain": "land",
+		"speed": 2.2,
+		"climb": 1,
+		"encounters": 0.5,
+		"maps": ["world"],
+		"color": "#39f5ff",
+		"starter": false
+	},
+	"submarine": {
+		"name": "Submarine",
+		"art": "",
+		"terrain": "water",
+		"speed": 1.8,
+		"climb": 0,
+		"encounters": 0.35,
+		"maps": ["world"],
+		"color": "#ffc857",
+		"starter": false
+	}
+}

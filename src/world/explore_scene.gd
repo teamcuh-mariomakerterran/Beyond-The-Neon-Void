@@ -53,6 +53,8 @@ var _avatar_facing: String = "SE"
 var fpos: Vector2 = Vector2.ZERO
 var _draw_h: float = 0.0
 var _anim_now: String = ""
+## The mount being ridden ("" = on foot); see Mounts / data/mounts.json.
+var mount_id: String = ""
 
 
 func _ready() -> void:
@@ -76,7 +78,14 @@ func _ready() -> void:
 	_renderer = WorldRenderer.new()
 	_renderer.world = world
 	add_child(_renderer)
+	# Still riding from last time (a save, a battle, back from a city)? Maps
+	# where it can't go leave it parked: you walk, and ride again outside.
+	var saved_mount := str(info.get("mount", ""))
+	if saved_mount != "" and Mounts.owned().has(saved_mount) and mount_allowed(saved_mount):
+		mount_id = saved_mount
 	cell = _start_cell(info)
+	if mount_id != "" and not can_step(cell, cell):
+		mount_id = ""  # e.g. the sub, but you start on land
 	CampaignManager.current_explore["at"] = cell
 	_avatar = _make_avatar()
 	add_child(_avatar)
@@ -121,8 +130,8 @@ func _ready() -> void:
 
 func _start_cell(info: Dictionary) -> Vector2i:
 	var at: Vector2i = info.get("at", Vector2i(-1, -1))
-	if grid.in_bounds(at) and grid.is_walkable(at):
-		return at
+	if grid.in_bounds(at) and (grid.is_walkable(at) or (mount_id != "" and can_step(at, at))):
+		return at  # (a sub resumes on its water cell)
 	var sp: Array = world.spawns.get("player", [])
 	var i := int(info.get("spawn", -1))
 	if not sp.is_empty():
@@ -141,8 +150,24 @@ func _start_cell(info: Dictionary) -> Vector2i:
 
 func _make_avatar() -> Node2D:
 	var root := Node2D.new()
+	_fill_avatar(root, str(Mounts.get_mount(mount_id).get("art", "")) if mount_id != "" else "")
+	return root
+
+
+## Puts the right sprite in the avatar: the mount's art when riding (a
+## placeholder shape until the mount has art), else the party leader.
+func _fill_avatar(root: Node2D, mount_art: String) -> void:
 	var party := GameManager.get_party_members()
 	var frames_path := party[0].sprite_frames_path if not party.is_empty() else ""
+	if mount_id != "":
+		frames_path = mount_art
+		if mount_art == "" or not (PixelLab.is_root(mount_art) or PixelMatrix.is_root(mount_art) or ResourceLoader.exists(mount_art) or LatticeClip.is_clip(mount_art)):
+			var mm := MountMarker.new()
+			mm.size = world.tile_height
+			mm.color = Color(str(Mounts.get_mount(mount_id).get("color", "#39f5ff")))
+			mm.water = Mounts.terrain(mount_id) == "water"
+			root.add_child(mm)
+			return
 	var uset: Dictionary = {}
 	if PixelLab.is_root(frames_path):
 		uset = PixelLab.unit_set(frames_path)
@@ -168,7 +193,33 @@ func _make_avatar() -> Node2D:
 		var marker := AvatarMarker.new()
 		marker.size = world.tile_height
 		root.add_child(marker)
-	return root
+
+
+## Stand-in for a mount without art yet: a hover sled (land) or a sub's
+## conning tower with a wake (water), in the mount's colour.
+class MountMarker extends Node2D:
+	var size: float = 32.0
+	var color: Color = Color(0.2, 1.0, 1.0)
+	var water := false
+
+	func _process(_d: float) -> void:
+		queue_redraw()
+
+	func _draw() -> void:
+		var t := Time.get_ticks_msec() / 1000.0
+		var bob := sin(t * 3.0) * 2.0
+		if water:
+			for i in 3:
+				var r := size * (0.5 + 0.25 * i) + fmod(t * 8.0, size * 0.25)
+				draw_arc(Vector2.ZERO, r, 0.0, TAU, 32, Color(color.r, color.g, color.b, 0.25 - i * 0.07), 2.0)
+			draw_colored_polygon(PackedVector2Array([Vector2(-size * 0.7, 0), Vector2(0, -size * 0.3), Vector2(size * 0.7, 0), Vector2(0, size * 0.3)]), Color(0.08, 0.1, 0.16))
+			draw_rect(Rect2(-size * 0.15, -size * 0.75 + bob, size * 0.3, size * 0.55), Color(0.12, 0.14, 0.2))
+			draw_rect(Rect2(-size * 0.1, -size * 0.7 + bob, size * 0.2, size * 0.08), color * 1.8)
+		else:
+			draw_circle(Vector2.ZERO, size * 0.5, Color(0, 0, 0, 0.3))
+			draw_colored_polygon(PackedVector2Array([Vector2(-size * 0.8, -size * 0.35 + bob), Vector2(size * 0.8, -size * 0.35 + bob), Vector2(size * 0.55, -size * 0.1 + bob), Vector2(-size * 0.55, -size * 0.1 + bob)]), Color(0.1, 0.1, 0.16))
+			draw_line(Vector2(-size * 0.7, -size * 0.1 + bob), Vector2(size * 0.7, -size * 0.1 + bob), color * 2.0, 2.0)
+			draw_rect(Rect2(-size * 0.12, -size * 1.1 + bob, size * 0.24, size * 0.75), Color(0.3, 1.9, 1.6))
 
 
 class AvatarMarker extends Node2D:
@@ -368,7 +419,7 @@ func roll_encounter() -> String:
 	for r: Dictionary in world.regions_at(cell):
 		var enc: Dictionary = r.get("encounter", {})
 		var ms: Array = enc.get("missions", [])
-		if not ms.is_empty() and _rng.randf() < float(enc.get("rate", 0.0)):
+		if not ms.is_empty() and _rng.randf() < float(enc.get("rate", 0.0)) * Mounts.encounter_mult(mount_id):
 			var mid := str(ms[_rng.randi() % ms.size()])
 			if ContentDB.get_mission(mid):
 				return mid
@@ -471,9 +522,16 @@ func _place_avatar() -> void:
 
 
 func can_step(from: Vector2i, to: Vector2i) -> bool:
-	if not grid.in_bounds(to) or not grid.is_walkable(to):
+	if not grid.in_bounds(to):
 		return false
-	if absi(grid.get_height(to) - grid.get_height(from)) > MAX_CLIMB:
+	if mount_id != "" and Mounts.terrain(mount_id) == "water":
+		if not Mounts.is_water_cell(grid, to):
+			return false  # the sub stays in the water
+	elif mount_id != "" and Mounts.terrain(mount_id) == "any":
+		pass
+	elif not grid.is_walkable(to):
+		return false
+	if absi(grid.get_height(to) - grid.get_height(from)) > Mounts.climb(mount_id, MAX_CLIMB):
 		return false
 	for o: Dictionary in world.objects_at(to):
 		if str(o.get("kind", "")) in ["structure", "location"]:
@@ -501,7 +559,7 @@ func _step(dir: Vector2i) -> void:
 	_avatar.z_index = maxi(cell.x + cell.y, to.x + to.y) * 2 + 1
 	var run := is_running()
 	# Same screen speed whichever way you go (a diagonal is a longer hop).
-	var t := STEP_TIME * _g2s(Vector2(dir)).length() / _g2s(Vector2(1, 0)).length() / (RUN_MULT if run else 1.0)
+	var t := STEP_TIME * _g2s(Vector2(dir)).length() / _g2s(Vector2(1, 0)).length() / (RUN_MULT if run else 1.0) / Mounts.speed(mount_id)
 	if _avatar_sprite:
 		_face(_g2s(Vector2(dir)))
 		_play("run" if run else "walk")
@@ -599,7 +657,7 @@ func free_move(gdir: Vector2, delta: float) -> void:
 		return
 	var run := is_running()
 	var sdir := _g2s(gdir).normalized()
-	var speed := world.tile_width * FREE_SPEED * (RUN_MULT if run else 1.0) * minf(gdir.length(), 1.0)
+	var speed := world.tile_width * FREE_SPEED * (RUN_MULT if run else 1.0) * minf(gdir.length(), 1.0) * Mounts.speed(mount_id)
 	var d := _s2g(sdir * speed * delta)
 	# Slide along walls: try the whole move, then each axis on its own.
 	if free_ok(fpos + d):
@@ -714,9 +772,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			_leave()
 		elif k.keycode == KEY_M:
 			toggle_free()
+		elif k.keycode == KEY_R:
+			toggle_mount(k.shift_pressed)
 	var jb := event as InputEventJoypadButton
 	if jb and jb.pressed and jb.button_index == JOY_BUTTON_A:
 		_interact()
+	elif jb and jb.pressed and jb.button_index == JOY_BUTTON_Y:
+		toggle_mount()
 	var mb := event as InputEventMouseButton
 	if mb and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
 		var hit := world.pick_top(get_global_mouse_position())
@@ -745,6 +807,91 @@ func walk_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 		out.push_front(cur)
 		cur = prev[cur]
 	return out
+
+
+# --- Mounts ------------------------------------------------------------------------
+
+func mount_allowed(id: String) -> bool:
+	return Mounts.allowed_on(id, world.kind, bool(ContentDB.get_map(world.id).get("mounts", false)))
+
+
+## R: get on (the next owned mount with Shift) or off. Water mounts board from
+## the shore onto water next to you, and leave onto dry land next to you.
+## Returns a short result for toasts / tests.
+func toggle_mount(next: bool = false) -> String:
+	if _busy or _moving:
+		return ""
+	if mount_id != "" and not next:
+		return dismount()
+	var choices := Mounts.owned().filter(func(id: String) -> bool: return mount_allowed(id))
+	if choices.is_empty():
+		var why := "No mount to ride here." if not Mounts.owned().is_empty() else "You don't have a mount yet."
+		_toast_text(why, NeonTheme.TEXT_DIM)
+		return why
+	var start := (choices.find(mount_id) + 1) % choices.size() if mount_id != "" else 0
+	for k in choices.size():
+		var id: String = choices[(start + k) % choices.size()]
+		if id == mount_id:
+			continue
+		if mount(id):
+			return "mounted " + id
+	_toast_text("Nowhere to board from here." if Mounts.terrain(choices[0]) == "water" else "Can't ride here.", NeonTheme.TEXT_DIM)
+	return "blocked"
+
+
+func mount(id: String) -> bool:
+	var prev := mount_id
+	if prev != "":
+		mount_id = ""
+	if Mounts.terrain(id) == "water" and not Mounts.is_water_cell(grid, cell):
+		var water := _neighbour(func(c: Vector2i) -> bool: return Mounts.is_water_cell(grid, c))
+		if water == Vector2i(-1, -1):
+			mount_id = prev
+			return false
+		cell = water  # board: step off the jetty into the sub
+	mount_id = id
+	_after_mount_change()
+	_toast_text("Riding: " + str(Mounts.get_mount(id).get("name", id)).to_upper(), Color(str(Mounts.get_mount(id).get("color", "#39f5ff"))))
+	return true
+
+
+func dismount() -> String:
+	var id := mount_id
+	if Mounts.terrain(id) == "water":
+		mount_id = ""
+		var land := _neighbour(func(c: Vector2i) -> bool: return can_step(c, c) and not Mounts.is_water_cell(grid, c))
+		if land == Vector2i(-1, -1):
+			mount_id = id
+			_toast_text("No dry land to step onto.", NeonTheme.TEXT_DIM)
+			return "no land"
+		cell = land
+	mount_id = ""
+	_after_mount_change()
+	_toast_text("On foot.", NeonTheme.TEXT_DIM)
+	return "dismounted"
+
+
+## First neighbouring cell (8 around) passing `ok`, or (-1, -1).
+func _neighbour(ok: Callable) -> Vector2i:
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 1), Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1)]:
+		var c := cell + d
+		if grid.in_bounds(c) and ok.call(c):
+			return c
+	return Vector2i(-1, -1)
+
+
+func _after_mount_change() -> void:
+	CampaignManager.current_explore["mount"] = mount_id
+	CampaignManager.current_explore["at"] = cell
+	_path.clear()
+	for c in _avatar.get_children():
+		c.queue_free()
+	_avatar_sprite = null
+	_avatar_set = {}
+	_anim_now = ""
+	_fill_avatar(_avatar, str(Mounts.get_mount(mount_id).get("art", "")) if mount_id != "" else "")
+	_place_avatar()
+	Sfx.event("door", -8.0, 1.6 if mount_id != "" else 1.1)
 
 
 func _leave() -> void:

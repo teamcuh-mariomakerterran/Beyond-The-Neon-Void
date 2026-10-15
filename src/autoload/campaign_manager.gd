@@ -82,7 +82,7 @@ static func _explore_to_json(d: Dictionary) -> Dictionary:
 	if d.is_empty():
 		return {}
 	var c := _cell(d.get("at"))
-	return {"map_id": str(d.get("map_id", "")), "spawn": int(d.get("spawn", -1)), "at": [c.x, c.y]}
+	return {"map_id": str(d.get("map_id", "")), "spawn": int(d.get("spawn", -1)), "at": [c.x, c.y], "mount": str(d.get("mount", ""))}
 
 
 ## Walk a world / city / hub / interior map. `spawn` indexes the map's player
@@ -91,7 +91,8 @@ func explore(map_id: String, spawn: int = -1, at: Vector2i = Vector2i(-1, -1), f
 	if ContentDB.get_map(map_id).is_empty():
 		push_error("CampaignManager: unknown map " + map_id)
 		return
-	current_explore = {"map_id": map_id, "spawn": spawn, "at": at, "from_forge": from_forge or bool(current_explore.get("from_forge", false))}
+	current_explore = {"map_id": map_id, "spawn": spawn, "at": at, "from_forge": from_forge or bool(current_explore.get("from_forge", false)),
+		"mount": str(current_explore.get("mount", ""))}
 	SceneManager.change_scene(EXPLORE_SCENE)
 
 
