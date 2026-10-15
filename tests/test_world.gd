@@ -41,6 +41,7 @@ func run(p_tree: SceneTree) -> int:
 	test_art_cutter()
 	test_gap_fixes()
 	test_shift_and_news()
+	test_external_library()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -1945,3 +1946,71 @@ func test_photo_mode() -> void:
 	EventBus.quest_state_changed.emit(qid, "complete")
 	var got := UIManager.toasts.history.slice(before)
 	check(got.size() >= 2 and got[0]["kind"] == "active" and got[-1]["kind"] == "complete" and got[-1]["text"].begins_with("Rewards"), "quest toasts: taken, progress, done (%s)" % [got])
+
+
+func test_external_library() -> void:
+	# A generator's folder, indexed every which way.
+	var root := ProjectSettings.globalize_path("user://ext_lib_test/Gemini Drops")
+	DirAccess.make_dir_recursive_absolute(root + "/tiles/street")
+	DirAccess.make_dir_recursive_absolute(root + "/props")
+	DirAccess.make_dir_recursive_absolute(root + "/misc")
+	var px := func(path: String, c: Color, bg: Color = Color(0, 0, 0, 0)) -> void:
+		var im := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+		im.fill(bg)
+		im.fill_rect(Rect2i(4, 4, 8, 8), c)
+		im.save_png(path)
+	px.call(root + "/tiles/street/wet_asphalt.png", Color(0.2, 0.2, 0.25))
+	px.call(root + "/props/crate_a.png", Color(0.5, 0.3, 0.1), ArtCutter.MAGENTA)
+	px.call(root + "/props/neon_sign.png", Color(1, 0.2, 0.8))
+	px.call(root + "/misc/vending.png", Color(0.3, 0.6, 0.9))
+	px.call(root + "/misc/loose_barrel.png", Color(0.4, 0.4, 0.4))
+	var w := func(path: String, v: Variant) -> void:
+		var f := FileAccess.open(path, FileAccess.WRITE)
+		f.store_string(JSON.stringify(v))
+		f.close()
+	w.call(root + "/index.json", {"assets": [
+		{"file": "tiles/street/wet_asphalt.png", "name": "Wet Asphalt", "type": "floor tile", "tags": ["street", "rain"], "prompt": "isometric wet asphalt, neon reflections"},
+		{"image": "props/crate_a.png", "title": "Rusty Crate", "category": "prop", "tags": "crate, rust"}]})
+	w.call(root + "/props/catalog.json", {"sign_01": {"path": "neon_sign.png", "kind": "sign", "description": "pink kanji sign"}})
+	w.call(root + "/misc/vending.json", {"name": "Vending Machine", "category": "machine", "width": 16, "height": 16})
+	var all := ExternalLibrary.scan(root)
+	var by := {}
+	for e: Dictionary in all:
+		by[e["name"]] = e
+	check(all.size() == 5, "five assets found (indexed + loose): %s" % [by.keys()])
+	check(by.has("Wet Asphalt") and by["Wet Asphalt"]["category"] == "tiles" and by["Wet Asphalt"]["text"].contains("neon") and "rain" in by["Wet Asphalt"]["tags"], "list index: name, category, tags, prompt")
+	check(by.has("Rusty Crate") and by["Rusty Crate"]["category"] == "props" and "rust" in by["Rusty Crate"]["tags"], "comma tags, title as name")
+	check(by.has("sign_01") and by["sign_01"]["category"] == "props", "keyed index: id becomes the name")
+	check(by.has("Vending Machine") and by["Vending Machine"]["size"] == Vector2i(16, 16), "sidecar json describes its image")
+	check(by.has("loose_barrel") and by["loose_barrel"]["index"] == "", "loose images still show up")
+	check(ExternalLibrary.guess_category(["Buildings"]) == "structures" and ExternalLibrary.guess_category(["guitar"]) == "props", "category words match whole words")
+	check(ExternalLibrary.matches(by["Wet Asphalt"], "neon rain") and not ExternalLibrary.matches(by["Wet Asphalt"], "crate"), "search covers tags and prompts")
+	# Import copies into the project (here a test folder), keys the magenta,
+	# records it, and spots a changed original.
+	ExternalLibrary.ledger_path = "user://ext_lib_test/ledger.json"
+	ExternalLibrary.assets_root = "user://ext_lib_test/assets"
+	var crate: Dictionary = by["Rusty Crate"]
+	check(ExternalLibrary.has_flat_background(crate["path"]) and not ExternalLibrary.has_flat_background(by["Wet Asphalt"]["path"]), "flat magenta backdrop detected")
+	var res := ExternalLibrary.import_entry(crate, "", true)
+	check(res.begins_with("user://ext_lib_test/assets/props/library/gemini_drops/") and FileAccess.file_exists(res), "imported into props/library/<pack> (%s)" % res)
+	check(Image.load_from_file(ProjectSettings.globalize_path(res)).get_pixel(0, 0).a == 0.0, "background keyed out on import")
+	check(FileAccess.file_exists(crate["path"]), "original untouched")
+	check(ExternalLibrary.imported_path(crate) == res and not ExternalLibrary.is_stale(crate), "ledger remembers it")
+	check(ExternalLibrary.import_entry(crate) == res, "re-import updates the same copy")
+	var meta: Variant = JSON.parse_string(FileAccess.get_file_as_string(res.get_basename() + ".meta.json"))
+	check(meta is Dictionary and "rust" in meta["tags"], "index entry kept beside the copy")
+	ExternalLibrary.ledger_path = ExternalLibrary.LEDGER
+	ExternalLibrary.assets_root = ""
+	# Folders are remembered per machine.
+	var keep := ExternalLibrary.folders()
+	ExternalLibrary.set_folders(PackedStringArray([root]))
+	check(ExternalLibrary.folders() == PackedStringArray([root]), "folder list saved")
+	ExternalLibrary.set_folders(keep)
+	# The tab builds and opens a folder.
+	var tab := ForgeExternalLibrary.new()
+	tree.root.add_child(tab)
+	tab.open_folder(root)
+	tab.query = "crate"
+	tab._filter()
+	check(tab.shown.size() == 1 and tab.shown[0]["name"] == "Rusty Crate", "tab search filters")
+	tab.queue_free()

@@ -13,6 +13,7 @@ extends Control
 const SECTIONS := [
 	# [id, label, kind, bucket/file]
 	["assets", "ASSETS", "assets", ""],
+	["external", "EXTERNAL LIBRARY", "external", ""],
 	["world", "WORLD PAINTER", "world", ""],
 	["maps", "MAPS (CLASSIC)", "maps", ""],
 	["cutscenes", "CUTSCENES", "cutscenes", ""],
@@ -151,6 +152,7 @@ func _count_for(s: Array) -> int:
 		"maps": return ContentDB.maps.size()
 		"world": return ContentDB.maps.values().filter(func(m: Dictionary) -> bool: return int(m.get("format", 1)) >= 2).size()
 		"cutscenes": return ForgeStore.list_cutscenes().size()
+		"external": return ExternalLibrary.folders().size()
 		"assets":
 			var n := 0
 			for cat: String in ForgeStore.ASSET_CATEGORIES:
@@ -211,6 +213,10 @@ func show_section(id: String) -> void:
 			_assets = ForgeAssetLibrary.new()
 			_assets.status.connect(flash)
 			_body.add_child(_assets)
+		"external":
+			var ext := ForgeExternalLibrary.new()
+			ext.status.connect(flash)
+			_body.add_child(ext)
 		"cutscenes":
 			var cs := ForgeCutscenes.new()
 			cs.status.connect(flash)
