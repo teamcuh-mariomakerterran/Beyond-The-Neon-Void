@@ -30,6 +30,8 @@ var victory: bool = false
 ## What the crew pocketed mid-fight (steal abilities): paid out when the
 ## battle is concluded, never during it (or in headless sims).
 var spoils := {"soul_coins": 0, "microchips": 0}
+## Who did what this battle (Shift Report, news).
+var stats := BattleStats.new()
 var _player_done: bool = false
 
 
@@ -44,6 +46,7 @@ func start_battle(p_grid: IsometricGrid, p_units: Array[Node], p_mission: Missio
 	turn_number = 0
 	victory = false
 	spoils = {"soul_coins": 0, "microchips": 0}
+	stats.reset()
 	active_unit = null
 	state = State.IDLE
 	_player_done = false
@@ -509,5 +512,8 @@ func conclude_battle() -> Dictionary:
 	if int(spoils["microchips"]) > 0:
 		GameManager.add_microchips(int(spoils["microchips"]))
 	report["stolen"] = spoils.duplicate()
+	report["shift"] = stats.team_rows(Unit.Team.PLAYER)
+	report["mvp"] = stats.mvp(Unit.Team.PLAYER)
+	report["news"] = NewsReacts.react(report)  # the Doctrine spins it
 	spoils = {"soul_coins": 0, "microchips": 0}
 	return report

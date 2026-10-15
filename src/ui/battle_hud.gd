@@ -403,6 +403,30 @@ func set_turn_indicator(text: String) -> void:
 
 
 ## End-of-battle screen. `report` comes from CampaignManager.process_mission_completion.
+## Shift Report: who carried the fight (BattleStats rows in the report).
+func _shift_report(v: VBoxContainer, report: Dictionary) -> void:
+	var rows: Array = report.get("shift", [])
+	if rows.is_empty():
+		return
+	v.add_child(HSeparator.new())
+	var mvp: Dictionary = report.get("mvp", {})
+	if not mvp.is_empty():
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash(str(report.get("mission_id", "")) + str(mvp["id"]) + str(mvp["dealt"]))
+		v.add_child(NeonTheme.label("★ MVP  %s  —  \"%s\"" % [str(mvp["name"]).to_upper(), BattleStats.title_for(mvp, rng)], 18, NeonTheme.AMBER))
+	var g := GridContainer.new()
+	g.columns = 6
+	g.add_theme_constant_override("h_separation", 14)
+	v.add_child(g)
+	for h: String in ["SHIFT REPORT", "DMG", "KO", "HEAL", "TAKEN", "BEST"]:
+		g.add_child(NeonTheme.label(h, 12, NeonTheme.TEXT_DIM))
+	for r: Dictionary in rows.slice(0, 6):
+		var star: bool = mvp.has("name") and r["name"] == mvp["name"]
+		g.add_child(NeonTheme.label(str(r["name"]), 14, NeonTheme.AMBER if star else NeonTheme.CYAN))
+		for k: String in ["dealt", "kills", "heals", "taken", "biggest"]:
+			g.add_child(NeonTheme.label(str(int(r[k])) if int(r[k]) > 0 else "·", 14, NeonTheme.TEXT if int(r[k]) > 0 else NeonTheme.TEXT_DIM))
+
+
 func show_results(victory: bool, report: Dictionary) -> void:
 	_cmd_bar.get_parent().visible = false
 	_results = PanelContainer.new()
@@ -432,6 +456,13 @@ func show_results(victory: bool, report: Dictionary) -> void:
 	var stolen: Dictionary = report.get("stolen", {})
 	if int(stolen.get("soul_coins", 0)) > 0 or int(stolen.get("microchips", 0)) > 0:
 		v.add_child(NeonTheme.label("Pocketed mid-fight: +%d Soul Coins  +%d Microchips" % [int(stolen.get("soul_coins", 0)), int(stolen.get("microchips", 0))], 15, NeonTheme.AMBER))
+	_shift_report(v, report)
+	var news: Array = report.get("news", [])
+	if not news.is_empty():
+		var nl := NeonTheme.label("ON THE TICKER TONIGHT  ▸  " + str(news[0]), 13, Color(1.6, 0.6, 1.0))
+		nl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		nl.custom_minimum_size.x = 460
+		v.add_child(nl)
 	var b := Button.new()
 	b.text = "BACK TO THE STREETS" if not CampaignManager.battle_return.is_empty() else "BACK TO THE NEON GUTTER"
 	b.pressed.connect(func() -> void: continue_pressed.emit())

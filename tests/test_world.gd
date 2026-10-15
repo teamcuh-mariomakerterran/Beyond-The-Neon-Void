@@ -40,6 +40,7 @@ func run(p_tree: SceneTree) -> int:
 	test_sfx()
 	test_art_cutter()
 	test_gap_fixes()
+	test_shift_and_news()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1851,3 +1852,46 @@ func test_gap_fixes() -> void:
 	check(float(ai.build_threat_map(tg, [mage]).get(Vector2i(10, 10), 0.0)) == calm, "a charged heal isn't danger")
 	CombatManager.turn_queue = keep_tq
 	mage.free()
+
+
+func test_shift_and_news() -> void:
+	# BattleStats credits the unit whose turn it is.
+	var st := BattleStats.new()
+	st.reset()
+	var g := IsometricGrid.new()
+	g.setup(6, 6)
+	var a := Unit.new()
+	a.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.PLAYER, 3)
+	var b := Unit.new()
+	b.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.PLAYER, 3)
+	var e := Unit.new()
+	e.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.ENEMY, 3)
+	var keep := CombatManager.active_unit
+	CombatManager.active_unit = a
+	st._on_damaged(e, 30, true)
+	st._on_damaged(e, 12, false)
+	st._on_died(e)
+	CombatManager.active_unit = b
+	st._on_healed(a, 20)
+	CombatManager.active_unit = keep
+	var ra: Dictionary = st.rows[a.get_instance_id()]
+	check(int(ra["dealt"]) == 42 and int(ra["kills"]) == 1 and int(ra["crits"]) == 1 and int(ra["biggest"]) == 30, "damage, kills, crits, best hit credited (%s)" % ra)
+	check(int(st.rows[b.get_instance_id()]["heals"]) == 20 and int(st.rows[e.get_instance_id()]["taken"]) == 42, "heals and damage taken tracked")
+	check(st.mvp(Unit.Team.PLAYER)["name"] == ra["name"] and st.team_rows(Unit.Team.PLAYER).size() == 2, "MVP is the killer; enemy rows kept apart")
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 5
+	check(BattleStats.title_for(ra, rng) in BattleStats.TITLES["kills"], "MVP titled after their best stat")
+	# NewsReacts: wins and losses spin differently; tokens filled; seeded.
+	var facts := {"victory": true, "mission_id": "m01_the_brew_plan", "place": "Supply Works", "fallen": 4, "crew": 3, "boss": "Foreman Grisk", "mvp": "Mags", "hp_left": 0.9, "turns": 12}
+	rng.seed = 11
+	var w := NewsReacts.headlines(facts, rng)
+	rng.seed = 11
+	check(w == NewsReacts.headlines(facts, rng), "same battle, same headlines")
+	check(w.size() >= 3 and w[0].contains("SUPPLY WORKS") and w.any(func(t: String) -> bool: return t.contains("Foreman Grisk")), "mission line, boss line and flawless line (%s)" % [w])
+	check(w.all(func(t: String) -> bool: return not t.contains("{")), "every token filled")
+	facts["victory"] = false
+	rng.seed = 3
+	var l := NewsReacts.headlines(facts, rng)
+	check(not l.is_empty() and NewsReacts.data()["loss"].any(func(t: String) -> bool: return NewsReacts._fill(t, facts, RandomNumberGenerator.new()).left(20) == l[0].left(20)), "a loss gets a loss spin")
+	for u: Node in [a, b, e]:
+		u.free()

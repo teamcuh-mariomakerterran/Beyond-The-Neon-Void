@@ -105,6 +105,9 @@ func _build_ticker(root: Control) -> void:
 		if r.get("channel") == "news" and ContentDB.rumor_ok(r):
 			_ticker_lines.append(str(r["text"]))
 	_ticker_lines.shuffle()
+	# Fresh news first: whatever the desk spun since (battles, broadcasts).
+	for i in range(mini(Signage.headlines.size(), 4) - 1, -1, -1):
+		_ticker_lines.push_front(Signage.headlines[i])
 	_next_ticker()
 
 

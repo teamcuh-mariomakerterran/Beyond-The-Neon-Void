@@ -1,0 +1,47 @@
+{
+	"_note": "NewsReacts (src/world/news_reacts.gd): after every battle the Doctrine news desk spins it onto the ticker and the living screens. Keys: win, loss, win:<mission_id>, loss:<mission_id>, boss_down, flawless, close_call, veil (an intercepted Veil feed, sometimes). Tokens: {place} {fallen} {crew} {mvp} {boss} {turns} {lie} (a confident wrong number).",
+	"win": [
+		"{place}: 'scheduled maintenance' concludes ahead of schedule. Ministry thanks residents for not looking.",
+		"Unrest at {place} resolved by an unregistered labor collective. Ministry will register them shortly.",
+		"{fallen} Doctrine wardens reassigned to 'quiet duty' after an incident at {place}. Families are proud.",
+		"Doctrine forces achieve total victory at {place}. Footage unavailable for reasons of victory.",
+		"OFFICIAL: There was no fight at {place}. The noise was weather. The weather has been disciplined.",
+		"{place} reopens tomorrow. Please disregard the scorch marks; they are a mural."
+	],
+	"loss": [
+		"Terrorist cell routed at {place}. Doctrine casualties: zero. Again. As always.",
+		"{place} secured by heroic wardens. The {crew} intruders 'went home to think about it.'",
+		"VICTORY at {place}! Citizens are reminded that the Doctrine has never lost. Not once. Stop asking.",
+		"Cantorate sermon tonight: 'On Knowing When to Stay In Your Bar.' Attendance mandatory near {place}."
+	],
+	"win:m01_the_brew_plan": [
+		"SUPPLY WORKS: Loading dock briefly 'self-unloaded.' Ministry blames gravity, opens inquiry into gravity."
+	],
+	"win:m02_shift_change": [
+		"GUTTER DISTRICT: Shift change goes 'smoothly.' Foreman's whereabouts: a matter of personal faith."
+	],
+	"win:relay_district": [
+		"RELAY DISTRICT: Broadcast interruption was a test of the emergency broadcast system. You passed. Probably."
+	],
+	"boss_down": [
+		"{boss} on extended leave. Ministry: 'They were tired. We are all very tired.'",
+		"{boss} promoted to a position with no address. Congratulations are not necessary.",
+		"Obituary section discontinued for efficiency. Unrelated: {boss} is fine."
+	],
+	"flawless": [
+		"Doctrine analysts confirm the {place} incident took '{lie} minutes.' It took less. They are furious.",
+		"Witnesses at {place} describe 'a very good bar crew.' Witnesses are being re-educated about adjectives."
+	],
+	"close_call": [
+		"{place}: 'The enemy nearly won,' admits warden, briefly, before being corrected.",
+		"Ambulance drones report a quiet night near {place}. They were lying. They have been told to lie."
+	],
+	"mvp": [
+		"WANTED for questioning: '{mvp}', or someone who looks like them. Reward: {lie} Soul Coins. Do not approach.",
+		"Rumor desk: a figure called '{mvp}' was seen leaving {place}. Rumor desk has been dissolved."
+	],
+	"veil": [
+		"INTERCEPTED VEIL FEED: 'Doctrine embarrassed at {place},' says Kade Halloway. Veil also embarrassed, somehow.",
+		"INTERCEPTED VEIL FEED: Kade Halloway calls {place} 'a regrettable lapse in mutual stability.' Interesting choice of words."
+	]
+}
