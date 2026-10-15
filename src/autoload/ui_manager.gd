@@ -6,6 +6,13 @@ extends Node
 var active_hud: Node = null
 ## Fallback dialogue panel for screens whose HUD has no show_dialog().
 var _dialogue_box: DialogueBox = null
+## Quest cards (top right) on every screen.
+var toasts: QuestToasts
+
+
+func _ready() -> void:
+	toasts = QuestToasts.new()
+	add_child(toasts)
 
 
 func register_hud(hud: Node) -> void:

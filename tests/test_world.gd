@@ -1937,3 +1937,11 @@ func test_photo_mode() -> void:
 	check(PhotoMode._find_post(scene) == null, "and takes it away again")
 	scene.queue_free()
 	await tree.process_frame
+	# Quest toasts hear quest events on every screen.
+	var qid: String = ContentDB.get_ids("quests")[0]
+	var before := UIManager.toasts.history.size()
+	EventBus.quest_state_changed.emit(qid, "active")
+	EventBus.quest_objective_progress.emit(qid, 0, 1)
+	EventBus.quest_state_changed.emit(qid, "complete")
+	var got := UIManager.toasts.history.slice(before)
+	check(got.size() >= 2 and got[0]["kind"] == "active" and got[-1]["kind"] == "complete" and got[-1]["text"].begins_with("Rewards"), "quest toasts: taken, progress, done (%s)" % [got])
