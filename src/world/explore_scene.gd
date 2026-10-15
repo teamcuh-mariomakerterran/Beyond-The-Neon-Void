@@ -26,6 +26,7 @@ var _toast: Label
 var _hud: CanvasLayer
 var _prompt: Label
 var _post: HD2DPost
+var photo: PhotoMode
 ## Region ids the player currently stands in (enter / exit triggers).
 var _inside: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
@@ -75,6 +76,8 @@ func _ready() -> void:
 	_post = HD2DPost.for_map(world.post)
 	if _post:
 		add_child(_post)
+	photo = PhotoMode.new()
+	add_child(photo)
 	_build_labels()
 	ix = Interactions.new().setup(world, grid, self, "explore")
 	var saved: Variant = GameManager.story_flags.get(_ix_key())
@@ -494,8 +497,8 @@ func _step(dir: Vector2i) -> void:
 
 
 func _process(_delta: float) -> void:
-	if world == null:
-		return
+	if world == null or (photo and photo.active):
+		return  # photo mode owns the camera and keys
 	_cam.position = _avatar.position
 	# X-ray: whatever stands between the camera and the player turns see-through.
 	_renderer.set_cutaway(_avatar.position + Vector2(0, -world.tile_height * 0.6), cell.x + cell.y, grid.get_height(cell))

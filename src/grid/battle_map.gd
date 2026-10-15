@@ -48,6 +48,7 @@ func _ready() -> void:
 	if SettingsFlags.fast_battles:
 		Engine.time_scale = SettingsFlags.FAST_SPEED  # Cues' slow-mo / hit-stop return to this
 	_setup_environment()
+	add_child(PhotoMode.new())  # P: hide the HUD, free camera, tilt-shift controls
 	world = Node2D.new()
 	world.name = "World"
 	add_child(world)

@@ -123,10 +123,26 @@ func configure(preset: String, overrides: Dictionary = {}) -> void:
 	_apply()
 
 
+## While true, set_focus() is ignored (photo mode owns the focus line).
+var focus_lock := false
+
+
 ## Screen-space y (0..1) of what should be sharp — the player or the cursor.
-func set_focus(screen_y: float) -> void:
-	if _mat:
+func set_focus(screen_y: float, force: bool = false) -> void:
+	if _mat and (force or not focus_lock):
 		_mat.set_shader_parameter("focus_y", clampf(screen_y, 0.05, 0.95))
+
+
+## Current value of a shader parameter (preset value, else the shader default).
+func get_param(k: String) -> Variant:
+	return _mat.get_shader_parameter(k) if _mat else params.get(k)
+
+
+## Set one parameter live (photo mode); kept in params.
+func set_param(k: String, v: Variant) -> void:
+	params[k] = v
+	visible = true
+	_apply()
 
 
 func _apply() -> void:

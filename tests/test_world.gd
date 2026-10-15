@@ -41,6 +41,7 @@ func run(p_tree: SceneTree) -> int:
 	test_art_cutter()
 	test_gap_fixes()
 	test_shift_and_news()
+	await test_photo_mode()
 	await test_painter()
 	await test_explore()
 	print("=== world: %d passed, %d failed ===" % [_passes, _fails])
@@ -1895,3 +1896,44 @@ func test_shift_and_news() -> void:
 	check(not l.is_empty() and NewsReacts.data()["loss"].any(func(t: String) -> bool: return NewsReacts._fill(t, facts, RandomNumberGenerator.new()).left(20) == l[0].left(20)), "a loss gets a loss spin")
 	for u: Node in [a, b, e]:
 		u.free()
+
+
+func test_photo_mode() -> void:
+	var scene := Node2D.new()
+	tree.root.add_child(scene)
+	var cam := Camera2D.new()
+	scene.add_child(cam)
+	cam.make_current()
+	cam.zoom = Vector2(1.5, 1.5)
+	var post := HD2DPost.new()
+	scene.add_child(post)
+	post.configure("neon_noir")
+	var hud := CanvasLayer.new()
+	hud.layer = 10
+	scene.add_child(hud)
+	var pm := PhotoMode.new()
+	scene.add_child(pm)
+	await tree.process_frame
+	pm.enter()
+	check(pm.active and not hud.visible and tree.root.get_viewport().get_camera_2d() != cam and post.focus_lock, "photo mode: HUD hidden, own camera, focus locked")
+	check(is_equal_approx(tree.root.get_viewport().get_camera_2d().zoom.x, 1.5), "starts from the game camera's framing")
+	pm._nudge("dof", 2.0, 0.0, 8.0)
+	pm._next_look()
+	pm._next_look()
+	post.set_focus(0.2)  # the game trying to move focus is ignored
+	check(post.focus_lock, "focus stays where the photographer put it")
+	pm.leave()
+	await tree.process_frame
+	check(hud.visible and tree.root.get_viewport().get_camera_2d() == cam and not post.focus_lock, "leaving restores HUD and camera")
+	check(post.params == HD2DPost.PRESETS["neon_noir"] and post.visible, "the map's own look is back exactly")
+	# A map with no post stack gets a temporary one, removed on leave.
+	post.queue_free()
+	await tree.process_frame
+	pm.enter()
+	var temp := PhotoMode._find_post(scene)
+	check(temp != null and pm._own_post, "no post stack: photo mode brings its own")
+	pm.leave()
+	await tree.process_frame
+	check(PhotoMode._find_post(scene) == null, "and takes it away again")
+	scene.queue_free()
+	await tree.process_frame
