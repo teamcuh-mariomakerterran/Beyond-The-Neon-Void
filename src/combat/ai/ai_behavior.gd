@@ -181,7 +181,9 @@ func score_action(unit: Node, ability: Ability, from_cell: Vector2i, target_cell
 			continue
 		var f := DamageCalculator.forecast(unit, u, ability, grid)
 		var value := float(f["hit"]) * float(f["damage"]) * aggression
-		if f["kill"]:
+		if not same_team and doomed(unit, u, grid):
+			value *= 0.25  # an ally's charged cast already finishes them: don't double up
+		elif f["kill"]:
 			value += kill_bonus * float(f["hit"])
 		var missing_pct := 1.0 - float(u.current_hp) / maxf(u.get_stat("max_hp"), 1)
 		value += missing_pct * 100.0 * focus_fire * float(f["hit"])
@@ -193,6 +195,26 @@ func score_action(unit: Node, ability: Ability, from_cell: Vector2i, target_cell
 	# Cheap actions are preferred when values tie.
 	score -= ability.mp_cost * 0.05 + ability.charge_ticks * 0.3
 	return score
+
+
+## True if allied charged casts already queued on `target` are expected to
+## finish it (forecast damage × hit, summed) before anything else happens.
+func doomed(unit: Node, target: Node, grid: IsometricGrid) -> bool:
+	var tq: TurnQueue = CombatManager.turn_queue
+	if tq == null or tq.pending_casts.is_empty():
+		return false
+	var expected := 0.0
+	for cast: Dictionary in tq.pending_casts:
+		var caster: Node = cast.get("caster")
+		var ab: Ability = cast.get("ability")
+		if caster == null or not is_instance_valid(caster) or ab == null or int(caster.team) != int(unit.team) or caster == unit:
+			continue
+		if not ab.kind in [Ability.Kind.ATTACK, Ability.Kind.MAGIC]:
+			continue
+		if ab.get_affected_cells(grid, caster.cell, cast["cell"]).has(target.cell):
+			var f := DamageCalculator.forecast(caster, target, ab, grid)
+			expected += float(f["hit"]) * float(f["damage"])
+	return expected >= float(target.current_hp)
 
 
 func score_position(unit: Node, c: Vector2i, grid: IsometricGrid, foes: Array[Node], friends: Array[Node], threat: Dictionary) -> float:

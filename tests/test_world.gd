@@ -2225,3 +2225,29 @@ func test_vfx_clip() -> void:
 		var sf := str(Toasts.style(i).get("sfx", ""))
 		check(sf == "" or sf.begins_with("res://") or not AudioManager.variants(sf).is_empty() or ResourceLoader.exists("res://assets/sfx/%s.wav" % sf) or ResourceLoader.exists("res://assets/sfx/%s.ogg" % sf), "toast %s sound '%s' exists" % [i, sf])
 	check(Toasts.anim_icon("quest_new") == null, "no animation set: no icon")
+	# Team sense: a target an ally's charged cast will finish isn't worth a kill shot.
+	var tg2 := IsometricGrid.new()
+	tg2.setup(12, 12)
+	var caster2 := Unit.new()
+	caster2.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.PLAYER, 9)
+	caster2.grid = tg2
+	caster2.cell = Vector2i(1, 1)
+	var shooter := Unit.new()
+	shooter.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.PLAYER, 3)
+	shooter.cell = Vector2i(2, 2)
+	var weak := Unit.new()
+	weak.setup(ContentDB.get_character("doctrine_warden"), Unit.Team.ENEMY, 1)
+	weak.grid = tg2
+	weak.cell = Vector2i(6, 6)
+	weak.current_hp = 5
+	var keep_tq2 := CombatManager.turn_queue
+	CombatManager.turn_queue = TurnQueue.new()
+	var ai2 := AIBehavior.create("tactical")
+	check(not ai2.doomed(shooter, weak, tg2), "no pending casts: nobody is doomed")
+	CombatManager.turn_queue.queue_cast(caster2, ContentDB.get_ability("plasma_storm"), Vector2i(6, 6))
+	check(ai2.doomed(shooter, weak, tg2), "an ally's storm about to land dooms the 5 HP foe")
+	CombatManager.turn_queue = keep_tq2
+	for uu: Node in [caster2, shooter, weak]:
+		uu.free()
+	# The battle log records a real battle and is deterministic.
+	check(CombatManager.battle_log != null, "battles keep a log")

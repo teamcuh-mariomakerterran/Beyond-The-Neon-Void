@@ -136,6 +136,12 @@ func _register_all() -> void:
 	register("time", "time <scale> — game speed (1 = normal).", func(a: Array) -> String:
 		Engine.time_scale = clampf(float(a[0]) if not a.is_empty() else 1.0, 0.05, 8.0)
 		return "time_scale = %.2f" % Engine.time_scale)
+	register("battlelog", "battlelog — the last battle's record (seed, events, hash) and where it's saved.", func(_a: Array) -> String:
+		var bl: BattleLog = CombatManager.battle_log
+		if bl.header.is_empty():
+			return _err("No battle yet.")
+		return "%s  seed %s  %d events  %s  hash %s\n%s" % [bl.header.get("mission", ""), bl.header.get("seed", ""), bl.events.size(),
+			"WIN" if bl.header.get("victory", false) else "loss", str(bl.header.get("hash", "")).left(12), ProjectSettings.globalize_path(CombatManager.LAST_LOG)])
 	register("mount", "mount <id> — own a mount (data/mounts.json); R rides it on world maps.", func(a: Array) -> String:
 		if a.is_empty() or Mounts.get_mount(a[0]).is_empty():
 			return _err("Mounts: " + ", ".join(Mounts.data().keys()))

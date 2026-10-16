@@ -32,6 +32,10 @@ var victory: bool = false
 var spoils := {"soul_coins": 0, "microchips": 0}
 ## Who did what this battle (Shift Report, news).
 var stats := BattleStats.new()
+## Every rules event of the current battle (seed, roster, moves, hits…);
+## saved to LAST_LOG after real battles for bug reports and replays.
+var battle_log := BattleLog.new()
+const LAST_LOG := "user://logs/last_battle.json"
 ## The battle map's anchors (terminals, switches, traps), or null. BattleMap
 ## passes its own; headless sims build one with no host, so the AI and traps
 ## behave the same with or without a screen.
@@ -69,6 +73,7 @@ func start_battle(p_grid: IsometricGrid, p_units: Array[Node], p_mission: Missio
 		turn_queue.add_unit(u)
 		if not u.died.is_connected(_on_unit_died.bind(u)):
 			u.died.connect(_on_unit_died.bind(u))
+	battle_log.begin(mission.id if mission else "", int(rng.seed), units, func() -> int: return turn_number)
 	EventBus.battle_started.emit(mission.id if mission else "")
 	_battle_loop()
 
@@ -514,6 +519,9 @@ func _finish(p_victory: bool) -> void:
 	state = State.ENDED
 	victory = p_victory
 	_player_done = true
+	battle_log.end(p_victory, turn_number)
+	if animate:
+		battle_log.save(LAST_LOG)
 	EventBus.battle_ended.emit(p_victory, mission.id if mission else "")
 	battle_finished.emit(p_victory)
 
