@@ -1,4 +1,26 @@
-# Known gaps and bugs (verified by reading the 2026-10-07 snapshot)
+# Known gaps and bugs
+
+## Status as of 2026-10-16 (read this first)
+
+The table further down is Grok's 2026-10-07 snapshot. Since then:
+
+**FIXED** (don't re-fix; the code has moved on):
+- #1 region music trigger (AudioManager takes paths) · #2/#3 battles from explore return to the same map/cell, saved · #4 vendor stock saved · #5 RNG leaks (loot, passives, Interactions in battle on CombatManager.rng) · #6 enemy level applies class growth
+- #7 one time-scale owner (VFX.hit_stop pushes onto the Cues stack) · #9 find_loot targets can be objects/anchors · #10 chunk streaming (32×32 chunks, LOD, lazy grids, big-map stubs) · #11 explore backdrop is a screen-sized layer
+- #12 AI: dodges telegraphed casts (threat map), **uses anchors** (AIAnchors: terminals, sequences, devices, medstations; player-side AI; enemy use behind CombatManager.enemy_anchor_use) · Vault Breach sims 0/3 → 3/3
+- #15 partly: hub has a STREETS tab (#21), Neon Expanse has visible encounter zones · #16/#30 sims build format-2 grids with copy_from + Interactions.for_battle (anchors, traps)
+- #17 passives in Forge · #20 rumours have required_flag / hidden_flag · #21 hub STREETS tab · #22 battle Interactions on CombatManager.rng (explore keeps its own) · #23 explore objects + loot anchors emit loot_discovered
+- #24 mission enemy/guest `ai` and guest `statuses` honoured (spawn facing still hard-coded: facings are ASK BRIAN) · #26 story_chapter advances via mission `ends_chapter`
+- #29 steal pays at battle end (CombatManager.spoils, shown on results) · #33 Foreman Grisk is_boss · #34 status_look texture×COLOR fixed (fog sheet's copy left on purpose: fixing it doubles fog density; Brian decides with a before/after)
+- #35 exploration gets the battle glow (NeonTheme.glow_environment) · #36 charged-cast footprints shown on the map (HighlightManager sticky layers) · #37 fast battles + #39 settings screen and persistence (SettingsFlags.save/load_saved)
+- #38 vault relay double cue · #40 battle grid copy (IsometricGrid.copy_from)
+- Also: battle music ids resolve through data/music.json (they matched no file); reaction passives have a cue; level/job/ability milestones have toasts; Ability.sfx_id IS read (Sfx.ability_sound); statuses focused/blinded/identity_loss/hidden/dualcast/berserk DO work through stat_flat / stat_multipliers (verified).
+
+**STILL OPEN:** #8 rules→presentation awaits · #13 AoE height / side damage (ASK) · #14 campaign content (Brian is writing it) · #18 facings (ASK) · #19 Lattice holds unit (ASK) · #25 difficulty_modifier (ASK what it scales) · #27 XP for KO'd units (ASK) · #28 asleep doesn't wake on damage (ASK) · #31 AI second action (ASK for enemies) · #32 anchor-only turn CT discount (ASK).
+
+---
+
+## Grok's 2026-10-07 snapshot
 
 Fix them when you touch the area, or route around them. Don't re-discover them. Each gap names the skill that owns the fix.
 

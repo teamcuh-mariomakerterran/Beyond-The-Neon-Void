@@ -23,7 +23,7 @@ Load as needed:
 - `references/eventbus-contract.md`: all 36 signals with emitters and listeners (from the audit script)
 - `references/data-pipeline.md`: JSON → ContentDB → GameResource → Neon Forge, and how to add a field or a content type end to end
 - `references/conventions.md`: the code, data, test and doc habits to copy
-- `references/known-gaps.md`: confirmed bugs and gaps (do not re-discover them, fix or route around them)
+- `references/known-gaps.md`: confirmed bugs and gaps; **its top section says which are fixed** (do not re-discover them)
 - `templates/CLAUDE.md.snippet.md`: paste into the repo root `CLAUDE.md`
 - `templates/change-plan.md`: the plan format for any multi-file change
 - `scripts/repo_facts.py`: prints live facts (autoload order, data counts, maps, mission graph)
@@ -123,8 +123,9 @@ Autoloads have **no `class_name`** (Godot 4.7 rule, `docs/MIGRATION.md`). Input 
 ## Open decisions (ASK BRIAN; never pick silently)
 
 - **Facings:** code is cardinal (`IsometricGrid.DIRECTIONS`, `Unit` facing). ROADMAP and art say 4 diagonals (Black Doctrine uses NW/NE/SE/SW).
-- **Tile scale:** v2 maps are 128×64 (height step 32). v1 maps and Black Doctrine art are 64×32. Both campaign battles still use v1 maps.
-- **Veil vs Viel:** `docs/lore/LORE_DIGEST.md` mostly "Veil"; `tools/cutscene_builder/c19_visual-motif-standard.md` says "Viel".
+- ~~**Tile scale**~~ **SETTLED:** stay 128×64; 64×32 art is upscaled by the renderer.
+- ~~**Veil vs Viel**~~ **SETTLED:** "Veil".
+- **The look (Brian, non-negotiable):** tilt-shift everywhere, dark wet neon through fog and bloom. Any look change ships only after Brian sees a before/after.
 - **Lattice `holds` unit:** game reads values >10 as ms; `docs/design/LATTICE_CLIP_FORMAT_GUIDE.md` says tick multipliers.
 - **Progression model:** `unlocks_mission_ids` graph (used) vs `GameData.mission_sequence` (exists, unused).
 - **Black Doctrine's current tech stack:** the Lattice guide cites TypeScript paths (`src/game/entity-layer.ts`), which suggests a web build. Confirm before writing port contracts.
