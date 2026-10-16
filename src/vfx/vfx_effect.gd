@@ -88,6 +88,7 @@ static func _make_part(type: String) -> VFXPart:
 		"shockwave", "glitch": return VFXScreen.new()
 		"light": return VFXLight.new()
 		"trail": return VFXTrail.new()
+		"clip": return VFXClip.new()
 	return null
 
 

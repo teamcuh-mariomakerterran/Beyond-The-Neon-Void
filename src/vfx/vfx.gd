@@ -135,6 +135,8 @@ static func impact_time(effect_id: String) -> float:
 	for p: Dictionary in def.get("parts", []):
 		if str(p.get("type", "")) == "trail":
 			best = maxf(best, float(p.get("delay", 0.0)) + float(p.get("travel", 0.3)))
+		elif str(p.get("type", "")) == "clip":
+			best = maxf(best, float(p.get("delay", 0.0)) + VFXClip.hit_time(p))  # the clip's hit frame
 	return best
 
 

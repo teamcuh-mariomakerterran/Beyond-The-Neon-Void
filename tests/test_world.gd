@@ -44,6 +44,7 @@ func run(p_tree: SceneTree) -> int:
 	test_external_library()
 	await test_visible_threats()
 	test_ai_anchors()
+	test_vfx_clip()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2196,3 +2197,21 @@ func test_ai_anchors() -> void:
 	var ms: Array = UIManager.toasts.history.slice(n0).map(func(h: Dictionary) -> String: return h["kind"])
 	check(ms == ["level", "class", "ability"], "level-ups, job unlocks and new abilities show up (%s)" % [ms])
 	check(Cues.resolve("reaction.counter") == "reaction" and Cues.resolve("reaction.overwatch") == "reaction", "every reaction passive has a cue")
+
+
+func test_vfx_clip() -> void:
+	# A Lattice FX clip (6 frames, 50 ms each, hit on frame 2) as a VFX part.
+	DirAccess.make_dir_recursive_absolute("user://t_fxclip")
+	var path := "user://t_fxclip/fx_zap_clip.json"
+	_write_clip(path, {"format": "lattice.clip", "kind": "fx", "textures": {"strip": "fx_zap_strip.png"}, "cell": [32, 32], "frames": 6, "frameMs": 50, "loop": false, "anchor": [16, 28], "hits": [{"frame": 2, "x": 16, "y": 20}]}, 32, 32, 6)
+	var part := {"type": "clip", "path": path, "delay": 0.1}
+	check(is_equal_approx(VFXClip.hit_time(part), 0.1), "the hit lands on the clip's hits[] frame (%.3f s)" % VFXClip.hit_time(part))
+	var fx := VFXEffect.new()
+	fx.setup("t_zap", {"parts": [part]}, Vector2.ZERO, {"to": Vector2(-100, 0), "seed": 1})
+	tree.root.add_child(fx)
+	var clip_part: VFXClip = fx.parts[0] as VFXClip
+	check(clip_part != null and is_equal_approx(fx.end_time(), 0.1 + 0.3), "the clip plays once for its own length (ends %.2f s)" % fx.end_time())
+	fx.step(0.15)
+	check(clip_part._spr.texture != null and clip_part._spr.flip_h, "it shows frames and faces a target on the left")
+	check(clip_part.material == null, "Lattice FX blend normally unless told to add")
+	fx.queue_free()

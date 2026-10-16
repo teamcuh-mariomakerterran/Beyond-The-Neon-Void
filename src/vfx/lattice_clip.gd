@@ -93,7 +93,8 @@ static func load_clip(path: String, facing_dir: String = "") -> Dictionary:
 		"is_overlay": overlay_flag(d), "next": str(d.get("endsOn", d.get("next", ""))) if (d.get("endsOn", d.get("next")) is String) else "",
 		"cell": Vector2(float(cell[0]), float(cell[1])), "footprint": maxi(int(foot.get("w", 1)), int(foot.get("h", 1))),
 		"frame_ms": frame_ms, "phase": float(d.get("phaseSeed", 0)) / 1000.0, "emitters": d.get("emitters", {}) if d.get("emitters") is Dictionary else {},
-		"overlay": "", "title": str(d.get("title", d.get("name", ""))), "bbox": bbox, "sort_bias": int(d.get("sortBias", 0))}
+		"overlay": "", "title": str(d.get("title", d.get("name", ""))), "bbox": bbox, "sort_bias": int(d.get("sortBias", 0)),
+		"hits": d.get("hits", []) if d.get("hits") is Array else []}
 	var ov := str(d.get("overlayClip", "")) if d.get("overlayClip") != null else ""
 	if ov != "" and is_clip(dir.path_join(ov)):
 		out["overlay"] = dir.path_join(ov)
