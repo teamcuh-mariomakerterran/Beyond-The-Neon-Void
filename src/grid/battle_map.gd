@@ -286,6 +286,10 @@ func _connect_events() -> void:
 	EventBus.unit_died.connect(func(_u: Node) -> void: Sfx.event("death", -4.0))
 	EventBus.unit_status_applied.connect(func(u: Node, sid: String) -> void: _float(u, ContentDB.get_status(sid).display_name.to_upper() if ContentDB.get_status(sid) else sid, Color(1.8, 1.4, 0.4)))
 	EventBus.grid_changed.connect(_on_grid_changed)
+	# Reactions (counters, overwatch, step away…): name them over the unit.
+	Cues.fired.connect(func(_id: String, key: String, ctx: Dictionary) -> void:
+		if key == "reaction" and is_instance_valid(ctx.get("unit")) and ctx.get("unit") is Node2D:
+			_float(ctx["unit"], str(ctx.get("passive", "REACTION")).to_upper() + "!", Color(0.5, 1.8, 2.0), false, 0.6))
 	EventBus.unit_died.connect(func(_u: Node) -> void: _refresh_tile_corpses())
 	EventBus.unit_died.connect(func(u: Node) -> void:
 		if info.active and u.get("data") and (u.data as CharacterData).id == InfoFilter.RELAY_ID:

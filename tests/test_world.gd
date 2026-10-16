@@ -2187,3 +2187,12 @@ func test_ai_anchors() -> void:
 	CombatManager.ix = keep[2]
 	hero.queue_free()
 	foe.queue_free()
+	# Milestones and reactions get their moment.
+	var cid: String = GameManager.get_party_members()[0].id if not GameManager.get_party_members().is_empty() else "rook"
+	var n0 := UIManager.toasts.history.size()
+	EventBus.character_leveled.emit(cid, 7)
+	EventBus.class_unlocked.emit(cid, "gunslinger")
+	EventBus.ability_unlocked.emit(cid, "plasma_bolt")
+	var ms: Array = UIManager.toasts.history.slice(n0).map(func(h: Dictionary) -> String: return h["kind"])
+	check(ms == ["level", "class", "ability"], "level-ups, job unlocks and new abilities show up (%s)" % [ms])
+	check(Cues.resolve("reaction.counter") == "reaction" and Cues.resolve("reaction.overwatch") == "reaction", "every reaction passive has a cue")

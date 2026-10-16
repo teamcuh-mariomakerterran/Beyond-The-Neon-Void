@@ -24,5 +24,6 @@
 	"door": [{"do": "sfx", "id": "security_door"}, {"do": "shake", "amp": 2, "dur": 0.15}],
 	"relay.down": [{"do": "sfx", "id": "static"}, {"do": "hitstop", "ms": 90}, {"do": "shake", "amp": 6, "dur": 0.35}, {"do": "flash", "color": "#ff2e88", "alpha": 0.3, "dur": 0.35}, {"do": "headline", "text": "DOCTRINE OVERLAY OFFLINE"}],
 	"evidence": [{"do": "sfx", "id": "loot_found"}, {"do": "flash", "color": "#ffd23f", "alpha": 0.18, "dur": 0.3}, {"do": "headline", "text": "EVIDENCE FOUND"}],
-	"duo": [{"do": "sfx", "id": "sting_epic"}, {"do": "slowmo", "scale": 0.4, "dur": 0.6}, {"do": "zoom", "amt": 0.12, "dur": 0.6}, {"do": "headline", "text": "DUO TECH!"}]
+	"duo": [{"do": "sfx", "id": "sting_epic"}, {"do": "slowmo", "scale": 0.4, "dur": 0.6}, {"do": "zoom", "amt": 0.12, "dur": 0.6}, {"do": "headline", "text": "DUO TECH!"}],
+	"reaction": [{"do": "sfx", "id": "ui_tone"}, {"do": "hitstop", "ms": 45}, {"do": "flash", "color": "#39f5ff", "alpha": 0.12, "dur": 0.15}]
 }

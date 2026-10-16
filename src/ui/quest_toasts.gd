@@ -11,6 +11,9 @@ const STYLE := {
 	"available": ["NEW LEAD", Color("ffc857")],
 	"progress": ["", Color("b98cff")],
 	"complete": ["JOB DONE", Color("4dff9e")],
+	"level": ["LEVEL UP", Color("ffc857")],
+	"class": ["NEW JOB", Color("ff3fb4")],
+	"ability": ["NEW ABILITY", Color("39f5ff")],
 }
 
 var _stack: VBoxContainer
@@ -33,6 +36,15 @@ func _ready() -> void:
 	add_child(_stack)
 	EventBus.quest_state_changed.connect(_on_state)
 	EventBus.quest_objective_progress.connect(_on_progress)
+	# Milestones: these signals had no listener, so nobody ever saw them.
+	EventBus.character_leveled.connect(func(cid: String, lv: int) -> void:
+		show_toast("level", _who(cid), "Level %d" % lv))
+	EventBus.class_unlocked.connect(func(cid: String, class_id: String) -> void:
+		var cl := ContentDB.get_class_res(class_id)
+		show_toast("class", cl.display_name if cl else class_id, "Unlocked for " + _who(cid)))
+	EventBus.ability_unlocked.connect(func(cid: String, aid: String) -> void:
+		var ab := ContentDB.get_ability(aid)
+		show_toast("ability", ab.display_name if ab else aid, _who(cid) + " learned it"))
 
 
 func _on_state(quest_id: String, state: String) -> void:
@@ -56,6 +68,11 @@ func _on_progress(quest_id: String, index: int, count: int) -> void:
 		return
 	var what := str(q.objectives[index].get("text", "Objective"))
 	show_toast("progress", q.display_name, "%s  %d / %d%s" % [what, count, need, "  ✔" if count == need else ""])
+
+
+static func _who(cid: String) -> String:
+	var c := GameManager.get_character(cid)
+	return c.display_name if c else cid
 
 
 func show_toast(kind: String, title: String, text: String) -> void:
@@ -90,3 +107,5 @@ func show_toast(kind: String, title: String, text: String) -> void:
 	t.tween_callback(card.queue_free)
 	if kind == "complete":
 		Sfx.event("loot", -4.0, 0.9)
+	elif kind in ["level", "class", "ability"]:
+		Sfx.event("level_up", -6.0)

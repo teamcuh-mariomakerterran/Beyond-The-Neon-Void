@@ -209,6 +209,6 @@ static func after_move(battle: Node, mover: Node) -> void:
 
 
 static func _announce(unit: Node, p: PassiveResource) -> void:
-	Cues.fire("reaction." + p.id, {"unit": unit})
+	Cues.fire("reaction." + p.id, {"unit": unit, "passive": p.display_name})
 	if unit is Node2D and unit.get_parent() and unit.has_method("display_name"):
 		EventBus.log_message.emit("%s: %s!" % [unit.display_name(), p.display_name])
