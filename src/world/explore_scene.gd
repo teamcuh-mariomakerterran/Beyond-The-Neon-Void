@@ -34,6 +34,7 @@ var _moving: bool = false
 var _busy: bool = false
 var _path: Array[Vector2i] = []
 var _toast: Label
+var _toast_icon: Control
 var _hud: CanvasLayer
 var _prompt: Label
 var _post: HD2DPost
@@ -125,7 +126,7 @@ func _ready() -> void:
 	_settle_threat()
 	threats = RoamingThreats.new().setup(self)
 	add_child(threats)
-	_toast_text(world.name.to_upper(), NeonTheme.CYAN)
+	_toast_text(world.name.to_upper(), NeonTheme.CYAN, "area_enter")
 	AudioManager.play_ambience(Sfx.ambience_for_map(d))
 	_rng.randomize()
 	for r: Dictionary in world.regions_at(cell):
@@ -262,7 +263,21 @@ func _build_hud() -> void:
 	_hud.add_child(help)
 
 
-func _toast_text(text: String, color: Color) -> void:
+## `id` names the toast's style in data/toasts.json (its sound and animated icon).
+func _toast_text(text: String, color: Color, id: String = "") -> void:
+	if id != "":
+		Toasts.play_sfx(id)
+		if _toast_icon:
+			_toast_icon.queue_free()
+			_toast_icon = null
+		_toast_icon = Toasts.anim_icon(id, 56.0)
+		if _toast_icon:
+			_toast_icon.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+			_toast_icon.position = Vector2(_toast_icon.position.x - 28.0, 92.0)
+			_hud.add_child(_toast_icon)
+			var tw_i := _toast_icon.create_tween()
+			tw_i.tween_interval(2.2)
+			tw_i.tween_property(_toast_icon, "modulate:a", 0.0, 0.8)
 	_toast.text = text
 	_toast.add_theme_color_override("font_color", color)
 	_toast.modulate.a = 1.0
@@ -371,16 +386,16 @@ func _interact() -> void:
 			GameManager.set_story_flag(flag)
 			EventBus.loot_discovered.emit(str(o["id"]), item, str(o.get("found_text", "")))  # quests' find_loot
 			var it := ContentDB.get_item(item)
-			_toast_text(str(o.get("found_text", "")) if str(o.get("found_text", "")) != "" else "Found: " + (it.display_name if it else item), NeonTheme.AMBER)
+			_toast_text(str(o.get("found_text", "")) if str(o.get("found_text", "")) != "" else "Found: " + (it.display_name if it else item), NeonTheme.AMBER, "item_found")
 		else:
-			_toast_text(str(o.get("empty_text", "Nothing here.")) if str(o.get("empty_text", "")) != "" else "Nothing here.", NeonTheme.TEXT_DIM)
+			_toast_text(str(o.get("empty_text", "Nothing here.")) if str(o.get("empty_text", "")) != "" else "Nothing here.", NeonTheme.TEXT_DIM, "nothing_here")
 
 
 func _enter(o: Dictionary) -> void:
 	var loc: Dictionary = o["location"]
 	var target := str(loc.get("target_map", ""))
 	if target == "" or ContentDB.get_map(target).is_empty():
-		_toast_text("%s — not built yet." % loc.get("name", "This place"), NeonTheme.MAGENTA)
+		_toast_text("%s — not built yet." % loc.get("name", "This place"), NeonTheme.MAGENTA, "location_locked")
 		return
 	var first := not GameManager.check_story_flag(visited_flag(world.id, str(o["id"])))
 	GameManager.set_story_flag(visited_flag(world.id, str(o["id"])))
@@ -392,7 +407,7 @@ func _enter(o: Dictionary) -> void:
 			await player.finished
 	elif first and world.kind == "world":
 		# No cutscene authored yet: a title card stands in for it.
-		_toast_text(str(loc.get("name", "")).to_upper(), NeonTheme.GREEN)
+		_toast_text(str(loc.get("name", "")).to_upper(), NeonTheme.GREEN, "location_enter")
 		await get_tree().create_timer(1.2).timeout
 	CampaignManager.explore(target, int(loc.get("target_spawn", 0)))
 
@@ -414,15 +429,14 @@ func _update_regions() -> void:
 	_inside = now_in
 	var m := roll_encounter()
 	if m != "":
-		_toast_text("AMBUSH!", NeonTheme.MAGENTA)
+		_toast_text("AMBUSH!", NeonTheme.MAGENTA, "ambush")
 		CampaignManager.start_mission(m)
 
 
 ## A visible threat reached the player: fight it, and come back here after.
 func _caught_by(t: RoamingThreats.Threat) -> void:
 	_busy = true
-	_toast_text("HOSTILES!", NeonTheme.MAGENTA)
-	Sfx.event("trap", -4.0, 0.8)
+	_toast_text("HOSTILES!", NeonTheme.MAGENTA, "hostiles")
 	CampaignManager.current_explore["threat"] = RoamingThreats.flag_of(world.id, t.region, t.index)
 	CampaignManager.current_explore["threat_mission"] = t.mission_id
 	CampaignManager.start_mission(t.mission_id)
@@ -724,7 +738,7 @@ func toggle_free() -> void:
 	fpos = Vector2(cell)
 	_path.clear()
 	_place_avatar()
-	_toast_text("MOVEMENT: " + ("FREE" if free_mode() else "CLASSIC (tile steps)"), NeonTheme.CYAN)
+	_toast_text("MOVEMENT: " + ("FREE" if free_mode() else "CLASSIC (tile steps)"), NeonTheme.CYAN, "movement_mode")
 
 
 func _process(_delta: float) -> void:
@@ -860,7 +874,7 @@ func toggle_mount(next: bool = false) -> String:
 	var choices := Mounts.owned().filter(func(id: String) -> bool: return mount_allowed(id))
 	if choices.is_empty():
 		var why := "No mount to ride here." if not Mounts.owned().is_empty() else "You don't have a mount yet."
-		_toast_text(why, NeonTheme.TEXT_DIM)
+		_toast_text(why, NeonTheme.TEXT_DIM, "mount_blocked")
 		return why
 	var start := (choices.find(mount_id) + 1) % choices.size() if mount_id != "" else 0
 	for k in choices.size():
@@ -869,7 +883,7 @@ func toggle_mount(next: bool = false) -> String:
 			continue
 		if mount(id):
 			return "mounted " + id
-	_toast_text("Nowhere to board from here." if Mounts.terrain(choices[0]) == "water" else "Can't ride here.", NeonTheme.TEXT_DIM)
+	_toast_text("Nowhere to board from here." if Mounts.terrain(choices[0]) == "water" else "Can't ride here.", NeonTheme.TEXT_DIM, "mount_blocked")
 	return "blocked"
 
 
@@ -885,7 +899,7 @@ func mount(id: String) -> bool:
 		cell = water  # board: step off the jetty into the sub
 	mount_id = id
 	_after_mount_change()
-	_toast_text("Riding: " + str(Mounts.get_mount(id).get("name", id)).to_upper(), Color(str(Mounts.get_mount(id).get("color", "#39f5ff"))))
+	_toast_text("Riding: " + str(Mounts.get_mount(id).get("name", id)).to_upper(), Color(str(Mounts.get_mount(id).get("color", "#39f5ff"))), "mount_on")
 	return true
 
 
@@ -896,12 +910,12 @@ func dismount() -> String:
 		var land := _neighbour(func(c: Vector2i) -> bool: return can_step(c, c) and not Mounts.is_water_cell(grid, c))
 		if land == Vector2i(-1, -1):
 			mount_id = id
-			_toast_text("No dry land to step onto.", NeonTheme.TEXT_DIM)
+			_toast_text("No dry land to step onto.", NeonTheme.TEXT_DIM, "mount_blocked")
 			return "no land"
 		cell = land
 	mount_id = ""
 	_after_mount_change()
-	_toast_text("On foot.", NeonTheme.TEXT_DIM)
+	_toast_text("On foot.", NeonTheme.TEXT_DIM, "mount_off")
 	return "dismounted"
 
 
@@ -925,7 +939,8 @@ func _after_mount_change() -> void:
 	_anim_now = ""
 	_fill_avatar(_avatar, str(Mounts.get_mount(mount_id).get("art", "")) if mount_id != "" else "")
 	_place_avatar()
-	Sfx.event("door", -8.0, 1.6 if mount_id != "" else 1.1)
+	if str(Toasts.style("mount_on" if mount_id != "" else "mount_off").get("sfx", "")) == "":
+		Sfx.event("door", -8.0, 1.6 if mount_id != "" else 1.1)  # until the mount has its own sound
 
 
 func _leave() -> void:

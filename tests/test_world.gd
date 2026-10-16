@@ -2215,3 +2215,13 @@ func test_vfx_clip() -> void:
 	check(clip_part._spr.texture != null and clip_part._spr.flip_h, "it shows frames and faces a target on the left")
 	check(clip_part.material == null, "Lattice FX blend normally unless told to add")
 	fx.queue_free()
+	# Toast styles: every id the game uses is in data/toasts.json.
+	var used := ["quest_new", "quest_lead", "quest_progress", "quest_done", "level_up", "job_unlocked", "ability_learned",
+		"area_enter", "location_enter", "location_locked", "item_found", "nothing_here", "hostiles", "ambush",
+		"mount_on", "mount_off", "mount_blocked", "movement_mode", "photo_saved"]
+	var have := Toasts.ids()
+	check(used.all(func(i: String) -> bool: return have.has(i)), "every toast id has a style slot (%s)" % [used.filter(func(i: String) -> bool: return not have.has(i))])
+	for i: String in have:
+		var sf := str(Toasts.style(i).get("sfx", ""))
+		check(sf == "" or sf.begins_with("res://") or not AudioManager.variants(sf).is_empty() or ResourceLoader.exists("res://assets/sfx/%s.wav" % sf) or ResourceLoader.exists("res://assets/sfx/%s.ogg" % sf), "toast %s sound '%s' exists" % [i, sf])
+	check(Toasts.anim_icon("quest_new") == null, "no animation set: no icon")

@@ -1,0 +1,22 @@
+{
+	"_note": "On-screen notification styles (src/ui/toasts.gd). sfx: a name in assets/sfx (a family like 'ui_chime' picks a variant) or a res:// path. anim: a Lattice clip (res://…_clip.json) played as an animated icon on the toast. Empty = the default sound / no animation. Battle moments (victory, boss intro, shield down…) live in data/cues.json instead: add sfx/vfx steps there.",
+	"quest_new": {"sfx": "", "anim": ""},
+	"quest_lead": {"sfx": "", "anim": ""},
+	"quest_progress": {"sfx": "", "anim": ""},
+	"quest_done": {"sfx": "loot_found", "anim": ""},
+	"level_up": {"sfx": "power_up", "anim": ""},
+	"job_unlocked": {"sfx": "power_up", "anim": ""},
+	"ability_learned": {"sfx": "ui_chime", "anim": ""},
+	"area_enter": {"sfx": "", "anim": ""},
+	"location_enter": {"sfx": "", "anim": ""},
+	"location_locked": {"sfx": "ui_error", "anim": ""},
+	"item_found": {"sfx": "loot_found", "anim": ""},
+	"nothing_here": {"sfx": "", "anim": ""},
+	"hostiles": {"sfx": "siren", "anim": ""},
+	"ambush": {"sfx": "siren", "anim": ""},
+	"mount_on": {"sfx": "", "anim": ""},
+	"mount_off": {"sfx": "", "anim": ""},
+	"mount_blocked": {"sfx": "ui_error", "anim": ""},
+	"movement_mode": {"sfx": "ui_beep", "anim": ""},
+	"photo_saved": {"sfx": "ui_chime", "anim": ""}
+}

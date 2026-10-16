@@ -173,7 +173,8 @@ func snap() -> String:
 	var path := "%s/neon_void_%04d%02d%02d_%02d%02d%02d.png" % [DIR, t.year, t.month, t.day, t.hour, t.minute, t.second]
 	img.save_png(path)
 	_say("Saved  " + ProjectSettings.globalize_path(path))
-	Sfx.event("loot", -6.0, 1.4)
+	if not Toasts.play_sfx("photo_saved"):
+		Sfx.event("loot", -6.0, 1.4)
 	return path
 
 

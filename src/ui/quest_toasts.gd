@@ -6,6 +6,9 @@ extends CanvasLayer
 
 const LIFE := 3.6
 const MAX_SHOWN := 4
+## Card kind -> its id in data/toasts.json (sound + animated icon).
+const TOAST_IDS := {"active": "quest_new", "available": "quest_lead", "progress": "quest_progress", "complete": "quest_done",
+	"level": "level_up", "class": "job_unlocked", "ability": "ability_learned"}
 const STYLE := {
 	"active": ["NEW JOB", Color("39f5ff")],
 	"available": ["NEW LEAD", Color("ffc857")],
@@ -85,8 +88,15 @@ func show_toast(kind: String, title: String, text: String) -> void:
 	card.add_theme_stylebox_override("panel", NeonTheme.panel_box(col, Color(0.03, 0.01, 0.07, 0.92)))
 	card.custom_minimum_size.x = 340
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	card.add_child(row)
+	var tid: String = TOAST_IDS.get(kind, kind)
+	var icon := Toasts.anim_icon(tid, 44.0)
+	if icon:
+		row.add_child(icon)
 	var v := VBoxContainer.new()
-	card.add_child(v)
+	row.add_child(v)
 	var head := NeonTheme.label(("%s  ▸  %s" % [st[0], title.to_upper()]) if st[0] != "" else title.to_upper(), 14, col)
 	v.add_child(head)
 	if text != "":
@@ -105,7 +115,8 @@ func show_toast(kind: String, title: String, text: String) -> void:
 	t.tween_interval(LIFE)
 	t.tween_property(card, "modulate:a", 0.0, 0.5)
 	t.tween_callback(card.queue_free)
-	if kind == "complete":
-		Sfx.event("loot", -4.0, 0.9)
-	elif kind in ["level", "class", "ability"]:
-		Sfx.event("level_up", -6.0)
+	if not Toasts.play_sfx(tid):
+		if kind == "complete":
+			Sfx.event("loot", -4.0, 0.9)
+		elif kind in ["level", "class", "ability"]:
+			Sfx.event("level_up", -6.0)
