@@ -55,6 +55,8 @@ var _draw_h: float = 0.0
 var _anim_now: String = ""
 ## The mount being ridden ("" = on foot); see Mounts / data/mounts.json.
 var mount_id: String = ""
+## Visible encounters (RoamingThreats); null on maps without visible zones.
+var threats: RoamingThreats
 
 
 func _ready() -> void:
@@ -120,6 +122,9 @@ func _ready() -> void:
 	_place_avatar()
 	_cam.reset_smoothing()
 	AudioManager.play_music(world.music if world.music != "" else ("hub_streets" if world.kind in ["hub", "city"] else "explore"))
+	_settle_threat()
+	threats = RoamingThreats.new().setup(self)
+	add_child(threats)
 	_toast_text(world.name.to_upper(), NeonTheme.CYAN)
 	AudioManager.play_ambience(Sfx.ambience_for_map(d))
 	_rng.randomize()
@@ -413,9 +418,34 @@ func _update_regions() -> void:
 		CampaignManager.start_mission(m)
 
 
+## A visible threat reached the player: fight it, and come back here after.
+func _caught_by(t: RoamingThreats.Threat) -> void:
+	_busy = true
+	_toast_text("HOSTILES!", NeonTheme.MAGENTA)
+	Sfx.event("trap", -4.0, 0.8)
+	CampaignManager.current_explore["threat"] = RoamingThreats.flag_of(world.id, t.region, t.index)
+	CampaignManager.current_explore["threat_mission"] = t.mission_id
+	CampaignManager.start_mission(t.mission_id)
+
+
+## Back from a threat's battle: a win keeps it gone until it respawns.
+func _settle_threat() -> void:
+	var key := str(CampaignManager.current_explore.get("threat", ""))
+	if key == "":
+		return
+	var rep: Dictionary = CampaignManager.last_battle_report
+	if bool(rep.get("victory", false)) and str(rep.get("mission_id", "")) == str(CampaignManager.current_explore.get("threat_mission", "")):
+		GameManager.story_flags[key] = CampaignManager.world_clock
+	CampaignManager.current_explore.erase("threat")
+	CampaignManager.current_explore.erase("threat_mission")
+
+
 ## Mission id if a random encounter triggers on this step, else "".
+## (Only regions in "random" mode roll; "visible" ones use RoamingThreats.)
 func roll_encounter() -> String:
 	for r: Dictionary in world.regions_at(cell):
+		if RoamingThreats.mode_of(r) != "random":
+			continue
 		var enc: Dictionary = r.get("encounter", {})
 		var ms: Array = enc.get("missions", [])
 		if not ms.is_empty() and _rng.randf() < float(enc.get("rate", 0.0)) * Mounts.encounter_mult(mount_id):
@@ -700,6 +730,11 @@ func toggle_free() -> void:
 func _process(_delta: float) -> void:
 	if world == null or (photo and photo.active):
 		return  # photo mode owns the camera and keys
+	if threats and not _busy:
+		var caught := threats.tick(_delta)
+		if caught:
+			_caught_by(caught)
+			return
 	_cam.position = _avatar.position
 	# X-ray: whatever stands between the camera and the player turns see-through.
 	_renderer.set_cutaway(_avatar.position + Vector2(0, -world.tile_height * 0.6), cell.x + cell.y, grid.get_height(cell))

@@ -1306,9 +1306,26 @@ func _region_editor(r: Dictionary) -> Control:
 		_build_palette())
 	box.add_child(addt)
 	var enc: Dictionary = r.get("encounter", {})
-	box.add_child(_section("RANDOM ENCOUNTERS"))
+	box.add_child(_section("ENCOUNTERS"))
+	var mr := HBoxContainer.new()
+	mr.add_child(NeonTheme.label("Mode", 12, NeonTheme.TEXT_DIM))
+	mr.add_child(ForgeForm._option(["visible", "random"], str(enc.get("mode", "visible")), func(k: String) -> void:
+		enc["mode"] = k
+		r["encounter"] = enc
+		dirty = true))
+	box.add_child(mr)
+	var vr := HBoxContainer.new()
+	for f: Array in [["max_threats", "Threats", 2.0, true], ["aggro", "Aggro (cells)", 4.0, false], ["respawn_hours", "Respawn (h)", 12.0, false]]:
+		var fk: String = f[0]
+		vr.add_child(NeonTheme.label(f[1], 12, NeonTheme.TEXT_DIM))
+		vr.add_child(ForgeForm._spin(float(enc.get(fk, f[2])), bool(f[3]), func(n: float) -> void:
+			enc[fk] = n
+			r["encounter"] = enc
+			dirty = true))
+	vr.tooltip_text = "Visible: hostiles you can see wander the region and chase you. Random: invisible rolls on each step."
+	box.add_child(vr)
 	var er := HBoxContainer.new()
-	er.add_child(NeonTheme.label("Chance / step %", 12, NeonTheme.TEXT_DIM))
+	er.add_child(NeonTheme.label("Random: chance / step %", 12, NeonTheme.TEXT_DIM))
 	er.add_child(ForgeForm._spin(float(enc.get("rate", 0.0)) * 100.0, false, func(n: float) -> void:
 		enc["rate"] = clampf(n / 100.0, 0.0, 1.0)
 		r["encounter"] = enc

@@ -42,6 +42,7 @@ func run(p_tree: SceneTree) -> int:
 	test_gap_fixes()
 	test_shift_and_news()
 	test_external_library()
+	await test_visible_threats()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -330,7 +331,7 @@ func test_regions_and_links() -> void:
 	check(GameManager.check_story_flag("t_left_alley"), "exit trigger fired")
 	var reg: Dictionary = ex.world.regions[0]
 	check(GameManager.check_story_flag(ExploreScene.trigger_flag(w.id, reg, 0)), "once-trigger remembered")
-	reg["encounter"] = {"rate": 1.0, "missions": ["m01_the_brew_plan"]}
+	reg["encounter"] = {"mode": "random", "rate": 1.0, "missions": ["m01_the_brew_plan"]}
 	ex.cell = Vector2i(3, 3)
 	check(ex.roll_encounter() == "m01_the_brew_plan", "encounter roll at 100%")
 	ex.queue_free()
@@ -2063,3 +2064,71 @@ func test_external_library() -> void:
 	tab._filter()
 	check(tab.shown.size() == 1 and tab.shown[0]["name"] == "Rusty Crate", "tab search filters")
 	tab.queue_free()
+
+
+func test_visible_threats() -> void:
+	var w := _map()
+	w.id = "t_threats"
+	w.kind = "world"
+	for x in 12:
+		for y in 12:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	var zone: Array = []
+	for x in range(6, 12):
+		for y in range(6, 12):
+			zone.append(WorldMap.key(Vector2i(x, y)))
+	w.regions = [{"id": "rgn_z", "name": "Zone", "cells": zone, "triggers": [],
+		"encounter": {"mode": "visible", "missions": ["enc_doctrine_patrol"], "max_threats": 2, "aggro": 4, "respawn_hours": 12}},
+		{"id": "rgn_r", "name": "Old school", "cells": [WorldMap.key(Vector2i(0, 0))], "triggers": [],
+		"encounter": {"mode": "random", "missions": ["enc_doctrine_patrol"], "rate": 1.0}}]
+	w.spawns["player"] = [[1, 1]]
+	ContentDB.maps[w.id] = w.to_dict()
+	CampaignManager.current_explore = {"map_id": w.id, "spawn": 0}
+	for k: String in GameManager.story_flags.keys():
+		if k.begins_with("threat:t_threats"):
+			GameManager.story_flags.erase(k)
+	var ex := ExploreScene.new()
+	tree.root.add_child(ex)
+	await tree.process_frame
+	ex._busy = true  # the test drives the threats itself
+	var th := ex.threats
+	check(th != null and th.threats.size() == 2, "a visible zone spawns its threats (%d)" % (th.threats.size() if th else -1))
+	check(th.threats.all(func(t: RoamingThreats.Threat) -> bool: return IsometricGrid.distance(t.cell, ex.cell) >= RoamingThreats.SAFE_SPAWN and zone.has(WorldMap.key(t.cell))), "threats start in their zone, away from the player")
+	# Far away: they wander but stay home and never catch you.
+	for i in 120:
+		th.tick(1.0 / 30.0)
+	check(th.triggered == null and th.threats.all(func(t: RoamingThreats.Threat) -> bool: return zone.has(WorldMap.key(t.cell))), "wandering threats stay on their turf")
+	# Step into the zone next to one: it gives chase and catches you.
+	var t0: RoamingThreats.Threat = th.threats[0]
+	ex.cell = t0.cell + Vector2i(-2, 0) if zone.has(WorldMap.key(t0.cell + Vector2i(-2, 0))) else t0.cell + Vector2i(2, 0)
+	ex.fpos = Vector2(ex.cell)
+	var caught: RoamingThreats.Threat = null
+	for i in 90:
+		caught = th.tick(1.0 / 30.0)
+		if caught:
+			break
+	check(caught != null and t0.chasing, "a threat chases and catches a player in its zone")
+	# Random regions don't spawn threats; visible ones don't roll steps.
+	ex.cell = Vector2i(0, 0)
+	check(ex.roll_encounter() == "enc_doctrine_patrol", "a random-mode region still rolls")
+	ex.cell = Vector2i(8, 8)
+	check(ex.roll_encounter() == "", "a visible-mode region never rolls invisible fights")
+	# Beaten: gone until the world clock passes its respawn time.
+	var r: Dictionary = w.regions[0]
+	CampaignManager.current_explore["threat"] = RoamingThreats.flag_of(w.id, r, 0)
+	CampaignManager.current_explore["threat_mission"] = "enc_doctrine_patrol"
+	var keep_rep := CampaignManager.last_battle_report
+	CampaignManager.last_battle_report = {"victory": true, "mission_id": "enc_doctrine_patrol"}
+	ex._settle_threat()
+	check(RoamingThreats.is_cleared(w.id, r, 0) and not RoamingThreats.is_cleared(w.id, r, 1), "a beaten threat stays down")
+	CampaignManager.world_clock += 13
+	check(not RoamingThreats.is_cleared(w.id, r, 0), "and comes back after its respawn hours")
+	CampaignManager.world_clock -= 13
+	CampaignManager.last_battle_report = keep_rep
+	for k: String in GameManager.story_flags.keys():
+		if k.begins_with("threat:t_threats"):
+			GameManager.story_flags.erase(k)
+	ex.queue_free()
+	ContentDB.maps.erase(w.id)
+	CampaignManager.current_explore = {}
+	await tree.process_frame

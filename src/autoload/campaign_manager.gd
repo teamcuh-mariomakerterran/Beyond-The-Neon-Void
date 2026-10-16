@@ -55,6 +55,9 @@ func after_battle() -> void:
 		var r := battle_return
 		battle_return = {}
 		explore(str(r["map_id"]), int(r.get("spawn", -1)), _cell(r.get("at")), bool(r.get("from_forge", false)))
+		for k: String in ["threat", "threat_mission", "mount"]:  # what the map needs to settle
+			if r.has(k):
+				current_explore[k] = r[k]
 	else:
 		battle_return = {}
 		return_to_hub()

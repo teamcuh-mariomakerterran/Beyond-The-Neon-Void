@@ -77,7 +77,27 @@ def world():
                     "location": None})
     return {"format": 2, "id": "neon_expanse", "name": "The Neon Expanse", "kind": "world", "width": W, "depth": D,
             "tile_width": 128, "tile_height": 64, "height_step": 32, "post": "hd2d_warm", "tiles": tiles, "details": [],
-            "particles": particles, "objects": objects, "spawns": {"player": [[9, 13]], "enemy": []}, "gameplay": {}}
+            "particles": particles, "objects": objects, "spawns": {"player": [[9, 13]], "enemy": []}, "gameplay": {},
+            "regions": regions(tiles)}
+
+
+def regions(tiles):
+    """Visible encounter zones (RoamingThreats): Doctrine patrols on the open
+    grass and forest, essence wraiths in the swamp. Kept clear of the start
+    and the road."""
+    def top(k):
+        return tiles[k][-1][1]
+    def far(k):
+        x, y = map(int, k.split(","))
+        return abs(x - 9) + abs(y - 13) >= 6 and y != 14
+    wild = [k for k in tiles if top(k) in ("terrain:grass", "terrain:forest") and far(k)]
+    marsh = [k for k in tiles if top(k) == "terrain:swamp" and far(k)]
+    return [
+        {"id": "rgn_wilds", "name": "The Wilds", "color": "#ff3fb4", "cells": sorted(wild), "triggers": [],
+         "encounter": {"mode": "visible", "missions": ["enc_doctrine_patrol"], "max_threats": 3, "aggro": 4, "respawn_hours": 12}},
+        {"id": "rgn_marsh", "name": "Glow Marsh", "color": "#8dff3f", "cells": sorted(marsh), "triggers": [],
+         "encounter": {"mode": "visible", "missions": ["enc_marsh_wraiths"], "max_threats": 2, "aggro": 3, "respawn_hours": 18, "speed": 0.8}},
+    ]
 
 
 def hub():
