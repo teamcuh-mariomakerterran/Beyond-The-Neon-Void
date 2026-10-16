@@ -45,6 +45,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_visible_threats()
 	test_ai_anchors()
 	test_vfx_clip()
+	test_encounter_gen()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -351,6 +352,12 @@ func test_regions_and_links() -> void:
 	p.brush_size = 2
 	_press(p, Vector2i(4, 4), 0)
 	check((p.sel_region["cells"] as Array).size() == 4, "brush paints region cells")
+	# The region editor shows rolled-fight settings (and builds with them).
+	p.sel_region["encounter"] = {"mode": "visible", "generate": {"name": "X", "maps": ["gutter_alley"], "pool": [{"id": "doctrine_warden", "weight": 2.0}], "count": [2, 3], "level": [4, 8], "scale": true}}
+	var ed := p._region_editor(p.sel_region)
+	var texts: Array = ed.find_children("*", "LineEdit", true, false).map(func(l: LineEdit) -> String: return l.text)
+	check(texts.has("doctrine_warden*2") and texts.has("gutter_alley"), "region editor shows the zone's pool and maps (%s)" % [texts])
+	ed.free()
 	p.queue_free()
 	await tree.process_frame
 	# Asset links: rename rewrites references; repair finds moved files.
@@ -2079,10 +2086,11 @@ func test_visible_threats() -> void:
 	for x in range(6, 12):
 		for y in range(6, 12):
 			zone.append(WorldMap.key(Vector2i(x, y)))
+	var gen := {"name": "Test Patrol", "maps": ["gutter_alley"], "pool": ["doctrine_warden"], "count": [2, 2], "level": [3, 3]}
 	w.regions = [{"id": "rgn_z", "name": "Zone", "cells": zone, "triggers": [],
-		"encounter": {"mode": "visible", "missions": ["enc_doctrine_patrol"], "max_threats": 2, "aggro": 4, "respawn_hours": 12}},
+		"encounter": {"mode": "visible", "missions": [], "generate": gen, "max_threats": 2, "aggro": 4, "respawn_hours": 12}},
 		{"id": "rgn_r", "name": "Old school", "cells": [WorldMap.key(Vector2i(0, 0))], "triggers": [],
-		"encounter": {"mode": "random", "missions": ["enc_doctrine_patrol"], "rate": 1.0}}]
+		"encounter": {"mode": "random", "missions": ["m01_the_brew_plan"], "rate": 1.0}}]
 	w.spawns["player"] = [[1, 1]]
 	ContentDB.maps[w.id] = w.to_dict()
 	CampaignManager.current_explore = {"map_id": w.id, "spawn": 0}
@@ -2095,6 +2103,8 @@ func test_visible_threats() -> void:
 	ex._busy = true  # the test drives the threats itself
 	var th := ex.threats
 	check(th != null and th.threats.size() == 2, "a visible zone spawns its threats (%d)" % (th.threats.size() if th else -1))
+	var rolled := ContentDB.get_mission(th.threats[0].mission_id)
+	check(rolled != null and rolled.map_id == "gutter_alley" and rolled.enemies.size() == 2 and rolled.enemies.all(func(e: Dictionary) -> bool: return int(e["level"]) == 3), "each threat carries a rolled fight from its zone")
 	check(th.threats.all(func(t: RoamingThreats.Threat) -> bool: return IsometricGrid.distance(t.cell, ex.cell) >= RoamingThreats.SAFE_SPAWN and zone.has(WorldMap.key(t.cell))), "threats start in their zone, away from the player")
 	# Far away: they wander but stay home and never catch you.
 	for i in 120:
@@ -2112,15 +2122,15 @@ func test_visible_threats() -> void:
 	check(caught != null and t0.chasing, "a threat chases and catches a player in its zone")
 	# Random regions don't spawn threats; visible ones don't roll steps.
 	ex.cell = Vector2i(0, 0)
-	check(ex.roll_encounter() == "enc_doctrine_patrol", "a random-mode region still rolls")
+	check(ex.roll_encounter() == "m01_the_brew_plan", "a random-mode region still rolls")
 	ex.cell = Vector2i(8, 8)
 	check(ex.roll_encounter() == "", "a visible-mode region never rolls invisible fights")
 	# Beaten: gone until the world clock passes its respawn time.
 	var r: Dictionary = w.regions[0]
 	CampaignManager.current_explore["threat"] = RoamingThreats.flag_of(w.id, r, 0)
-	CampaignManager.current_explore["threat_mission"] = "enc_doctrine_patrol"
+	CampaignManager.current_explore["threat_mission"] = th.threats[0].mission_id
 	var keep_rep := CampaignManager.last_battle_report
-	CampaignManager.last_battle_report = {"victory": true, "mission_id": "enc_doctrine_patrol"}
+	CampaignManager.last_battle_report = {"victory": true, "mission_id": th.threats[0].mission_id}
 	ex._settle_threat()
 	check(RoamingThreats.is_cleared(w.id, r, 0) and not RoamingThreats.is_cleared(w.id, r, 1), "a beaten threat stays down")
 	CampaignManager.world_clock += 13
@@ -2251,3 +2261,36 @@ func test_vfx_clip() -> void:
 		uu.free()
 	# The battle log records a real battle and is deterministic.
 	check(CombatManager.battle_log != null, "battles keep a log")
+
+
+func test_encounter_gen() -> void:
+	var g := {"name": "Patrol", "maps": ["gutter_alley", "supply_works_dock"], "pool": [{"id": "doctrine_warden", "weight": 3}, "factory_marksman"],
+		"count": [2, 4], "level": [2, 6], "coins_per_level": 10, "xp_per_level": 5}
+	var a := EncounterGen.make_entry("t_gen", g, 1234, 3)
+	var b := EncounterGen.make_entry("t_gen", g, 1234, 3)
+	check(a == b, "same seed, same fight")
+	var levels_ok := true
+	var any_diff := false
+	for sd in 30:
+		var e := EncounterGen.make_entry("t_gen", g, sd, 3)
+		if e != a:
+			any_diff = true
+		var n := (e["enemies"] as Array).size()
+		levels_ok = levels_ok and n >= 2 and n <= 4 and (e["enemies"] as Array).all(func(x: Dictionary) -> bool: return int(x["level"]) >= 2 and int(x["level"]) <= 6)
+		var cells := {}
+		for x: Dictionary in e["enemies"]:
+			cells[str(x["cell"])] = true
+		levels_ok = levels_ok and cells.size() == n  # one enemy per spawn
+	check(levels_ok and any_diff, "random maps and formations, levels in the zone's range, no stacking")
+	check(int(a["soul_coin_reward"]) == 10 * (a["enemies"] as Array).reduce(func(t: int, x: Dictionary) -> int: return t + int(x["level"]), 0), "rewards scale with enemy levels")
+	# Scaling follows the party, clamped to the zone.
+	g["scale"] = true
+	var low := EncounterGen.make_entry("t_gen", g, 7, 1)
+	var high := EncounterGen.make_entry("t_gen", g, 7, 30)
+	check((low["enemies"] as Array).all(func(x: Dictionary) -> bool: return int(x["level"]) <= 2), "a weak party meets the zone's floor")
+	check((high["enemies"] as Array).all(func(x: Dictionary) -> bool: return int(x["level"]) == 6), "a strong party never pushes past the zone's ceiling")
+	# Late-game / secret areas: fixed levels, a set boss.
+	var secret := {"maps": ["gutter_alley"], "pool": ["choir_enforcer"], "count": [3, 3], "fixed_level": 40, "boss": "essence_wraith"}
+	var s := EncounterGen.make_entry("t_gen2", secret, 5, 2)
+	check((s["enemies"] as Array)[0]["character_id"] == "essence_wraith" and (s["enemies"] as Array).all(func(x: Dictionary) -> bool: return int(x["level"]) >= 40), "fixed-level zones hold their level; the boss always comes")
+	check(EncounterGen.has_generator({"encounter": {"generate": secret}}) and not EncounterGen.has_generator({"encounter": {"missions": ["x"]}}), "generator detection")

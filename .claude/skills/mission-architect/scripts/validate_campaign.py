@@ -136,6 +136,25 @@ def main() -> int:
     # EventBus.loot_discovered (battle_map._spawn_prop -> interaction_trigger.gd).
     # Explore `objects` set flag "looted:<map>:<id>" instead; anchors emit nothing.
     loot_ids, loot_empty, other_ids = set(), set(), {}
+    # Rolled encounters (EncounterGen): pool enemies and battle maps must exist,
+    # and the maps need enemy spawns to place a formation on.
+    for mid, mp in maps.items():
+        for r in mp.get("regions", []):
+            g = (r.get("encounter") or {}).get("generate")
+            if not isinstance(g, dict):
+                continue
+            W = f"map {mid} region {r.get('id')}"
+            for e in g.get("pool", []):
+                eid = e.get("id") if isinstance(e, dict) else e
+                if eid not in chars:
+                    R.err(W, f"generate.pool enemy '{eid}' not in characters.json")
+            for bm in g.get("maps", []):
+                if bm not in maps:
+                    R.err(W, f"generate.maps '{bm}' not in data/maps")
+                elif not maps[bm].get("spawns", {}).get("enemy"):
+                    R.err(W, f"generate.maps '{bm}' has no enemy spawns")
+            if g.get("boss") and g["boss"] not in chars:
+                R.err(W, f"generate.boss '{g['boss']}' not in characters.json")
     for mid, mp in maps.items():
         for p in mp.get("props", []):
             (loot_ids if p.get("loot_item_id") else loot_empty).add(p.get("id"))

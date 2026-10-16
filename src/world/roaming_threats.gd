@@ -8,8 +8,9 @@ extends Node2D
 ## Regions set to mode "random" keep the classic invisible step rolls instead
 ## (ExploreScene.roll_encounter).
 ##
-## Region "encounter": {mode: visible | random, missions: [ids], rate (random
-## only), max_threats (2), aggro (4 cells), respawn_hours (12), speed (1.0)}
+## Region "encounter": {mode: visible | random, missions: [ids] and / or
+## generate: {…} (EncounterGen: random map + formation, zone levels), rate
+## (random only), max_threats (2), aggro (4 cells), respawn_hours (12), speed (1.0)}
 
 const WANDER_SPEED := 1.3  # cells / s
 const CHASE_SPEED := 2.4
@@ -26,7 +27,7 @@ var triggered: Threat = null
 
 static func mode_of(region: Dictionary) -> String:
 	var enc: Dictionary = region.get("encounter", {})
-	if (enc.get("missions", []) as Array).is_empty():
+	if (enc.get("missions", []) as Array).is_empty() and not EncounterGen.has_generator(region):
 		return ""
 	return str(enc.get("mode", "visible"))
 
@@ -62,11 +63,20 @@ func setup(p_scene: Node) -> RoamingThreats:
 		for n in n_max:
 			if cells.is_empty() or is_cleared(w.id, r, n):
 				continue
-			var ms: Array = enc["missions"]
+			var ms: Array = enc.get("missions", [])
 			var t := Threat.new()
 			t.region = r
 			t.index = n
-			t.mission_id = str(ms[rng.randi() % ms.size()])
+			# Rolled fight (random map + formation, zone levels) or a hand-made
+			# one; with both, hand-made ones come up now and then.
+			var gen := EncounterGen.has_generator(r)
+			if gen and (ms.is_empty() or rng.randf() < 0.75):
+				var hours := maxf(float(enc.get("respawn_hours", 12)), 1.0)
+				# Same fight until this threat respawns.
+				var window := int(floor(float(CampaignManager.world_clock) / hours))
+				t.mission_id = EncounterGen.build(w.id, r, n, hash([w.id, r.get("id", ""), n, window]))
+			else:
+				t.mission_id = str(ms[rng.randi() % ms.size()])
 			t.cell = cells[rng.randi() % cells.size()]
 			t.fpos = Vector2(t.cell)
 			t.aggro = float(enc.get("aggro", 4))

@@ -1324,6 +1324,66 @@ func _region_editor(r: Dictionary) -> Control:
 			dirty = true))
 	vr.tooltip_text = "Visible: hostiles you can see wander the region and chase you. Random: invisible rolls on each step."
 	box.add_child(vr)
+	# Rolled fights (EncounterGen): random map + formation at the zone's levels.
+	var gen: Dictionary = enc.get("generate", {})
+	var save_gen := func() -> void:
+		enc["generate"] = gen
+		r["encounter"] = enc
+		dirty = true
+	box.add_child(NeonTheme.label("Rolled fights (leave pool empty for hand-made missions only)", 12, NeonTheme.CYAN))
+	for fld: Array in [["name", "Name", "Doctrine Patrol"], ["maps", "Battle maps", "gutter_alley, supply_works_dock"], ["pool", "Enemy pool (id or id*weight)", "doctrine_warden*3, factory_marksman"], ["boss", "Always add (boss id)", ""]]:
+		var fkey: String = fld[0]
+		var le := LineEdit.new()
+		le.placeholder_text = "%s, e.g. %s" % [fld[1], fld[2]]
+		var cur: Variant = gen.get(fkey, "")
+		if cur is Array:
+			le.text = ", ".join(PackedStringArray((cur as Array).map(func(x: Variant) -> String: return ("%s*%s" % [x["id"], str(int(float(x.get("weight", 1)))) if fmod(float(x.get("weight", 1)), 1.0) == 0.0 else str(x.get("weight"))]) if x is Dictionary else str(x))))
+		else:
+			le.text = str(cur)
+		le.tooltip_text = fld[1]
+		le.text_changed.connect(func(v: String) -> void:
+			if fkey in ["maps", "pool"]:
+				var items: Array = []
+				for bit in v.split(",", false):
+					var b := bit.strip_edges()
+					if fkey == "pool" and b.contains("*"):
+						items.append({"id": b.split("*")[0].strip_edges(), "weight": float(b.split("*")[1])})
+					elif b != "":
+						items.append(b)
+				gen[fkey] = items
+			else:
+				gen[fkey] = v.strip_edges()
+			save_gen.call())
+		box.add_child(le)
+	var lr := HBoxContainer.new()
+	var lv: Array = gen.get("level", [1, 3])
+	var cn: Array = gen.get("count", [2, 3])
+	for f2: Array in [["Lv min", lv, 0, "level"], ["Lv max", lv, 1, "level"], ["Count min", cn, 0, "count"], ["max", cn, 1, "count"]]:
+		var arr: Array = f2[1]
+		var idx: int = f2[2]
+		var k2: String = f2[3]
+		lr.add_child(NeonTheme.label(f2[0], 12, NeonTheme.TEXT_DIM))
+		lr.add_child(ForgeForm._spin(float(arr[idx]) if idx < arr.size() else 1.0, true, func(n: float) -> void:
+			var a2: Array = gen.get(k2, [1, 3]).duplicate()
+			while a2.size() < 2:
+				a2.append(a2[0] if not a2.is_empty() else 1)
+			a2[idx] = int(n)
+			gen[k2] = a2
+			save_gen.call()))
+	box.add_child(lr)
+	var sr := HBoxContainer.new()
+	var sc := CheckBox.new()
+	sc.text = "Scale with the party (inside the range)"
+	sc.button_pressed = bool(gen.get("scale", false))
+	sc.toggled.connect(func(on: bool) -> void:
+		gen["scale"] = on
+		save_gen.call())
+	sr.add_child(sc)
+	sr.add_child(NeonTheme.label("Fixed level (late game / secret, 0 = off)", 12, NeonTheme.TEXT_DIM))
+	sr.add_child(ForgeForm._spin(float(gen.get("fixed_level", 0)), true, func(n: float) -> void:
+		gen["fixed_level"] = int(n)
+		save_gen.call()))
+	box.add_child(sr)
 	var er := HBoxContainer.new()
 	er.add_child(NeonTheme.label("Random: chance / step %", 12, NeonTheme.TEXT_DIM))
 	er.add_child(ForgeForm._spin(float(enc.get("rate", 0.0)) * 100.0, false, func(n: float) -> void:

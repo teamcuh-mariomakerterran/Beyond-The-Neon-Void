@@ -460,6 +460,8 @@ func roll_encounter() -> String:
 	for r: Dictionary in world.regions_at(cell):
 		if RoamingThreats.mode_of(r) != "random":
 			continue
+		if EncounterGen.has_generator(r) and _rng.randf() < float((r.get("encounter", {}) as Dictionary).get("rate", 0.0)):
+			return EncounterGen.build(world.id, r, 99, _rng.randi())
 		var enc: Dictionary = r.get("encounter", {})
 		var ms: Array = enc.get("missions", [])
 		if not ms.is_empty() and _rng.randf() < float(enc.get("rate", 0.0)) * Mounts.encounter_mult(mount_id):

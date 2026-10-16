@@ -94,9 +94,16 @@ def regions(tiles):
     marsh = [k for k in tiles if top(k) == "terrain:swamp" and far(k)]
     return [
         {"id": "rgn_wilds", "name": "The Wilds", "color": "#ff3fb4", "cells": sorted(wild), "triggers": [],
-         "encounter": {"mode": "visible", "missions": ["enc_doctrine_patrol"], "max_threats": 3, "aggro": 4, "respawn_hours": 12}},
+         "encounter": {"mode": "visible", "missions": [], "max_threats": 3, "aggro": 4, "respawn_hours": 12,
+                       "generate": {"name": "Doctrine Patrol", "maps": ["gutter_alley", "supply_works_dock"],
+                                    "pool": [{"id": "doctrine_warden", "weight": 3}, {"id": "factory_marksman", "weight": 2},
+                                             {"id": "choir_enforcer", "weight": 1}, {"id": "munitions_drone", "weight": 1}],
+                                    "count": [2, 4], "level": [2, 6], "scale": True, "coins_per_level": 12, "xp_per_level": 9}}},
         {"id": "rgn_marsh", "name": "Glow Marsh", "color": "#8dff3f", "cells": sorted(marsh), "triggers": [],
-         "encounter": {"mode": "visible", "missions": ["enc_marsh_wraiths"], "max_threats": 2, "aggro": 3, "respawn_hours": 18, "speed": 0.8}},
+         "encounter": {"mode": "visible", "missions": [], "max_threats": 2, "aggro": 3, "respawn_hours": 18, "speed": 0.8,
+                       "generate": {"name": "Marsh Wraiths", "maps": ["supply_works_dock", "gutter_alley"],
+                                    "pool": [{"id": "essence_wraith", "weight": 3}, {"id": "cantor_adept", "weight": 1}],
+                                    "count": [1, 3], "level": [3, 7], "scale": True, "coins_per_level": 15, "xp_per_level": 11, "chips": 1}}},
     ]
 
 
