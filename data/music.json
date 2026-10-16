@@ -1,0 +1,53 @@
+{
+	"_note": "Music for game moments (AudioManager). A name is a file in assets/music (no extension); a list picks one at random each time. These are first-pass picks by filename; change them freely.",
+	"title": "main_menu_theme_song",
+	"menu": "menu_theme",
+	"neon_gutter": "hub_poker_theme",
+	"hub_streets": "hub_map_1",
+	"battle": [
+		"neon_flow",
+		"neon_waits",
+		"purple_rain",
+		"when_the_smoke_clears"
+	],
+	"battle_supply_works": "neon_flow",
+	"battle_alley": "when_the_smoke_clears",
+	"boss": [
+		"boss_encounter_v1",
+		"boss_encounter_v2",
+		"boss_encounter_v3",
+		"boss_encounter_v4",
+		"boss_encounter_v5"
+	],
+	"explore": [
+		"map_song_random_v1",
+		"map_song_random_v10",
+		"map_song_random_v11",
+		"map_song_random_v12",
+		"map_song_random_v13",
+		"map_song_random_v14",
+		"map_song_random_v15",
+		"map_song_random_v16",
+		"map_song_random_v17",
+		"map_song_random_v18",
+		"map_song_random_v19",
+		"map_song_random_v2",
+		"map_song_random_v20",
+		"map_song_random_v21",
+		"map_song_random_v22",
+		"map_song_random_v23",
+		"map_song_random_v3",
+		"map_song_random_v4",
+		"map_song_random_v5",
+		"map_song_random_v6",
+		"map_song_random_v7",
+		"map_song_random_v8",
+		"map_song_random_v9"
+	],
+	"story": [
+		"dramatic_story_events_v1",
+		"dramatic_story_events_v2"
+	],
+	"hangover_morning": "beyond_recall",
+	"dark": "beneath_the_black_veil_the_darkness"
+}

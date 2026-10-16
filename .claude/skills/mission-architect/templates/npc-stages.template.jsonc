@@ -1,0 +1,26 @@
+// Merge into an npcs.json entry. Stage order: intro_lines -> give item -> after_talk -> repeat_lines -> closing_lines.
+{
+  "id": "<npc_id>",
+  "display_name": "<Name 'Nick' Surname>",
+  "description": "<one line: job + one specific weird detail>",
+  "location_id": "<hub location or map id>",
+  "required_flag": "",
+  "quest_ids": [],
+  "intro_lines": ["<first meeting>"],
+  "give_item_id": "", "give_item_qty": 1,
+  "after_talk": "quest",                    // none | shop | quest | chain | fetch | battle | cutscene
+  "offer_quest_id": "q_<npc>_<slug>",
+  "chain_quest_id": "", "chain_requires": [], "chain_locked_lines": [],
+  "fetch_items": {}, "fetch_reward_coins_each": 0, "fetch_reward_items_each": {},
+  "fetch_reward_coins_done": 0, "fetch_reward_chips_done": 0, "fetch_reward_items_done": {},
+  "fight_mission_id": "",
+  "stage_cutscene": "",
+  "repeat_lines": ["<hint line: this is where mission answers hide (cf. Ma Rivet's relay order)>"],
+  "closing_lines": ["<exit joke>"],
+  "eavesdrop_lines": [{"text": "<Name>, to someone: '<overheard hint or world fact>'", "requires_flag": ""}],
+  "dialog": [
+    {"id": "greet", "text": "...", "next": "ask"},
+    {"id": "ask", "text": "...", "choices": [{"text": "...", "next": "a"}, {"text": "...", "next": "b", "sets_flag": "<npc>_<fact>"}]},
+    {"id": "after_m03", "text": "<reacts to a mission>", "requires_flag": "m03_done"}
+  ]
+}

@@ -49,7 +49,7 @@ func _ready() -> void:
 	setup(crew)
 	_build_ui()
 	_refresh()
-	AudioManager.play_music("neon_gutter")
+	AudioManager.play_music("hangover_morning")
 	Sfx.ambience("hangover_morning")
 
 

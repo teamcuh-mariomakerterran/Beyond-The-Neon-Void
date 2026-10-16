@@ -119,8 +119,7 @@ func _ready() -> void:
 		add_child(marks)
 	_place_avatar()
 	_cam.reset_smoothing()
-	if world.music != "":
-		AudioManager.play_music(world.music)
+	AudioManager.play_music(world.music if world.music != "" else ("hub_streets" if world.kind in ["hub", "city"] else "explore"))
 	_toast_text(world.name.to_upper(), NeonTheme.CYAN)
 	AudioManager.play_ambience(Sfx.ambience_for_map(d))
 	_rng.randomize()

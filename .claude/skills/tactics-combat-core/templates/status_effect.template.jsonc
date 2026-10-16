@@ -1,0 +1,19 @@
+// Append to data/status_effects.json (array). Strip comments. Keys = StatusEffect @export vars.
+{
+  "id": "<snake_case>",
+  "display_name": "<Title>",
+  "description": "<one line the HUD tooltip shows>",
+  "type": "DEBUFF",                 // BUFF | DEBUFF (Firewall can block) | NEUTRAL
+  "duration_turns": 2,              // ticks on the afflicted unit's own turn
+  "is_permanent": false,            // true = until removed (shielded/cloaked style)
+  "stat_multipliers": {"speed": 0.75},
+  "stat_flat": {},
+  "damage_per_turn": 0,
+  "damage_per_turn_pct": 0.0,       // 0.06 = 6% max HP per turn; negative heals
+  "max_stacks": 1,
+  "prevents_action": false,
+  "prevents_move": false,
+  "deferred_damage_key": "",
+  "tags": []                        // engine-read tags today: "untouchable", "cloaked", "stone"
+}
+// Then: data/status_looks.json entry (godot-shader-forge), icon, cue "status.<id>" if it deserves one, a test.

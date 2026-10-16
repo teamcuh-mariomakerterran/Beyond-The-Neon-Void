@@ -1,0 +1,39 @@
+## TEMPLATE: the BTNV inline-shader pattern (HD2DPost, VFXScreen, FogSheet, cutscene layers).
+## Shader code lives in a GDScript string constant; ONE Shader per class (static cache),
+## one ShaderMaterial per instance. shader_check.py / shader_lint.py find these constants
+## automatically as long as the code sits inside """...""" and contains `shader_type`.
+## Prefer a .gdshader file when the shader is shared, large (>60 lines), or artists tune it;
+## keep it inline when it is private to one class and generated/templated (e.g. render_mode %s).
+
+const MY_SHADER := """
+shader_type canvas_item;
+uniform float intensity : hint_range(0.0, 1.0) = 0.0;
+void fragment() {
+	COLOR.rgb *= 1.0 + intensity;  // COLOR already includes TEXTURE in Godot 4
+}
+"""
+
+static var _shader: Shader
+
+var _mat: ShaderMaterial
+
+
+func _make_material() -> ShaderMaterial:
+	if _shader == null:
+		_shader = Shader.new()
+		_shader.code = MY_SHADER
+	_mat = ShaderMaterial.new()
+	_mat.shader = _shader
+	return _mat
+
+
+## Data-driven knobs: read from JSON, never hard-code look values in gameplay code.
+## Colours in data use the VFX colour syntax ("#ff2e88*1.6" = HDR, "$main*2" = palette);
+## parse them with VFX.parse_color(v, palette) (src/vfx/vfx.gd:261), not Color(str), or the
+## HDR multiplier is lost.
+func apply_params(p: Dictionary) -> void:
+	for k: String in p:
+		var v: Variant = p[k]
+		if v is String and (str(v).begins_with("#") or str(v).begins_with("$")):
+			v = VFX.parse_color(v)
+		_mat.set_shader_parameter(k, v)

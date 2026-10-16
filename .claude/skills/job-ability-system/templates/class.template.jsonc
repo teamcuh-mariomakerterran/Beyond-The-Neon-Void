@@ -1,0 +1,21 @@
+// Append to data/classes.json. Then: ClassLibrary.CLASS_ORDER, docs/design/CLASSES.md, ABILITY_LIST.md.
+{
+  "id": "<snake_case>",
+  "display_name": "<Neon Name>",
+  "description": "<one dry line: fantasy + verb>",
+  "role": "SUPPORT",                     // MELEE | RANGED | SUPPORT | UTILITY | TANK | SPECIAL
+  "tier": 2,                             // 1 starter, 2 advanced, 3 elite, 4 secret
+  "playable": true,
+  "is_hidden": false,                    // true for secret classes until unlocked
+  "uses_deck": false,                    // true = cards replace basic attack (Deck Stacker)
+  "element_modifiers": {},               // {"electric": 0.5, "cryo": 1.5}
+  "base_hp": 90, "base_mp": 40, "hp_growth": 9, "mp_growth": 4,
+  "base_speed": 9, "move": 4, "jump": 3, "max_ap": 2,
+  "multipliers": {"strength": 1.0, "agility": 1.0, "intelligence": 1.0, "vitality": 1.0},
+  "growth": {"strength": 1, "agility": 1, "intelligence": 1, "vitality": 1},
+  "weapon_types": ["<type>"], "specialty_weapon_types": ["<type>"], "armor_types": ["light"],
+  "innate_ability_ids": ["<ability id>"],
+  "learnable_ability_ids": ["<ability id>", "<ability id>"],
+  "unlock_requirements": {"<class id>": 3},
+  "unlock_flag": ""                      // "secret_<id>" for secret classes
+}

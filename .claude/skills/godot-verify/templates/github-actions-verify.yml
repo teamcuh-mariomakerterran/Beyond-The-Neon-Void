@@ -1,0 +1,18 @@
+# OPTIONAL. Only if Brian wants CI and the repo is on GitHub (ASK BRIAN).
+# Save as .github/workflows/verify.yml. Linux runner, Godot 4.7.2 headless.
+name: verify
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Godot 4.7.2
+        run: |
+          curl -sSL -o g.zip https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip
+          unzip -q g.zip && chmod +x Godot_v4.7.2-stable_linux.x86_64
+          echo "GODOT=$PWD/Godot_v4.7.2-stable_linux.x86_64" >> $GITHUB_ENV
+      - name: Verify
+        run: bash .claude/skills/godot-verify/scripts/verify.sh . --keep-going

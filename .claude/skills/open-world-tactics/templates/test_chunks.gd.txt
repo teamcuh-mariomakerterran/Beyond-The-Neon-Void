@@ -1,0 +1,29 @@
+## Paste into tests/test_world.gd (and call it from run()) once ChunkStore lands in
+## src/world/chunk_store.gd. Uses user:// so it never writes into res://data.
+
+func test_chunk_store() -> void:
+	var dir := "user://test_chunks/perf/chunks"
+	DirAccess.make_dir_recursive_absolute(dir)
+	# two 4x4 chunks: (0,0) concrete, (1,0) missing (= default ocean)
+	var chunk := {"chunk": [0, 0], "tiles": {}, "particles": {}, "details": []}
+	for y in 4:
+		for x in 4:
+			chunk["tiles"]["%d,%d" % [x, y]] = [[0, "terrain:concrete"]]
+	var f := FileAccess.open(dir.path_join("0_0.json"), FileAccess.WRITE)
+	check(f != null and f.store_string(JSON.stringify(chunk)), "chunk file written")
+	f = null
+	var manifest := {"format": 3, "id": "perf", "kind": "world", "width": 8, "depth": 4,
+		"tile_width": 128, "tile_height": 64, "height_step": 32, "spawns": {"player": [[1, 1]], "enemy": []},
+		"streaming": {"chunk_size": 4, "dir": "user://test_chunks/perf/chunks", "default_tile": "terrain:water"}}
+	check(ChunkStore.is_streamed(manifest), "format 3 manifest detected")
+	var w := WorldMap.from_dict(manifest)
+	var cs := ChunkStore.from_manifest(manifest)
+	cs.flag_check = func(_f: String) -> bool: return false
+	var res := cs.update(w, Vector2i(1, 1), 1, 1)
+	check((res["added"] as Array).size() == 16, "16 cells streamed in (got %d)" % (res["added"] as Array).size())
+	check(w.tile_at(Vector2i(2, 2), 0) == "terrain:concrete", "streamed tile readable")
+	check(not w.tiles.has(Vector2i(5, 1)), "missing chunk stays empty (ocean quad, not tiles)")
+	var g := w.to_grid()
+	check(g.is_walkable(Vector2i(1, 1)) and not g.is_walkable(Vector2i(5, 1)), "to_grid: land walkable, ocean hole not")
+	res = cs.update(w, Vector2i(1, 1) + Vector2i(40, 0), 0, 0)
+	check(w.tiles.is_empty(), "far move unloads the chunk")

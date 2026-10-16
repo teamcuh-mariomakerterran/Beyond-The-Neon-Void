@@ -1,0 +1,28 @@
+## Paste into tests/test_suite.gd (or a new tests/test_ai.gd wired into tests/run_tests.gd).
+## Style follows the repo's check(cond, label) helper. Battles run with animate=false and
+## autobattle=true, so start_battle resolves synchronously.
+
+func test_ai_prefers_kill_over_chip() -> void:
+	GameManager.new_game()
+	var g := IsometricGrid.new()
+	g.setup(8, 8)
+	var me := _ai_unit(g, "doctrine_warden", 1, Vector2i(3, 3), 5)
+	var weak := _ai_unit(g, "doctrine_warden", 0, Vector2i(4, 3), 1)
+	var tough := _ai_unit(g, "doctrine_warden", 0, Vector2i(3, 4), 9)
+	weak.current_hp = 1
+	CombatManager.grid = g  # plan_turn reads battle.grid / get_opponents
+	CombatManager.units = [me, weak, tough]
+	var plan: Dictionary = AIBehavior.create("tactical").plan_turn(me, CombatManager)
+	check(plan["ability"] != null and plan["target_cell"] == weak.cell, "AI takes the sure kill")
+	for u in [me, weak, tough]:
+		u.queue_free()
+	CombatManager.units = []
+
+
+func _ai_unit(g: IsometricGrid, char_id: String, team: int, cell: Vector2i, level: int) -> Unit:
+	var u := Unit.new()
+	u.setup(ContentDB.get_character(char_id), team, level)
+	u.grid = g
+	u.place_at(cell)
+	root.add_child(u)
+	return u

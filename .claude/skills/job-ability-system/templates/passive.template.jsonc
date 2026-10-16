@@ -1,0 +1,16 @@
+// Append to data/passives.json. Effects with behaviour: counter nullify_debuff patch step_away overwatch adrenaline
+// mp_discount ap_discount damage_taken_mult damage_dealt_mult range_plus pass_through move_heal (else use stat_flat/stat_multipliers).
+{
+  "id": "<snake_case>",
+  "display_name": "<Title>",
+  "slot": "reaction",                    // reaction | support | movement
+  "class_id": "<class that teaches it>",
+  "trigger": "on_hit",                   // reactions only
+  "effect": "counter",
+  "chance": 0.4,
+  "params": {},
+  "stat_flat": {}, "stat_multipliers": {},
+  "chip_cost": 3,
+  "description": "<When X, Y.>"
+}
+// Reactions fire cue "reaction.<id>": add one to data/cues.json or it's silent.

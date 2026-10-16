@@ -1,0 +1,30 @@
+// Append to data/missions.json (an array). Strip comments first: JSON has none.
+// Keys == MissionResource @export vars; unknown keys are silently dropped.
+{
+  "id": "m03_<slug>",                       // m<NN>_ for story, side_ for side battles (proposed), demo_ for demos
+  "display_name": "<Title Case, 1-3 words, wry>",
+  "description": "<one line for the mission list>",
+  "chapter": 1,                             // metadata only today (story_chapter never advances)
+  "map_id": "<data/maps/<id>.json>",        // map needs spawns.player >= max_party_size cells, west side (enemies face west)
+  "music_id": "<assets/music/<id>.ogg>",
+  "briefing": "<In-voice. Name the mechanic: which anchor, which order, what is hidden. Brief like Otto would.>",
+  "intro_cutscene": "",                     // res://data/cutscenes/<x>.parallax.json
+  "outro_cutscene": "",
+  "enemies": [
+    {"character_id": "<characters.json id>", "cell": [12, 4], "level": 3, "statuses": ["shielded"]},  // boss gated by an anchor
+    {"character_id": "<id>", "cell": [11, 7], "level": 2, "statuses": ["cloaked"]},                    // ambusher, countered by a reveal device
+    {"character_id": "<id>", "cell": [13, 2], "level": 2}
+  ],
+  "guests": [],                             // [{"character_id", "cell", "level"}], AI allies; needed for protect/escort
+  "max_party_size": 5,
+  "win_condition": "defeat_target",         // defeat_all | defeat_target | survive | reach_cell
+  "win_param": "<char id | rounds | \"x,y\">",
+  "lose_condition": "party_wiped",          // party_wiped | leader_down | protect | time_limit
+  "lose_param": "",
+  "soul_coin_reward": 300,
+  "xp_reward": 160,
+  "microchip_reward": 2,
+  "loot_table_id": "loot_supply_works",
+  "story_flags_on_win": ["m03_done"],       // something MUST read this (news, NPC line, quest, next briefing)
+  "unlocks_mission_ids": []
+}

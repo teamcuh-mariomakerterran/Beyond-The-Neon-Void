@@ -1,0 +1,18 @@
+// Append to data/dispatch_missions.json (array). Success = clamp(0.5 + (score - difficulty)/100, 0.1, 0.95).
+{
+  "id": "dsp_<slug>",
+  "display_name": "<Job: Place>",
+  "description": "<one line, war-adjacent; the Doctrine war is background, never resolved>",
+  "duration_minutes": 20,                   // real-time minutes
+  "difficulty": 25,
+  "stat_weights": {"strength": 1.0, "vitality": 1.0},
+  "class_affinity": {"<class id>": 10},
+  "min_level": 1,
+  "loot_table_id": "loot_dispatch_salvage",
+  "soul_coin_reward": 120,
+  "xp_reward": 50,
+  "success_text": "<deadpan good outcome>",
+  "failure_text": "<deadpan bad outcome that callbacks success_text>",
+  "rumor_ids": ["r_<id in rumors.json>"],   // the franchise news layer; Black Doctrine shows up HERE
+  "required_flag": ""
+}

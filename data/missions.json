@@ -113,7 +113,10 @@
 			"m02_done",
 			"evidence:shift_roster"
 		],
-		"ends_chapter": true
+		"ends_chapter": true,
+		"unlocks_mission_ids": [
+			"relay_district"
+		]
 	},
 	{
 		"id": "demo_vault_breach",
@@ -262,8 +265,8 @@
 			{
 				"character_id": "test_hero",
 				"cell": [
-					0,
-					9
+					1,
+					8
 				],
 				"level": 3,
 				"controlled": true

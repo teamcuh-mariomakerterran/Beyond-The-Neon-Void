@@ -38,7 +38,28 @@ func _find(dir: String, id: String) -> AudioStream:
 		var p := dir.path_join(id + "." + ext)
 		if ResourceLoader.exists(p):
 			return load(p) as AudioStream
+	if dir == MUSIC_DIR:
+		var alias := music_alias(id)
+		if alias != "" and alias != id:
+			return _find(dir, alias)
 	return null
+
+
+## data/music.json: a game moment ("battle", "neon_gutter", "boss"...) to a
+## track name, or a list to pick from. Names that are files win.
+static var _music_map: Dictionary = {}
+
+
+static func music_alias(id: String) -> String:
+	if _music_map.is_empty() and FileAccess.file_exists("res://data/music.json"):
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/music.json"))
+		_music_map = d if d is Dictionary else {"_": ""}
+	var v: Variant = _music_map.get(id)
+	if v == null and id.begins_with("battle_"):
+		v = _music_map.get("battle")  # any battle without its own track
+	if v is Array and not (v as Array).is_empty():
+		return str(v[randi() % (v as Array).size()])
+	return str(v) if v is String else ""
 
 
 ## `music_id` is a name under assets/music ("battle_supply_works") or a full

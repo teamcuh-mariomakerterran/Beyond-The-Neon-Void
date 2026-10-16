@@ -1,0 +1,14 @@
+{"element_impact_name": {
+  "palette": {"main": "#ff2e88", "alt": "#b14dff", "core": "#ffffff*2.4"},
+  "shake": [3.0, 0.14],
+  "hit_stop": 0.05,
+  "parts": [
+    {"type": "flash", "pos": [0, -22], "life": 0.12, "size": 28, "colors": ["$main*1.8", "$core"], "rays": 3, "ray_len": 44, "ray_width": 2.5},
+    {"type": "streaks", "pos": [0, -22], "life": 0.16, "count": 8, "len": [12, 28], "width": 2, "travel": 28, "colors": ["$core", "$main*1.6"]},
+    {"type": "sim", "pos": [0, -20], "count": 16, "render": "line", "width": 1.6, "stretch": 0.035, "size": [2, 5], "speed": [140, 300], "dir": -90, "spread": 220, "gravity": 520, "floor": true, "bounce": 0.35, "plife": [0.25, 0.5], "colors": ["#ffffff*2.2", "$main*1.6", "$alt"]},
+    {"type": "sim", "pos": [0, -16], "blend": "mix", "render": "poly", "count": 7, "speed": [120, 240], "dir": -90, "spread": 150, "gravity": 700, "floor": true, "bounce": 0.3, "spin": [360, 900], "plife": [0.6, 1.0], "size": [3, 6], "fade": "late", "colors": ["#3a2e4e", "#221a30"]},
+    {"type": "ring", "pos": [0, -2], "life": 0.28, "r0": 4, "r1": 34, "width": 2.5, "dashes": 6, "colors": ["#ffffff*2", "$main*1.4"]},
+    {"type": "decal", "life": 1.2, "radius": 14, "squash": 0.5, "color": "#1a0d1f", "ember": "$main*1.3", "ember_time": 0.5},
+    {"type": "light", "pos": [0, -20], "life": 0.25, "radius": 110, "energy": 1.6}
+  ]
+}}

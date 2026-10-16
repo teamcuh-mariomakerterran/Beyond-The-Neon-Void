@@ -1,0 +1,30 @@
+// Append to data/quests.json (array). Add the id to the giver's npcs.json quest_ids.
+{
+  "id": "q_<giver>_<slug>",
+  "display_name": "<Title>",
+  "description": "<what the giver wants, in their voice, 1-2 sentences>",
+  "giver_npc_id": "<npcs.json id>",
+  "chain_id": "",                           // e.g. "<giver>_chain" for multi-step chains
+  "prerequisite_quest_ids": [],
+  "prerequisite_flags": [],                 // e.g. ["m01_done"]; every flag must be set somewhere
+  "min_chapter": 1,                         // keep 1 until story_chapter advancement exists
+  "objectives": [
+    {"type": "complete_mission", "target": "<mission id>", "count": 1, "text": "<imperative, short>"}
+    // {"type": "collect_item", "target": "<item id>", "count": 3, "text": "..."}   items are consumed on turn-in
+    // {"type": "talk_to", "target": "<npc id>", "count": 1, "text": "..."}
+    // {"type": "find_loot", "target": "<battle-map prop id WITH loot_item_id>", "count": 1, "text": "..."}
+    // {"type": "flag", "target": "<flag set by anchor/quest/mission>", "count": 1, "text": "..."}
+    // {"type": "defeat_character", "target": "<character id>", "count": 2, "text": "..."}
+  ],
+  "reward_soul_coins": 120,
+  "reward_xp": 60,
+  "reward_microchips": 0,
+  "reward_items": {},
+  "reward_flags": ["<giver>_<fact>"],
+  "unlocks_mission_ids": [],
+  "next_quest_id": "",
+  "accept_text": "<giver line on accept>",
+  "progress_text": "<giver line while active, a joke that also nudges>",
+  "complete_text": "<payoff line>",
+  "repeatable": false
+}

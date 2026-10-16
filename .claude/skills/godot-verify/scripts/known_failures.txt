@@ -1,0 +1,14 @@
+# Test failures that are EXPECTED in a checkout without the full art/fixture set.
+# One regex per line (matched against "FAIL ..." lines from tests/run_tests.gd).
+# A FAIL that matches is reported as "known (art/fixtures)"; anything else is NEW and fails the gate.
+# Measured on the 2026-10-07 box snapshot (Godot 4.7.2): suite 641/0, world 334/9 (all 9 below).
+# On Brian's full PC checkout these should PASS; if they do, delete the lines.
+demo world has no errors
+strip finds its _clip\.json
+overlay strip finds its _overlay_clip\.json
+real export loads with its overlay
+every ability, item and passive has an icon
+status icons
+class icons: [0-9]+ missing
+command icons
+style setting picks the pack

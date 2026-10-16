@@ -1,0 +1,24 @@
+// Append to data/abilities.json. class_id's class MUST list this id (innate or learnable).
+{
+  "id": "<snake_case>",
+  "display_name": "<Title>",
+  "class_id": "<class id>",
+  "description": "<one dry line the player reads>",
+  "kind": "ATTACK",                      // ATTACK | MAGIC (roll + damage) | HEAL | BUFF | DEBUFF | UTILITY | SPECIAL
+  "target": "ENEMY",                     // ENEMY | ALLY | SELF | ANY_UNIT | TILE
+  "ap_cost": 1, "mp_cost": 0, "hp_cost_pct": 0.0,
+  "chip_cost": 2,                        // terminal price (0 only if gated by item or class level)
+  "charge_ticks": 0,                     // >0 = FFT charge; keep <= 12 or the AI never uses it
+  "required_class_level": 0, "requires_item_id": "",
+  "range_min": 1, "range_max": 1, "uses_weapon_range": false, "vertical_tolerance": 3, "requires_los": false,
+  "shape": "SINGLE", "aoe_radius": 0, "friendly_fire": false,
+  "power": 1.6, "scaling_stat": "attack", "damage_type": "physical",   // magical: tech void essence electric plasma cryo
+  "accuracy_bonus": 0.0, "ignores_cover": false, "crit_bonus": 0.0,
+  "status_ids": [], "status_chance": 1.0,
+  "special": "",                         // see references/ability-schema.md; kinetic./time./terrain. need "script"
+  "script": "",                          // kinetic | time | terrain
+  "params": {},
+  "blue_learnable": false, "absorb_only": false,
+  "addition": {},                        // {"beats":[0.0,0.45],"window":0.16,"per_hit":0.3,"finisher":0.4}
+  "vfx_id": "", "cutscene": "", "flavor_text": ""
+}

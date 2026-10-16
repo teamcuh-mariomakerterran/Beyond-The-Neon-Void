@@ -1,0 +1,136 @@
+{
+  "demo_vault_breach": {
+    "capped": 2,
+    "runs": 3,
+    "teams": {
+      "enemy": {
+        "actions_per_turn": 0.355191256830601,
+        "ap_unused_per_turn": 1.63934426229508,
+        "charges": 0,
+        "healed": 0,
+        "idle_pct": 64.207650273224,
+        "max_ms": 50.235,
+        "moves_per_turn": 0.437158469945355,
+        "ms_per_turn": 11.4452841530055,
+        "top": [
+          "hymn_cleave×45",
+          "shift_whistle×43",
+          "rail_shot×24",
+          "overtime×12",
+          "bl_crown_hymn×6"
+        ],
+        "turns": 366
+      },
+      "player": {
+        "actions_per_turn": 0.444906444906445,
+        "ap_unused_per_turn": 1.50727650727651,
+        "charges": 33,
+        "healed": 1199,
+        "idle_pct": 55.5093555093555,
+        "max_ms": 46.206,
+        "moves_per_turn": 0.141372141372141,
+        "ms_per_turn": 11.238422037422,
+        "top": [
+          "rally_cry×196",
+          "aim_assist×99",
+          "chrome_cleave×46",
+          "mend_light×42",
+          "charge_shot×22",
+          "plasma_bolt×11"
+        ],
+        "turns": 962
+      }
+    },
+    "wins": 0
+  },
+  "m01_the_brew_plan": {
+    "capped": 0,
+    "runs": 3,
+    "teams": {
+      "enemy": {
+        "actions_per_turn": 0.785714285714286,
+        "ap_unused_per_turn": 1.21428571428571,
+        "charges": 0,
+        "healed": 56,
+        "idle_pct": 21.4285714285714,
+        "max_ms": 56.256,
+        "moves_per_turn": 0.946428571428571,
+        "ms_per_turn": 22.2839821428571,
+        "top": [
+          "rail_shot×16",
+          "bl_arc_lash×10",
+          "shift_whistle×7",
+          "basic_attack×6",
+          "bl_self_repair×3",
+          "stun_baton×2"
+        ],
+        "turns": 56
+      },
+      "player": {
+        "actions_per_turn": 0.865979381443299,
+        "ap_unused_per_turn": 0.948453608247423,
+        "charges": 33,
+        "healed": 393,
+        "idle_pct": 13.4020618556701,
+        "max_ms": 39.041,
+        "moves_per_turn": 0.917525773195876,
+        "ms_per_turn": 16.084824742268,
+        "top": [
+          "charge_shot×20",
+          "chrome_cleave×18",
+          "rally_cry×15",
+          "mend_light×14",
+          "plasma_bolt×13",
+          "aim_assist×2"
+        ],
+        "turns": 97
+      }
+    },
+    "wins": 3
+  },
+  "m02_shift_change": {
+    "capped": 0,
+    "runs": 3,
+    "teams": {
+      "enemy": {
+        "actions_per_turn": 0.829545454545455,
+        "ap_unused_per_turn": 1.14772727272727,
+        "charges": 0,
+        "healed": 259,
+        "idle_pct": 15.9090909090909,
+        "max_ms": 21.227,
+        "moves_per_turn": 0.943181818181818,
+        "ms_per_turn": 11.5164090909091,
+        "top": [
+          "quota_crusher×17",
+          "basic_attack×13",
+          "hymn_cleave×11",
+          "overtime×8",
+          "hymnal_mend×7",
+          "bl_essence_leech×5"
+        ],
+        "turns": 88
+      },
+      "player": {
+        "actions_per_turn": 0.957983193277311,
+        "ap_unused_per_turn": 0.714285714285714,
+        "charges": 43,
+        "healed": 474,
+        "idle_pct": 4.20168067226891,
+        "max_ms": 41.885,
+        "moves_per_turn": 0.92436974789916,
+        "ms_per_turn": 15.1982352941176,
+        "top": [
+          "chrome_cleave×39",
+          "charge_shot×25",
+          "mend_light×17",
+          "plasma_bolt×16",
+          "rally_cry×9",
+          "aim_assist×3"
+        ],
+        "turns": 119
+      }
+    },
+    "wins": 3
+  }
+}

@@ -1,0 +1,9 @@
+# Paste into tests/test_suite.gd and add `await test_my_feature()` to run().
+# Seeded, headless, no animation, cleans up after itself.
+func test_my_feature() -> void:
+	var res := await _run_battle("m01_the_brew_plan", ["chrome_warrior", "laser_archer", "blackcode_mage", "chrome_warrior", "whitelight_medic"], 4242)
+	check(res["ended"], "my feature: battle ended")
+	check(res["turns"] < CombatManager.MAX_TURNS, "my feature: no stalemate (%d turns)" % res["turns"])
+	# Determinism: same seed, same outcome
+	var again := await _run_battle("m01_the_brew_plan", ["chrome_warrior", "laser_archer", "blackcode_mage", "chrome_warrior", "whitelight_medic"], 4242)
+	check(again["victory"] == res["victory"] and again["turns"] == res["turns"], "my feature: seeded battle replays identically")

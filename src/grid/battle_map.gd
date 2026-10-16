@@ -73,7 +73,12 @@ func _ready() -> void:
 	barks.world = world
 	add_child(barks)
 	var units := _spawn_units()
-	AudioManager.play_music(mission.music_id)
+	var boss_fight := mission.enemies.any(func(e: Dictionary) -> bool:
+		var cd := ContentDB.get_character(str(e.get("character_id", "")))
+		return cd != null and cd.is_boss)
+	# A mission naming a real track keeps it; otherwise bosses get boss music.
+	var explicit := mission.music_id != "" and (mission.music_id.begins_with("res://") or ResourceLoader.exists("res://assets/music/%s.mp3" % mission.music_id) or ResourceLoader.exists("res://assets/music/%s.ogg" % mission.music_id))
+	AudioManager.play_music(mission.music_id if explicit or (mission.music_id != "" and not boss_fight) else ("boss" if boss_fight else "battle"))
 	AudioManager.play_ambience(Sfx.ambience_for_map(map_data), -16.0)
 	hud.show_banner(mission.display_name.to_upper(), NeonTheme.CYAN, 1.2)
 	hud.add_log("[color=#8f84ad]%s[/color]" % mission.briefing)
@@ -204,6 +209,11 @@ func _spawn_prop(prop: Dictionary) -> void:
 func _spawn_units() -> Array[Node]:
 	var out: Array[Node] = []
 	var spawns: Array = map_data.get("spawns", {}).get("player", [])
+	# Spawn tiles a guest already stands on are skipped (no two units per tile).
+	var taken := {}
+	for g0: Dictionary in mission.guests:
+		taken[Vector2i(int(g0["cell"][0]), int(g0["cell"][1]))] = true
+	spawns = spawns.filter(func(sp: Array) -> bool: return not taken.has(Vector2i(int(sp[0]), int(sp[1]))))
 	var i := 0
 	for c in GameManager.get_party_members().slice(0, mission.max_party_size):
 		if i >= spawns.size():
