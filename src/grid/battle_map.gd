@@ -603,17 +603,19 @@ func _use_anchor(u: Node, a: Dictionary, verb: String = "") -> void:
 	_after_action()
 
 
-## CombatManager: a unit finished walking `path` (traps along the way go off).
-func on_unit_path(unit: Node, path: Array) -> void:
-	if ix == null:
-		return
-	for c: Vector2i in path:
-		if not unit.is_alive():
-			return
-		if not ix.on_enter(c, unit).is_empty():
-			_float(unit, "TRAP!", Color(2.0, 0.6, 0.2), true, 0.6)
-			if CombatManager.animate:
-				await get_tree().create_timer(0.25).timeout
+## CombatManager: a trap went off under `unit` (the rules already ran it).
+func on_trap_sprung(unit: Node, _cell: Vector2i) -> void:
+	_float(unit, "TRAP!", Color(2.0, 0.6, 0.2), true, 0.6)
+	if CombatManager.animate:
+		await get_tree().create_timer(0.25).timeout
+
+
+## CombatManager: the AI used an anchor (show it like a player's use).
+func ix_ai_used(unit: Node, a: Dictionary, res: Dictionary) -> void:
+	hud.add_log("[color=#ffd23f]%s %s %s[/color]" % [unit.display_name(), "uses" if res["ok"] else "fails at", Interactions.title(a)])
+	_float(unit, Interactions.kind_info(str(a.get("kind", "")))["verb"], Color(2.0, 1.6, 0.4), false, 0.5)
+	if CombatManager.animate:
+		await get_tree().create_timer(0.35).timeout
 
 
 ## The relay is hacked / destroyed: masks off, the HUD glitches to the truth.

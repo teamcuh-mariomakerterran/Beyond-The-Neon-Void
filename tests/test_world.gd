@@ -43,6 +43,7 @@ func run(p_tree: SceneTree) -> int:
 	test_shift_and_news()
 	test_external_library()
 	await test_visible_threats()
+	test_ai_anchors()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2132,3 +2133,57 @@ func test_visible_threats() -> void:
 	ContentDB.maps.erase(w.id)
 	CampaignManager.current_explore = {}
 	await tree.process_frame
+
+
+func test_ai_anchors() -> void:
+	# An 8×8 yard cut in two by a shut door (column x=4); a terminal on our
+	# side opens it. The foe is out of reach until someone hacks it.
+	var w := _map()
+	w.id = "t_ai_door"
+	for x in 8:
+		for y in 8:
+			w.set_tile(Vector2i(x, y), 0, "terrain:concrete")
+	for y in 8:
+		w.gameplay[Vector2i(4, y)] = {"walkable": false, "group": "yard_door"}
+	var term := w.add_anchor(Vector2i(2, 6), "terminal")
+	term["actions"] = [{"do": "open", "arg": "yard_door"}]
+	var g := w.to_grid()
+	var ix := Interactions.new().setup(w, g, null, "battle")
+	var hero := _pu(g, Unit.Team.PLAYER, Vector2i(1, 1))
+	var foe := _pu(g, Unit.Team.ENEMY, Vector2i(6, 1))
+	var keep := [CombatManager.grid, CombatManager.units.duplicate(), CombatManager.ix]
+	CombatManager.grid = g
+	CombatManager.units.assign([hero, foe])
+	CombatManager.ix = ix
+	var ai := AIBehavior.create("tactical")
+	check(AIAnchors.cut_off(hero, g, [foe]), "the shut door cuts the crew off")
+	check(AIAnchors.score(hero, term, ix, CombatManager, ai, true) >= AIAnchors.OPEN_STUCK, "opening the way scores high when cut off")
+	var plan := ai.plan_turn(hero, CombatManager)
+	var aim: Dictionary = plan.get("anchor", {})
+	check((not aim.is_empty() and aim["id"] == term["id"]) or IsometricGrid.distance(plan["move_to"], Vector2i(2, 6)) < IsometricGrid.distance(hero.cell, Vector2i(2, 6)), "the AI heads for (or uses) the door terminal (%s)" % plan)
+	hero.place_at(Vector2i(2, 5))
+	plan = ai.plan_turn(hero, CombatManager)
+	check(not (plan.get("anchor", {}) as Dictionary).is_empty(), "next to it, the AI hacks it")
+	ix.interact(term, hero)
+	check(ix.is_open("yard_door") and not AIAnchors.cut_off(hero, g, [foe]), "the door opens and the way is clear")
+	# Sequences: only the next step scores; an out-of-order press is avoided.
+	var s1 := w.add_anchor(Vector2i(0, 0), "switch")
+	var s2 := w.add_anchor(Vector2i(0, 7), "switch")
+	for k in 2:
+		var sw: Dictionary = [s1, s2][k]
+		sw["sequence"] = "t_core"
+		sw["step"] = k + 1
+		sw["actions"] = []
+	s2["actions"] = [{"do": "unshield", "arg": ""}]
+	foe.apply_status("shielded")
+	check(AIAnchors.score(hero, s2, ix, CombatManager, ai, false) < 0.0, "pressing step 2 first is avoided")
+	check(AIAnchors.score(hero, s1, ix, CombatManager, ai, false) > 0.0, "step 1 borrows the shield drop's value")
+	ix.interact(s1, hero)
+	check(AIAnchors.score(hero, s2, ix, CombatManager, ai, false) >= ai.kill_bonus * 1.5, "the final relay drops the shield: worth more than a kill")
+	# Enemies leave the map alone unless that's switched on.
+	check(not AIAnchors.allowed(foe, CombatManager) and AIAnchors.allowed(hero, CombatManager), "enemy anchor use is off by default")
+	CombatManager.grid = keep[0]
+	CombatManager.units.assign(keep[1])
+	CombatManager.ix = keep[2]
+	hero.queue_free()
+	foe.queue_free()

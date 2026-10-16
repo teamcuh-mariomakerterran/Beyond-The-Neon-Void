@@ -317,7 +317,7 @@ func _run_battle(mission_id: String, party_classes: Array, seed_value: int) -> D
 		_spawn(g, ContentDB.get_character(e["character_id"]), Unit.Team.ENEMY, Vector2i(e["cell"][0], e["cell"][1]), int(e.get("level", 1)), units)
 	CombatManager.animate = false
 	CombatManager.autobattle = true
-	CombatManager.start_battle(g, units, mission, null, seed_value)
+	CombatManager.start_battle(g, units, mission, null, seed_value, Interactions.for_battle(map, g))  # anchors + traps, as in the game
 	var result := {"victory": CombatManager.victory, "turns": CombatManager.turn_number, "ended": CombatManager.state == CombatManager.State.ENDED, "units": CombatManager.units.size()}
 	for u in CombatManager.units:
 		if is_instance_valid(u):

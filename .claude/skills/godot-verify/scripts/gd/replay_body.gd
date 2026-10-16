@@ -100,7 +100,7 @@ func _battle(mission: MissionResource, classes: Array, level: int, seed_value: i
 	_trace = []
 	CombatManager.animate = false
 	CombatManager.autobattle = true
-	CombatManager.start_battle(g, units, mission, null, seed_value)
+	CombatManager.start_battle(g, units, mission, null, seed_value, Interactions.for_battle(map, g))  # anchors + traps, as in the game
 	var trace := _trace.duplicate()
 	var res := {"victory": CombatManager.victory, "turns": CombatManager.turn_number,
 		"ended": CombatManager.state == CombatManager.State.ENDED,

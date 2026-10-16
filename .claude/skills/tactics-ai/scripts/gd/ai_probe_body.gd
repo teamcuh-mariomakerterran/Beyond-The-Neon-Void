@@ -125,7 +125,7 @@ func _battle(mission: MissionResource, level: int, seed_value: int) -> Dictionar
 			units.append(u)
 	CombatManager.animate = false
 	CombatManager.autobattle = true
-	CombatManager.start_battle(g, units, mission, null, seed_value)
+	CombatManager.start_battle(g, units, mission, null, seed_value, Interactions.for_battle(map, g))  # anchors + traps, as in the game
 	var res := {"victory": CombatManager.victory, "capped": CombatManager.turn_number >= CombatManager.MAX_TURNS}
 	for u in CombatManager.units:
 		if is_instance_valid(u):

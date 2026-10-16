@@ -123,6 +123,14 @@ static func title(a: Dictionary) -> String:
 	return str(a.get("label", "")) if str(a.get("label", "")) != "" else str(info["name"])
 
 
+## A battle's anchors from map data, with no host (headless sims, tests):
+## null when the map has none. `grid` must be the battle grid itself.
+static func for_battle(map: Dictionary, grid: IsometricGrid) -> Interactions:
+	if int(map.get("format", 1)) < 2 or (map.get("anchors", []) as Array).is_empty():
+		return null
+	return Interactions.new().setup(WorldMap.from_dict(map), grid, null, "battle")
+
+
 func setup(p_world: WorldMap, p_grid: IsometricGrid, p_host: Object = null, p_scene: String = "battle") -> Interactions:
 	world = p_world
 	grid = p_grid

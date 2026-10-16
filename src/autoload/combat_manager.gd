@@ -32,13 +32,20 @@ var victory: bool = false
 var spoils := {"soul_coins": 0, "microchips": 0}
 ## Who did what this battle (Shift Report, news).
 var stats := BattleStats.new()
+## The battle map's anchors (terminals, switches, traps), or null. BattleMap
+## passes its own; headless sims build one with no host, so the AI and traps
+## behave the same with or without a screen.
+var ix: Interactions = null
+## Whether the enemy AI may use anchors too (ASK BRIAN; off for now).
+var enemy_anchor_use := false
 var _player_done: bool = false
 
 
 # --- Setup -----------------------------------------------------------------
 
-func start_battle(p_grid: IsometricGrid, p_units: Array[Node], p_mission: MissionResource, p_map: Node2D = null, seed_value: int = -1) -> void:
+func start_battle(p_grid: IsometricGrid, p_units: Array[Node], p_mission: MissionResource, p_map: Node2D = null, seed_value: int = -1, p_ix: Interactions = null) -> void:
 	grid = p_grid
+	ix = p_ix if p_ix else (p_map.get("ix") as Interactions if p_map and "ix" in p_map else null)
 	map_node = p_map
 	mission = p_mission
 	units = p_units.duplicate()
@@ -71,6 +78,7 @@ func stop_battle() -> void:
 	units.clear()
 	grid = null
 	map_node = null
+	ix = null
 
 
 # --- Queries ---------------------------------------------------------------
@@ -259,8 +267,13 @@ func request_move(unit: Node, cell: Vector2i) -> bool:
 	var prev := state
 	state = State.EXECUTING
 	await unit.move_along(path, animate)
-	if map_node and map_node.has_method("on_unit_path"):
-		await map_node.on_unit_path(unit, path)
+	# Traps along the way go off (rules side, so headless sims spring them too).
+	if ix:
+		for c: Vector2i in path:
+			if not unit.is_alive():
+				break
+			if not ix.on_enter(c, unit).is_empty() and map_node and map_node.has_method("on_trap_sprung"):
+				await map_node.on_trap_sprung(unit, c)
 	if unit.is_alive():
 		await Passives.after_move(self, unit)
 	if state == State.EXECUTING:
@@ -401,7 +414,18 @@ func _ai_turn(unit: Node) -> void:
 	var ability: Ability = plan.get("ability")
 	if animate and is_inside_tree():
 		await get_tree().create_timer(0.3).timeout
-	if plan["act_first"] and ability:
+	var anchor: Dictionary = plan.get("anchor", {})
+	if not anchor.is_empty() and ix:
+		if plan["move_to"] != unit.cell:
+			await request_move(unit, plan["move_to"])
+		if unit.is_alive() and state != State.ENDED and ix.in_reach(anchor, unit.cell):
+			unit.face_towards(Interactions.cell_of(anchor))
+			var res := ix.interact(anchor, unit)
+			EventBus.log_message.emit("%s %s %s." % [unit.display_name(), "uses" if res["ok"] else "fails at", Interactions.title(anchor)])
+			if map_node and map_node.has_method("ix_ai_used"):
+				await map_node.ix_ai_used(unit, anchor, res)
+			_check_battle_end()
+	elif plan["act_first"] and ability:
 		await request_ability(unit, ability, plan["target_cell"])
 		if unit.is_alive() and plan["move_to"] != unit.cell:
 			await request_move(unit, plan["move_to"])

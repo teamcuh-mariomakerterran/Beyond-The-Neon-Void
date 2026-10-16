@@ -80,9 +80,20 @@ func plan_turn(unit: Node, battle: Node) -> Dictionary:
 		acts[c] = _best_action_from(unit, c, abilities, grid)
 		if acts[c]["ability"] != null and acts[c]["score"] > 1.0 and (acts[c]["ability"] as Ability).is_offensive():
 			any_action = true
+	# Map anchors (terminals, switches, devices): see AIAnchors.
+	var ix: Interactions = battle.get("ix") if AIAnchors.allowed(unit, battle) else null
+	var stuck := ix != null and AIAnchors.cut_off(unit, grid, foes)
+	var goal := {}
+	if ix and (not any_action or stuck):
+		goal = AIAnchors.goal(unit, ix, battle, self, stuck)
 	# No attack in reach anywhere (buffing friends doesn't count): march toward
-	# the enemy instead of idling in cover.
-	if not any_action and not foes.is_empty():
+	# the enemy instead of idling in cover, or toward the anchor that would
+	# open the way (a door terminal, the next shield relay).
+	if (not any_action or stuck) and not goal.is_empty():
+		var gcell := Interactions.cell_of(goal["anchor"])
+		for c in moves:
+			pos_scores[c] -= approach_weight * IsometricGrid.distance(c, gcell)
+	elif not any_action and not foes.is_empty():
 		for c in moves:
 			pos_scores[c] -= approach_weight * _nearest_dist(c, foes)
 	for c in moves:
@@ -90,6 +101,16 @@ func plan_turn(unit: Node, battle: Node) -> Dictionary:
 		var total: float = pos_scores[c] + act["score"]
 		if total > best["score"]:
 			best = {"move_to": c, "ability": act["ability"], "target_cell": act["cell"], "act_first": false, "score": total}
+
+	# Plan C: walk to an anchor and use it.
+	if ix and unit.can_act():
+		for c in moves:
+			for a: Dictionary in ix.usable_from(c, unit):
+				if str(a.get("kind", "")) == "trap":
+					continue
+				var v := AIAnchors.score(unit, a, ix, battle, self, stuck)
+				if v > 1.0 and pos_scores[c] + v > best["score"]:
+					best = {"move_to": c, "ability": null, "anchor": a, "target_cell": Interactions.cell_of(a), "act_first": false, "score": pos_scores[c] + v}
 
 	# Plan B: act from here, then retreat to the best position.
 	if hit_and_run and unit.can_move() and not abilities.is_empty():
