@@ -46,6 +46,7 @@ func run(p_tree: SceneTree) -> int:
 	test_ai_anchors()
 	test_vfx_clip()
 	test_encounter_gen()
+	await test_dialog_tool()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2294,3 +2295,40 @@ func test_encounter_gen() -> void:
 	var s := EncounterGen.make_entry("t_gen2", secret, 5, 2)
 	check((s["enemies"] as Array)[0]["character_id"] == "essence_wraith" and (s["enemies"] as Array).all(func(x: Dictionary) -> bool: return int(x["level"]) >= 40), "fixed-level zones hold their level; the boss always comes")
 	check(EncounterGen.has_generator({"encounter": {"generate": secret}}) and not EncounterGen.has_generator({"encounter": {"missions": ["x"]}}), "generator detection")
+
+
+func test_dialog_tool() -> void:
+	var nodes: Array[Dictionary] = [{"id": "a", "text": "Hi.", "next": "b"}, {"id": "b", "text": "Pick.", "choices": [{"text": "Yes", "next": "c"}, {"text": "No"}]},
+		{"id": "c", "text": "Good."}, {"id": "lost", "text": "Nobody gets here."}]
+	var p := DialogTools.problems(nodes)
+	check(p.size() == 1 and p[0].contains("lost"), "unreachable nodes are flagged")
+	check(DialogTools.rename(nodes, "c", "end") and nodes[1]["choices"][0]["next"] == "end" and not DialogTools.rename(nodes, "a", "b"), "rename follows links, refuses taken ids")
+	DialogTools.remove(nodes, "end")
+	check(not nodes[1]["choices"][0].has("next") and nodes.size() == 3, "removing a node ends links to it")
+	DialogTools.auto_layout(nodes)
+	check(nodes.all(func(d: Dictionary) -> bool: return d.has("pos")) and float(nodes[1]["pos"][0]) > float(nodes[0]["pos"][0]), "layout runs left to right")
+	check(DialogTools.new_id(nodes, "a") == "a_2", "fresh ids")
+	check(DialogTools.voice_path("otto", "greet") == "res://assets/voice/dialog/otto_greet.ogg", "voice naming convention")
+	# The Forge tab edits through the same paths as the mouse.
+	var npc := NPCResource.new()
+	npc.id = "t_dialog_npc"
+	npc.display_name = "Tester"
+	npc.dialog = [{"id": "start", "text": "Hello."}]
+	var fd := ForgeDialog.new()
+	tree.root.add_child(fd)
+	await tree.process_frame
+	fd.npc = npc
+	fd.rebuild()
+	var nid := fd.add_node(false, "start")
+	check(npc.dialog.size() == 2 and npc.dialog[0]["next"] == nid, "dragging into empty space makes a linked line")
+	var cid := fd.add_node(true)
+	fd.link(cid, 1, "start")
+	check(npc.dialog[2]["choices"][1]["next"] == "start", "choice ports link per answer")
+	await tree.process_frame
+	var gnodes := fd.graph.get_children().filter(func(c: Node) -> bool: return c is GraphNode)
+	check(gnodes.size() == 3 and fd.graph.get_connection_list().size() == 2, "graph shows every node and link")
+	fd.remove_node(nid)
+	check(not npc.dialog[0].has("next"), "deleting a node unlinks it")
+	check(DialogTools.voice_script(npc).begins_with("file\tspeaker\tline\nt_dialog_npc_start.ogg\tTester\tHello."), "voice script lists file, speaker, line")
+	fd.queue_free()
+	await tree.process_frame

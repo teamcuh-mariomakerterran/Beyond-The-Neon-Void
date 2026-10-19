@@ -19,6 +19,7 @@ const SECTIONS := [
 	["cutscenes", "CUTSCENES", "cutscenes", ""],
 	["characters", "CHARACTERS", "bucket", "characters"],
 	["npcs", "NPCS & DIALOG", "bucket", "npcs"],
+	["dialog", "DIALOG GRAPH", "dialog", "npcs"],
 	["quests", "QUESTS", "bucket", "quests"],
 	["missions", "MISSIONS", "bucket", "missions"],
 	["classes", "CLASSES", "bucket", "classes"],
@@ -152,6 +153,7 @@ func _count_for(s: Array) -> int:
 		"maps": return ContentDB.maps.size()
 		"world": return ContentDB.maps.values().filter(func(m: Dictionary) -> bool: return int(m.get("format", 1)) >= 2).size()
 		"cutscenes": return ForgeStore.list_cutscenes().size()
+		"dialog": return ContentDB.get_ids("npcs").size()
 		"external": return ExternalLibrary.folders().size()
 		"assets":
 			var n := 0
@@ -221,6 +223,12 @@ func show_section(id: String) -> void:
 			var cs := ForgeCutscenes.new()
 			cs.status.connect(flash)
 			_body.add_child(cs)
+		"dialog":
+			var dlg := ForgeDialog.new()
+			dlg.status.connect(flash)
+			dlg.edited.connect(_mark_dirty)
+			dlg.save_requested.connect(save_all)
+			_body.add_child(dlg)
 		"world":
 			_world = ForgeWorldPainter.new()
 			_world.status.connect(func(t: String, c: Color) -> void: flash(t, c); _refresh_rail())

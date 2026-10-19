@@ -145,7 +145,9 @@ func _show_node(node: Dictionary) -> void:
 	var speaker := str(node.get("speaker", ""))
 	if speaker == "" and _npc:
 		speaker = _npc.display_name
-	_show_line({"speaker": speaker, "text": str(node.get("text", "")), "voice_path": str(node.get("voice_path", ""))}, node.get("choices", []))
+	# No voice_path: the conventional assets/voice/dialog/<npc>_<node> file, if recorded.
+	var voice := DialogTools.voice_for(_npc.id, node) if _npc else str(node.get("voice_path", ""))
+	_show_line({"speaker": speaker, "text": str(node.get("text", "")), "voice_path": voice}, node.get("choices", []))
 
 
 func _show_line(line: Dictionary, choices: Array = []) -> void:
@@ -222,7 +224,7 @@ func _set_portrait(path: String) -> void:
 
 func _play_voice(path: String) -> void:
 	_voice.stop()
-	var stream := load_audio(path)
+	var stream := load_audio(Barks.voice_file(path))  # .ogg / .wav / .mp3 under the same name
 	if stream:
 		_voice.stream = stream
 		_voice.play()
