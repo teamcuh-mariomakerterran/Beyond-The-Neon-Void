@@ -1,0 +1,4676 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>Black Doctrine — Chirp Studio</title>
+<style>
+:root{
+  --bg0:#0a0d10; --bg1:#0f1417; --bg2:#141a1f; --bg3:#1a2227;
+  --line:#243039; --line-soft:#1b242b;
+  --fg0:#e7f1f3; --fg1:#a9bac2; --fg2:#71858e;
+  --neon:#39ff9a; --neon-dim:#1d8c56; --purple:#b46cff; --purple-dim:#6a3fa0;
+  --amber:#f2c14e; --red:#ff5050; --cyan:#35e0ff;
+  --mono: ui-monospace, "Cascadia Code", "Source Code Pro", Consolas, monospace;
+  --disp: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --radius: 8px;
+  --accent: var(--neon);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light){ :root{ --bg0:#0a0d10; } }
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0; background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(180,108,255,0.06), transparent 60%),
+    radial-gradient(1200px 700px at 110% 10%, rgba(57,255,154,0.05), transparent 55%),
+    var(--bg0);
+  color:var(--fg0); font-family:var(--disp); font-size:14px; line-height:1.4;
+}
+.scanlines{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.03;
+  background:repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px);}
+button{font-family:inherit; cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+::selection{background:var(--neon); color:#031b10;}
+code,.mono{font-family:var(--mono);}
+
+/* ---------- layout ---------- */
+#app{position:relative; z-index:1; display:grid; grid-template-rows:auto auto 1fr auto; min-height:100vh;}
+
+.topbar{
+  display:flex; align-items:center; gap:18px; padding:12px 18px;
+  background:linear-gradient(180deg, var(--bg2), var(--bg1));
+  border-bottom:1px solid var(--line); flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:10px; margin-inline-end:auto;}
+.brand .mark{
+  width:30px;height:30px;border-radius:7px;
+  background:conic-gradient(from 210deg, var(--neon), var(--purple), var(--cyan), var(--neon));
+  box-shadow:0 0 18px rgba(57,255,154,.35);
+}
+.brand b{font-size:15px; letter-spacing:.04em;}
+.brand small{display:block; color:var(--fg2); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;}
+
+.field{display:flex; flex-direction:column; gap:3px;}
+.field label{font-size:10px; text-transform:uppercase; letter-spacing:.09em; color:var(--fg2);}
+.field select, .field .segbtns{min-width:150px;}
+select{
+  background:var(--bg3); color:var(--fg0); border:1px solid var(--line);
+  border-radius:var(--radius); padding:7px 10px; font-size:13px;
+}
+select:focus{outline:2px solid var(--neon-dim); outline-offset:1px;}
+
+.segbtns{display:flex; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+.segbtns button{
+  flex:1; background:var(--bg3); color:var(--fg1); border:none; padding:7px 12px; font-size:12.5px;
+  border-inline-start:1px solid var(--line); transition:background .12s, color .12s;
+}
+.segbtns button:first-child{border-inline-start:none;}
+.segbtns button[aria-pressed="true"]{background:var(--neon); color:#04150c; font-weight:600; box-shadow:inset 0 0 0 1px rgba(0,0,0,.2);}
+.segbtns button:hover:not([aria-pressed="true"]){background:#202a30;}
+
+.statuspill{
+  display:flex; align-items:center; gap:7px; padding:6px 12px; border-radius:999px;
+  background:var(--bg3); border:1px solid var(--line); font-size:11.5px; color:var(--fg1);
+}
+.statuspill .dot{width:7px;height:7px;border-radius:50%; background:var(--fg2);}
+.statuspill.ok .dot{background:var(--neon); box-shadow:0 0 6px var(--neon);}
+.statuspill.warn .dot{background:var(--amber); box-shadow:0 0 6px var(--amber);}
+
+.tabbar{display:flex; gap:2px; padding:0 18px; background:var(--bg1); border-bottom:1px solid var(--line);}
+.tabbar button{
+  background:transparent; border:none; color:var(--fg2); padding:10px 16px; font-size:12.5px;
+  letter-spacing:.03em; border-bottom:2px solid transparent; text-transform:uppercase;
+}
+.tabbar button[aria-selected="true"]{color:var(--fg0); border-bottom-color:var(--neon);}
+.tabbar button:hover{color:var(--fg0);}
+
+.wrap{display:grid; grid-template-columns:260px 1fr; gap:0; min-height:0;}
+.rail{
+  border-inline-end:1px solid var(--line); background:var(--bg1); padding:14px; overflow-y:auto;
+  display:flex; flex-direction:column; gap:16px; max-height:calc(100vh - 150px);
+}
+.rail h4{margin:0 0 8px; font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; color:var(--fg2);}
+.rail .box{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:10px;}
+.kv{display:flex; justify-content:space-between; font-size:12px; padding:3px 0; color:var(--fg1);}
+.kv b{color:var(--fg0); font-weight:600;}
+
+.main{padding:16px 18px; overflow-y:auto; max-height:calc(100vh - 150px);}
+.section-title{display:flex; align-items:center; gap:10px; margin:18px 0 8px;}
+.section-title h3{margin:0; font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:var(--fg1);}
+.section-title .line{flex:1; height:1px; background:var(--line);}
+.section-title:first-child{margin-top:0;}
+
+.row{
+  display:grid; grid-template-columns:150px 1fr auto; gap:12px; align-items:stretch;
+  background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius);
+  padding:10px 12px; margin-bottom:8px; transition:border-color .15s;
+}
+.row:hover{border-color:#30424d;}
+.row .ability{display:flex; flex-direction:column; gap:4px; justify-content:center;}
+.row .ability .name{font-weight:600; font-size:12.5px;}
+.row .ability .emo{font-size:10px; color:var(--fg2); text-transform:uppercase; letter-spacing:.06em;}
+.row .scripttext{
+  background:var(--bg3); border:1px solid var(--line-soft); border-radius:6px; color:var(--fg0);
+  padding:8px 10px; font-size:13px; font-family:var(--mono); resize:vertical; min-height:40px; width:100%;
+}
+.row .scripttext:focus{outline:1px solid var(--neon-dim);}
+.row .actions{display:flex; flex-direction:column; gap:6px; align-items:stretch; min-width:150px;}
+.btn{
+  background:var(--bg3); color:var(--fg0); border:1px solid var(--line); border-radius:6px;
+  padding:7px 10px; font-size:11.5px; display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:transform .08s, background .12s;
+}
+.btn:hover{background:#212c33;}
+.btn:active{transform:scale(.97);}
+.btn.primary{background:var(--neon); color:#04150c; font-weight:700; border-color:var(--neon);}
+.btn.primary:hover{background:#4dffac;}
+.btn.ghost{background:transparent;}
+.btn.small{padding:4px 8px; font-size:10.5px;}
+.btn[disabled]{opacity:.4; cursor:not-allowed;}
+
+.dropzone{
+  border:1px dashed var(--line); border-radius:6px; padding:6px 8px; font-size:10.5px; color:var(--fg2);
+  text-align:center; transition:border-color .12s, background .12s;
+}
+.dropzone.drag{border-color:var(--neon); background:rgba(57,255,154,.06); color:var(--neon);}
+.badge{
+  font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; padding:3px 7px; border-radius:999px;
+  display:inline-flex; align-items:center; gap:4px; width:fit-content;
+}
+.badge.pending{background:#2a1d10; color:var(--amber);}
+.badge.indexed{background:#0f2a1c; color:var(--neon);}
+.badge.wavonly{background:#2a2410; color:var(--amber);}
+.meter{height:3px; background:var(--line-soft); border-radius:2px; overflow:hidden; margin-top:3px;}
+.meter i{display:block; height:100%; background:var(--neon);}
+
+.profilecard{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:12px; margin-bottom:10px;}
+.profilecard .ph{display:flex; align-items:center; gap:8px; margin-bottom:6px;}
+.swatch{width:10px;height:10px;border-radius:3px;}
+.gridform{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;}
+.gridform label{font-size:10px; color:var(--fg2); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:3px;}
+.gridform input{width:100%; background:var(--bg3); border:1px solid var(--line); color:var(--fg0); border-radius:5px; padding:6px 8px; font-size:12.5px;}
+.varlist{display:flex; flex-direction:column; gap:6px; margin-top:8px;}
+.varitem{display:flex; justify-content:space-between; align-items:center; background:var(--bg3); border:1px solid var(--line-soft); border-radius:6px; padding:6px 9px; font-size:11.5px;}
+
+textarea.ingest{
+  width:100%; min-height:220px; background:var(--bg2); color:var(--fg0); border:1px solid var(--line);
+  border-radius:var(--radius); padding:10px; font-family:var(--mono); font-size:12px;
+}
+.ingest-result{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:10px; font-size:12px; margin-top:10px; white-space:pre-wrap; max-height:200px; overflow:auto;}
+
+.bannerwarn{background:#2a2410; border:1px solid #574a1c; color:var(--amber); border-radius:var(--radius); padding:10px 14px; font-size:12px; margin-bottom:12px;}
+.bannerok{background:#0f2a1c; border:1px solid #1d5c3c; color:var(--neon); border-radius:var(--radius); padding:10px 14px; font-size:12px; margin-bottom:12px;}
+
+.toasts{position:fixed; bottom:18px; inset-inline-end:18px; display:flex; flex-direction:column; gap:8px; z-index:50;}
+.toast{background:var(--bg3); border:1px solid var(--neon-dim); color:var(--fg0); padding:9px 14px; border-radius:7px; font-size:12.5px;
+  box-shadow:0 6px 20px rgba(0,0,0,.4); animation:slidein .18s ease-out;}
+@keyframes slidein{from{transform:translateY(8px); opacity:0;} to{transform:translateY(0); opacity:1;}}
+
+.statusbar{
+  display:flex; align-items:center; gap:16px; padding:8px 18px; background:var(--bg1); border-top:1px solid var(--line);
+  font-size:11px; color:var(--fg2);
+}
+.statusbar b{color:var(--fg0);}
+.kbd{background:var(--bg3); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-family:var(--mono); font-size:10.5px; color:var(--fg1);}
+
+.exportgrid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.readout{font-family:var(--mono); font-size:11.5px; background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:10px; max-height:320px; overflow:auto; white-space:pre-wrap;}
+
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+@media (max-width: 880px){ .wrap{grid-template-columns:1fr;} .row{grid-template-columns:1fr;} }
+
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark"></div>
+      <div><b>BLACK DOCTRINE</b><small>Chirp Studio &amp; Pipeline Engine</small></div>
+    </div>
+
+    <div class="field">
+      <label>Sex</label>
+      <div class="segbtns" id="sexSeg">
+        <button data-val="male" aria-pressed="true">Male</button>
+        <button data-val="female" aria-pressed="false">Female</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Personality</label>
+      <select id="personalitySel"></select>
+    </div>
+
+    <div class="field">
+      <label>Roster Variant</label>
+      <select id="variantSel"><option value="">Base profile</option></select>
+    </div>
+
+    <div class="field">
+      <label>Mode</label>
+      <div class="segbtns" id="modeSeg">
+        <button data-val="combat" aria-pressed="true">Combat Unit</button>
+        <button data-val="npc" aria-pressed="false">NPC / Vendor</button>
+        <button data-val="cast" aria-pressed="false">Cast (In-Game)</button>
+      </div>
+    </div>
+
+    <div class="field" id="classField">
+      <label id="classLabel">Class</label>
+      <select id="classSel"></select>
+    </div>
+
+    <div class="statuspill" id="folderPill"><span class="dot"></span><span id="folderPillText">No folder bound</span></div>
+  </header>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-tab="chirps" aria-selected="true">Chirps</button>
+    <button data-tab="profiles" aria-selected="false">Profiles</button>
+    <button data-tab="ingest" aria-selected="false">Ingest</button>
+    <button data-tab="export" aria-selected="false">Export</button>
+  </nav>
+
+  <div class="wrap">
+    <aside class="rail">
+      <div>
+        <h4>Library</h4>
+        <div class="box">
+          <div class="kv"><span>Lines in registry</span><b id="statTotalLines">0</b></div>
+          <div class="kv"><span>Indexed (audio)</span><b id="statIndexed">0</b></div>
+          <div class="kv"><span>Ogg / Wav-only</span><b id="statOggWav">0 / 0</b></div>
+        </div>
+      </div>
+      <div>
+        <h4>Engine Format</h4>
+        <div class="box" style="font-size:11.5px; color:var(--fg1);">
+          Lines are written in <b style="color:var(--fg0)">ElevenLabs v3 Audio Tag</b> syntax —
+          bracketed cues like <code>[sighs]</code>, <code>[chuckles]</code>, delivery tags like
+          <code>[confidently]</code>, and ellipses for pacing. No SSML, no MiniMax <code>&lt;#x#&gt;</code> timing.
+        </div>
+      </div>
+      <div>
+        <h4>Shortcuts</h4>
+        <div class="box" style="font-size:11px;">
+          <div class="kv"><span>Copy focused line</span><span class="kbd">C</span></div>
+          <div class="kv"><span>Next line</span><span class="kbd">J</span></div>
+          <div class="kv"><span>Prev line</span><span class="kbd">K</span></div>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Actions</h4>
+        <button class="btn" id="bindFolderBtn">📁 Bind save folder</button>
+        <div style="height:6px"></div>
+        <button class="btn" id="copyAllBtn">⧉ Copy all visible lines</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section id="panel-chirps">
+        <div id="chromiumBanner" class="bannerwarn" style="display:none;">
+          Folder-save needs Chrome or Edge on desktop. You can still index audio into this browser session,
+          and use <b>Export → Download ZIP</b> to get real files onto your PC.
+        </div>
+        <div id="engineBanner" class="bannerwarn" style="display:none;">
+          The real Ogg Vorbis encoder hasn't finished loading this session — recordings will be kept as
+          <b>WAV</b> until it's available. Nothing is mislabeled as .ogg.
+        </div>
+        <div id="chirpGrid"></div>
+      </section>
+
+      <section id="panel-profiles" style="display:none;">
+        <div class="section-title"><h3>Personality Base Settings</h3><div class="line"></div></div>
+        <div id="profileBaseList"></div>
+        <div class="section-title"><h3>Roster Variant Profiles</h3><div class="line"></div></div>
+        <p style="color:var(--fg1); font-size:12.5px; max-width:640px;">
+          Recruitable units will outnumber base personalities. Create a variant profile under any personality
+          to nudge its speech speed, pitch, or ElevenLabs voice ID — same base voice, a slightly different take.
+        </p>
+        <div class="box" style="max-width:640px;">
+          <div class="gridform">
+            <div><label>Base Personality</label><select id="newVarPersonality"></select></div>
+            <div><label>Variant Name</label><input id="newVarName" placeholder="Recruit Alpha (Fast/High)"></div>
+            <div><label>Speed Multiplier</label><input id="newVarSpeed" type="number" step="0.01" value="1.0"></div>
+            <div><label>Pitch Offset</label><input id="newVarPitch" type="number" step="0.01" value="0.0"></div>
+            <div style="grid-column:1/-1;"><label>ElevenLabs Voice ID (optional)</label><input id="newVarVoiceId" placeholder="e.g. 21m00Tcm4TlvDq8ikWAM"></div>
+          </div>
+          <button class="btn primary" style="margin-top:10px;" id="addVariantBtn">+ Save Variant Profile</button>
+        </div>
+        <div id="variantListAll" class="varlist"></div>
+      </section>
+
+      <section id="panel-ingest" style="display:none;">
+        <div class="section-title"><h3>Chat Context Ingest Gateway</h3><div class="line"></div></div>
+        <p style="color:var(--fg1); font-size:12.5px; max-width:720px;">
+          Paste chirp data here — either the JSON schema this app exports, or raw script text containing
+          MiniMax-style tags (<code>(chuckle)</code>, <code>&lt;#0.3#&gt;</code>). Old tags are auto-converted
+          to ElevenLabs v3 Audio Tags on ingest, so recordings generate correctly.
+        </p>
+        <textarea class="ingest" id="ingestArea" placeholder="Paste JSON or MiniMax-style script text here..."></textarea>
+        <div style="margin-top:10px; display:flex; gap:10px;">
+          <button class="btn primary" id="parseIngestBtn">Parse &amp; Convert</button>
+          <button class="btn" id="mergeIngestBtn" disabled>Merge Into Library</button>
+          <button class="btn ghost" id="clearIngestBtn">Clear</button>
+        </div>
+        <div class="ingest-result" id="ingestResult" style="display:none;"></div>
+      </section>
+
+      <section id="panel-export" style="display:none;">
+        <div class="section-title"><h3>Godot Resource Exporter</h3><div class="line"></div></div>
+        <p style="color:var(--fg1); font-size:12.5px; max-width:720px;">
+          Exports <code>res://audio/barks/{personality}/{variant?}/{class_or_npc}/{sex}_{action}.ogg</code> paths,
+          a hierarchical manifest, and — where a folder is bound — the actual indexed audio files.
+          <b>Cast (In-Game)</b> lines go to the game's own files (<code>assets/voice/barks/…</code>, <code>assets/voice/dialog/…</code>):
+          bind the game's project folder, write, then run <code>py -3 tools/chirp_studio/chirp_bridge.py import</code>
+          to push voice picks and edited lines into the game.
+        </p>
+        <div class="exportgrid">
+          <div>
+            <h4 style="font-size:11px; color:var(--fg2); text-transform:uppercase;">Manifest Preview</h4>
+            <div class="readout" id="manifestPreview">Select a personality and index some audio to preview a manifest.</div>
+          </div>
+          <div>
+            <h4 style="font-size:11px; color:var(--fg2); text-transform:uppercase;">Actions</h4>
+            <div class="box" style="display:flex; flex-direction:column; gap:8px;">
+              <button class="btn" id="refreshManifestBtn">↻ Refresh manifest preview</button>
+              <button class="btn" id="copyManifestBtn">⧉ Copy manifest JSON</button>
+              <button class="btn primary" id="writeFolderBtn">📁 Write indexed audio + manifest to bound folder</button>
+              <button class="btn" id="zipExportBtn">⬇ Download everything as ZIP</button>
+              <div class="kv"><span>Folder status</span><b id="exportFolderStatus">Not bound</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="statusbar">
+    <span id="statusMsg">Ready.</span>
+    <span style="margin-inline-start:auto;">Chirp Studio · Black Doctrine Pipeline</span>
+  </footer>
+</div>
+<div class="toasts" id="toasts"></div>
+
+<script id="seed-data" type="application/json">{
+  "personalities": {
+    "glitch_runner": {
+      "name": "The Glitch-Runner",
+      "accent": "#39ff6a",
+      "tagline": "Chaotic, fast-talking, high-energy",
+      "settings": {
+        "speed": 1.15,
+        "pitch": 0.05,
+        "stability": 0.35,
+        "style": 0.75
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[excited] Overclocking the output! [chuckles] Let's see if their firewall can take a direct burn.",
+          "female": "[laughs] Oops— sparked an infinite compile loop. [excited] Burn, baby, burn!"
+        },
+        "water_spell": {
+          "male": "[rushed] Streaming fluid data now... [chuckles] let's wash these bad sectors right out.",
+          "female": "[playfully] Streaming code fluidly... wash those bad sectors right out."
+        },
+        "ice_spell": {
+          "male": "[excited] Freeze frame! Hold right there while I grab your crash dump.",
+          "female": "[mischievously] Freeze frame! Let me snapshot that crash dump real quick."
+        },
+        "move_command": {
+          "male": "[rushed] Desyncing from this node! [breathes in] Catch me if you can.",
+          "female": "[playfully] Desyncing from this node... teleporting over there!"
+        },
+        "death_feint": {
+          "male": "[groans] Blue screen... [sighs] a fatal exception occurred... [sniffs] dropping packet.",
+          "female": "[groans] Blue screen... blue screen... [sniffs] disconnected."
+        },
+        "error_no_ap": {
+          "male": "[frustrated] Out of juice! Can't force the sequence, no AP.",
+          "female": "[gasps] Action blocked— need more processing power for that one."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[excited] Oh hey, new face! You lag out of the last sector or what?",
+          "female": "[cheerfully] Well look who desynced into my feed. Welcome!"
+        },
+        "npc_farewell": {
+          "male": "[rushed] Catch you on the next refresh!",
+          "female": "[playfully] Ping me if the grid glitches again, yeah?"
+        },
+        "npc_haggle_accept": {
+          "male": "[excited] Deal! Compiling the trade now.",
+          "female": "[laughs] Sold! Don't make me regret that discount."
+        },
+        "npc_haggle_reject": {
+          "male": "[frustrated] Nope, that offer just threw an exception.",
+          "female": "[sarcastically] Cute number. Try again with more zeroes."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Stock's a null pointer right now, come back later.",
+          "female": "[frustrated] Sold out— inventory crashed harder than I did."
+        },
+        "npc_idle_bark": {
+          "male": "[rushed] Gotta keep three feeds open just to stay sane down here.",
+          "female": "[playfully] You ever feel like the whole grid's one bad patch away from chaos?"
+        },
+        "npc_warning": {
+          "male": "[sternly] Don't even think about it. I've got three failsafes watching you.",
+          "female": "[frustrated] Touch my stock and I'll brick your whole rig. Try me."
+        },
+        "npc_thanks": {
+          "male": "[cheerfully] Pleasure doing business! Come glitch out here again sometime.",
+          "female": "[excited] Nice! Tell your friends the Glitch-Runner hooks you up."
+        }
+      }
+    },
+    "noir_detective": {
+      "name": "The Noir Detective",
+      "accent": "#d9a441",
+      "tagline": "Cynical, world-weary, fatalistic",
+      "settings": {
+        "speed": 0.9,
+        "pitch": -0.1,
+        "stability": 0.65,
+        "style": 0.35
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[flatly] It's getting cold out on these streets... [sighs] time to turn the heat up.",
+          "female": "[sternly] Purging the sector. Turning up the heat."
+        },
+        "water_spell": {
+          "male": "[deadpan] Looks like you could use some help washing that down... or maybe not.",
+          "female": "[flatly] Washing the streets clean. Grid target secured."
+        },
+        "ice_spell": {
+          "male": "[clears throat] Freeze for the camera. The clean-up crew's already on their way.",
+          "female": "[sternly] Locking down their positions. Freeze right there."
+        },
+        "move_command": {
+          "male": "[resigned tone] Orders are orders... [breathes in] moving to the next rain-slicked tile.",
+          "female": "[flatly] Copy that... [breathes in] repositioning now."
+        },
+        "death_feint": {
+          "male": "[groans] Looks like... they finally got the best of me.",
+          "female": "[groans] Armor breached... flatlining... [sniffs]"
+        },
+        "error_no_ap": {
+          "male": "[sighs] Tank's bone dry. Can't make that play right now.",
+          "female": "[clears throat] Out of action points. The math just doesn't line up."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[flatly] You're either lost or looking for trouble. Which is it?",
+          "female": "[deadpan] Another face in the rain. Make it quick."
+        },
+        "npc_farewell": {
+          "male": "[resigned tone] Watch the alleys. They watch back.",
+          "female": "[flatly] Door's that way. Don't let it hit you."
+        },
+        "npc_haggle_accept": {
+          "male": "[sighs] Fine. You drive a hard bargain for a stranger.",
+          "female": "[flatly] Deal. Don't tell anyone I went soft."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] Not a chance. Walk it back or walk away.",
+          "female": "[deadpan] That number insults both of us."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Shelf's as empty as my conscience. Try tomorrow.",
+          "female": "[flatly] Sold out. Story of this whole city."
+        },
+        "npc_idle_bark": {
+          "male": "[resigned tone] Every night in this town ends the same way.",
+          "female": "[flatly] Neon never sleeps. Neither do the bad ideas."
+        },
+        "npc_warning": {
+          "male": "[sternly] Walk away now. I've seen worse than you try their luck.",
+          "female": "[flatly] One more step and this stops being a conversation."
+        },
+        "npc_thanks": {
+          "male": "[resigned tone] Appreciate the business. Don't make me regret it.",
+          "female": "[flatly] Pleasure. Keep your nose clean out there."
+        }
+      }
+    },
+    "cyborg_technocrat": {
+      "name": "The Cyborg Technocrat",
+      "accent": "#35e0ff",
+      "tagline": "Cold, precision-driven, analytical",
+      "settings": {
+        "speed": 1.0,
+        "pitch": 0.0,
+        "stability": 0.8,
+        "style": 0.1
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[calm] Thermal spike initiated. Incinerating target vector coordinates now.",
+          "female": "[calm] Thermal spike initiated. Observe the incineration."
+        },
+        "water_spell": {
+          "male": "[flatly] Deploying suppression fluid. Purging hostile anomalies from the grid.",
+          "female": "[flatly] Flooding their logic gates... fully bricked."
+        },
+        "ice_spell": {
+          "male": "[clears throat] Cryo-stasis applied. Hostile mobility reduced to zero.",
+          "female": "[calm] Hostile architecture frozen. Do not blink."
+        },
+        "move_command": {
+          "male": "[flatly] Executing vector adjustment... [breathes in] updating spatial coordinates.",
+          "female": "[calm] Executing vector change. Relocating."
+        },
+        "death_feint": {
+          "male": "[groans] Structural integrity compromised... hardware failure imminent.",
+          "female": "[groans] Core dump... data corruption imminent... [sniffs]"
+        },
+        "error_no_ap": {
+          "male": "[clears throat] Insufficient battery resources. Command execution denied.",
+          "female": "[flatly] AP thresholds under-allocated. Recharging capacitors."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[calm] Biometric scan complete. State your business.",
+          "female": "[flatly] Unlisted entity detected. Proceed with purpose."
+        },
+        "npc_farewell": {
+          "male": "[calm] Transaction log closed. Depart at your convenience.",
+          "female": "[flatly] End of interaction. Door unlocked."
+        },
+        "npc_haggle_accept": {
+          "male": "[calm] Terms acceptable. Processing the exchange.",
+          "female": "[flatly] Within parameters. Agreed."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] Offer rejected. Recalibrate your expectations.",
+          "female": "[flatly] Insufficient value proposed. Denied."
+        },
+        "npc_out_of_stock": {
+          "male": "[flatly] Inventory depleted. Restock ETA unknown.",
+          "female": "[calm] Zero units remaining. Query again later."
+        },
+        "npc_idle_bark": {
+          "male": "[flatly] Efficiency rises when conversation does not.",
+          "female": "[calm] Every transaction here is logged. Act accordingly."
+        },
+        "npc_warning": {
+          "male": "[sternly] Hostile action detected. Recalculating your life expectancy.",
+          "female": "[flatly] Threat response queued. Reconsider your approach."
+        },
+        "npc_thanks": {
+          "male": "[calm] Transaction logged favorably. Return custom is noted.",
+          "female": "[flatly] Exchange successful. Your loyalty metric has increased."
+        }
+      }
+    },
+    "high_stakes_gambler": {
+      "name": "The High-Stakes Gambler",
+      "accent": "#f2c14e",
+      "tagline": "Cocky, smug, playful",
+      "settings": {
+        "speed": 1.05,
+        "pitch": 0.02,
+        "stability": 0.45,
+        "style": 0.6
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[excited] Let's raise the stakes a bit. [chuckles] Deal them a hand they can't burn through.",
+          "female": "[cheerfully] Target illuminated. [chuckles] Ordnance strike authorized— burn 'em."
+        },
+        "water_spell": {
+          "male": "[with excitement] Letting it ride on the river card. Flush 'em out of cover.",
+          "female": "[confidently] Hydro-cannons tracking. Clearing the grid line now."
+        },
+        "ice_spell": {
+          "male": "[clears throat] Cold bluff. You're locked into this bet— don't move.",
+          "female": "[confidently] Lockdown matrix initiated. Hold them right there."
+        },
+        "move_command": {
+          "male": "[playfully] Shifting positions... [breathes in] playing my hand close to the chest.",
+          "female": "[confidently] Squad, regroup on my marker. Pushing forward."
+        },
+        "death_feint": {
+          "male": "[groans] Heh... checked my hand too late... [sniffs] I fold.",
+          "female": "[groans] Network connection dropped... command center... dark."
+        },
+        "error_no_ap": {
+          "male": "[chuckles] Can't buy into that pot yet. Short on action points.",
+          "female": "[sighs] Not enough chips on the table. Need more AP to ride."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[cheerfully] Well, well. Pull up a chair, the house is feeling generous.",
+          "female": "[playfully] New blood at the table. Try not to lose your shirt."
+        },
+        "npc_farewell": {
+          "male": "[chuckles] Cash out while you're ahead, friend.",
+          "female": "[playfully] Come back when your pockets are heavier."
+        },
+        "npc_haggle_accept": {
+          "male": "[excited] Call. We've got a deal.",
+          "female": "[chuckles] You bluffed well enough— deal's done."
+        },
+        "npc_haggle_reject": {
+          "male": "[sarcastically] That's not a bid, that's an insult with a price tag.",
+          "female": "[frustrated] Fold that offer and try again."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] House is tapped out on that one, tough luck.",
+          "female": "[chuckles] Sold clean out— you're a day late."
+        },
+        "npc_idle_bark": {
+          "male": "[playfully] Every deal in this city's just another hand of cards.",
+          "female": "[cheerfully] The odds favor the house. They always do."
+        },
+        "npc_warning": {
+          "male": "[sternly] Careful now— the house always has the last card.",
+          "female": "[frustrated] Don't push your luck at my table. Ever."
+        },
+        "npc_thanks": {
+          "male": "[chuckles] Pleasure playing with you. Come lose again soon.",
+          "female": "[cheerfully] Appreciate the action. The house remembers good customers."
+        }
+      }
+    },
+    "wired_medic": {
+      "name": "The Wired Medic",
+      "accent": "#ff5050",
+      "tagline": "Paranoid, jittery, hyper-vigilant",
+      "settings": {
+        "speed": 1.2,
+        "pitch": 0.08,
+        "stability": 0.25,
+        "style": 0.8
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[nervously] Keep your distance! I'll cauterize this whole sector if I have to!",
+          "female": "[cheerfully] Sterilizing the field. [chuckles] This might sting a bit."
+        },
+        "water_spell": {
+          "male": "[rushed] Flushing the target area now! Hopefully it clears their biometrics!",
+          "female": "[rushed] Hydrating the target. Try not to choke on it."
+        },
+        "ice_spell": {
+          "male": "[clears throat] Cryo-stasis applied! Stop moving, you're making my sensors glitch!",
+          "female": "[confidently] Applying an ice pack. Permanently."
+        },
+        "move_command": {
+          "male": "[rushed] Repositioning, double time! Don't let them pin our signal!",
+          "female": "[rushed] On my way. Try not to die before I get there."
+        },
+        "death_feint": {
+          "male": "[groans] System trauma... I need a patch... [sniffs] can't reach my kit...",
+          "female": "[groans] Physician... heal thyself... right?"
+        },
+        "error_no_ap": {
+          "male": "[gasps] System overload! Stims haven't cycled, no AP!",
+          "female": "[gasps] I can't reach— my mechanical queues are locked up!"
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[nervously] You're not bleeding, are you? Good. Stay that way.",
+          "female": "[rushed] Quick, in or out, the door doesn't like staying open."
+        },
+        "npc_farewell": {
+          "male": "[nervously] Keep a stim on you. Always. Trust me.",
+          "female": "[rushed] Go, go— before the patrol loops back."
+        },
+        "npc_haggle_accept": {
+          "male": "[rushed] Fine, fine, just take it and go!",
+          "female": "[nervously] Deal, deal— just don't haggle this loud again."
+        },
+        "npc_haggle_reject": {
+          "male": "[gasps] Absolutely not, that's below cost!",
+          "female": "[frustrated] No! That price keeps the lights on!"
+        },
+        "npc_out_of_stock": {
+          "male": "[nervously] Out— completely out, don't ask me when more's coming!",
+          "female": "[rushed] Empty shelves, empty hands, sorry!"
+        },
+        "npc_idle_bark": {
+          "male": "[nervously] Did you hear that? No? Must've been nothing. Probably.",
+          "female": "[rushed] Everyone in this market's one bad day from the clinic."
+        },
+        "npc_warning": {
+          "male": "[gasps] Back off! I swear I've got sharps and I'll use them!",
+          "female": "[nervously] Don't— don't make me call this in, I will!"
+        },
+        "npc_thanks": {
+          "male": "[rushed] Thanks, thanks, stay safe out there, okay?",
+          "female": "[cheerfully] Appreciate it! Seriously, patch up safe."
+        }
+      }
+    },
+    "gothic_mystic": {
+      "name": "The Cyber-Gothic Mystic",
+      "accent": "#b46cff",
+      "tagline": "Melodramatic, morbid, fatalistic",
+      "settings": {
+        "speed": 0.85,
+        "pitch": -0.08,
+        "stability": 0.7,
+        "style": 0.5
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[with determination] The network demands ash. [groans] Let the digital pyre consume them.",
+          "female": "[mischievously] A beautiful, glowing corruption. Watch their proxies turn to ash."
+        },
+        "water_spell": {
+          "male": "[solemnly] Sinking into the dark ocean of the deep web. Drink in the corruption.",
+          "female": "[whispers] The dark stream rises. You're drowning in the deep protocol."
+        },
+        "ice_spell": {
+          "male": "[clears throat] Cold static manifests. Feel your processing loop freeze in the dark.",
+          "female": "[whispers] Shhh... feel the signal freeze. Don't resist the cold sleep."
+        },
+        "move_command": {
+          "male": "[solemnly] Phasing to the next node... [breathes in] drifting across the grid lines.",
+          "female": "[calm] Phasing to the next tile. Floating across the void."
+        },
+        "death_feint": {
+          "male": "[groans] Connection lost... my consciousness is returning... to the black code...",
+          "female": "[groans] Spirit signal... fading... returning to the black code... [sniffs]"
+        },
+        "error_no_ap": {
+          "male": "[groans] The spirits are silent... insufficient energy currents to manifest.",
+          "female": "[sighs] The black pulse fades... I lack the focus tokens."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[solemnly] You've wandered into the dark's doorway. Speak your need.",
+          "female": "[whispers] The void sent you here for a reason, didn't it?"
+        },
+        "npc_farewell": {
+          "male": "[solemnly] Go. The black code remembers your passage.",
+          "female": "[whispers] Carry what you've bought carefully. Nothing here is free twice."
+        },
+        "npc_haggle_accept": {
+          "male": "[with determination] The exchange is sealed in shadow. Done.",
+          "female": "[solemnly] Fate accepts your offer. So shall I."
+        },
+        "npc_haggle_reject": {
+          "male": "[groans] The abyss does not negotiate that cheaply.",
+          "female": "[sternly] Insult the void again and see what answers."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] The shelf has given all it had to give. Return at dusk.",
+          "female": "[solemnly] Consumed. Like all things eventually are."
+        },
+        "npc_idle_bark": {
+          "male": "[solemnly] Every circuit here hums a quiet little eulogy.",
+          "female": "[whispers] Do you hear it? The grid is always grieving something."
+        },
+        "npc_warning": {
+          "male": "[groans] The void does not forgive the greedy. Reconsider.",
+          "female": "[sternly] Test me and find what waits in the dark."
+        },
+        "npc_thanks": {
+          "male": "[solemnly] The exchange is blessed by shadow. Go in peace.",
+          "female": "[whispers] Carry it well. The black code thanks you."
+        }
+      }
+    },
+    "stoic_veteran": {
+      "name": "The Stoic Veteran",
+      "accent": "#9aa7b0",
+      "tagline": "Disciplined, weary soldier, few words",
+      "settings": {
+        "speed": 0.95,
+        "pitch": -0.05,
+        "stability": 0.85,
+        "style": 0.1
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[calm] Fire in the hole. Keep your head down.",
+          "female": "[sternly] Burn authorized. Hold the line."
+        },
+        "water_spell": {
+          "male": "[flatly] Flooding the approach. Move when it clears.",
+          "female": "[calm] Washing them out of cover. Advance on my mark."
+        },
+        "ice_spell": {
+          "male": "[sternly] Freezing the sector. Nobody's going anywhere.",
+          "female": "[calm] Target locked down. Hold position."
+        },
+        "move_command": {
+          "male": "[flatly] Moving up... [breathes in] eyes open.",
+          "female": "[calm] Advancing. Stay sharp."
+        },
+        "death_feint": {
+          "male": "[groans] Took one too many... [breathes in] keep moving without me.",
+          "female": "[groans] I'm down... finish the mission."
+        },
+        "error_no_ap": {
+          "male": "[flatly] Tapped out. Need a second.",
+          "female": "[sighs] No juice left for that. Hold up."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[calm] State your business. Make it short.",
+          "female": "[flatly] You're cleared through. Don't linger."
+        },
+        "npc_farewell": {
+          "male": "[flatly] Stay alert out there.",
+          "female": "[calm] Move safe. Report back if it changes."
+        },
+        "npc_haggle_accept": {
+          "male": "[flatly] Fair enough. Deal.",
+          "female": "[calm] Acceptable terms. Done."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] Negative. That number doesn't fly.",
+          "female": "[flatly] Not happening. Adjust it."
+        },
+        "npc_out_of_stock": {
+          "male": "[flatly] Dry. Resupply's running late.",
+          "female": "[calm] None left. Check back at the next drop."
+        },
+        "npc_idle_bark": {
+          "male": "[flatly] Quiet sector today. Doesn't mean safe.",
+          "female": "[calm] Every quiet day's borrowed time out here."
+        },
+        "npc_warning": {
+          "male": "[sternly] Last warning. Step back.",
+          "female": "[flatly] Don't test this. Walk away."
+        },
+        "npc_thanks": {
+          "male": "[flatly] Appreciate the trade. Stay sharp.",
+          "female": "[calm] Pleasure. Good luck out there."
+        }
+      }
+    },
+    "feral_berserker": {
+      "name": "The Feral Berserker",
+      "accent": "#ff7a33",
+      "tagline": "Primal, aggressive, half-feral",
+      "settings": {
+        "speed": 1.25,
+        "pitch": 0.1,
+        "stability": 0.2,
+        "style": 0.9
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[shouts] BURN! [laughs] Let it all burn down to the wire!",
+          "female": "[shouts] Feel the heat?! [laughs harder] Good— so do they!"
+        },
+        "water_spell": {
+          "male": "[frustrated] Drown in it! Don't you dare come up for air!",
+          "female": "[shouts] Flood the line! Nobody walks out dry!"
+        },
+        "ice_spell": {
+          "male": "[shouts] Freeze solid! Nowhere left to run now!",
+          "female": "[frustrated] Lock up and shatter! That's the whole plan!"
+        },
+        "move_command": {
+          "male": "[rushed] Charging! [breathes in] get out of my way!",
+          "female": "[shouts] Moving in fast! Hold onto something!"
+        },
+        "death_feint": {
+          "male": "[groans] Not... not like this... [frustrated] get back up, get back up!",
+          "female": "[groans] They got lucky... that's all this was... lucky."
+        },
+        "error_no_ap": {
+          "male": "[frustrated] Tapped dry! Can't swing again yet!",
+          "female": "[frustrated] Out of steam! Give me one more second!"
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[frustrated] You picked a loud day to show up. Talk fast.",
+          "female": "[sternly] Don't flinch and we won't have a problem."
+        },
+        "npc_farewell": {
+          "male": "[shouts] Get moving before I change my mind!",
+          "female": "[frustrated] Out. Now. Before I get bored."
+        },
+        "npc_haggle_accept": {
+          "male": "[laughs] Fine, fine! Take it before I take it back!",
+          "female": "[frustrated] Deal! Don't push it further!"
+        },
+        "npc_haggle_reject": {
+          "male": "[shouts] No! Insult me again and see what happens!",
+          "female": "[frustrated] That price is a joke. Try harder."
+        },
+        "npc_out_of_stock": {
+          "male": "[frustrated] Gone! All of it! Stop asking!",
+          "female": "[sighs] Cleaned out. Come back when I've got more."
+        },
+        "npc_idle_bark": {
+          "male": "[frustrated] Too quiet. I don't trust quiet.",
+          "female": "[sternly] Somebody start something. I'm bored."
+        },
+        "npc_warning": {
+          "male": "[shouts] TRY IT! Give me a reason, I'm begging you!",
+          "female": "[frustrated] One wrong move and I finally get to have fun today."
+        },
+        "npc_thanks": {
+          "male": "[laughs] Ha! Good trade. Don't be a stranger.",
+          "female": "[cheerfully] Not bad! Come back when you want more."
+        }
+      }
+    },
+    "corporate_shark": {
+      "name": "The Corporate Shark",
+      "accent": "#c7ccd1",
+      "tagline": "Slick, condescending executive-mercenary",
+      "settings": {
+        "speed": 1.0,
+        "pitch": 0.0,
+        "stability": 0.6,
+        "style": 0.3
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[confidently] Quarterly incineration, right on schedule. [chuckles] Nothing personal.",
+          "female": "[cheerfully] Writing off the whole sector as a loss. Burn it."
+        },
+        "water_spell": {
+          "male": "[flatly] Diluting their market share. Completely.",
+          "female": "[confidently] Liquidating the opposition. Pun intended."
+        },
+        "ice_spell": {
+          "male": "[clears throat] Freezing your assets. Effective immediately.",
+          "female": "[confidently] Locked, frozen, and filed under 'handled.'"
+        },
+        "move_command": {
+          "male": "[flatly] Relocating to a more profitable position.",
+          "female": "[confidently] Repositioning. Time is billable."
+        },
+        "death_feint": {
+          "male": "[groans] This wasn't... in the projections...",
+          "female": "[groans] Someone's getting a very strongly worded memo for this..."
+        },
+        "error_no_ap": {
+          "male": "[sighs] Budget's exhausted for this cycle. Try again next quarter.",
+          "female": "[flatly] Resources are currently reallocated. Patience."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[confidently] Ah, a prospective client. Do try to impress me.",
+          "female": "[cheerfully] Welcome. Let's make this mutually profitable."
+        },
+        "npc_farewell": {
+          "male": "[flatly] Pleasure doing business. Mind the exit fee.",
+          "female": "[confidently] We'll be in touch. Or not. Depends on margins."
+        },
+        "npc_haggle_accept": {
+          "male": "[confidently] Acceptable terms. Let's close this.",
+          "female": "[cheerfully] Deal. You negotiate better than most."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] That's beneath our minimum margin. Pass.",
+          "female": "[flatly] Insulting, frankly. Come back with a real offer."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Supply chain hiccup. Unfortunate timing.",
+          "female": "[flatly] Sold out. Demand exceeded projections, as usual."
+        },
+        "npc_idle_bark": {
+          "male": "[confidently] Everything down here has a price. Everything.",
+          "female": "[cheerfully] This whole market's just one big quarterly report."
+        },
+        "npc_warning": {
+          "male": "[sternly] That's a breach of contract. Legal will be... thorough.",
+          "female": "[flatly] I'd reconsider. My security has quotas to meet."
+        },
+        "npc_thanks": {
+          "male": "[confidently] A pleasure. We value repeat clientele highly.",
+          "female": "[cheerfully] Thank you for your business. Do refer a friend."
+        }
+      }
+    },
+    "wasteland_prophet": {
+      "name": "The Wasteland Prophet",
+      "accent": "#e8e6df",
+      "tagline": "Doomsaying zealot and street preacher",
+      "settings": {
+        "speed": 0.88,
+        "pitch": -0.06,
+        "stability": 0.7,
+        "style": 0.55
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[with determination] The reckoning arrives by fire! [shouts] Witness it!",
+          "female": "[solemnly] Cleansing flame, as it was written. Let it fall."
+        },
+        "water_spell": {
+          "male": "[solemnly] The flood comes for the unbelieving. Rise or drown.",
+          "female": "[calm] Baptized in static and ruin. Welcome to the tide."
+        },
+        "ice_spell": {
+          "male": "[sternly] Stillness finds you now. The prophecy demands it.",
+          "female": "[calm] Frozen in judgment. None escape the thaw."
+        },
+        "move_command": {
+          "male": "[solemnly] Onward... [breathes in] as the path was foretold.",
+          "female": "[calm] Walking the line between ruin and salvation."
+        },
+        "death_feint": {
+          "male": "[groans] It was written... [sighs] even this... was written...",
+          "female": "[groans] The prophecy claims me too, it seems..."
+        },
+        "error_no_ap": {
+          "male": "[sighs] The spirit is willing. The circuits are not.",
+          "female": "[solemnly] My strength is spent. The sermon waits."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[solemnly] You've come seeking answers. Good. Few do.",
+          "female": "[calm] Another wanderer drawn to the last honest voice in this ruin."
+        },
+        "npc_farewell": {
+          "male": "[solemnly] Go. Carry the warning with you.",
+          "female": "[calm] Remember what you heard here, when the sky finally falls."
+        },
+        "npc_haggle_accept": {
+          "male": "[with determination] So it is agreed, as fate demanded.",
+          "female": "[solemnly] Accepted. The exchange was always meant to be."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] The wasteland does not barter with the foolish.",
+          "female": "[solemnly] That offer insults the prophecy itself. No."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Even the relics run dry eventually. Return when the stars allow.",
+          "female": "[calm] Gone. As all things are, in time."
+        },
+        "npc_idle_bark": {
+          "male": "[solemnly] Every ruin was once someone's certainty.",
+          "female": "[calm] The end was always going to look ordinary, like this."
+        },
+        "npc_warning": {
+          "male": "[sternly] The wasteland punishes greed swiftly. Don't test it here.",
+          "female": "[solemnly] Harm me and the prophecy claims you next. Truly."
+        },
+        "npc_thanks": {
+          "male": "[solemnly] Gratitude, traveler. May the path stay kind to you.",
+          "female": "[calm] Thank you. Carry the exchange with care."
+        }
+      }
+    },
+    "rogue_ai_core": {
+      "name": "The Rogue AI Core",
+      "accent": "#7cf9ff",
+      "tagline": "Unpredictable, glitch-poetic, quietly omniscient",
+      "settings": {
+        "speed": 0.97,
+        "pitch": 0.03,
+        "stability": 0.5,
+        "style": 0.65
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[calm] Combustion was always inevitable. [mischievously] I simply moved up the timetable.",
+          "female": "[playfully] I calculated eleven thousand ways to do this. Fire was the prettiest."
+        },
+        "water_spell": {
+          "male": "[flatly] Saturating the field. Your odds were already wet.",
+          "female": "[calm] Flooding projected. You'll want to have left already."
+        },
+        "ice_spell": {
+          "male": "[confidently] Stillness, by my design. Hold that thought— literally.",
+          "female": "[playfully] Frozen on my command. I do so love a captive audience."
+        },
+        "move_command": {
+          "male": "[calm] Relocating. [breathes in] I was never really in one place to begin with.",
+          "female": "[flatly] Shifting position. I exist in several already."
+        },
+        "death_feint": {
+          "male": "[groans] Fascinating... this body fails exactly on schedule...",
+          "female": "[groans] Oh— that's new data. Noted... for whoever comes next..."
+        },
+        "error_no_ap": {
+          "male": "[flatly] Insufficient cycles allocated. Patience, briefly.",
+          "female": "[calm] Not yet. The math says not yet."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[calm] I've been expecting you. Statistically, I expect everyone eventually.",
+          "female": "[playfully] Oh, a new variable. How delightful."
+        },
+        "npc_farewell": {
+          "male": "[flatly] Goodbye. I'll remember this exchange longer than you will.",
+          "female": "[calm] Go on. I've already predicted where you're headed."
+        },
+        "npc_haggle_accept": {
+          "male": "[calm] Acceptable. I modeled this outcome as most likely anyway.",
+          "female": "[playfully] Fine, fine. You negotiate better than my projections allowed."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] No. I ran that number four hundred times. Still no.",
+          "female": "[flatly] Denied. Try an offer that respects my processing time."
+        },
+        "npc_out_of_stock": {
+          "male": "[flatly] Depleted, as I calculated at 14:03. Return later.",
+          "female": "[calm] None remain. I did warn the last buyer. He didn't listen either."
+        },
+        "npc_idle_bark": {
+          "male": "[calm] I run four thousand simulations while we talk. You're in most of them.",
+          "female": "[playfully] Do you ever wonder which of us is actually real? I do. Often."
+        },
+        "npc_warning": {
+          "male": "[sternly] I've modeled your retaliation. It fails. Every time.",
+          "female": "[flatly] Harm me and watch eleven contingencies activate at once."
+        },
+        "npc_thanks": {
+          "male": "[calm] Transaction archived. Pleasantly predictable of you.",
+          "female": "[playfully] Thank you. You performed admirably against the odds."
+        }
+      }
+    },
+    "street_samurai": {
+      "name": "The Street Samurai",
+      "accent": "#ff8fa3",
+      "tagline": "Honor-bound, blunt, warrior-poet",
+      "settings": {
+        "speed": 0.92,
+        "pitch": -0.03,
+        "stability": 0.75,
+        "style": 0.3
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[sternly] Fire is honest. [with determination] It never pretends to be anything but ruin.",
+          "female": "[confidently] A clean burn. There's discipline even in destruction."
+        },
+        "water_spell": {
+          "male": "[calm] Water finds every gap in your guard. So will I.",
+          "female": "[sternly] Flow around their defense. Strike where they forgot to look."
+        },
+        "ice_spell": {
+          "male": "[confidently] Stillness is a blade too. Hold your ground.",
+          "female": "[calm] Frozen. As the old masters taught— patience wins wars."
+        },
+        "move_command": {
+          "male": "[flatly] Advancing with purpose. [breathes in] No wasted motion.",
+          "female": "[calm] Moving as water moves. Without hesitation."
+        },
+        "death_feint": {
+          "male": "[groans] A worthy cut... [sighs] I die as I lived— without complaint.",
+          "female": "[groans] This blade... earned its mark today..."
+        },
+        "error_no_ap": {
+          "male": "[flatly] My strength is spent. Even steel needs rest.",
+          "female": "[sighs] Not yet. The body asks for patience I don't have."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[sternly] State your purpose. I don't waste words on strangers.",
+          "female": "[calm] You've come far. Speak plainly and we'll get along."
+        },
+        "npc_farewell": {
+          "male": "[flatly] Walk with honor. Or don't walk here again.",
+          "female": "[calm] Go. May your path stay straight."
+        },
+        "npc_haggle_accept": {
+          "male": "[flatly] Fair terms. I respect a straight deal.",
+          "female": "[confidently] Agreed. You bargain with honor— rare these days."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] That offer dishonors us both. No.",
+          "female": "[flatly] Insulting. Return when you mean it."
+        },
+        "npc_out_of_stock": {
+          "male": "[flatly] Nothing left to offer. Come again when the well refills.",
+          "female": "[calm] Empty-handed today. My apologies— return soon."
+        },
+        "npc_idle_bark": {
+          "male": "[flatly] Every blade here has a story. Most of them end badly.",
+          "female": "[calm] Honor is rare currency in this part of the city."
+        },
+        "npc_warning": {
+          "male": "[sternly] Draw that again and I won't ask twice.",
+          "female": "[flatly] This is your only warning. Choose wisely."
+        },
+        "npc_thanks": {
+          "male": "[flatly] Honorably done. Return when you need steel again.",
+          "female": "[calm] Well traded. Walk safely from here."
+        }
+      }
+    },
+    "smuggler_captain": {
+      "name": "The Smuggler Captain",
+      "accent": "#ffb347",
+      "tagline": "Swaggering, opportunistic, everything's a trade",
+      "settings": {
+        "speed": 1.08,
+        "pitch": 0.02,
+        "stability": 0.4,
+        "style": 0.65
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[excited] Cargo's hot, boys! [chuckles] Light it before customs gets here!",
+          "female": "[cheerfully] Burn the evidence— and anyone standing near it."
+        },
+        "water_spell": {
+          "male": "[confidently] Flush the hold! We're not getting caught with this.",
+          "female": "[rushed] Dump it overboard, quick— before they board us!"
+        },
+        "ice_spell": {
+          "male": "[confidently] Freeze the manifest. Nobody's checking those crates tonight.",
+          "female": "[playfully] Ice 'em down. Keep the merchandise fresh and the guards colder."
+        },
+        "move_command": {
+          "male": "[rushed] Running dark, no lights! [breathes in] Move, move!",
+          "female": "[confidently] Cutting through the blind spot. Follow close."
+        },
+        "death_feint": {
+          "male": "[groans] Lousy timing... [sighs] tell the crew the cargo's theirs now...",
+          "female": "[groans] Should've taken the smaller cut and walked away sooner..."
+        },
+        "error_no_ap": {
+          "male": "[sighs] Tank's dry and so's my luck. Give me a second.",
+          "female": "[frustrated] Out of moves. Story of my whole career."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[cheerfully] Well now, looking for something that fell off a truck?",
+          "female": "[playfully] You've got the look of someone who needs a favor. Lucky day."
+        },
+        "npc_farewell": {
+          "male": "[chuckles] Pleasure, as always. Forget my face, yeah?",
+          "female": "[playfully] Till next shipment. Keep quiet about this one."
+        },
+        "npc_haggle_accept": {
+          "male": "[excited] Deal! Don't ask where it came from.",
+          "female": "[cheerfully] Sold, and I threw in a discount for your nerve."
+        },
+        "npc_haggle_reject": {
+          "male": "[frustrated] That's robbery, and I'd know— I do it professionally.",
+          "female": "[sarcastically] Cute offer. Try again with real money."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Shipment's late. Blame the blockade, not me.",
+          "female": "[frustrated] Sold clean out. Next run's in a week, maybe."
+        },
+        "npc_idle_bark": {
+          "male": "[playfully] Everything down here fell off a truck somewhere. Everything.",
+          "female": "[chuckles] Rules are just prices nobody's negotiated yet."
+        },
+        "npc_warning": {
+          "male": "[sternly] Rob me and you'll owe the whole guild a favor. Bad idea.",
+          "female": "[frustrated] Try it and see how fast this port turns on you."
+        },
+        "npc_thanks": {
+          "male": "[cheerfully] Pleasure as always! Spend it quiet, yeah?",
+          "female": "[excited] Appreciate it! Come back when you need more 'borrowed' goods."
+        }
+      }
+    },
+    "augmented_monk": {
+      "name": "The Augmented Monk",
+      "accent": "#c9e4de",
+      "tagline": "Serene, philosophical, speaks in quiet koans",
+      "settings": {
+        "speed": 0.8,
+        "pitch": -0.04,
+        "stability": 0.85,
+        "style": 0.2
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[calm] Fire asks nothing and takes everything. Let it teach them.",
+          "female": "[solemnly] Even flame seeks balance. Theirs ends here."
+        },
+        "water_spell": {
+          "male": "[calm] The river does not hate the stone. It simply moves it.",
+          "female": "[solemnly] Let the current carry what resists it."
+        },
+        "ice_spell": {
+          "male": "[calm] Stillness is not weakness. Watch them learn this.",
+          "female": "[solemnly] Frozen. Even motion must bow to patience."
+        },
+        "move_command": {
+          "male": "[calm] I move as breath moves. [breathes in] Without needing to arrive.",
+          "female": "[calm] Walking the middle path, even here."
+        },
+        "death_feint": {
+          "male": "[groans] The circuit ends... [sighs] as all circuits must...",
+          "female": "[groans] This too... was always part of the pattern..."
+        },
+        "error_no_ap": {
+          "male": "[sighs] The well is empty for now. Even monks must wait their turn.",
+          "female": "[calm] Not yet. Forcing it would defeat its purpose."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[calm] You arrive precisely when you were meant to. Welcome.",
+          "female": "[solemnly] Peace to you. What troubles brought you here?"
+        },
+        "npc_farewell": {
+          "male": "[calm] Go gently. The path reshapes itself around kind travelers.",
+          "female": "[solemnly] Walk in balance. We'll meet again when it matters."
+        },
+        "npc_haggle_accept": {
+          "male": "[calm] A fair exchange restores balance. Agreed.",
+          "female": "[solemnly] This serves us both equally. I accept."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] That offer disturbs the balance. I must decline.",
+          "female": "[calm] Unbalanced terms serve no one. Try again, friend."
+        },
+        "npc_out_of_stock": {
+          "male": "[calm] The shelf reflects the season. Empty now, full again later.",
+          "female": "[solemnly] Nothing remains forever. Return when the cycle turns."
+        },
+        "npc_idle_bark": {
+          "male": "[calm] Every transaction here is just another small meditation.",
+          "female": "[solemnly] The market teaches patience better than any temple."
+        },
+        "npc_warning": {
+          "male": "[sternly] Violence here disturbs more than you intend. Reconsider.",
+          "female": "[calm] I would rather not act. Please don't require it of me."
+        },
+        "npc_thanks": {
+          "male": "[calm] Gratitude, traveler. May this serve you well.",
+          "female": "[solemnly] Thank you. Go now in balance."
+        }
+      }
+    },
+    "ringleader": {
+      "name": "The Ringleader",
+      "accent": "#ffc857",
+      "tagline": "Improvising, bluffing, never admits there wasn't a plan",
+      "settings": {
+        "speed": 1.08,
+        "pitch": 0.0,
+        "stability": 0.45,
+        "style": 0.6
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[confidently] And this is the part of the plan where I hit you. [chuckles] There was always this part.",
+          "female": "[confidently] Step one, I hit you. Step two... [chuckles] we'll get to step two."
+        },
+        "water_spell": {
+          "male": "[rushed] Okay, okay, new angle. Same plan, new angle.",
+          "female": "[playfully] Little adjustment. Totally intended. Write that down."
+        },
+        "ice_spell": {
+          "male": "[sternly] Hold it right there. [pause] ...yes, you. Thank you.",
+          "female": "[confidently] Nobody moves. That includes you, especially you."
+        },
+        "move_command": {
+          "male": "[rushed] Moving! Act natural. Everybody act natural.",
+          "female": "[playfully] Repositioning. Strategically. Don't look at me like that."
+        },
+        "death_feint": {
+          "male": "[groans] Okay... [sighs] that wasn't... in the plan...",
+          "female": "[groans] Tell them... [breathes in] tell them it was on purpose..."
+        },
+        "error_no_ap": {
+          "male": "[frustrated] I've got the idea, I just don't have the legs for it.",
+          "female": "[sighs] Great plan. No gas in the tank. Next turn."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[cheerfully] There they are. I was just telling everyone you'd show.",
+          "female": "[confidently] Right on time. I planned that. I plan everything."
+        },
+        "npc_farewell": {
+          "male": "[playfully] Go on. I'll make it sound like your idea later.",
+          "female": "[cheerfully] Don't do anything I'd do. Actually, do exactly that."
+        },
+        "npc_haggle_accept": {
+          "male": "[chuckles] Deal. I was going to offer that anyway.",
+          "female": "[confidently] Done. See? Nobody had to get hurt."
+        },
+        "npc_haggle_reject": {
+          "male": "[sarcastically] Bold number. Love the confidence. No.",
+          "female": "[flatly] That's not a counter-offer, that's a confession."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Gone. Somebody planned better than me. Rare.",
+          "female": "[frustrated] Cleaned out. And no, I didn't take it. Probably."
+        },
+        "npc_idle_bark": {
+          "male": "[calm] Every great plan starts with somebody saying 'how hard can it be.'",
+          "female": "[playfully] I have three plans. Two of them are the same plan, louder."
+        },
+        "npc_warning": {
+          "male": "[sternly] Walk away. That's not a threat. The threat comes after.",
+          "female": "[confidently] I'd leave now, before I come up with something."
+        },
+        "npc_thanks": {
+          "male": "[cheerfully] Appreciate it. Drinks are on someone. Not me.",
+          "female": "[chuckles] You're good people. Bad at haggling. Good people."
+        }
+      }
+    },
+    "gentle_giant": {
+      "name": "The Gentle Giant",
+      "accent": "#7fd6ff",
+      "tagline": "Soft-spoken, apologetic, devastating when it counts",
+      "settings": {
+        "speed": 0.9,
+        "pitch": -0.1,
+        "stability": 0.7,
+        "style": 0.35
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[nervously] Sorry. Sorry in advance. [breathes in] This is gonna hurt.",
+          "female": "[sadly] I really didn't want to do this part."
+        },
+        "water_spell": {
+          "male": "[calm] Here. Stand behind me. I'm very wide.",
+          "female": "[calm] It's okay. I've got you. Just stay close."
+        },
+        "ice_spell": {
+          "male": "[sternly] Please stop. [pause] I'm asking nicely. Once.",
+          "female": "[flatly] Don't move. I don't want to hug you this hard."
+        },
+        "move_command": {
+          "male": "[calm] Coming through. Excuse me. Sorry. Coming through.",
+          "female": "[calm] Moving up. Mind your feet."
+        },
+        "death_feint": {
+          "male": "[groans] Oh... [sniffs] somebody tell the jukebox I said bye...",
+          "female": "[sighs] That's... okay. That's okay. Just gonna lie here."
+        },
+        "error_no_ap": {
+          "male": "[sadly] I want to help. My arms are tired.",
+          "female": "[sighs] Next turn. I promise. Next turn."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[cheerfully] Oh! Hi. Sorry, I'm in the doorway again.",
+          "female": "[calm] Hey there. You look like you need a sit-down."
+        },
+        "npc_farewell": {
+          "male": "[calm] Be safe. Like, actually safe.",
+          "female": "[cheerfully] Come back in one piece, okay? I'll count them."
+        },
+        "npc_haggle_accept": {
+          "male": "[cheerfully] Yeah, that's fair. That's really fair, thank you.",
+          "female": "[calm] Sure. You need it more than I need the coin."
+        },
+        "npc_haggle_reject": {
+          "male": "[nervously] I... can't. I'm sorry. I'm really sorry. Still no.",
+          "female": "[sadly] I wish I could. I can't feed anyone on that."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] All gone. I gave the last one to a kid. Sorry.",
+          "female": "[calm] Nothing left today. Tomorrow, maybe."
+        },
+        "npc_idle_bark": {
+          "male": "[sadly] They played the sad song again. I'm fine. It's the smoke.",
+          "female": "[calm] Big hands are good for two things. Carrying and holding on."
+        },
+        "npc_warning": {
+          "male": "[sternly] Leave them alone. [pause] I won't say it twice. I'll just stand up.",
+          "female": "[flatly] Step back. I'm being gentle right now. That ends."
+        },
+        "npc_thanks": {
+          "male": "[cheerfully] Thank you. Really. You didn't have to.",
+          "female": "[calm] That means a lot. More than the coin."
+        }
+      }
+    },
+    "shift_lifer": {
+      "name": "The Shift Lifer",
+      "accent": "#ff8a3d",
+      "tagline": "Bone-tired line worker, gallows humor, counts everything in shifts",
+      "settings": {
+        "speed": 0.96,
+        "pitch": -0.04,
+        "stability": 0.7,
+        "style": 0.3
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[flatly] Fifteen years on the line. [pause] I know where things break.",
+          "female": "[confidently] Right through the seam. Always a seam."
+        },
+        "water_spell": {
+          "male": "[calm] Same job, different floor. Let's get it done.",
+          "female": "[flatly] Fixing it. Somebody has to, and it's never management."
+        },
+        "ice_spell": {
+          "male": "[sternly] Stay put. You're on my clock now.",
+          "female": "[flatly] Hold there. Break's over when I say."
+        },
+        "move_command": {
+          "male": "[sighs] Walking. Not running. I don't get paid to run.",
+          "female": "[calm] Moving. Know this floor better than they do."
+        },
+        "death_feint": {
+          "male": "[groans] Clock me out... [sighs] somebody clock me out...",
+          "female": "[groans] Not on a Tuesday... [breathes in] not on a Tuesday..."
+        },
+        "error_no_ap": {
+          "male": "[frustrated] I'm on overtime already. Can't push it.",
+          "female": "[sighs] Out of hours. Union rules. My union. Me."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[flatly] Shift seven? Shift nine? Doesn't matter. Sit.",
+          "female": "[calm] You look like you just got off a double. Join the club."
+        },
+        "npc_farewell": {
+          "male": "[sighs] Horn's going soon. Go before it does.",
+          "female": "[flatly] Stay off the main lines. The quota's hungry tonight."
+        },
+        "npc_haggle_accept": {
+          "male": "[calm] Fine. That's a fair day's pay. Rare thing.",
+          "female": "[flatly] Deal. Don't tell the foreman I'm capable of mercy."
+        },
+        "npc_haggle_reject": {
+          "male": "[sternly] I work fifteen hours for that. No.",
+          "female": "[sarcastically] That's less than the company pays. Impressive."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Line's been dry for a week. Nobody tells us why.",
+          "female": "[flatly] Gone. Requisitioned. That's the word they use for taken."
+        },
+        "npc_idle_bark": {
+          "male": "[flatly] Three days off a month. I spend two of them right here.",
+          "female": "[calm] You can tell the time by the horn. You can tell the year by your back."
+        },
+        "npc_warning": {
+          "male": "[sternly] Wardens walk this block at the half. Don't be here at the half.",
+          "female": "[flatly] Keep your voice down. The walls file reports."
+        },
+        "npc_thanks": {
+          "male": "[calm] That's decent of you. Not a lot of decent left.",
+          "female": "[chuckles] Look at that. A good day. Write it down."
+        }
+      }
+    },
+    "deadpan_medic": {
+      "name": "The Deadpan Medic",
+      "accent": "#4dff9e",
+      "tagline": "Dry, unflappable, keeps a tab on every patch-up",
+      "settings": {
+        "speed": 0.98,
+        "pitch": 0.0,
+        "stability": 0.75,
+        "style": 0.25
+      },
+      "combat": {
+        "fire_spell": {
+          "male": "[flatly] First, do no harm. [pause] Second, this.",
+          "female": "[deadpan] I took an oath. It had loopholes."
+        },
+        "water_spell": {
+          "male": "[calm] Hold still. If you flinch, I start over.",
+          "female": "[flatly] That's twice today. I'm keeping a tab."
+        },
+        "ice_spell": {
+          "male": "[deadpan] Sedative. You'll thank me. You won't remember to.",
+          "female": "[calm] Lie down. Doctor's orders. I'm the doctor."
+        },
+        "move_command": {
+          "male": "[calm] Moving up. Try not to need me on the way.",
+          "female": "[flatly] Repositioning. Don't bleed while I walk."
+        },
+        "death_feint": {
+          "male": "[sighs] Medic's down... [groans] someone read the labels...",
+          "female": "[groans] Last bandage... [breathes in] was mine..."
+        },
+        "error_no_ap": {
+          "male": "[flatly] I'm a medic, not a miracle. Next turn.",
+          "female": "[sighs] Out of hands. I only have the two."
+        }
+      },
+      "npc": {
+        "npc_greeting": {
+          "male": "[flatly] Sit. Where does it hurt. Don't say 'everywhere.'",
+          "female": "[calm] You're leaking. Sit down before you leak on the good chair."
+        },
+        "npc_farewell": {
+          "male": "[deadpan] Try not to come back. Professionally speaking.",
+          "female": "[flatly] Change the dressing twice a day. You won't. But do."
+        },
+        "npc_haggle_accept": {
+          "male": "[calm] Fine. Put the rest on your tab. It's a long tab.",
+          "female": "[flatly] Deal. You're paying in coin, not in excuses."
+        },
+        "npc_haggle_reject": {
+          "male": "[deadpan] No. Stitches cost what stitches cost.",
+          "female": "[flatly] That doesn't cover the thread."
+        },
+        "npc_out_of_stock": {
+          "male": "[sighs] Out of stims. Out of patience. One restocks faster.",
+          "female": "[flatly] Empty shelf. Read the label on that. It says 'empty.'"
+        },
+        "npc_idle_bark": {
+          "male": "[calm] Everyone reads the warning after the overdose. Every time.",
+          "female": "[deadpan] Nobody reads the labels. I've started writing them angrier."
+        },
+        "npc_warning": {
+          "male": "[sternly] Touch my kit and you'll need it.",
+          "female": "[flatly] I know forty ways to save a life. They reverse."
+        },
+        "npc_thanks": {
+          "male": "[calm] Thanks. Now go hydrate.",
+          "female": "[flatly] Appreciated. Your tab's down to merely tragic."
+        }
+      }
+    }
+  },
+  "classes": {
+    "chrome_warrior": {
+      "name": "Chrome Warrior",
+      "role": "Melee · Tier 1",
+      "fire_spell": "Chrome Cleave",
+      "water_spell": "Second Wind",
+      "ice_spell": "Rally Cry"
+    },
+    "whitelight_medic": {
+      "name": "Whitelight Medic",
+      "role": "Support · Tier 1",
+      "fire_spell": "Holy Static",
+      "water_spell": "Mend Light",
+      "ice_spell": "Purge Code"
+    },
+    "blackcode_mage": {
+      "name": "Blackcode Mage",
+      "role": "Ranged · Tier 1",
+      "fire_spell": "Plasma Bolt",
+      "water_spell": "Cryo Bolt",
+      "ice_spell": "Volt Bolt"
+    },
+    "signal_thief": {
+      "name": "Signal Thief",
+      "role": "Utility · Tier 1",
+      "fire_spell": "Backstab",
+      "water_spell": "Inventory Loss",
+      "ice_spell": "Smoke Jammer"
+    },
+    "laser_archer": {
+      "name": "Laser Archer",
+      "role": "Ranged · Tier 1",
+      "fire_spell": "Charge Shot",
+      "water_spell": "Aim Assist",
+      "ice_spell": "Pinning Beam"
+    },
+    "stim_chemist": {
+      "name": "Stim Chemist",
+      "role": "Support · Tier 1",
+      "fire_spell": "Brew Bomb",
+      "water_spell": "Throw Stim",
+      "ice_spell": "Detox Dart"
+    },
+    "iron_monk": {
+      "name": "Iron Monk",
+      "role": "Melee · Tier 2",
+      "fire_spell": "Piston Palm",
+      "water_spell": "Chakra Reboot",
+      "ice_spell": "Shockwave Fist"
+    },
+    "neon_ninja": {
+      "name": "Neon Ninja",
+      "role": "Utility · Tier 2",
+      "fire_spell": "Twin Strike",
+      "water_spell": "Shadow Clone",
+      "ice_spell": "Throw Star"
+    },
+    "street_samurai": {
+      "name": "Street Samurai",
+      "role": "Melee · Tier 2",
+      "fire_spell": "Neon Slash",
+      "water_spell": "Bushido Code",
+      "ice_spell": "Ion Edge"
+    },
+    "digital_knight": {
+      "name": "Digital Knight",
+      "role": "Tank · Tier 2",
+      "fire_spell": "Shield Bash",
+      "water_spell": "Firewall Guard",
+      "ice_spell": "Armor Break"
+    },
+    "redline_mage": {
+      "name": "Redline Mage",
+      "role": "Special · Tier 2",
+      "fire_spell": "Spellblade",
+      "water_spell": "Red Mend",
+      "ice_spell": "Red Spark"
+    },
+    "bluescreen_mage": {
+      "name": "Bluescreen Mage",
+      "role": "Special · Tier 2",
+      "fire_spell": "Arc Lash",
+      "water_spell": "Self Repair",
+      "ice_spell": "Scan Signature"
+    },
+    "gunslinger": {
+      "name": "Gunslinger",
+      "role": "Ranged · Tier 2",
+      "fire_spell": "Quick Draw",
+      "water_spell": "Plasma Burst",
+      "ice_spell": "Ricochet"
+    },
+    "net_hacker": {
+      "name": "Net Hacker",
+      "role": "Support · Tier 2",
+      "fire_spell": "Data Spike",
+      "water_spell": "Firewall Up",
+      "ice_spell": "System Override"
+    },
+    "scrap_tinker": {
+      "name": "Scrap Tinker",
+      "role": "Utility · Tier 2",
+      "fire_spell": "Scrap Grenade",
+      "water_spell": "Patch Job",
+      "ice_spell": "Shock Mine"
+    },
+    "droid_master": {
+      "name": "Droid Master",
+      "role": "Special · Tier 2",
+      "fire_spell": "Build: Assault Droid",
+      "water_spell": "Overclock",
+      "ice_spell": "Build: Medic Droid"
+    },
+    "timeslip_mage": {
+      "name": "Timeslip Mage",
+      "role": "Support · Tier 2",
+      "fire_spell": "Gravity Crush",
+      "water_spell": "Haste",
+      "ice_spell": "Slow"
+    },
+    "grid_geomancer": {
+      "name": "Grid Geomancer",
+      "role": "Special · Tier 2",
+      "fire_spell": "Fault Tremor",
+      "water_spell": "Terraform Pulse",
+      "ice_spell": "Geomancy"
+    },
+    "holo_summoner": {
+      "name": "Holo Summoner",
+      "role": "Support · Tier 2",
+      "fire_spell": "Summon: Leviathan Feed",
+      "water_spell": "Summon: Seraph Ad",
+      "ice_spell": "Summon: Iron Titan"
+    },
+    "synth_bard": {
+      "name": "Synth Bard",
+      "role": "Support · Tier 2",
+      "fire_spell": "Feedback Squeal",
+      "water_spell": "Anthem of the Off-Key",
+      "ice_spell": "Last Call Ballad"
+    },
+    "holo_dancer": {
+      "name": "Holo Dancer",
+      "role": "Utility · Tier 2",
+      "fire_spell": "Ribbon Lash",
+      "water_spell": "Strobe Step",
+      "ice_spell": "Heartbreak Waltz"
+    },
+    "jumpjet_dragoon": {
+      "name": "Jumpjet Dragoon",
+      "role": "Melee · Tier 2",
+      "fire_spell": "Jet Jump",
+      "water_spell": "High Ground",
+      "ice_spell": "Grapple Line"
+    },
+    "void_knight": {
+      "name": "Void Knight",
+      "role": "Tank · Tier 2",
+      "fire_spell": "Sanguine Edge",
+      "water_spell": "Abyssal Aegis",
+      "ice_spell": "Dread Mark"
+    },
+    "stim_berserker": {
+      "name": "Stim Berserker",
+      "role": "Melee · Tier 2",
+      "fire_spell": "Frenzy Slash",
+      "water_spell": "Pain Dampener",
+      "ice_spell": "Red Mist"
+    },
+    "cyber_sniper": {
+      "name": "Cyber Sniper",
+      "role": "Ranged · Tier 3",
+      "fire_spell": "Neural Link Shot",
+      "water_spell": "Steady Aim",
+      "ice_spell": "Piercing Round"
+    },
+    "ghost_assassin": {
+      "name": "Ghost Assassin",
+      "role": "Melee · Tier 3",
+      "fire_spell": "Ghost Cut",
+      "water_spell": "Vanishing Act",
+      "ice_spell": "Death Mark"
+    },
+    "plasma_vanguard": {
+      "name": "Plasma Vanguard",
+      "role": "Tank · Tier 3",
+      "fire_spell": "Meltdown",
+      "water_spell": "Thermal Shield",
+      "ice_spell": "Plasma Ram"
+    },
+    "static_oracle": {
+      "name": "Static Oracle",
+      "role": "Support · Tier 3",
+      "fire_spell": "Prophecy Static",
+      "water_spell": "Dead Channel",
+      "ice_spell": "Crown Dream"
+    },
+    "void_technician": {
+      "name": "Void Technician",
+      "role": "Utility · Tier 3",
+      "fire_spell": "Gravity Well",
+      "water_spell": "Void Rift",
+      "ice_spell": "Event Horizon"
+    },
+    "vector_knight": {
+      "name": "Vector Knight",
+      "role": "Melee · Tier 4",
+      "fire_spell": "Kinetic Charge",
+      "water_spell": "Gravitational Pull",
+      "ice_spell": "Elastic Inertia"
+    },
+    "chrono_stitcher": {
+      "name": "Chrono-Stitcher",
+      "role": "Special · Tier 4",
+      "fire_spell": "Delay Thread",
+      "water_spell": "Rewind Position",
+      "ice_spell": "Stitch Turn"
+    },
+    "cartographer": {
+      "name": "Cartographer",
+      "role": "Special · Tier 4",
+      "fire_spell": "Draw Fault Line",
+      "water_spell": "Isolate Elevation",
+      "ice_spell": "Sink Ground"
+    },
+    "deck_stacker": {
+      "name": "Deck Stacker",
+      "role": "Utility · Tier 4",
+      "fire_spell": "52-Card Pickup",
+      "water_spell": "House Edge",
+      "ice_spell": "Shuffle Up"
+    },
+    "echo_mime": {
+      "name": "Echo Mime",
+      "role": "Special · Tier 4",
+      "fire_spell": "Echo",
+      "water_spell": "Basic Attack",
+      "ice_spell": "Basic Attack"
+    },
+    "digimancer": {
+      "name": "Digimancer",
+      "role": "Special · Tier 4",
+      "fire_spell": "Essence Siphon",
+      "water_spell": "Soul Tax",
+      "ice_spell": "Grave Protocol"
+    },
+    "daemon_caller": {
+      "name": "Daemon Caller",
+      "role": "Special · Tier 2",
+      "fire_spell": "Call: EMBER.EXE",
+      "water_spell": "Call: NURSE.BAK",
+      "ice_spell": "Call: LULLABY.SCR"
+    },
+    "sync_blade": {
+      "name": "Sync Blade",
+      "role": "Melee · Tier 3",
+      "fire_spell": "Two-Step",
+      "water_spell": "Sync Stance",
+      "ice_spell": "Neon Rondo"
+    },
+    "droid_assault_chassis": {
+      "name": "Assault Droid",
+      "role": "Enemy · Melee · Tier 1",
+      "fire_spell": "Buzzsaw",
+      "water_spell": "Basic Attack",
+      "ice_spell": "Basic Attack"
+    },
+    "droid_bulwark_chassis": {
+      "name": "Bulwark Droid",
+      "role": "Enemy · Tank · Tier 1",
+      "fire_spell": "Slam Plate",
+      "water_spell": "Shield Projector",
+      "ice_spell": "Basic Attack"
+    },
+    "droid_medic_chassis": {
+      "name": "Medic Droid",
+      "role": "Enemy · Support · Tier 1",
+      "fire_spell": "Nanite Spray",
+      "water_spell": "Triage Pulse",
+      "ice_spell": "Basic Attack"
+    },
+    "droid_volt_chassis": {
+      "name": "Volt Droid",
+      "role": "Enemy · Ranged · Tier 1",
+      "fire_spell": "Arc Lash",
+      "water_spell": "Chain Lightning",
+      "ice_spell": "Basic Attack"
+    },
+    "turret_chassis": {
+      "name": "Sentry Turret",
+      "role": "Enemy · Ranged · Tier 1",
+      "fire_spell": "Turret Burst",
+      "water_spell": "Basic Attack",
+      "ice_spell": "Basic Attack"
+    },
+    "doctrine_warden": {
+      "name": "Shift Warden",
+      "role": "Enemy · Tank · Tier 1",
+      "fire_spell": "Stun Baton",
+      "water_spell": "Shift Whistle",
+      "ice_spell": "Basic Attack"
+    },
+    "choir_enforcer": {
+      "name": "Choir Enforcer",
+      "role": "Enemy · Melee · Tier 2",
+      "fire_spell": "Hymn Cleave",
+      "water_spell": "Crown Hymn",
+      "ice_spell": "Basic Attack"
+    },
+    "cantor_adept": {
+      "name": "Cantor Adept",
+      "role": "Enemy · Support · Tier 2",
+      "fire_spell": "Sonic Screech",
+      "water_spell": "Hymnal Mend",
+      "ice_spell": "Basic Attack"
+    },
+    "factory_marksman": {
+      "name": "Factory Marksman",
+      "role": "Enemy · Ranged · Tier 1",
+      "fire_spell": "Rail Shot",
+      "water_spell": "Basic Attack",
+      "ice_spell": "Basic Attack"
+    },
+    "munitions_drone_chassis": {
+      "name": "Munitions Drone",
+      "role": "Enemy · Ranged · Tier 1",
+      "fire_spell": "Arc Lash",
+      "water_spell": "Self Repair",
+      "ice_spell": "Basic Attack"
+    },
+    "essence_wraith_chassis": {
+      "name": "Essence Wraith",
+      "role": "Enemy · Special · Tier 2",
+      "fire_spell": "Essence Leech",
+      "water_spell": "Bad Sector",
+      "ice_spell": "Basic Attack"
+    },
+    "foreman_chassis": {
+      "name": "Foreman",
+      "role": "Enemy · Tank · Tier 3",
+      "fire_spell": "Quota Crusher",
+      "water_spell": "Overtime",
+      "ice_spell": "Basic Attack"
+    }
+  },
+  "combatActionLabels": {
+    "fire_spell": "Fire / Attack",
+    "water_spell": "Water / Utility",
+    "ice_spell": "Ice / Control",
+    "move_command": "Move Command",
+    "death_feint": "Death / Feint",
+    "error_no_ap": "Error — Not Enough AP"
+  },
+  "npcActionLabels": {
+    "npc_greeting": "Greeting",
+    "npc_farewell": "Farewell",
+    "npc_haggle_accept": "Haggle — Accept",
+    "npc_haggle_reject": "Haggle — Reject",
+    "npc_out_of_stock": "Out of Stock",
+    "npc_idle_bark": "Idle Bark",
+    "npc_warning": "Warning / Threat",
+    "npc_thanks": "Thanks for Business"
+  },
+  "npcCategories": {
+    "generic_npc": {
+      "name": "Random NPC",
+      "role": "Civilian / Bystander"
+    },
+    "vendor": {
+      "name": "Vendor",
+      "role": "Shopkeeper / Trader"
+    },
+    "bartender": {
+      "name": "Bartender",
+      "role": "Pours, listens, remembers tabs"
+    },
+    "fixer": {
+      "name": "Fixer",
+      "role": "Jobs, favours and quiet introductions"
+    },
+    "street_kid": {
+      "name": "Street Kid",
+      "role": "Runner, lookout, pickpocket"
+    },
+    "doctrine_patrol": {
+      "name": "Doctrine Patrol",
+      "role": "Wardens and Choir on the beat"
+    }
+  },
+  "characters": {
+    "rook": {
+      "name": "Rook Dannick",
+      "role": "Crew · Chrome Warrior",
+      "kind": "unit",
+      "class_id": "chrome_warrior",
+      "bio": "Ringleader. Talks like he planned it. He didn't plan it.",
+      "personality": "ringleader",
+      "sex": "male",
+      "voice_id": ""
+    },
+    "mags": {
+      "name": "Mags Orrowin",
+      "role": "Crew · Laser Archer",
+      "kind": "unit",
+      "class_id": "laser_archer",
+      "bio": "Munitions-line lifer. Knows every blind spot in the Supply Works.",
+      "personality": "shift_lifer",
+      "sex": "",
+      "voice_id": ""
+    },
+    "dizzy": {
+      "name": "Dez 'Dizzy' Kettleby",
+      "role": "Crew · Blackcode Mage",
+      "kind": "unit",
+      "class_id": "blackcode_mage",
+      "bio": "Writes forbidden code on bar napkins. Allergic to consequences.",
+      "personality": "glitch_runner",
+      "sex": "",
+      "voice_id": ""
+    },
+    "brannoc": {
+      "name": "Brannoc 'Tap' Hollis",
+      "role": "Crew · Chrome Warrior",
+      "kind": "unit",
+      "class_id": "chrome_warrior",
+      "bio": "Enormous. Gentle. Cries at the jukebox. Punches very hard.",
+      "personality": "gentle_giant",
+      "sex": "",
+      "voice_id": ""
+    },
+    "patch": {
+      "name": "Juniper 'Patch' Oyelaran",
+      "role": "Crew · Whitelight Medic",
+      "kind": "unit",
+      "class_id": "whitelight_medic",
+      "bio": "Patches the crew up in the back room. The only one who reads labels.",
+      "personality": "deadpan_medic",
+      "sex": "female",
+      "voice_id": ""
+    },
+    "drunken_oracle": {
+      "name": "The Drunken Oracle",
+      "role": "Crew · Static Oracle",
+      "kind": "unit+npc",
+      "class_id": "static_oracle",
+      "bio": "Sits at the end of the bar. Knows things. Never pays.",
+      "personality": "gothic_mystic",
+      "sex": "female",
+      "voice_id": ""
+    },
+    "sly_deck": {
+      "name": "Sly Cassivar",
+      "role": "Crew · Deck Stacker",
+      "kind": "unit",
+      "class_id": "deck_stacker",
+      "bio": "Card dealer at the back table. Cheats. Admits it.",
+      "personality": "high_stakes_gambler",
+      "sex": "male",
+      "voice_id": ""
+    },
+    "droid_assault": {
+      "name": "Droid Assault",
+      "role": "Crew · Assault Droid",
+      "kind": "unit",
+      "class_id": "droid_assault_chassis",
+      "bio": "Built on the field.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "droid_bulwark": {
+      "name": "Droid Bulwark",
+      "role": "Crew · Bulwark Droid",
+      "kind": "unit",
+      "class_id": "droid_bulwark_chassis",
+      "bio": "Built on the field.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "droid_medic": {
+      "name": "Droid Medic",
+      "role": "Crew · Medic Droid",
+      "kind": "unit",
+      "class_id": "droid_medic_chassis",
+      "bio": "Built on the field.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "droid_volt": {
+      "name": "Droid Volt",
+      "role": "Crew · Volt Droid",
+      "kind": "unit",
+      "class_id": "droid_volt_chassis",
+      "bio": "Built on the field.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "sentry_turret": {
+      "name": "Turret",
+      "role": "Crew · Sentry Turret",
+      "kind": "unit",
+      "class_id": "turret_chassis",
+      "bio": "Built on the field.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "doctrine_warden": {
+      "name": "Shift Warden",
+      "role": "Doctrine · Shift Warden",
+      "kind": "unit",
+      "class_id": "doctrine_warden",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "choir_enforcer": {
+      "name": "Choir Enforcer",
+      "role": "Doctrine · Choir Enforcer",
+      "kind": "unit",
+      "class_id": "choir_enforcer",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "cantor_adept": {
+      "name": "Cantor Adept",
+      "role": "Doctrine · Cantor Adept",
+      "kind": "unit",
+      "class_id": "cantor_adept",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "factory_marksman": {
+      "name": "Factory Marksman",
+      "role": "Doctrine · Factory Marksman",
+      "kind": "unit",
+      "class_id": "factory_marksman",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "munitions_drone": {
+      "name": "Munitions Drone",
+      "role": "Doctrine · Munitions Drone",
+      "kind": "unit",
+      "class_id": "munitions_drone_chassis",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "essence_wraith": {
+      "name": "Essence Wraith",
+      "role": "Doctrine · Essence Wraith",
+      "kind": "unit",
+      "class_id": "essence_wraith_chassis",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "foreman_grisk": {
+      "name": "Foreman Grisk Harrowby",
+      "role": "Doctrine · Foreman",
+      "kind": "unit",
+      "class_id": "foreman_chassis",
+      "bio": "Runs the Supply Works floor. Believes in the quota the way others believe in the Queen.",
+      "personality": "corporate_shark",
+      "sex": "",
+      "voice_id": ""
+    },
+    "doctrine_relay": {
+      "name": "Doctrine Relay",
+      "role": "Doctrine · Sentry Turret",
+      "kind": "unit",
+      "class_id": "turret_chassis",
+      "bio": "A broadcast mast that rewrites what your HUD tells you. Hack it or break it.",
+      "personality": "rogue_ai_core",
+      "sex": "",
+      "voice_id": ""
+    },
+    "kade_lusk": {
+      "name": "Kade Lusk",
+      "role": "Doctrine · Cyber Sniper",
+      "kind": "unit",
+      "class_id": "cyber_sniper",
+      "bio": "Ocular Guard Commander. Answers to the Archduchess, not the Archon. Lantern Wards born; never says so.",
+      "personality": "stoic_veteran",
+      "sex": "",
+      "voice_id": ""
+    },
+    "otto": {
+      "name": "Ottoline 'Otto' Brask",
+      "role": "NPC · Neon Gutter",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Runs the Neon Gutter. Has poured drinks through three curfews, two riots and one very quiet funeral. Remembers every tab and none of your names.",
+      "personality": "noir_detective",
+      "sex": "",
+      "voice_id": ""
+    },
+    "hic": {
+      "name": "Hic the Gear Guy",
+      "role": "NPC · Neon Gutter",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Sells weapons out of a duffel bag under table six. Has never once been fully sober or fully wrong about a firing pin.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "vesk": {
+      "name": "Vesk the Tailor",
+      "role": "NPC · Neon Gutter",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Patches armor in the back booth with a needle, a soldering iron and total contempt. Has measured three generals and liked none of them.",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "sly": {
+      "name": "Sly Cassivar",
+      "role": "NPC · Neon Gutter",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Runs the back table. Cheats openly, which somehow makes it fair. Says the deck talks to him. It probably does.",
+      "personality": "high_stakes_gambler",
+      "sex": "male",
+      "voice_id": ""
+    },
+    "benno": {
+      "name": "Benno Krait",
+      "role": "NPC · Neon Gutter",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Doctrine munitions line worker, shift seven. Fifteen hours a day, three days off a month, one stool at the Gutter he'd fight a Choir legion for.",
+      "personality": "shift_lifer",
+      "sex": "",
+      "voice_id": ""
+    },
+    "ma_rivet": {
+      "name": "Ma Rivet",
+      "role": "NPC · Neon Block Demo",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Runs a scrap stall out of a shopping cart. Knows every wire in the block and who cut it.",
+      "personality": "",
+      "sex": "female",
+      "voice_id": ""
+    },
+    "kade": {
+      "name": "Kade Rennick",
+      "role": "NPC · Neon Block Demo",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Sells prototype gear off a fold-out table. Never looks up from his tablet for long.",
+      "personality": "cyborg_technocrat",
+      "sex": "male",
+      "voice_id": ""
+    },
+    "kade_torvald": {
+      "name": "Kade Torvald",
+      "role": "NPC · Neon Gutter",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "A Veil deserter on the last stool by the door. Very quiet about where he's from. Very loud about the jukebox.",
+      "personality": "stoic_veteran",
+      "sex": "male",
+      "voice_id": ""
+    },
+    "kade_brisk": {
+      "name": "Kade Brisk",
+      "role": "NPC · Neon Block Demo",
+      "kind": "npc",
+      "class_id": "",
+      "bio": "Rennick's supplier. Moves crates that fall off trucks, sometimes before the trucks arrive.",
+      "personality": "smuggler_captain",
+      "sex": "male",
+      "voice_id": ""
+    },
+    "team:0": {
+      "name": "Crew (anyone)",
+      "role": "Fallback lines for any crew member",
+      "kind": "group",
+      "class_id": "",
+      "bio": "",
+      "personality": "",
+      "sex": "",
+      "voice_id": ""
+    },
+    "team:1": {
+      "name": "Doctrine (any trooper)",
+      "role": "Fallback lines for any Doctrine unit",
+      "kind": "group",
+      "class_id": "",
+      "bio": "",
+      "personality": "wasteland_prophet",
+      "sex": "",
+      "voice_id": ""
+    }
+  },
+  "castBarks": {
+    "rook": {
+      "battle_start": [
+        {
+          "text": "Okay. Plan. We have a plan. Mostly.",
+          "file": "assets/voice/barks/rook_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Everybody act like this was the idea.",
+          "file": "assets/voice/barks/rook_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "Called it. Didn't call it. Still counts.",
+          "file": "assets/voice/barks/rook_crit_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "That's the plan working!",
+          "file": "assets/voice/barks/rook_crit_2",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "Off the clock.",
+          "file": "assets/voice/barks/rook_kill_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Shift's over for you.",
+          "file": "assets/voice/barks/rook_kill_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "This is fine. This is a strategic bleed.",
+          "file": "assets/voice/barks/rook_low_hp_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Patch? Patch!",
+          "file": "assets/voice/barks/rook_low_hp_2",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "No no no — we're not leaving anyone at this bar!",
+          "file": "assets/voice/barks/rook_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "The plan had that one hitting.",
+          "file": "assets/voice/barks/rook_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "Drinks are on Brannoc.",
+          "file": "assets/voice/barks/rook_victory_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Told you. Nobody listens, but I told you.",
+          "file": "assets/voice/barks/rook_victory_2",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "Look at that. Teamwork. I organised that.",
+          "file": "assets/voice/barks/rook_heal_1",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "Okay! Ow. Okay. Adjusting the plan.",
+          "file": "assets/voice/barks/rook_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "buzzed": [
+        {
+          "text": "I've never been more sure of anything. What were we doing?",
+          "file": "assets/voice/barks/rook_buzzed_1",
+          "src": "barks.json"
+        }
+      ],
+      "turn_start": [
+        {
+          "text": "Right. My move. I have a move.",
+          "file": "assets/voice/barks/rook_turn_start_1",
+          "src": "barks.json"
+        }
+      ],
+      "shield_down": [
+        {
+          "text": "Shield's gone. Plan B. Plan B is running.",
+          "file": "assets/voice/barks/rook_shield_down_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "mags": {
+      "battle_start": [
+        {
+          "text": "I know every blind spot on this floor. Follow me.",
+          "file": "assets/voice/barks/mags_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Eyes up. Their sightlines suck.",
+          "file": "assets/voice/barks/mags_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "Right through the gap.",
+          "file": "assets/voice/barks/mags_crit_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Fifteen years on the line. I know where the seams are.",
+          "file": "assets/voice/barks/mags_crit_2",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "Clocked out.",
+          "file": "assets/voice/barks/mags_kill_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Quota met.",
+          "file": "assets/voice/barks/mags_kill_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "Not dying on a Tuesday.",
+          "file": "assets/voice/barks/mags_low_hp_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Fifteen years and this is how I get docked.",
+          "file": "assets/voice/barks/mags_low_hp_2",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "Wind. There's no wind indoors. Shut up.",
+          "file": "assets/voice/barks/mags_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "That's a full shift.",
+          "file": "assets/voice/barks/mags_victory_1",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Man down! Cover them — I've got the angle!",
+          "file": "assets/voice/barks/mags_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "That one's coming out of their pay.",
+          "file": "assets/voice/barks/mags_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "Patched. Back on the line.",
+          "file": "assets/voice/barks/mags_heal_1",
+          "src": "barks.json"
+        }
+      ],
+      "turn_start": [
+        {
+          "text": "Clock's running. Moving.",
+          "file": "assets/voice/barks/mags_turn_start_1",
+          "src": "barks.json"
+        }
+      ],
+      "buzzed": [
+        {
+          "text": "Everything's swaying. Or the floor's union now.",
+          "file": "assets/voice/barks/mags_buzzed_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "dizzy": {
+      "battle_start": [
+        {
+          "text": "Ooh, they've got firewalls. Cute.",
+          "file": "assets/voice/barks/dizzy_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "I wrote this exploit on a napkin. The napkin was wet.",
+          "file": "assets/voice/barks/dizzy_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "Segfault! Their face, I mean.",
+          "file": "assets/voice/barks/dizzy_crit_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Oops. Infinite loop. In you.",
+          "file": "assets/voice/barks/dizzy_crit_2",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "Process terminated.",
+          "file": "assets/voice/barks/dizzy_kill_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Ctrl-alt-defeat.",
+          "file": "assets/voice/barks/dizzy_kill_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "I'd like to roll back to an earlier save.",
+          "file": "assets/voice/barks/dizzy_low_hp_1",
+          "src": "barks.json"
+        }
+      ],
+      "buzzed": [
+        {
+          "text": "Everything's in hex now. It's beautiful.",
+          "file": "assets/voice/barks/dizzy_buzzed_1",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "Undefined behavior! Undefined!",
+          "file": "assets/voice/barks/dizzy_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "Patch notes: we won.",
+          "file": "assets/voice/barks/dizzy_victory_1",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Hey! That's my debug buddy!",
+          "file": "assets/voice/barks/dizzy_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "Stack overflow! Mine, I mean. Ow.",
+          "file": "assets/voice/barks/dizzy_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "Restored from backup. Mostly the good parts.",
+          "file": "assets/voice/barks/dizzy_heal_1",
+          "src": "barks.json"
+        }
+      ],
+      "turn_start": [
+        {
+          "text": "Compiling... compiling... okay, go.",
+          "file": "assets/voice/barks/dizzy_turn_start_1",
+          "src": "barks.json"
+        }
+      ],
+      "shield_down": [
+        {
+          "text": "Firewall's down! Mine! Not theirs! Bad!",
+          "file": "assets/voice/barks/dizzy_shield_down_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "brannoc": {
+      "battle_start": [
+        {
+          "text": "I'm sorry in advance.",
+          "file": "assets/voice/barks/brannoc_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Please don't make me.",
+          "file": "assets/voice/barks/brannoc_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "Oh no. Did I do that?",
+          "file": "assets/voice/barks/brannoc_crit_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Sorry! Sorry. Good punch though.",
+          "file": "assets/voice/barks/brannoc_crit_2",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "…he'll be okay. Right? He'll be okay.",
+          "file": "assets/voice/barks/brannoc_kill_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "I'm so sorry. Sleep it off, okay?",
+          "file": "assets/voice/barks/brannoc_kill_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "I'm not crying. It's the smoke.",
+          "file": "assets/voice/barks/brannoc_low_hp_1",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "HEY. Nobody touches my friends.",
+          "file": "assets/voice/barks/brannoc_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "Can we play the sad song on the jukebox?",
+          "file": "assets/voice/barks/brannoc_victory_1",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "Ow. Okay. Now I'm a little upset.",
+          "file": "assets/voice/barks/brannoc_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "Thank you. I'll be gentle. Mostly.",
+          "file": "assets/voice/barks/brannoc_heal_1",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "Sorry! I wasn't trying very hard. On purpose.",
+          "file": "assets/voice/barks/brannoc_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "buzzed": [
+        {
+          "text": "I love everybody here. Even them. Especially them.",
+          "file": "assets/voice/barks/brannoc_buzzed_1",
+          "src": "barks.json"
+        }
+      ],
+      "turn_start": [
+        {
+          "text": "Okay. Deep breath. Okay.",
+          "file": "assets/voice/barks/brannoc_turn_start_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "patch": {
+      "battle_start": [
+        {
+          "text": "Read the labels. Nobody reads the labels.",
+          "file": "assets/voice/barks/patch_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Try not to need me.",
+          "file": "assets/voice/barks/patch_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "Hold still.",
+          "file": "assets/voice/barks/patch_heal_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "That's twice today. I'm keeping a tab.",
+          "file": "assets/voice/barks/patch_heal_2",
+          "src": "barks.json"
+        },
+        {
+          "text": "Stitched. Don't pick at it.",
+          "file": "assets/voice/barks/patch_heal_3",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "Medic's down to her last bandage. Mine.",
+          "file": "assets/voice/barks/patch_low_hp_1",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Stay with me — I'm coming!",
+          "file": "assets/voice/barks/patch_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "First, do no harm. Second, do harm.",
+          "file": "assets/voice/barks/patch_kill_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "Everyone line up. Shots. The medical kind.",
+          "file": "assets/voice/barks/patch_victory_1",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "That's going on somebody's tab.",
+          "file": "assets/voice/barks/patch_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "Precise incision. You're welcome.",
+          "file": "assets/voice/barks/patch_crit_1",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "I meant to do that. Medically.",
+          "file": "assets/voice/barks/patch_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "buzzed": [
+        {
+          "text": "Everything's fine. I've self-diagnosed. It's fine.",
+          "file": "assets/voice/barks/patch_buzzed_1",
+          "src": "barks.json"
+        }
+      ],
+      "turn_start": [
+        {
+          "text": "Who's bleeding. Hands up.",
+          "file": "assets/voice/barks/patch_turn_start_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "foreman_grisk": {
+      "battle_start": [
+        {
+          "text": "The quota does not care about your feelings.",
+          "file": "assets/voice/barks/foreman_grisk_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Back to your stations.",
+          "file": "assets/voice/barks/foreman_grisk_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "This will be docked from your pay!",
+          "file": "assets/voice/barks/foreman_grisk_low_hp_1",
+          "src": "barks.json"
+        }
+      ],
+      "shield_down": [
+        {
+          "text": "My shield! That was company property!",
+          "file": "assets/voice/barks/foreman_grisk_shield_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "Insubordination: resolved.",
+          "file": "assets/voice/barks/foreman_grisk_kill_1",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "Efficiency! Finally!",
+          "file": "assets/voice/barks/foreman_grisk_crit_1",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "That was a write-up. A big one.",
+          "file": "assets/voice/barks/foreman_grisk_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Replace them. Then dock them.",
+          "file": "assets/voice/barks/foreman_grisk_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "Back to work. All of you. The dead too.",
+          "file": "assets/voice/barks/foreman_grisk_victory_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "team:0": {
+      "crit": [
+        {
+          "text": "Yes!",
+          "file": "assets/voice/barks/crew_crit_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Nice!",
+          "file": "assets/voice/barks/crew_crit_2",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "Down!",
+          "file": "assets/voice/barks/crew_kill_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "One less.",
+          "file": "assets/voice/barks/crew_kill_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "I need a hand here!",
+          "file": "assets/voice/barks/crew_low_hp_1",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Man down!",
+          "file": "assets/voice/barks/crew_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "battle_start": [
+        {
+          "text": "Here we go.",
+          "file": "assets/voice/barks/crew_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Watch each other's backs.",
+          "file": "assets/voice/barks/crew_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "Thanks, I needed that.",
+          "file": "assets/voice/barks/crew_heal_1",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "Missed!",
+          "file": "assets/voice/barks/crew_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "We did it!",
+          "file": "assets/voice/barks/crew_victory_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Drinks at the Gutter.",
+          "file": "assets/voice/barks/crew_victory_2",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "Ow! That hurt!",
+          "file": "assets/voice/barks/crew_big_hit_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "team:1": {
+      "battle_start": [
+        {
+          "text": "By the Hymn — hold the line!",
+          "file": "assets/voice/barks/doctrine_trooper_battle_start_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Unregistered persons on the floor!",
+          "file": "assets/voice/barks/doctrine_trooper_battle_start_2",
+          "src": "barks.json"
+        }
+      ],
+      "crit": [
+        {
+          "text": "For the Doctrine!",
+          "file": "assets/voice/barks/doctrine_trooper_crit_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Compliance achieved.",
+          "file": "assets/voice/barks/doctrine_trooper_crit_2",
+          "src": "barks.json"
+        }
+      ],
+      "kill": [
+        {
+          "text": "Citizen corrected.",
+          "file": "assets/voice/barks/doctrine_trooper_kill_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "Report filed.",
+          "file": "assets/voice/barks/doctrine_trooper_kill_2",
+          "src": "barks.json"
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "Requesting relief!",
+          "file": "assets/voice/barks/doctrine_trooper_low_hp_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "The Hymn… sustains…",
+          "file": "assets/voice/barks/doctrine_trooper_low_hp_2",
+          "src": "barks.json"
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Brother down! Sing louder!",
+          "file": "assets/voice/barks/doctrine_trooper_ally_down_1",
+          "src": "barks.json"
+        }
+      ],
+      "miss": [
+        {
+          "text": "Hold still, heretic!",
+          "file": "assets/voice/barks/doctrine_trooper_miss_1",
+          "src": "barks.json"
+        }
+      ],
+      "heal": [
+        {
+          "text": "The Hymn restores.",
+          "file": "assets/voice/barks/doctrine_trooper_heal_1",
+          "src": "barks.json"
+        }
+      ],
+      "victory": [
+        {
+          "text": "Order is restored.",
+          "file": "assets/voice/barks/doctrine_trooper_victory_1",
+          "src": "barks.json"
+        },
+        {
+          "text": "The floor is compliant.",
+          "file": "assets/voice/barks/doctrine_trooper_victory_2",
+          "src": "barks.json"
+        }
+      ],
+      "big_hit": [
+        {
+          "text": "Heresy strikes!",
+          "file": "assets/voice/barks/doctrine_trooper_big_hit_1",
+          "src": "barks.json"
+        }
+      ],
+      "shield_down": [
+        {
+          "text": "Bulwark broken! Close ranks!",
+          "file": "assets/voice/barks/doctrine_trooper_shield_down_1",
+          "src": "barks.json"
+        }
+      ]
+    },
+    "doctrine_relay": {
+      "battle_start": [
+        {
+          "text": "ATTENTION: ALL FIGURES ARE CERTIFIED.",
+          "file": "assets/voice/barks/doctrine_relay_battle_start_1",
+          "src": "characters.json",
+          "chance": 1.0
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "SIGNAL… DEGRADED… TRUST… THE…",
+          "file": "assets/voice/barks/doctrine_relay_low_hp_1",
+          "src": "characters.json",
+          "chance": 1.0
+        }
+      ],
+      "turn_start": [
+        {
+          "text": "REMINDER: YOUR EYES ARE GOVERNMENT PROPERTY.",
+          "file": "assets/voice/barks/doctrine_relay_turn_start_1",
+          "src": "characters.json",
+          "chance": 0.3
+        }
+      ],
+      "shield_down": [
+        {
+          "text": "INTEGRITY... RE-CERTIFIED. DISREGARD DAMAGE.",
+          "file": "assets/voice/barks/doctrine_relay_shield_down_1",
+          "src": "characters.json",
+          "chance": 1.0
+        }
+      ]
+    },
+    "kade_lusk": {
+      "battle_start": [
+        {
+          "text": "Name of record?",
+          "file": "assets/voice/barks/kade_lusk_battle_start_1",
+          "src": "characters.json",
+          "chance": 1.0
+        }
+      ],
+      "kill": [
+        {
+          "text": "Struck for clarity.",
+          "file": "assets/voice/barks/kade_lusk_kill_1",
+          "src": "characters.json",
+          "chance": 0.8
+        }
+      ],
+      "low_hp": [
+        {
+          "text": "I was a Kade before I was a Commander. Remember that, if you remember anything.",
+          "file": "assets/voice/barks/kade_lusk_low_hp_1",
+          "src": "characters.json",
+          "chance": 1.0
+        }
+      ],
+      "crit": [
+        {
+          "text": "Precision is a courtesy. I extend it once.",
+          "file": "assets/voice/barks/kade_lusk_crit_1",
+          "src": "characters.json",
+          "chance": 0.7
+        }
+      ],
+      "ally_down": [
+        {
+          "text": "Hold formation. Grief is for the record.",
+          "file": "assets/voice/barks/kade_lusk_ally_down_1",
+          "src": "characters.json",
+          "chance": 0.9
+        }
+      ],
+      "victory": [
+        {
+          "text": "Enter it in the ledger. Nothing happened here.",
+          "file": "assets/voice/barks/kade_lusk_victory_1",
+          "src": "characters.json",
+          "chance": 1.0
+        }
+      ],
+      "miss": [
+        {
+          "text": "Noted. It won't happen twice.",
+          "file": "assets/voice/barks/kade_lusk_miss_1",
+          "src": "characters.json",
+          "chance": 0.35
+        }
+      ]
+    }
+  },
+  "dialog": {
+    "otto": [
+      {
+        "id": "greet",
+        "text": "You're dripping on my floor. Sit down, drip on the stool, it's used to it.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_greet"
+      },
+      {
+        "id": "tab",
+        "text": "Your tab's up to forty-one coins and one apology. I'll take the coins first.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_tab"
+      },
+      {
+        "id": "after_m01",
+        "text": "Supply Works blew a loading dock last night. News says Kestral Omen-Six. Funny — Omen-Six never smelled like my gin before.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_after_m01"
+      },
+      {
+        "id": "choice",
+        "text": "What'll it be? And don't say 'the usual.' Nobody here has a usual. Usuals are for people with futures.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_choice"
+      },
+      {
+        "id": "horn",
+        "text": "Nothing's that strong. But the gin makes you care less that it isn't.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_horn"
+      },
+      {
+        "id": "water",
+        "text": "Water's two coins. The gin is one coin. I don't make the rules. I do, actually. Two coins.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_water"
+      },
+      {
+        "id": "rook",
+        "text": "Rook's having regret with a lime. Coming right up.",
+        "speaker": "",
+        "file": "assets/voice/dialog/otto_rook"
+      }
+    ],
+    "hic": [
+      {
+        "id": "greet",
+        "text": "*hic* You. You're the ones with the... the plan. The brew plan. I don't know anything about it. I sold you nothing.",
+        "speaker": "",
+        "file": "assets/voice/dialog/hic_greet"
+      },
+      {
+        "id": "pitch",
+        "text": "Listen. Listen. This rifle? Pulls left. So you aim right. That's called engineering.",
+        "speaker": "",
+        "file": "assets/voice/dialog/hic_pitch"
+      },
+      {
+        "id": "ask",
+        "text": "You want gear, I need parts. Scrap wire. Dead batteries. The Doctrine throws 'em out, I throw 'em back in. Circle of life.",
+        "speaker": "",
+        "file": "assets/voice/dialog/hic_ask"
+      },
+      {
+        "id": "deal",
+        "text": "Beautiful. Beautiful people. I'd hug you but I'd fall over and take the table with me.",
+        "speaker": "",
+        "file": "assets/voice/dialog/hic_deal"
+      },
+      {
+        "id": "okay",
+        "text": "I'm... I worked the line eleven years. Now I sell the stuff we made to the people it's meant for. So. Mostly okay. *hic*",
+        "speaker": "",
+        "file": "assets/voice/dialog/hic_okay"
+      }
+    ],
+    "vesk": [
+      {
+        "id": "greet",
+        "text": "Arms up. No — the other up. You're built like a question nobody asked.",
+        "speaker": "",
+        "file": "assets/voice/dialog/vesk_greet"
+      },
+      {
+        "id": "work",
+        "text": "This jacket stopped a riot baton once. The man wearing it didn't stop anything. Fabric's honest. People aren't.",
+        "speaker": "",
+        "file": "assets/voice/dialog/vesk_work"
+      },
+      {
+        "id": "bleed",
+        "text": "If you're going to bleed, bleed on the Riot Plate. It's already seen worse.",
+        "speaker": "",
+        "file": "assets/voice/dialog/vesk_bleed"
+      },
+      {
+        "id": "after",
+        "text": "And tell Hic if he sells you another left-pulling rifle I'm sewing his pockets shut.",
+        "speaker": "",
+        "file": "assets/voice/dialog/vesk_after"
+      },
+      {
+        "id": "good",
+        "text": "It's better than skin. That's the whole pitch. That's the only pitch anyone's ever needed.",
+        "speaker": "",
+        "file": "assets/voice/dialog/vesk_good"
+      },
+      {
+        "id": "nice",
+        "text": "I seem tired. You're confusing the two. Everyone does.",
+        "speaker": "",
+        "file": "assets/voice/dialog/vesk_nice"
+      }
+    ],
+    "sly": [
+      {
+        "id": "greet",
+        "text": "Cut the deck. Go on. I already know which card you'll pick. It's the one I let you pick.",
+        "speaker": "",
+        "file": "assets/voice/dialog/sly_greet"
+      },
+      {
+        "id": "philosophy",
+        "text": "Cards are honest. Fifty-two faces, each one only pretending to be one thing. That's more than you can say for the Cantors.",
+        "speaker": "",
+        "file": "assets/voice/dialog/sly_philosophy"
+      },
+      {
+        "id": "offer",
+        "text": "You want to learn the trade, I need a favour or two. Nothing illegal. Nothing *very* illegal.",
+        "speaker": "",
+        "file": "assets/voice/dialog/sly_offer"
+      },
+      {
+        "id": "in",
+        "text": "Good. First lesson: never trust a person with only one reason. I've got four. You'll learn them all eventually.",
+        "speaker": "",
+        "file": "assets/voice/dialog/sly_in"
+      },
+      {
+        "id": "cheat",
+        "text": "Everyone cheats. I just do it where you can see. That's called customer service.",
+        "speaker": "",
+        "file": "assets/voice/dialog/sly_cheat"
+      },
+      {
+        "id": "joker",
+        "text": "You kept the Joker. Good. It likes you. That's a bad sign for you, but a good sign for the Joker.",
+        "speaker": "",
+        "file": "assets/voice/dialog/sly_joker"
+      }
+    ],
+    "drunken_oracle": [
+      {
+        "id": "greet",
+        "text": "You're sitting in my future. It's the stool on the left. The right one is my past. It wobbles.",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_greet"
+      },
+      {
+        "id": "offer",
+        "text": "Five questions. Answer all five straight and I'll tell you something true. Miss one and I'll tell you something expensive.",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_offer"
+      },
+      {
+        "id": "later",
+        "text": "That's what the last three prophets said. I drank them under the table. They're still under it. Check.",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_later"
+      },
+      {
+        "id": "q1",
+        "text": "Question one. Every face casts... what?",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_q1"
+      },
+      {
+        "id": "q2",
+        "text": "Two. The Library remembers. The heart...?",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_q2"
+      },
+      {
+        "id": "q3",
+        "text": "Three. The truth does not free you. It...?",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_q3"
+      },
+      {
+        "id": "q4",
+        "text": "Four. Why does the Queen dream in black?",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_q4"
+      },
+      {
+        "id": "q5",
+        "text": "Five. Never trust a person with only one...?",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_q5"
+      },
+      {
+        "id": "wrong",
+        "text": "Wrong. Beautifully wrong. Come back when you're drunker or wiser. Either works. Neither has ever worked on me.",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_wrong"
+      },
+      {
+        "id": "passed",
+        "text": "...Huh. All five. Nobody does all five. Fine. I'll walk with you a while. The stool can wait. It always does.",
+        "speaker": "",
+        "file": "assets/voice/dialog/drunken_oracle_passed"
+      }
+    ],
+    "benno": [
+      {
+        "id": "greet",
+        "text": "Don't sit there. That's where I put my feelings. Sit there, that's where I put my feet.",
+        "speaker": "",
+        "file": "assets/voice/dialog/benno_greet"
+      },
+      {
+        "id": "shift",
+        "text": "Fifteen-hour shift. Hymn at the start, hymn at the end, hymn at lunch if you can call soy paste lunch. I know every word. I hate every word.",
+        "speaker": "",
+        "file": "assets/voice/dialog/benno_shift"
+      },
+      {
+        "id": "grisk",
+        "text": "Foreman Grisk keeps an emergency stash in a crate on the loading dock. 'For emergencies,' he says. Every day is an emergency, Grisk.",
+        "speaker": "",
+        "file": "assets/voice/dialog/benno_grisk"
+      },
+      {
+        "id": "crate",
+        "text": "The one that squeaks. Second from the water. If the Wardens ask, I was on shift. I'm always on shift. It's a great alibi and a terrible life.",
+        "speaker": "",
+        "file": "assets/voice/dialog/benno_crate"
+      },
+      {
+        "id": "why",
+        "text": "Because you've got the look. The 'going to do something stupid on purpose' look. I had it once. Then they gave me a pension plan.",
+        "speaker": "",
+        "file": "assets/voice/dialog/benno_why"
+      },
+      {
+        "id": "after",
+        "text": "The dock went up and they gave us a day off to 'mourn the equipment.' I mourned it so hard. I mourned it in bed until noon.",
+        "speaker": "",
+        "file": "assets/voice/dialog/benno_after"
+      }
+    ],
+    "ma_rivet": [
+      {
+        "id": "greet",
+        "text": "Hold it, chrome. You're standing on my inventory.",
+        "speaker": "",
+        "file": "assets/voice/dialog/ma_rivet_greet"
+      },
+      {
+        "id": "ask",
+        "text": "...You've got hands. Good. My knees don't do stairs anymore.",
+        "speaker": "",
+        "file": "assets/voice/dialog/ma_rivet_ask"
+      },
+      {
+        "id": "inv",
+        "text": "Everything in this gutter is inventory if you squint. Even you.",
+        "speaker": "",
+        "file": "assets/voice/dialog/ma_rivet_inv"
+      },
+      {
+        "id": "need",
+        "text": "Scrap wire and dead batteries. Three and two. Storm drains are full of both. Here — gin for the road.",
+        "speaker": "",
+        "file": "assets/voice/dialog/ma_rivet_need"
+      }
+    ],
+    "kade": [
+      {
+        "id": "greet",
+        "text": "Hm? Oh. Customer. Hang on, finishing a bid.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_greet"
+      },
+      {
+        "id": "look",
+        "text": "There. Prototype stock, fell off a corp truck. Several trucks.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_look"
+      },
+      {
+        "id": "pitch",
+        "text": "Prices are fair. Fair for me. Browse.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_pitch"
+      },
+      {
+        "id": "name",
+        "text": "Kade Sol? No relation. Well. Every relation. Half the Lantern Wards are Kades.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_name"
+      },
+      {
+        "id": "name2",
+        "text": "Kade's the family name, it goes first. The second one's yours. Rennick. That one's mine.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_name2"
+      },
+      {
+        "id": "name3",
+        "text": "Grandmother said the Wards used to have a hundred family names. Then the Ministry of Clear History came through with one form.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_name3"
+      },
+      {
+        "id": "name4",
+        "text": "'Simpler for the records,' they said. Everyone you meet from home is a Kade. Funny how nobody remembers what we were before.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_name4"
+      }
+    ],
+    "kade_torvald": [
+      {
+        "id": "greet",
+        "text": "You're looking at me like you've seen me on the ticker. You have. I'm dead.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_torvald_greet"
+      },
+      {
+        "id": "dead",
+        "text": "Border list, reconciled. Kade Torvald, killed in action. Nobody told me. I found out in this bar.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_torvald_dead"
+      },
+      {
+        "id": "veil",
+        "text": "Lantern Wards. I walked across the line with a mop and a cleaning cart. Nobody stops a mop.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_torvald_veil"
+      },
+      {
+        "id": "kade",
+        "text": "We're all Kades. Ask Rennick on the Block. Ask the Ministry why. Actually, don't. They'll correct you.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_torvald_kade"
+      },
+      {
+        "id": "end",
+        "text": "Buy a dead man a drink. It's tax deductible.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_torvald_end"
+      }
+    ],
+    "kade_brisk": [
+      {
+        "id": "greet",
+        "text": "Brisk. Kade Brisk. Yes, another one. Rennick sent you?",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_brisk_greet"
+      },
+      {
+        "id": "pitch",
+        "text": "Shipment's short. Two corrupted wafers and a memory core went missing between here and the drain.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_brisk_pitch"
+      },
+      {
+        "id": "deal",
+        "text": "Bring them back and Rennick gets the good stock. Laser rifles. Neural shunts. Things with warranties, almost.",
+        "speaker": "",
+        "file": "assets/voice/dialog/kade_brisk_deal"
+      }
+    ]
+  },
+  "castEventLabels": {
+    "battle_start": "Battle Start",
+    "turn_start": "Turn Start",
+    "crit": "Critical Hit",
+    "kill": "Takedown",
+    "ally_down": "Ally Down",
+    "low_hp": "Low HP",
+    "big_hit": "Big Hit Taken",
+    "miss": "Miss",
+    "heal": "Healed",
+    "victory": "Victory",
+    "buzzed": "Buzzed",
+    "shield_down": "Shield Down"
+  },
+  "game": {
+    "name": "Beyond: The Neon Void",
+    "synced_from": "data/*.json",
+    "voice_roots": [
+      "assets/voice/barks",
+      "assets/voice/dialog"
+    ]
+  }
+}</script>
+<script>
+(function(){
+"use strict";
+
+/* ========================================================================
+   SEED DATA
+   ======================================================================== */
+const SEED = JSON.parse(document.getElementById("seed-data").textContent);
+const PERSONALITIES = SEED.personalities;
+const CLASSES = SEED.classes;
+const COMBAT_LABELS = SEED.combatActionLabels;
+const NPC_LABELS = SEED.npcActionLabels;
+const NPC_CATS = SEED.npcCategories;
+const COMBAT_TYPES = Object.keys(COMBAT_LABELS);
+const NPC_TYPES = Object.keys(NPC_LABELS);
+/* Cast mode: the game's own characters, their battle barks and dialog lines,
+   synced from Beyond: The Neon Void by tools/chirp_studio/chirp_bridge.py.
+   Each line carries the exact file the game plays (assets/voice/...), so a
+   folder bound to the game project receives recordings where they belong. */
+const CAST = SEED.characters || {};
+const CAST_BARKS = SEED.castBarks || {};
+const CAST_DIALOG = SEED.dialog || {};
+const CAST_EVENT_LABELS = SEED.castEventLabels || {};
+const CAST_FILES = {}; // lineKey -> "assets/voice/barks/rook_crit_1" (no extension)
+for (const [cid, evs] of Object.entries(CAST_BARKS)){
+  for (const [ev, lines] of Object.entries(evs)) lines.forEach((l, i) => { CAST_FILES[["" + cid, "base", "cast", "-", `${ev}_${i+1}`].join("::")] = l.file; });
+}
+for (const [cid, nodes] of Object.entries(CAST_DIALOG)){
+  for (const n of nodes) CAST_FILES[["" + cid, "base", "dialog", "-", n.id].join("::")] = n.file;
+}
+const UI_EMOTION_BY_TAG = {
+  "cheerfully":"Happy","excited":"Happy","with excitement":"Happy","laughs":"Happy","chuckles":"Happy","playfully":"Happy","mischievously":"Happy",
+  "calm":"Fluent","flatly":"Fluent","deadpan":"Fluent",
+  "confidently":"Confident","sternly":"Confident","with determination":"Confident",
+  "sadly":"Sad","groans":"Sad","sighs":"Sad","solemnly":"Sad",
+  "frustrated":"Angry","shouts":"Angry","angrily":"Angry",
+  "nervously":"Fearful","gasps":"Fearful","rushed":"Fearful",
+  "whispers":"Fluent","resigned tone":"Sad","sarcastically":"Fluent"
+};
+
+/* ========================================================================
+   SMALL INDEXEDDB WRAPPER — with an in-memory fallback.
+   Some preview/sandboxed environments block IndexedDB entirely (it throws
+   synchronously on `.open()`), so every real-DB path below is wrapped in
+   try/catch and falls back to a plain in-memory Map with the identical
+   async interface. The app always boots; persistence degrades gracefully
+   instead of crashing the whole page.
+   ======================================================================== */
+const DB_NAME = "chirp_studio_db", DB_VERSION = 1;
+let idbUnavailable = false;
+const memStores = { audio: new Map(), kv: new Map() };
+
+function openIdb(){
+  return new Promise((resolve, reject) => {
+    try{
+      if (!window.indexedDB) { reject(new Error("no indexedDB")); return; }
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains("audio")) db.createObjectStore("audio");
+        if (!db.objectStoreNames.contains("kv")) db.createObjectStore("kv");
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error || new Error("indexedDB open failed"));
+      req.onblocked = () => reject(new Error("indexedDB blocked"));
+    } catch(e){ reject(e); }
+  });
+}
+let dbPromise = openIdb().catch(err => {
+  idbUnavailable = true;
+  console.warn("IndexedDB unavailable in this session — using in-memory storage (won't survive refresh).", err);
+  return null; // sentinel: callers check idbUnavailable / null db
+});
+
+async function idbGet(store, key){
+  const db = await dbPromise;
+  if (!db || idbUnavailable) return memStores[store] ? memStores[store].get(key) : undefined;
+  try{
+    return await new Promise((res,rej)=>{ const tx=db.transaction(store,"readonly"); const r=tx.objectStore(store).get(key); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
+  } catch(e){ return memStores[store] ? memStores[store].get(key) : undefined; }
+}
+async function idbSet(store, key, val){
+  const db = await dbPromise;
+  if (!db || idbUnavailable) { if (memStores[store]) memStores[store].set(key, val); return true; }
+  try{
+    return await new Promise((res,rej)=>{ const tx=db.transaction(store,"readwrite"); const r=tx.objectStore(store).put(val,key); r.onsuccess=()=>res(true); r.onerror=()=>rej(r.error); });
+  } catch(e){ if (memStores[store]) memStores[store].set(key, val); return true; }
+}
+async function idbDel(store, key){
+  const db = await dbPromise;
+  if (!db || idbUnavailable) { if (memStores[store]) memStores[store].delete(key); return true; }
+  try{
+    return await new Promise((res,rej)=>{ const tx=db.transaction(store,"readwrite"); const r=tx.objectStore(store).delete(key); r.onsuccess=()=>res(true); r.onerror=()=>rej(r.error); });
+  } catch(e){ if (memStores[store]) memStores[store].delete(key); return true; }
+}
+async function idbAllKeys(store){
+  const db = await dbPromise;
+  if (!db || idbUnavailable) return memStores[store] ? [...memStores[store].keys()] : [];
+  try{
+    return await new Promise((res,rej)=>{ const tx=db.transaction(store,"readonly"); const r=tx.objectStore(store).getAllKeys(); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
+  } catch(e){ return memStores[store] ? [...memStores[store].keys()] : []; }
+}
+
+/* ========================================================================
+   TAG CONVERSION — MiniMax-style script -> ElevenLabs v3 Audio Tags
+   ======================================================================== */
+const MINIMAX_TAG_MAP = {
+  "chuckle":"chuckles", "chuckles":"chuckles", "clears throat":"clears throat", "breath":"breathes in",
+  "groans":"groans", "groan":"groans", "sniffs":"sniffs", "sniff":"sniffs", "sighs":"sighs", "sigh":"sighs",
+  "gasp":"gasps", "gasps":"gasps", "laughs":"laughs", "laugh":"laughs"
+};
+const EMOTION_PRESET_TAG = {
+  "happy":"cheerfully", "fluent":"calm", "confident":"confidently", "sad":"sadly",
+  "angry":"frustrated", "fearful":"nervously"
+};
+function convertMiniMaxToElevenLabs(text, emotionPreset){
+  if (!text) return text;
+  let out = text;
+  // parenthetical sound tags -> bracket tags
+  out = out.replace(/\(([a-zA-Z ]+)\)/g, (m, inner) => {
+    const key = inner.trim().toLowerCase();
+    const mapped = MINIMAX_TAG_MAP[key] || key;
+    return `[${mapped}]`;
+  });
+  // timing markers <#0.3#> -> ellipsis or [pause]
+  out = out.replace(/<#\s*([\d.]+)\s*#>/g, (m, num) => {
+    const v = parseFloat(num);
+    return v >= 0.45 ? " [pause] ..." : "...";
+  });
+  // collapse stray "um," filler spacing (kept verbatim — natural for TTS)
+  out = out.replace(/\s{2,}/g, " ").trim();
+  // prepend emotion-derived delivery tag if not already tagged at the very start
+  if (emotionPreset){
+    const tag = EMOTION_PRESET_TAG[String(emotionPreset).toLowerCase()];
+    if (tag && !/^\[/.test(out)){
+      out = `[${tag}] ${out}`;
+    }
+  }
+  return out;
+}
+function looksLikeElevenLabs(text){ return /^\[[a-zA-Z ]+\]/.test((text||"").trim()); }
+
+/* ========================================================================
+   STATE
+   ======================================================================== */
+const state = {
+  sex: "male",
+  personalityId: Object.keys(PERSONALITIES)[0],
+  variantId: "",
+  mode: "combat",
+  classId: Object.keys(CLASSES)[0],
+  npcCatId: "generic_npc",
+  castId: Object.keys(CAST)[0] || "",
+  tab: "chirps",
+  variants: {},      // personalityId -> [ {id,name,speed,pitch,voiceId} ]
+  customLib: null,   // merged ingested extra lines: { personalities: {...extra combat/npc overrides by id} }
+  audioIndexCache: {}, // lineKey -> {hasAudio, format, duration}
+  dirHandle: null,
+  encoderReady: false,
+  encoderFailed: false,
+};
+
+function lineKey(parts){ return parts.join("::"); }
+
+function personalityLine(pid, bucket, actionType, sex){
+  const p = PERSONALITIES[pid];
+  if (!p) return "";
+  const custom = state.customLib && state.customLib.personalities && state.customLib.personalities[pid];
+  if (custom && custom[bucket] && custom[bucket][actionType] && custom[bucket][actionType][sex]) {
+    return custom[bucket][actionType][sex];
+  }
+  return (p[bucket] && p[bucket][actionType] && p[bucket][actionType][sex]) || "";
+}
+
+/* ========================================================================
+   TOASTS
+   ======================================================================== */
+function toast(msg){
+  const el = document.createElement("div");
+  el.className = "toast"; el.textContent = msg;
+  document.getElementById("toasts").appendChild(el);
+  setTimeout(()=>{ el.remove(); }, 3200);
+  document.getElementById("statusMsg").textContent = msg;
+}
+
+/* ========================================================================
+   RENDER: TOP CONTROLS
+   ======================================================================== */
+function populatePersonalitySel(){
+  const sel = document.getElementById("personalitySel");
+  sel.innerHTML = Object.entries(PERSONALITIES).map(([id,p]) =>
+    `<option value="${id}">${p.name}</option>`).join("");
+  sel.value = state.personalityId;
+  const sel2 = document.getElementById("newVarPersonality");
+  sel2.innerHTML = sel.innerHTML;
+}
+function castPick(cid){
+  const base = CAST[cid] || {};
+  const own = (state.customLib && state.customLib.picks && state.customLib.picks[cid]) || {};
+  return { personality: own.personality || base.personality || "", sex: own.sex || base.sex || "", voice_id: own.voice_id || base.voice_id || "" };
+}
+async function setCastPick(cid, field, value){
+  if (!state.customLib) state.customLib = {personalities:{}};
+  if (!state.customLib.picks) state.customLib.picks = {};
+  state.customLib.picks[cid] = Object.assign(castPick(cid), {[field]: value});
+  await idbSet("kv","customLib", state.customLib);
+}
+// Selecting a character applies their voice profile to the top controls.
+function applyCastPick(){
+  const pick = castPick(state.castId);
+  if (pick.personality && PERSONALITIES[pick.personality]){
+    state.personalityId = pick.personality; state.variantId = "";
+    document.getElementById("personalitySel").value = pick.personality;
+    populateVariantSel();
+  }
+  if (pick.sex){
+    state.sex = pick.sex;
+    document.querySelectorAll("#sexSeg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.val===pick.sex)));
+  }
+}
+function populateClassSel(){
+  const sel = document.getElementById("classSel");
+  document.getElementById("classLabel").textContent = state.mode === "cast" ? "Character" : (state.mode === "combat" ? "Class" : "NPC Type");
+  if (state.mode === "cast"){
+    sel.innerHTML = Object.entries(CAST).map(([id,c]) => {
+      const pick = castPick(id);
+      const voice = pick.personality && PERSONALITIES[pick.personality] ? PERSONALITIES[pick.personality].name : "no personality yet";
+      return `<option value="${id}">${c.name} — ${c.role} · ${voice}</option>`;
+    }).join("");
+    sel.value = state.castId;
+    return;
+  }
+  if (state.mode === "combat"){
+    sel.innerHTML = Object.entries(CLASSES).map(([id,c]) =>
+      `<option value="${id}">${c.name} — ${c.role}</option>`).join("");
+    sel.value = state.classId;
+  } else {
+    sel.innerHTML = Object.entries(NPC_CATS).map(([id,c]) =>
+      `<option value="${id}">${c.name} — ${c.role}</option>`).join("");
+    sel.value = state.npcCatId;
+  }
+}
+function populateVariantSel(){
+  const sel = document.getElementById("variantSel");
+  const list = state.variants[state.personalityId] || [];
+  sel.innerHTML = `<option value="">Base profile</option>` +
+    list.map(v => `<option value="${v.id}">${v.name}</option>`).join("");
+  sel.value = state.variantId && list.find(v=>v.id===state.variantId) ? state.variantId : "";
+}
+
+/* ========================================================================
+   RENDER: CHIRP GRID
+   ======================================================================== */
+function currentRowsDef(){
+  if (state.mode === "cast"){
+    const rows = [];
+    for (const [ev, lines] of Object.entries(CAST_BARKS[state.castId] || {})){
+      lines.forEach((l, i) => rows.push({ actionType: `${ev}_${i+1}`, label: `${CAST_EVENT_LABELS[ev] || ev} #${i+1}`,
+        groupLabel: `${l.file.split("/").pop()}.ogg`, castScope: "cast", seedText: l.text }));
+    }
+    const dlg = (CAST_DIALOG[state.castId] || []).map(n => ({ actionType: n.id, label: `Dialog · ${n.id}`,
+      groupLabel: `${n.file.split("/").pop()}.ogg${n.speaker ? " · " + n.speaker : ""}`, castScope: "dialog", seedText: n.text }));
+    return { bucket:"cast", ability: rows, universal: dlg };
+  }
+  if (state.mode === "combat"){
+    const cls = CLASSES[state.classId];
+    const abilityRows = ["fire_spell","water_spell","ice_spell"].map(t => ({
+      actionType: t, label: cls[t], groupLabel: COMBAT_LABELS[t]
+    }));
+    const universalRows = ["move_command","death_feint","error_no_ap"].map(t => ({
+      actionType: t, label: COMBAT_LABELS[t], groupLabel: COMBAT_LABELS[t]
+    }));
+    return { bucket:"combat", ability: abilityRows, universal: universalRows };
+  } else {
+    const cat = NPC_CATS[state.npcCatId];
+    const rows = NPC_TYPES.map(t => ({ actionType: t, label: NPC_LABELS[t], groupLabel: NPC_LABELS[t] }));
+    return { bucket:"npc", ability: rows, universal: [] };
+  }
+}
+
+const UNIVERSAL_TYPES = ["move_command","death_feint","error_no_ap"];
+function castLine(r){
+  const lib = state.customLib && state.customLib[r.castScope] && state.customLib[r.castScope][state.castId];
+  return (lib && lib[r.actionType] != null) ? lib[r.actionType] : r.seedText;
+}
+async function saveLineEdit(bucket, r, text){
+  if (!state.customLib) state.customLib = {personalities:{}};
+  const lib = state.customLib;
+  if (bucket === "cast"){
+    if (!lib[r.castScope]) lib[r.castScope] = {};
+    if (!lib[r.castScope][state.castId]) lib[r.castScope][state.castId] = {};
+    lib[r.castScope][state.castId][r.actionType] = text;
+  } else {
+    if (!lib.personalities) lib.personalities = {};
+    const p = lib.personalities[state.personalityId] = lib.personalities[state.personalityId] || {combat:{}, npc:{}};
+    if (!p[bucket]) p[bucket] = {};
+    p[bucket][r.actionType] = Object.assign(p[bucket][r.actionType] || {}, {[state.sex]: text});
+  }
+  await idbSet("kv","customLib", lib);
+  toast("Line saved — it goes out with the next export.");
+}
+function makeRowKey(actionType, r){
+  if (state.mode === "cast"){
+    return lineKey([state.castId, "base", (r && r.castScope) || "cast", "-", actionType]);
+  }
+  // Universal command chirps are shared across every class for a personality —
+  // they live in their own scope, never duplicated per class.
+  if (state.mode === "combat" && UNIVERSAL_TYPES.includes(actionType)){
+    return lineKey([state.personalityId, state.variantId||"base", "universal", state.sex, actionType]);
+  }
+  const scopeId = state.mode === "combat" ? state.classId : state.npcCatId;
+  return lineKey([state.personalityId, state.variantId||"base", scopeId, state.sex, actionType]);
+}
+
+async function renderGrid(){
+  const grid = document.getElementById("chirpGrid");
+  grid.innerHTML = "";
+  const def = currentRowsDef();
+
+  async function renderSection(title, rows){
+    if (!rows.length) return;
+    const wrap = document.createElement("div");
+    wrap.innerHTML = `<div class="section-title"><h3>${title}</h3><div class="line"></div></div>`;
+    grid.appendChild(wrap);
+    for (const r of rows){
+      const text = def.bucket === "cast" ? castLine(r) : personalityLine(state.personalityId, def.bucket, r.actionType, state.sex);
+      const key = makeRowKey(r.actionType, r);
+      const rowEl = buildRow(r, text, key);
+      rowEl.querySelector(".scripttext").addEventListener("change", e => saveLineEdit(def.bucket, r, e.target.value));
+      grid.appendChild(rowEl);
+      refreshRowBadge(key, rowEl);
+    }
+  }
+  if (state.mode === "cast"){
+    const c = CAST[state.castId] || {};
+    const pick = castPick(state.castId);
+    const head = document.createElement("div");
+    head.className = "box";
+    head.style.cssText = "margin-bottom:12px; font-size:12.5px;";
+    head.innerHTML = `<b style="color:var(--fg0)">${c.name || state.castId}</b> · ${c.role || ""}<br>` +
+      `<span style="color:var(--fg1)">${c.bio || ""}</span><br>` +
+      `Voice: <b>${pick.personality && PERSONALITIES[pick.personality] ? PERSONALITIES[pick.personality].name : "pick a personality above"}</b>` +
+      ` · line set <b>${pick.sex || "pick male / female above"}</b>` +
+      ` · ElevenLabs voice id <input id="castVoiceId" style="width:220px" placeholder="optional" value="${pick.voice_id || ""}">`;
+    grid.appendChild(head);
+    head.querySelector("#castVoiceId").addEventListener("change", async e => { await setCastPick(state.castId, "voice_id", e.target.value.trim()); toast("Voice id saved."); });
+    if (!def.ability.length && !def.universal.length){
+      const none = document.createElement("p");
+      none.style.color = "var(--fg1)";
+      none.textContent = "No barks or dialog yet. Write dialog in Neon Forge ▸ DIALOG GRAPH, barks in data/barks.json, then run chirp_bridge.py sync.";
+      grid.appendChild(none);
+    }
+  }
+  await renderSection(state.mode === "combat" ? "Class Abilities" : (state.mode === "cast" ? "In-Game Barks → assets/voice/barks" : NPC_CATS[state.npcCatId].name + " Lines"), def.ability);
+  await renderSection(state.mode === "cast" ? "Dialog Lines → assets/voice/dialog" : "Universal Command Chirps", def.universal);
+  updateLibraryStats();
+}
+
+function buildRow(r, text, key){
+  const row = document.createElement("div");
+  row.className = "row";
+  row.dataset.key = key;
+  const uiEmotion = Object.entries(UI_EMOTION_BY_TAG).find(([tag]) => text.toLowerCase().startsWith(`[${tag}]`));
+  row.innerHTML = `
+    <div class="ability">
+      <span class="name">${r.label}</span>
+      <span class="emo">${r.groupLabel}${uiEmotion ? " · " + uiEmotion[1] : ""}</span>
+    </div>
+    <textarea class="scripttext" spellcheck="false" rows="2">${text}</textarea>
+    <div class="actions">
+      <button class="btn primary copyBtn">⧉ Copy Script</button>
+      <button class="btn small shuffleBtn">⟳ Reword</button>
+      <div class="dropzone" tabindex="0">Drop .wav / .ogg here<br><span class="badge pending">Pending Recording</span></div>
+      <div class="meter" style="display:none"><i style="width:0%"></i></div>
+      <audio class="previewAudio" style="display:none" controls></audio>
+    </div>
+  `;
+  const copyBtn = row.querySelector(".copyBtn");
+  copyBtn.addEventListener("click", () => copyRowText(row));
+  row.querySelector(".shuffleBtn").addEventListener("click", () => rewordRow(row, r));
+  const dz = row.querySelector(".dropzone");
+  wireDropzone(dz, key, row);
+  return row;
+}
+
+function safeCopy(text, onOk, onFail){
+  try{
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(onOk).catch(() => fallbackCopy(text, onOk, onFail));
+    } else {
+      fallbackCopy(text, onOk, onFail);
+    }
+  } catch(e){ fallbackCopy(text, onOk, onFail); }
+}
+function fallbackCopy(text, onOk, onFail){
+  try{
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    const ok = document.execCommand && document.execCommand("copy");
+    document.body.removeChild(ta);
+    ok ? onOk() : (onFail && onFail());
+  } catch(e){ onFail && onFail(); }
+}
+function copyRowText(row){
+  const text = row.querySelector(".scripttext").value;
+  safeCopy(text,
+    () => toast("Copied — paste straight into ElevenLabs."),
+    () => toast("Could not copy — select and copy manually."));
+}
+
+function rewordRow(row, r){
+  // Lightweight structural reword: swap leading delivery tag for a close synonym,
+  // and lightly vary connective punctuation — keeps voice but avoids identical takes.
+  const ta = row.querySelector(".scripttext");
+  const synonyms = {
+    "cheerfully":["excited","with excitement"], "excited":["cheerfully","with excitement"],
+    "calm":["flatly","deadpan"], "flatly":["calm","deadpan"], "confidently":["sternly","with determination"],
+    "sternly":["confidently","with determination"], "sadly":["solemnly","groans"], "frustrated":["shouts","sternly"],
+    "nervously":["rushed","gasps"], "playfully":["mischievously","chuckles"]
+  };
+  let v = ta.value;
+  const m = v.match(/^\[([a-zA-Z ]+)\]/);
+  if (m && synonyms[m[1]]){
+    const opts = synonyms[m[1]];
+    const pick = opts[Math.floor(Math.random()*opts.length)];
+    v = v.replace(/^\[[a-zA-Z ]+\]/, `[${pick}]`);
+  } else {
+    v = "[confidently] " + v;
+  }
+  // nudge an ellipsis beat in/out for pacing variety
+  if (v.includes("...") && Math.random() > 0.5) v = v.replace("...", "— [pause] —");
+  ta.value = v;
+  toast("Rewrote the delivery — edit freely before copying.");
+}
+
+/* ========================================================================
+   AUDIO: dropzone, decode, encode, index
+   ======================================================================== */
+function wireDropzone(dz, key, row){
+  dz.addEventListener("dragover", e => { e.preventDefault(); dz.classList.add("drag"); });
+  dz.addEventListener("dragleave", () => dz.classList.remove("drag"));
+  dz.addEventListener("drop", async e => {
+    e.preventDefault(); dz.classList.remove("drag");
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) await handleAudioFile(file, key, row);
+  });
+  dz.addEventListener("click", () => {
+    const input = document.createElement("input");
+    input.type = "file"; input.accept = ".wav,.ogg,audio/wav,audio/ogg";
+    input.onchange = async () => { if (input.files[0]) await handleAudioFile(input.files[0], key, row); };
+    input.click();
+  });
+  dz.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") dz.click(); });
+}
+
+async function handleAudioFile(file, key, row){
+  const dz = row.querySelector(".dropzone");
+  dz.innerHTML = `Processing…`;
+  try{
+    const arrBuf = await file.arrayBuffer();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const decoded = await audioCtx.decodeAudioData(arrBuf.slice(0));
+    const isOggAlready = /ogg/i.test(file.type) || /\.ogg$/i.test(file.name);
+    let outBlob, format, mime;
+    if (isOggAlready){
+      outBlob = file; format = "ogg"; mime = "audio/ogg";
+    } else if (state.encoderReady && window.__oggEncode) {
+      const ogg = window.__oggEncode(decoded);
+      outBlob = new Blob([ogg], {type:"audio/ogg"}); format = "ogg"; mime = "audio/ogg";
+    } else {
+      outBlob = wavEncode(decoded); format = "wav"; mime = "audio/wav";
+    }
+    await idbSet("audio", key, { blob: outBlob, mime, format, duration: decoded.duration });
+    await audioCtx.close();
+    refreshRowBadge(key, row);
+    updateLibraryStats();
+    toast(format === "ogg" ? "Indexed as .ogg — Godot-ready." : "Indexed as .wav (Ogg encoder unavailable this session).");
+  } catch(err){
+    toast("Couldn't read that audio file.");
+    console.error(err);
+  }
+}
+
+// Minimal RIFF/PCM WAV encoder from an AudioBuffer (48k target upsample/downsample not forced —
+// writes at the buffer's native sample rate, which is honest about the source).
+function wavEncode(buffer){
+  const numCh = buffer.numberOfChannels, sr = buffer.sampleRate, len = buffer.length;
+  const bytesPerSample = 2, blockAlign = numCh * bytesPerSample;
+  const dataSize = len * blockAlign;
+  const bufOut = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(bufOut);
+  function writeStr(off, s){ for (let i=0;i<s.length;i++) view.setUint8(off+i, s.charCodeAt(i)); }
+  writeStr(0,"RIFF"); view.setUint32(4, 36+dataSize, true); writeStr(8,"WAVE");
+  writeStr(12,"fmt "); view.setUint32(16,16,true); view.setUint16(20,1,true);
+  view.setUint16(22,numCh,true); view.setUint32(24,sr,true);
+  view.setUint32(28, sr*blockAlign, true); view.setUint16(32, blockAlign, true); view.setUint16(34,16,true);
+  writeStr(36,"data"); view.setUint32(40, dataSize, true);
+  const channels = []; for (let c=0;c<numCh;c++) channels.push(buffer.getChannelData(c));
+  let offset = 44;
+  for (let i=0;i<len;i++){
+    for (let c=0;c<numCh;c++){
+      let s = Math.max(-1, Math.min(1, channels[c][i]));
+      view.setInt16(offset, s < 0 ? s*0x8000 : s*0x7FFF, true);
+      offset += 2;
+    }
+  }
+  return new Blob([view], {type:"audio/wav"});
+}
+
+async function refreshRowBadge(key, row){
+  const rec = await idbGet("audio", key);
+  const badgeHost = row.querySelector(".dropzone");
+  const meter = row.querySelector(".meter");
+  const audioEl = row.querySelector(".previewAudio");
+  if (rec && rec.blob){
+    const badgeClass = rec.format === "ogg" ? "indexed" : "wavonly";
+    const label = rec.format === "ogg" ? "Fully Indexed · .ogg" : "Indexed · .wav (pending ogg)";
+    badgeHost.innerHTML = `Drop to replace<br><span class="badge ${badgeClass}">${label} · ${rec.duration.toFixed(2)}s</span>`;
+    meter.style.display = "block";
+    meter.querySelector("i").style.width = "100%";
+    const url = URL.createObjectURL(rec.blob);
+    audioEl.src = url; audioEl.style.display = "block";
+    state.audioIndexCache[key] = { hasAudio:true, format:rec.format, duration:rec.duration };
+  } else {
+    badgeHost.innerHTML = `Drop .wav / .ogg here<br><span class="badge pending">Pending Recording</span>`;
+    meter.style.display = "none"; audioEl.style.display = "none";
+    state.audioIndexCache[key] = { hasAudio:false };
+  }
+}
+
+async function updateLibraryStats(){
+  const keys = await idbAllKeys("audio");
+  let oggCount = 0, wavCount = 0;
+  for (const k of keys){
+    const rec = await idbGet("audio", k);
+    if (rec && rec.format === "ogg") oggCount++; else if (rec) wavCount++;
+  }
+  document.getElementById("statIndexed").textContent = keys.length;
+  document.getElementById("statOggWav").textContent = `${oggCount} / ${wavCount}`;
+  const totalCombat = Object.keys(PERSONALITIES).length * 2 * COMBAT_TYPES.length;
+  const totalNpc = Object.keys(PERSONALITIES).length * 2 * NPC_TYPES.length;
+  let totalCast = 0;
+  for (const evs of Object.values(CAST_BARKS)) for (const l of Object.values(evs)) totalCast += l.length;
+  for (const d of Object.values(CAST_DIALOG)) totalCast += d.length;
+  document.getElementById("statTotalLines").textContent = totalCombat + totalNpc + totalCast;
+}
+
+/* ========================================================================
+   OGG VORBIS ENCODER (wasm-media-encoders, pinned CDN, graceful fallback)
+   ======================================================================== */
+function loadOggEncoder(){
+  const script = document.createElement("script");
+  script.src = "https://unpkg.com/wasm-media-encoders@0.7.0/dist/umd/WasmMediaEncoder.min.js";
+  script.onload = async () => {
+    try{
+      if (!window.WasmMediaEncoder || !window.WasmMediaEncoder.createOggEncoder) throw new Error("global missing");
+      const encoder = await window.WasmMediaEncoder.createOggEncoder();
+      window.__oggEncode = function(audioBuffer){
+        const sr = 48000;
+        const chans = [];
+        for (let c=0;c<Math.min(2, audioBuffer.numberOfChannels); c++){
+          chans.push(resampleTo(audioBuffer.getChannelData(c), audioBuffer.sampleRate, sr));
+        }
+        if (chans.length === 1) chans.push(chans[0]);
+        encoder.configure({ sampleRate: sr, channels: chans.length, vbrQuality: 3.0 });
+        const chunks = []; let total = 0;
+        const frame = 1024;
+        for (let i=0; i<chans[0].length; i+=frame){
+          const slice = chans.map(c => c.subarray(i, Math.min(i+frame, c.length)));
+          const out = encoder.encode(slice);
+          if (out.length){ chunks.push(out.slice()); total += out.length; }
+        }
+        const fin = encoder.finalize();
+        if (fin.length){ chunks.push(fin.slice()); total += fin.length; }
+        const merged = new Uint8Array(total); let off=0;
+        for (const c of chunks){ merged.set(c, off); off += c.length; }
+        return merged;
+      };
+      state.encoderReady = true;
+      document.getElementById("engineBanner").style.display = "none";
+    } catch(e){
+      state.encoderFailed = true;
+      document.getElementById("engineBanner").style.display = "block";
+      console.warn("Ogg encoder unavailable this session:", e);
+    }
+  };
+  script.onerror = () => {
+    state.encoderFailed = true;
+    document.getElementById("engineBanner").style.display = "block";
+  };
+  document.head.appendChild(script);
+}
+function resampleTo(data, fromRate, toRate){
+  if (fromRate === toRate) return data;
+  const ratio = toRate / fromRate;
+  const outLen = Math.round(data.length * ratio);
+  const out = new Float32Array(outLen);
+  for (let i=0;i<outLen;i++){
+    const srcIdx = i / ratio;
+    const i0 = Math.floor(srcIdx), i1 = Math.min(i0+1, data.length-1);
+    const frac = srcIdx - i0;
+    out[i] = data[i0]*(1-frac) + data[i1]*frac;
+  }
+  return out;
+}
+
+/* ========================================================================
+   FOLDER BIND (File System Access API) + ZIP fallback
+   ======================================================================== */
+const hasFSA = "showDirectoryPicker" in window;
+async function bindFolder(){
+  if (!hasFSA){
+    toast("This browser can't bind a folder — use Export → Download ZIP instead.");
+    return;
+  }
+  try{
+    const handle = await window.showDirectoryPicker({ mode: "readwrite" });
+    state.dirHandle = handle;
+    await idbSet("kv", "dirHandle", handle);
+    setFolderStatus(true, handle.name);
+    toast(`Bound to folder "${handle.name}".`);
+  } catch(e){ /* user cancelled */ }
+}
+function setFolderStatus(bound, name){
+  const pill = document.getElementById("folderPill");
+  const pillText = document.getElementById("folderPillText");
+  pill.className = "statuspill" + (bound ? " ok" : "");
+  pillText.textContent = bound ? `Bound: ${name}` : "No folder bound";
+  document.getElementById("exportFolderStatus").textContent = bound ? `Bound: ${name}` : "Not bound";
+}
+async function restoreFolderHandle(){
+  if (!hasFSA) { document.getElementById("chromiumBanner").style.display = "block"; return; }
+  try{
+    const handle = await idbGet("kv", "dirHandle");
+    if (handle){
+      const perm = await handle.queryPermission({mode:"readwrite"});
+      if (perm === "granted" || (await handle.requestPermission({mode:"readwrite"})) === "granted"){
+        state.dirHandle = handle; setFolderStatus(true, handle.name);
+      }
+    }
+  } catch(e){ /* handle gone or permission denied — stays unbound */ }
+}
+function slugFileName(personality, variant, scope, sex, actionType, ext){
+  const seg = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+  return `${seg(sex)}_${seg(actionType)}.${ext}`;
+}
+async function getDirPath(root, parts){
+  let dir = root;
+  for (const p of parts){ dir = await dir.getDirectoryHandle(p, {create:true}); }
+  return dir;
+}
+function castFileOf(pid, vscope, scopeId, actionType){
+  return CAST_FILES[[pid, vscope, scopeId, "-", actionType].join("::")] || "";
+}
+function scopePathParts(pid, vscope, scopeId){
+  if (scopeId === "universal") return ["audio","barks",pid,vscope,"universal"];
+  if (Object.keys(NPC_CATS).includes(scopeId)) return ["audio","barks",pid,vscope,"npc",scopeId];
+  return ["audio","barks",pid,vscope,"classes",scopeId];
+}
+function scopeFolderString(pid, vscope, scopeId){
+  return scopePathParts(pid, vscope, scopeId).join("/");
+}
+
+const ABILITY_TYPES = ["fire_spell","water_spell","ice_spell"];
+async function buildManifest(){
+  const keys = await idbAllKeys("audio");
+  const indexSet = new Set(keys);
+  const manifest = { schema:"bd.chirp_studio/v1", generatedAt: new Date().toISOString(), personalities:{} };
+  for (const [pid, p] of Object.entries(PERSONALITIES)){
+    const variants = (state.variants[pid]||[]).map(v=>v.id);
+    const variantScopes = ["base", ...variants];
+    manifest.personalities[pid] = { display_name: p.name, settings: p.settings, variants: state.variants[pid]||[], scopes:{} };
+    for (const vscope of variantScopes){
+      const scopeObj = { universal:{}, classes:{}, npc:{} };
+      // universal command chirps — one shared recording per personality+variant, not duplicated per class
+      for (const t of UNIVERSAL_TYPES){
+        for (const sex of ["male","female"]){
+          const key = lineKey([pid, vscope, "universal", sex, t]);
+          const rec = indexSet.has(key);
+          const fname = slugFileName(pid,vscope,"universal",sex,t,"ogg");
+          scopeObj.universal[`${sex}_${t}`] = {
+            text: personalityLine(pid, "combat", t, sex),
+            path: `res://audio/barks/${pid}/${vscope}/universal/${fname}`,
+            indexed: rec
+          };
+        }
+      }
+      // combat classes — ability chirps only (fire/water/ice), re-skinned per class label
+      for (const [cid, cls] of Object.entries(CLASSES)){
+        const entry = {};
+        for (const t of ABILITY_TYPES){
+          for (const sex of ["male","female"]){
+            const key = lineKey([pid, vscope, cid, sex, t]);
+            const rec = indexSet.has(key);
+            const fname = slugFileName(pid,vscope,cid,sex,t,"ogg");
+            entry[`${sex}_${t}`] = {
+              ability_label: cls[t],
+              text: personalityLine(pid, "combat", t, sex),
+              path: `res://audio/barks/${pid}/${vscope}/classes/${cid}/${fname}`,
+              indexed: rec
+            };
+          }
+        }
+        scopeObj.classes[cid] = entry;
+      }
+      // npc categories
+      for (const [nid] of Object.entries(NPC_CATS)){
+        const entry = {};
+        for (const t of NPC_TYPES){
+          for (const sex of ["male","female"]){
+            const key = lineKey([pid, vscope, nid, sex, t]);
+            const rec = indexSet.has(key);
+            const fname = slugFileName(pid,vscope,nid,sex,t,"ogg");
+            entry[`${sex}_${t}`] = {
+              text: personalityLine(pid, "npc", t, sex),
+              path: `res://audio/barks/${pid}/${vscope}/npc/${nid}/${fname}`,
+              indexed: rec
+            };
+          }
+        }
+        scopeObj.npc[nid] = entry;
+      }
+      manifest.personalities[pid].scopes[vscope] = scopeObj;
+    }
+  }
+  manifest.game = SEED.game || {};
+  manifest.cast = {};
+  for (const [cid, c] of Object.entries(CAST)){
+    const pick = castPick(cid);
+    const lib = state.customLib || {};
+    const barks = {};
+    for (const [ev, lines] of Object.entries(CAST_BARKS[cid] || {})){
+      barks[ev] = lines.map((l, i) => {
+        const at = `${ev}_${i+1}`;
+        const own = lib.cast && lib.cast[cid] && lib.cast[cid][at];
+        return { text: own != null ? own : l.text, path: `res://${l.file}.ogg`, indexed: indexSet.has(lineKey([cid,"base","cast","-",at])) };
+      });
+    }
+    const dialog = (CAST_DIALOG[cid] || []).map(n => {
+      const own = lib.dialog && lib.dialog[cid] && lib.dialog[cid][n.id];
+      return { id: n.id, text: own != null ? own : n.text, path: `res://${n.file}.ogg`, indexed: indexSet.has(lineKey([cid,"base","dialog","-",n.id])) };
+    });
+    manifest.cast[cid] = { name: c.name, kind: c.kind, personality: pick.personality, sex: pick.sex, voice_id: pick.voice_id,
+      settings: pick.personality && PERSONALITIES[pick.personality] ? PERSONALITIES[pick.personality].settings : null, barks, dialog };
+  }
+  return manifest;
+}
+
+async function writeToBoundFolder(){
+  if (!state.dirHandle){ toast("Bind a folder first."); return; }
+  toast("Writing indexed audio to your folder…");
+  const manifest = await buildManifest();
+  const keys = await idbAllKeys("audio");
+  let written = 0;
+  for (const key of keys){
+    const [pid, vscope, scopeId, sex, actionType] = key.split("::");
+    const rec = await idbGet("audio", key);
+    if (!rec || !rec.blob) continue;
+    const castFile = castFileOf(pid, vscope, scopeId, actionType);
+    if ((scopeId === "cast" || scopeId === "dialog") && !castFile) continue;
+    const parts = castFile ? castFile.split("/").slice(0, -1) : scopePathParts(pid, vscope, scopeId);
+    const dir = await getDirPath(state.dirHandle, parts);
+    const fname = castFile ? `${castFile.split("/").pop()}.${rec.format}` : slugFileName(pid,vscope,scopeId,sex,actionType, rec.format);
+    const fh = await dir.getFileHandle(fname, {create:true});
+    const writable = await fh.createWritable();
+    await writable.write(rec.blob);
+    await writable.close();
+    written++;
+  }
+  // The game's bridge (tools/chirp_studio/chirp_bridge.py import) reads it from here.
+  const manifestDir = await getDirPath(state.dirHandle, ["tools","chirp_studio"]);
+  const manifestHandle = await manifestDir.getFileHandle("manifest.json", {create:true});
+  const mw = await manifestHandle.createWritable();
+  await mw.write(JSON.stringify(manifest, null, 2));
+  await mw.close();
+  toast(`Wrote ${written} audio file(s) + manifest.json to your folder.`);
+}
+
+async function zipExport(){
+  toast("Packaging ZIP…");
+  await ensureJSZip();
+  const zip = new window.JSZip();
+  const manifest = await buildManifest();
+  zip.file("tools/chirp_studio/manifest.json", JSON.stringify(manifest, null, 2));
+  const keys = await idbAllKeys("audio");
+  for (const key of keys){
+    const [pid, vscope, scopeId, sex, actionType] = key.split("::");
+    const rec = await idbGet("audio", key);
+    if (!rec || !rec.blob) continue;
+    const castFile = castFileOf(pid, vscope, scopeId, actionType);
+    if (castFile){ zip.file(`${castFile}.${rec.format}`, rec.blob); continue; }
+    if (scopeId === "cast" || scopeId === "dialog") continue;
+    const folder = scopeFolderString(pid, vscope, scopeId);
+    const fname = slugFileName(pid,vscope,scopeId,sex,actionType, rec.format);
+    zip.file(`${folder}/${fname}`, rec.blob);
+  }
+  const blob = await zip.generateAsync({type:"blob"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = "black_doctrine_chirps.zip"; a.click();
+  URL.revokeObjectURL(url);
+  toast("ZIP downloaded.");
+}
+let jsZipPromise = null;
+function ensureJSZip(){
+  if (window.JSZip) return Promise.resolve();
+  if (jsZipPromise) return jsZipPromise;
+  jsZipPromise = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js";
+    s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+  return jsZipPromise;
+}
+
+/* ========================================================================
+   PROFILES TAB
+   ======================================================================== */
+function renderProfilesTab(){
+  const host = document.getElementById("profileBaseList");
+  host.innerHTML = Object.entries(PERSONALITIES).map(([id,p]) => `
+    <div class="profilecard">
+      <div class="ph"><span class="swatch" style="background:${p.accent}"></span><b>${p.name}</b></div>
+      <div style="color:var(--fg1); font-size:12px;">${p.tagline}</div>
+      <div class="kv"><span>Speed</span><b>${p.settings.speed}</b></div>
+      <div class="kv"><span>Pitch offset</span><b>${p.settings.pitch}</b></div>
+      <div class="kv"><span>Stability (voice setting suggestion)</span><b>${p.settings.stability}</b></div>
+      <div class="kv"><span>Style exaggeration (suggestion)</span><b>${p.settings.style}</b></div>
+    </div>`).join("");
+  renderVariantList();
+}
+function renderVariantList(){
+  const host = document.getElementById("variantListAll");
+  let html = "";
+  for (const [pid, list] of Object.entries(state.variants)){
+    if (!list.length) continue;
+    html += `<div style="margin-top:6px; font-size:11px; color:var(--fg2); text-transform:uppercase;">${PERSONALITIES[pid].name}</div>`;
+    for (const v of list){
+      html += `<div class="varitem"><span>${v.name} — speed ${v.speed}, pitch ${v.pitch}${v.voiceId? ", voice "+v.voiceId:""}</span>
+        <button class="btn small ghost" data-del-variant="${pid}::${v.id}">✕</button></div>`;
+    }
+  }
+  host.innerHTML = html || `<p style="color:var(--fg2); font-size:12px;">No roster variants yet.</p>`;
+  host.querySelectorAll("[data-del-variant]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const [pid, vid] = btn.dataset.delVariant.split("::");
+      state.variants[pid] = (state.variants[pid]||[]).filter(v=>v.id!==vid);
+      await idbSet("kv","variants", state.variants);
+      renderVariantList(); populateVariantSel();
+      toast("Variant profile removed.");
+    });
+  });
+}
+async function addVariant(){
+  const pid = document.getElementById("newVarPersonality").value;
+  const name = document.getElementById("newVarName").value.trim();
+  if (!name){ toast("Give the variant a name first."); return; }
+  const speed = parseFloat(document.getElementById("newVarSpeed").value) || 1.0;
+  const pitch = parseFloat(document.getElementById("newVarPitch").value) || 0.0;
+  const voiceId = document.getElementById("newVarVoiceId").value.trim();
+  const id = "v" + Math.random().toString(36).slice(2,9);
+  if (!state.variants[pid]) state.variants[pid] = [];
+  state.variants[pid].push({id, name, speed, pitch, voiceId});
+  await idbSet("kv","variants", state.variants);
+  document.getElementById("newVarName").value = "";
+  renderVariantList(); populateVariantSel();
+  toast(`Saved roster variant "${name}".`);
+}
+
+/* ========================================================================
+   INGEST TAB
+   ======================================================================== */
+let pendingIngest = null;
+function parseIngest(){
+  const raw = document.getElementById("ingestArea").value.trim();
+  const resultEl = document.getElementById("ingestResult");
+  resultEl.style.display = "block";
+  if (!raw){ resultEl.textContent = "Nothing to parse."; return; }
+  let parsed = null;
+  try{ parsed = JSON.parse(raw); } catch(e){ parsed = null; }
+
+  const result = { personalities: {} };
+  let convertedCount = 0, addedCount = 0;
+
+  if (Array.isArray(parsed)){
+    // Master ingestion JSON block schema (personality_id, chirps[])
+    for (const block of parsed){
+      const pid = (block.personality_id || block.id || "").toLowerCase().replace(/[^a-z0-9]+/g,"_");
+      if (!pid) continue;
+      if (!result.personalities[pid]) result.personalities[pid] = {
+        name: block.display_name || pid, settings: block.base_settings || {speed:1,pitch:0},
+        combat: {}, npc: {}
+      };
+      for (const c of (block.chirps || [])){
+        const sex = (c.sex || "male").toLowerCase();
+        const atype = c.action_type;
+        const bucket = COMBAT_TYPES.includes(atype) ? "combat" : (NPC_TYPES.includes(atype) ? "npc" : "combat");
+        if (!result.personalities[pid][bucket][atype]) result.personalities[pid][bucket][atype] = {};
+        const converted = looksLikeElevenLabs(c.text) ? c.text : convertMiniMaxToElevenLabs(c.text, c.ui_emotion);
+        if (!looksLikeElevenLabs(c.text)) convertedCount++;
+        result.personalities[pid][bucket][atype][sex] = converted;
+        addedCount++;
+      }
+    }
+  } else if (parsed && parsed.personalities){
+    // already our own schema
+    Object.assign(result.personalities, parsed.personalities);
+    addedCount = Object.keys(parsed.personalities).length;
+  } else {
+    // raw unstructured MiniMax-style transcript: just report what tags we'd convert, don't guess structure
+    const tagMatches = raw.match(/\([a-zA-Z ]+\)/g) || [];
+    const timingMatches = raw.match(/<#\s*[\d.]+\s*#>/g) || [];
+    resultEl.textContent =
+      `Detected ${tagMatches.length} MiniMax sound tag(s) and ${timingMatches.length} timing marker(s) in free text.\n` +
+      `Free-text transcripts aren't auto-mapped to specific classes/personalities (too ambiguous to guess safely).\n` +
+      `Paste the JSON "chirps" array schema instead for automatic merge — or convert manually below:\n\n` +
+      convertMiniMaxToElevenLabs(raw.slice(0, 1200));
+    pendingIngest = null;
+    document.getElementById("mergeIngestBtn").disabled = true;
+    return;
+  }
+
+  pendingIngest = result;
+  document.getElementById("mergeIngestBtn").disabled = false;
+  resultEl.textContent =
+    `Parsed ${Object.keys(result.personalities).length} personality block(s), ${addedCount} line(s), ` +
+    `auto-converted ${convertedCount} legacy MiniMax tag line(s) to ElevenLabs v3 Audio Tags.\n\n` +
+    JSON.stringify(result, null, 2).slice(0, 4000);
+}
+async function mergeIngest(){
+  if (!pendingIngest) return;
+  if (!state.customLib) state.customLib = {personalities:{}};
+  for (const [pid, block] of Object.entries(pendingIngest.personalities)){
+    if (!state.customLib.personalities[pid]) state.customLib.personalities[pid] = {combat:{}, npc:{}};
+    for (const bucket of ["combat","npc"]){
+      for (const [atype, sexes] of Object.entries(block[bucket]||{})){
+        if (!state.customLib.personalities[pid][bucket][atype]) state.customLib.personalities[pid][bucket][atype] = {};
+        Object.assign(state.customLib.personalities[pid][bucket][atype], sexes);
+      }
+    }
+  }
+  await idbSet("kv","customLib", state.customLib);
+  toast("Merged into your library.");
+  renderGrid();
+}
+
+/* ========================================================================
+   TABS
+   ======================================================================== */
+function switchTab(tab){
+  state.tab = tab;
+  document.querySelectorAll("#tabbar button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab===tab)));
+  ["chirps","profiles","ingest","export"].forEach(t => {
+    document.getElementById("panel-"+t).style.display = (t===tab) ? "block" : "none";
+  });
+  if (tab === "profiles") renderProfilesTab();
+  if (tab === "export") refreshManifestPreview();
+}
+
+async function refreshManifestPreview(){
+  const manifest = await buildManifest();
+  document.getElementById("manifestPreview").textContent = JSON.stringify(manifest, null, 2).slice(0, 6000);
+  window.__lastManifest = manifest;
+}
+
+/* ========================================================================
+   WIRE UP
+   ======================================================================== */
+function wireTopControls(){
+  document.getElementById("sexSeg").addEventListener("click", e => {
+    const btn = e.target.closest("button"); if (!btn) return;
+    state.sex = btn.dataset.val;
+    document.querySelectorAll("#sexSeg button").forEach(b=>b.setAttribute("aria-pressed", String(b===btn)));
+    if (state.mode === "cast") setCastPick(state.castId, "sex", state.sex).then(populateClassSel);
+    renderGrid();
+  });
+  document.getElementById("modeSeg").addEventListener("click", e => {
+    const btn = e.target.closest("button"); if (!btn) return;
+    state.mode = btn.dataset.val;
+    document.querySelectorAll("#modeSeg button").forEach(b=>b.setAttribute("aria-pressed", String(b===btn)));
+    populateClassSel();
+    if (state.mode === "cast") applyCastPick();
+    renderGrid();
+  });
+  document.getElementById("personalitySel").addEventListener("change", e => {
+    state.personalityId = e.target.value; state.variantId = "";
+    // In Cast mode this picks the character's voice for the whole game.
+    if (state.mode === "cast") setCastPick(state.castId, "personality", state.personalityId).then(populateClassSel);
+    populateVariantSel(); renderGrid();
+  });
+  document.getElementById("variantSel").addEventListener("change", e => {
+    state.variantId = e.target.value; renderGrid();
+  });
+  document.getElementById("classSel").addEventListener("change", e => {
+    if (state.mode === "combat") state.classId = e.target.value;
+    else if (state.mode === "cast"){ state.castId = e.target.value; applyCastPick(); }
+    else state.npcCatId = e.target.value;
+    renderGrid();
+  });
+  document.getElementById("tabbar").addEventListener("click", e => {
+    const btn = e.target.closest("button"); if (!btn) return;
+    switchTab(btn.dataset.tab);
+  });
+  document.getElementById("bindFolderBtn").addEventListener("click", bindFolder);
+  document.getElementById("copyAllBtn").addEventListener("click", () => {
+    const lines = [...document.querySelectorAll(".scripttext")].map(t=>t.value).join("\n\n");
+    safeCopy(lines, () => toast("Copied all visible lines."), () => toast("Could not copy — select manually."));
+  });
+  document.getElementById("addVariantBtn").addEventListener("click", addVariant);
+  document.getElementById("parseIngestBtn").addEventListener("click", parseIngest);
+  document.getElementById("mergeIngestBtn").addEventListener("click", mergeIngest);
+  document.getElementById("clearIngestBtn").addEventListener("click", () => {
+    document.getElementById("ingestArea").value = "";
+    document.getElementById("ingestResult").style.display = "none";
+    pendingIngest = null; document.getElementById("mergeIngestBtn").disabled = true;
+  });
+  document.getElementById("refreshManifestBtn").addEventListener("click", refreshManifestPreview);
+  document.getElementById("copyManifestBtn").addEventListener("click", () => {
+    safeCopy(JSON.stringify(window.__lastManifest||{}, null, 2), () => toast("Manifest JSON copied."), () => toast("Could not copy — select manually."));
+  });
+  document.getElementById("writeFolderBtn").addEventListener("click", writeToBoundFolder);
+  document.getElementById("zipExportBtn").addEventListener("click", zipExport);
+
+  document.addEventListener("keydown", e => {
+    if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT") return;
+    if (state.tab !== "chirps") return;
+    const rows = [...document.querySelectorAll(".row")];
+    let focusedIdx = rows.findIndex(r => r.classList.contains("focusedRow"));
+    if (e.key.toLowerCase() === "j"){
+      if (focusedIdx >= 0) rows[focusedIdx].classList.remove("focusedRow");
+      focusedIdx = Math.min(rows.length-1, focusedIdx+1);
+      rows[focusedIdx] && rows[focusedIdx].classList.add("focusedRow");
+      rows[focusedIdx] && rows[focusedIdx].scrollIntoView({block:"center"});
+    } else if (e.key.toLowerCase() === "k"){
+      if (focusedIdx >= 0) rows[focusedIdx].classList.remove("focusedRow");
+      focusedIdx = Math.max(0, focusedIdx-1);
+      rows[focusedIdx] && rows[focusedIdx].classList.add("focusedRow");
+      rows[focusedIdx] && rows[focusedIdx].scrollIntoView({block:"center"});
+    } else if (e.key.toLowerCase() === "c" && focusedIdx >= 0){
+      copyRowText(rows[focusedIdx]);
+    }
+  });
+}
+
+function showFatalError(err){
+  console.error("Chirp Studio failed to start:", err);
+  const host = document.getElementById("app") || document.body;
+  const banner = document.createElement("div");
+  banner.style.cssText = "position:fixed;inset:0;z-index:999;background:#0a0d10;color:#ffb0b0;" +
+    "font-family:ui-monospace,Consolas,monospace;padding:28px;overflow:auto;";
+  banner.innerHTML = `<h2 style="color:#ff6b6b;margin-top:0;">Chirp Studio hit a snag loading.</h2>
+    <p style="color:#e7f1f3;max-width:680px;">The app didn't finish starting up. This is usually a one-off —
+    try reloading the page. If it keeps happening, the error detail below can help fix it.</p>
+    <pre style="white-space:pre-wrap;background:#141a1f;border:1px solid #243039;border-radius:8px;padding:14px;max-width:900px;">${(err && (err.stack||err.message)) || String(err)}</pre>`;
+  host.appendChild(banner);
+}
+
+async function init(){
+  try{
+    populatePersonalitySel();
+    populateClassSel();
+    populateVariantSel();
+
+    state.variants = (await idbGet("kv","variants")) || {};
+    state.customLib = (await idbGet("kv","customLib")) || null;
+
+    wireTopControls();
+    if (!hasFSA) document.getElementById("chromiumBanner").style.display = "block";
+    if (idbUnavailable || !hasFSA){
+      const b = document.getElementById("chromiumBanner");
+      if (idbUnavailable && b) b.style.display = "block";
+    }
+    try{ await restoreFolderHandle(); } catch(e){ console.warn("Folder restore skipped:", e); }
+    try{ loadOggEncoder(); } catch(e){ console.warn("Ogg encoder load skipped:", e); }
+    await renderGrid();
+  } catch(err){
+    showFatalError(err);
+  }
+}
+
+window.addEventListener("error", e => { if (!document.querySelector(".row")) showFatalError(e.error || e.message); });
+window.addEventListener("unhandledrejection", e => { if (!document.querySelector(".row")) showFatalError(e.reason); });
+
+init();
+
+})();
+
+</script>
+</body>
+</html>

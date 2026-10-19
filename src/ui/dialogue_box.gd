@@ -154,7 +154,7 @@ func _show_line(line: Dictionary, choices: Array = []) -> void:
 	visible = true
 	_speaker.text = str(line.get("speaker", "")).to_upper()
 	_speaker.visible = _speaker.text != ""
-	_body.text = str(line.get("text", ""))
+	_body.text = DialogTools.display_text(str(line.get("text", "")))
 	_body.visible_characters = 0
 	_shown_chars = 0.0
 	_typing = true

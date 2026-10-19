@@ -28,6 +28,10 @@ extends GameResource
 @export var quest_ids: Array[String] = []
 ## The NPC only shows up once this story flag is set (empty = always).
 @export var required_flag: String = ""
+## Chirp Studio voice profile (see CharacterData.voice_personality).
+@export var voice_personality: String = ""
+@export var voice_sex: String = ""
+@export var voice_id: String = ""
 
 @export_group("Interaction stages")
 ## What happens when an interaction anchor (or E in explore) hooks this NPC.

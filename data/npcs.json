@@ -87,7 +87,8 @@
 		"quest_ids": [
 			"q_otto_the_tab"
 		],
-		"required_flag": ""
+		"required_flag": "",
+		"voice_personality": "noir_detective"
 	},
 	{
 		"id": "hic",
@@ -279,7 +280,9 @@
 		"quest_ids": [
 			"q_sly_friendly_game",
 			"q_sly_stack_the_deck"
-		]
+		],
+		"voice_personality": "high_stakes_gambler",
+		"voice_sex": "male"
 	},
 	{
 		"id": "drunken_oracle",
@@ -455,7 +458,9 @@
 				"quest_id": ""
 			}
 		],
-		"quest_ids": []
+		"quest_ids": [],
+		"voice_personality": "gothic_mystic",
+		"voice_sex": "female"
 	},
 	{
 		"id": "benno",
@@ -554,7 +559,8 @@
 		],
 		"quest_ids": [
 			"q_benno_grisks_stash"
-		]
+		],
+		"voice_personality": "shift_lifer"
 	},
 	{
 		"id": "ma_rivet",
@@ -629,7 +635,8 @@
 		},
 		"closing_lines": [
 			"Now scram. You're scaring off the rats, and the rats are customers."
-		]
+		],
+		"voice_sex": "female"
 	},
 	{
 		"id": "kade",
@@ -711,7 +718,9 @@
 		"after_talk": "shop",
 		"closing_lines": [
 			"Pleasure. Don't tell anyone where you got it."
-		]
+		],
+		"voice_personality": "cyborg_technocrat",
+		"voice_sex": "male"
 	},
 	{
 		"id": "kade_torvald",
@@ -785,7 +794,9 @@
 					"Read the line where it says 'prior names.' Then tell me the Republic's a republic."
 				]
 			}
-		]
+		],
+		"voice_personality": "stoic_veteran",
+		"voice_sex": "male"
 	},
 	{
 		"id": "kade_brisk",
@@ -843,6 +854,8 @@
 		"fetch_reward_items_done": {},
 		"closing_lines": [
 			"Tell Rennick the good shelf is open."
-		]
+		],
+		"voice_personality": "smuggler_captain",
+		"voice_sex": "male"
 	}
 ]

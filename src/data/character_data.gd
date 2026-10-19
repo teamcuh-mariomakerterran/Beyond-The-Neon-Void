@@ -43,6 +43,12 @@ extends GameResource
 ## Events: battle_start, turn_start, crit, kill, ally_down, low_hp, big_hit,
 ## miss, heal, victory, buzzed, shield_down. These win over data/barks.json.
 @export var barks: Array[Dictionary] = []
+## Chirp Studio voice profile (tools/chirp_studio): the personality whose
+## cadence every line is read in, which line set (male / female, "" = not
+## picked yet) and the ElevenLabs voice id. Same values on NPCs.
+@export var voice_personality: String = ""
+@export var voice_sex: String = ""
+@export var voice_id: String = ""
 
 @export_group("AI (enemies / guests)")
 @export var ai_behavior: String = "aggressive"

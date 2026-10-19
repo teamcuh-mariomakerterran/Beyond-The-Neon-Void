@@ -97,7 +97,7 @@ func say(unit: Node, event: String, force: bool = false) -> Dictionary:
 	barked.emit(unit, event, line)
 	if CombatManager.animate and world and is_instance_valid(world):
 		var b := Bubble.new()
-		b.text = str(line["text"])
+		b.text = DialogTools.display_text(str(line["text"]))
 		b.color = NeonTheme.team_color(int(unit.get("team")))
 		b.position = (unit as Node2D).position + Vector2(0, -unit_height(unit))
 		b.z_index = 3500

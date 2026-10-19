@@ -12,3 +12,6 @@ export_credentials.cfg
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Chirp Studio export (transfer file, read by chirp_bridge.py import)
+tools/chirp_studio/manifest.json

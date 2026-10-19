@@ -38,6 +38,11 @@ func _ready() -> void:
 	var hint := NeonTheme.label("Drag a port to a node to link it, into empty space for a new line. Del removes selected nodes. Drop audio on a node to voice it.", 12, NeonTheme.TEXT_DIM)
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	left.add_child(hint)
+	var studio := Button.new()
+	studio.text = "OPEN CHIRP STUDIO ↗"
+	studio.tooltip_text = "Voice lines for ElevenLabs (tools/chirp_studio). Run chirp_bridge.py sync first to load the latest lines."
+	studio.pressed.connect(_open_studio)
+	left.add_child(studio)
 	_list = ItemList.new()
 	_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_list.item_selected.connect(func(i: int) -> void: open_npc(_ids[i]))
@@ -417,6 +422,14 @@ func _layout() -> void:
 		DialogTools.auto_layout(npc.dialog)
 		edited.emit("npcs")
 		rebuild()
+
+
+func _open_studio() -> void:
+	var p := ProjectSettings.globalize_path("res://tools/chirp_studio/black_doctrine_chirp_studio.html")
+	if FileAccess.file_exists(p):
+		OS.shell_open(p)
+	else:
+		status.emit("Chirp Studio not found at tools/chirp_studio/.", NeonTheme.MAGENTA)
 
 
 func _hear(path: String) -> void:

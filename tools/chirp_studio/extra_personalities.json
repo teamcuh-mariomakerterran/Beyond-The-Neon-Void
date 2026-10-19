@@ -1,0 +1,267 @@
+{
+	"_note": "Personalities written for Beyond: The Neon Void's own cast, merged into the Chirp Studio seed by sync_chirp_studio.py (only added if the app doesn't have them yet; edits made in the app win).",
+	"ringleader": {
+		"name": "The Ringleader",
+		"accent": "#ffc857",
+		"tagline": "Improvising, bluffing, never admits there wasn't a plan",
+		"settings": {"speed": 1.08, "pitch": 0.0, "stability": 0.45, "style": 0.6},
+		"combat": {
+			"fire_spell": {
+				"male": "[confidently] And this is the part of the plan where I hit you. [chuckles] There was always this part.",
+				"female": "[confidently] Step one, I hit you. Step two... [chuckles] we'll get to step two."
+			},
+			"water_spell": {
+				"male": "[rushed] Okay, okay, new angle. Same plan, new angle.",
+				"female": "[playfully] Little adjustment. Totally intended. Write that down."
+			},
+			"ice_spell": {
+				"male": "[sternly] Hold it right there. [pause] ...yes, you. Thank you.",
+				"female": "[confidently] Nobody moves. That includes you, especially you."
+			},
+			"move_command": {
+				"male": "[rushed] Moving! Act natural. Everybody act natural.",
+				"female": "[playfully] Repositioning. Strategically. Don't look at me like that."
+			},
+			"death_feint": {
+				"male": "[groans] Okay... [sighs] that wasn't... in the plan...",
+				"female": "[groans] Tell them... [breathes in] tell them it was on purpose..."
+			},
+			"error_no_ap": {
+				"male": "[frustrated] I've got the idea, I just don't have the legs for it.",
+				"female": "[sighs] Great plan. No gas in the tank. Next turn."
+			}
+		},
+		"npc": {
+			"npc_greeting": {
+				"male": "[cheerfully] There they are. I was just telling everyone you'd show.",
+				"female": "[confidently] Right on time. I planned that. I plan everything."
+			},
+			"npc_farewell": {
+				"male": "[playfully] Go on. I'll make it sound like your idea later.",
+				"female": "[cheerfully] Don't do anything I'd do. Actually, do exactly that."
+			},
+			"npc_haggle_accept": {
+				"male": "[chuckles] Deal. I was going to offer that anyway.",
+				"female": "[confidently] Done. See? Nobody had to get hurt."
+			},
+			"npc_haggle_reject": {
+				"male": "[sarcastically] Bold number. Love the confidence. No.",
+				"female": "[flatly] That's not a counter-offer, that's a confession."
+			},
+			"npc_out_of_stock": {
+				"male": "[sighs] Gone. Somebody planned better than me. Rare.",
+				"female": "[frustrated] Cleaned out. And no, I didn't take it. Probably."
+			},
+			"npc_idle_bark": {
+				"male": "[calm] Every great plan starts with somebody saying 'how hard can it be.'",
+				"female": "[playfully] I have three plans. Two of them are the same plan, louder."
+			},
+			"npc_warning": {
+				"male": "[sternly] Walk away. That's not a threat. The threat comes after.",
+				"female": "[confidently] I'd leave now, before I come up with something."
+			},
+			"npc_thanks": {
+				"male": "[cheerfully] Appreciate it. Drinks are on someone. Not me.",
+				"female": "[chuckles] You're good people. Bad at haggling. Good people."
+			}
+		}
+	},
+	"gentle_giant": {
+		"name": "The Gentle Giant",
+		"accent": "#7fd6ff",
+		"tagline": "Soft-spoken, apologetic, devastating when it counts",
+		"settings": {"speed": 0.9, "pitch": -0.1, "stability": 0.7, "style": 0.35},
+		"combat": {
+			"fire_spell": {
+				"male": "[nervously] Sorry. Sorry in advance. [breathes in] This is gonna hurt.",
+				"female": "[sadly] I really didn't want to do this part."
+			},
+			"water_spell": {
+				"male": "[calm] Here. Stand behind me. I'm very wide.",
+				"female": "[calm] It's okay. I've got you. Just stay close."
+			},
+			"ice_spell": {
+				"male": "[sternly] Please stop. [pause] I'm asking nicely. Once.",
+				"female": "[flatly] Don't move. I don't want to hug you this hard."
+			},
+			"move_command": {
+				"male": "[calm] Coming through. Excuse me. Sorry. Coming through.",
+				"female": "[calm] Moving up. Mind your feet."
+			},
+			"death_feint": {
+				"male": "[groans] Oh... [sniffs] somebody tell the jukebox I said bye...",
+				"female": "[sighs] That's... okay. That's okay. Just gonna lie here."
+			},
+			"error_no_ap": {
+				"male": "[sadly] I want to help. My arms are tired.",
+				"female": "[sighs] Next turn. I promise. Next turn."
+			}
+		},
+		"npc": {
+			"npc_greeting": {
+				"male": "[cheerfully] Oh! Hi. Sorry, I'm in the doorway again.",
+				"female": "[calm] Hey there. You look like you need a sit-down."
+			},
+			"npc_farewell": {
+				"male": "[calm] Be safe. Like, actually safe.",
+				"female": "[cheerfully] Come back in one piece, okay? I'll count them."
+			},
+			"npc_haggle_accept": {
+				"male": "[cheerfully] Yeah, that's fair. That's really fair, thank you.",
+				"female": "[calm] Sure. You need it more than I need the coin."
+			},
+			"npc_haggle_reject": {
+				"male": "[nervously] I... can't. I'm sorry. I'm really sorry. Still no.",
+				"female": "[sadly] I wish I could. I can't feed anyone on that."
+			},
+			"npc_out_of_stock": {
+				"male": "[sighs] All gone. I gave the last one to a kid. Sorry.",
+				"female": "[calm] Nothing left today. Tomorrow, maybe."
+			},
+			"npc_idle_bark": {
+				"male": "[sadly] They played the sad song again. I'm fine. It's the smoke.",
+				"female": "[calm] Big hands are good for two things. Carrying and holding on."
+			},
+			"npc_warning": {
+				"male": "[sternly] Leave them alone. [pause] I won't say it twice. I'll just stand up.",
+				"female": "[flatly] Step back. I'm being gentle right now. That ends."
+			},
+			"npc_thanks": {
+				"male": "[cheerfully] Thank you. Really. You didn't have to.",
+				"female": "[calm] That means a lot. More than the coin."
+			}
+		}
+	},
+	"shift_lifer": {
+		"name": "The Shift Lifer",
+		"accent": "#ff8a3d",
+		"tagline": "Bone-tired line worker, gallows humor, counts everything in shifts",
+		"settings": {"speed": 0.96, "pitch": -0.04, "stability": 0.7, "style": 0.3},
+		"combat": {
+			"fire_spell": {
+				"male": "[flatly] Fifteen years on the line. [pause] I know where things break.",
+				"female": "[confidently] Right through the seam. Always a seam."
+			},
+			"water_spell": {
+				"male": "[calm] Same job, different floor. Let's get it done.",
+				"female": "[flatly] Fixing it. Somebody has to, and it's never management."
+			},
+			"ice_spell": {
+				"male": "[sternly] Stay put. You're on my clock now.",
+				"female": "[flatly] Hold there. Break's over when I say."
+			},
+			"move_command": {
+				"male": "[sighs] Walking. Not running. I don't get paid to run.",
+				"female": "[calm] Moving. Know this floor better than they do."
+			},
+			"death_feint": {
+				"male": "[groans] Clock me out... [sighs] somebody clock me out...",
+				"female": "[groans] Not on a Tuesday... [breathes in] not on a Tuesday..."
+			},
+			"error_no_ap": {
+				"male": "[frustrated] I'm on overtime already. Can't push it.",
+				"female": "[sighs] Out of hours. Union rules. My union. Me."
+			}
+		},
+		"npc": {
+			"npc_greeting": {
+				"male": "[flatly] Shift seven? Shift nine? Doesn't matter. Sit.",
+				"female": "[calm] You look like you just got off a double. Join the club."
+			},
+			"npc_farewell": {
+				"male": "[sighs] Horn's going soon. Go before it does.",
+				"female": "[flatly] Stay off the main lines. The quota's hungry tonight."
+			},
+			"npc_haggle_accept": {
+				"male": "[calm] Fine. That's a fair day's pay. Rare thing.",
+				"female": "[flatly] Deal. Don't tell the foreman I'm capable of mercy."
+			},
+			"npc_haggle_reject": {
+				"male": "[sternly] I work fifteen hours for that. No.",
+				"female": "[sarcastically] That's less than the company pays. Impressive."
+			},
+			"npc_out_of_stock": {
+				"male": "[sighs] Line's been dry for a week. Nobody tells us why.",
+				"female": "[flatly] Gone. Requisitioned. That's the word they use for taken."
+			},
+			"npc_idle_bark": {
+				"male": "[flatly] Three days off a month. I spend two of them right here.",
+				"female": "[calm] You can tell the time by the horn. You can tell the year by your back."
+			},
+			"npc_warning": {
+				"male": "[sternly] Wardens walk this block at the half. Don't be here at the half.",
+				"female": "[flatly] Keep your voice down. The walls file reports."
+			},
+			"npc_thanks": {
+				"male": "[calm] That's decent of you. Not a lot of decent left.",
+				"female": "[chuckles] Look at that. A good day. Write it down."
+			}
+		}
+	},
+	"deadpan_medic": {
+		"name": "The Deadpan Medic",
+		"accent": "#4dff9e",
+		"tagline": "Dry, unflappable, keeps a tab on every patch-up",
+		"settings": {"speed": 0.98, "pitch": 0.0, "stability": 0.75, "style": 0.25},
+		"combat": {
+			"fire_spell": {
+				"male": "[flatly] First, do no harm. [pause] Second, this.",
+				"female": "[deadpan] I took an oath. It had loopholes."
+			},
+			"water_spell": {
+				"male": "[calm] Hold still. If you flinch, I start over.",
+				"female": "[flatly] That's twice today. I'm keeping a tab."
+			},
+			"ice_spell": {
+				"male": "[deadpan] Sedative. You'll thank me. You won't remember to.",
+				"female": "[calm] Lie down. Doctor's orders. I'm the doctor."
+			},
+			"move_command": {
+				"male": "[calm] Moving up. Try not to need me on the way.",
+				"female": "[flatly] Repositioning. Don't bleed while I walk."
+			},
+			"death_feint": {
+				"male": "[sighs] Medic's down... [groans] someone read the labels...",
+				"female": "[groans] Last bandage... [breathes in] was mine..."
+			},
+			"error_no_ap": {
+				"male": "[flatly] I'm a medic, not a miracle. Next turn.",
+				"female": "[sighs] Out of hands. I only have the two."
+			}
+		},
+		"npc": {
+			"npc_greeting": {
+				"male": "[flatly] Sit. Where does it hurt. Don't say 'everywhere.'",
+				"female": "[calm] You're leaking. Sit down before you leak on the good chair."
+			},
+			"npc_farewell": {
+				"male": "[deadpan] Try not to come back. Professionally speaking.",
+				"female": "[flatly] Change the dressing twice a day. You won't. But do."
+			},
+			"npc_haggle_accept": {
+				"male": "[calm] Fine. Put the rest on your tab. It's a long tab.",
+				"female": "[flatly] Deal. You're paying in coin, not in excuses."
+			},
+			"npc_haggle_reject": {
+				"male": "[deadpan] No. Stitches cost what stitches cost.",
+				"female": "[flatly] That doesn't cover the thread."
+			},
+			"npc_out_of_stock": {
+				"male": "[sighs] Out of stims. Out of patience. One restocks faster.",
+				"female": "[flatly] Empty shelf. Read the label on that. It says 'empty.'"
+			},
+			"npc_idle_bark": {
+				"male": "[calm] Everyone reads the warning after the overdose. Every time.",
+				"female": "[deadpan] Nobody reads the labels. I've started writing them angrier."
+			},
+			"npc_warning": {
+				"male": "[sternly] Touch my kit and you'll need it.",
+				"female": "[flatly] I know forty ways to save a life. They reverse."
+			},
+			"npc_thanks": {
+				"male": "[calm] Thanks. Now go hydrate.",
+				"female": "[flatly] Appreciated. Your tab's down to merely tragic."
+			}
+		}
+	}
+}

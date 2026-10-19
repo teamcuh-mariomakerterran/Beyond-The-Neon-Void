@@ -47,6 +47,7 @@ func run(p_tree: SceneTree) -> int:
 	test_vfx_clip()
 	test_encounter_gen()
 	await test_dialog_tool()
+	test_voice_profiles()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2308,6 +2309,7 @@ func test_dialog_tool() -> void:
 	DialogTools.auto_layout(nodes)
 	check(nodes.all(func(d: Dictionary) -> bool: return d.has("pos")) and float(nodes[1]["pos"][0]) > float(nodes[0]["pos"][0]), "layout runs left to right")
 	check(DialogTools.new_id(nodes, "a") == "a_2", "fresh ids")
+	check(DialogTools.display_text("[sighs] Fine. [pause] Deal.") == "Fine. Deal." and DialogTools.display_text("No tags.") == "No tags.", "voice tags never reach the screen")
 	check(DialogTools.voice_path("otto", "greet") == "res://assets/voice/dialog/otto_greet.ogg", "voice naming convention")
 	# The Forge tab edits through the same paths as the mouse.
 	var npc := NPCResource.new()
@@ -2332,3 +2334,13 @@ func test_dialog_tool() -> void:
 	check(DialogTools.voice_script(npc).begins_with("file\tspeaker\tline\nt_dialog_npc_start.ogg\tTester\tHello."), "voice script lists file, speaker, line")
 	fd.queue_free()
 	await tree.process_frame
+
+
+func test_voice_profiles() -> void:
+	var rook := ContentDB.get_character("rook")
+	check(rook != null and rook.voice_personality == "ringleader" and rook.voice_sex == "male", "voice profile loads on characters")
+	var otto := ContentDB.get_entry("npcs", "otto") as NPCResource
+	check(otto != null and otto.voice_personality == "noir_detective", "voice profile loads on NPCs")
+	# New barks are real lines with conventional voice files.
+	var lines: Array = (ContentDB.barks.get("rook", {}) as Dictionary).get("heal", [])
+	check(not lines.is_empty() and str(lines[0].get("voice", "")) == "res://assets/voice/barks/rook_heal_1.ogg", "new barks carry their voice file")

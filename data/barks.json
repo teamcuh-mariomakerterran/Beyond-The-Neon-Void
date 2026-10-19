@@ -57,6 +57,40 @@
 			{
 				"text": "Drinks are on Brannoc.",
 				"voice": "res://assets/voice/barks/rook_victory_1.ogg"
+			},
+			{
+				"text": "Told you. Nobody listens, but I told you.",
+				"voice": "res://assets/voice/barks/rook_victory_2.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "Look at that. Teamwork. I organised that.",
+				"voice": "res://assets/voice/barks/rook_heal_1.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "Okay! Ow. Okay. Adjusting the plan.",
+				"voice": "res://assets/voice/barks/rook_big_hit_1.ogg"
+			}
+		],
+		"buzzed": [
+			{
+				"text": "I've never been more sure of anything. What were we doing?",
+				"voice": "res://assets/voice/barks/rook_buzzed_1.ogg"
+			}
+		],
+		"turn_start": [
+			{
+				"text": "Right. My move. I have a move.",
+				"voice": "res://assets/voice/barks/rook_turn_start_1.ogg"
+			}
+		],
+		"shield_down": [
+			{
+				"text": "Shield's gone. Plan B. Plan B is running.",
+				"voice": "res://assets/voice/barks/rook_shield_down_1.ogg"
 			}
 		]
 	},
@@ -95,6 +129,10 @@
 			{
 				"text": "Not dying on a Tuesday.",
 				"voice": "res://assets/voice/barks/mags_low_hp_1.ogg"
+			},
+			{
+				"text": "Fifteen years and this is how I get docked.",
+				"voice": "res://assets/voice/barks/mags_low_hp_2.ogg"
 			}
 		],
 		"miss": [
@@ -107,6 +145,36 @@
 			{
 				"text": "That's a full shift.",
 				"voice": "res://assets/voice/barks/mags_victory_1.ogg"
+			}
+		],
+		"ally_down": [
+			{
+				"text": "Man down! Cover them — I've got the angle!",
+				"voice": "res://assets/voice/barks/mags_ally_down_1.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "That one's coming out of their pay.",
+				"voice": "res://assets/voice/barks/mags_big_hit_1.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "Patched. Back on the line.",
+				"voice": "res://assets/voice/barks/mags_heal_1.ogg"
+			}
+		],
+		"turn_start": [
+			{
+				"text": "Clock's running. Moving.",
+				"voice": "res://assets/voice/barks/mags_turn_start_1.ogg"
+			}
+		],
+		"buzzed": [
+			{
+				"text": "Everything's swaying. Or the floor's union now.",
+				"voice": "res://assets/voice/barks/mags_buzzed_1.ogg"
 			}
 		]
 	},
@@ -164,6 +232,36 @@
 				"text": "Patch notes: we won.",
 				"voice": "res://assets/voice/barks/dizzy_victory_1.ogg"
 			}
+		],
+		"ally_down": [
+			{
+				"text": "Hey! That's my debug buddy!",
+				"voice": "res://assets/voice/barks/dizzy_ally_down_1.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "Stack overflow! Mine, I mean. Ow.",
+				"voice": "res://assets/voice/barks/dizzy_big_hit_1.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "Restored from backup. Mostly the good parts.",
+				"voice": "res://assets/voice/barks/dizzy_heal_1.ogg"
+			}
+		],
+		"turn_start": [
+			{
+				"text": "Compiling... compiling... okay, go.",
+				"voice": "res://assets/voice/barks/dizzy_turn_start_1.ogg"
+			}
+		],
+		"shield_down": [
+			{
+				"text": "Firewall's down! Mine! Not theirs! Bad!",
+				"voice": "res://assets/voice/barks/dizzy_shield_down_1.ogg"
+			}
 		]
 	},
 	"brannoc": {
@@ -191,6 +289,10 @@
 			{
 				"text": "…he'll be okay. Right? He'll be okay.",
 				"voice": "res://assets/voice/barks/brannoc_kill_1.ogg"
+			},
+			{
+				"text": "I'm so sorry. Sleep it off, okay?",
+				"voice": "res://assets/voice/barks/brannoc_kill_2.ogg"
 			}
 		],
 		"low_hp": [
@@ -209,6 +311,36 @@
 			{
 				"text": "Can we play the sad song on the jukebox?",
 				"voice": "res://assets/voice/barks/brannoc_victory_1.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "Ow. Okay. Now I'm a little upset.",
+				"voice": "res://assets/voice/barks/brannoc_big_hit_1.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "Thank you. I'll be gentle. Mostly.",
+				"voice": "res://assets/voice/barks/brannoc_heal_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "Sorry! I wasn't trying very hard. On purpose.",
+				"voice": "res://assets/voice/barks/brannoc_miss_1.ogg"
+			}
+		],
+		"buzzed": [
+			{
+				"text": "I love everybody here. Even them. Especially them.",
+				"voice": "res://assets/voice/barks/brannoc_buzzed_1.ogg"
+			}
+		],
+		"turn_start": [
+			{
+				"text": "Okay. Deep breath. Okay.",
+				"voice": "res://assets/voice/barks/brannoc_turn_start_1.ogg"
 			}
 		]
 	},
@@ -231,6 +363,10 @@
 			{
 				"text": "That's twice today. I'm keeping a tab.",
 				"voice": "res://assets/voice/barks/patch_heal_2.ogg"
+			},
+			{
+				"text": "Stitched. Don't pick at it.",
+				"voice": "res://assets/voice/barks/patch_heal_3.ogg"
 			}
 		],
 		"low_hp": [
@@ -255,6 +391,36 @@
 			{
 				"text": "Everyone line up. Shots. The medical kind.",
 				"voice": "res://assets/voice/barks/patch_victory_1.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "That's going on somebody's tab.",
+				"voice": "res://assets/voice/barks/patch_big_hit_1.ogg"
+			}
+		],
+		"crit": [
+			{
+				"text": "Precise incision. You're welcome.",
+				"voice": "res://assets/voice/barks/patch_crit_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "I meant to do that. Medically.",
+				"voice": "res://assets/voice/barks/patch_miss_1.ogg"
+			}
+		],
+		"buzzed": [
+			{
+				"text": "Everything's fine. I've self-diagnosed. It's fine.",
+				"voice": "res://assets/voice/barks/patch_buzzed_1.ogg"
+			}
+		],
+		"turn_start": [
+			{
+				"text": "Who's bleeding. Hands up.",
+				"voice": "res://assets/voice/barks/patch_turn_start_1.ogg"
 			}
 		]
 	},
@@ -286,6 +452,30 @@
 				"text": "Insubordination: resolved.",
 				"voice": "res://assets/voice/barks/foreman_grisk_kill_1.ogg"
 			}
+		],
+		"crit": [
+			{
+				"text": "Efficiency! Finally!",
+				"voice": "res://assets/voice/barks/foreman_grisk_crit_1.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "That was a write-up. A big one.",
+				"voice": "res://assets/voice/barks/foreman_grisk_big_hit_1.ogg"
+			}
+		],
+		"ally_down": [
+			{
+				"text": "Replace them. Then dock them.",
+				"voice": "res://assets/voice/barks/foreman_grisk_ally_down_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "Back to work. All of you. The dead too.",
+				"voice": "res://assets/voice/barks/foreman_grisk_victory_1.ogg"
+			}
 		]
 	},
 	"team:0": {
@@ -302,6 +492,44 @@
 		],
 		"ally_down": [
 			"Man down!"
+		],
+		"battle_start": [
+			{
+				"text": "Here we go.",
+				"voice": "res://assets/voice/barks/crew_battle_start_1.ogg"
+			},
+			{
+				"text": "Watch each other's backs.",
+				"voice": "res://assets/voice/barks/crew_battle_start_2.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "Thanks, I needed that.",
+				"voice": "res://assets/voice/barks/crew_heal_1.ogg"
+			}
+		],
+		"miss": [
+			{
+				"text": "Missed!",
+				"voice": "res://assets/voice/barks/crew_miss_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "We did it!",
+				"voice": "res://assets/voice/barks/crew_victory_1.ogg"
+			},
+			{
+				"text": "Drinks at the Gutter.",
+				"voice": "res://assets/voice/barks/crew_victory_2.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "Ow! That hurt!",
+				"voice": "res://assets/voice/barks/crew_big_hit_1.ogg"
+			}
 		]
 	},
 	"team:1": {
@@ -355,6 +583,34 @@
 			{
 				"text": "Hold still, heretic!",
 				"voice": "res://assets/voice/barks/doctrine_trooper_miss_1.ogg"
+			}
+		],
+		"heal": [
+			{
+				"text": "The Hymn restores.",
+				"voice": "res://assets/voice/barks/doctrine_trooper_heal_1.ogg"
+			}
+		],
+		"victory": [
+			{
+				"text": "Order is restored.",
+				"voice": "res://assets/voice/barks/doctrine_trooper_victory_1.ogg"
+			},
+			{
+				"text": "The floor is compliant.",
+				"voice": "res://assets/voice/barks/doctrine_trooper_victory_2.ogg"
+			}
+		],
+		"big_hit": [
+			{
+				"text": "Heresy strikes!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_big_hit_1.ogg"
+			}
+		],
+		"shield_down": [
+			{
+				"text": "Bulwark broken! Close ranks!",
+				"voice": "res://assets/voice/barks/doctrine_trooper_shield_down_1.ogg"
 			}
 		]
 	}

@@ -11,6 +11,18 @@ extends RefCounted
 
 const VOICE_DIR := "res://assets/voice/dialog"
 
+static var _tag_re: RegEx
+
+
+## Line text as shown on screen: ElevenLabs delivery tags ("[sighs] ",
+## "[confidently] ") are for the recording only, so lines can keep them.
+static func display_text(text: String) -> String:
+	if not "[" in text:
+		return text
+	if _tag_re == null:
+		_tag_re = RegEx.create_from_string("\\[[a-zA-Z][a-zA-Z ]*\\]\\s*")
+	return _tag_re.sub(text, "", true).strip_edges()
+
 
 static func voice_path(npc_id: String, node_id: String) -> String:
 	return VOICE_DIR.path_join("%s_%s.ogg" % [npc_id, node_id])
