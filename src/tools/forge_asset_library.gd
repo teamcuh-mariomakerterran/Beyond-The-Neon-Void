@@ -68,9 +68,10 @@ func _ready() -> void:
 	refresh()
 
 
-func _dashed() -> StyleBoxFlat:
+func _dashed() -> StyleBox:
 	var sb := NeonTheme.panel_box(Color(NeonTheme.GREEN, 0.7), Color(NeonTheme.GREEN, 0.05))
-	sb.set_border_width_all(1)
+	if sb is StyleBoxFlat:
+		(sb as StyleBoxFlat).set_border_width_all(1)
 	sb.set_content_margin_all(14)
 	return sb
 

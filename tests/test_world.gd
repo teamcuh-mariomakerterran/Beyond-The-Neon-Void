@@ -48,6 +48,7 @@ func run(p_tree: SceneTree) -> int:
 	test_encounter_gen()
 	await test_dialog_tool()
 	test_voice_profiles()
+	test_ui_theme()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2344,3 +2345,20 @@ func test_voice_profiles() -> void:
 	# New barks are real lines with conventional voice files.
 	var lines: Array = (ContentDB.barks.get("rook", {}) as Dictionary).get("heal", [])
 	check(not lines.is_empty() and str(lines[0].get("voice", "")) == "res://assets/voice/barks/rook_heal_1.ogg", "new barks carry their voice file")
+
+
+func test_ui_theme() -> void:
+	check(NeonTheme.GREEN == Color("39ff9f") and NeonTheme.PANEL == Color(0.07, 0.04, 0.12, 0.88), "the theme file holds today's look")
+	check(NeonTheme.color("violet@0.6") == Color(Color("b14dff"), 0.6) and NeonTheme.color([2.0, 1.0, 0.5]) == Color(2.0, 1.0, 0.5)
+		and NeonTheme.color("#ff000080").a > 0.49 and NeonTheme.color("nope", Color.RED) == Color.RED, "colour formats: names, alpha, HDR arrays, hex")
+	check(NeonTheme.panel_box() is StyleBoxFlat and NeonTheme.get_theme().get_stylebox("hover", "Button") is StyleBoxFlat, "no textures set: the built-in flat look")
+	# A Lattice 9-slice frame swaps in without touching any screen.
+	var keep: Dictionary = NeonTheme._data
+	NeonTheme._data = keep.duplicate(true)
+	(NeonTheme._data["button"]["hover"] as Dictionary)["texture"] = "res://assets/ui/icons_004.png"
+	NeonTheme._theme = null
+	var sb := NeonTheme.get_theme().get_stylebox("hover", "Button")
+	check(sb is StyleBoxTexture and (sb as StyleBoxTexture).texture_margin_left == 8.0, "a texture turns a style into a 9-slice frame")
+	NeonTheme.reload()
+	check(NeonTheme.get_theme().get_stylebox("hover", "Button") is StyleBoxFlat and NeonTheme._data == keep, "reload puts the file's look back")
+	check(NeonTheme.ui_sound("confirm") == "" and NeonTheme.section("sounds").has("no_save"), "UI sound slots exist, silent until filled")

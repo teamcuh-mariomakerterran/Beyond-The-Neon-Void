@@ -11,6 +11,7 @@ var toasts: QuestToasts
 
 
 func _ready() -> void:
+	NeonTheme.apply_cursors()  # from data/ui_theme.json; none set = system cursor
 	toasts = QuestToasts.new()
 	add_child(toasts)
 

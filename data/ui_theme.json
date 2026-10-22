@@ -1,0 +1,126 @@
+{
+	"_note": "The game's interface look (src/ui/neon_theme.gd reads this; Lattice's interface section edits it). Colours: \"#rrggbb[aa]\", a palette name (\"green\"), a name with alpha (\"violet@0.6\"), or [r, g, b, a] (values above 1 bloom). Any style with a \"texture\" becomes a 9-slice frame (\"slice\": [left, top, right, bottom] px). Empty paths keep the built-in look.",
+	"colors": {
+		"bg": "#07040d",
+		"panel": [0.07, 0.04, 0.12, 0.88],
+		"panel_hi": [0.12, 0.07, 0.2, 0.95],
+		"green": "#39ff9f",
+		"magenta": "#ff2e88",
+		"violet": "#b14dff",
+		"cyan": "#3fd2ff",
+		"amber": "#ffd23f",
+		"text": "#e9e1ff",
+		"text_dim": "#8f84ad"
+	},
+	"fonts": {
+		"body": "res://assets/fonts/space-grotesk-latin-500-normal.woff2",
+		"bold": "res://assets/fonts/space-grotesk-latin-700-normal.woff2",
+		"mono": "res://assets/fonts/jetbrains-mono-latin-400-normal.woff2",
+		"size": 17,
+		"bold_from_size": 22,
+		"input_size": 14,
+		"option_size": 14
+	},
+	"text": {
+		"label": "text",
+		"button": "text",
+		"button_hover": "#ffffff",
+		"button_pressed": "bg",
+		"button_disabled": "text_dim@0.5",
+		"caret": "green",
+		"selection": "violet@0.45",
+		"placeholder": "text_dim@0.6"
+	},
+	"panel": {
+		"fill": "panel",
+		"rim": "violet@0.6",
+		"border": 1,
+		"border_left": 3,
+		"radius": 2,
+		"margin": 12,
+		"shadow_alpha": 0.18,
+		"shadow_size": 8,
+		"texture": "",
+		"slice": [12, 12, 12, 12]
+	},
+	"tooltip": {"rim": "cyan"},
+	"button": {
+		"border": 1,
+		"border_bottom": 2,
+		"radius": 2,
+		"margin": [14, 8, 14, 8],
+		"normal": {"fill": [0.1, 0.06, 0.17, 0.95], "rim": "violet@0.55", "texture": ""},
+		"hover": {"fill": [0.16, 0.08, 0.27, 1.0], "rim": "green", "texture": ""},
+		"pressed": {"fill": "green", "rim": "green", "texture": ""},
+		"focus": {"fill": [0.16, 0.08, 0.27, 1.0], "rim": "cyan", "texture": ""},
+		"disabled": {"fill": [0.06, 0.04, 0.09, 0.8], "rim": "text_dim@0.2", "texture": ""},
+		"slice": [8, 8, 8, 8]
+	},
+	"option": {
+		"normal": {"fill": [0.06, 0.035, 0.1, 1.0], "rim": [1, 1, 1, 0.12]},
+		"hover": {"fill": [0.1, 0.06, 0.17, 1.0], "rim": "cyan@0.7"},
+		"pressed": {"fill": [0.1, 0.06, 0.17, 1.0], "rim": "green"},
+		"focus": {"fill": [0.1, 0.06, 0.17, 1.0], "rim": "cyan"}
+	},
+	"input": {
+		"fill": [0.02, 0.01, 0.04, 0.9],
+		"rim": [1, 1, 1, 0.12],
+		"rim_focus": "cyan",
+		"rim_read_only": [1, 1, 1, 0.05],
+		"border": 1,
+		"radius": 2,
+		"margin": [8, 5, 8, 5],
+		"texture": "",
+		"slice": [6, 6, 6, 6]
+	},
+	"popup": {"fill": [0.05, 0.03, 0.09, 0.98], "rim": "cyan", "margin": 6, "hover_fill": "green@0.2", "hover_rim": "green"},
+	"list": {"rim": [1, 1, 1, 0.06], "hover_fill": [1, 1, 1, 0.05], "guide": [1, 1, 1, 0.04]},
+	"select": {"fill": "green@0.12", "bar": "green", "bar_width": 3, "margin_left": 6},
+	"split": {"separation": 10},
+	"meter": {
+		"background": [0, 0, 0, 0.6],
+		"fill": "green",
+		"height": 10,
+		"texture_under": "",
+		"texture_fill": "",
+		"slice": [4, 4, 4, 4]
+	},
+	"numbers": {
+		"font": "bold",
+		"min_size": 18,
+		"max_size": 34,
+		"crit_bonus": 8,
+		"outline": 7,
+		"outline_color": [0.02, 0.0, 0.05, 1.0],
+		"crit_color": [2.2, 1.7, 0.4, 1.0]
+	},
+	"cursors": {
+		"arrow": "",
+		"pointing_hand": "",
+		"ibeam": "",
+		"busy": "",
+		"hotspot": [0, 0]
+	},
+	"icons": {"root": "res://assets/ui/icons"},
+	"glyphs": {"sheet": "", "cell": [16, 16], "chars": ""},
+	"sounds": {
+		"_note": "UI sound slots (sfx families in assets/sfx). Empty = silent, as today. The menu sandbox plays these.",
+		"hover": "",
+		"press": "",
+		"release": "",
+		"confirm": "",
+		"cancel": "",
+		"error": "",
+		"menu_move": "",
+		"open": "",
+		"close": "",
+		"save_loaded": "",
+		"no_save": ""
+	},
+	"glow": {
+		"intensity": 0.9,
+		"bloom": 0.05,
+		"hdr_threshold": 1.0,
+		"levels": {"1": 1.0, "3": 0.6}
+	}
+}

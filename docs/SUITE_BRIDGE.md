@@ -49,7 +49,22 @@ The personality library's own recordings, which aren't tied to a character, go t
 | Interface parts: 9-slice frames, meters, button states, cursors, icons, glyph sheet, numbers | `assets/ui/` (existing sets: `frames_doctrine`, `glyphs_doctrine`, `hud_doctrine`, `icons`) |
 | Fonts | `assets/fonts/` (OFL licences next to them) |
 
-**The interface theme is still in code** (`src/ui/neon_theme.gd`: colours, fonts, panel and button styles). The next game-side step is `data/ui_theme.json`. It will hold every value the game uses now: colours, fonts, 9-slice frame paths and margins, meter, button states, cursors, icon and glyph sheets, and number styles. NeonTheme will read it, Lattice's interface section will read and write it, and an in-game UI sandbox will preview it before it goes live. Until then the screens keep reading the code values, so nothing changes on screen.
+**Interface theme: `data/ui_theme.json`** (built 2026-10-22; it holds exactly today's look, and the screenshots before and after the move matched). `src/ui/neon_theme.gd` reads it and every screen goes through NeonTheme, so a change here reaches the whole game.
+| Section | Holds |
+|---|---|
+| `colors` | Palette: bg, panel, green, magenta, violet, cyan, amber, text, text_dim |
+| `fonts` | body / bold / mono paths and sizes. Point `body` at a new font in `assets/fonts/` to try it everywhere |
+| `text` | Label, button-state, caret, selection and placeholder colours |
+| `panel`, `tooltip`, `popup`, `list`, `select`, `input`, `option` | Windows, wells, menus, list rows |
+| `button` | `normal`, `hover`, `pressed`, `focus`, `disabled` (fill, rim, optional `texture`) |
+| `meter` | Bar background and fill colours, or `texture_under` and `texture_fill` |
+| `numbers` | Damage numbers: font, size range, crit bonus, outline, crit colour |
+| `cursors` | arrow, pointing_hand, ibeam, busy, hotspot |
+| `icons`, `glyphs` | Icon root, glyph sheet, cell size, characters |
+| `sounds` | UI sound slots (sfx families): hover, press, release, confirm, cancel, error, menu_move, open, close, save_loaded, no_save |
+| `glow` | Neon bloom strength |
+
+Colours can be written as `"#rrggbb[aa]"`, a palette name, `"name@alpha"` or `[r, g, b, a]`; values above 1 bloom. A style with a `texture` becomes a 9-slice frame (`"slice": [left, top, right, bottom]`). Empty paths keep the built-in look. The game reads the file at startup, and `NeonTheme.reload()` re-reads it (that's what the sandbox will use). The data check flags any path in the file that doesn't exist.
 
 ## The hub's Link project button
 1. Ask for the project root. Confirm it holds `project.godot` and `data/characters.json`.

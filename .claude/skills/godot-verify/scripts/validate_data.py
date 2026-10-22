@@ -182,6 +182,30 @@ def check_bucket(root, bucket, cls, classes, scripts, R):
     return len(entries)
 
 
+def check_ui_theme(root, R):
+    """data/ui_theme.json: every font / texture / cursor path it names must exist."""
+    p = os.path.join(root, "data", "ui_theme.json")
+    if not os.path.exists(p):
+        return
+    W = "data/ui_theme.json"
+    d = jload(p, R, W)
+    if not isinstance(d, dict):
+        return
+    def walk(v, where):
+        if isinstance(v, dict):
+            for k, x in v.items():
+                if not k.startswith("_"):
+                    walk(x, f"{where}.{k}" if where else k)
+        elif isinstance(v, str) and v.startswith("res://"):
+            if not os.path.exists(os.path.join(root, v[len("res://"):])):
+                R.err(W, f"{where}: {v} not found")
+    walk(d, "")
+    pal = d.get("colors", {})
+    for k in ("bg", "panel", "green", "magenta", "violet", "cyan", "amber", "text", "text_dim"):
+        if k not in pal:
+            R.warn(W, f"colors.{k} missing (the built-in colour is used)")
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     root = os.path.abspath(args[0] if args else ".")
@@ -204,6 +228,7 @@ def main():
                 d = jload(p, R, f"data/{name}.json")
                 if d is not None and not isinstance(d, (dict, list)):
                     R.err(f"data/{name}.json", "must be a JSON object")
+        check_ui_theme(root, R)
         seen = {}
         for p in sorted(glob.glob(os.path.join(D, "maps", "*.json"))):
             W = "data/maps/" + os.path.basename(p)

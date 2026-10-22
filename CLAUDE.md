@@ -34,6 +34,8 @@ Gates: preflight, import, data (`validate_data.py`), compile (`tests/compile_all
 - Tiles stay **128×64** (v2 maps); 64×32 art is upscaled by the renderer.
 - **Veil** (not Viel). Veil: a public republic over a hidden monarchy. High Oracle Nyra: the Doctrine's hidden dream-writer. The managed war is canon. Kade is the shared family name of the Lantern Wards.
 - Overworld mounts ride on world maps only unless a map opts in.
+- No separate diorama art style for scenes: staged moments are built in-engine (maps, cutscenes, our interface). The tilt-shift HD-2D look stays.
+- The interface look lives in `data/ui_theme.json` (NeonTheme reads it; Lattice edits it). Change values there, not in code.
 
 ## ASK BRIAN (open decisions; do not pick)
 Facings (cardinal in code vs 4 diagonals in art) · Lattice `holds` unit · progression model (`unlocks_mission_ids` vs `GameData.mission_sequence`) · AI using both AP (balance) · sleep breaking on damage · `difficulty_modifier` meaning · defeat in a street battle · XP for KO'd units.

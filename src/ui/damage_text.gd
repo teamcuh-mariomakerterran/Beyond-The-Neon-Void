@@ -30,12 +30,14 @@ func setup(world_pos: Vector2, text_value: String, color: Color, is_critical: bo
 	z_index = 4090
 	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	var fs := int(lerpf(18.0, 34.0, clampf(weight, 0.0, 1.0)))
-	add_theme_font_size_override("font_size", fs + (8 if is_critical else 0))
-	add_theme_font_override("font", NeonTheme.bold())
-	add_theme_color_override("font_outline_color", Color(0.02, 0.0, 0.05))
-	add_theme_constant_override("outline_size", 7)
-	modulate = Color(2.2, 1.7, 0.4) if is_critical else color
+	var nb := NeonTheme.section("numbers")  # data/ui_theme.json
+	var fs := int(lerpf(float(nb.get("min_size", 18)), float(nb.get("max_size", 34)), clampf(weight, 0.0, 1.0)))
+	add_theme_font_size_override("font_size", fs + (int(nb.get("crit_bonus", 8)) if is_critical else 0))
+	var face := str(nb.get("font", "bold"))
+	add_theme_font_override("font", NeonTheme.bold() if face == "bold" else (NeonTheme.mono() if face == "mono" else NeonTheme.font(face)))
+	add_theme_color_override("font_outline_color", NeonTheme.color(nb.get("outline_color", [0.02, 0.0, 0.05, 1.0])))
+	add_theme_constant_override("outline_size", int(nb.get("outline", 7)))
+	modulate = NeonTheme.color(nb.get("crit_color", [2.2, 1.7, 0.4, 1.0])) if is_critical else color
 	size = Vector2(160, 44)
 	pivot_offset = size * 0.5
 	position = world_pos + Vector2(-80, -86 - n * 22)
