@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ca5ueht0lrus3"
+path="res://.godot/imported/Neon Pulse (2).ogg-f41d5bcce505d70eef8d2649dcafb00b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/Neon Pulse (2).ogg"
+dest_files=["res://.godot/imported/Neon Pulse (2).ogg-f41d5bcce505d70eef8d2649dcafb00b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ck2wcirxwrqg0"
+path="res://.godot/imported/new horizons.ogg-b45bb8518ed69901b2cfc525e940e261.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/new horizons.ogg"
+dest_files=["res://.godot/imported/new horizons.ogg-b45bb8518ed69901b2cfc525e940e261.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

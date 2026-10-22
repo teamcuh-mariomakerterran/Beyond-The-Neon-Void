@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dv07nrx8hda77"
+path="res://.godot/imported/Neon Rain.ogg-07a872676ead62e839060a1f3671c38b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/Neon Rain.ogg"
+dest_files=["res://.godot/imported/Neon Rain.ogg-07a872676ead62e839060a1f3671c38b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

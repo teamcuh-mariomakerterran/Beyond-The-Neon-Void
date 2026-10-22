@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cebhxqkjq2sta"
+path="res://.godot/imported/Beneath the Black Veil the daarkness.ogg-db5ecfc4f5e4b0c0f3114fb0f5597f3f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/Beneath the Black Veil the daarkness.ogg"
+dest_files=["res://.godot/imported/Beneath the Black Veil the daarkness.ogg-db5ecfc4f5e4b0c0f3114fb0f5597f3f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

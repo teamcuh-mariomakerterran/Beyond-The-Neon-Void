@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c2kfwpky7vn5o"
+path="res://.godot/imported/cyber_Neon_Rain (1).ogg-60d6130f5e65325d2803210f9214fe09.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/cyber_Neon_Rain (1).ogg"
+dest_files=["res://.godot/imported/cyber_Neon_Rain (1).ogg-60d6130f5e65325d2803210f9214fe09.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

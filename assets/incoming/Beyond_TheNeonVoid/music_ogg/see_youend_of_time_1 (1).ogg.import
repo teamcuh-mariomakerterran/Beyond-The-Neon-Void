@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://qsjf0211dh88"
+path="res://.godot/imported/see_youend_of_time_1 (1).ogg-6b375149f4f28beca85198c2a11ed5c2.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/see_youend_of_time_1 (1).ogg"
+dest_files=["res://.godot/imported/see_youend_of_time_1 (1).ogg-6b375149f4f28beca85198c2a11ed5c2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

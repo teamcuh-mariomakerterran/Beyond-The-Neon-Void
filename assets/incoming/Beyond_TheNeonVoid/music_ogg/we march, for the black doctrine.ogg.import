@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bk7fklggn72fa"
+path="res://.godot/imported/we march, for the black doctrine.ogg-3d65516fcd55a2954fbeede30ae91e2a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/we march, for the black doctrine.ogg"
+dest_files=["res://.godot/imported/we march, for the black doctrine.ogg-3d65516fcd55a2954fbeede30ae91e2a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

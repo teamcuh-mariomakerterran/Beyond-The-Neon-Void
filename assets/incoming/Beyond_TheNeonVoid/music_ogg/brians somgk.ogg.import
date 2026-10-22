@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dk51lllopcmkq"
+path="res://.godot/imported/brians somgk.ogg-a6abd48b45e7bfb31a93733288174236.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/music_ogg/brians somgk.ogg"
+dest_files=["res://.godot/imported/brians somgk.ogg-a6abd48b45e7bfb31a93733288174236.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b705ur4c187gc"
+path="res://.godot/imported/The Digital Queen (4).ogg-0bffda79d96948e2d7ba7726e8600821.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/incoming/Beyond_TheNeonVoid/sfx_ogg/The Digital Queen (4).ogg"
+dest_files=["res://.godot/imported/The Digital Queen (4).ogg-0bffda79d96948e2d7ba7726e8600821.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
