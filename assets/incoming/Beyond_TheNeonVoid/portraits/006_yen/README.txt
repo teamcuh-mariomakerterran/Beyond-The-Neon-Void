@@ -1,4 +1,0 @@
-006 yen
-01_bust/verified_bust_idle_CDHeK.jpg
-01_bust/verified_bust_alt_0JJN3.jpg
-01_bust/verified_bust_alt_ADnc1.jpg

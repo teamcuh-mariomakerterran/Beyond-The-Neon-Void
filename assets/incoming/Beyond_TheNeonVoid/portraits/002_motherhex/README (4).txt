@@ -1,2 +1,0 @@
-002 motherhex
-01_bust/verified_bust_idle_IQ1my.jpg
