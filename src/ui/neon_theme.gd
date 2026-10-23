@@ -101,6 +101,46 @@ static func color(v: Variant, fallback: Color = Color.WHITE) -> Color:
 static var _textures: Dictionary = {}
 
 
+## A pixel font from an atlas + JSON metrics (Brian's PRESS START format:
+## {image, cell, advance, lineHeight, baseline, glyphs{"A": {x, y, w, h, advance}}}).
+## Fixed size, scaled by whole numbers only so the pixels stay crisp.
+static func bitmap_font(json_path: String) -> FontFile:
+	if not FileAccess.file_exists(json_path):
+		return null
+	var meta: Variant = JSON.parse_string(FileAccess.get_file_as_string(json_path))
+	if not meta is Dictionary:
+		return null
+	var tex := _texture(json_path.get_base_dir().path_join(str(meta.get("image", ""))))
+	if tex == null:
+		return null
+	var cell: Array = meta.get("cell", [5, 9])
+	var line_h := int(meta.get("lineHeight", int(cell[1]) + 2))
+	var base := int(meta.get("baseline", int(cell[1]) - 2))
+	var size := Vector2i(line_h, 0)
+	var f := FontFile.new()
+	# fonts.pixel_base: the text size that draws at 1x (smaller = every size scales up more).
+	f.fixed_size = int(_value("fonts", "pixel_base", line_h))
+	f.fixed_size_scale_mode = TextServer.FIXED_SIZE_SCALE_INTEGER_ONLY
+	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE
+	f.set_texture_image(0, size, 0, tex.get_image())
+	f.set_cache_ascent(0, line_h, float(base + 1))
+	f.set_cache_descent(0, line_h, float(line_h - base - 1))
+	var glyphs: Dictionary = meta.get("glyphs", {})
+	for ch: String in glyphs:
+		if ch.length() != 1:
+			continue
+		var g: Dictionary = glyphs[ch]
+		var code := ch.unicode_at(0)
+		var w := float(g.get("w", cell[0]))
+		var h := float(g.get("h", cell[1]))
+		f.set_glyph_advance(0, line_h, code, Vector2(float(g.get("advance", meta.get("advance", 6))), 0))
+		f.set_glyph_offset(0, size, code, Vector2(0, -base))
+		f.set_glyph_size(0, size, code, Vector2(w, h))
+		f.set_glyph_uv_rect(0, size, code, Rect2(float(g.get("x", 0)), float(g.get("y", 0)), w, h))
+		f.set_glyph_texture_idx(0, size, code, 0)
+	return f
+
+
 static func _texture(path: String) -> Texture2D:
 	if path == "":
 		return null
@@ -143,7 +183,9 @@ static func font(path: String) -> Font:
 	if _fonts.has(path):
 		return _fonts[path]
 	var f: FontFile = null
-	if ResourceLoader.exists(path):
+	if path.ends_with(".json"):
+		f = bitmap_font(path)
+	elif ResourceLoader.exists(path):
 		f = load(path) as FontFile
 	if f == null and FileAccess.file_exists(path):
 		f = FontFile.new()

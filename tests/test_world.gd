@@ -2362,3 +2362,5 @@ func test_ui_theme() -> void:
 	NeonTheme.reload()
 	check(NeonTheme.get_theme().get_stylebox("hover", "Button") is StyleBoxFlat and NeonTheme._data == keep, "reload puts the file's look back")
 	check(NeonTheme.ui_sound("confirm") == "" and NeonTheme.section("sounds").has("no_save"), "UI sound slots exist, silent until filled")
+	var px := NeonTheme.bitmap_font("res://assets/fonts/press_start/press_start_atlas.json")
+	check(px != null and px.fixed_size == 11 and px.has_char("A".unicode_at(0)) and not px.has_char("~".unicode_at(0)), "Brian's PRESS START atlas loads as a crisp pixel font")
