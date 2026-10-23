@@ -1,0 +1,713 @@
+{
+ "font": "Neon Void PRESS START (5x7 hand pixel font)",
+ "source": "splash3.py F{} + new glyphs",
+ "image": "press_start_atlas.png",
+ "scale": 1,
+ "cell": [
+  5,
+  9
+ ],
+ "advance": 6,
+ "lineHeight": 11,
+ "baseline": 7,
+ "capHeight": 7,
+ "xHeight": 5,
+ "descender": 2,
+ "monospace": true,
+ "note": "y of every rect is the glyph top; baseline = 7 px below it. Screen look: render.py screen() (3x, italic shear 1px/3px, magenta shadow 3px down, 2px dark outline (2,0,11), cyan (76,254,236) + highlight (160,255,245)).",
+ "glyphs": {
+  "A": {
+   "x": 1,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/A_upper.png",
+   "original": true
+  },
+  "B": {
+   "x": 7,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/B_upper.png",
+   "original": false
+  },
+  "C": {
+   "x": 13,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/C_upper.png",
+   "original": false
+  },
+  "D": {
+   "x": 19,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/D_upper.png",
+   "original": false
+  },
+  "E": {
+   "x": 25,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/E_upper.png",
+   "original": true
+  },
+  "F": {
+   "x": 31,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/F_upper.png",
+   "original": false
+  },
+  "G": {
+   "x": 37,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/G_upper.png",
+   "original": false
+  },
+  "H": {
+   "x": 43,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/H_upper.png",
+   "original": false
+  },
+  "I": {
+   "x": 49,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/I_upper.png",
+   "original": false
+  },
+  "J": {
+   "x": 55,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/J_upper.png",
+   "original": false
+  },
+  "K": {
+   "x": 61,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/K_upper.png",
+   "original": false
+  },
+  "L": {
+   "x": 67,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/L_upper.png",
+   "original": false
+  },
+  "M": {
+   "x": 73,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/M_upper.png",
+   "original": false
+  },
+  "N": {
+   "x": 79,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/N_upper.png",
+   "original": false
+  },
+  "O": {
+   "x": 85,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/O_upper.png",
+   "original": false
+  },
+  "P": {
+   "x": 91,
+   "y": 1,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/P_upper.png",
+   "original": true
+  },
+  "Q": {
+   "x": 1,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/Q_upper.png",
+   "original": false
+  },
+  "R": {
+   "x": 7,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/R_upper.png",
+   "original": true
+  },
+  "S": {
+   "x": 13,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/S_upper.png",
+   "original": true
+  },
+  "T": {
+   "x": 19,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/T_upper.png",
+   "original": true
+  },
+  "U": {
+   "x": 25,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/U_upper.png",
+   "original": false
+  },
+  "V": {
+   "x": 31,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/V_upper.png",
+   "original": false
+  },
+  "W": {
+   "x": 37,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/W_upper.png",
+   "original": false
+  },
+  "X": {
+   "x": 43,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/X_upper.png",
+   "original": false
+  },
+  "Y": {
+   "x": 49,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/Y_upper.png",
+   "original": false
+  },
+  "Z": {
+   "x": 55,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/Z_upper.png",
+   "original": false
+  },
+  "a": {
+   "x": 61,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/a_lower.png",
+   "original": false
+  },
+  "b": {
+   "x": 67,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/b_lower.png",
+   "original": false
+  },
+  "c": {
+   "x": 73,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/c_lower.png",
+   "original": false
+  },
+  "d": {
+   "x": 79,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/d_lower.png",
+   "original": false
+  },
+  "e": {
+   "x": 85,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/e_lower.png",
+   "original": false
+  },
+  "f": {
+   "x": 91,
+   "y": 11,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/f_lower.png",
+   "original": false
+  },
+  "g": {
+   "x": 1,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/g_lower.png",
+   "original": false
+  },
+  "h": {
+   "x": 7,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/h_lower.png",
+   "original": false
+  },
+  "i": {
+   "x": 13,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/i_lower.png",
+   "original": false
+  },
+  "j": {
+   "x": 19,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/j_lower.png",
+   "original": false
+  },
+  "k": {
+   "x": 25,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/k_lower.png",
+   "original": false
+  },
+  "l": {
+   "x": 31,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/l_lower.png",
+   "original": false
+  },
+  "m": {
+   "x": 37,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/m_lower.png",
+   "original": false
+  },
+  "n": {
+   "x": 43,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/n_lower.png",
+   "original": false
+  },
+  "o": {
+   "x": 49,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/o_lower.png",
+   "original": false
+  },
+  "p": {
+   "x": 55,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/p_lower.png",
+   "original": false
+  },
+  "q": {
+   "x": 61,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/q_lower.png",
+   "original": false
+  },
+  "r": {
+   "x": 67,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/r_lower.png",
+   "original": false
+  },
+  "s": {
+   "x": 73,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/s_lower.png",
+   "original": false
+  },
+  "t": {
+   "x": 79,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/t_lower.png",
+   "original": false
+  },
+  "u": {
+   "x": 85,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/u_lower.png",
+   "original": false
+  },
+  "v": {
+   "x": 91,
+   "y": 21,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/v_lower.png",
+   "original": false
+  },
+  "w": {
+   "x": 1,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/w_lower.png",
+   "original": false
+  },
+  "x": {
+   "x": 7,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/x_lower.png",
+   "original": false
+  },
+  "y": {
+   "x": 13,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/y_lower.png",
+   "original": false
+  },
+  "z": {
+   "x": 19,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/z_lower.png",
+   "original": false
+  },
+  "0": {
+   "x": 25,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/0.png",
+   "original": false
+  },
+  "1": {
+   "x": 31,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/1.png",
+   "original": false
+  },
+  "2": {
+   "x": 37,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/2.png",
+   "original": false
+  },
+  "3": {
+   "x": 43,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/3.png",
+   "original": false
+  },
+  "4": {
+   "x": 49,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/4.png",
+   "original": false
+  },
+  "5": {
+   "x": 55,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/5.png",
+   "original": false
+  },
+  "6": {
+   "x": 61,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/6.png",
+   "original": false
+  },
+  "7": {
+   "x": 67,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/7.png",
+   "original": false
+  },
+  "8": {
+   "x": 73,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/8.png",
+   "original": false
+  },
+  "9": {
+   "x": 79,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/9.png",
+   "original": false
+  },
+  "#": {
+   "x": 85,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/hash.png",
+   "original": false
+  },
+  "$": {
+   "x": 91,
+   "y": 31,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/dollar.png",
+   "original": false
+  },
+  "!": {
+   "x": 1,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/exclam.png",
+   "original": false
+  },
+  "?": {
+   "x": 7,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/question.png",
+   "original": false
+  },
+  "\"": {
+   "x": 13,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/quote.png",
+   "original": false
+  },
+  ":": {
+   "x": 19,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/colon.png",
+   "original": false
+  },
+  ";": {
+   "x": 25,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/semicolon.png",
+   "original": false
+  },
+  "[": {
+   "x": 31,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/bracketleft.png",
+   "original": false
+  },
+  "]": {
+   "x": 37,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/bracketright.png",
+   "original": false
+  },
+  ",": {
+   "x": 43,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/comma.png",
+   "original": false
+  },
+  ".": {
+   "x": 49,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/period.png",
+   "original": false
+  },
+  "(": {
+   "x": 55,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/parenleft.png",
+   "original": false
+  },
+  ")": {
+   "x": 61,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/parenright.png",
+   "original": false
+  },
+  "-": {
+   "x": 67,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/hyphen.png",
+   "original": false
+  },
+  " ": {
+   "x": 73,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/space.png",
+   "original": false
+  }
+ }
+}

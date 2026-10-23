@@ -1,0 +1,23 @@
+Neon Void PRESS START font
+Copyright (c) 2026 Brian Moore. All rights reserved.
+
+ORIGIN
+This is an original bitmap font. Every glyph was drawn by hand on a 5x7 pixel
+grid specifically for Brian Moore's games (Beyond The Neon Void / Black Doctrine).
+It is NOT derived from, traced from, or converted from any existing font,
+including "Press Start 2P" or any other third-party typeface. No third-party
+font files, outlines or glyph data were used. The glyph data lives in
+glyphs.py / splash3.py and is rendered by build.py / render.py.
+
+OWNERSHIP AND USE
+Brian Moore owns this font and all its files (glyph data, atlases, PNGs,
+JSON metrics). Brian Moore, and anyone working on his projects with his
+permission (including contractors and AI coding assistants), may use, modify,
+embed and distribute this font as part of his games, tools, builds, trailers
+and marketing, commercially or otherwise, with no royalty or attribution
+required.
+
+Redistributing the font on its own, separate from Brian Moore's projects,
+requires his written permission.
+
+No warranty is given.
