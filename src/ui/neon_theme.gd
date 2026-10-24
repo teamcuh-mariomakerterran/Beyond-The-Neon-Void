@@ -125,7 +125,11 @@ static func bitmap_font(json_path: String) -> FontFile:
 	f.set_texture_image(0, size, 0, tex.get_image())
 	f.set_cache_ascent(0, line_h, float(base + 1))
 	f.set_cache_descent(0, line_h, float(line_h - base - 1))
-	var glyphs: Dictionary = meta.get("glyphs", {})
+	var glyphs: Dictionary = (meta.get("glyphs", {}) as Dictionary).duplicate()
+	# Curly quotes in game text reuse the straight ones.
+	for alias: Array in [["’", "'"], ["‘", "'"], ["“", "\""], ["”", "\""]]:
+		if not glyphs.has(alias[0]) and glyphs.has(alias[1]):
+			glyphs[alias[0]] = glyphs[alias[1]]
 	for ch: String in glyphs:
 		if ch.length() != 1:
 			continue
