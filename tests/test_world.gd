@@ -2348,6 +2348,7 @@ func test_voice_profiles() -> void:
 
 
 func test_ui_theme() -> void:
+	check(NeonTheme.FONT_BOLD.ends_with("press_start_atlas.json"), "headings use Brian's PRESS START font (option A)")
 	check(NeonTheme.GREEN == Color("39ff9f") and NeonTheme.PANEL == Color(0.07, 0.04, 0.12, 0.88), "the theme file holds today's look")
 	check(NeonTheme.color("violet@0.6") == Color(Color("b14dff"), 0.6) and NeonTheme.color([2.0, 1.0, 0.5]) == Color(2.0, 1.0, 0.5)
 		and NeonTheme.color("#ff000080").a > 0.49 and NeonTheme.color("nope", Color.RED) == Color.RED, "colour formats: names, alpha, HDR arrays, hex")

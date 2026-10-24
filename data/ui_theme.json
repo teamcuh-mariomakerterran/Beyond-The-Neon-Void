@@ -14,7 +14,7 @@
 	},
 	"fonts": {
 		"body": "res://assets/fonts/space-grotesk-latin-500-normal.woff2",
-		"bold": "res://assets/fonts/space-grotesk-latin-700-normal.woff2",
+		"bold": "res://assets/fonts/press_start/press_start_atlas.json",
 		"mono": "res://assets/fonts/jetbrains-mono-latin-400-normal.woff2",
 		"size": 17,
 		"bold_from_size": 22,
@@ -86,7 +86,7 @@
 		"slice": [4, 4, 4, 4]
 	},
 	"numbers": {
-		"font": "bold",
+		"font": "res://assets/fonts/space-grotesk-latin-700-normal.woff2",
 		"min_size": 18,
 		"max_size": 34,
 		"crit_bonus": 8,
