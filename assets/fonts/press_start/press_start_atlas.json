@@ -708,6 +708,24 @@
    "advance": 6,
    "file": "glyphs/white/space.png",
    "original": false
+  },
+  "'": {
+   "x": 79,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/apostrophe.png",
+   "original": false
+  },
+  "%": {
+   "x": 85,
+   "y": 41,
+   "w": 5,
+   "h": 9,
+   "advance": 6,
+   "file": "glyphs/white/percent.png",
+   "original": false
   }
  }
 }
