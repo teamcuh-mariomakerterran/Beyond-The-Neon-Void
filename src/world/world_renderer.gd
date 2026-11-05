@@ -1024,7 +1024,7 @@ class WorldSprite extends Node2D:
 			add_child(_screen_light)
 		var feed := str(scr.get("feed", "news"))
 		_screen.setup(scr, float(absi(hash(str(data.get("id", "")))) % 100) / 10.0)
-		_screen.tex = renderer.signage.channel(feed, str(scr.get("text", ""))).get_texture()
+		_screen.tex = renderer.signage.channel(feed, str(scr.get("text", "")), str(scr.get("playlist", ""))).get_texture()
 		_screen_light.color = Signage.FEED_COLORS.get(feed, Color.WHITE)
 		_screen_light.base_energy = 0.55 * float(scr.get("bright", 1.6)) / 1.6
 		_screen_light.energy = _screen_light.base_energy

@@ -979,6 +979,55 @@ func test_signage() -> void:
 	await tree.process_frame
 	DirAccess.remove_absolute(dir + "/b.png")
 	DirAccess.remove_absolute(dir)
+	await test_signage_slides()
+
+
+## Animated ad slides and per-screen playlists.
+func test_signage_slides() -> void:
+	var dir := "user://t_ads"
+	DirAccess.make_dir_recursive_absolute(dir + "/kitsune_spin")
+	var still := Image.create(192, 96, false, Image.FORMAT_RGBA8)
+	still.fill(Color.RED)
+	still.save_png(dir + "/kitsune_still.png")
+	for i in 3:
+		var fr := Image.create(192, 96, false, Image.FORMAT_RGBA8)
+		fr.fill(Color(0, 0, 0.3 * (i + 1)))
+		fr.save_png(dir + "/kitsune_spin/%d.png" % (i + 1))
+	var f := FileAccess.open(dir + "/kitsune_spin/ad.json", FileAccess.WRITE)
+	f.store_string('{"fps": 10, "hold": 3}')
+	f.close()
+	var keep := Signage.ad_dir
+	Signage.ad_dir = dir
+	var slides := Signage.ads()
+	check(slides.has("kitsune_still") and (slides["kitsune_spin"]["frames"] as Array).size() == 3 and float(slides["kitsune_spin"]["fps"]) == 10.0, "stills and animated folders are slides")
+	var td := Signage.text_data()
+	var had: Variant = td.get("playlists")
+	td["playlists"] = {"t_noodle": ["kitsune_*", "text:EAT NOW", "feed:stats"]}
+	var pl := Signage.items("ads", "", "t_noodle")
+	check(pl.size() >= 4 and pl[0].has("image") and pl[1].has("frames") and str(pl[2]["text"]) == "EAT NOW", "a playlist plays its own slides, copy and feeds in order")
+	check(Signage.items("ads", "", "no_such_list").size() == Signage.items("ads").size(), "an unknown playlist falls back to the feed")
+	var s := Signage.new()
+	tree.root.add_child(s)
+	var c := s.channel("ads", "", "t_noodle")
+	check(c != s.channel("ads") and c == s.channel("ads", "", "t_noodle"), "each playlist gets its own shared board")
+	await tree.process_frame
+	var b: Signage.Board = c.board
+	b._i = 1
+	b._load()
+	b._t = 0.0
+	var f0 := b.current_image()
+	b._t = 0.15
+	check(f0 != null and b.current_image() != f0 and b.hold() == 3.0, "animated slides play their frames and hold as long as ad.json says")
+	s.queue_free()
+	Signage.ad_dir = keep
+	if had == null:
+		td.erase("playlists")
+	else:
+		td["playlists"] = had
+	for p in ["/kitsune_spin/1.png", "/kitsune_spin/2.png", "/kitsune_spin/3.png", "/kitsune_spin/ad.json", "/kitsune_still.png"]:
+		DirAccess.remove_absolute(dir + p)
+	DirAccess.remove_absolute(dir + "/kitsune_spin")
+	DirAccess.remove_absolute(dir)
 
 
 func test_cues() -> void:

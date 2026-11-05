@@ -1,5 +1,5 @@
 {
-	"_note": "Text for in-world screens (Signage). news = live headlines (EventBus.broadcast_line 'news'/'rumor') + news rumors. stats lines use {soul_coins}, {leader}, {party_size}, {time}. Ad images: drop PNGs in res://assets/signage/ads/.",
+	"_note": "Text for in-world screens (Signage). news = live headlines (EventBus.broadcast_line 'news'/'rumor') + news rumors. stats lines use {soul_coins}, {leader}, {party_size}, {time}. Ad slides: res://assets/signage/ads/ (192x96 PNGs; a folder of numbered frames is an animated slide). playlists: per-screen lists.",
 	"propaganda": [
 		"ATTENDANCE IS DEVOTION",
 		"DEVOTION IS RECORDED",
@@ -25,5 +25,32 @@
 		"WANTED: {leader}",
 		"CREW STRENGTH {party_size}",
 		"LOCAL TIME {time}"
-	]
+	],
+	"playlists": {
+		"_note": "Per-screen playlists: set a screen's playlist in the World Painter. Entries play in order: an ad slide name from assets/signage/ads (wildcards like kitsune_*), \"text:...\" for a line of copy, \"feed:<feed>\" to mix in a whole feed (propaganda, news, stats...).",
+		"kitsune_noodle": [
+			"kitsune_*",
+			"text:KITSUNE NOODLE · 24/7 · NOW WITH REAL SALT"
+		],
+		"halo_taxi": [
+			"halo_taxi*",
+			"text:HALO TAXI — WE DON'T LOOK DOWN"
+		],
+		"synthgin_bar": [
+			"synthgin*",
+			"text:SYNTHGIN: DRINK THE FUTURE",
+			"neurolace*"
+		],
+		"doctrine_billboard": [
+			"feed:propaganda",
+			"dreambooth*",
+			"voidwear*",
+			"text:THE DOCTRINE PROVIDES"
+		],
+		"street_mix": [
+			"feed:ads",
+			"feed:propaganda",
+			"feed:news"
+		]
+	}
 }

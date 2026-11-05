@@ -7,13 +7,20 @@ extends Node
 ## Feeds are shared channels, so twenty news screens cost one render:
 ##   news        live headlines (EventBus.broadcast_line "news"/"rumor") + news rumours
 ##   propaganda  Doctrine slogans (data/signage.json)
-##   ads         ad copy + any PNGs in res://assets/signage/ads/
+##   ads         ad copy + every ad slide in res://assets/signage/ads/
+##
+## Ad slides: <name>.png is a still; a folder <name>/ of numbered frames is an
+## animated slide (optional <name>/ad.json: {"fps": 8, "hold": 6}). Slides
+## are 192x96, the board's own resolution.
+## Playlists (data/signage.json "playlists"): a screen with "playlist": <id>
+## shows only that list, in order: ad names ("kitsune_noodle", wildcards
+## "kitsune_*"), "text:..." lines and "feed:<feed>" to mix another feed in.
 ##   stats       live numbers: soul coins, the crew, local time
 ##   gossip      street rumours and graffiti
 ##   custom      the object's own text
 ##
 ## Object data: "screen": {corners: [[u,v]×4 TL,TR,BR,BL], feed, mode, text,
-## bright, cells}. u, v are 0–1 across the sprite's visible box.
+## bright, cells, playlist}. u, v are 0–1 across the sprite's visible box.
 
 const FEEDS := ["news", "propaganda", "ads", "stats", "gossip", "custom"]
 const MODES := ["led", "lcd", "crt", "holo"]
@@ -22,6 +29,9 @@ const FEED_COLORS := {"news": Color(1.0, 0.75, 0.3), "propaganda": Color(1.0, 0.
 const DEFAULT_CORNERS := [[0.3, 0.3], [0.7, 0.3], [0.7, 0.5], [0.3, 0.5]]
 const SHADER := preload("res://src/vfx/screen.gdshader")
 const AD_DIR := "res://assets/signage/ads"
+const IMAGE_EXT := ["png", "webp", "jpg"]
+## Where slides are read from (tests point it elsewhere).
+static var ad_dir: String = AD_DIR
 
 ## Newest first. Anything can push here; the news feed shows it next.
 static var headlines: Array[String] = []
@@ -64,8 +74,60 @@ static func text_data() -> Dictionary:
 	return _text
 
 
-## What a feed shows right now: [{text} or {image}].
-static func items(feed: String, custom: String = "") -> Array:
+## Every ad slide by name: still {image} or animated {frames, fps, hold}.
+static func ads() -> Dictionary:
+	var out := {}
+	if not DirAccess.dir_exists_absolute(ad_dir):
+		return out
+	var files := Array(DirAccess.get_files_at(ad_dir))
+	files.sort()
+	for f: String in files:
+		if f.get_extension().to_lower() in IMAGE_EXT:
+			out[f.get_basename()] = {"image": ad_dir.path_join(f)}
+	var dirs := Array(DirAccess.get_directories_at(ad_dir))
+	dirs.sort()
+	for d: String in dirs:
+		var sub := ad_dir.path_join(d)
+		var frames: Array = []
+		for f2: String in DirAccess.get_files_at(sub):
+			if f2.get_extension().to_lower() in IMAGE_EXT:
+				frames.append(sub.path_join(f2))
+		if frames.is_empty():
+			continue
+		frames.sort_custom(func(a: String, b: String) -> bool: return a.naturalnocasecmp_to(b) < 0)
+		var meta: Variant = JSON.parse_string(FileAccess.get_file_as_string(sub.path_join("ad.json"))) if FileAccess.file_exists(sub.path_join("ad.json")) else null
+		var m: Dictionary = meta if meta is Dictionary else {}
+		var fps := float(m.get("fps", 8))
+		out[d] = {"frames": frames, "fps": fps, "hold": float(m.get("hold", maxf(5.0, frames.size() / maxf(fps, 0.1))))}
+	return out
+
+
+## A playlist from data/signage.json, resolved to items ([] if unknown).
+static func playlist_items(id: String) -> Array:
+	var list: Variant = (text_data().get("playlists", {}) as Dictionary).get(id) if text_data().get("playlists") is Dictionary else null
+	if not list is Array:
+		return []
+	var out: Array = []
+	var slides := ads()
+	for e: Variant in list:
+		var entry := str(e)
+		if entry.begins_with("text:"):
+			out.append({"text": fill(entry.substr(5).strip_edges())})
+		elif entry.begins_with("feed:"):
+			out.append_array(items(entry.substr(5).strip_edges()))
+		else:
+			for n: String in slides:
+				if n == entry or n.match(entry):
+					out.append(slides[n])
+	return out
+
+
+## What a feed (or a screen's playlist) shows right now: [{text} / {image} / {frames}].
+static func items(feed: String, custom: String = "", playlist: String = "") -> Array:
+	if playlist != "":
+		var pl := playlist_items(playlist)
+		if not pl.is_empty():
+			return pl
 	var out: Array = []
 	match feed:
 		"news":
@@ -81,10 +143,8 @@ static func items(feed: String, custom: String = "") -> Array:
 		"propaganda", "ads", "stats":
 			for t: Variant in text_data().get(feed, []):
 				out.append({"text": fill(str(t))})
-			if feed == "ads" and DirAccess.dir_exists_absolute(AD_DIR):
-				for f in DirAccess.get_files_at(AD_DIR):
-					if f.get_extension().to_lower() in ["png", "webp", "jpg"]:
-						out.append({"image": AD_DIR.path_join(f)})
+			if feed == "ads":
+				out.append_array(ads().values())
 		_:
 			out.append({"text": custom if custom != "" else "· · ·"})
 	if out.is_empty():
@@ -103,13 +163,14 @@ static func fill(t: String) -> String:
 		"time": "%02d:%02d" % [now["hour"], now["minute"]]})
 
 
-## The shared render of one feed.
-func channel(feed: String, custom: String = "") -> Channel:
-	var key := feed + "|" + custom
+## The shared render of one feed (or playlist): screens showing the same one share it.
+func channel(feed: String, custom: String = "", playlist: String = "") -> Channel:
+	var key := feed + "|" + custom + "|" + playlist
 	if not _channels.has(key):
 		var c := Channel.new()
 		c.feed = feed
 		c.custom = custom
+		c.playlist = playlist
 		add_child(c)
 		_channels[key] = c
 	return _channels[key]
@@ -120,6 +181,7 @@ func channel(feed: String, custom: String = "") -> Channel:
 class Channel extends SubViewport:
 	var feed := "news"
 	var custom := ""
+	var playlist := ""
 	var board: Board
 
 	func _ready() -> void:
@@ -129,6 +191,7 @@ class Channel extends SubViewport:
 		board = Board.new()
 		board.feed = feed
 		board.custom = custom
+		board.playlist = playlist
 		board.size = Vector2(size)
 		add_child(board)
 
@@ -136,19 +199,34 @@ class Channel extends SubViewport:
 class Board extends Control:
 	var feed := "news"
 	var custom := ""
+	var playlist := ""
 	var _items: Array = []
 	var _i := 0
 	var _t := 0.0
 	var _img: Texture2D
+	var _frames: Array[Texture2D] = []
 
 	func _ready() -> void:
-		_items = Signage.items(feed, custom)
-		_i = absi(hash(feed + custom)) % _items.size()
+		_items = Signage.items(feed, custom, playlist)
+		# A playlist plays from the top; shared feeds start somewhere of their own.
+		_i = 0 if playlist != "" else absi(hash(feed + custom)) % _items.size()
 		_load()
 
 	func _load() -> void:
 		var it: Dictionary = _items[_i % _items.size()]
 		_img = ForgeStore.load_texture(str(it["image"])) if it.has("image") else null
+		_frames.clear()
+		for f: Variant in it.get("frames", []):
+			var tex := ForgeStore.load_texture(str(f))
+			if tex:
+				_frames.append(tex)
+
+	## The texture on the board right now (an animated slide's current frame).
+	func current_image() -> Texture2D:
+		if not _frames.is_empty():
+			var it: Dictionary = _items[_i % _items.size()]
+			return _frames[int(_t * float(it.get("fps", 8))) % _frames.size()]
+		return _img
 
 	## How to fit a line on the panel: {lines, fs, scroll}. Short text shrinks
 	## to sit still, slogans and ads may wrap onto two lines, and anything
@@ -176,6 +254,8 @@ class Board extends Control:
 
 	func hold() -> float:
 		var it: Dictionary = _items[_i % _items.size()]
+		if it.has("hold"):
+			return float(it["hold"])
 		if it.has("text"):
 			var lay := layout(str(it["text"]))
 			if lay["scroll"]:
@@ -189,7 +269,7 @@ class Board extends Control:
 			_t = 0.0
 			_i += 1
 			if _i % _items.size() == 0:
-				_items = Signage.items(feed, custom)  # pick up fresh headlines / numbers
+				_items = Signage.items(feed, custom, playlist)  # pick up fresh headlines / numbers
 			_load()
 		queue_redraw()
 
@@ -198,8 +278,9 @@ class Board extends Control:
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.02, 0.01, 0.04))
 		var it: Dictionary = _items[_i % _items.size()]
 		var wipe := clampf(_t * 4.0, 0.0, 1.0)
-		if _img:
-			draw_texture_rect(_img, Rect2(Vector2.ZERO, size), false)
+		var pic := current_image()
+		if pic:
+			draw_texture_rect(pic, Rect2(Vector2.ZERO, size), false)
 		else:
 			var font := get_theme_default_font()
 			var text := str(it.get("text", ""))

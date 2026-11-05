@@ -2163,6 +2163,16 @@ func _screen_editor(o: Dictionary) -> Control:
 	grid.add_child(ForgeForm._option(Signage.FEEDS, str(scr.get("feed", "news")), func(k: String) -> void:
 		scr["feed"] = k
 		apply.call()))
+	grid.add_child(NeonTheme.label("Playlist", 12, NeonTheme.TEXT_DIM))
+	var lists: Array = ["(feed)"]
+	if Signage.text_data().get("playlists") is Dictionary:
+		lists.append_array((Signage.text_data()["playlists"] as Dictionary).keys().filter(func(k: String) -> bool: return not k.begins_with("_")))
+	grid.add_child(ForgeForm._option(lists, str(scr.get("playlist", "(feed)")) if scr.get("playlist", "") != "" else "(feed)", func(k: String) -> void:
+		if k == "(feed)":
+			scr.erase("playlist")
+		else:
+			scr["playlist"] = k
+		apply.call()))
 	grid.add_child(NeonTheme.label("Display", 12, NeonTheme.TEXT_DIM))
 	grid.add_child(ForgeForm._option(Signage.MODES, str(scr.get("mode", "led")), func(k: String) -> void:
 		scr["mode"] = k
