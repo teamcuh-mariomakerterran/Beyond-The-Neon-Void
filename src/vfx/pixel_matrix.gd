@@ -11,6 +11,8 @@ extends RefCounted
 ## costs one sprite at runtime. Gear folders with the same layout slot each
 ## piece directly above its limb, so armour never clips when units turn.
 ## The result plugs into the same unit code as Lattice packs (LatticeClip.play_on).
+## A job's palette_swap ({"#rrggbb": "#rrggbb"}) recolours the flattened strip,
+## so one base body serves every job (see Unit.refresh_look).
 
 const LIMBS := ["Head", "Torso", "Hips", "LeftArm", "RightArm", "LeftLeg", "RightLeg"]
 ## Back-to-front draw order per facing (from Grok's PixelMatrix spec).
@@ -104,8 +106,29 @@ static func _image(path: String) -> Image:
 	return img
 
 
+## Exact-colour recolour in place: {"#rrggbb" or Color: "#rrggbb" or Color}.
+## Alpha is kept, so outlines and soft edges survive.
+static func recolor(img: Image, palette: Dictionary) -> void:
+	if img == null or palette.is_empty():
+		return
+	var map := {}
+	for k: Variant in palette:
+		var a: Color = k if k is Color else Color.from_string(str(k), Color(0, 0, 0, 0))
+		var b: Variant = palette[k]
+		map[a.to_html(false)] = b if b is Color else Color.from_string(str(b), a)
+	for y in img.get_height():
+		for x in img.get_width():
+			var c := img.get_pixel(x, y)
+			if c.a <= 0.0:
+				continue
+			var to: Variant = map.get(c.to_html(false))
+			if to != null:
+				var t: Color = to
+				img.set_pixel(x, y, Color(t.r, t.g, t.b, c.a))
+
+
 ## One strip per anim + facing with all layers (and gear) flattened in depth order.
-static func composite(root: String, anim: String, facing: String, gear_roots: Array = []) -> Image:
+static func composite(root: String, anim: String, facing: String, gear_roots: Array = [], palette: Dictionary = {}) -> Image:
 	var layers: Dictionary = (scan(root).get(anim, {}) as Dictionary).get(facing, {}).duplicate()
 	for g: String in gear_roots:
 		var gl: Dictionary = (scan(g).get(anim, {}) as Dictionary).get(facing, {})
@@ -120,13 +143,14 @@ static func composite(root: String, anim: String, facing: String, gear_roots: Ar
 		if out == null:
 			out = Image.create(img.get_width(), img.get_height(), false, Image.FORMAT_RGBA8)
 		out.blend_rect(img, Rect2i(Vector2i.ZERO, img.get_size()), Vector2i.ZERO)
+	recolor(out, palette)
 	return out
 
 
 ## Same shape as LatticeClip.unit_set: {ok, frames, anchors, cells, next}.
 ## Anims are named "<action>_<FACING>" (attack/aim_fire → attack, hurt → hit).
-static func unit_set(root: String, gear_roots: Array = []) -> Dictionary:
-	var key := root + "|" + ",".join(gear_roots)
+static func unit_set(root: String, gear_roots: Array = [], palette: Dictionary = {}) -> Dictionary:
+	var key := root + "|" + ",".join(gear_roots) + "|" + JSON.stringify(palette)
 	if _cache.has(key):
 		return _cache[key]
 	var out := {"ok": false, "frames": SpriteFrames.new(), "anchors": {}, "cells": {}, "next": {}}
@@ -140,7 +164,7 @@ static func unit_set(root: String, gear_roots: Array = []) -> Dictionary:
 	var data := scan(root)
 	for anim: String in data:
 		for facing: String in data[anim]:
-			var strip := composite(root, anim, facing, gear_roots)
+			var strip := composite(root, anim, facing, gear_roots, palette)
 			if strip == null or strip.get_height() == 0:
 				continue
 			var cell := strip.get_height()

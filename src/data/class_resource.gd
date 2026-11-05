@@ -44,6 +44,14 @@ enum Role { MELEE, RANGED, SUPPORT, UTILITY, TANK, SPECIAL }
 @export var specialty_weapon_types: Array[String] = []
 @export var armor_types: Array[String] = ["light"]
 
+@export_group("Look")
+## Outfit layers this job puts on base bodies: a PixelMatrix gear folder
+## (<anim>/<FACING>_<Limb>.png), drawn under equipped gear. Empty: none.
+@export var outfit_path: String = ""
+## Recolours for base bodies in this job: {"#rrggbb": "#rrggbb"}, applied to
+## the composited body and its layers (exact colour match).
+@export var palette_swap: Dictionary = {}
+
 @export_group("Abilities")
 ## Always-available command set (the class's signature skills).
 @export var innate_ability_ids: Array[String] = []

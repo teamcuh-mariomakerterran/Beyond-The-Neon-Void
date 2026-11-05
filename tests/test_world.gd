@@ -27,6 +27,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_passives()
 	test_dev_console()
 	await test_pixel_matrix()
+	await test_gear_attach()
 	test_ui_icons()
 	test_cover()
 	test_masks_and_anchors()
@@ -1252,6 +1253,104 @@ func test_pixel_matrix() -> void:
 			DirAccess.remove_absolute(d + "/" + f)
 		DirAccess.remove_absolute(d)
 	for d: String in [root, gear, "user://t_pm"]:
+		DirAccess.remove_absolute(d)
+
+
+func test_gear_attach() -> void:
+	# Rig lookup: per frame (clamped), then the facing's still, then its mirror.
+	var rig := {"points": {"hand_r": {"facing": {"SE": [10, 20, 1]},
+		"anims": {"attack_SE": [[1, 2, 1], [3, 4, -1, 30]]}}}}
+	check(GearAttach.point_at(rig, "hand_r", "attack_SE", 0) == Vector3(1, 2, 1), "rig: per-frame point")
+	check(GearAttach.point_at(rig, "hand_r", "attack_SE", 9) == Vector3(3, 4, -1), "rig: frames past the end hold the last")
+	check(GearAttach.point_at(rig, "hand_r", "idle_SE", 0) == Vector3(10, 20, 1), "rig: facing still when the anim has none")
+	check(GearAttach.point_at(rig, "hand_r", "idle_SW", 0, "", 64.0) == Vector3(54, 20, 1), "rig: a missing facing mirrors its partner")
+	check(GearAttach.point_at(rig, "head", "idle_SE", 0) == null and GearAttach.point_at({}, "hand_r", "idle_SE", 0) == null, "rig: no point, no piece")
+	check(is_equal_approx(GearAttach.angle_at(rig, "hand_r", "attack_SE", 1), 30.0), "rig: optional forearm angle")
+	# Art: own facing, mirror (flipped), nearest drawn, then the single picture.
+	var art := {"pics": {"SE": "se.png", "NE": "ne.png"}, "any": "", "grip": Vector2(4, 5), "grips": {"NE": Vector2(7, 8)}, "z": {"NE": -1}, "point": "hand_r"}
+	check(GearAttach.art_for(art, "SE") == ["se.png", false, "SE"] and GearAttach.art_for(art, "SW") == ["se.png", true, "SE"], "art: own facing, mirror flipped")
+	check(GearAttach.art_for(art, "E")[2] in ["SE", "NE"] and GearAttach.art_for({"pics": {}, "any": "one.png"}, "W") == ["one.png", true, ""], "art: nearest facing, single picture")
+	# Placement: grip at the point; a flipped body mirrors x; z picks the side.
+	var pl := GearAttach.place(rig, art, "idle_SE", 0, false, Vector2(-32, -60), Vector2(64, 64))
+	check(pl["pos"] == Vector2(-22, -40) and pl["front"] and not pl["flip"] and pl["grip"] == Vector2(4, 5), "place: in front, at the hand")
+	var fl := GearAttach.place(rig, art, "idle_SE", 0, true, Vector2(-32, -60), Vector2(64, 64))
+	check(fl["pos"] == Vector2(22, -40) and fl["flip"], "place: mirrored body mirrors the piece")
+	var rig_ne := {"points": {"hand_r": {"facing": {"NE": [5, 5, 1]}}}}
+	var ne := GearAttach.place(rig_ne, art, "idle_NE", 0, false, Vector2.ZERO, Vector2(64, 64))
+	check(not ne["front"] and ne["grip"] == Vector2(7, 8), "place: art z sends the piece behind; per-facing grip")
+	# Estimator: a body with an arm out on screen-left (the right hand facing SE).
+	var img := Image.create(40, 60, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(15, 5, 10, 50), Color.WHITE)
+	img.fill_rect(Rect2i(8, 28, 7, 4), Color.WHITE)
+	var fp := RigEstimate.frame_points(img, "SE")
+	var hr: Vector3 = fp["hand_r"]
+	check(int(hr.x) == 9 and hr.y >= 28 and hr.y <= 31 and hr.z > 0, "estimate: right hand at the arm's tip, in front (%s)" % hr)
+	check(absf((fp["head"] as Vector3).x - 19.5) < 0.6 and (fp["hand_l"] as Vector3).z < 0, "estimate: head centred, far hand behind")
+	check(RigEstimate.frame_points(Image.create(8, 8, false, Image.FORMAT_RGBA8), "SE").is_empty(), "estimate: empty frame, no points")
+	# Palette swap recolours exact colours and keeps alpha.
+	var pal := Image.create(2, 1, false, Image.FORMAT_RGBA8)
+	pal.set_pixel(0, 0, Color8(255, 0, 0, 128))
+	pal.set_pixel(1, 0, Color.BLUE)
+	PixelMatrix.recolor(pal, {"#ff0000": "#00ff00"})
+	check(pal.get_pixel(0, 0).g8 == 255 and pal.get_pixel(0, 0).r8 == 0 and pal.get_pixel(0, 0).a8 == 128 and pal.get_pixel(1, 0) == Color.BLUE, "palette swap: exact match, alpha kept")
+	# End to end: a base body with a rig wears an item's weapon art, a job's
+	# outfit layer and palette; the weapon follows facing to the back.
+	var root := "user://t_gear/body"
+	var outfit := "user://t_gear/outfit"
+	var wpn := "user://t_gear/blade"
+	for d: String in [root + "/idle", outfit + "/idle", wpn]:
+		DirAccess.make_dir_recursive_absolute(d)
+	for f: String in ["SE", "SW"]:
+		_pm_strip(root + "/idle/%s.png" % f, Color.RED)
+	_pm_strip(outfit + "/idle/SE_Torso.png", Color.YELLOW, 2, Rect2i(12, 12, 4, 4))
+	var blade := Image.create(6, 6, false, Image.FORMAT_RGBA8)
+	blade.fill(Color.CYAN)
+	blade.save_png(wpn + "/SE.png")
+	blade.save_png(wpn + "/NE.png")
+	var fa := FileAccess.open(wpn + "/attach.json", FileAccess.WRITE)
+	fa.store_string(JSON.stringify({"point": "hand_r", "grip": [1, 1]}))
+	fa.close()
+	check(GearAttach.is_art(wpn) and not GearAttach.is_art(outfit) and PixelMatrix.is_root(outfit), "attach art and layer gear told apart")
+	var made := RigEstimate.write_for(root)
+	check(not made.is_empty() and FileAccess.file_exists(root + "/rig.json") and (made["points"]["hand_r"]["anims"] as Dictionary).has("idle_SE"), "rig.json written from the body's own frames")
+	var item := ContentDB.inject("items", {"id": "t_gear_blade", "display_name": "T Blade", "category": "WEAPON", "equip_type": "sword", "wear_path": wpn}, false) as ItemResource
+	check(item != null and item.wear_path == wpn and item.to_dict().get("wear_path", "") == wpn, "items carry wear_path (load + save)")
+	var cd: CharacterData = (ContentDB.get_all("characters")[0] as CharacterData).duplicate(true)
+	cd.sprite_frames_path = root
+	cd.equipment = {}
+	var u := Unit.new()
+	u.setup(cd, Unit.Team.PLAYER, 1)
+	var job := (u.class_res().duplicate(true) as ClassResource)
+	job.outfit_path = outfit
+	job.palette_swap = {"#ffff00": "#00ff00"}
+	u.job_handler.current_job = job
+	tree.root.add_child(u)
+	await tree.process_frame
+	check(u.gear == null, "nothing equipped, nothing attached")
+	u.equipment.equip_instance({"uid": "t", "item_id": "t_gear_blade", "level": 1})
+	await tree.process_frame
+	check(u.gear != null and u.gear.pieces.size() == 1, "equipping a weapon with art attaches it")
+	if u.gear:
+		var s: Sprite2D = u.gear.pieces[0]["node"]
+		check(s.visible and s.get_parent() == u.sprite and not s.show_behind_parent, "facing SE: blade in front of the body")
+		u.facing = Vector2i(0, 1)
+		u.gear.sync()
+		check(str(u.sprite.animation) == "idle_SW" and s.show_behind_parent, "facing SW: right-hand blade goes behind the body")
+	var tex := u.sprite.sprite_frames.get_frame_texture(&"idle_SE", 0)
+	var px := tex.get_image().get_pixel(13, 13) if tex else Color.BLACK
+	check(px == Color.GREEN, "job outfit layered on and palette-swapped (%s)" % px)
+	u.equipment.unequip("weapon")
+	await tree.process_frame
+	check(u.gear == null, "unequipping takes it off")
+	u.queue_free()
+	await tree.process_frame
+	(ContentDB._db["items"] as Dictionary).erase("t_gear_blade")
+	GearAttach.clear_cache()
+	for d: String in [root + "/idle", outfit + "/idle", wpn, root, outfit]:
+		for f in DirAccess.get_files_at(d):
+			DirAccess.remove_absolute(d + "/" + f)
+		DirAccess.remove_absolute(d)
+	for d: String in [root, outfit, "user://t_gear"]:
 		DirAccess.remove_absolute(d)
 
 

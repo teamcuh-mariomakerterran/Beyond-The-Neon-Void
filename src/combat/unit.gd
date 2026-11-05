@@ -49,6 +49,8 @@ var job_handler: JobHandler
 var equipment: EquipmentManager
 var hud: UnitHUD
 var sprite: AnimatedSprite2D
+## Weapons / helmets pinned to the body's rig points (null if none).
+var gear: GearAttach
 var _lattice: Dictionary = {}  # LatticeClip.unit_set() when the art is a Lattice pack
 var _action: String = "idle"
 var grid: IsometricGrid
@@ -62,6 +64,7 @@ func _init() -> void:
 	add_child(job_handler)
 	add_child(equipment)
 	equipment.equipment_changed.connect(_on_equipment_changed)
+	job_handler.job_changed.connect(func(_j: ClassResource) -> void: refresh_look())
 
 
 func _ready() -> void:
@@ -166,6 +169,53 @@ func get_stat(stat: String) -> int:
 
 func _on_equipment_changed() -> void:
 	refresh_stats()
+	refresh_look()
+
+
+## Wear paths of everything equipped, in slot order (weapon first).
+func worn_paths() -> Array:
+	var out: Array = []
+	for slot: String in EquipmentManager.SLOTS:
+		var it := equipment.get_item(slot)
+		if it and it.wear_path != "":
+			out.append(it.wear_path)
+	return out
+
+
+## Layer folders for a base (PixelMatrix) body: the job's outfit, then worn
+## gear in PixelMatrix layout. Attach art sets are left to GearAttach.
+func layer_paths() -> Array:
+	var out: Array = []
+	var job := class_res()
+	if job and job.outfit_path != "" and PixelMatrix.is_root(job.outfit_path):
+		out.append(job.outfit_path)
+	for p: String in worn_paths():
+		if PixelMatrix.is_root(p):
+			out.append(p)
+	return out
+
+
+## Rebuilds what the unit visibly wears (job outfit, palette, gear layers,
+## attached weapons). Presentation only; safe before the sprite exists.
+func refresh_look() -> void:
+	if sprite == null or data == null or _lattice.is_empty():
+		return
+	var root := data.sprite_frames_path
+	if PixelMatrix.is_root(root) and not PixelLab.is_root(root):
+		var job := class_res()
+		var us := PixelMatrix.unit_set(root, layer_paths(), job.palette_swap if job else {})
+		if us.get("ok", false) and us["frames"] != sprite.sprite_frames:
+			var anim := sprite.animation
+			var fr := sprite.frame
+			_lattice = us
+			sprite.sprite_frames = us["frames"]
+			if sprite.sprite_frames.has_animation(anim):
+				sprite.play(anim)
+				sprite.frame = fr
+			play_animation(_action)
+	if gear and is_instance_valid(gear):
+		gear.free()
+	gear = GearAttach.attach_to(sprite, root, worn_paths())
 
 
 # --- State -----------------------------------------------------------------
@@ -607,6 +657,7 @@ func _try_load_sprite() -> void:
 		sprite.animation_finished.connect(_on_clip_finished)
 		add_child(sprite)
 		play_animation("idle")
+		refresh_look()
 		return
 	var frames := ResourceLoader.load(data.sprite_frames_path, "SpriteFrames") as SpriteFrames
 	if frames:

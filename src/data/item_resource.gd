@@ -21,6 +21,12 @@ enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 ## Per-level growth of stat_modifiers (multiplied by item level - 1).
 @export var stat_growth: Dictionary = {}
 @export var weapon_range: int = 1
+## What the unit wears when this is equipped. An attach art set (attach.json +
+## <FACING>.png, pinned to a rig point such as the hand or head; see
+## GearAttach) works on every body with a rig.json. A PixelMatrix gear folder
+## (<anim>/<FACING>_<Limb>.png) is layered onto base bodies limb by limb.
+## Empty: nothing shows.
+@export var wear_path: String = ""
 ## Hook for on-hit or passive effects.
 @export var special_ability: String = ""
 
