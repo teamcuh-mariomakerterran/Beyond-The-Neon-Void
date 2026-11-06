@@ -1,0 +1,19 @@
+{
+	"steps": {
+		"body": {
+			"character_id": "1b014f80-b640-441c-8b42-cf43d324cb72",
+			"generations_used": 2.0,
+			"at": "2026-11-06 08:45"
+		},
+		"animate": {
+			"template": "walking",
+			"mode": "template",
+			"jobs": 8,
+			"generations_used": 8.0,
+			"at": "2026-11-06 08:48"
+		}
+	},
+	"character_id": "1b014f80-b640-441c-8b42-cf43d324cb72",
+	"total_generations_used": 10.0,
+	"animation_group_id": "109db31c-895e-4be3-8e56-ebf298deee47"
+}
