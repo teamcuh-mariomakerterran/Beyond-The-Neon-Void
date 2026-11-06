@@ -38,6 +38,7 @@ func _ready() -> void:
 		_button(center, "TEST UNITS — SKIRMISH", func() -> void: _quick_battle("test_pixellab_skirmish"))
 	if ContentDB.get_character("test_hero") and not ContentDB.get_map("neon_block_demo").is_empty():
 		_button(center, "TEST UNITS — WALK THE NEON BLOCK", _test_walk)
+	_button(center, "TEST UNITS — GALLERY (EVERY FACING)", func() -> void: SceneManager.change_scene(UnitGallery.SCENE))
 	_button(center, "TEST — HANGOVER MORNING", func() -> void:
 		GameManager.new_game()
 		GameManager.hungover["dizzy"] = true

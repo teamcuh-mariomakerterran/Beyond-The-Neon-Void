@@ -51,6 +51,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_dialog_tool()
 	test_voice_profiles()
 	test_ui_theme()
+	await test_unit_gallery()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2566,3 +2567,22 @@ func test_ui_theme() -> void:
 	check(NeonTheme.ui_sound("confirm") == "" and NeonTheme.section("sounds").has("no_save"), "UI sound slots exist, silent until filled")
 	var px := NeonTheme.bitmap_font("res://assets/fonts/press_start/press_start_atlas.json")
 	check(px != null and px.fixed_size == 11 and px.has_char("A".unicode_at(0)) and px.has_char("%".unicode_at(0)) and px.has_char("’".unicode_at(0)) and not px.has_char("~".unicode_at(0)), "Brian's PRESS START atlas loads as a crisp pixel font")
+
+
+func test_unit_gallery() -> void:
+	var dirs := UnitGallery.unit_dirs()
+	check(not dirs.is_empty() and dirs[0].get_file().begins_with("pool_"), "the gallery finds every unit folder, pool characters first")
+	var g := UnitGallery.new()
+	tree.root.add_child(g)
+	await tree.process_frame
+	check(not g.rows.is_empty() and (g.rows[0]["sprites"] as Array).size() == 8, "one row per unit, one cell per facing")
+	var first: AnimatedSprite2D = g.rows[0]["sprites"][0]
+	var before := str(first.animation)
+	g.step_action(1)
+	check(g.action != "idle" and g.actions.has(g.action) and str(first.animation) != "" and (str(first.animation) != before or not (g.rows[0]["actions"] as Array).has(g.action)), "stepping the action replays every cell")
+	g.weapons = true
+	g.play()
+	var rigged := g.rows.filter(func(r: Dictionary) -> bool: return FileAccess.file_exists(str(r["dir"]).path_join("rig.json")))
+	check(rigged.is_empty() or not (rigged[0]["gear"] as Array).is_empty(), "the weapon toggle pins the blade on rigged bodies")
+	g.queue_free()
+	await tree.process_frame
