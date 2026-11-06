@@ -51,7 +51,58 @@
 			"generations_used": 10.0,
 			"balance_drop": 8.0,
 			"at": "2026-11-06 14:19"
+		},
+		"3": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					]
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					]
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					]
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					]
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					]
+				}
+			},
+			"generations_used": 20.0,
+			"at": "2026-11-06 14:23"
 		}
 	},
-	"total_generations_used": 10.0
+	"total_generations_used": 30.0
 }
