@@ -5,44 +5,53 @@
 				"walk": {
 					"template": "walking",
 					"directions": [
+						"north-east",
+						"north-west",
 						"south-east",
-						"north-east"
-					],
-					"note": "submitted before the attack template error; usage not captured (about 2)"
+						"south-west"
+					]
 				},
 				"attack": {
 					"template": "cross-punch",
 					"directions": [
+						"north-east",
+						"north-west",
 						"south-east",
-						"north-east"
+						"south-west"
 					]
 				},
 				"hurt": {
 					"template": "taking-punch",
 					"directions": [
+						"north-east",
+						"north-west",
 						"south-east",
-						"north-east"
+						"south-west"
 					]
 				},
 				"death": {
 					"template": "falling-back-death",
 					"directions": [
+						"north-east",
+						"north-west",
 						"south-east",
-						"north-east"
+						"south-west"
 					]
 				},
 				"jump": {
 					"template": "two-footed-jump",
 					"directions": [
+						"north-east",
+						"north-west",
 						"south-east",
-						"north-east"
+						"south-west"
 					]
 				}
 			},
-			"generations_used": 0.0,
+			"generations_used": 10.0,
 			"balance_drop": 8.0,
-			"at": "2026-11-06 14:15"
+			"at": "2026-11-06 14:19"
 		}
 	},
-	"total_generations_used": 0.0
+	"total_generations_used": 10.0
 }
