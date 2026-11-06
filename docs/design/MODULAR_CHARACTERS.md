@@ -70,3 +70,8 @@ transfer-outfit costs about 10 a direction, so the other 7 would be about 70. A 
 It doesn't layer. The state edit drew different armour (grey plating all over, no magenta: `use_color_palette_from_reference` blocked the new colour), and its walk is generated fresh, so frames sit a pixel or two off the base walk and the cut-out layer is broken outlines. Layers come out clean only when the dressed frames are the body's own frames repainted, which is what transfer-outfit does. The state's layers in `assets/gear/armor/pilot_vest/walk/` (all but SE) are a record of the test, not usable gear. A dressed state could still serve as a whole separate body (no layering).
 
 ![All 8 directions: dressed walk, cut layer, base + layer](../screenshots/armor_pilot_8dir.png)
+
+## Pool characters: free rig points (2026-11-06)
+PixelLab keeps a 2D skeleton for all 8 rotations of every character (`GET /characters/{id}` → `skeletons.2d_references`; this is the skeleton its editor shows). `tools/pixellab/pool_rigs.py <n>` downloads a pool character's export into `assets/units/pool_<n>/` and writes rig.json from those skeletons, for free. They cover the still poses; animation frames fall back to them until they get their own points (`skeleton_rig.py`, 0.1 a frame). The exports themselves still carry no keypoints.
+
+![Pool #5 holding the pilot blade from PixelLab's own skeleton](../screenshots/pool_005_blade.png)
