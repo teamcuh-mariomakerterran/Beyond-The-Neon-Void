@@ -14,7 +14,8 @@
 						"north-east",
 						"north-west"
 					],
-					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)",
+					"v3_groups": {}
 				},
 				"attack": {
 					"template": "cross-punch",
@@ -23,7 +24,13 @@
 						"north-west",
 						"south-east",
 						"south-west"
-					]
+					],
+					"v3_groups": {
+						"c4e4d1a7-5041-4d25-945e-d70a4eae7505": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"hurt": {
 					"template": "taking-punch",
@@ -32,7 +39,13 @@
 						"north-west",
 						"south-east",
 						"south-west"
-					]
+					],
+					"v3_groups": {
+						"1b41a62d-2649-4cd4-b76f-2df2518e504b": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"death": {
 					"template": "falling-back-death",
@@ -41,7 +54,13 @@
 						"north-west",
 						"south-east",
 						"south-west"
-					]
+					],
+					"v3_groups": {
+						"96ef8e37-ae89-4dce-98ef-76e443e6d117": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"jump": {
 					"template": "two-footed-jump",
@@ -50,7 +69,13 @@
 						"north-west",
 						"south-east",
 						"south-west"
-					]
+					],
+					"v3_groups": {
+						"fa60d78b-2148-423b-832e-e18121aeb77d": [
+							"north-east",
+							"north-west"
+						]
+					}
 				}
 			},
 			"generations_used": 10.0,
@@ -132,24 +157,53 @@
 			"anims": {
 				"walk": {
 					"template": "walking",
-					"directions": [],
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
 					],
-					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)",
+					"v3_groups": {}
 				},
 				"attack": {
 					"template": "cross-punch",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"ac0ff0c0-8fc4-4b51-aa0d-dc74b755a3af": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"hurt": {
 					"template": "taking-punch",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"2fd2fa9f-63e3-498d-82e0-fb851b138bca": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"death": {
 					"template": "falling-back-death",
-					"directions": []
+					"directions": [],
+					"v3_groups": {}
 				},
 				"jump": {
 					"template": "two-footed-jump",
@@ -167,7 +221,8 @@
 						"north-east",
 						"north-west"
 					],
-					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)",
+					"v3_groups": {}
 				},
 				"attack": {
 					"template": "cross-punch",
@@ -197,24 +252,53 @@
 			"anims": {
 				"walk": {
 					"template": "walking",
-					"directions": [],
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
 					],
-					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)",
+					"v3_groups": {}
 				},
 				"attack": {
 					"template": "cross-punch",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"df1eb116-0042-43c6-ae30-d4e3a90b31c3": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"hurt": {
 					"template": "taking-punch",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"7ed0a490-05f9-4aa3-98f4-91bf8a611df5": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"death": {
 					"template": "falling-back-death",
-					"directions": []
+					"directions": [],
+					"v3_groups": {}
 				},
 				"jump": {
 					"template": "two-footed-jump",
