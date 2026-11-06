@@ -205,7 +205,10 @@ def step_armor(st: State, a) -> None:
 	ref = {"image": {"type": "base64", "base64": st.d["armor_ref"], "format": "png"}, "size": {"width": SIZE, "height": SIZE}}
 	outdir = os.path.join(a.gear, "_raw")
 	os.makedirs(outdir, exist_ok=True)
+	only = [x for x in a.dirs.split(",") if x]
 	for d, pngs in frames.items():
+		if only and DIRS[d] not in only:
+			continue
 		r = call("POST", "/transfer-outfit-v2", {"reference_image": ref, "image_size": {"width": SIZE, "height": SIZE},
 			"frames": [{"image": b64(p), "size": {"width": SIZE, "height": SIZE}} for p in pngs[:15]],
 			"no_background": True, "seed": a.seed})
@@ -215,7 +218,7 @@ def step_armor(st: State, a) -> None:
 			data = im.get("base64") if isinstance(im, dict) else im
 			with open(os.path.join(outdir, "%s_%03d.png" % (DIRS[d], i)), "wb") as f:
 				f.write(base64.b64decode(data))
-	st.log("armor", before, generations(), {"directions": len(frames)})
+	st.log("armor" + ("_" + "_".join(only) if only else ""), before, generations(), {"directions": only or list(DIRS.values())})
 
 
 def step_layers(st: State, a) -> None:
@@ -241,18 +244,37 @@ def step_layers(st: State, a) -> None:
 	print("layers written to", a.gear)
 
 
-def diff_layer(base, dressed, tol: int = 24):
-	"""Pixels of `dressed` that differ from `base` (colour distance > tol)."""
+def diff_layer(base, dressed, tol: int = 60, min_blob: int = 12):
+	"""Pixels of `dressed` that differ from `base` (colour distance > tol),
+	minus specks: transfer-outfit lightly reshades the whole body, so only
+	connected patches of at least `min_blob` pixels count as the garment."""
 	from PIL import Image
-	out = Image.new("RGBA", base.size)
-	bp, dp, op = base.load(), dressed.load(), out.load()
-	for y in range(base.height):
-		for x in range(base.width):
+	w, h = base.size
+	bp, dp = base.load(), dressed.load()
+	keep = set()
+	for y in range(h):
+		for x in range(w):
 			b, d = bp[x, y], dp[x, y]
-			if d[3] < 128:
-				continue
-			if b[3] < 128 or sum(abs(b[i] - d[i]) for i in range(3)) > tol:
-				op[x, y] = d
+			if d[3] >= 128 and (b[3] < 128 or sum(abs(b[i] - d[i]) for i in range(3)) > tol):
+				keep.add((x, y))
+	out = Image.new("RGBA", base.size)
+	op = out.load()
+	seen = set()
+	for start in keep:
+		if start in seen:
+			continue
+		blob, todo = [], [start]
+		seen.add(start)
+		while todo:
+			x, y = todo.pop()
+			blob.append((x, y))
+			for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+				if (nx, ny) in keep and (nx, ny) not in seen:
+					seen.add((nx, ny))
+					todo.append((nx, ny))
+		if len(blob) >= min_blob:
+			for x, y in blob:
+				op[x, y] = dp[x, y]
 	return out
 
 
@@ -279,6 +301,7 @@ def main() -> None:
 	p.add_argument("--template", default="walking", help="skeleton animation template id")
 	p.add_argument("--mode", default="template", choices=["template", "skeleton-v3"])
 	p.add_argument("--seed", type=int, default=1337)
+	p.add_argument("--dirs", default="", help="armor: only these facings, e.g. SE (measure cost first)")
 	p.add_argument("--body-prompt", default=BODY_PROMPT)
 	p.add_argument("--armor-prompt", default=ARMOR_PROMPT)
 	p.add_argument("--weapon-prompt", default=WEAPON_PROMPT)

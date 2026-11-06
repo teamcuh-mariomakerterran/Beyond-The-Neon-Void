@@ -49,3 +49,18 @@ Make one: `godot --headless --path . -s res://tools/rig/make_rig.gd -- res://ass
 ![One pose, projected per facing](../screenshots/gear_pose.png)
 
 ![Skeleton hands, forearm cover, NW poke-out](../screenshots/gear_grip_fix2.png)
+
+## Pilot credit log (2026-11-06)
+| Step | Generations |
+|---|---|
+| Base body A, 8 rotations | 2 |
+| Walk, 8 directions (skeleton template) | 8 |
+| Skeleton hand points, idle frames (2 test units) | 2.4 |
+| Skeleton hand points, walk + attack frames (124) | 12.6 |
+| Armour: reference image + transfer-outfit, SE only | 11 |
+| **Total** | **36** |
+
+transfer-outfit costs about 10 a direction, so the other 7 would be about 70. A cheaper route to try: `/create-character-state` ("wearing the vest") edits all 8 rotations at once, then the same walk template animates that state with matching poses (8), and the vest layer is the difference, as for SE. The layer is cut by `pilot.py layers`: colour change above a threshold, specks under 12 pixels dropped.
+
+![Armour pilot: reference, base, transfer result, layer](../screenshots/armor_pilot_raw.png)
+![Cleaned vest layer and base + layer](../screenshots/armor_pilot_layer.png)
