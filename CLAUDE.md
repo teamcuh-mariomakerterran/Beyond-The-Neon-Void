@@ -36,6 +36,12 @@ Gates: preflight, import, data (`validate_data.py`), compile (`tests/compile_all
 - Editing `legacy/original_gd/` (reference only, `.gdignore`d).
 - Inventing canon names or lore. Mark proposals `[BNV PROPOSAL]`; canon lives in `docs/lore/LORE_DIGEST.md`.
 
+## Paid generation (PixelLab, ElevenLabs): Brian's credits
+- **Nothing that spends credits runs without Brian's go for that exact step,** with the cost shown first. No batches or loops.
+- **One at a time:** generate one character / animation / facing, then **look at every frame yourself** (open the images, a contact sheet beside the previous facings) for identity, proportions, offset and pose consistency. Show Brian the sheet. Only then ask for the next step.
+- **Stop on the first bad result** and report it. Never retry or "fill in" automatically.
+- Log the real cost from the account balance before and after each step.
+
 ## Settled (Brian's calls)
 - Tiles stay **128×64** (v2 maps); 64×32 art is upscaled by the renderer.
 - **Veil** (not Viel). Veil: a public republic over a hidden monarchy. High Oracle Nyra: the Doctrine's hidden dream-writer. The managed war is canon. Kade is the shared family name of the Lantern Wards.
