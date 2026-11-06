@@ -87,17 +87,22 @@ static func point_at(p_rig: Dictionary, point: String, anim: String, frame: int,
 	if per_frame is Array and not (per_frame as Array).is_empty():
 		var arr: Array = per_frame
 		return _vec(arr[clampi(frame, 0, arr.size() - 1)])
+	# Still-pose points are in the rig's own cell ("cell"). Skeleton-mode takes
+	# draw the same body centred on a bigger canvas, so shift by the padding.
+	var rig_cell := float(p_rig.get("cell", 0))
+	if rig_cell <= 0.0:
+		rig_cell = cell_w
+	var pad := (cell_w - rig_cell) * 0.5 if cell_w > 0.0 and rig_cell > 0.0 else 0.0
 	var by_facing: Dictionary = pts.get("facing", {})
 	if by_facing.has(facing):
-		return _vec(by_facing[facing])
+		var f: Variant = _vec(by_facing[facing])
+		return (f as Vector3) + Vector3(pad, pad, 0) if f != null else null
 	var m := str(MIRROR.get(facing, ""))
 	if m != "" and m != facing and by_facing.has(m):
 		var v: Variant = _vec(by_facing[m])
-		if v != null:
-			var cell := cell_w if cell_w > 0.0 else float(p_rig.get("cell", 0))
-			if cell > 0.0:
-				var w: Vector3 = v
-				return Vector3(cell - w.x, w.y, w.z)
+		if v != null and rig_cell > 0.0:
+			var w: Vector3 = v
+			return Vector3(rig_cell - w.x + pad, w.y + pad, w.z)
 	return null
 
 

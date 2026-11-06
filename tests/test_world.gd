@@ -52,6 +52,7 @@ func run(p_tree: SceneTree) -> int:
 	test_voice_profiles()
 	test_ui_theme()
 	await test_unit_gallery()
+	test_pixellab_padding()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2586,3 +2587,24 @@ func test_unit_gallery() -> void:
 	check(rigged.is_empty() or not (rigged[0]["gear"] as Array).is_empty(), "the weapon toggle pins the blade on rigged bodies")
 	g.queue_free()
 	await tree.process_frame
+
+
+## Skeleton-mode takes come on a bigger canvas than the standing pose (96 vs 60 px).
+func test_pixellab_padding() -> void:
+	check(PixelLab.base_anim("walking-96ef8e37") == "walking" and PixelLab.base_anim("cross_punch_attack") == "cross_punch_attack"
+		and PixelLab.base_anim("north-east") == "north-east", "a take id is dropped from the animation name, nothing else")
+	var rig := {"cell": 60, "points": {"hand_r": {"facing": {"SE": [20, 42, 1]}, "anims": {"attack_SE": [[50, 60, 1]]}}}}
+	check(GearAttach.point_at(rig, "hand_r", "walk_SE", 0, "SE", 96.0) == Vector3(38, 60, 1), "a still-pose hand point moves with the padding on a 96 px take")
+	check(GearAttach.point_at(rig, "hand_r", "walk_SW", 0, "SW", 96.0) == Vector3(58, 60, 1), "mirrored points mirror in the pose's cell, then pad")
+	check(GearAttach.point_at(rig, "hand_r", "attack_SE", 0, "SE", 96.0) == Vector3(50, 60, 1), "per-frame points are already in the take's own cell")
+	var dir := "res://assets/units/pool_005"
+	if not PixelLab.is_root(dir):
+		return
+	var us := PixelLab.unit_set(dir)
+	var cells: Dictionary = us["cells"]
+	var anchors: Dictionary = us["anchors"]
+	if cells.has("walk_NE") and cells.has("idle_NE") and cells["walk_NE"] != cells["idle_NE"]:
+		var pad: Vector2 = ((cells["walk_NE"] as Vector2) - (cells["idle_NE"] as Vector2)) * 0.5
+		check((anchors["walk_NE"] as Vector2).is_equal_approx((anchors["idle_NE"] as Vector2) + pad), "a 96 px walk stands on the same feet as its 60 px pose")
+	var names := Array((us["frames"] as SpriteFrames).get_animation_names()).map(func(n: StringName) -> String: return str(n))
+	check(not names.any(func(n: String) -> bool: return PixelLab.base_anim(n.left(n.rfind("_"))) != n.left(n.rfind("_"))), "no animation is listed twice under a take id")

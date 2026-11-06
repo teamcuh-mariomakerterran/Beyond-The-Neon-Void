@@ -169,6 +169,15 @@ static func classify(state: String, anim: String) -> String:
 	return ""
 
 
+## An animation folder's name without PixelLab's take id ("walking-96ef8e37"
+## → "walking"), so every take of one animation shares one name.
+static func base_anim(an: String) -> String:
+	var i := an.rfind("-")
+	if i > 0 and an.length() - i - 1 == 8 and an.substr(i + 1).is_valid_hex_number():
+		return an.left(i)
+	return an
+
+
 static func slug(text: String) -> String:
 	var t := text.to_lower()
 	var out := ""
@@ -318,8 +327,9 @@ static func unit_set(dir: String) -> Dictionary:
 	for e2: Dictionary in entries:
 		if used.has(e2["key"]) or (e2["facings"] as Dictionary).is_empty() or bool(e2.get("still", false)):
 			continue
-		var nm := slug(str(e2["anim"]) if str(e2["anim"]) != "" else str(e2["state"]))
-		if nm != "" and not sf.has_animation(nm + "_SE"):
+		# Takes of one animation merge under one name (_add skips facings it has).
+		var nm := slug(base_anim(str(e2["anim"])) if str(e2["anim"]) != "" else str(e2["state"]))
+		if nm != "":
 			_add(out, nm, e2, fps, not str(e2["action"]) in ONE_SHOT)
 	# Still poses: idle for any facing without one (all 8 directions).
 	var still_src: Dictionary = {}
@@ -371,5 +381,11 @@ static func _add(out: Dictionary, action: String, e: Dictionary, fps: float, loo
 			continue
 		# Feet from the still pose of this state (jumps leave the ground).
 		var ref := str(rot.get(fc, (facings[fc] as Array)[0]))
-		out["anchors"][nm] = _feet(ref)
+		var feet := _feet(ref)
+		# Skeleton-mode takes come on a bigger canvas (96 or 80 px around a
+		# 60 px pose) with the body centred: move the pose's feet by the padding.
+		var ref_tex := ForgeStore.load_texture(ref)
+		if ref_tex and ref_tex.get_size() != first.get_size():
+			feet += (first.get_size() - ref_tex.get_size()) * 0.5
+		out["anchors"][nm] = feet
 		out["cells"][nm] = first.get_size()
