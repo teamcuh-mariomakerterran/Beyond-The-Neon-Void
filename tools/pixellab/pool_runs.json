@@ -1,0 +1,48 @@
+{
+	"runs": {
+		"5": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"south-east",
+						"north-east"
+					],
+					"note": "submitted before the attack template error; usage not captured (about 2)"
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"south-east",
+						"north-east"
+					]
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"south-east",
+						"north-east"
+					]
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"south-east",
+						"north-east"
+					]
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"south-east",
+						"north-east"
+					]
+				}
+			},
+			"generations_used": 0.0,
+			"balance_drop": 8.0,
+			"at": "2026-11-06 14:15"
+		}
+	},
+	"total_generations_used": 0.0
+}

@@ -1,5 +1,5 @@
 {
-	"_about": "Brian's PixelLab character pool (2026-11-06). n = number on the contact sheet. status keep/skip/no_image is Brian's pick; focus = kept and 60x60 (work on these first). Tool data for tools/pixellab/, not game content. status enemy = wild enemy that gets only the basic set (attack, death, hurt, jump, walk or fly); enemy.move is my guess until Brian confirms.",
+	"_about": "Brian's PixelLab character pool (2026-11-06). n = number on the contact sheet. status keep/skip/no_image is Brian's pick; focus = kept and 60x60 (work on these first). Tool data for tools/pixellab/, not game content. status enemy = wild enemy that gets only the basic set (attack, death, hurt, jump, walk or fly); enemy.move is my guess until Brian confirms. batch = the run a character was animated in; mirror_ok = looks the same flipped (only those get mirrored facings).",
 	"open_questions": [
 		"#223 and #225 (64 px, outside the focus): keep or skip?"
 	],
@@ -47,7 +47,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 4,
@@ -62,7 +64,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 5,
@@ -77,7 +81,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 6,
@@ -92,7 +98,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 7,
@@ -137,7 +145,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 10,
@@ -287,7 +297,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": true
 		},
 		{
 			"n": 20,
@@ -317,7 +329,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 22,
@@ -362,7 +376,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 25,
@@ -377,7 +393,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": true
 		},
 		{
 			"n": 26,
@@ -407,7 +425,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 28,
@@ -437,7 +457,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 30,
@@ -647,7 +669,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 44,
@@ -812,7 +836,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 55,
@@ -827,7 +853,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 56,
@@ -902,7 +930,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 61,
@@ -932,7 +962,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 63,
@@ -962,7 +994,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 65,
@@ -1067,7 +1101,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 72,
@@ -1112,7 +1148,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 75,
@@ -1127,7 +1165,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 76,
@@ -1172,7 +1212,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 79,
@@ -1187,7 +1229,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": true
 		},
 		{
 			"n": 80,
@@ -1457,7 +1501,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": true
 		},
 		{
 			"n": 98,
@@ -1930,7 +1976,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": false
+			"focus": false,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 128,
@@ -2005,7 +2053,9 @@
 			"states": 1,
 			"animations": 0,
 			"status": "keep",
-			"focus": true
+			"focus": true,
+			"batch": "2026-11-06 cast",
+			"mirror_ok": false
 		},
 		{
 			"n": 133,
