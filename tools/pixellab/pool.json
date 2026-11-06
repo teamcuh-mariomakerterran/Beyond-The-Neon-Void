@@ -1,7 +1,6 @@
 {
 	"_about": "Brian's PixelLab character pool (2026-11-06). n = number on the contact sheet. status keep/skip/no_image is Brian's pick; focus = kept and 60x60 (work on these first). Tool data for tools/pixellab/, not game content. status enemy = wild enemy that gets only the basic set (attack, death, hurt, jump, walk or fly); enemy.move is my guess until Brian confirms.",
 	"open_questions": [
-		"Confirm which enemies fly: guessed #114, #141, #151, #166, #168, #169, #183, #193, #226",
 		"#223 and #225 (64 px, outside the focus): keep or skip?"
 	],
 	"characters": [
@@ -1719,11 +1718,10 @@
 					"attack",
 					"death",
 					"hurt",
-					"jump",
 					"fly"
 				],
 				"move": "fly",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -1780,7 +1778,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2137,7 +2135,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2160,11 +2158,10 @@
 					"attack",
 					"death",
 					"hurt",
-					"jump",
 					"fly"
 				],
 				"move": "fly",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2221,7 +2218,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2248,7 +2245,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2275,7 +2272,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2347,7 +2344,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2371,10 +2368,10 @@
 					"death",
 					"hurt",
 					"jump",
-					"fly"
+					"walk"
 				],
-				"move": "fly",
-				"move_confirmed": false,
+				"move": "walk",
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2521,7 +2518,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2619,12 +2616,12 @@
 					"attack",
 					"death",
 					"hurt",
-					"jump",
-					"fly"
+					"float"
 				],
-				"move": "fly",
-				"move_confirmed": false,
-				"size_exception": false
+				"move": "float",
+				"move_confirmed": true,
+				"size_exception": false,
+				"note": "ghost"
 			}
 		},
 		{
@@ -2661,11 +2658,10 @@
 					"attack",
 					"death",
 					"hurt",
-					"jump",
 					"fly"
 				],
 				"move": "fly",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2685,15 +2681,14 @@
 			"focus": false,
 			"enemy": {
 				"anims": [
-					"attack",
+					"cast",
 					"death",
-					"hurt",
-					"jump",
-					"fly"
+					"hurt"
 				],
-				"move": "fly",
-				"move_confirmed": false,
-				"size_exception": false
+				"move": "stationary",
+				"move_confirmed": true,
+				"size_exception": false,
+				"note": "doesn't move; casts spells from a set point once the battle begins"
 			}
 		},
 		{
@@ -2745,12 +2740,12 @@
 					"attack",
 					"death",
 					"hurt",
-					"jump",
-					"walk"
+					"float"
 				],
-				"move": "walk",
-				"move_confirmed": false,
-				"size_exception": false
+				"move": "float",
+				"move_confirmed": true,
+				"size_exception": false,
+				"note": "spirit squid"
 			}
 		},
 		{
@@ -2821,7 +2816,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -2935,10 +2930,10 @@
 					"death",
 					"hurt",
 					"jump",
-					"fly"
+					"walk"
 				],
-				"move": "fly",
-				"move_confirmed": false,
+				"move": "walk",
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -3025,7 +3020,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -3109,10 +3104,10 @@
 					"death",
 					"hurt",
 					"jump",
-					"fly"
+					"walk"
 				],
-				"move": "fly",
-				"move_confirmed": false,
+				"move": "walk",
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -3319,7 +3314,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": false
 			}
 		},
@@ -3406,7 +3401,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": true
 			}
 		},
@@ -3568,7 +3563,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": true
 			}
 		},
@@ -3595,7 +3590,7 @@
 					"walk"
 				],
 				"move": "walk",
-				"move_confirmed": false,
+				"move_confirmed": true,
 				"size_exception": true
 			}
 		},
@@ -3664,10 +3659,10 @@
 					"death",
 					"hurt",
 					"jump",
-					"fly"
+					"walk"
 				],
-				"move": "fly",
-				"move_confirmed": false,
+				"move": "walk",
+				"move_confirmed": true,
 				"size_exception": true
 			}
 		},
@@ -4954,6 +4949,8 @@
 		"jump": "two-footed-jump",
 		"walk": "walking-8-frames",
 		"fly": "custom text (no PixelLab template)",
-		"_note": "Template ids seen on Brian's own animated characters (2026-11-06). Templates are humanoid (mannequin); creatures likely need custom text animations."
+		"_note": "Template ids seen on Brian's own animated characters (2026-11-06). Templates are humanoid (mannequin); creatures likely need custom text animations. Flyers and floaters skip jump (they cross height without it); the stationary caster gets cast, death and hurt only.",
+		"float": "custom text (no PixelLab template)",
+		"cast": "custom text, or the attack template"
 	}
 }
