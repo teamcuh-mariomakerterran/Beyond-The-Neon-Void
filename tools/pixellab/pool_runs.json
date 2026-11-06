@@ -1268,7 +1268,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:50",
+			"facings_made": 20
 		},
 		"64": {
 			"anims": {
@@ -1334,11 +1336,23 @@
 				},
 				"jump": {
 					"template": "two-footed-jump",
-					"directions": [],
-					"v3_groups": {}
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"93d5aa13-dcb8-407e-adab-5ea8b6cda35d": [
+							"north-east",
+							"north-west"
+						]
+					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:50",
+			"facings_made": 20
 		},
 		"71": {
 			"anims": {
@@ -1356,6 +1370,111 @@
 							"north-west"
 						]
 					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"718fc53b-93c3-4e4d-af86-7e1cc15a6aea": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"4460762a-3ccc-4bb9-bb09-eb3d75353a15": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"ef4bd941-669b-4a4d-803f-78ad5de7ffa6": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"176d0a27-5ca6-445b-87a6-3b198768cc01": [
+							"north-east",
+							"north-west"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0
+		},
+		"74": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"b08f17f7-35e0-4c97-91b3-bbb87d98dfe0": [
+							"north-east",
+							"north-west"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0
+		},
+		"75": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"668b2b75-e49c-4556-82e0-1a6cc4a53629": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [],
+					"v3_groups": {}
 				}
 			},
 			"generations_used": 0.0
