@@ -1676,7 +1676,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:58",
+			"facings_made": 20
 		},
 		"79": {
 			"anims": {
@@ -1741,7 +1743,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:57",
+			"facings_made": 10
 		},
 		"97": {
 			"anims": {
@@ -1806,7 +1810,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:58",
+			"facings_made": 10
 		}
 	},
 	"total_generations_used": 60.0,
