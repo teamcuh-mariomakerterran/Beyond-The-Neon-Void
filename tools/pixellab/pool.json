@@ -1,7 +1,7 @@
 {
-	"_about": "Brian's PixelLab character pool (2026-11-06). n = number on the contact sheet. status keep/skip/no_image is Brian's pick; focus = kept and 60x60 (work on these first). Tool data for tools/pixellab/, not game content.",
+	"_about": "Brian's PixelLab character pool (2026-11-06). n = number on the contact sheet. status keep/skip/no_image is Brian's pick; focus = kept and 60x60 (work on these first). Tool data for tools/pixellab/, not game content. status enemy = wild enemy that gets only the basic set (attack, death, hurt, jump, walk or fly); enemy.move is my guess until Brian confirms.",
 	"open_questions": [
-		"Which skipped ones are wild enemies that still need attack + death animations?",
+		"Confirm which enemies fly: guessed #114, #141, #151, #166, #168, #169, #183, #193, #226",
 		"#223 and #225 (64 px, outside the focus): keep or skip?"
 	],
 	"characters": [
@@ -1712,8 +1712,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 115,
@@ -1757,8 +1769,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 118,
@@ -2102,8 +2126,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 141,
@@ -2117,8 +2153,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 142,
@@ -2162,8 +2210,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 145,
@@ -2177,8 +2237,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "keep",
-			"focus": true
+			"status": "enemy",
+			"focus": true,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 146,
@@ -2192,8 +2264,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 147,
@@ -2252,8 +2336,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "keep",
-			"focus": true
+			"status": "enemy",
+			"focus": true,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 151,
@@ -2267,8 +2363,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 152,
@@ -2402,8 +2510,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 161,
@@ -2492,8 +2612,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 167,
@@ -2522,8 +2654,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 169,
@@ -2537,8 +2681,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 170,
@@ -2582,8 +2738,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 173,
@@ -2642,8 +2810,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 177,
@@ -2747,8 +2927,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 184,
@@ -2822,8 +3014,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 189,
@@ -2897,8 +3101,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 194,
@@ -3092,8 +3308,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": false
+			}
 		},
 		{
 			"n": 207,
@@ -3167,8 +3395,20 @@
 			],
 			"states": 7,
 			"animations": 14,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": true
+			}
 		},
 		{
 			"n": 212,
@@ -3317,8 +3557,20 @@
 			],
 			"states": 2,
 			"animations": 9,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": true
+			}
 		},
 		{
 			"n": 222,
@@ -3332,8 +3584,20 @@
 			],
 			"states": 4,
 			"animations": 10,
-			"status": "skip",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"walk"
+				],
+				"move": "walk",
+				"move_confirmed": false,
+				"size_exception": true
+			}
 		},
 		{
 			"n": 223,
@@ -3392,8 +3656,20 @@
 			],
 			"states": 1,
 			"animations": 0,
-			"status": "keep",
-			"focus": false
+			"status": "enemy",
+			"focus": false,
+			"enemy": {
+				"anims": [
+					"attack",
+					"death",
+					"hurt",
+					"jump",
+					"fly"
+				],
+				"move": "fly",
+				"move_confirmed": false,
+				"size_exception": true
+			}
 		},
 		{
 			"n": 227,
@@ -4670,5 +4946,14 @@
 			"status": "skip",
 			"focus": false
 		}
-	]
+	],
+	"enemy_templates": {
+		"attack": "attack",
+		"death": "falling-back-death",
+		"hurt": "taking-punch",
+		"jump": "two-footed-jump",
+		"walk": "walking-8-frames",
+		"fly": "custom text (no PixelLab template)",
+		"_note": "Template ids seen on Brian's own animated characters (2026-11-06). Templates are humanoid (mannequin); creatures likely need custom text animations."
+	}
 }
