@@ -63,7 +63,7 @@ def key() -> str:
 	return k
 
 
-def call(method: str, path: str, body: dict = None, raw: bool = False):
+def call(method: str, path: str, body: dict = None, raw: bool = False, allow: tuple = ()):
 	req = urllib.request.Request(API + path, method=method,
 		data=json.dumps(body).encode() if body is not None else None,
 		headers={"Authorization": "Bearer " + key(), "Content-Type": "application/json"})
@@ -78,6 +78,8 @@ def call(method: str, path: str, body: dict = None, raw: bool = False):
 			if e.code == 429 and attempt < 59:
 				time.sleep(30)
 				continue
+			if e.code in allow:  # caller handles it (e.g. 409: that facing exists or is generating)
+				return {"_status": e.code, "_detail": body}
 			sys.exit("%s %s -> %d %s" % (method, path, e.code, body))
 	return data if raw else json.loads(data)
 

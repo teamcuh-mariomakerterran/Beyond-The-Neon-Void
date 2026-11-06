@@ -92,9 +92,12 @@ def animate(c: dict, runs: dict) -> None:
 				"animation_name": action, "directions": todo_front}
 			if front_group:
 				req["animation_group_id"] = front_group
-			r = pilot.call("POST", "/characters/animations", req)
-			waits += r.get("background_job_ids") or []
-			n_jobs += len(todo_front)
+			r = pilot.call("POST", "/characters/animations", req, allow=(409,))
+			if r.get("_status") == 409:
+				print("#%d %s: front facing already there or generating, skipped" % (c["n"], action), flush=True)
+			else:
+				waits += r.get("background_job_ids") or []
+				n_jobs += len(todo_front)
 		if todo_back:
 			r = pilot.call("POST", "/characters/animations", {"character_id": c["character_id"], "mode": "skeleton-v3",
 				"template_animation_id": template, "animation_name": action, "directions": todo_back})
@@ -113,43 +116,46 @@ def animate(c: dict, runs: dict) -> None:
 	print("#%d: %d facings made" % (c["n"], n_jobs), flush=True)
 
 
+# Folder name PixelLab's export gives each template (seen in exports).
+FOLDER = {"walking": "walking", "cross-punch": "cross_punch_attack", "taking-punch": "taking_a_punch",
+	"falling-back-death": "falling_backward", "two-footed-jump": "two_footed_jump"}
+GAME_ACTION = {"walk": "walk", "attack": "attack", "hurt": "hit", "death": "death", "jump": "jump"}
+
+
 def pin_back_facings(c: dict, runs: dict, out: str, data: bytes) -> None:
-	"""pixellab.json: back facings come from the skeleton-v3 takes. The export
-	names one of two same-named animations "<name>-<group id prefix>"."""
+	"""pixellab.json: back facings come from the skeleton-v3 takes. Of two
+	same-named animations the export suffixes one "<name>-<group id prefix>";
+	a suffix matching a v3 group marks that take, a suffix matching any other
+	group marks the unsuffixed folder as the v3 take."""
 	rec = runs["runs"].get(str(c["n"]), {}).get("anims", {})
-	v3 = {}
-	for action, r in rec.items():
-		for gid, dirs in r.get("v3_groups", {}).items():
-			for d in dirs:
-				v3[gid] = (action, dirs)
-	# #3's back facings were redone inside its template group before Brian's
-	# no-delete rule: that group's back facings are skeleton-v3 already.
-	if not v3:
-		return
 	z = zipfile.ZipFile(io.BytesIO(data))
 	meta = json.loads(z.read([n for n in z.namelist() if n.endswith("metadata.json")][0]))
 	pins = {}
 	for stt in meta.get("states", []):
 		state = stt.get("folder", "")
 		anims = (stt.get("frames") or {}).get("animations") or {}
-		for folder in anims:
-			base, _, suffix = folder.partition("-")
-			for gid, (action, dirs) in v3.items():
-				if suffix and gid.startswith(suffix):
-					hit = True
-				elif not suffix:
-					# unsuffixed: v3 only if no other folder of this name claims this group
-					hit = not any(f.partition("-")[0] == base and f.partition("-")[2] and gid.startswith(f.partition("-")[2]) for f in anims) \
-						and set(anims[folder]) == set(dirs)
-				else:
-					hit = False
-				if hit:
-					for d in dirs:
-						if d in anims[folder]:
-							pins["%s_%s" % ("hit" if action == "hurt" else action, pilot.DIRS[d])] = "%s/%s" % (state, folder)
+		for action, r in rec.items():
+			groups = r.get("v3_groups", {})
+			if not groups:
+				continue
+			base = FOLDER.get(r.get("template", SET.get(action, "")), "")
+			cands = [f for f in anims if f.partition("-")[0] == base]
+			if len(cands) < 2:
+				continue  # one take only: nothing to choose
+			for gid, dirs in groups.items():
+				pick = next((f for f in cands if f.partition("-")[2] and gid.startswith(f.partition("-")[2])), None)
+				if pick is None:
+					plain = [f for f in cands if not f.partition("-")[2]]
+					pick = plain[0] if len(plain) == 1 else None
+				if pick is None:
+					print("#%d %s: couldn't tell which take is skeleton-v3; no pin" % (c["n"], action))
+					continue
+				for d in dirs:
+					if d in anims[pick]:
+						pins["%s_%s" % (GAME_ACTION[action], pilot.DIRS[d])] = "%s/%s" % (state, pick)
 	conf_p = os.path.join(out, "pixellab.json")
 	conf = json.load(open(conf_p, encoding="utf-8")) if os.path.exists(conf_p) else {}
-	conf.setdefault("actions", {}).update(pins)
+	conf["actions"] = pins
 	conf["_about"] = "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
 	with open(conf_p, "w", encoding="utf-8") as f:
 		json.dump(conf, f, indent="\t")

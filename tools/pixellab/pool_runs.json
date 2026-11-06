@@ -240,7 +240,12 @@
 			"anims": {
 				"walk": {
 					"template": "walking",
-					"directions": [],
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
@@ -250,24 +255,63 @@
 				},
 				"attack": {
 					"template": "cross-punch",
-					"directions": [],
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
 					],
-					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)",
+					"v3_groups": {}
 				},
 				"hurt": {
 					"template": "taking-punch",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"d8323f98-0028-474e-bcbf-ec709c0da924": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"death": {
 					"template": "falling-back-death",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"5bc9e5cb-1782-42af-87ba-4c66a4085774": [
+							"north-east",
+							"north-west"
+						]
+					}
 				},
 				"jump": {
 					"template": "two-footed-jump",
-					"directions": []
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"e55b4a60-df3f-435a-a209-4b65a0e878f5": [
+							"north-east",
+							"north-west"
+						]
+					}
 				}
 			},
 			"generations_used": 0.0
@@ -495,6 +539,138 @@
 						"d739b401-f63f-41d6-a5e9-ddb2e2dc9a99": [
 							"north-east",
 							"north-west"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:29",
+			"facings_made": 20
+		},
+		"24": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"96f1ad66-ecaa-43af-97b3-d44cba2cfcb6": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"524f8369-e247-47a1-a5f4-cca8b3bfb345": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"4753b346-9f50-4603-88db-1b600aa7dac5": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"3a99d90c-083b-44f3-b01a-645e3f435ae3": [
+							"north-east",
+							"north-west"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0
+		},
+		"25": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"south-east"
+					],
+					"v3_groups": {
+						"82d7d4d2-7482-49e3-91a1-e29da5bff634": [
+							"north-east"
+						]
+					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"south-east"
+					],
+					"v3_groups": {
+						"60ace019-37ea-4133-bf75-c3a3ce434d25": [
+							"north-east"
+						]
+					}
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"south-east"
+					],
+					"v3_groups": {
+						"514f9a3d-6f2e-417e-b6ed-15606d868560": [
+							"north-east"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"south-east"
+					],
+					"v3_groups": {
+						"9ecf147e-a6f8-4880-9a31-79a79500606b": [
+							"north-east"
+						]
+					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"south-east"
+					],
+					"v3_groups": {
+						"8919ad06-ed05-40dd-bc4e-1c10db8386c7": [
+							"north-east"
 						]
 					}
 				}
