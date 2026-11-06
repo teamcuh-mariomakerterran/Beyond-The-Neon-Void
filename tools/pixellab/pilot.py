@@ -9,6 +9,8 @@ animation in 8 directions, one armour layer, one weapon.
     python3 tools/pixellab/pilot.py weapon  --go         # one weapon picture (optional; placeholder art is free)
     python3 tools/pixellab/pilot.py export               # zip -> PixelMatrix folder (free)
     python3 tools/pixellab/pilot.py layers               # armour frames -> limb layer strips (free)
+    python3 tools/pixellab/pilot.py state   --go [--dirs SW,NE,...]  # cheaper armour: dressed state + same walk template
+    python3 tools/pixellab/pilot.py state_layers [--dirs ...]          # dressed state walk -> vest layers (free)
 
 Nothing that spends credits runs without --go. Every paid step logs the
 balance before and after into <out>/pilot.json, so the credit cost is known
@@ -142,12 +144,18 @@ def fetch_zip(st: State) -> zipfile.ZipFile:
 	return zipfile.ZipFile(io.BytesIO(call("GET", "/characters/%s/zip" % cid, raw=True)))
 
 
-def walk_frames(z: zipfile.ZipFile) -> dict:
-	"""{direction: [png bytes per frame]} for the first animation in the zip."""
+def walk_frames(z: zipfile.ZipFile, state: str = "") -> dict:
+	"""{direction: [png bytes per frame]} for the walk in the zip. A state's
+	zip holds the whole group (the base body's folder too), so `state` picks
+	one state's folder; empty takes the first folder found."""
 	out = {}
-	for n in sorted(z.namelist()):
+	names = sorted(z.namelist())
+	if not state:
+		first = next((n for n in names if "/animations/" in n and n.endswith(".png")), "")
+		state = first.split("/")[0] if "/" in first else ""
+	for n in names:
 		parts = n.split("/")
-		if "animations" in parts and n.endswith(".png"):
+		if parts[0] == state and "animations" in parts and n.endswith(".png"):
 			d = parts[-2]
 			if d in DIRS:
 				out.setdefault(d, []).append(z.read(n))
@@ -278,6 +286,57 @@ def diff_layer(base, dressed, tol: int = 60, min_blob: int = 12):
 	return out
 
 
+def step_state(st: State, a) -> None:
+	"""Cheaper armour route: one edit dresses all 8 rotations, then the same
+	walk template animates the dressed state, so its poses match the base."""
+	cid = st.d.get("character_id") or sys.exit("run `body` first")
+	only = [x for x in a.dirs.split(",") if x]
+	dirs = [d for d, f in DIRS.items() if not only or f in only]
+	before = generations()
+	if not st.d.get("armor_state_id"):
+		r = call("POST", "/create-character-state", {"character_id": cid, "edit_description": a.state_edit,
+			"state_name": "pilot vest", "use_color_palette_from_reference": True, "seed": a.seed})
+		wait(r["background_job_id"])
+		st.d["armor_state_id"] = r["character_id"]
+		st.save()
+		mid = generations()
+		print("state edit: %.2f generations" % (before - mid))
+	r = call("POST", "/characters/animations", {"character_id": st.d["armor_state_id"], "mode": a.mode,
+		"template_animation_id": a.template, "animation_name": "walk", "directions": dirs, "seed": a.seed})
+	for j in r.get("background_job_ids") or []:
+		wait(j)
+	st.log("armor_state", before, generations(), {"directions": [DIRS[d] for d in dirs], "state_id": st.d["armor_state_id"]})
+
+
+def step_state_layers(st: State, a) -> None:
+	"""Vest layer per direction = dressed state's walk minus the base walk."""
+	from PIL import Image
+	sid = st.d.get("armor_state_id") or sys.exit("run `state` first")
+	z = zipfile.ZipFile(io.BytesIO(call("GET", "/characters/%s/zip" % sid, raw=True)))
+	frames = walk_frames(z, "pilot_vest")
+	raw = os.path.join(a.gear, "_raw_state")
+	os.makedirs(raw, exist_ok=True)
+	os.makedirs(os.path.join(a.gear, "walk"), exist_ok=True)
+	only = [x for x in a.dirs.split(",") if x]
+	for d, pngs in frames.items():
+		facing = DIRS[d]
+		if only and facing not in only:
+			continue
+		base_p = os.path.join(a.out, "walk", facing + ".png")
+		if not os.path.exists(base_p):
+			continue
+		base = Image.open(base_p).convert("RGBA")
+		h = base.height
+		strip = Image.new("RGBA", (h * len(pngs), h))
+		for i, png in enumerate(pngs):
+			with open(os.path.join(raw, "%s_%03d.png" % (facing, i)), "wb") as f:
+				f.write(png)
+			dressed = Image.open(io.BytesIO(png)).convert("RGBA").resize((h, h), Image.NEAREST)
+			strip.paste(diff_layer(base.crop((i * h, 0, (i + 1) * h, h)), dressed), (i * h, 0))
+		strip.save(os.path.join(a.gear, "walk", facing + "_Torso.png"))
+		print("layer", facing, len(pngs), "frames")
+
+
 def step_weapon(st: State, a) -> None:
 	before = generations()
 	r = call("POST", "/create-image-pixflux", {"description": a.weapon_prompt, "image_size": {"width": 48, "height": 48},
@@ -293,7 +352,7 @@ def step_weapon(st: State, a) -> None:
 
 def main() -> None:
 	p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-	p.add_argument("step", choices=["plan", "balance", "body", "animate", "armor", "layers", "weapon", "export"])
+	p.add_argument("step", choices=["plan", "balance", "body", "animate", "armor", "layers", "state", "state_layers", "weapon", "export"])
 	p.add_argument("--go", action="store_true", help="actually spend credits")
 	p.add_argument("--out", default="assets/units/base_body_a")
 	p.add_argument("--gear", default="assets/gear/armor/pilot_vest")
@@ -305,6 +364,7 @@ def main() -> None:
 	p.add_argument("--body-prompt", default=BODY_PROMPT)
 	p.add_argument("--armor-prompt", default=ARMOR_PROMPT)
 	p.add_argument("--weapon-prompt", default=WEAPON_PROMPT)
+	p.add_argument("--state-edit", default="wearing a dark armoured tactical vest with neon magenta trim over the bodysuit")
 	a = p.parse_args()
 	st = State(a.out)
 	if a.step == "plan":
@@ -317,10 +377,11 @@ def main() -> None:
 	if a.step == "balance":
 		print("generations left: %.1f" % generations())
 		return
-	if a.step in ("body", "animate", "armor", "weapon") and not a.go:
+	COST["state"] = 2 + 8
+	if a.step in ("body", "animate", "armor", "state", "weapon") and not a.go:
 		sys.exit("%s spends ~%d generations: add --go to run it" % (a.step, COST[a.step]))
 	{"body": step_body, "animate": step_animate, "armor": step_armor, "layers": step_layers,
-		"weapon": step_weapon, "export": step_export}[a.step](st, a)
+		"weapon": step_weapon, "export": step_export, "state": step_state, "state_layers": step_state_layers}[a.step](st, a)
 
 
 if __name__ == "__main__":

@@ -58,9 +58,15 @@ Make one: `godot --headless --path . -s res://tools/rig/make_rig.gd -- res://ass
 | Skeleton hand points, idle frames (2 test units) | 2.4 |
 | Skeleton hand points, walk + attack frames (124) | 12.6 |
 | Armour: reference image + transfer-outfit, SE only | 11 |
-| **Total** | **36** |
+| Armour, cheaper route: dressed state (10) + walk on 7 directions (7) | 17 |
+| **Total** | **53** |
 
 transfer-outfit costs about 10 a direction, so the other 7 would be about 70. A cheaper route to try: `/create-character-state` ("wearing the vest") edits all 8 rotations at once, then the same walk template animates that state with matching poses (8), and the vest layer is the difference, as for SE. The layer is cut by `pilot.py layers`: colour change above a threshold, specks under 12 pixels dropped.
 
 ![Armour pilot: reference, base, transfer result, layer](../screenshots/armor_pilot_raw.png)
 ![Cleaned vest layer and base + layer](../screenshots/armor_pilot_layer.png)
+
+### Result of the cheaper route (dressed state)
+It doesn't layer. The state edit drew different armour (grey plating all over, no magenta: `use_color_palette_from_reference` blocked the new colour), and its walk is generated fresh, so frames sit a pixel or two off the base walk and the cut-out layer is broken outlines. Layers come out clean only when the dressed frames are the body's own frames repainted, which is what transfer-outfit does. The state's layers in `assets/gear/armor/pilot_vest/walk/` (all but SE) are a record of the test, not usable gear. A dressed state could still serve as a whole separate body (no layering).
+
+![All 8 directions: dressed walk, cut layer, base + layer](../screenshots/armor_pilot_8dir.png)
