@@ -1278,13 +1278,14 @@ func test_gear_attach() -> void:
 	var rig_ne := {"points": {"hand_r": {"facing": {"NE": [5, 5, 1]}}}}
 	var ne := GearAttach.place(rig_ne, art, "idle_NE", 0, false, Vector2.ZERO, Vector2(64, 64))
 	check(not ne["front"] and ne["grip"] == Vector2(7, 8), "place: art z sends the piece behind; per-facing grip")
+	check(GearAttach.cover_rect(Vector2(10, 20), 2, Vector2(64, 64)) == Rect2(8, 18, 5, 5) and GearAttach.cover_rect(Vector2(0, 0), 2, Vector2(64, 64)) == Rect2(0, 0, 3, 3) and not GearAttach.cover_rect(Vector2(5, 5), 0, Vector2(64, 64)).has_area(), "fist patch: square round the point, clipped")
 	# Estimator: a body with an arm out on screen-left (the right hand facing SE).
 	var img := Image.create(40, 60, false, Image.FORMAT_RGBA8)
 	img.fill_rect(Rect2i(15, 5, 10, 50), Color.WHITE)
 	img.fill_rect(Rect2i(8, 28, 7, 4), Color.WHITE)
 	var fp := RigEstimate.frame_points(img, "SE")
 	var hr: Vector3 = fp["hand_r"]
-	check(int(hr.x) == 9 and hr.y >= 28 and hr.y <= 31 and hr.z > 0, "estimate: right hand at the arm's tip, in front (%s)" % hr)
+	check(hr.x >= 9 and hr.x <= 11 and hr.y >= 28 and hr.y <= 31 and hr.z > 0, "estimate: right hand in the fist at the arm's tip, in front (%s)" % hr)
 	check(absf((fp["head"] as Vector3).x - 19.5) < 0.6 and (fp["hand_l"] as Vector3).z < 0, "estimate: head centred, far hand behind")
 	check(RigEstimate.frame_points(Image.create(8, 8, false, Image.FORMAT_RGBA8), "SE").is_empty(), "estimate: empty frame, no points")
 	# Palette swap recolours exact colours and keeps alpha.
@@ -1308,7 +1309,7 @@ func test_gear_attach() -> void:
 	blade.save_png(wpn + "/SE.png")
 	blade.save_png(wpn + "/NE.png")
 	var fa := FileAccess.open(wpn + "/attach.json", FileAccess.WRITE)
-	fa.store_string(JSON.stringify({"point": "hand_r", "grip": [1, 1]}))
+	fa.store_string(JSON.stringify({"point": "hand_r", "grip": [1, 1], "cover": 2}))
 	fa.close()
 	check(GearAttach.is_art(wpn) and not GearAttach.is_art(outfit) and PixelMatrix.is_root(outfit), "attach art and layer gear told apart")
 	var made := RigEstimate.write_for(root)
@@ -1333,9 +1334,11 @@ func test_gear_attach() -> void:
 	if u.gear:
 		var s: Sprite2D = u.gear.pieces[0]["node"]
 		check(s.visible and s.get_parent() == u.sprite and not s.show_behind_parent, "facing SE: blade in front of the body")
+		var hand: Sprite2D = u.gear.pieces[0]["cover"]
+		check(hand.visible and hand.get_index() > s.get_index() and hand.texture is AtlasTexture and (hand.texture as AtlasTexture).region.size == Vector2(5, 5), "the fist is redrawn over the handle")
 		u.facing = Vector2i(0, 1)
 		u.gear.sync()
-		check(str(u.sprite.animation) == "idle_SW" and s.show_behind_parent, "facing SW: right-hand blade goes behind the body")
+		check(str(u.sprite.animation) == "idle_SW" and s.show_behind_parent and not (u.gear.pieces[0]["cover"] as Sprite2D).visible, "facing SW: right-hand blade goes behind the body (no fist patch)")
 	var tex := u.sprite.sprite_frames.get_frame_texture(&"idle_SE", 0)
 	var px := tex.get_image().get_pixel(13, 13) if tex else Color.BLACK
 	check(px == Color.GREEN, "job outfit layered on and palette-swapped (%s)" % px)

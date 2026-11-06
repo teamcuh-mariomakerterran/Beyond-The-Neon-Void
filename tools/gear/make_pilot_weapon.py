@@ -60,7 +60,9 @@ def draw(angle_deg: float) -> tuple:
 			put(x + ox, y + oy, OUTLINE)
 	for x, y, c, _ in body:
 		put(x, y, c)
-	return img, (gx, gy)
+	# Held at the middle of the wrap, so the fist sits on the handle.
+	mid = -(HILT - 1) / 2.0
+	return img, (int(round(gx + dx * mid)), int(round(gy + dy * mid)))
 
 
 def main() -> None:
@@ -73,7 +75,7 @@ def main() -> None:
 		img, grip = draw(ang)
 		img.save(os.path.join(out, facing + ".png"))
 		grips[facing] = list(grip)
-	meta = {"point": "hand_r", "grip": grips["SE"], "grips": grips, "z": {}, "rotate": False, "order": 0}
+	meta = {"point": "hand_r", "grip": grips["SE"], "grips": grips, "z": {}, "rotate": False, "order": 0, "cover": 2}
 	with open(os.path.join(out, "attach.json"), "w", encoding="utf-8") as f:
 		json.dump(meta, f, indent="\t")
 		f.write("\n")

@@ -29,7 +29,9 @@ Make one: `godot --headless --path . -s res://tools/rig/make_rig.gd -- res://ass
 ```json
 {"point": "hand_r", "grip": [24, 24], "grips": {"NE": [24, 24]}, "z": {"NE": -1}, "rotate": false, "order": 0}
 ```
-`point` is the rig point to pin to (`hand_r`, `hand_l`, `head`). `z` overrides the rig's side for one facing. `order` stacks several pieces on the same side.
+`point` is the rig point to pin to (`hand_r`, `hand_l`, `head`). `grip` is the middle of the handle. `z` overrides the rig's side for one facing. `order` stacks several pieces on the same side. `cover` redraws the body's own pixels within that many pixels of the hand over a piece held in front, so the fist closes over the handle.
+
+![Grip fix (Brian's notes): held mid-handle, fist centre, hand over the handle](../screenshots/gear_grip_fix.png)
 
 ![Before / after: pilot blade on the hand point](../screenshots/gear_before_after.png)
 
@@ -41,4 +43,4 @@ Make one: `godot --headless --path . -s res://tools/rig/make_rig.gd -- res://ass
 ## Status (2026-11-05)
 - Built: rig lookup, attach art, front/back per facing, mirroring, the estimator, item `wear_path`, job `outfit_path` and `palette_swap`, PixelMatrix palette swap, test `test_gear_attach`.
 - Pilot weapon: `assets/gear/weapons/pilot_blade` (placeholder art drawn by `tools/gear/make_pilot_weapon.py`). No game item uses it yet: that waits for Brian's before/after.
-- PixelLab pilot: script ready, not run (no API key in the cloud session).
+- PixelLab pilot: base body A + walk in 8 directions done (`assets/units/base_body_a`), 10 generations. Armour and weapon steps next.

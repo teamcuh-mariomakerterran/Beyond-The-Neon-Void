@@ -24,9 +24,12 @@ extends Node2D
 ##   <FACING>.png (any of N NE E SE S SW W NW; a missing side borrows its
 ##   mirror, flipped, then the nearest drawn facing), or one picture for all.
 ##   attach.json: {"point": "hand_r", "grip": [x, y], "grips": {"NE": [x, y]},
-##                 "z": {"NE": -1}, "rotate": false, "order": 0}
-##   grip is the pixel held at the anchor point; z overrides the rig's side
-##   per facing; order breaks ties between pieces on the same side.
+##                 "z": {"NE": -1}, "rotate": false, "order": 0, "cover": 2}
+##   grip is the pixel held at the anchor point (the middle of a handle); z
+##   overrides the rig's side per facing; order breaks ties between pieces on
+##   the same side. cover > 0 redraws the body's own pixels within that many
+##   pixels of the point on top of a piece in front, so the fist closes over
+##   the handle instead of the weapon floating over the hand.
 ## A wear_path folder in PixelMatrix layout (<anim>/<FACING>_<Limb>.png) is a
 ## worn layer instead and goes through PixelMatrix.composite (see Unit).
 
@@ -153,7 +156,7 @@ static func load_art(dir: String) -> Dictionary:
 		grips[k] = _v2(meta["grips"][k])
 	var out := {"dir": dir, "point": str(meta.get("point", "hand_r")), "grip": _v2(meta.get("grip", [0, 0])),
 		"grips": grips, "z": meta.get("z", {}), "rotate": bool(meta.get("rotate", false)),
-		"order": int(meta.get("order", 0)), "pics": pics, "any": any}
+		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "pics": pics, "any": any}
 	_arts[dir] = out
 	return out
 
@@ -208,7 +211,17 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 		z = float(zo[drawn])
 	var ang := angle_at(p_rig, point, anim, frame) if bool(art.get("rotate", false)) else 0.0
 	return {"pos": offset + Vector2(x, v.y), "grip": grip, "flip": flip != bool(pic[1]),
-		"front": z >= 0.0, "angle": -ang if flip else ang, "path": str(pic[0])}
+		"front": z >= 0.0, "angle": -ang if flip else ang, "path": str(pic[0]),
+		"point": Vector2(v.x, v.y), "cover": cover_rect(Vector2(v.x, v.y), int(art.get("cover", 0)), cell) if z >= 0.0 else Rect2()}
+
+
+## The patch of the body (cell pixels, unflipped) redrawn over a held piece:
+## a square of radius `r` round the point, clipped to the cell. Empty if r <= 0.
+static func cover_rect(point: Vector2, r: int, cell: Vector2) -> Rect2:
+	if r <= 0:
+		return Rect2()
+	var rect := Rect2(point.x - r, point.y - r, r * 2 + 1, r * 2 + 1)
+	return rect.intersection(Rect2(Vector2.ZERO, cell)) if cell != Vector2.ZERO else rect
 
 
 ## Builds a GearAttach under `spr` for the given art folders (skips folders
@@ -236,7 +249,14 @@ static func attach_to(spr: AnimatedSprite2D, body_dir: String, art_dirs: Array) 
 		s.use_parent_material = true
 		s.visible = false
 		spr.add_child(s)
-		g.pieces.append({"art": a, "node": s})
+		# The fist: a window onto the body's current frame, drawn over the piece.
+		var c := Sprite2D.new()
+		c.name = s.name + "_Hand"
+		c.centered = false
+		c.use_parent_material = true
+		c.visible = false
+		spr.add_child(c)
+		g.pieces.append({"art": a, "node": s, "cover": c})
 	g.sync()
 	return g
 
@@ -247,9 +267,10 @@ func _process(_dt: float) -> void:
 
 func _exit_tree() -> void:
 	for pc: Dictionary in pieces:
-		var s: Sprite2D = pc["node"]
-		if is_instance_valid(s):
-			s.queue_free()
+		for k: String in ["node", "cover"]:
+			var n: Node = pc.get(k)
+			if is_instance_valid(n):
+				n.queue_free()
 	pieces.clear()
 
 
@@ -268,6 +289,8 @@ func sync() -> void:
 		cell = tex.get_size()
 	for pc: Dictionary in pieces:
 		var s: Sprite2D = pc["node"]
+		var cv: Sprite2D = pc["cover"]
+		cv.visible = false
 		var pl := place(rig, pc["art"], anim, body.frame, body.flip_h, body.offset, cell)
 		if pl.is_empty():
 			s.visible = false
@@ -285,3 +308,23 @@ func sync() -> void:
 		s.position = pl["pos"]
 		s.rotation_degrees = float(pl["angle"])
 		s.show_behind_parent = not bool(pl["front"])
+		var cr: Rect2 = pl["cover"]
+		if cr.has_area() and tex:
+			_show_cover(cv, tex, cr, cell, body.flip_h, body.offset)
+
+
+## Points `cv` at the region `cr` of the body frame `tex`, placed where the
+## body draws it (mirrored when the body is flipped).
+func _show_cover(cv: Sprite2D, tex: Texture2D, cr: Rect2, cell: Vector2, flip: bool, offset: Vector2) -> void:
+	var at := AtlasTexture.new()
+	if tex is AtlasTexture:
+		var src := tex as AtlasTexture
+		at.atlas = src.atlas
+		at.region = Rect2(src.region.position + cr.position, cr.size)
+	else:
+		at.atlas = tex
+		at.region = cr
+	cv.texture = at
+	cv.flip_h = flip
+	cv.position = offset + Vector2(cell.x - cr.position.x - cr.size.x if flip else cr.position.x, cr.position.y)
+	cv.visible = true
