@@ -417,7 +417,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:26",
+			"facings_made": 10
 		},
 		"21": {
 			"anims": {
@@ -483,8 +485,18 @@
 				},
 				"jump": {
 					"template": "two-footed-jump",
-					"directions": [],
-					"v3_groups": {}
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"d739b401-f63f-41d6-a5e9-ddb2e2dc9a99": [
+							"north-east",
+							"north-west"
+						]
+					}
 				}
 			},
 			"generations_used": 0.0
