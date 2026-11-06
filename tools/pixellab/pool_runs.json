@@ -314,7 +314,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:33",
+			"facings_made": 10
 		},
 		"9": {
 			"anims": {
@@ -608,6 +610,21 @@
 							"north-west"
 						]
 					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"b2b01764-9e0e-4cad-92b8-8c076e5dc9b7": [
+							"north-east",
+							"north-west"
+						]
+					}
 				}
 			},
 			"generations_used": 0.0
@@ -671,6 +688,71 @@
 					"v3_groups": {
 						"8919ad06-ed05-40dd-bc4e-1c10db8386c7": [
 							"north-east"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0
+		},
+		"27": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"686167ec-7cd8-4388-a9bf-8909834cdcee": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"5d947a78-1da3-4413-aa57-d50c594a0abe": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"72a691be-cdf5-4eaa-b16e-122c0e872db1": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"035eb691-697a-4bdc-8b9b-32dfc491bb4b": [
+							"north-east",
+							"north-west"
 						]
 					}
 				}
