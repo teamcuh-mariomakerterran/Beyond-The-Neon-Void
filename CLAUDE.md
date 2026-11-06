@@ -23,6 +23,12 @@ Cyberpunk turn-based tactics RPG, a spiritual successor to Final Fantasy Tactics
 `bash .claude/skills/godot-verify/scripts/verify.sh .` (Windows: `powershell -ExecutionPolicy Bypass -File .claude/skills/godot-verify/scripts/verify.ps1`).
 Gates: preflight, import, data (`validate_data.py`), compile (`tests/compile_all.gd`), tests (`tests/run_tests.gd`), replay (seeded determinism + win rates).
 
+## PixelLab spending (Brian's rule, 2026-11-06)
+- Every PixelLab batch starts with ONE character: generate, then look at the full animations frame by frame against the character's standing poses (outfit, weapons, head, silhouette) and send Brian the GIFs. Nothing more is generated until he approves.
+- Every batch has a credit ceiling Brian sets; stop and report before going over it.
+- Never delete a PixelLab take (keep them as a kit; pin the preferred take per facing).
+- Report real credit use (balance before/after) after every step.
+
 ## Never
 - TileMap, a second grid, a second currency, `.tres` saves, `class_name` on autoloads.
 - New `RandomNumberGenerator.new()` in rules code (use `CombatManager.rng`).
