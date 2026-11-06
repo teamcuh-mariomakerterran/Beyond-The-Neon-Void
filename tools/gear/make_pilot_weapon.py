@@ -3,7 +3,7 @@
 python3 tools/gear/make_pilot_weapon.py [out_dir]   (default assets/gear/weapons/pilot_blade)
 
 Placeholder art for testing the hand-point system until PixelLab (or Brian)
-supplies the real set. Writes SE.png and NE.png (SW / NW borrow them,
+supplies the real set. Writes SE.png, NE.png and NW.png (SW borrows SE,
 mirrored) plus attach.json with the grip pixel of each.
 """
 import json
@@ -71,7 +71,10 @@ def main() -> None:
 	grips = {}
 	# SE: lowered, tip down and forward (toward the viewer's right).
 	# NE: carried up and back over the shoulder side, away from the viewer.
-	for facing, ang in (("SE", 62.0), ("NE", -58.0)):
+	# NW: held behind the body on the far side, angled out (up and away) so the
+	# blade pokes past the body instead of hiding behind it (Brian, 2026-11-06).
+	# SW borrows SE mirrored, which already points out past the body.
+	for facing, ang in (("SE", 62.0), ("NE", -58.0), ("NW", -40.0)):
 		img, grip = draw(ang)
 		img.save(os.path.join(out, facing + ".png"))
 		grips[facing] = list(grip)

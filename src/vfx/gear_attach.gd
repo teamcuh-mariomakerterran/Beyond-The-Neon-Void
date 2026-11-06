@@ -212,15 +212,21 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 	var ang := angle_at(p_rig, point, anim, frame) if bool(art.get("rotate", false)) else 0.0
 	return {"pos": offset + Vector2(x, v.y), "grip": grip, "flip": flip != bool(pic[1]),
 		"front": z >= 0.0, "angle": -ang if flip else ang, "path": str(pic[0]),
-		"point": Vector2(v.x, v.y), "cover": cover_rect(Vector2(v.x, v.y), int(art.get("cover", 0)), cell) if z >= 0.0 else Rect2()}
+		"point": Vector2(v.x, v.y), "cover": cover_rect(Vector2(v.x, v.y), int(art.get("cover", 0)), cell,
+			point_at(p_rig, point.replace("hand", "elbow"), anim, frame, drawn, cell.x) if point.begins_with("hand") else null) if z >= 0.0 else Rect2()}
 
 
 ## The patch of the body (cell pixels, unflipped) redrawn over a held piece:
-## a square of radius `r` round the point, clipped to the cell. Empty if r <= 0.
-static func cover_rect(point: Vector2, r: int, cell: Vector2) -> Rect2:
+## a square of radius `r` round the point, stretched to the elbow when the rig
+## has one (elbow_r / elbow_l), so the forearm in front covers the handle too.
+## Clipped to the cell. Empty if r <= 0.
+static func cover_rect(point: Vector2, r: int, cell: Vector2, elbow: Variant = null) -> Rect2:
 	if r <= 0:
 		return Rect2()
 	var rect := Rect2(point.x - r, point.y - r, r * 2 + 1, r * 2 + 1)
+	if elbow is Vector3:
+		var e: Vector3 = elbow
+		rect = rect.merge(Rect2(e.x - r, e.y - r, r * 2 + 1, r * 2 + 1))
 	return rect.intersection(Rect2(Vector2.ZERO, cell)) if cell != Vector2.ZERO else rect
 
 

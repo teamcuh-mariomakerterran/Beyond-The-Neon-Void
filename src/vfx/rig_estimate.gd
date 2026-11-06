@@ -147,6 +147,29 @@ static func from_unit_set(us: Dictionary) -> Dictionary:
 	return {"source": "RigEstimate (silhouette)", "points": pts}
 
 
+## Saves the frames a body plays as <out>/<anim>__<frame>.png (all anims, or
+## `only`; `first_only` keeps frame 0). Returns how many were written.
+static func dump_frames(dir: String, out: String, only: Array = [], first_only: bool = false) -> int:
+	var us: Dictionary = {}
+	if PixelLab.is_root(dir):
+		us = PixelLab.unit_set(dir)
+	elif PixelMatrix.is_root(dir):
+		us = PixelMatrix.unit_set(dir)
+	if not us.get("ok", false):
+		return 0
+	DirAccess.make_dir_recursive_absolute(out)
+	var sf: SpriteFrames = us["frames"]
+	var n := 0
+	for anim: StringName in sf.get_animation_names():
+		if not only.is_empty() and not only.has(str(anim)):
+			continue
+		for i in (1 if first_only else sf.get_frame_count(anim)):
+			var img := _frame_image(sf, anim, i)
+			if img and img.save_png(out.path_join("%s__%d.png" % [anim, i])) == OK:
+				n += 1
+	return n
+
+
 ## Writes <dir>/rig.json for the body at `dir` unless one exists (force to
 ## overwrite). Returns the rig or {} on failure.
 static func write_for(dir: String, force: bool = false) -> Dictionary:
