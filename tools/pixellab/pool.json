@@ -1,0 +1,4674 @@
+{
+	"_about": "Brian's PixelLab character pool (2026-11-06). n = number on the contact sheet. status keep/skip/no_image is Brian's pick; focus = kept and 60x60 (work on these first). Tool data for tools/pixellab/, not game content.",
+	"open_questions": [
+		"Which skipped ones are wild enemies that still need attack + death animations?",
+		"#223 and #225 (64 px, outside the focus): keep or skip?"
+	],
+	"characters": [
+		{
+			"n": 1,
+			"character_id": "1b014f80-b640-441c-8b42-cf43d324cb72",
+			"group_id": "43ef80b7-e706-4872-84ce-613a7b888470",
+			"name": "plain androgynous human base body, grey bodysuit,",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 2,
+			"animations": 15,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 2,
+			"character_id": "ea39fbf0-a340-4216-b894-1b150f1a4e30",
+			"group_id": "141bfc89-0e16-4714-8db1-38235ac38b08",
+			"name": "cyberpunk tactics characters, has sword",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 3,
+			"character_id": "6eb97c85-83ba-4e6d-9b74-3291e0cce5da",
+			"group_id": "23bc6b05-1eb4-4777-8a9f-ceef1c77d742",
+			"name": "cyberpunk tactics enemy units, has",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 4,
+			"character_id": "72471e67-ddf3-43c1-810b-a051b3d9faf9",
+			"group_id": "2afa9ed6-428a-4857-9825-7d5ed097300a",
+			"name": "cyberpunk tactics units",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 5,
+			"character_id": "be717348-5586-40da-a1d6-c47f33512b5a",
+			"group_id": "5ecc07e8-2ecd-4142-850d-a3e517713571",
+			"name": "cyberpunk npc characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 6,
+			"character_id": "3b4bf7e3-668e-4dd6-ac22-523c29e2dfdf",
+			"group_id": "e42f3afb-a37b-44f6-a332-b0ed221fcba5",
+			"name": "cyberpunk tech sniper characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 7,
+			"character_id": "cc47fc79-c1ee-439b-b2f4-6ece3a25f0b3",
+			"group_id": "9f9b1415-f892-482e-9c26-652c9a097b9e",
+			"name": "cyberpunk tech boss characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 8,
+			"character_id": "fc04046c-4f81-4a1c-8810-173f67ffc2de",
+			"group_id": "d25afd8e-cccf-4917-b58b-156ef3405718",
+			"name": "cyberpunk characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 9,
+			"character_id": "9b20f4d1-696d-4e84-b174-1f8a7328eca5",
+			"group_id": "883cff82-ab37-4ab3-a6fb-cac832ef4c0c",
+			"name": "cyberpunk tech mage characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 10,
+			"character_id": "72689fee-df3f-4996-88db-b4136a975407",
+			"group_id": "c32ea608-2fa8-4142-82cc-e2a4e6927363",
+			"name": "cyberpunk droid characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 11,
+			"character_id": "9bd961a8-43ae-4fc1-b836-54565073b20f",
+			"group_id": "06e05322-778a-44d9-a512-dc2cc3651d61",
+			"name": "cyberpunk tech mercenaries characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 12,
+			"character_id": "7d3908d5-cf63-41d6-9b59-f226088c128c",
+			"group_id": "6b8ca359-146a-4d4e-b8b6-5e8840648cdd",
+			"name": "cyberpunk tech mercenaries characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 13,
+			"character_id": "4cd1597e-fb41-445f-8834-74cf250f0bc4",
+			"group_id": "313e85fa-e86e-4f4f-9b3a-1d6d368cc2a0",
+			"name": "cyberpunk tech dragoon characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 14,
+			"character_id": "dc14e964-3897-4f66-926a-e11ed41d1c66",
+			"group_id": "3fb7606b-41a8-4908-b61c-51250185e4ef",
+			"name": "cyberpunk droid characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 15,
+			"character_id": "e65b804c-77fa-4e7d-b137-995837681a0e",
+			"group_id": "ee1e7235-0023-4e15-920f-86da81d2000b",
+			"name": "cyberpunk characters with upgrades",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 16,
+			"character_id": "b934ce7d-2512-40bd-824b-fc27de6daaa7",
+			"group_id": "97c811a5-2c87-4e28-ac97-e9ee5108fcb8",
+			"name": "cyberpunk tech creature characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 17,
+			"character_id": "374e4282-1946-48e9-98e4-5b58215e230a",
+			"group_id": "12347f58-e86f-4fe4-8c0c-dfdea00e5276",
+			"name": "cyberpunk corporate characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 2,
+			"animations": 16,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 18,
+			"character_id": "ab5389e3-a8a3-4abc-a8b4-32991909f97f",
+			"group_id": "1585fa31-630e-428e-baff-67e5781e7330",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 19,
+			"character_id": "6fff4a95-20ff-44cc-8948-3a9ef956e32f",
+			"group_id": "52f193f6-ac85-4068-aa78-d92abe28ec08",
+			"name": "cyberpunk corporate characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 20,
+			"character_id": "a7653f4a-69e9-47b1-8cb2-e454a32eda86",
+			"group_id": "b76f13ec-a70e-43dd-b843-07374b71d71c",
+			"name": "cyberpunk corporate characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 8,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 21,
+			"character_id": "6b888589-209d-4c76-abc2-44ee36954c04",
+			"group_id": "b2882058-a6a0-4d40-9ad6-8b58adfed25b",
+			"name": "cyberpunk tech sniper characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 22,
+			"character_id": "288b860f-091c-48f0-a91c-d02fe6cef3d8",
+			"group_id": "61ac1563-f355-49c3-9c79-4d4bebeb1f8d",
+			"name": "cyberpunk tech sniper characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 23,
+			"character_id": "beaae51c-42dc-4f25-bfa4-17690b31e627",
+			"group_id": "17f1ead2-f403-4065-ad4e-6e4f62037145",
+			"name": "cyberpunk tech mage characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 24,
+			"character_id": "cb21e31d-fa54-4388-b56e-a9219a3aa9db",
+			"group_id": "5e2d948b-fd35-460c-ae94-40335c02cd80",
+			"name": "cyberpunk tech mage characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 25,
+			"character_id": "4119f984-5d4e-46f2-be83-866bca47f82a",
+			"group_id": "ce004652-0d7c-45b5-953e-34820b454b74",
+			"name": "cyberpunk tech necromancer characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 26,
+			"character_id": "8150b598-2eb6-44ea-adc8-f4c7b6f54d60",
+			"group_id": "ac2dcab8-5382-4f10-a50d-f34440ef4f67",
+			"name": "cyberpunk tech dragoon characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 27,
+			"character_id": "70ffa369-8709-431f-afa8-a1762a2470cc",
+			"group_id": "8edd0cf6-a179-49a9-865d-04714a3ad97c",
+			"name": "cyberpunk tech necromancer characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 28,
+			"character_id": "c3d3dfca-1848-4dae-b573-e49117455bb0",
+			"group_id": "f632b00e-b95e-4d23-9572-ee23ce3cc2ce",
+			"name": "cyberpunk tech necromancer characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 29,
+			"character_id": "512f756e-3cf2-43b0-98b5-2bbe7b23c463",
+			"group_id": "a04485be-b08b-43ea-b84c-d4fa0cfec3da",
+			"name": "cyberpunk tech necromancer characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 30,
+			"character_id": "090236a0-25b3-40e9-a3ea-35565ba53edb",
+			"group_id": "c56fee27-ccce-4409-aa84-b579b126c3d5",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 31,
+			"character_id": "4aaa36e5-a3a9-4e62-accb-08206d617087",
+			"group_id": "96a4e352-3aad-4f51-a98a-65df01d982a3",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 32,
+			"character_id": "61f14184-887f-485a-90d2-eed8e1d76c2d",
+			"group_id": "9290dc45-3376-43c8-aa30-7ba579fe53d2",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 33,
+			"character_id": "34a0e162-9801-4ff9-9e19-dc75b60fbd15",
+			"group_id": "f11ccdf9-cb82-4f59-9e5a-71a98e8cae3b",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 34,
+			"character_id": "44917ec3-323c-4876-86fa-3a71ce05856a",
+			"group_id": "2c9697d1-5c4d-41ad-8c95-ff64b60547db",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 35,
+			"character_id": "6b34b1a2-b2c0-44fe-b419-09e5ad9f5fb0",
+			"group_id": "17f73846-0427-46f2-9a8a-10d1db8fdb67",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 36,
+			"character_id": "333e8771-29ba-4f40-a756-bdad11009ac0",
+			"group_id": "d281a5a3-1027-43f0-829b-d6bbd21f94f9",
+			"name": "cyberpunk tech god characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 37,
+			"character_id": "b6912ad1-46bb-4cc9-8654-0375fb35e94b",
+			"group_id": "11030e20-2729-41f9-a1e8-6c5c2c562a84",
+			"name": "cyberpunk tech mercenaries characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 38,
+			"character_id": "4b3b110a-f7fa-47c6-b011-d4d9fa8253ab",
+			"group_id": "a96279f8-b2b2-4fce-8b9d-5cfc90ece3ae",
+			"name": "cyberpunk characters with upgrades",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 39,
+			"character_id": "ef8008ca-a5d0-4235-87b5-48237023cec2",
+			"group_id": "657591ee-8149-4269-8325-9224bc1d39e0",
+			"name": "cyberpunk characters in droid armor",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 40,
+			"character_id": "52a337bb-3bbc-4c49-bc4e-aae01581f2a8",
+			"group_id": "7014bc48-bc97-4f30-bbd7-47f383702173",
+			"name": "cyberpunk npc boss characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 41,
+			"character_id": "0cf3e450-5a1a-41f3-b8d0-0731b69eb8a5",
+			"group_id": "ef8b0a1c-e3f6-4cc4-b39b-5ccdd6185f1b",
+			"name": "cyberpunk droid characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 42,
+			"character_id": "341ad358-2a60-44f5-9add-d692a6820cf9",
+			"group_id": "2f836618-1c23-4536-84cd-10a62daba7f1",
+			"name": "cyberpunk characters in droid armor",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 43,
+			"character_id": "850cbea7-e871-498f-989f-290900f7cbc3",
+			"group_id": "5986c9df-f90e-4dc9-82be-142f97d22753",
+			"name": "cyberpunk tech mage characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 44,
+			"character_id": "de93ad96-9cd4-4546-a9c8-60ae09818792",
+			"group_id": "400ba4d0-5330-43cb-af6c-27fbadb90e5a",
+			"name": "cyberpunk tech creature characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 45,
+			"character_id": "882e8e3d-dea0-4886-8074-c8796ae6a004",
+			"group_id": "4c1d61a6-57ed-4d3f-a7bc-4a842d6007d7",
+			"name": "cyberpunk tech ninja characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 46,
+			"character_id": "a7aa40f9-8b62-4b13-8ba5-a70f2ff98532",
+			"group_id": "bca1cdef-02cc-466b-8589-f6bb761a9c7d",
+			"name": "cyberpunk tech ninja characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 47,
+			"character_id": "2e28e23b-ff93-4742-a7b6-1840d96df020",
+			"group_id": "fc46eab5-153f-4621-b7fd-a683e8a210d6",
+			"name": "cyberpunk tech ninja characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 48,
+			"character_id": "fd19dcfa-126d-4420-a776-1bb0f548b4f8",
+			"group_id": "754f4268-cb65-4d25-b8c8-d88278f5a87c",
+			"name": "cyberpunk tech ninja characters",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 49,
+			"character_id": "bda2583e-899a-4c84-afe0-6be09df87258",
+			"group_id": "cbe573d8-6a7c-475a-ade2-07590a154a49",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 10,
+			"animations": 16,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 50,
+			"character_id": "ff702bb9-ce7d-4dfa-866e-9a6b74c50227",
+			"group_id": "241a0ea3-13e2-461c-b75a-4a74d32c79c2",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 51,
+			"character_id": "9212aa12-02b2-4298-87ac-f1ccfbe7a41c",
+			"group_id": "262f4b30-72fb-41d4-a87f-02852978af95",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 52,
+			"character_id": "066af419-d185-46ec-a118-8aed29530989",
+			"group_id": "15b2cabe-99e9-42ba-bd8c-812ddcb1fbd3",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 53,
+			"character_id": "72f6a1cd-bba5-45f8-a0f6-bac789eb4ce9",
+			"group_id": "21393651-ce6a-4bd9-82ea-de0dfe3d3c3b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 54,
+			"character_id": "426f7a23-a8fa-4b91-a637-142f1bf814e4",
+			"group_id": "25a67d57-2912-412e-8bf7-deac01591951",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 55,
+			"character_id": "d45cdce0-e0ea-4501-8221-98f9fb38b27e",
+			"group_id": "80bdef72-e091-4d4d-8775-01b5d44da9b6",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 56,
+			"character_id": "bf1e0abb-7b98-40bf-b6b7-9e706f6ad8d2",
+			"group_id": "3e5c4710-5ba5-4894-8b0a-08036038d920",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 57,
+			"character_id": "695d969f-3f9f-4d50-b31d-8f4c664ca93f",
+			"group_id": "708c11bd-177c-4f4c-9acd-64c235d5cc4e",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 58,
+			"character_id": "b06fa132-5f1c-408d-8e16-d1f33fce52cd",
+			"group_id": "686888aa-598f-42b3-8179-5fac03facb64",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 59,
+			"character_id": "31ff237a-25f9-49f2-b070-9403ab968188",
+			"group_id": "98ff0c55-f408-4414-ae6a-17f80e77882f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 60,
+			"character_id": "cc225470-7d41-4af7-9a05-5b61225fef9e",
+			"group_id": "94b1c71b-0e5d-49b1-9660-f35188190fe5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 61,
+			"character_id": "973d3360-8795-4f76-8049-9c21afe56f54",
+			"group_id": "21ad1eb7-bfb7-4c3c-b0e6-58ff3a2a361f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 62,
+			"character_id": "66f6df64-38f5-47a0-9cc9-cf89b417090f",
+			"group_id": "5f6282aa-490b-48a3-8fac-a9ba4327ad36",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 63,
+			"character_id": "49ec8968-7d34-4090-99c0-fb50aa61752b",
+			"group_id": "0fd98adf-5462-4e85-88d7-4fc549061487",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 64,
+			"character_id": "ed946665-12b0-4c2a-ac57-8693d13e6ca1",
+			"group_id": "0e5f8c7e-c111-44b7-b11c-eb4f754b1763",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 65,
+			"character_id": "d6cfb5ca-6cac-496a-b602-177c7373ec0e",
+			"group_id": "42ffc0fd-5491-4e2d-a169-42a92f5545b0",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 66,
+			"character_id": "69662eca-bf39-4797-ac65-5eb5007ea35b",
+			"group_id": "d3f0ae52-a050-4555-a3c1-dc938600f668",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 67,
+			"character_id": "010eb974-8f9d-4180-af09-c7f1e1be210f",
+			"group_id": "979ed1f5-b386-418f-a832-1b7de3ad95d3",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 68,
+			"character_id": "6fd70c03-6cae-4daf-96d0-416f5dfd4b2e",
+			"group_id": "203baea6-c71a-45a8-ad6e-06b009ac4a85",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 69,
+			"character_id": "903323f5-f61f-4392-9bdc-d7634cf26894",
+			"group_id": "66721aa3-ee0b-4502-ab10-dd38b9f609fb",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 70,
+			"character_id": "61ce19a8-08e8-48a6-a3fa-46ef65c2badf",
+			"group_id": "6a2010c6-8cb9-4a54-952a-8fc019875479",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 71,
+			"character_id": "f324737b-5009-4691-be4a-18e4df80cfa9",
+			"group_id": "b2163f67-5602-4e05-9caf-f13f5301e045",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 72,
+			"character_id": "c134c427-ac1c-42cc-892a-5f570271be36",
+			"group_id": "72992497-3ebd-46f9-a1a0-c90c6f7c8183",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 73,
+			"character_id": "be523116-043b-4e64-a105-b3efd76add0f",
+			"group_id": "fd284770-3b75-4be2-94e0-e943c695abab",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 74,
+			"character_id": "a0b63826-ea35-494b-be61-33001ad28fe7",
+			"group_id": "0dad4ce3-fad7-4fea-adae-415d5a7d1113",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 75,
+			"character_id": "10c2ab06-05e3-4306-b0ae-4098acc213f2",
+			"group_id": "4021ceff-30de-4bdc-8c07-46f658fdc685",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 76,
+			"character_id": "19b7b0d0-c148-4ec8-ad53-171d3706fc9a",
+			"group_id": "90943078-e655-48bb-be3e-631e9336c91a",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 4,
+			"animations": 15,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 77,
+			"character_id": "63d099f7-aa88-4e66-ae38-a9ed737c9a6b",
+			"group_id": "d87a6817-e803-4e81-8ee4-29c9395ebbdf",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 78,
+			"character_id": "d562a842-467e-4258-92a6-b47ba564a245",
+			"group_id": "65b52065-7dc7-4132-83f3-898295c7d6b7",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 79,
+			"character_id": "bcc9fba7-bed3-4dbf-82e7-0264bdb62497",
+			"group_id": "b63918a7-8124-4a1f-978a-99ba9e005e91",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 80,
+			"character_id": "29509d5c-8b0c-4c11-8212-df8d0fac820c",
+			"group_id": "6d186df7-7c07-4ff1-a494-2294c57ac6b1",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 81,
+			"character_id": "bcf93bfe-863a-4607-83f9-bcac8b14027e",
+			"group_id": "3b3c9b13-9211-4538-aa79-b75cbf117fb3",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 82,
+			"character_id": "9d954414-c5ea-47ec-909d-dd1ac0c12ac6",
+			"group_id": "86b9656a-dc15-4566-b25e-af6c6577c40b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 83,
+			"character_id": "ef74c748-7665-4ce6-afa7-68a31370355b",
+			"group_id": "94b2b1cb-3bea-4f8b-abce-098b36ea7846",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 84,
+			"character_id": "058d319d-cdda-4028-96a5-26e3685a194b",
+			"group_id": "a325156e-b6f4-42b6-885a-0e183932367c",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 85,
+			"character_id": "ced50e46-52e6-4a87-852d-c89718d9fe31",
+			"group_id": "1c6f782e-b791-4e50-b949-8c8eb6e60288",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 86,
+			"character_id": "eee4abc2-ef29-4525-91ed-a231f63f610d",
+			"group_id": "8b709e23-c380-4646-84f5-2015aeed6aa9",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 87,
+			"character_id": "4e9769b9-b6c6-48e0-8b93-b13fc93ef6e3",
+			"group_id": "0eda15bd-524a-4d56-88e0-8547c11a61fb",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 88,
+			"character_id": "6a1ee8f3-2c1f-497d-94a0-8afab50cc98c",
+			"group_id": "0f9f707c-592c-4096-856b-6d98c2e4fa19",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 89,
+			"character_id": "4962ed49-1354-412b-9a39-dda990a734ae",
+			"group_id": "737d7447-0aeb-4c9a-9463-a64dfe6dde81",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 90,
+			"character_id": "01669be3-a284-4cb2-a38a-b6ce9cbe35d3",
+			"group_id": "317f5de8-21ad-4257-b559-357213f5aa1b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 91,
+			"character_id": "1bcfbb9e-cf9b-4b5d-bb3c-1eb6f4419371",
+			"group_id": "9c18fe26-dd39-4200-9fff-9fd928288e5d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 92,
+			"character_id": "9c712f60-95a3-4818-9336-3281c300159a",
+			"group_id": "65384f70-eccd-4d6d-aaaa-780fc52bcc3f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 93,
+			"character_id": "d6b99ed5-cdc3-4288-a1ac-0b0c59473a86",
+			"group_id": "3de3f3d5-53cb-4548-a30e-ed2eacead3f7",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 94,
+			"character_id": "e79ad7ec-60a3-454b-9990-1a60f720cd46",
+			"group_id": "f3be5638-171f-459b-ace0-143361528f5e",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 95,
+			"character_id": "e7125e4b-3187-42c1-b5f6-f9fa1c3fc63e",
+			"group_id": "185b3bee-0136-4bc1-a020-270093ec879d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 96,
+			"character_id": "02d0854e-ddf7-4242-8db5-90ea901967f9",
+			"group_id": "cd9c0bdd-1597-4597-ae7c-f6a990341d75",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 97,
+			"character_id": "838f6662-b4ca-4f39-beb1-298a1f6c70f3",
+			"group_id": "cef32f2d-4ddf-4c29-87ca-84a54c7fa294",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 98,
+			"character_id": "167dbeae-62ef-42f3-86ab-54a024095a73",
+			"group_id": "2b0f205e-e282-4e5f-830b-26efda150954",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 99,
+			"character_id": "48873969-fc9f-4317-987b-c5d05f436dff",
+			"group_id": "1314c075-af76-46b1-b1c4-e32469ceea3a",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 100,
+			"character_id": "116d4892-e413-4e6c-9470-f9acdab9c4e0",
+			"group_id": "d7be75ee-fc7c-401e-a28f-ab09c2e2739d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 101,
+			"character_id": "1f4dc18f-ef9e-49b3-b60c-080fca8182e8",
+			"group_id": "7784d028-de56-4290-82ff-1e309d9c3312",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 102,
+			"character_id": "972074a9-6fb3-41a8-ad0d-37d25ee691cd",
+			"group_id": "affeed4b-52e6-4313-9893-ca1d637dfa74",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 103,
+			"character_id": "d38184dd-4fc0-45de-87c5-a22151327921",
+			"group_id": "37a66b1c-c628-4ea3-aa9c-9fa3145b01e5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 104,
+			"character_id": "e1759a2f-1fb1-4096-bcc4-c1988a5b3e6b",
+			"group_id": "134ab0ce-e026-47f2-9772-c5ff1afb1888",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 105,
+			"character_id": "95322ba5-d32d-4b15-95e3-281a70716fdb",
+			"group_id": "596cd52f-2377-44ce-8025-46f8dbed7a4b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 106,
+			"character_id": "0228ff0d-baba-4d80-9251-18bc2467a650",
+			"group_id": "f2a4d673-0665-45db-9147-17e4741ade5d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 107,
+			"character_id": "29c79b45-78aa-4410-85de-b6fedf7499b0",
+			"group_id": "3f55aeea-7643-416d-b3f3-9858a43b1e07",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 108,
+			"character_id": "c8dd47d0-8a6a-4254-9f78-09c3021b1d3d",
+			"group_id": "39109907-e66a-4be4-9dca-3d68c363729d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 109,
+			"character_id": "e2b09e16-2257-4eed-8779-0fc5d5ee8edf",
+			"group_id": "e33d385e-187f-40e7-80e7-c34a433b0817",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 110,
+			"character_id": "3d768d5b-83b3-406e-9157-2a8e4b3cf79e",
+			"group_id": "7c03c098-6396-48ed-9dac-460211bd5c32",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 111,
+			"character_id": "63c86a77-efae-4073-9d74-718c5885429f",
+			"group_id": "e0d81123-f175-47da-8777-583604d2679d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 112,
+			"character_id": "91abc1ff-3bfa-47fe-ba44-4655ce28cfef",
+			"group_id": "af244fc9-95ab-451e-a298-2d176be9e79e",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 113,
+			"character_id": "8295c32b-0aca-4cf3-ab6c-eaab1f555bc8",
+			"group_id": "6ebc4990-555b-4997-860c-6f222c0f8a7d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 114,
+			"character_id": "712e8c81-55fb-4843-8e7d-7feb6f81c8dd",
+			"group_id": "ab8b27df-12fc-4112-a292-b4a770149fd4",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 115,
+			"character_id": "6b1ed708-bd67-4fce-a120-5c751e79fef9",
+			"group_id": "a1bd5a9f-bda9-483c-8199-782cb1b5b363",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 116,
+			"character_id": "e8653769-897c-425b-9f51-70415e23ceb7",
+			"group_id": "bba65749-b04e-4c0d-a8bf-bd5c3960d4a8",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 117,
+			"character_id": "523683d5-c6fa-40ab-902a-cedce2aa74c7",
+			"group_id": "3a577be4-402d-47e6-b111-84aa6813eb0d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 118,
+			"character_id": "9ee4393f-1ef6-40ad-94fc-54ac42467310",
+			"group_id": "894cec0f-cbbd-4db1-88b7-bc12c2fc6143",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 119,
+			"character_id": "21c2737b-1e3d-4eb5-b66d-6c04c0e4ef1f",
+			"group_id": "ec3a7ab2-a9c8-47b7-bea0-3b623cd9a8e1",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 120,
+			"character_id": "7dc5af30-6e94-406f-b049-afecb6bade6d",
+			"group_id": "5918256e-3307-47b2-9a09-dc50823177cd",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 121,
+			"character_id": "6f8538ff-6cb2-423a-a42b-c923581280ae",
+			"group_id": "2f519294-5534-4aa4-abeb-cdb7c4eb1df6",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 122,
+			"character_id": "a8a28547-1b7e-42c2-8672-b91abdf56efa",
+			"group_id": "7fd981b2-3cd9-4e91-a1e1-a574835ad71c",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 123,
+			"character_id": "b9a05565-3a8a-46ee-9841-6eb58d84481c",
+			"group_id": "4579ef78-c812-4a5a-9a9d-0f847d0f3415",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 124,
+			"character_id": "92ab9053-5edb-49d5-8f3d-a9322244c414",
+			"group_id": "f54ffd79-1542-4d76-940e-b755d905467a",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 125,
+			"character_id": "a51778ad-f0ff-423a-80e6-5fdfbe767397",
+			"group_id": "1ca44bf0-fee0-42de-a4e7-1f3d32ca2232",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 126,
+			"character_id": "532fe7cc-7b08-40f2-badd-c1996c26fcd5",
+			"group_id": "184ae15b-8afa-463d-9809-a9d9162eb962",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 127,
+			"character_id": "f93c2d26-1ff1-48ad-84fa-b6102b171059",
+			"group_id": "2bd34ad7-6f8c-4ddc-86a1-4bbc1e8a8d67",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 128,
+			"character_id": "ea8aaa20-3390-4d51-857b-da5583657617",
+			"group_id": "6b7db3a1-220c-4f5f-92ef-0b6f3b34f5e6",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 129,
+			"character_id": "a5c00b03-29e0-4f17-9823-b6b22ddd158e",
+			"group_id": "f4fe2e63-a057-4b5a-beca-73ba8f7db957",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 130,
+			"character_id": "c5daf304-ae42-4a8b-8a8f-f3a591c56bec",
+			"group_id": "56a25f5f-568e-4d34-9234-e7bbcd09c52b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 131,
+			"character_id": "e665628a-2664-499e-8ebc-711d7b933cbb",
+			"group_id": "ab6d82f0-0593-4134-b385-b39f32bf7744",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 132,
+			"character_id": "92cc109f-ef95-4d92-b4b3-a4737e3d3c1d",
+			"group_id": "b5e5b923-d20b-4be9-85ac-3f5b3a428ef4",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 133,
+			"character_id": "b559e792-bcda-4aeb-9d6a-1bf645cb2178",
+			"group_id": "8fde26b9-8df0-4a4e-90f2-bf0730331c14",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 134,
+			"character_id": "f443ba21-f164-497c-a253-e958c89bf9da",
+			"group_id": "5604e12d-e1e9-42b6-b4b0-d00cca5c64e4",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 135,
+			"character_id": "ca51ffaf-e204-484b-a9b2-b4800e24ef9e",
+			"group_id": "11c5724c-d4ea-4da6-a17d-0d4d518947a9",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 136,
+			"character_id": "9330d3be-4ce7-4ebb-be9a-e1dcbf8ab2ad",
+			"group_id": "16cd22b0-4913-473e-9d58-a27d040dc6e1",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 137,
+			"character_id": "58ac7db0-ef51-47a4-a45d-58046bb906d3",
+			"group_id": "0d647a20-4cac-4ea1-b0bf-ac85a1a19b24",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 138,
+			"character_id": "dae9e0a4-9c36-45ad-ad62-3d07a53b00fb",
+			"group_id": "b30f7496-9e78-4ee1-9efd-85b8efeef6b5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 139,
+			"character_id": "7c5c73e7-8bed-4d46-8bb3-2fefb02b7839",
+			"group_id": "cea8dfc1-b6c6-4673-af16-6b42d4c511e1",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 140,
+			"character_id": "c4b3f1fd-2c5c-4c5e-a2bb-c5b1d8884a3a",
+			"group_id": "a57ebb25-b138-424d-8b39-3da5aea26a49",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 141,
+			"character_id": "1d7c1b2f-13ca-4863-b91b-dac5eaeadaa5",
+			"group_id": "8360f4f9-c111-4fe7-bbcb-be48e8c0bc31",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 142,
+			"character_id": "bd2c18b8-88ae-410c-8dd9-76277883cb23",
+			"group_id": "143ddf00-c69d-4494-843e-a36246caa177",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 143,
+			"character_id": "59d24f68-e09e-4285-910d-47afcb735364",
+			"group_id": "070ebf0e-2128-4383-afa6-a3522225d025",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 144,
+			"character_id": "75c20345-0e62-4979-a978-8493381a2a46",
+			"group_id": "fa282e7c-515a-462b-8854-fcab320c269a",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 145,
+			"character_id": "54acc061-4081-4df8-b169-43b99d36c61f",
+			"group_id": "b6b96207-f8af-48fe-a1cd-c4dd832da545",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 146,
+			"character_id": "0dc4ee84-7942-43e5-b4f2-a5041b925dae",
+			"group_id": "0ccd40b3-e521-4b46-a27b-929a11e1a7c4",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 147,
+			"character_id": "dfa99868-b086-4804-be8c-017aa07edd64",
+			"group_id": "a3687aff-e87a-4a62-9615-754ef8e20a1f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 148,
+			"character_id": "dd8ffe41-52ef-4e32-bc56-74f8b1974e6f",
+			"group_id": "f9380c3b-85d8-4aa4-8404-39bb2524db0f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 149,
+			"character_id": "7740cfd4-0198-4390-b6b2-e9c506b724ac",
+			"group_id": "9eebe69b-f44e-4544-94da-3340501c0810",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 150,
+			"character_id": "01a5b92a-5b5c-4fd7-a0de-a9405d11310c",
+			"group_id": "9ee70321-4fc1-4c0b-8d7e-39c339624d40",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 151,
+			"character_id": "dd1efc48-9d1a-45ad-a67d-eeed2dc2b52a",
+			"group_id": "1b04e1a4-89fd-421c-b41d-226e2db5f119",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 152,
+			"character_id": "33cccbce-b4c5-4c6a-8f33-0f803ad4154f",
+			"group_id": "1208dec3-5c90-40c7-bf2d-d0b6b1a1f94b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 153,
+			"character_id": "b3fad7fd-2dda-409f-a978-bc49dc05691e",
+			"group_id": "1518702a-f0c2-43af-a88f-fec42dd8d329",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 154,
+			"character_id": "f93f1256-02eb-4b97-b635-ff6cf83cbb41",
+			"group_id": "11bf989c-7f62-4c37-b942-41576f96c6df",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 155,
+			"character_id": "a12128b3-cbd1-42a1-9557-cbdddebec7a0",
+			"group_id": "e8c3ec40-9935-49f6-aade-752aa6ba95ef",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 156,
+			"character_id": "defea959-366d-45a7-a2a5-f677d3114cb4",
+			"group_id": "f53ad2a2-1ec7-414b-9d95-4d92ebcea92c",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 157,
+			"character_id": "cf1f85d7-c987-44a3-8150-653c6e80aacb",
+			"group_id": "4977f43f-7662-4e06-98c1-7c4fe5949056",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 158,
+			"character_id": "02f15441-c3d1-42e3-974b-4516dbcb822b",
+			"group_id": "bf0d6b3e-f907-4299-92c5-4a5f8d8b8e5f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 159,
+			"character_id": "66c4c08c-d10b-4a56-8369-0cb5ef1eb566",
+			"group_id": "4f223382-e3fb-4dc2-9d16-602b1e6a0303",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 160,
+			"character_id": "6fdc6de9-a2f1-4d87-812f-12182161662a",
+			"group_id": "e067201c-7fe8-4aa3-a33f-dfdba52ac2f3",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 161,
+			"character_id": "b3b8f101-db23-415a-92e6-2a67e80bec7a",
+			"group_id": "8a4f1bed-c963-42be-9de2-68520858d55e",
+			"name": "cyberpunk npc main characters",
+			"state": "Idle",
+			"size": [
+				60,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 162,
+			"character_id": "240a469e-d518-40ad-a14e-7aa48be59d92",
+			"group_id": "ec4e3ce1-1edf-406f-af65-6e864134489e",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 163,
+			"character_id": "3cb9c71f-bb23-4f2d-b8a6-e12f16903e54",
+			"group_id": "e5239fd4-ef30-45f2-80da-060bb5ab5e9d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 164,
+			"character_id": "f7e7fc4a-b45f-40ef-8fe8-136aafae68c2",
+			"group_id": "24cb01fa-3418-433a-8744-cc1c23ac0f28",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 165,
+			"character_id": "5847d4e0-2612-4f21-866f-612896aa868c",
+			"group_id": "96d7d5a5-d762-4068-8078-bd30880c8aca",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 166,
+			"character_id": "d1167dce-66c6-4a3e-ab7e-989152caf8f5",
+			"group_id": "58a5b660-77a2-4d56-8da7-24feabb9baa5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 167,
+			"character_id": "b7137cde-b981-4089-84af-6387498a817d",
+			"group_id": "3fb6eb90-4b10-4bc3-93d3-4ec91cd3a1c5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 168,
+			"character_id": "6c97c6f0-3bf2-44e9-bba4-8b8c71b922b9",
+			"group_id": "b519b6ab-f563-478f-9aa3-8d4bf2e8d487",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 169,
+			"character_id": "a979a7ab-a18c-4539-8d92-a5e6275c82ce",
+			"group_id": "8ed71d51-812c-4afe-af51-1c761bda2451",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 170,
+			"character_id": "9f5e133b-b741-498c-acbb-b62bf7018c01",
+			"group_id": "c10c8eeb-e531-44c9-a663-943b3c9903e5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 171,
+			"character_id": "f0c66c37-c233-4b2f-9725-206d776de588",
+			"group_id": "47c25605-b60b-4199-8756-b92b660c2481",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 172,
+			"character_id": "8a8dfdc8-adaf-4f9b-a1cb-322fce6602b5",
+			"group_id": "e589b814-8e77-4b66-9aaf-58ef85ec19cf",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 173,
+			"character_id": "e135018f-65ce-4cd0-a08a-ce0af7384dc4",
+			"group_id": "364764ae-093a-4851-9ea8-4d48e354998c",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 174,
+			"character_id": "4305b166-6819-412d-815c-a3eee67396ed",
+			"group_id": "d9d300b4-9c98-441a-a0f4-5c02e4baef82",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 175,
+			"character_id": "fbb103f9-bb75-49fd-a6cf-676975b6e259",
+			"group_id": "86a338dd-f691-4556-af18-3225998be660",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 176,
+			"character_id": "3a42ee7f-a985-4718-b1d3-464b59d924af",
+			"group_id": "39a6e8ef-f9f9-4954-a36a-58c46a74563e",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 177,
+			"character_id": "552a3e38-a34e-4a65-8650-1220ab66e857",
+			"group_id": "cb68f6f9-6cb3-4186-8149-dc537930d3eb",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 178,
+			"character_id": "daa56f46-3920-4bc8-b124-98e6651871ff",
+			"group_id": "8ef79a9a-baed-47ba-87e9-06dc0e71a0f4",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 179,
+			"character_id": "6d2cb3bb-adfa-46dc-a983-36715eee39c2",
+			"group_id": "d39ca7dd-c5bc-4782-8db4-aa3391700627",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 180,
+			"character_id": "89e2b04d-3ecb-4773-aab3-2787f745a029",
+			"group_id": "9e12fdfa-20f4-46de-b264-3658182deca8",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 181,
+			"character_id": "2c53468d-6a0f-44ba-b854-a45c246ab9f8",
+			"group_id": "ba1b7b84-a44b-4796-a663-405f172dc92f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 182,
+			"character_id": "ebb722ca-e700-43ee-a85f-35cae28c4b34",
+			"group_id": "a8bb8ab6-0275-44d4-b7b0-97009d4d251d",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 183,
+			"character_id": "9e9788b7-fd03-4ffc-b05e-99d0223fbe38",
+			"group_id": "c7fb50e9-45f6-4011-ab49-37df3e059b0c",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 184,
+			"character_id": "5603166d-d91f-4dc9-92aa-77288539b563",
+			"group_id": "d0faf976-88ed-466a-8140-36c8b0837c49",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 185,
+			"character_id": "d67ae9d1-9725-48e2-9dbe-beb64f6eb59b",
+			"group_id": "66233b6f-f020-4b2b-bef3-7bd8d49cfe72",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 186,
+			"character_id": "0675df9d-86de-4354-a928-8041e62ed51c",
+			"group_id": "07c014da-34a6-4f9c-81eb-c716a68ed9f0",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 187,
+			"character_id": "0c0a4d4d-5d3f-4c77-a7ec-356d73c91898",
+			"group_id": "dadfac1a-e197-451b-9ff6-cd89f5d0c942",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 188,
+			"character_id": "c245fc57-0756-4e06-b919-16bc2eab2d1c",
+			"group_id": "12886b59-10b6-4d73-b330-e67cc6382c28",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 189,
+			"character_id": "ea1a7fbf-e243-4011-9566-a4429ab4dcaf",
+			"group_id": "45d635d0-676d-4371-afa5-9d0a0d5fa091",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 190,
+			"character_id": "f762b171-d3e5-4c84-a55c-53ae998054bf",
+			"group_id": "4bb3c808-2f72-46c9-b657-dc95ec3c0bb6",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 191,
+			"character_id": "188985a2-3d9f-452a-bfff-3bf86cb7fdea",
+			"group_id": "15b3d212-b8d3-42fe-b059-0e0100e3cb04",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 192,
+			"character_id": "ba851485-2753-4717-871e-b4c3fd3d85e9",
+			"group_id": "475fc5e7-054e-4746-b44e-5b7c5bc3f88a",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 193,
+			"character_id": "a0687a87-15ae-469c-8542-a34cffbd6376",
+			"group_id": "d1e9bb3f-2c53-4fd7-8697-96eed4b563b5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 194,
+			"character_id": "9ffdbd84-0228-478a-8700-1f5c271e4925",
+			"group_id": "10808e44-6f11-4d44-81e4-9e68ab948050",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 195,
+			"character_id": "e48d3746-eb4c-4fe1-a19c-a100132f8a18",
+			"group_id": "abd428a3-9149-4cd5-81e4-575d7b40526e",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 196,
+			"character_id": "08e4e05a-0c80-40e3-a54d-7f4c53def200",
+			"group_id": "0d286bfd-515d-4308-bf87-e9df62da6d96",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 197,
+			"character_id": "93500e40-7db1-411f-ac8f-148b83aa13f8",
+			"group_id": "b461f109-1363-4a1c-a148-46dac177734b",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 198,
+			"character_id": "5d36b582-91b5-461f-b70e-73134b11021a",
+			"group_id": "0575fe3e-7d6f-42f6-868d-7115a098e9a6",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 199,
+			"character_id": "0c9c166d-d6da-4a27-8da4-d8895f723a35",
+			"group_id": "ae331fb5-dde7-4c4d-8142-832037d0bce9",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 200,
+			"character_id": "6535ef57-0f8b-4c77-8151-50990e8ba58e",
+			"group_id": "4edfd7aa-60cd-4a72-8d79-e221f1824d36",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 201,
+			"character_id": "2ad26864-7aef-49ff-b704-a743709ca641",
+			"group_id": "1de36bd2-b861-438a-86bd-eceb38243a55",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 202,
+			"character_id": "7f7200f2-7007-40f3-8e8e-2bb01c26bea5",
+			"group_id": "0bdfe858-1bd1-47a8-8d95-7fca4af5ee74",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 203,
+			"character_id": "df744c9f-3eb8-484b-90d5-dedbde6f1940",
+			"group_id": "b59f9a04-61eb-4692-b30c-649063ce035f",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 204,
+			"character_id": "4752a6d4-349d-43ff-bdbc-4a0f051b3e68",
+			"group_id": "cc350665-501f-4983-8a2a-109ad5e7e7bd",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 205,
+			"character_id": "edd4e448-ee2a-488d-bed3-59b9cf3af15c",
+			"group_id": "1592b92a-afde-457d-ad44-0199761ce076",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 206,
+			"character_id": "4eb55765-70d4-494b-b492-8b1df7646fcc",
+			"group_id": "87046deb-923a-4e7a-b0e0-4eeb078ceaf5",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 207,
+			"character_id": "c044d51d-b7fa-4d00-9497-6586180ae6c9",
+			"group_id": "e4e86a19-959a-4f92-ba82-e8c67f002277",
+			"name": "cyberpunk final fantasy tactics character",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 5,
+			"animations": 28,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 208,
+			"character_id": "74797f8b-017b-4fc5-91e1-fc25e4e40be5",
+			"group_id": "6775e496-53d2-4f8e-8151-2f2cbae87b07",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 209,
+			"character_id": "de7e8ae0-f84b-47a7-8b72-f448b0565489",
+			"group_id": "a89b769a-cad4-45d6-ab8f-11d315425c9d",
+			"name": "cyberpunk final fantasy tactics character",
+			"state": "Idle",
+			"size": [
+				76,
+				88
+			],
+			"states": 2,
+			"animations": 5,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 210,
+			"character_id": "334d0627-1259-438f-b38d-59dbb6726c7d",
+			"group_id": "6e3b06b7-f3bd-4d4d-a4b5-72d3460d06cc",
+			"name": "cyberpunk male, isometric 2:1 perspective, (copy)",
+			"state": "armor color is switc",
+			"size": [
+				84,
+				84
+			],
+			"states": 4,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 211,
+			"character_id": "cc902c2d-0fff-49d1-9a10-e64c9da70f3c",
+			"group_id": "21099f2f-b1ee-40d3-820b-962384485156",
+			"name": "cyborg chihuahua, mostly made of metal and steel parts, cybernetic laser eyes",
+			"state": "attack/bark",
+			"size": [
+				80,
+				80
+			],
+			"states": 7,
+			"animations": 14,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 212,
+			"character_id": "19b7a461-eb7e-4d27-9d25-1ef49476d437",
+			"group_id": "a846971d-fd8c-47c5-b397-90696f528523",
+			"name": "jump",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 5,
+			"animations": 12,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 213,
+			"character_id": "e5b3d902-ab0d-4d2d-be60-56c12ba922d4",
+			"group_id": "47061890-2e82-4189-b1e2-962fe0fd0732",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				68
+			],
+			"states": 6,
+			"animations": 14,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 214,
+			"character_id": "ce18ca57-07e7-4570-937a-57a827b9ca63",
+			"group_id": "8cdd5c4a-d406-433c-8997-9e03f9b86d28",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				36,
+				64
+			],
+			"states": 2,
+			"animations": 12,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 215,
+			"character_id": "156e103f-b6f6-44f7-b70e-d291e9e062e8",
+			"group_id": "b0bbacd3-6864-48de-9a0b-5c45c32cf3db",
+			"name": "cyberpunk final fantasy tactics styled",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 3,
+			"animations": 4,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 216,
+			"character_id": "d75f2d2a-14f0-49ac-bc6f-328d5d44e611",
+			"group_id": "903b269e-92b6-48e9-87f5-374f65b0c8e3",
+			"name": "cyberpunk final fantasy tactics styled flying drone 84x84 isometric 2:1 perspective, clean and crisp black 1 pixel outlines, cyberpunk",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 217,
+			"character_id": "5233b042-070f-4bd0-87e0-6d543988f0b3",
+			"group_id": "f1791a47-369c-431b-ac89-0c77f479234e",
+			"name": "main character #2 test",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 7,
+			"animations": 22,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 218,
+			"character_id": "dc93125d-9893-48f5-9e97-d924109345bc",
+			"group_id": "712c0ecd-b5de-473b-a61a-81af41e0d267",
+			"name": "A lean cyberpunk soldier in",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 219,
+			"character_id": "32a4dcbd-29ad-44ea-9299-a145278be387",
+			"group_id": "b59b16fc-49f0-4aa5-a176-e2b954b54027",
+			"name": "cyberpunk male, isometric 2:1 perspective, black 1 pixel outline.",
+			"state": "idle breathing",
+			"size": [
+				84,
+				84
+			],
+			"states": 12,
+			"animations": 40,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 220,
+			"character_id": "1d011991-8bed-45a8-93fb-90b898529f1d",
+			"group_id": "3db964f7-877d-4532-a1ee-1d96681203ad",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 6,
+			"animations": 9,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 221,
+			"character_id": "f98dd7bc-0cc8-4572-8010-a552c64f9ad6",
+			"group_id": "b6d6da17-198c-4699-865c-325d230f124d",
+			"name": "Cyber Arctos 2000",
+			"state": "transformed into a m",
+			"size": [
+				144,
+				144
+			],
+			"states": 2,
+			"animations": 9,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 222,
+			"character_id": "5907f7cc-2513-44d1-b7e4-081fda0473ab",
+			"group_id": "60eb3b42-b706-49f4-b862-ebf137a60d92",
+			"name": "final fantasy tactics styled character",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 4,
+			"animations": 10,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 223,
+			"character_id": "19555199-9921-46a3-b22c-346ca5bd5c08",
+			"group_id": "21edc8b1-c471-4077-8549-e80baec3705a",
+			"name": "cyberpunk final fantasy tactics character 84x84 isometric 2:1 perspective, clean and crisp black 1 pixel outlines",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 224,
+			"character_id": "eac37d96-07f0-4475-9901-7eb16419173d",
+			"group_id": "6c9865d2-6eec-49a3-9383-2064f3c7b664",
+			"name": "cyberpunk final fantasy tactics character",
+			"state": "Idle",
+			"size": [
+				144,
+				152
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 225,
+			"character_id": "92c6081a-2923-40e1-90f8-d4613a2acbc3",
+			"group_id": "21a7c47d-e9fa-42ec-a818-01c2df7d8859",
+			"name": "cyberpunk final fantasy tactics character",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 1,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 226,
+			"character_id": "8add63ce-7a07-45b1-9a73-54602657391e",
+			"group_id": "8e63ed4a-77f2-4ee7-8b4c-30732f35b6ec",
+			"name": "cyborg chihuahua, mostly made of metal and steel parts, cybernetic laser eyes (copy)",
+			"state": "transformed into a c",
+			"size": [
+				148,
+				148
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 227,
+			"character_id": "dc8cdd15-7e06-4c36-8c00-1f1e3f542b04",
+			"group_id": "1d891e2d-2b65-49db-8cf4-d3e3a79dbad4",
+			"name": "ff tactic style cyberpunk mage",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 4,
+			"animations": 12,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 228,
+			"character_id": "a718d3d4-bb0a-4ece-9bd1-4f22353d4adc",
+			"group_id": "a0c1f1c3-d7ef-4bca-aca1-64a75ffdad72",
+			"name": "Enemy_001",
+			"state": "idle breathing",
+			"size": [
+				80,
+				80
+			],
+			"states": 9,
+			"animations": 32,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 229,
+			"character_id": "a0eeb132-2561-436b-8dd8-468c8e1e7b83",
+			"group_id": "2dbbe26a-01a2-4a4d-b29f-16e9eec44da5",
+			"name": "ff tactic style cyberpunk mage (copy)",
+			"state": "change robe color to",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 230,
+			"character_id": "be9d61fc-5541-4913-a618-0922e831463a",
+			"group_id": "0b00b587-8f9a-4930-8da8-6351420e536c",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "idle/breathing",
+			"size": [
+				84,
+				84
+			],
+			"states": 5,
+			"animations": 12,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 231,
+			"character_id": "f0febfb1-adb9-40e7-ab1e-5e4555017c2d",
+			"group_id": "a9974ce4-ee32-454f-ad7c-cafa40224817",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 4,
+			"animations": 8,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 232,
+			"character_id": "905069ed-7dbe-4323-a774-317654644934",
+			"group_id": "da823231-0895-49c3-9de2-11ee5ae10028",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 2,
+			"animations": 5,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 233,
+			"character_id": "58cbfc3d-8b6f-4b17-977a-23c9e2f4b0b2",
+			"group_id": "54941d74-7628-43b7-884c-ff90c5e15f08",
+			"name": "enemy_002",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 6,
+			"animations": 20,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 234,
+			"character_id": "9940f07d-676d-4f90-968f-35a1cd0a9b6f",
+			"group_id": "47661785-493d-421e-97d0-be800dd5779e",
+			"name": "cyberpunk dragoon",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 235,
+			"character_id": "add01a7e-1be2-49bb-a13a-48d30ba8f32b",
+			"group_id": "c2f3ac9e-17dc-4055-bbed-92bcae3835db",
+			"name": "cyberpunk male, isometric 2:1 perspective, (copy 2)",
+			"state": "doesnt have any gear (copy 2)",
+			"size": [
+				84,
+				84
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 236,
+			"character_id": "8a81d3d2-25af-4ffd-b9b0-3ea10f2620cf",
+			"group_id": "0f7da9eb-6759-4f2c-a6fe-5d539f67a9ab",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "shooting gun",
+			"size": [
+				84,
+				84
+			],
+			"states": 30,
+			"animations": 114,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 237,
+			"character_id": "c04b05f8-4c5a-4fb9-9f24-75827ec3cf8d",
+			"group_id": "37d73e5f-ca54-4ab3-8c47-61ea919a36da",
+			"name": "cyberpunk green mage, cyberpunk green neon designs on his mage robe",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 238,
+			"character_id": "9f7df86d-d9bd-42a6-afae-6cd4d163ef8e",
+			"group_id": "af0e89e6-b93e-4d77-913f-b32a93f8da89",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 12,
+			"animations": 12,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 239,
+			"character_id": "d9984962-8b92-4d94-a270-687575ec4a7a",
+			"group_id": "16fedf2b-5d59-4080-923a-21d626eb8aeb",
+			"name": "84x84 isometric 2:1 perspective, clean",
+			"state": "Idle",
+			"size": [
+				64,
+				64
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 240,
+			"character_id": "2ab06e4a-b47f-42c0-8757-7785841c95d1",
+			"group_id": "8b15a9ed-23a4-454c-ad51-08ed8c9941b0",
+			"name": "cyberpunk characters, netrunner, hologram summoner, TCG hologram card player, hologram ninja, sniper, cyberpunk samurai, neon blue mage, neon green mage, neon orange mage",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 241,
+			"character_id": "54b461ca-d161-4c5a-bfdd-5fb92465e323",
+			"group_id": "d5d05a95-ac9e-4ae8-8bfa-03e063631473",
+			"name": "a gray and white medium length haired american tab",
+			"state": "Idle",
+			"size": [
+				48,
+				48
+			],
+			"states": 4,
+			"animations": 4,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 242,
+			"character_id": "9d855718-9118-442f-8ec9-61f1df1fa60c",
+			"group_id": "3f335f43-a69f-4abb-b972-b0f5d6feda8e",
+			"name": "cyber summoner",
+			"state": "Idle",
+			"size": [
+				56,
+				56
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 243,
+			"character_id": "324685ae-b6cd-48eb-a499-7209b3d573a3",
+			"group_id": "0c607859-093e-40be-94a4-272df931cdf9",
+			"name": "hologram ninja",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": true
+		},
+		{
+			"n": 244,
+			"character_id": "7f746fa2-c054-4c8f-9af5-daaded8eab37",
+			"group_id": "0d4784be-dd2b-4492-a286-e56af804f460",
+			"name": "isometric 2:1 perspective, clean and crisp black 1 pixel outlines",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 245,
+			"character_id": "3d27f30c-9e8b-4e69-a944-8c45a556f5aa",
+			"group_id": "42ba55e9-2ee3-4a56-9b90-28442db665b9",
+			"name": "isometric 2:1 perspective, clean and",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 246,
+			"character_id": "2520f109-4e39-4ca1-a5ee-9712551d8e4f",
+			"group_id": "2615d61f-1902-4489-b85a-d4b3239b145a",
+			"name": "cyberpunk male soldier, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 5,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 247,
+			"character_id": "70f49853-815e-454d-9cf3-70b424170946",
+			"group_id": "fd956382-0117-4a75-b562-4b95bac07f48",
+			"name": "a sci-fi four-legged mechanized war robot, two large cannons attached to should areas on each side",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 248,
+			"character_id": "f1405454-aefa-4537-9bac-987f4b0fb9a3",
+			"group_id": "bd404f00-a05d-4474-b481-b1ecd8007128",
+			"name": "A four-legged Giant Sci-Fi Mech with two large cannons attached to it, walks like a four-legged animal in a mechanical/robotic way,",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 249,
+			"character_id": "a443387a-c8c2-4c1b-a2d3-3a8f217bd7ec",
+			"group_id": "c4ad1ced-6ed0-4179-a29e-7000b1f4c54d",
+			"name": "cyberpunk mech unit, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 5,
+			"animations": 12,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 250,
+			"character_id": "88ef7926-3468-4f97-a9af-0c78d8ae83d4",
+			"group_id": "7e47a789-b85b-465f-8722-fa5384a1b5a5",
+			"name": "cyberpunk aircraft drone, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 3,
+			"animations": 1,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 251,
+			"character_id": "64da4e08-9000-4990-ba7d-51b51ac7c0f5",
+			"group_id": "95c4a032-83aa-4f15-9b0e-5720a4cc10ce",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "crouching",
+			"size": [
+				84,
+				84
+			],
+			"states": 12,
+			"animations": 36,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 252,
+			"character_id": "92fba2a4-9009-4906-9ac6-622f83562b7d",
+			"group_id": "8ca82835-940d-46ed-af5a-620cd2d9aa36",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 10,
+			"animations": 16,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 253,
+			"character_id": "231e16eb-85ac-4c0a-8817-a9dd870be932",
+			"group_id": "845ca3ca-6444-4344-88b0-2b41fef0b784",
+			"name": "cyberpunk male droid, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 9,
+			"animations": 17,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 254,
+			"character_id": "8510b888-dbb9-4465-b529-3f66e60beee4",
+			"group_id": "a0826389-45a6-403b-b0ec-0aa0f2861b8a",
+			"name": "cyberpunk female, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 255,
+			"character_id": "b2cb371e-4189-44dd-81f8-b461b71091a8",
+			"group_id": "f1001efb-7448-4ce9-a647-fd338f490864",
+			"name": "84x84 cyberpunk male, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 5,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 256,
+			"character_id": "e93d9027-2e1d-4990-87a9-2c6d9aecf746",
+			"group_id": "f627f63d-7fe5-4525-8b41-b8c6edfda159",
+			"name": "84x84 cyberpunk male, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 257,
+			"character_id": "7d38d143-c3cc-444d-8553-fa944bf3c007",
+			"group_id": "a30cc969-9212-46be-9201-32eb15ad8f67",
+			"name": "cyberpunk battle robot, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 258,
+			"character_id": "f80e3bf9-22f0-48be-99a9-58f200786b59",
+			"group_id": "876ef50e-4786-43d7-ae5c-2b61a918319f",
+			"name": "cyberpunk male plain clothes",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 14,
+			"animations": 49,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 259,
+			"character_id": "eb736efa-6682-40cd-b6b0-112530ff650b",
+			"group_id": "44d4cb5d-4800-44a1-b32f-87f512c661e9",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 6,
+			"animations": 16,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 260,
+			"character_id": "2e98ef26-d219-43ac-b14d-8cd30b38be01",
+			"group_id": "5b5ca945-659d-49d5-b791-6432da613a12",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 261,
+			"character_id": "d3952681-69c2-42f5-acba-679e21002337",
+			"group_id": "484a2961-8a9c-40f2-8a32-070399598f21",
+			"name": "mech with energy rifle in",
+			"state": "Idle",
+			"size": [
+				256,
+				256
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 262,
+			"character_id": "bf4515d1-1c5e-4c1e-a57c-3f79c513fc73",
+			"group_id": "b9078619-42cb-4ce2-9896-d5e508d3d803",
+			"name": "84x84px high powered full auto rifle with a compensator on the barrel tip",
+			"state": "Idle",
+			"size": [
+				124,
+				124
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 263,
+			"character_id": "e35d5c38-74b2-4e8e-aba5-040d187cc942",
+			"group_id": "678cc810-a3fe-4505-8052-9e667d965a16",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 264,
+			"character_id": "dee4a155-be8a-4f3b-b22a-36bf69030840",
+			"group_id": "9c0c4c7d-8690-4ae9-a86c-df4024eff772",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 265,
+			"character_id": "d62915d7-eb8d-4c9a-9708-00449ef1da78",
+			"group_id": "6e4d4595-d11e-4dc2-a119-0ee399d843cd",
+			"name": "cyberpunk mech, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 3,
+			"animations": 3,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 266,
+			"character_id": "6c0cf559-9167-4eb7-98d4-6763a2314f40",
+			"group_id": "9322a8d7-e332-4e80-bdcf-7f25b0a3d068",
+			"name": "cyberpunk female, isometric 2:1 perspective, black 1 pixel outline.",
+			"state": "Idle",
+			"size": [
+				92,
+				92
+			],
+			"states": 12,
+			"animations": 42,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 267,
+			"character_id": "c116332b-d5f1-48dd-8aeb-ada4434ee03b",
+			"group_id": "dbbba438-f666-4375-87d1-e195095bccb9",
+			"name": "84x84 cyberpunk robot, isometric 2:1 perspective, clean and crisp black 1 pixel outlines. massive plasma gattling gun in both hands, large laser canon mounted on the characters right shoulder",
+			"state": "Idle",
+			"size": [
+				76,
+				76
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 268,
+			"character_id": "039b12a8-4a2b-4a99-973f-1145f48e9438",
+			"group_id": "0cf2154e-5101-4052-8b96-ebef1e7648c7",
+			"name": "84x84 cyberpunk robot, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 5,
+			"animations": 8,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 269,
+			"character_id": "fd69109e-0772-4fcf-8b61-2aacd89b595f",
+			"group_id": "154e0fe1-859b-4712-a170-56e8c43774d2",
+			"name": "A cyberpunk man in a",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 270,
+			"character_id": "d7b4a337-cc52-4e5d-a408-39d190d014c0",
+			"group_id": "d86e3d14-eca1-4aec-a185-83bc203d175d",
+			"name": "A cyberpunk male standing in",
+			"state": "Idle",
+			"size": [
+				80,
+				80
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 271,
+			"character_id": "06923291-8f2a-498c-94c2-eeb7dde3a095",
+			"group_id": "6bdbfd97-447a-4752-b410-018969e74a2a",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "walking",
+			"size": [
+				96,
+				96
+			],
+			"states": 9,
+			"animations": 41,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 272,
+			"character_id": "bc5a678a-b12a-4d5d-b230-97918df4725b",
+			"group_id": "94146ce3-895a-4a00-a52a-b88070e8aee7",
+			"name": "84x84 cyberpunk male, isometric 2:1 perspective, clean and crisp black 1 pixel outlines. gun held in right hand",
+			"state": "Idle",
+			"size": [
+				104,
+				104
+			],
+			"states": 2,
+			"animations": 4,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 273,
+			"character_id": "2a16339f-2938-48a2-8c94-3bd262b785de",
+			"group_id": "bc1f3ec3-c4d0-4b62-8b66-949cdf2cca93",
+			"name": "warrior woman with orange hair",
+			"state": "warrior woman with orange hair",
+			"size": [
+				60,
+				60
+			],
+			"states": 3,
+			"animations": 72,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 274,
+			"character_id": "f5811025-2319-4998-abe3-8484a2e67fe8",
+			"group_id": "55e479fb-f523-4638-a2ac-09f09d58c87e",
+			"name": "blonde farmer with long hair and a dress",
+			"state": "blonde farmer with long hair and a dress",
+			"size": [
+				44,
+				44
+			],
+			"states": 1,
+			"animations": 64,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 275,
+			"character_id": "2d0452f2-8bf5-41ba-907a-b390c92cd947",
+			"group_id": "ddf99831-4b1e-473d-93eb-9a3f7af0b5c7",
+			"name": "flat shaded light brown bear",
+			"state": "flat shaded light brown bear",
+			"size": [
+				88,
+				88
+			],
+			"states": 1,
+			"animations": 32,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 276,
+			"character_id": "b1e49172-2b88-4120-bd5b-0176cebeb104",
+			"group_id": "a8c63bae-613a-4b76-b917-fc6cb134a16d",
+			"name": "old man bald",
+			"state": "old man bald",
+			"size": [
+				44,
+				44
+			],
+			"states": 1,
+			"animations": 32,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 277,
+			"character_id": "9a4d1a8d-9258-4c5e-8a51-a605e972ef5c",
+			"group_id": "e1399cc7-c938-4f46-b6b0-d355330bfa8a",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 278,
+			"character_id": "ee8e8413-849f-4961-bbaa-75b10fe9881c",
+			"group_id": "94354fc2-4dec-4e04-a983-5617a5da9873",
+			"name": "cyberpunk battle robot, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 279,
+			"character_id": "3aa90c0b-e08a-42dd-b545-44446cd64c50",
+			"group_id": "e28c2f50-42f4-4544-a3a9-6c268e55a8d5",
+			"name": "cyberpunk battle mech, isometric 2:1 perspective, black 1 pixel outline.",
+			"state": "Idle",
+			"size": [
+				160,
+				160
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 280,
+			"character_id": "f5917f49-c8bb-4197-9e5a-c72ebb4914d6",
+			"group_id": "168ae5a8-f765-4aca-8587-7490b1c5c232",
+			"name": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  navy blue base color with neon magenta trim",
+			"state": "Idle",
+			"size": [
+				160,
+				160
+			],
+			"states": 3,
+			"animations": 1,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 281,
+			"character_id": "6a9950c2-8dc8-4557-9b7f-744adcdda21c",
+			"group_id": "0fab898e-ce03-4156-b088-a969d130f8d1",
+			"name": "cyberpunk battle robot, isometric 2:1 perspective, black 1 pixel outline.  navy blue base color with neon magenta trim",
+			"state": "Idle",
+			"size": [
+				128,
+				128
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 282,
+			"character_id": "36947905-a2bc-4b8c-983f-826f1f59180c",
+			"group_id": "1acc030d-e638-402c-b4fa-d230d2896864",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 283,
+			"character_id": "be84f948-db12-4598-aa01-e2fbabfb84b4",
+			"group_id": "f367d45e-0bb2-43bd-97d5-0a756f581b26",
+			"name": "cyberpunk male droid, isometric 2:1 perspective, black 1 pixel outline.",
+			"state": "Idle",
+			"size": [
+				108,
+				108
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 284,
+			"character_id": "de910c6e-cc39-489d-bc5b-c916fe26bf5b",
+			"group_id": "b010508e-40b8-4d26-aca2-f9b3bcb7fa05",
+			"name": "miniature jumbo jet drone",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 2,
+			"animations": 8,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 285,
+			"character_id": "5e98bba3-61f5-4e5f-b361-f789f7e045d4",
+			"group_id": "2b90b553-a8dd-47ae-a192-8f63658fde1a",
+			"name": "cyberpunk transport vehicle, isometric 2:1",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 286,
+			"character_id": "f5b69e54-39ac-4b1a-a3c6-4fa11d9d710e",
+			"group_id": "aed5a27e-930d-4887-919c-d181fab11e6c",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 287,
+			"character_id": "40751921-6011-4e66-b803-4926bfcc71b9",
+			"group_id": "44344a73-eba8-409a-9b7c-074c8f321ba9",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 288,
+			"character_id": "eb09a09d-70db-470b-a463-aa71d5a63032",
+			"group_id": "f2d7ab79-ffba-40ae-b94b-83e9ea04e183",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 289,
+			"character_id": "56da7fb6-525e-433d-a44a-acaa745e424f",
+			"group_id": "3c051340-a00d-4389-8247-e952e618a36b",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 290,
+			"character_id": "8317f6d8-a5eb-46a9-a044-ce81b9172058",
+			"group_id": "b501d833-3f9d-435a-93d0-5f2abdca259b",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				84,
+				84
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 291,
+			"character_id": "24b99fbf-3b0d-4279-b722-6161bdbd0bc4",
+			"group_id": "b0ad8e0f-a07a-47ca-b49e-46dded47f915",
+			"name": "cyberpunk tank, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				256,
+				256
+			],
+			"states": 2,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 292,
+			"character_id": "60d89cc3-9157-4010-937d-04911e586ba7",
+			"group_id": "68cee610-2fa8-4f93-9deb-d718c322e7d9",
+			"name": "cyberpunk male, isometric 2:1 perspective,",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "keep",
+			"focus": false
+		},
+		{
+			"n": 293,
+			"character_id": "5496c607-0620-4e2a-ab75-dc60c8efa455",
+			"group_id": "33523677-7b72-452f-8500-88745a239f84",
+			"name": "cyber punk soldier equipped with a heavy machine gun",
+			"state": "Idle",
+			"size": [
+				168,
+				168
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 294,
+			"character_id": "1305699b-afc2-40c1-8fd2-8bdb661b8958",
+			"group_id": "dd209b5f-2aa5-4fcf-a1a4-72c91786d4f4",
+			"name": "cute wizard",
+			"state": "Idle",
+			"size": [
+				76,
+				76
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 295,
+			"character_id": "02a4fe17-9ed0-45af-bdb3-72b0a9f395a7",
+			"group_id": "51967b1c-0a60-4fdf-b568-14e538ea4edc",
+			"name": "Anthropomorphic, racoon head with cyborg body, abdomen is really skinny due to damage, has scattered armor, has a Sardine can on top of head for helmet, has power supply backpack that powers his cyborg body, orange and white fur face, hands and forearms are orange fur, feet orange fur, red cybernetic eyes",
+			"state": "Anthropomorphic, racoon head with cyborg body, abdomen is really skinny due to damage, has scattered armor, has a Sardine can on top of head for helmet, has power supply backpack that powers his cyborg body, orange and white fur face, hands and forearms are orange fur, feet orange fur, red cybernetic eyes",
+			"size": [
+				92,
+				92
+			],
+			"states": 6,
+			"animations": 4,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 296,
+			"character_id": "00c3dd62-187d-4512-9562-3f8c40a56bfd",
+			"group_id": "47a820fc-50ec-4edd-9119-f6ff037ce26f",
+			"name": "A fit adult male soldier",
+			"state": "Idle",
+			"size": [
+				96,
+				96
+			],
+			"states": 4,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 297,
+			"character_id": "7c9214ba-2bbe-4b79-9fd4-c5351d77af72",
+			"group_id": "ff139799-c753-4ecf-b5b8-3482ce06a282",
+			"name": "Klixx tamagotchi (copy 5)",
+			"state": "In a standing idle p",
+			"size": [
+				96,
+				96
+			],
+			"states": 3,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 298,
+			"character_id": "fb7f22e3-14e7-4864-b11a-20e40876eafd",
+			"group_id": "41b4d81e-bf6a-4e64-adbb-47472bdf3ff6",
+			"name": "Klixx tamagotchi (copy 6)",
+			"state": "Hidden inside couch",
+			"size": [
+				96,
+				96
+			],
+			"states": 2,
+			"animations": 8,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 299,
+			"character_id": "d38c75ac-3d02-401d-a386-cdbe2f52bb4e",
+			"group_id": "fbbb7cd6-632a-41eb-bdf4-9e8b25a39c99",
+			"name": "Anthropomorphic, racoon head with cyborg body, abdomen is really skinny due to damage, has scattered armor, has a Sardine can on top of head for helmet, has power supply backpack that powers his cyborg body, orange and white fur face, hands and forearms are orange fur, feet orange fur, red cybernetic eyes (copy)",
+			"state": "idle with full body",
+			"size": [
+				128,
+				128
+			],
+			"states": 5,
+			"animations": 8,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 300,
+			"character_id": "aaf6020d-0291-4b6d-acc0-974a2e4c1737",
+			"group_id": "1200e965-8a35-4f56-8bb6-82e7621ba628",
+			"name": "Anthropomorphic, racoon head with cyborg body, abdomen is really skinny due to damage, has scattered armor, has a Sardine can on top of head for helmet, has power supply backpack that powers his cyborg body, orange and white fur face, hands and forearms are orange fur, feet orange fur, red cybernetic eyes (copy 3)",
+			"state": "In a full body and h",
+			"size": [
+				88,
+				64
+			],
+			"states": 4,
+			"animations": 17,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 301,
+			"character_id": "493c7336-e9d0-417d-901b-c3ebdd1f7578",
+			"group_id": "6626f69e-4f5d-47ea-a4e6-c3fd1ed57270",
+			"name": "Klixx tamagotchi (copy)",
+			"state": "standing idle in a f",
+			"size": [
+				96,
+				96
+			],
+			"states": 10,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 302,
+			"character_id": "3e6da71e-1b78-4cc2-90fb-14045c939fe8",
+			"group_id": "431b53be-189f-4252-ae3e-e3daf1737e9e",
+			"name": "Klixx tamagotchi (copy 2)",
+			"state": "wearing a Japanese m",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 303,
+			"character_id": "87578565-84c3-44ed-ab2f-47e28d7bab17",
+			"group_id": "5ebd4f18-7a12-4954-a361-96f3539ffd02",
+			"name": "Klixx tamagotchi (copy 3)",
+			"state": "Standing in idle pos",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 304,
+			"character_id": "156437f5-b0a9-4986-8be9-a6a5d37948cf",
+			"group_id": "bca8a628-67b7-4a60-82c1-ec0e8c713c04",
+			"name": "Klixx tamagotchi (copy 4)",
+			"state": "Standing in idle pos",
+			"size": [
+				96,
+				96
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 305,
+			"character_id": "d4f8230d-104f-409b-b8a8-ec609e3d09db",
+			"group_id": "59054d86-af15-4a55-afaf-1b82f3c75ecc",
+			"name": "Klixx tamagotchi",
+			"state": "Idle (copy 2)",
+			"size": [
+				76,
+				76
+			],
+			"states": 16,
+			"animations": 38,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 306,
+			"character_id": "7ab4cf1b-3239-4d51-aa4a-4b7de126cbcb",
+			"group_id": "925d0fff-bce4-4e08-af9f-7828534486c5",
+			"name": "Anthropomorphic, racoon head with cyborg body, abdomen is really skinny due to damage, has scattered armor, has a Sardine can on top of head for helmet, has power supply backpack that powers his cyborg body, orange and white fur face, hands and forearms are orange fur, feet orange fur, red cybernetic eyes (copy 2)",
+			"state": "idle with a fake mec",
+			"size": [
+				92,
+				92
+			],
+			"states": 1,
+			"animations": 0,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 307,
+			"character_id": "b7e50294-041a-4acd-be79-a6cbc93e7381",
+			"group_id": "e1209882-105f-40d1-9d1c-0039f51a40b3",
+			"name": "a man with a gray sweat shirt on and dark gray sweat pants, wearing a black hat with neon cyan trim, black shoes,",
+			"state": "Idle",
+			"size": [
+				60,
+				60
+			],
+			"states": 5,
+			"animations": 11,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 308,
+			"character_id": "58cb4c47-c567-4361-9535-8864d94ca051",
+			"group_id": "19082fda-100d-44f5-981c-8f2e6d7b9ce2",
+			"name": "Walking",
+			"state": "Walking",
+			"size": [
+				92,
+				92
+			],
+			"states": 11,
+			"animations": 44,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 309,
+			"character_id": "e81a19df-16d7-4dd4-ad35-a22d0b646581",
+			"group_id": "935644b6-8ff2-43f2-bde0-88f7d751e8b5",
+			"name": "slender anthropomorphic black cat, cyber punk, wears a blue cyber punk visor that cant be seen through from the outside that attach to black cyberpunk headphones, wears a black trench coat with a black belt at the wait around it, belt has a gold belt buckle, black shirt, black pants, black boots, pink whiskers match his neon pink/magenta inside of ears",
+			"state": "slender anthropomorphic black cat, cyber punk, wears a blue cyber punk visor that cant be seen through from the outside that attach to black cyberpunk headphones, wears a black trench coat with a black belt at the wait around it, belt has a gold belt buckle, black shirt, black pants, black boots, pink whiskers match his neon pink/magenta inside of ears ",
+			"size": [
+				88,
+				88
+			],
+			"states": 2,
+			"animations": 3,
+			"status": "skip",
+			"focus": false
+		},
+		{
+			"n": 310,
+			"character_id": "35dbcfc1-2d4c-471f-ad6c-43d80f5fb360",
+			"group_id": "51f46570-1386-48a7-8fff-4f390670ca43",
+			"name": "black cat  that looks like the concept image. has a blue cyber punk visor. and a blue paints circle on back leg",
+			"state": "black cat  that looks like the concept image. has a blue cyber punk visor. and a blue paints circle on back leg",
+			"size": [
+				60,
+				60
+			],
+			"states": 7,
+			"animations": 22,
+			"status": "no_image",
+			"focus": false
+		},
+		{
+			"n": 311,
+			"character_id": "f5461897-73eb-45b6-a360-0c045ced6f73",
+			"group_id": "e356f276-492c-4e31-90af-6035ea6d00ab",
+			"name": "Cyberpunk hacker cat standing upright on two legs, humanoid posture, pixel art. Dark navy-black fur with subtle deep blue highlights. Glowing cyan visor covering both eyes with horizontal scan lines visible on the lens. Hot pink/magenta whiskers, pink inner ears, pink accent stripe bands on the lower legs and paws. Slim build, slightly slouched cool stance, long tail. Cyberpunk noir aesthetic, neon cyan and magenta palette on dark background. Transparent background.",
+			"state": "Cyberpunk hacker cat standing upright on two legs, humanoid posture, pixel art. Dark navy-black fur with subtle deep blue highlights. Glowing cyan visor covering both eyes with horizontal scan lines visible on the lens. Hot pink/magenta whiskers, pink inner ears, pink accent stripe bands on the lower legs and paws. Slim build, slightly slouched cool stance, long tail. Cyberpunk noir aesthetic, neon cyan and magenta palette on dark background. Transparent background.",
+			"size": [
+				84,
+				84
+			],
+			"states": 3,
+			"animations": 8,
+			"status": "skip",
+			"focus": false
+		}
+	]
+}
