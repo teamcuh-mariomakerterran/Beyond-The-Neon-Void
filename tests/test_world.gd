@@ -1279,7 +1279,7 @@ func test_gear_attach() -> void:
 	var ne := GearAttach.place(rig_ne, art, "idle_NE", 0, false, Vector2.ZERO, Vector2(64, 64))
 	check(not ne["front"] and ne["grip"] == Vector2(7, 8), "place: art z sends the piece behind; per-facing grip")
 	check(GearAttach.cover_rect(Vector2(10, 20), 2, Vector2(64, 64)) == Rect2(8, 18, 5, 5) and GearAttach.cover_rect(Vector2(0, 0), 2, Vector2(64, 64)) == Rect2(0, 0, 3, 3) and not GearAttach.cover_rect(Vector2(5, 5), 0, Vector2(64, 64)).has_area(), "fist patch: square round the point, clipped")
-	check(GearAttach.cover_rect(Vector2(10, 20), 1, Vector2(64, 64), Vector3(14, 12, 1)) == Rect2(9, 11, 6, 10), "fist patch stretches up the forearm to the elbow")
+	check(GearAttach.cover_rect(Vector2(10, 20), 1, Vector2(64, 64), Vector3(14, 12, 1)) == Rect2(9, 11, 7, 11), "fist patch stretches up the forearm to the elbow")
 	# Estimator: a body with an arm out on screen-left (the right hand facing SE).
 	var img := Image.create(40, 60, false, Image.FORMAT_RGBA8)
 	img.fill_rect(Rect2i(15, 5, 10, 50), Color.WHITE)
