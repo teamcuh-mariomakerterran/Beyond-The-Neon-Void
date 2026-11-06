@@ -1186,7 +1186,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 15:47",
+			"facings_made": 20
 		},
 		"62": {
 			"anims": {
@@ -1237,8 +1239,33 @@
 				},
 				"death": {
 					"template": "falling-back-death",
-					"directions": [],
-					"v3_groups": {}
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"cdf7a668-0fd1-4def-8286-8865462f4c24": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"f69cb0dd-259a-4e66-b7aa-f7fe8f027c96": [
+							"north-east",
+							"north-west"
+						]
+					}
 				}
 			},
 			"generations_used": 0.0
@@ -1285,6 +1312,46 @@
 					],
 					"v3_groups": {
 						"cb9cd769-acc3-4e3e-9b92-165f2b2e89ce": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"34b82abd-7252-478e-8e3d-ae49836b8111": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [],
+					"v3_groups": {}
+				}
+			},
+			"generations_used": 0.0
+		},
+		"71": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"d6cf3b42-035e-47b7-9404-bebde4aca25a": [
 							"north-east",
 							"north-west"
 						]
