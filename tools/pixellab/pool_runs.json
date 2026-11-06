@@ -80,7 +80,7 @@
 			},
 			"generations_used": 10.0,
 			"balance_drop": 8.0,
-			"at": "2026-11-06 15:22",
+			"at": "2026-11-06 15:59",
 			"facings_made": 8
 		},
 		"3": {
@@ -96,7 +96,8 @@
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
-					]
+					],
+					"v3_groups": {}
 				},
 				"attack": {
 					"template": "cross-punch",
@@ -109,7 +110,8 @@
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
-					]
+					],
+					"v3_groups": {}
 				},
 				"hurt": {
 					"template": "taking-punch",
@@ -122,7 +124,8 @@
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
-					]
+					],
+					"v3_groups": {}
 				},
 				"death": {
 					"template": "falling-back-death",
@@ -135,7 +138,8 @@
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
-					]
+					],
+					"v3_groups": {}
 				},
 				"jump": {
 					"template": "two-footed-jump",
@@ -148,11 +152,13 @@
 					"skeleton_v3": [
 						"north-east",
 						"north-west"
-					]
+					],
+					"v3_groups": {}
 				}
 			},
 			"generations_used": 50.0,
-			"at": "2026-11-06 15:10"
+			"at": "2026-11-06 15:59",
+			"facings_made": 0
 		},
 		"4": {
 			"anims": {
@@ -233,7 +239,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:23",
+			"at": "2026-11-06 15:59",
 			"facings_made": 8
 		},
 		"6": {
@@ -315,7 +321,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:33",
+			"at": "2026-11-06 15:59",
 			"facings_made": 10
 		},
 		"9": {
@@ -464,7 +470,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:26",
+			"at": "2026-11-06 15:59",
 			"facings_made": 10
 		},
 		"21": {
@@ -546,7 +552,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:29",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"24": {
@@ -628,8 +634,8 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:34",
-			"facings_made": 20
+			"at": "2026-11-06 16:00",
+			"facings_made": 21
 		},
 		"25": {
 			"anims": {
@@ -695,7 +701,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:34",
+			"at": "2026-11-06 15:59",
 			"facings_made": 10
 		},
 		"27": {
@@ -777,7 +783,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:39",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"29": {
@@ -859,7 +865,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:42",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"43": {
@@ -941,7 +947,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:42",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"54": {
@@ -1023,7 +1029,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:44",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"55": {
@@ -1105,7 +1111,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:45",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"60": {
@@ -1187,7 +1193,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:47",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"62": {
@@ -1269,7 +1275,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:50",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"64": {
@@ -1351,7 +1357,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:50",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"71": {
@@ -1433,7 +1439,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:52",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"74": {
@@ -1515,7 +1521,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:56",
+			"at": "2026-11-06 15:59",
 			"facings_made": 20
 		},
 		"75": {
@@ -1575,8 +1581,10 @@
 					],
 					"v3_groups": {
 						"09606b42-e2f6-44c4-a63c-643a2f5bbb7b": [
-							"north-east",
 							"north-west"
+						],
+						"390ed308-b501-41ba-a56b-fd5f3eb93aac": [
+							"north-east"
 						]
 					}
 				},
@@ -1677,7 +1685,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:58",
+			"at": "2026-11-06 16:00",
 			"facings_made": 20
 		},
 		"79": {
@@ -1744,7 +1752,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:57",
+			"at": "2026-11-06 16:00",
 			"facings_made": 10
 		},
 		"97": {
@@ -1811,7 +1819,7 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:58",
+			"at": "2026-11-06 16:00",
 			"facings_made": 10
 		}
 	},

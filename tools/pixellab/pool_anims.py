@@ -96,19 +96,26 @@ def animate(c: dict, runs: dict) -> None:
 			if r.get("_status") == 409:
 				print("#%d %s: front facing already there or generating, skipped" % (c["n"], action), flush=True)
 			else:
-				waits += r.get("background_job_ids") or []
+				waits += [(j, None, None) for j in r.get("background_job_ids") or []]
 				n_jobs += len(todo_front)
 		if todo_back:
 			r = pilot.call("POST", "/characters/animations", {"character_id": c["character_id"], "mode": "skeleton-v3",
 				"template_animation_id": template, "animation_name": action, "directions": todo_back})
-			v3_groups[r.get("animation_group_id") or "unknown"] = todo_back
-			waits += r.get("background_job_ids") or []
+			gid = r.get("animation_group_id") or "unknown"
+			v3_groups[gid] = todo_back
+			# one job per direction, in request order: a failure un-records it
+			waits += [(j, v3_groups[gid], d) for j, d in zip(r.get("background_job_ids") or [], list(todo_back))]
 			n_jobs += len(todo_back)
 		rec["directions"] = sorted(set(rec["directions"]) | set(front) | set(back))
 		with LOCK:
 			save_runs(runs)
-	for j in waits:
-		pilot.wait(j, limit=3600)
+	for j, rec_dirs, d in waits:
+		res = pilot.wait(j, limit=3600, fatal=False)
+		if res.get("status") == "failed":
+			n_jobs -= 1
+			if rec_dirs is not None and d in rec_dirs:
+				rec_dirs.remove(d)  # skeleton-v3 facing: redo it next pass
+			print("#%d: a job failed on PixelLab's side; the next pass retries it" % c["n"], flush=True)
 	with LOCK:
 		done["at"] = time.strftime("%Y-%m-%d %H:%M")
 		done["facings_made"] = done.get("facings_made", 0) + n_jobs

@@ -90,7 +90,7 @@ def generations() -> float:
 	return float(sub.get("generations") or 0)
 
 
-def wait(job_id: str, every: int = 8, limit: int = 1800) -> dict:
+def wait(job_id: str, every: int = 8, limit: int = 1800, fatal: bool = True) -> dict:
 	t = 0
 	while t < limit:
 		j = call("GET", "/background-jobs/" + job_id)
@@ -98,6 +98,9 @@ def wait(job_id: str, every: int = 8, limit: int = 1800) -> dict:
 		if st == "completed":
 			return j
 		if st == "failed":
+			if not fatal:
+				print("job %s failed: %s" % (job_id, json.dumps(j.get("last_response"))[:300]), flush=True)
+				return j
 			sys.exit("job %s failed: %s" % (job_id, json.dumps(j.get("last_response"))[:600]))
 		time.sleep(every)
 		t += every
