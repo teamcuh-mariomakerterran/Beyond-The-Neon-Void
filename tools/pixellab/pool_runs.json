@@ -9,7 +9,12 @@
 						"north-west",
 						"south-east",
 						"south-west"
-					]
+					],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
+					],
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
 				},
 				"attack": {
 					"template": "cross-punch",
@@ -61,6 +66,10 @@
 						"north-west",
 						"south-east",
 						"south-west"
+					],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
 					]
 				},
 				"attack": {
@@ -70,6 +79,10 @@
 						"north-west",
 						"south-east",
 						"south-west"
+					],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
 					]
 				},
 				"hurt": {
@@ -79,6 +92,10 @@
 						"north-west",
 						"south-east",
 						"south-west"
+					],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
 					]
 				},
 				"death": {
@@ -88,6 +105,10 @@
 						"north-west",
 						"south-east",
 						"south-west"
+					],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
 					]
 				},
 				"jump": {
@@ -97,12 +118,128 @@
 						"north-west",
 						"south-east",
 						"south-west"
+					],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
 					]
 				}
 			},
-			"generations_used": 20.0,
-			"at": "2026-11-06 14:23"
+			"generations_used": 50.0,
+			"at": "2026-11-06 15:10"
+		},
+		"4": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
+					],
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": []
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": []
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": []
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": []
+				}
+			},
+			"generations_used": 0.0
+		},
+		"6": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
+					],
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
+					],
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": []
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": []
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": []
+				}
+			},
+			"generations_used": 0.0
+		},
+		"9": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [],
+					"skeleton_v3": [
+						"north-east",
+						"north-west"
+					],
+					"note": "back facings made by skeleton-v3 inside the template group (run of 2026-11-06 before the no-delete rule)"
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": []
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": []
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": []
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": []
+				}
+			},
+			"generations_used": 0.0
 		}
 	},
-	"total_generations_used": 30.0
+	"total_generations_used": 60.0,
+	"lost": [
+		{
+			"n": 4,
+			"what": "template-mode NE/NW of walk and attack",
+			"why": "deleted before Brian's keep-every-take rule; never exported, no copy"
+		},
+		{
+			"n": 3,
+			"what": "template-mode NE/NW of all 5 and the skeleton-v3 NW attack test",
+			"why": "deleted in PixelLab; copies kept in assets/units/pool_003/kit/"
+		},
+		{
+			"n": 5,
+			"what": "template-mode NE/NW of walk and attack",
+			"why": "deleted in PixelLab; copies kept in assets/units/pool_005/kit/"
+		}
+	]
 }

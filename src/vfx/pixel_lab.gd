@@ -14,8 +14,13 @@ extends RefCounted
 ## (walking → walk, shooting / kick / uppercut → attack, taking hit → hit,
 ## heal / item → cast, idle / breathing → idle, jump, wave, death…). An
 ## optional <folder>/pixellab.json overrides the picks and timing:
-##   {"actions": {"attack": "attack_kick/Roundhouse_Kick", "idle": "idle_breathing/Breathing_Idle"},
+##   {"actions": {"attack": "attack_kick/Roundhouse_Kick", "idle": "idle_breathing/Breathing_Idle",
+##                "attack_NE": "Idle/cross_punch_attack"},
 ##    "fps": 10, "fps_by_action": {"walk": 12}, "scale": 1.5, "loop": {"attack": false}}
+## A key with a facing ("attack_NE") picks that one facing only. When several
+## animations are the same action, facings missing from the picked one are
+## filled from the others (e.g. front facings from one PixelLab animation,
+## back facings from another), so nothing has to be deleted to combine them.
 ## Animations not picked for an action stay playable under their own slug
 ## (e.g. "uppercut_SE"). Still rotations fill idle for facings an idle
 ## animation doesn't cover. Result has the same shape as LatticeClip.unit_set.
@@ -24,8 +29,8 @@ const DIRS := {"south": "S", "south-east": "SE", "east": "E", "north-east": "NE"
 	"north": "N", "north-west": "NW", "west": "W", "south-west": "SW"}
 ## Checked in order; the first keyword hit names the action.
 const KEYWORDS := [
-	["death", ["death", "dying", "die_", "collapse", "dead"]],
-	["hit", ["taking_hit", "take_hit", "hurt", "flinch", "knockback", "got_hit"]],
+	["death", ["death", "dying", "die_", "collapse", "dead", "falling_back"]],
+	["hit", ["taking_hit", "take_hit", "taking_a_punch", "taking_punch", "hurt", "flinch", "knockback", "got_hit"]],
 	["cast", ["heal", "item", "potion", "cast", "spell", "throwing_up"]],
 	["attack", ["shoot", "shooting", "gun", "fire", "blast", "attack", "kick", "uppercut", "punch", "slash", "swing", "strike", "stab", "wind-up"]],
 	["jump", ["jump", "leap"]],
@@ -282,11 +287,33 @@ static func unit_set(dir: String) -> Dictionary:
 	var fps_by: Dictionary = conf.get("fps_by_action", {})
 	var loops: Dictionary = conf.get("loop", {})
 	var used := {}
+	var forced: Dictionary = conf.get("actions", {})
+	# Per-facing picks first ("attack_NE": "state/Anim"); _add skips facings
+	# that already exist, so these win.
+	for fk: String in forced:
+		var fac := fk.get_slice("_", fk.get_slice_count("_") - 1)
+		if not fac in DIRS.values():
+			continue
+		var act := fk.left(fk.length() - fac.length() - 1)
+		for ef: Dictionary in entries:
+			if (ef["key"] == str(forced[fk]) or ef["state"] == str(forced[fk])) and (ef["facings"] as Dictionary).has(fac):
+				_add(out, act, {"facings": {fac: ef["facings"][fac]}, "rot": ef["rot"]}, float(fps_by.get(act, fps)), bool(loops.get(act, not act in ONE_SHOT)))
+				break
 	for action: String in picks:
 		var e: Dictionary = picks[action]
 		out["actions"][action] = e["key"]
 		used[e["key"]] = true
 		_add(out, action, e, float(fps_by.get(action, fps)), bool(loops.get(action, not action in ONE_SHOT)))
+		# Facings the pick lacks, from other animations of the same action.
+		for eo: Dictionary in entries:
+			if eo["key"] == e["key"] or str(eo["action"]) != action or bool(eo.get("still", false)):
+				continue
+			var extra := {}
+			for fo: String in (eo["facings"] as Dictionary):
+				if not (e["facings"] as Dictionary).has(fo):
+					extra[fo] = eo["facings"][fo]
+			if not extra.is_empty():
+				_add(out, action, {"facings": extra, "rot": eo["rot"]}, float(fps_by.get(action, fps)), bool(loops.get(action, not action in ONE_SHOT)))
 	# Everything else under its own name, so abilities can ask for it.
 	for e2: Dictionary in entries:
 		if used.has(e2["key"]) or (e2["facings"] as Dictionary).is_empty() or bool(e2.get("still", false)):

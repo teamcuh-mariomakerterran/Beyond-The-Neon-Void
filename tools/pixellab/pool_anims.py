@@ -5,7 +5,8 @@
     python3 tools/pixellab/pool_anims.py 5 --export-only   # re-download, no credits
 
 Set per character (data below): walk, attack, hurt, death, jump, drawn in
-all 4 battle diagonals; only characters that look the same flipped
+all 4 battle diagonals (front facings by template, back facings by
+skeleton-v3, which keeps the character's look); only characters that look the same flipped
 (pool.json mirror_ok, Brian's rule) get SE + NE and are mirrored for SW and
 NW by the game (LatticeClip.resolve). Idle
 comes from the 8 still rotations, and cast falls back to attack. Animation
@@ -20,7 +21,9 @@ import io
 import json
 import os
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -30,8 +33,11 @@ import pool_rigs  # noqa: E402
 HERE = os.path.dirname(os.path.abspath(__file__))
 # action name -> PixelLab template id (seen on Brian's own characters).
 SET = {"walk": "walking", "attack": "cross-punch", "hurt": "taking-punch", "death": "falling-back-death", "jump": "two-footed-jump"}
-DIAGONALS = ["south-east", "north-east", "south-west", "north-west"]
-MIRRORED = ["south-east", "north-east"]
+# Brian's pick B (2026-11-06): templates on the front facings, which keep the
+# character; skeleton-v3 on the back ones, where templates fell back to a
+# plain mannequin (docs/screenshots/pool_template_vs_skeleton.png).
+FRONT = ["south-east", "south-west"]
+BACK = ["north-east", "north-west"]
 RUNS = os.path.join(HERE, "pool_runs.json")
 
 
@@ -45,48 +51,109 @@ def save_runs(r: dict) -> None:
 		f.write("\n")
 
 
-def directions_for(c: dict) -> list:
-	"""All 4 battle diagonals, unless Brian's check says the character looks the
-	same flipped (pool.json mirror_ok): then SE + NE, mirrored for SW + NW."""
-	return MIRRORED if c.get("mirror_ok") else DIAGONALS
+def directions_for(c: dict) -> tuple:
+	"""(template facings, skeleton-v3 facings). Characters that look the same
+	flipped (pool.json mirror_ok) draw one of each and are mirrored."""
+	if c.get("mirror_ok"):
+		return FRONT[:1], BACK[:1]
+	return FRONT, BACK
+
+
+LOCK = threading.Lock()
 
 
 def animate(c: dict, runs: dict) -> None:
-	"""Adds whatever is missing: whole animations, or facings of ones that
-	exist (same animation group, so they move the same way)."""
+	"""Adds whatever is missing and never deletes (Brian keeps every take as a
+	kit). Front facings: template, in the action's existing group. Back
+	facings: skeleton-v3 in a group of their own, recorded in pool_runs.json
+	so the export can pin them (pixellab.json) over any older take."""
 	key = str(c["n"])
-	done = runs["runs"].setdefault(key, {"anims": {}, "generations_used": 0.0})
-	want = directions_for(c)
+	with LOCK:
+		done = runs["runs"].setdefault(key, {"anims": {}, "generations_used": 0.0})
+	front, back = directions_for(c)
 	have = {}
 	for an in pilot.call("GET", "/characters/%s" % c["character_id"]).get("animations") or []:
-		have.setdefault(an.get("animation_type"), (an.get("animation_group_id"), {d["direction"] for d in an.get("directions") or []}))
-	before = pilot.generations()
-	jobs = []
+		g = have.setdefault(an.get("animation_type"), {})
+		g[an.get("animation_group_id")] = {d["direction"] for d in an.get("directions") or []}
+	waits = []
+	n_jobs = 0
 	for action, template in SET.items():
-		group, dirs = have.get(template, (None, set()))
-		missing = [d for d in want if d not in dirs]
-		if not missing:
-			continue
-		req = {"character_id": c["character_id"], "mode": "template", "template_animation_id": template,
-			"animation_name": action, "directions": missing}
-		if group:
-			req["animation_group_id"] = group
-		r = pilot.call("POST", "/characters/animations", req)
-		jobs.append((action, missing, r.get("background_job_ids") or []))
-	for action, missing, ids in jobs:
-		for j in ids:
-			pilot.wait(j)
-		prev = done["anims"].get(action, {}).get("directions", [])
-		done["anims"][action] = {"template": SET[action], "directions": sorted(set(prev) | set(missing))}
-	time.sleep(2)
-	# PixelLab reports no per-job usage on a subscription, so this is the
-	# balance drop; it also counts anything Brian generates meanwhile.
-	drop = round(before - pilot.generations(), 2)
-	done["generations_used"] = round(done["generations_used"] + drop, 2)
-	done["at"] = time.strftime("%Y-%m-%d %H:%M")
-	runs["total_generations_used"] = round(sum(v["generations_used"] for v in runs["runs"].values()), 2)
-	save_runs(runs)
-	print("#%d: %d jobs, %.2f generations (batch total %.2f)" % (c["n"], sum(len(m) for _, m, _ in jobs), drop, runs["total_generations_used"]))
+		with LOCK:
+			rec = done["anims"].setdefault(action, {"template": template, "directions": []})
+		v3_groups: dict = rec.setdefault("v3_groups", {})
+		v3_dirs = {d for ds in v3_groups.values() for d in ds} | set(rec.get("skeleton_v3", []))
+		groups = have.get(template, {})
+		front_have = {d for gid, ds in groups.items() if gid not in v3_groups for d in ds}
+		front_group = next((gid for gid in groups if gid not in v3_groups), None)
+		todo_front = [d for d in front if d not in front_have]
+		todo_back = [d for d in back if d not in v3_dirs]
+		if todo_front:
+			req = {"character_id": c["character_id"], "mode": "template", "template_animation_id": template,
+				"animation_name": action, "directions": todo_front}
+			if front_group:
+				req["animation_group_id"] = front_group
+			r = pilot.call("POST", "/characters/animations", req)
+			waits += r.get("background_job_ids") or []
+			n_jobs += len(todo_front)
+		if todo_back:
+			r = pilot.call("POST", "/characters/animations", {"character_id": c["character_id"], "mode": "skeleton-v3",
+				"template_animation_id": template, "animation_name": action, "directions": todo_back})
+			v3_groups[r.get("animation_group_id") or "unknown"] = todo_back
+			waits += r.get("background_job_ids") or []
+			n_jobs += len(todo_back)
+		rec["directions"] = sorted(set(rec["directions"]) | set(front) | set(back))
+		with LOCK:
+			save_runs(runs)
+	for j in waits:
+		pilot.wait(j, limit=3600)
+	with LOCK:
+		done["at"] = time.strftime("%Y-%m-%d %H:%M")
+		done["facings_made"] = done.get("facings_made", 0) + n_jobs
+		save_runs(runs)
+	print("#%d: %d facings made" % (c["n"], n_jobs), flush=True)
+
+
+def pin_back_facings(c: dict, runs: dict, out: str, data: bytes) -> None:
+	"""pixellab.json: back facings come from the skeleton-v3 takes. The export
+	names one of two same-named animations "<name>-<group id prefix>"."""
+	rec = runs["runs"].get(str(c["n"]), {}).get("anims", {})
+	v3 = {}
+	for action, r in rec.items():
+		for gid, dirs in r.get("v3_groups", {}).items():
+			for d in dirs:
+				v3[gid] = (action, dirs)
+	# #3's back facings were redone inside its template group before Brian's
+	# no-delete rule: that group's back facings are skeleton-v3 already.
+	if not v3:
+		return
+	z = zipfile.ZipFile(io.BytesIO(data))
+	meta = json.loads(z.read([n for n in z.namelist() if n.endswith("metadata.json")][0]))
+	pins = {}
+	for stt in meta.get("states", []):
+		state = stt.get("folder", "")
+		anims = (stt.get("frames") or {}).get("animations") or {}
+		for folder in anims:
+			base, _, suffix = folder.partition("-")
+			for gid, (action, dirs) in v3.items():
+				if suffix and gid.startswith(suffix):
+					hit = True
+				elif not suffix:
+					# unsuffixed: v3 only if no other folder of this name claims this group
+					hit = not any(f.partition("-")[0] == base and f.partition("-")[2] and gid.startswith(f.partition("-")[2]) for f in anims) \
+						and set(anims[folder]) == set(dirs)
+				else:
+					hit = False
+				if hit:
+					for d in dirs:
+						if d in anims[folder]:
+							pins["%s_%s" % ("hit" if action == "hurt" else action, pilot.DIRS[d])] = "%s/%s" % (state, folder)
+	conf_p = os.path.join(out, "pixellab.json")
+	conf = json.load(open(conf_p, encoding="utf-8")) if os.path.exists(conf_p) else {}
+	conf.setdefault("actions", {}).update(pins)
+	conf["_about"] = "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
+	with open(conf_p, "w", encoding="utf-8") as f:
+		json.dump(conf, f, indent="\t")
+		f.write("\n")
 
 
 def usage(r: dict) -> float:
@@ -113,6 +180,7 @@ def export(c: dict) -> None:
 	with open(os.path.join(out, "rig.json"), "w", encoding="utf-8") as f:
 		json.dump(rig, f, indent="\t")
 		f.write("\n")
+	pin_back_facings(c, load_runs(), out, data)
 	print("#%d -> %s" % (c["n"], out))
 
 
@@ -121,16 +189,28 @@ def main() -> None:
 	p.add_argument("numbers", nargs="+", type=int)
 	p.add_argument("--go", action="store_true")
 	p.add_argument("--export-only", action="store_true")
+	p.add_argument("--parallel", type=int, default=4)
 	a = p.parse_args()
 	pool = {c["n"]: c for c in json.load(open(os.path.join(HERE, "pool.json"), encoding="utf-8"))["characters"]}
 	todo = [pool[n] for n in a.numbers if n in pool and pool[n]["status"] == "keep"]
-	print("%d characters, ~%d generations at most (%d anims x 2 or 4 facings)" % (len(todo), sum(len(SET) * len(directions_for(c)) for c in todo), len(SET)))
+	est = sum(len(SET) * (len(directions_for(c)[0]) + 3 * len(directions_for(c)[1])) for c in todo)
+	print("%d characters, ~%d generations at most (templates 1 a facing, skeleton-v3 about 3)" % (len(todo), est))
 	if not (a.go or a.export_only):
 		return
 	runs = load_runs()
+	if a.go:
+		# Several characters at once (PixelLab runs jobs in parallel); spend is
+		# the balance drop over the whole run, since jobs report no usage.
+		before = pilot.generations()
+		with ThreadPoolExecutor(a.parallel) as ex:
+			list(ex.map(lambda c: animate(c, runs), todo))
+		time.sleep(3)
+		drop = round(before - pilot.generations(), 2)
+		runs.setdefault("batches", []).append({"at": time.strftime("%Y-%m-%d %H:%M"), "characters": [c["n"] for c in todo], "generations_used": drop})
+		runs["total_generations_used"] = round(sum(b["generations_used"] for b in runs["batches"]) + sum(v.get("generations_used", 0) for v in runs["runs"].values()), 2)
+		save_runs(runs)
+		print("batch: %.2f generations (balance drop; includes anything else spent meanwhile)" % drop, flush=True)
 	for c in todo:
-		if a.go:
-			animate(c, runs)
 		export(c)
 
 

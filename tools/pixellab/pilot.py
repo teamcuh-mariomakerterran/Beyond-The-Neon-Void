@@ -67,11 +67,18 @@ def call(method: str, path: str, body: dict = None, raw: bool = False):
 	req = urllib.request.Request(API + path, method=method,
 		data=json.dumps(body).encode() if body is not None else None,
 		headers={"Authorization": "Bearer " + key(), "Content-Type": "application/json"})
-	try:
-		with urllib.request.urlopen(req, timeout=120) as r:
-			data = r.read()
-	except urllib.error.HTTPError as e:
-		sys.exit("%s %s -> %d %s" % (method, path, e.code, e.read()[:600].decode("utf-8", "replace")))
+	for attempt in range(60):
+		try:
+			with urllib.request.urlopen(req, timeout=120) as r:
+				data = r.read()
+			break
+		except urllib.error.HTTPError as e:
+			body = e.read()[:600].decode("utf-8", "replace")
+			# All concurrent job slots busy: wait for some to finish.
+			if e.code == 429 and attempt < 59:
+				time.sleep(30)
+				continue
+			sys.exit("%s %s -> %d %s" % (method, path, e.code, body))
 	return data if raw else json.loads(data)
 
 

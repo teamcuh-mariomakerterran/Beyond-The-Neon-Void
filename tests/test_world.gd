@@ -36,6 +36,7 @@ func run(p_tree: SceneTree) -> int:
 	test_campaign_fixes()
 	await test_streaming()
 	test_pixellab()
+	test_pixellab_merge()
 	test_barks_lies_evidence()
 	test_bonds_and_hangover()
 	test_sfx()
@@ -1666,6 +1667,7 @@ func test_pixellab() -> void:
 	check(PixelLab.classify("attack_kick", "Roundhouse_Kick") == "attack" and PixelLab.classify("attack_kick", "Taking_Hit") == "hit"
 		and PixelLab.classify("throwing_up_item_to_heal", "The_right_hand_reaches") == "cast" and PixelLab.classify("run", "Running") == "run"
 		and PixelLab.classify("walking_forward", "Walking") == "walk" and PixelLab.classify("idle_breathing", "Breathing_Idle") == "idle", "PixelLab names map to game actions")
+	check(PixelLab.classify("Idle", "taking_a_punch") == "hit" and PixelLab.classify("Idle", "falling_backward") == "death" and PixelLab.classify("Idle", "two_footed_jump") == "jump" and PixelLab.classify("Idle", "cross_punch_attack") == "attack", "PixelLab template names: hurt, death, jump, attack")
 	var dir := "res://assets/units/test_enemy_001"
 	if not PixelLab.is_root(dir):
 		check(false, "test_enemy_001 PixelLab export present")
@@ -1699,6 +1701,53 @@ func test_pixellab() -> void:
 	gunner.queue_free()
 	var m := ContentDB.get_mission("test_pixellab_skirmish")
 	check(m != null and bool(m.guests[0].get("controlled", false)) and ContentDB.get_npc("kade") != null and ContentDB.vendors.has("test_vendor"), "test skirmish, Kade and his shop are in")
+
+
+func _pl_frame(path: String, c: Color) -> void:
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	var img := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(4, 2, 8, 13), c)
+	img.save_png(path)
+
+
+func test_pixellab_merge() -> void:
+	# Front facings in one PixelLab animation, back facings in another (Brian:
+	# never delete takes, combine them): the loader merges them per action,
+	# and pixellab.json can pick one facing from a named animation.
+	var root := "user://t_plm/unit"
+	var st := root + "/exp/Idle"
+	for d: String in ["south-east", "south-west", "north-east", "north-west", "south"]:
+		_pl_frame(st + "/rotations/%s.png" % d, Color.GRAY)
+	_pl_frame(st + "/animations/walking/south-east/frame_000.png", Color.RED)
+	_pl_frame(st + "/animations/walking/south-west/frame_000.png", Color.RED)
+	_pl_frame(st + "/animations/walking-b1/north-east/frame_000.png", Color.BLUE)
+	_pl_frame(st + "/animations/walking-b1/north-west/frame_000.png", Color.BLUE)
+	_pl_frame(st + "/animations/cross_punch_attack/north-east/frame_000.png", Color.GREEN)
+	_pl_frame(st + "/animations/cross_punch_attack/south-east/frame_000.png", Color.GREEN)
+	_pl_frame(st + "/animations/cross_punch_attack-x2/north-east/frame_000.png", Color.YELLOW)
+	var fa := FileAccess.open(st.get_base_dir() + "/metadata.json", FileAccess.WRITE)
+	fa.store_string("{}")
+	fa.close()
+	fa = FileAccess.open(root + "/pixellab.json", FileAccess.WRITE)
+	fa.store_string(JSON.stringify({"actions": {"attack_NE": "Idle/cross_punch_attack-x2"}}))
+	fa.close()
+	check(PixelLab.is_root(root), "merge fixture is a PixelLab unit")
+	var us := PixelLab.unit_set(root)
+	var sf: SpriteFrames = us["frames"]
+	var px := func(anim: String) -> Color:
+		var t := sf.get_frame_texture(anim, 0) if sf.has_animation(anim) else null
+		return t.get_image().get_pixel(8, 8) if t else Color.BLACK
+	check(px.call("walk_SE") == Color.RED and px.call("walk_NE") == Color.BLUE and px.call("walk_NW") == Color.BLUE, "walk: front from one animation, back filled from the other")
+	check(px.call("attack_NE") == Color.YELLOW and px.call("attack_SE") == Color.GREEN, "attack_NE pinned to the other take by pixellab.json; SE keeps the first")
+	_rm_tree("user://t_plm")
+
+
+func _rm_tree(dir: String) -> void:
+	for d in DirAccess.get_directories_at(dir):
+		_rm_tree(dir.path_join(d))
+	for f in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir.path_join(f))
+	DirAccess.remove_absolute(dir)
 
 
 func test_barks_lies_evidence() -> void:
