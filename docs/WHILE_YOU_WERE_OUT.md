@@ -1,3 +1,23 @@
+# While you were at work (Nov 6)
+
+All pushed to `claude/optimistic-fermat-pie49w`; the verify gate passed on every push.
+
+## Your 25 characters are animated and in the game
+Walk, attack, hurt, death and jump in all 4 battle facings (front facings by PixelLab template, back facings by skeleton-v3, your pick B). #19, #25, #79 and #97 look the same flipped, so they're drawn SE + NE and mirrored. Idle uses their 8 standing poses, and cast falls back to attack. Each one is in `assets/units/pool_<n>/` with free hand / elbow / head points from PixelLab's stored skeletons.
+
+![Review 1](screenshots/pool_batch_review_1.png)
+![Review 2](screenshots/pool_batch_review_2.png)
+
+- **Credits:** the balance went from 1,811 to 858 over the batch, about 950. That includes anything you generated in PixelLab meanwhile. Pilot before that: 53.
+- **Nothing deleted since your rule.** Older takes stay in PixelLab next to the new ones, and the game picks the skeleton-v3 take for back facings (`pixellab.json` in each folder). Takes deleted before the rule are back as full exports in `assets/kit/`. The one loss: #4's old template back facings of walk and attack (about 4 to remake).
+- **PixelLab hiccup:** one job failed on their side (#75, NE death); the fill pass redid it.
+- **Not hooked up yet:** none of these are in `characters.json` or a mission. Tell me who's who (names / jobs) and I'll add them, or which test fight to drop them into.
+
+## Waiting on you
+1. Gun aims (pistol + rifle), about 550-700 for the 25: which characters use guns?
+2. Gun art waits until you've looked at these animations.
+3. Enemies (23 marked): the test of #150 (template) and #145 (custom creature), about 10-30, then the batch.
+
 # While you were at work (Oct 15)
 
 All pushed to `claude/optimistic-fermat-pie49w`. Tests: 644 + 495 passing, every script compiles.

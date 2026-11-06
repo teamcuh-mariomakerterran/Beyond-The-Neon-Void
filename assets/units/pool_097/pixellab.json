@@ -1,0 +1,10 @@
+{
+	"actions": {
+		"walk_NE": "Idle/walking",
+		"attack_NE": "Idle/cross_punch_attack-71109404",
+		"hit_NE": "Idle/taking_a_punch-f623c8a0",
+		"death_NE": "Idle/falling_backward",
+		"jump_NE": "Idle/two_footed_jump"
+	},
+	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
+}

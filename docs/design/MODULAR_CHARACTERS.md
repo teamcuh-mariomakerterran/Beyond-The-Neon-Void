@@ -75,3 +75,6 @@ It doesn't layer. The state edit drew different armour (grey plating all over, n
 PixelLab keeps a 2D skeleton for all 8 rotations of every character (`GET /characters/{id}` → `skeletons.2d_references`; this is the skeleton its editor shows). `tools/pixellab/pool_rigs.py <n>` downloads a pool character's export into `assets/units/pool_<n>/` and writes rig.json from those skeletons, for free. They cover the still poses; animation frames fall back to them until they get their own points (`skeleton_rig.py`, 0.1 a frame). The exports themselves still carry no keypoints.
 
 ![Pool #5 holding the pilot blade from PixelLab's own skeleton](../screenshots/pool_005_blade.png)
+
+## Cast batch (2026-11-06)
+Brian's 25 picks animated by `tools/pixellab/pool_anims.py` (pick B: template front facings, skeleton-v3 back facings; mirror only where the character looks the same flipped). The loader merges facings across takes and `pixellab.json` pins a facing to a take, so no take is ever deleted. Review: `docs/screenshots/pool_batch_review_1.png`, `_2.png`.

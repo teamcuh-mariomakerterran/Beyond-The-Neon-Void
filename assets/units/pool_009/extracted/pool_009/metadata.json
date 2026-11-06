@@ -195,6 +195,15 @@
             ]
           },
           "falling_backward-ff26623c": {
+            "south-west": [
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_000.png",
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_001.png",
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_002.png",
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_003.png",
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_004.png",
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_005.png",
+              "Idle/animations/falling_backward-ff26623c/south-west/frame_006.png"
+            ],
             "south-east": [
               "Idle/animations/falling_backward-ff26623c/south-east/frame_000.png",
               "Idle/animations/falling_backward-ff26623c/south-east/frame_001.png",
@@ -210,5 +219,5 @@
     }
   ],
   "export_version": "3.1",
-  "export_date": "2026-11-06T15:31:22.389349"
+  "export_date": "2026-11-06T16:06:45.708721"
 }

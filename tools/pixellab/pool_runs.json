@@ -403,8 +403,8 @@
 				}
 			},
 			"generations_used": 0.0,
-			"at": "2026-11-06 15:24",
-			"facings_made": 14
+			"at": "2026-11-06 16:01",
+			"facings_made": 15
 		},
 		"19": {
 			"anims": {
@@ -1604,7 +1604,9 @@
 					}
 				}
 			},
-			"generations_used": 0.0
+			"generations_used": 0.0,
+			"at": "2026-11-06 16:00",
+			"facings_made": 1
 		},
 		"78": {
 			"anims": {
@@ -1821,9 +1823,173 @@
 			"generations_used": 0.0,
 			"at": "2026-11-06 16:00",
 			"facings_made": 10
+		},
+		"127": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"e55a1f90-6887-4217-8a1c-f445b2b01863": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"f538fe31-3521-4364-8c29-391343649b74": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"401cf137-ea90-411f-a133-19002309fa71": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"8c0ffe99-2b6b-49c0-84f5-faed68e33c93": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"871fa7b4-b9cf-4925-bc56-b6e399b8ef25": [
+							"north-east",
+							"north-west"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0,
+			"at": "2026-11-06 16:04",
+			"facings_made": 20
+		},
+		"132": {
+			"anims": {
+				"walk": {
+					"template": "walking",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"d8df16fa-dd47-46c9-b344-45ce2f8b5853": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"attack": {
+					"template": "cross-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"bacca29e-28cf-4088-bae0-24175c417bfa": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"hurt": {
+					"template": "taking-punch",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"62ee46e6-c953-4b17-8452-9413ffb85f63": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"death": {
+					"template": "falling-back-death",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"b20f9d9f-64b0-40a1-aee7-7939d68e4d01": [
+							"north-east",
+							"north-west"
+						]
+					}
+				},
+				"jump": {
+					"template": "two-footed-jump",
+					"directions": [
+						"north-east",
+						"north-west",
+						"south-east",
+						"south-west"
+					],
+					"v3_groups": {
+						"ed0bbf46-8f91-4182-adbb-ef8cb9e83789": [
+							"north-east",
+							"north-west"
+						]
+					}
+				}
+			},
+			"generations_used": 0.0,
+			"at": "2026-11-06 16:06",
+			"facings_made": 20
 		}
 	},
-	"total_generations_used": 60.0,
+	"total_generations_used": 145.0,
 	"lost": [
 		{
 			"n": 4,
@@ -1839,6 +2005,39 @@
 			"n": 5,
 			"what": "template-mode NE/NW of walk and attack",
 			"why": "deleted in PixelLab; copies kept in assets/units/pool_005/kit/"
+		}
+	],
+	"batches": [
+		{
+			"at": "2026-11-06 16:06",
+			"characters": [
+				3,
+				4,
+				5,
+				6,
+				9,
+				19,
+				21,
+				24,
+				25,
+				27,
+				29,
+				43,
+				54,
+				55,
+				60,
+				62,
+				64,
+				71,
+				74,
+				75,
+				78,
+				79,
+				97,
+				127,
+				132
+			],
+			"generations_used": 85.0
 		}
 	]
 }
