@@ -44,6 +44,8 @@ Make one: `godot --headless --path . -s res://tools/rig/make_rig.gd -- res://ass
 - Built: rig lookup, attach art, front/back per facing, mirroring, the estimator, item `wear_path`, job `outfit_path` and `palette_swap`, PixelMatrix palette swap, test `test_gear_attach`.
 - Pilot weapon: `assets/gear/weapons/pilot_blade` (placeholder art drawn by `tools/gear/make_pilot_weapon.py`). No game item uses it yet: that waits for Brian's before/after.
 - PixelLab pilot: base body A + walk in 8 directions done (`assets/units/base_body_a`), 10 generations. Armour and weapon steps next.
-- Hand points from PixelLab's skeleton (`tools/pixellab/skeleton_rig.py`, 0.1 generation a frame) beat the silhouette guess on black gloves. Done for the idle frames of the two test units (2.4 generations); walk and attack frames still use the estimator. The skeleton's elbow stretches the hand cover up the forearm. NW has its own blade picture angled out so it pokes past the body.
+- Hand points from PixelLab's skeleton (`tools/pixellab/skeleton_rig.py`, 0.1 generation a frame) beat the silhouette guess on black gloves. Done for the idle frames of the two test units (2.4 generations); walk and attack frames still use the estimator. The skeleton's elbow stretches the hand cover up the forearm. Every blade picture is one 3D pose (low ready) turned with the body and projected 2:1 isometric (`tools/gear/make_pilot_weapon.py`), so the angle stays consistent as the unit turns. A blade shows past the body only when its real length reaches (Brian: never force it).
+
+![One pose, projected per facing](../screenshots/gear_pose.png)
 
 ![Skeleton hands, forearm cover, NW poke-out](../screenshots/gear_grip_fix2.png)
