@@ -71,10 +71,11 @@ def main() -> None:
 	grips = {}
 	# SE: lowered, tip down and forward (toward the viewer's right).
 	# NE: carried up and back over the shoulder side, away from the viewer.
-	# NW: held behind the body on the far side, angled out (up and away) so the
-	# blade pokes past the body instead of hiding behind it (Brian, 2026-11-06).
+	# NW: held behind the back, blade up and across to the far shoulder so the
+	# tip shows past it when the blade is long enough; a short blade stays hidden
+	# behind the body (Brian, 2026-11-06: never force it to show).
 	# SW borrows SE mirrored, which already points out past the body.
-	for facing, ang in (("SE", 62.0), ("NE", -58.0), ("NW", -40.0)):
+	for facing, ang in (("SE", 62.0), ("NE", -58.0), ("NW", -148.0)):
 		img, grip = draw(ang)
 		img.save(os.path.join(out, facing + ".png"))
 		grips[facing] = list(grip)
