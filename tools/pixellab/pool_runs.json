@@ -2084,6 +2084,15 @@
 			"group": "a48f7b90-3ed3-4171-b696-9f772566fedb",
 			"generations": 3,
 			"verdict": "fair: poncho and head size kept; face goes dark and goggles fade on frames 1, 2 and 6"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "hurt SW",
+			"method": "skeleton-v3",
+			"group": "a48f7b90-3ed3-4171-b696-9f772566fedb",
+			"generations": 3,
+			"verdict": "pass: face and goggles clear; poncho soft on frames 1 and 6; up to 5 px taller"
 		}
 	]
 }

@@ -6,6 +6,7 @@ Add to it as we go; tick a line when it's done.
 
 ## #21 (camo poncho, cap, goggles)
 - [ ] **hurt SE**, take `taking_a_punch` (skeleton-v3, group a48f7b90): frames **1, 2, 6**. The face goes dark and the goggles fade; frames 3-4 show the right face.
+- [ ] **hurt SW**, take `taking_a_punch` (group a48f7b90): frames **1, 6**, the poncho's camo goes soft and blurry. The figure stands up to 5 px taller than the standing pose (cap and head).
 - [ ] **attack SE**, take `cross_punch_attack` (skeleton-v3, group 7f2f0229): frame **6** smears the poncho (trimmed in game).
 - [ ] **attack SW**, same take: frame **6** smears the poncho (trimmed in game). The punch reads weakly: the fist stays inside the poncho on frames 1-5.
 - [ ] **walk SW**, take `walking-9babe46a`: frame **6**, the poncho hem goes soft.
