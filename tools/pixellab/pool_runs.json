@@ -2093,6 +2093,15 @@
 			"group": "a48f7b90-3ed3-4171-b696-9f772566fedb",
 			"generations": 3,
 			"verdict": "pass: face and goggles clear; poncho soft on frames 1 and 6; up to 5 px taller"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "death SE",
+			"method": "skeleton-v3",
+			"group": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
+			"generations": 3,
+			"verdict": "pass: poncho kept, ends flat, no whoosh mark; frames 6-7 poncho goes blurry"
 		}
 	]
 }
