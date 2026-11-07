@@ -48,7 +48,7 @@ def main() -> None:
 		pr = probe.rotate(deg, resample=Image.NEAREST, expand=True)
 		bb = pr.getbbox() or (0, 0, 1, 1)
 		grips[name] = [bb[0], bb[1]]
-	json.dump({"point": "hand_r", "grip": grips["SE"], "grips": grips, "z": {}, "rotate": False, "order": 0, "cover": 2},
+	json.dump({"point": "hand_r", "grip": grips["SE"], "grips": grips, "z": {}, "rotate": True, "order": 0, "cover": 2},
 		open(os.path.join(OUT, "attach.json"), "w"), indent="\t")
 	print("wrote", OUT)
 

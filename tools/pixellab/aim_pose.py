@@ -3,6 +3,7 @@
     python3 -I tools/pixellab/aim_pose.py preview <n> <facing> <out.png>   # free: poses over the sprite
     python3 -I tools/pixellab/aim_pose.py plan <n> <facing>                # cost only
     python3 -I tools/pixellab/aim_pose.py go <n> <facing> <out_dir>        # spends (~4 for 15 frames)
+    python3 -I tools/pixellab/aim_pose.py rig <n> <facing> [frames]        # free: hand, elbow, forearm angle into rig.json
 
 The clip (pistol, one hand): frames 0-4 raise the right arm to aim, 5-7 hold,
 8-14 fire twice (the hand kicks up and back, then settles). Poses start from
@@ -151,11 +152,48 @@ def go(n: int, facing: str, out_dir: str) -> None:
 	print("saved", len(imgs), "frames to", out_dir)
 
 
+REST_TILT_MAX = 65.0  # a lowered gun points down-forward, not into the leg
+
+
+def forearm_deg(f: dict) -> float:
+	el, wr = f["RIGHT ELBOW"], f["RIGHT ARM"]
+	return math.degrees(math.atan2(wr[1] - el[1], wr[0] - el[0]))
+
+
+def rig(n: int, facing: str, count: int = 8) -> None:
+	"""Writes aim_<facing> hand_r [x, y, z, angle] and elbow_r per frame, plus the
+	still pose's forearm angle, into the unit's rig.json. Angle 0 = the aimed
+	forearm (gun art is drawn aimed); positive turns clockwise, toward down."""
+	c, d, base, w, png = load(n, facing)
+	frames = poses(base, w, facing)[:count]
+	aim = forearm_deg(frames[-1])
+	sign = 1.0 if facing.endswith("E") else -1.0
+	def tilt(f):
+		a = (forearm_deg(f) - aim) * sign
+		return round(max(-REST_TILT_MAX, min(REST_TILT_MAX, a)) * sign, 1)
+	rp = os.path.join("assets", "units", "pool_%03d" % n, "rig.json")
+	r = json.load(open(rp, encoding="utf-8"))
+	pts = r["points"]
+	z = 1 if facing in ("SE", "NE", "E", "S") else -1
+	pts["hand_r"].setdefault("anims", {})["aim_" + facing] = [[round(f["RIGHT ARM"][0]), round(f["RIGHT ARM"][1]), z, tilt(f)] for f in frames]
+	pts.setdefault("elbow_r", {"facing": {}, "anims": {}}).setdefault("anims", {})["aim_" + facing] = [[round(f["RIGHT ELBOW"][0]), round(f["RIGHT ELBOW"][1]), z] for f in frames]
+	# Still pose (60 px cell): same lowered angle as frame 0.
+	still = pts["hand_r"]["facing"].get(facing)
+	if still:
+		pts["hand_r"]["facing"][facing] = still[:3] + [tilt(frames[0])]
+	with open(rp, "w", encoding="utf-8") as fh:
+		json.dump(r, fh, indent="\t")
+		fh.write("\n")
+	print("rig", rp, [a[3] for a in pts["hand_r"]["anims"]["aim_" + facing]])
+
+
 if __name__ == "__main__":
 	cmd, n, facing = sys.argv[1], int(sys.argv[2]), sys.argv[3]
 	if cmd == "preview":
 		preview(n, facing, sys.argv[4])
 	elif cmd == "plan":
 		print("#%d %s pistol aim: 15 frames, 1 facing = 4 generations" % (n, facing))
+	elif cmd == "rig":
+		rig(n, facing, int(sys.argv[4]) if len(sys.argv) > 4 else 8)
 	elif cmd == "go":
 		go(n, facing, sys.argv[4])
