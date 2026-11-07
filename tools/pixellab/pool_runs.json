@@ -2102,6 +2102,15 @@
 			"group": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
 			"generations": 3,
 			"verdict": "pass: poncho kept, ends flat, no whoosh mark; frames 6-7 poncho goes blurry"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "death SW",
+			"method": "skeleton-v3",
+			"group": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
+			"generations": "balance fell 18 during the job (9954 -> 9936) and 15 between steps (9969 -> 9954) with no calls of mine; expected 3",
+			"verdict": "pass: poncho, face and goggles kept, ends flat, no whoosh mark; frames 3-4 up to 5 px taller"
 		}
 	]
 }
