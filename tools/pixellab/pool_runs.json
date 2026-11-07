@@ -2039,5 +2039,24 @@
 			],
 			"generations_used": 85.0
 		}
+	],
+	"redo_log": [
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "attack SE (test)",
+			"method": "skeleton-v3",
+			"generations": 3,
+			"verdict": "pass"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "attack SW",
+			"method": "skeleton-v3",
+			"group": "7f2f0229-fd95-46f5-a5ca-a1822b72852a",
+			"generations": 3,
+			"verdict": "pass; last frame smears; up to 5 px taller than standing"
+		}
 	]
 }
