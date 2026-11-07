@@ -20,6 +20,8 @@ extends RefCounted
 ##    "keep_frames": {"death_NE": 5}}
 ## keep_frames cuts an animation ("<action>_<FACING>") to its first N frames,
 ## so a take whose last frames smear ends on its last clean frame.
+## clean_frames {"death_NE": [2]} keeps only the largest connected shape on
+## those frames (erases stray marks PixelLab draws in the air beside a body).
 ## A key with a facing ("attack_NE") picks that one facing only. When several
 ## animations are the same action, facings missing from the picked one are
 ## filled from the others (e.g. front facings from one PixelLab animation,
@@ -362,9 +364,70 @@ static func unit_set(dir: String) -> Dictionary:
 			var n_keep := maxi(int(keep[kn]), 1)
 			while sf.get_frame_count(kn) > n_keep:
 				sf.remove_frame(kn, sf.get_frame_count(kn) - 1)
+	var clean: Dictionary = conf.get("clean_frames", {})
+	for cn: String in clean:
+		if not sf.has_animation(cn):
+			continue
+		for fi: Variant in clean[cn]:
+			var i := int(fi)
+			if i < 0 or i >= sf.get_frame_count(cn):
+				continue
+			var t := sf.get_frame_texture(cn, i)
+			var img := t.get_image() if t else null
+			if img == null:
+				continue
+			if img.is_compressed():
+				img = img.duplicate()
+				img.decompress()
+			sf.set_frame(cn, i, ImageTexture.create_from_image(largest_shape(img)))
 	out["ok"] = not sf.get_animation_names().is_empty()
 	_cache[dir] = out
 	return out
+
+
+## Copy of `img` with only its largest 8-connected opaque shape kept.
+static func largest_shape(img: Image) -> Image:
+	var src := img.duplicate() as Image
+	src.convert(Image.FORMAT_RGBA8)
+	var w := src.get_width()
+	var h := src.get_height()
+	var label := PackedInt32Array()
+	label.resize(w * h)
+	label.fill(0)
+	var sizes: Array[int] = [0]
+	var stack := PackedInt32Array()
+	for start in w * h:
+		if label[start] != 0 or src.get_pixel(start % w, start / w).a < 0.5:
+			continue
+		var id := sizes.size()
+		var n := 0
+		stack.append(start)
+		label[start] = id
+		while not stack.is_empty():
+			var q := stack[stack.size() - 1]
+			stack.resize(stack.size() - 1)
+			n += 1
+			var qx := q % w
+			var qy := q / w
+			for dy in range(-1, 2):
+				for dx in range(-1, 2):
+					var nx := qx + dx
+					var ny := qy + dy
+					if nx < 0 or ny < 0 or nx >= w or ny >= h:
+						continue
+					var nq := ny * w + nx
+					if label[nq] == 0 and src.get_pixel(nx, ny).a >= 0.5:
+						label[nq] = id
+						stack.append(nq)
+		sizes.append(n)
+	var best := 0
+	for k in range(1, sizes.size()):
+		if best == 0 or sizes[k] > sizes[best]:
+			best = k
+	for q in w * h:
+		if label[q] != best and src.get_pixel(q % w, q / w).a > 0.0:
+			src.set_pixel(q % w, q / w, Color(0, 0, 0, 0))
+	return src
 
 
 static func _add(out: Dictionary, action: String, e: Dictionary, fps: float, loop: bool) -> void:

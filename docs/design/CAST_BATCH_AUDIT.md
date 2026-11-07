@@ -53,6 +53,10 @@ Every frame of the 25 characters checked against their own standing poses. Sheet
 
 ![](../screenshots/cast_fixes/pool_003_trim.png)
 
+- Frame 3 of the back deaths on 11 characters had a grey whoosh mark floating beside the body (PixelLab's death template draws it). `clean_frames` keeps only the body's shape on those frames.
+
+![](../screenshots/cast_fixes/death_whoosh_cleanup.png)
+
 ## Quality test: #21 attack SE (13 generations, ceiling 40)
 | Method | Cost | Poncho | Skin | Cap / goggles | Striped sleeve | Size vs standing (58 px) | Verdict |
 |---|---|---|---|---|---|---|---|

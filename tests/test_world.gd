@@ -1742,6 +1742,11 @@ func test_pixellab_merge() -> void:
 		return t.get_image().get_pixel(8, 8) if t else Color.BLACK
 	check(px.call("walk_SE") == Color.RED and px.call("walk_NE") == Color.BLUE and px.call("walk_NW") == Color.BLUE, "walk: front from one animation, back filled from the other")
 	check(sf.get_frame_count("walk_NE") == 1 and sf.get_frame_count("walk_NW") == 1, "keep_frames cuts a smeared ending (walk_NE 2 -> 1)")
+	var specky := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+	specky.fill_rect(Rect2i(4, 2, 8, 13), Color.RED)
+	specky.fill_rect(Rect2i(14, 1, 2, 2), Color.GRAY)
+	var cleaned := PixelLab.largest_shape(specky)
+	check(cleaned.get_pixel(14, 1).a == 0.0 and cleaned.get_pixel(8, 8) == Color.RED, "clean_frames: stray mark erased, body kept")
 	check(px.call("attack_NE") == Color.YELLOW and px.call("attack_SE") == Color.GREEN, "attack_NE pinned to the other take by pixellab.json; SE keeps the first")
 	_rm_tree("user://t_plm")
 

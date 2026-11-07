@@ -18,5 +18,11 @@
 		"attack_NW": 5,
 		"death_NW": 5
 	},
-	"_about_keep_frames": "Back-facing attack / death end on their last clean frame (cast audit 2026-11-07)."
+	"_about_keep_frames": "Back-facing attack / death end on their last clean frame (cast audit 2026-11-07).",
+	"clean_frames": {
+		"death_NE": [
+			2
+		]
+	},
+	"_about_clean_frames": "Frame 3 of these back deaths had a stray whoosh mark beside the body (Brian, 2026-11-07)."
 }

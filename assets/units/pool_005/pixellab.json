@@ -22,5 +22,11 @@
 		"hit_NW": "Idle/taking_a_punch-e519c149",
 		"jump_NE": "Idle/two_footed_jump",
 		"jump_NW": "Idle/two_footed_jump"
-	}
+	},
+	"clean_frames": {
+		"death_NE": [
+			2
+		]
+	},
+	"_about_clean_frames": "Frame 3 of these back deaths had a stray whoosh mark beside the body (Brian, 2026-11-07)."
 }
