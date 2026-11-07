@@ -7,7 +7,7 @@ Every frame of the 25 characters checked against their own standing poses. Sheet
 2. **Back facings of attack, hurt and death (NE, NW; skeleton-v3).** The outfit stays, but heads swell into blobs mid-motion, and the last 1-2 frames of attack and death smear into mush on nearly every character.
 3. **Hurt SW** often changes colours (white gloves or patches on #3, #29, #64).
 4. **One-offs:** a pink blob in #71 jump SE frame 2, a pink mouth in #4 death SE.
-5. **Game bug (free fix):** skeleton-v3 frames are 96 px while the standing poses are 60 px, so back facings are drawn off the unit's spot.
+5. **Game bug:** skeleton-v3 frames are 96 px while the standing poses are 60 px, so back facings were drawn off the unit's spot. Fixed in cbcac693 ("skeleton-mode takes stand on their feet").
 
 ## Usable as is
 - **Walk, all 4 facings:** good for most. Not for the cloak / poncho characters on SE and SW (#4, #21, #60, #132).
@@ -44,6 +44,5 @@ Every frame of the 25 characters checked against their own standing poses. Sheet
 | 132 | bad | same problems as #4 (camo cloak) |
 
 ## Free fixes before any new spending
-- Fix the 96 px back-facing offset.
 - Drop the smeared final frames of back attack and death (hold the last clean frame) with a per-animation frame range in `pixellab.json`.
 - Use the older kept takes where they're better for a facing.
