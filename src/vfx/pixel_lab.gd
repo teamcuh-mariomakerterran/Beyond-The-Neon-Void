@@ -22,6 +22,11 @@ extends RefCounted
 ## so a take whose last frames smear ends on its last clean frame.
 ## clean_frames {"death_NE": [2]} keeps only the largest connected shape on
 ## those frames (erases stray marks PixelLab draws in the air beside a body).
+## frame_order {"jump_SE": [0, 1, 2, 3, 4, 4, 4, 5, 6]} replays frames in that
+## order (repeat one to hold it, e.g. the top of a jump).
+## jump {"air": [3, 7] or {"SE": [3, 7]}, "lift": 10}: on a height change the
+## unit plays its jump; frames before air[0] crouch in place, air[0]..air[1]
+## ride the arc, the rest land. lift adds art pixels to the arc's peak.
 ## A key with a facing ("attack_NE") picks that one facing only. When several
 ## animations are the same action, facings missing from the picked one are
 ## filled from the others (e.g. front facings from one PixelLab animation,
@@ -380,6 +385,19 @@ static func unit_set(dir: String) -> Dictionary:
 				img = img.duplicate()
 				img.decompress()
 			sf.set_frame(cn, i, ImageTexture.create_from_image(largest_shape(img)))
+	var order: Dictionary = conf.get("frame_order", {})
+	for on: String in order:
+		if not sf.has_animation(on):
+			continue
+		var texs: Array[Texture2D] = []
+		for k in sf.get_frame_count(on):
+			texs.append(sf.get_frame_texture(on, k))
+		sf.clear(on)
+		for idx: Variant in order[on]:
+			var i2 := int(idx)
+			if i2 >= 0 and i2 < texs.size():
+				sf.add_frame(on, texs[i2])
+	out["jump"] = conf.get("jump", {})
 	out["ok"] = not sf.get_animation_names().is_empty()
 	_cache[dir] = out
 	return out

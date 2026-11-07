@@ -1732,7 +1732,8 @@ func test_pixellab_merge() -> void:
 	fa.store_string("{}")
 	fa.close()
 	fa = FileAccess.open(root + "/pixellab.json", FileAccess.WRITE)
-	fa.store_string(JSON.stringify({"actions": {"attack_NE": "Idle/cross_punch_attack-x2"}, "keep_frames": {"walk_NE": 1}}))
+	fa.store_string(JSON.stringify({"actions": {"attack_NE": "Idle/cross_punch_attack-x2"}, "keep_frames": {"walk_NE": 1},
+		"frame_order": {"walk_SE": [0, 0, 0]}, "jump": {"air": [1, 2], "lift": 7}}))
 	fa.close()
 	check(PixelLab.is_root(root), "merge fixture is a PixelLab unit")
 	var us := PixelLab.unit_set(root)
@@ -1742,6 +1743,8 @@ func test_pixellab_merge() -> void:
 		return t.get_image().get_pixel(8, 8) if t else Color.BLACK
 	check(px.call("walk_SE") == Color.RED and px.call("walk_NE") == Color.BLUE and px.call("walk_NW") == Color.BLUE, "walk: front from one animation, back filled from the other")
 	check(sf.get_frame_count("walk_NE") == 1 and sf.get_frame_count("walk_NW") == 1, "keep_frames cuts a smeared ending (walk_NE 2 -> 1)")
+	check(sf.get_frame_count("walk_SE") == 3 and px.call("walk_SE") == Color.RED, "frame_order repeats a frame (hold the top of a jump)")
+	check(int((us["jump"] as Dictionary).get("lift", 0)) == 7, "jump settings reach the unit set")
 	var specky := Image.create(16, 16, false, Image.FORMAT_RGBA8)
 	specky.fill_rect(Rect2i(4, 2, 8, 13), Color.RED)
 	specky.fill_rect(Rect2i(14, 1, 2, 2), Color.GRAY)

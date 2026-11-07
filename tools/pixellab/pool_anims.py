@@ -129,43 +129,66 @@ FOLDER = {"walking": "walking", "cross-punch": "cross_punch_attack", "taking-pun
 GAME_ACTION = {"walk": "walk", "attack": "attack", "hurt": "hit", "death": "death", "jump": "jump"}
 
 
-def pin_back_facings(c: dict, runs: dict, out: str, data: bytes) -> None:
-	"""pixellab.json: back facings come from the skeleton-v3 takes. Of two
-	same-named animations the export suffixes one "<name>-<group id prefix>";
-	a suffix matching a v3 group marks that take, a suffix matching any other
-	group marks the unsuffixed folder as the v3 take."""
+def folder_groups(detail: dict, meta: dict) -> dict:
+	"""{export folder name: animation group id}. The export suffixes all but
+	one of the same-named takes with "-<group id prefix>"; the unsuffixed one
+	is the group whose prefix no folder uses. Names can change between
+	downloads, so pins are kept by group id and resolved here."""
+	by_base: dict = {}
+	for an in detail.get("animations") or []:
+		base = FOLDER.get(an.get("animation_type", ""), "")
+		if base:
+			by_base.setdefault(base, []).append(an.get("animation_group_id", ""))
+	out = {}
+	for stt in meta.get("states", []):
+		anims = (stt.get("frames") or {}).get("animations") or {}
+		for base, gids in by_base.items():
+			names = [f for f in anims if f.partition("-")[0] == base]
+			used = set()
+			for f in names:
+				suf = f.partition("-")[2]
+				g = next((g for g in gids if suf and g.startswith(suf)), None)
+				if g:
+					out[f] = g
+					used.add(g)
+			left = [g for g in gids if g not in used]
+			plain = [f for f in names if not f.partition("-")[2]]
+			if len(plain) == 1 and len(left) == 1:
+				out[plain[0]] = left[0]
+	return out
+
+
+def pin_back_facings(c: dict, runs: dict, out: str, data: bytes, detail: dict = None) -> None:
+	"""pixellab.json actions: back facings from the skeleton-v3 takes, then
+	hand picks (pins_by_group: {"walk_SE": group id}, then pins_by_hand by
+	folder name) on top."""
 	rec = runs["runs"].get(str(c["n"]), {}).get("anims", {})
 	z = zipfile.ZipFile(io.BytesIO(data))
 	meta = json.loads(z.read([n for n in z.namelist() if n.endswith("metadata.json")][0]))
-	pins = {}
-	for stt in meta.get("states", []):
-		state = stt.get("folder", "")
-		anims = (stt.get("frames") or {}).get("animations") or {}
-		for action, r in rec.items():
-			groups = r.get("v3_groups", {})
-			if not groups:
-				continue
-			base = FOLDER.get(r.get("template", SET.get(action, "")), "")
-			cands = [f for f in anims if f.partition("-")[0] == base]
-			if len(cands) < 2:
-				continue  # one take only: nothing to choose
-			for gid, dirs in groups.items():
-				pick = next((f for f in cands if f.partition("-")[2] and gid.startswith(f.partition("-")[2])), None)
-				if pick is None:
-					plain = [f for f in cands if not f.partition("-")[2]]
-					pick = plain[0] if len(plain) == 1 else None
-				if pick is None:
-					print("#%d %s: couldn't tell which take is skeleton-v3; no pin" % (c["n"], action))
-					continue
-				for d in dirs:
-					if d in anims[pick]:
-						pins["%s_%s" % (GAME_ACTION[action], pilot.DIRS[d])] = "%s/%s" % (state, pick)
+	detail = detail or pilot.call("GET", "/characters/%s" % c["character_id"])
+	fg = folder_groups(detail, meta)
+	by_group = {g: f for f, g in fg.items()}
+	state = (meta.get("states") or [{}])[0].get("folder", "Idle")
 	conf_p = os.path.join(out, "pixellab.json")
 	conf = json.load(open(conf_p, encoding="utf-8")) if os.path.exists(conf_p) else {}
-	# Hand-picked takes (pins_by_hand) win over the automatic pins.
+	pins = {}
+	for action, r in rec.items():
+		for gid, dirs in r.get("v3_groups", {}).items():
+			f = by_group.get(gid)
+			if f is None:
+				print("#%d %s: take %s not found in the export; no pin" % (c["n"], action, gid[:8]))
+				continue
+			for d in dirs:
+				pins["%s_%s" % (GAME_ACTION[action], pilot.DIRS[d])] = "%s/%s" % (state, f)
+	for key, gid in conf.get("pins_by_group", {}).items():
+		f = by_group.get(gid)
+		if f is None:
+			print("#%d %s: take %s not found in the export; no pin" % (c["n"], key, gid[:8]))
+			continue
+		pins[key] = "%s/%s" % (state, f)
 	pins.update(conf.get("pins_by_hand", {}))
 	conf["actions"] = pins
-	conf["_about"] = "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
+	conf["_about"] = "Pins: back facings to their skeleton-v3 takes, then pins_by_group (hand picks by PixelLab group id). Older takes stay in the export as a kit."
 	with open(conf_p, "w", encoding="utf-8") as f:
 		json.dump(conf, f, indent="\t")
 		f.write("\n")
@@ -191,11 +214,12 @@ def export(c: dict) -> None:
 	if os.path.isdir(ext):
 		import shutil
 		shutil.rmtree(ext)
-	rig = pool_rigs.rig_from_detail(pilot.call("GET", "/characters/%s" % c["character_id"]))
+	detail = pilot.call("GET", "/characters/%s" % c["character_id"])
+	rig = pool_rigs.rig_from_detail(detail)
 	with open(os.path.join(out, "rig.json"), "w", encoding="utf-8") as f:
 		json.dump(rig, f, indent="\t")
 		f.write("\n")
-	pin_back_facings(c, load_runs(), out, data)
+	pin_back_facings(c, load_runs(), out, data, detail)
 	print("#%d -> %s" % (c["n"], out))
 
 

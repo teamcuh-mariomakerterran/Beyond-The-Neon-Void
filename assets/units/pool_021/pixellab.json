@@ -2,21 +2,32 @@
 	"actions": {
 		"walk_NE": "Idle/walking",
 		"walk_NW": "Idle/walking",
-		"attack_NE": "Idle/cross_punch_attack",
-		"attack_NW": "Idle/cross_punch_attack",
+		"attack_NE": "Idle/cross_punch_attack-a89cbbbb",
+		"attack_NW": "Idle/cross_punch_attack-a89cbbbb",
 		"hit_NE": "Idle/taking_a_punch-d11e32e1",
 		"hit_NW": "Idle/taking_a_punch-d11e32e1",
 		"death_NE": "Idle/falling_backward-ce2e7d49",
 		"death_NW": "Idle/falling_backward-ce2e7d49",
 		"jump_NE": "Idle/two_footed_jump",
-		"jump_NW": "Idle/two_footed_jump"
+		"jump_NW": "Idle/two_footed_jump",
+		"walk_SE": "Idle/walking-9babe46a",
+		"walk_SW": "Idle/walking-9babe46a",
+		"attack_SE": "Idle/cross_punch_attack",
+		"attack_SW": "Idle/cross_punch_attack",
+		"hit_SE": "Idle/taking_a_punch",
+		"hit_SW": "Idle/taking_a_punch",
+		"death_SE": "Idle/falling_backward-e1e57cf7",
+		"death_SW": "Idle/falling_backward-e1e57cf7",
+		"jump_SE": "Idle/two_footed_jump-e3d87586"
 	},
-	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit.",
+	"_about": "Pins: back facings to their skeleton-v3 takes, then pins_by_group (hand picks by PixelLab group id). Older takes stay in the export as a kit.",
 	"keep_frames": {
 		"attack_NE": 5,
 		"death_NE": 5,
 		"attack_NW": 5,
-		"death_NW": 5
+		"death_NW": 5,
+		"attack_SE": 5,
+		"attack_SW": 5
 	},
 	"_about_keep_frames": "Back-facing attack / death end on their last clean frame (cast audit 2026-11-07).",
 	"clean_frames": {
@@ -24,5 +35,40 @@
 			2
 		]
 	},
-	"_about_clean_frames": "Frame 3 of these back deaths had a stray whoosh mark beside the body (Brian, 2026-11-07)."
+	"_about_clean_frames": "Frame 3 of these back deaths had a stray whoosh mark beside the body (Brian, 2026-11-07).",
+	"pins_by_group": {
+		"walk_SE": "9babe46a-2b2b-4356-9c47-e73a62e6ae41",
+		"walk_SW": "9babe46a-2b2b-4356-9c47-e73a62e6ae41",
+		"attack_SE": "7f2f0229-fd95-46f5-a5ca-a1822b72852a",
+		"attack_SW": "7f2f0229-fd95-46f5-a5ca-a1822b72852a",
+		"hit_SE": "a48f7b90-3ed3-4171-b696-9f772566fedb",
+		"hit_SW": "a48f7b90-3ed3-4171-b696-9f772566fedb",
+		"death_SE": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
+		"death_SW": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
+		"jump_SE": "e3d87586-d2d8-420a-ab56-f164d53c7744"
+	},
+	"_about_pins_by_group": "#21's front facings redone in skeleton-v3 (2026-11-07). jump_SW still the old take until it's redone.",
+	"frame_order": {
+		"jump_SE": [
+			0,
+			1,
+			2,
+			3,
+			4,
+			4,
+			4,
+			5,
+			6
+		]
+	},
+	"jump": {
+		"air": {
+			"SE": [
+				3,
+				7
+			]
+		},
+		"lift": 10
+	},
+	"_about_jump": "Jump on height changes: SE holds its top frame for 3 beats; frames 4-8 ride the arc (Brian, 2026-11-07)."
 }

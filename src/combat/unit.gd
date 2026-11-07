@@ -49,6 +49,9 @@ var job_handler: JobHandler
 var equipment: EquipmentManager
 var hud: UnitHUD
 var sprite: AnimatedSprite2D
+## Height changes play the unit's jump animation along the arc (false: the
+## old hop with the walk cycle; kept for before/after shots).
+static var jump_with_anim := true
 ## Weapons / helmets pinned to the body's rig points (null if none).
 var gear: GearAttach
 var _lattice: Dictionary = {}  # LatticeClip.unit_set() when the art is a Lattice pack
@@ -516,8 +519,13 @@ func move_along(path: Array[Vector2i], animate: bool = true) -> void:
 			var next := path[i]
 			face_towards(next)
 			z_index = maxi(IsometricGrid.draw_order(next), IsometricGrid.draw_order(cell)) * 2 + 1
-			var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			var hop := grid.get_height(next) != grid.get_height(cell)
+			if hop and jump_with_anim and has_anim("jump"):
+				await _jump_to(next)
+				cell = next
+				play_animation("walk")
+				continue
+			var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			if hop:
 				# Jump arc: up and over, then land with a squash.
 				var mid := (position + grid.grid_to_world(next)) * 0.5 + Vector2(0, -grid.height_step * 1.1)
@@ -540,6 +548,43 @@ func move_along(path: Array[Vector2i], animate: bool = true) -> void:
 	has_moved = true
 	move_streak = _straight_run(path)
 	EventBus.unit_moved.emit(self, start, goal)
+
+
+## Plays the jump across a height change: crouch in place, ride the arc on the
+## airborne frames, land with a squash. Timing comes from the animation's own
+## frames and fps; which frames are airborne and the extra lift come from the
+## unit set's "jump" config (PixelLab: pixellab.json "jump").
+func _jump_to(next: Vector2i) -> void:
+	play_animation("jump")
+	if sprite == null or sprite.sprite_frames == null:
+		return
+	sprite.frame = 0
+	var anim := sprite.animation
+	var n := sprite.sprite_frames.get_frame_count(anim)
+	var fps := maxf(sprite.sprite_frames.get_animation_speed(anim), 1.0)
+	var j: Dictionary = _lattice.get("jump", {})
+	var air: Variant = j.get("air", [])
+	if air is Dictionary:
+		air = (air as Dictionary).get(LatticeClip.facing_of(facing), [])
+	var a0 := int(n / 3.0)
+	var a1 := int(n * 2 / 3.0)
+	if air is Array and (air as Array).size() == 2:
+		a0 = clampi(int(air[0]), 0, n - 1)
+		a1 = clampi(int(air[1]), a0, n - 1)
+	if a0 > 0:
+		await get_tree().create_timer(a0 / fps).timeout
+	var start := position
+	var goal := grid.grid_to_world(next)
+	var lift := grid.height_step * 1.1 + float(j.get("lift", 0)) * absf(sprite.scale.y)
+	var t := create_tween()
+	t.tween_method(func(k: float) -> void:
+		position = start.lerp(goal, k) + Vector2(0, -4.0 * lift * k * (1.0 - k)),
+		0.0, 1.0, (a1 - a0 + 1) / fps)
+	await t.finished
+	position = goal
+	land_squash()
+	if a1 < n - 1:
+		await get_tree().create_timer((n - 1 - a1) / fps).timeout
 
 
 static func _straight_run(path: Array[Vector2i]) -> int:
