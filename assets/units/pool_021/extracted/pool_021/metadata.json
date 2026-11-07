@@ -261,6 +261,15 @@
               "Idle/animations/two_footed_jump-e3d87586/south-east/frame_004.png",
               "Idle/animations/two_footed_jump-e3d87586/south-east/frame_005.png",
               "Idle/animations/two_footed_jump-e3d87586/south-east/frame_006.png"
+            ],
+            "south-west": [
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_000.png",
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_001.png",
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_002.png",
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_003.png",
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_004.png",
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_005.png",
+              "Idle/animations/two_footed_jump-e3d87586/south-west/frame_006.png"
             ]
           },
           "cross_punch_attack-eb611375": {
@@ -306,5 +315,5 @@
     }
   ],
   "export_version": "3.1",
-  "export_date": "2026-11-07T14:12:03.884008"
+  "export_date": "2026-11-07T15:02:13.474090"
 }

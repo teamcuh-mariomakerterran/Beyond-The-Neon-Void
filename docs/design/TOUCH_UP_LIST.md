@@ -10,6 +10,7 @@ Add to it as we go; tick a line when it's done.
 - [ ] **death SE**, take `falling_backward-e1e57cf7` (group e1e57cf7): frames **6, 7** (lying down), the poncho turns into a blurry mass. Don't trim these: they're the frames where he lands flat.
 - [ ] **death SW**, take `falling_backward-e1e57cf7`: frames **3, 4**, the figure is up to 5 px taller than the standing pose and the poncho's underside goes dark like a cape.
 - [ ] **jump SE**, take `two_footed_jump-e3d87586` (group e3d87586): frames **6, 7**, the poncho flares out sideways like a cape and its edge goes soft.
+- [ ] **jump SW**, take `two_footed_jump-e3d87586`: frames **2, 3** (crouch), the poncho goes smooth and loses its camo; frames **5, 6** stand up to 4 px taller than the standing pose.
 - [ ] **jump SE, frame 1**: the poncho already sticks out on his back-left side, so it pops when the jump starts from the standing pose (Brian).
 - [ ] **jump SE lift**: the feet only leave the ground about 5 px at the top (frame 5); a bigger hop would read better on height changes.
 - [ ] **attack SE**, take `cross_punch_attack` (skeleton-v3, group 7f2f0229): frame **6** smears the poncho (trimmed in game).

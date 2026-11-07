@@ -18,7 +18,8 @@
 		"hit_SW": "Idle/taking_a_punch",
 		"death_SE": "Idle/falling_backward-e1e57cf7",
 		"death_SW": "Idle/falling_backward-e1e57cf7",
-		"jump_SE": "Idle/two_footed_jump-e3d87586"
+		"jump_SE": "Idle/two_footed_jump-e3d87586",
+		"jump_SW": "Idle/two_footed_jump-e3d87586"
 	},
 	"_about": "Pins: back facings to their skeleton-v3 takes, then pins_by_group (hand picks by PixelLab group id). Older takes stay in the export as a kit.",
 	"keep_frames": {
@@ -45,11 +46,23 @@
 		"hit_SW": "a48f7b90-3ed3-4171-b696-9f772566fedb",
 		"death_SE": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
 		"death_SW": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
-		"jump_SE": "e3d87586-d2d8-420a-ab56-f164d53c7744"
+		"jump_SE": "e3d87586-d2d8-420a-ab56-f164d53c7744",
+		"jump_SW": "e3d87586-d2d8-420a-ab56-f164d53c7744"
 	},
-	"_about_pins_by_group": "#21's front facings redone in skeleton-v3 (2026-11-07). jump_SW still the old take until it's redone.",
+	"_about_pins_by_group": "#21's front facings redone in skeleton-v3 (2026-11-07).",
 	"frame_order": {
 		"jump_SE": [
+			0,
+			1,
+			2,
+			3,
+			4,
+			4,
+			4,
+			5,
+			6
+		],
+		"jump_SW": [
 			0,
 			1,
 			2,
@@ -64,6 +77,10 @@
 	"jump": {
 		"air": {
 			"SE": [
+				3,
+				7
+			],
+			"SW": [
 				3,
 				7
 			]

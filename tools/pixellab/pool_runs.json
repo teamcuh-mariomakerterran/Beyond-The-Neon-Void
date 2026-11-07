@@ -2121,6 +2121,15 @@
 			"group": "e3d87586-d2d8-420a-ab56-f164d53c7744",
 			"generations": 3,
 			"verdict": "pass: poncho, sleeve, face kept; poncho flares out like a cape on frames 3, 6, 7 and goes soft on 6-7"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "jump SW",
+			"method": "skeleton-v3",
+			"group": "e3d87586-d2d8-420a-ab56-f164d53c7744",
+			"generations": 3,
+			"verdict": "pass: poncho, face kept; poncho goes smooth on frames 2-3; frames 5-6 up to 4 px taller"
 		}
 	]
 }
