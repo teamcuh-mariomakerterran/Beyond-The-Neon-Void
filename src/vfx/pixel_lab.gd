@@ -16,7 +16,10 @@ extends RefCounted
 ## optional <folder>/pixellab.json overrides the picks and timing:
 ##   {"actions": {"attack": "attack_kick/Roundhouse_Kick", "idle": "idle_breathing/Breathing_Idle",
 ##                "attack_NE": "Idle/cross_punch_attack"},
-##    "fps": 10, "fps_by_action": {"walk": 12}, "scale": 1.5, "loop": {"attack": false}}
+##    "fps": 10, "fps_by_action": {"walk": 12}, "scale": 1.5, "loop": {"attack": false},
+##    "keep_frames": {"death_NE": 5}}
+## keep_frames cuts an animation ("<action>_<FACING>") to its first N frames,
+## so a take whose last frames smear ends on its last clean frame.
 ## A key with a facing ("attack_NE") picks that one facing only. When several
 ## animations are the same action, facings missing from the picked one are
 ## filled from the others (e.g. front facings from one PixelLab animation,
@@ -353,6 +356,12 @@ static func unit_set(dir: String) -> Dictionary:
 		sf.add_frame(nm2, tex)
 		out["anchors"][nm2] = _feet(str(still_src[fc]))
 		out["cells"][nm2] = tex.get_size()
+	var keep: Dictionary = conf.get("keep_frames", {})
+	for kn: String in keep:
+		if sf.has_animation(kn):
+			var n_keep := maxi(int(keep[kn]), 1)
+			while sf.get_frame_count(kn) > n_keep:
+				sf.remove_frame(kn, sf.get_frame_count(kn) - 1)
 	out["ok"] = not sf.get_animation_names().is_empty()
 	_cache[dir] = out
 	return out

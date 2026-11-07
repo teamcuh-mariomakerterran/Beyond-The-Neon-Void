@@ -1723,6 +1723,7 @@ func test_pixellab_merge() -> void:
 	_pl_frame(st + "/animations/walking/south-east/frame_000.png", Color.RED)
 	_pl_frame(st + "/animations/walking/south-west/frame_000.png", Color.RED)
 	_pl_frame(st + "/animations/walking-b1/north-east/frame_000.png", Color.BLUE)
+	_pl_frame(st + "/animations/walking-b1/north-east/frame_001.png", Color.BLUE)
 	_pl_frame(st + "/animations/walking-b1/north-west/frame_000.png", Color.BLUE)
 	_pl_frame(st + "/animations/cross_punch_attack/north-east/frame_000.png", Color.GREEN)
 	_pl_frame(st + "/animations/cross_punch_attack/south-east/frame_000.png", Color.GREEN)
@@ -1731,7 +1732,7 @@ func test_pixellab_merge() -> void:
 	fa.store_string("{}")
 	fa.close()
 	fa = FileAccess.open(root + "/pixellab.json", FileAccess.WRITE)
-	fa.store_string(JSON.stringify({"actions": {"attack_NE": "Idle/cross_punch_attack-x2"}}))
+	fa.store_string(JSON.stringify({"actions": {"attack_NE": "Idle/cross_punch_attack-x2"}, "keep_frames": {"walk_NE": 1}}))
 	fa.close()
 	check(PixelLab.is_root(root), "merge fixture is a PixelLab unit")
 	var us := PixelLab.unit_set(root)
@@ -1740,6 +1741,7 @@ func test_pixellab_merge() -> void:
 		var t := sf.get_frame_texture(anim, 0) if sf.has_animation(anim) else null
 		return t.get_image().get_pixel(8, 8) if t else Color.BLACK
 	check(px.call("walk_SE") == Color.RED and px.call("walk_NE") == Color.BLUE and px.call("walk_NW") == Color.BLUE, "walk: front from one animation, back filled from the other")
+	check(sf.get_frame_count("walk_NE") == 1 and sf.get_frame_count("walk_NW") == 1, "keep_frames cuts a smeared ending (walk_NE 2 -> 1)")
 	check(px.call("attack_NE") == Color.YELLOW and px.call("attack_SE") == Color.GREEN, "attack_NE pinned to the other take by pixellab.json; SE keeps the first")
 	_rm_tree("user://t_plm")
 

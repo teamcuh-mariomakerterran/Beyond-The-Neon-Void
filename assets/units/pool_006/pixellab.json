@@ -7,5 +7,12 @@
 		"jump_NE": "Idle/two_footed_jump-e55b4a60",
 		"jump_NW": "Idle/two_footed_jump-e55b4a60"
 	},
-	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
+	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit.",
+	"keep_frames": {
+		"attack_NE": 5,
+		"death_NE": 5,
+		"attack_NW": 5,
+		"death_NW": 5
+	},
+	"_about_keep_frames": "Back-facing attack / death end on their last clean frame (cast audit 2026-11-07)."
 }

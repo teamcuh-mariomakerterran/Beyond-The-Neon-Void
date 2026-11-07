@@ -162,6 +162,8 @@ def pin_back_facings(c: dict, runs: dict, out: str, data: bytes) -> None:
 						pins["%s_%s" % (GAME_ACTION[action], pilot.DIRS[d])] = "%s/%s" % (state, pick)
 	conf_p = os.path.join(out, "pixellab.json")
 	conf = json.load(open(conf_p, encoding="utf-8")) if os.path.exists(conf_p) else {}
+	# Hand-picked takes (pins_by_hand) win over the automatic pins.
+	pins.update(conf.get("pins_by_hand", {}))
 	conf["actions"] = pins
 	conf["_about"] = "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
 	with open(conf_p, "w", encoding="utf-8") as f:

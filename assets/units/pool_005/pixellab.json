@@ -2,12 +2,25 @@
 	"actions": {
 		"attack_NE": "Idle/cross_punch_attack-c4e4d1a7",
 		"attack_NW": "Idle/cross_punch_attack-c4e4d1a7",
-		"hit_NE": "Idle/taking_a_punch",
-		"hit_NW": "Idle/taking_a_punch",
+		"hit_NE": "Idle/taking_a_punch-e519c149",
+		"hit_NW": "Idle/taking_a_punch-e519c149",
 		"death_NE": "Idle/falling_backward-96ef8e37",
 		"death_NW": "Idle/falling_backward-96ef8e37",
-		"jump_NE": "Idle/two_footed_jump-fa60d78b",
-		"jump_NW": "Idle/two_footed_jump-fa60d78b"
+		"jump_NE": "Idle/two_footed_jump",
+		"jump_NW": "Idle/two_footed_jump"
 	},
-	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit."
+	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit.",
+	"keep_frames": {
+		"attack_NE": 5,
+		"death_NE": 5,
+		"attack_NW": 5,
+		"death_NW": 5
+	},
+	"_about_keep_frames": "Back-facing attack / death end on their last clean frame (cast audit 2026-11-07).",
+	"pins_by_hand": {
+		"hit_NE": "Idle/taking_a_punch-e519c149",
+		"hit_NW": "Idle/taking_a_punch-e519c149",
+		"jump_NE": "Idle/two_footed_jump",
+		"jump_NW": "Idle/two_footed_jump"
+	}
 }
