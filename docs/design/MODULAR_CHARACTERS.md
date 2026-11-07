@@ -78,3 +78,8 @@ PixelLab keeps a 2D skeleton for all 8 rotations of every character (`GET /chara
 
 ## Cast batch (2026-11-06)
 Brian's 25 picks animated by `tools/pixellab/pool_anims.py` (pick B: template front facings, skeleton-v3 back facings; mirror only where the character looks the same flipped). The loader merges facings across takes and `pixellab.json` pins a facing to a take, so no take is ever deleted. Review: `docs/screenshots/pool_batch_review_1.png`, `_2.png`.
+
+## Gun aim (2026-11-07)
+Raise and hold come from our own skeleton poses (`tools/pixellab/aim_pose.py`, `/animate-with-skeleton-v3`, about 4 a facing for 15 frames), so the hand stays empty and its point is known on every frame. The shot's kick is done in the engine: `GearAttach.fire_kick()` moves the held gun and the fist over it up 3 px and back 2 px and tips the muzzle 10°, then settles. `Unit.aim_raise()` plays `aim` and holds its last frame; an ability with `anim: "aim"` raises, kicks on the shot, then returns to idle. `frames_from` in `pixellab.json` loads the kept frames. Test: #5 SE with the placeholder `pilot_pistol` (`tools/gear/make_pilot_pistol.py`). The test's fire frames grew a gun and stay in the kit as scrap.
+
+![](../screenshots/cast_fixes/pool_005_aim_kick.gif)

@@ -47,6 +47,12 @@ var rig: Dictionary = {}
 ## [{art: Dictionary, node: Sprite2D}]
 var pieces: Array = []
 var _state := ""
+## Recoil, set by fire_kick(): 0 at rest, 1 at the top of the kick. Pieces
+## (and the fist drawn over them) move up and back and tip the muzzle up.
+var kick := 0.0
+const KICK_BACK := 2.0
+const KICK_UP := 3.0
+const KICK_TILT := 10.0
 
 
 ## Rig for a body folder ({} if it has none). Cached.
@@ -290,7 +296,7 @@ func sync() -> void:
 	if body == null or body.sprite_frames == null:
 		return
 	var anim := str(body.animation)
-	var key := "%s|%d|%s|%s" % [anim, body.frame, body.flip_h, body.offset]
+	var key := "%s|%d|%s|%s|%.3f" % [anim, body.frame, body.flip_h, body.offset, kick]
 	if key == _state:
 		return
 	_state = key
@@ -316,12 +322,31 @@ func sync() -> void:
 		var w := float(s.texture.get_width())
 		# The grip pixel lands on the point; flipped art holds the mirrored pixel.
 		s.offset = -Vector2(w - grip.x if s.flip_h else grip.x, grip.y)
-		s.position = pl["pos"]
-		s.rotation_degrees = float(pl["angle"])
+		# Aim side on screen: east facings point right, mirrored when flipped.
+		var aim_x := (1.0 if facing_from_anim(anim).ends_with("E") else -1.0) * (-1.0 if body.flip_h else 1.0)
+		var kv := Vector2(-aim_x * KICK_BACK, -KICK_UP) * kick
+		s.position = pl["pos"] + kv
+		s.rotation_degrees = float(pl["angle"]) - aim_x * KICK_TILT * kick
 		s.show_behind_parent = not bool(pl["front"])
 		var cr: Rect2 = pl["cover"]
 		if cr.has_area() and tex:
 			_show_cover(cv, tex, cr, cell, body.flip_h, body.offset)
+			cv.position += kv
+
+
+## One shot's recoil: snaps up and back, settles over `time` seconds.
+func fire_kick(time: float = 0.18) -> void:
+	if not is_inside_tree():
+		return
+	var t := create_tween()
+	t.tween_method(_set_kick, 0.0, 1.0, time * 0.25)
+	t.tween_method(_set_kick, 1.0, 0.0, time * 0.75).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await t.finished
+
+
+func _set_kick(v: float) -> void:
+	kick = v
+	sync()
 
 
 ## Points `cv` at the region `cr` of the body frame `tex`, placed where the

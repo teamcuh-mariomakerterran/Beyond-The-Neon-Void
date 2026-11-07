@@ -6,3 +6,6 @@ Every PixelLab take we've generated, kept whole (Brian, 2026-11-06: never delete
 - `pool_005/pool_005_takes_2026-11-06a.zip`: #5 with the template-mode back facings of walk and attack, later deleted in PixelLab.
 
 New takes now stay in PixelLab next to each other (separate animation groups), so they're in every fresh export too.
+
+## Scrap frames (reuse freely)
+- `pool_005/aim_pistol_SE/`: #5 pistol raise / hold / fire from our own skeleton poses (`tools/pixellab/aim_pose.py`, 4 generations, 2026-11-07). Frames 0-7 (raise, hold) are copied into `assets/units/pool_005/aim_pistol/SE/` for the game. Frames 8-14 are scrap: PixelLab drew a gun and a muzzle flash in the hand, and frame 14 snaps back to standing. `aim.json` has the hand point of every frame.

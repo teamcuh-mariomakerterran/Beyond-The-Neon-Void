@@ -26,6 +26,9 @@ extends RefCounted
 ## lighter than a dark outline are repainted in the standing pose's outline
 ## colour, on every frame of those animations (a bare action covers all its
 ## facings). Restores the outline skeleton-v3 frames lose when they go soft.
+## frames_from {"aim": {"SE": {"dir": "res://.../aim_pistol/SE", "frames": [0, 7]}}}
+## adds an animation (one-shot, at "fps") from loose frame PNGs (frame_000.png...)
+## in that folder; "frames" is the first and last index kept.
 ## frame_order {"jump_SE": [0, 1, 2, 3, 4, 4, 4, 5, 6]} replays frames in that
 ## order (repeat one to hold it, e.g. the top of a jump).
 ## jump {"air": [3, 7] or {"SE": [3, 7]}, "lift": 10}: on a height change the
@@ -367,6 +370,21 @@ static func unit_set(dir: String) -> Dictionary:
 		sf.add_frame(nm2, tex)
 		out["anchors"][nm2] = _feet(str(still_src[fc]))
 		out["cells"][nm2] = tex.get_size()
+	var extra_src: Dictionary = conf.get("frames_from", {})
+	for xa: String in extra_src:
+		var xf := {}
+		for xfc: String in (extra_src[xa] as Dictionary):
+			var spec: Dictionary = extra_src[xa][xfc]
+			var rng: Array = spec.get("frames", [0, 99])
+			var paths: Array = []
+			for xi in range(int(rng[0]), int(rng[1]) + 1):
+				var fp := str(spec.get("dir", "")).path_join("frame_%03d.png" % xi)
+				if FileAccess.file_exists(fp) or ResourceLoader.exists(fp):
+					paths.append(fp)
+			if not paths.is_empty():
+				xf[xfc] = paths
+		if not xf.is_empty():
+			_add(out, xa, {"facings": xf, "rot": still_src}, float(fps_by.get(xa, fps)), false)
 	var keep: Dictionary = conf.get("keep_frames", {})
 	for kn: String in keep:
 		if sf.has_animation(kn):

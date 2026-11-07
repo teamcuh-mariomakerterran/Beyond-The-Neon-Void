@@ -647,7 +647,7 @@ func _on_clip_finished() -> void:
 	var nxt := str((_lattice.get("next", {}) as Dictionary).get(sprite.animation, ""))
 	if nxt != "" and sprite.sprite_frames.has_animation(nxt):
 		sprite.play(nxt)
-	elif _action != "death":
+	elif _action != "death" and _action != "aim":
 		play_animation("idle")
 
 
@@ -669,6 +669,40 @@ func hit_flash(color: Color = Color(2.0, 0.4, 0.6), heavy: bool = false) -> void
 		r.tween_property(self, "rotation", 0.12, 0.05)
 		r.tween_property(self, "rotation", -0.08, 0.07)
 		r.tween_property(self, "rotation", 0.0, 0.1)
+
+
+## Gun shot presentation: raise into "aim" (held on its last frame), kick the
+## held weapon once per shot, then back to idle. Without an aim animation the
+## unit plays its attack. Awaitable; no rules here.
+func aim_and_fire(shots: int = 1, gap: float = 0.12) -> void:
+	if not await aim_raise():
+		return
+	for i in maxi(shots, 1):
+		await fire_kick()
+		if i < shots - 1:
+			await get_tree().create_timer(gap).timeout
+
+
+## Plays "aim" and waits for the raise to finish (it holds the last frame).
+## False when the unit has no aim animation (it plays its attack instead).
+func aim_raise() -> bool:
+	if not has_anim("aim"):
+		play_animation("attack")
+		return false
+	play_animation("aim")
+	if is_inside_tree() and sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(sprite.animation):
+		var n := sprite.sprite_frames.get_frame_count(sprite.animation)
+		var fps := maxf(sprite.sprite_frames.get_animation_speed(sprite.animation), 1.0)
+		await get_tree().create_timer(float(n) / fps).timeout
+	return true
+
+
+## One shot's recoil on the held weapon (and the fist over it).
+func fire_kick() -> void:
+	if gear and is_instance_valid(gear):
+		await gear.fire_kick()
+	elif is_inside_tree():
+		await get_tree().create_timer(0.18).timeout
 
 
 ## Little squash when landing after a hop / jump.

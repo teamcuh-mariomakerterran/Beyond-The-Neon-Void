@@ -761,7 +761,15 @@ func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	var ranged: bool = IsometricGrid.distance(unit.cell, cell) > 1 and not self_cast
 	var plan := VFX.plan_for_ability(ability, ranged)
 	var cells := ability.get_affected_cells(grid, unit.cell, cell)
-	unit.play_animation(unit.anim_for(ability))
+	var aiming: bool = unit.anim_for(ability) == "aim"
+	if aiming:
+		# Raise the gun and hold; the kick lands with the shot's sound.
+		await unit.aim_raise()
+		if not is_instance_valid(unit):
+			return
+		unit.fire_kick()
+	else:
+		unit.play_animation(unit.anim_for(ability))
 	AudioManager.play_sfx(Sfx.ability_sound(ability, unit, ranged), -2.0)
 	if ability.id == Bonds.DUO_TECH:
 		var partner: Node = unit.duo_partner()
@@ -790,6 +798,8 @@ func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 			flash.tween_property(tv, "modulate", Color.WHITE, 0.3)
 	# Let the impact peak before damage numbers pop.
 	await get_tree().create_timer(0.12).timeout
+	if aiming and is_instance_valid(unit):
+		unit.play_animation("idle")
 
 
 ## Spawns the plan's impact effect in the shape its mode asks for.

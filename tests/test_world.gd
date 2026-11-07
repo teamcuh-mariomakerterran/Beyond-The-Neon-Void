@@ -28,6 +28,7 @@ func run(p_tree: SceneTree) -> int:
 	test_dev_console()
 	await test_pixel_matrix()
 	await test_gear_attach()
+	test_aim_kick()
 	test_ui_icons()
 	test_cover()
 	test_masks_and_anchors()
@@ -1257,6 +1258,29 @@ func test_pixel_matrix() -> void:
 		DirAccess.remove_absolute(d)
 	for d: String in [root, gear, "user://t_pm"]:
 		DirAccess.remove_absolute(d)
+
+
+## Gun aim: #5's raise/hold frames load from frames_from, and a shot's kick
+## moves the held gun up and back (presentation only).
+func test_aim_kick() -> void:
+	var us := PixelLab.unit_set("res://assets/units/pool_005")
+	var sf: SpriteFrames = us["frames"]
+	check(sf.has_animation("aim_SE") and sf.get_frame_count("aim_SE") == 8 and not sf.get_animation_loop("aim_SE"), "aim: 8 raise/hold frames, one-shot")
+	var spr := AnimatedSprite2D.new()
+	spr.sprite_frames = sf
+	spr.animation = "aim_SE"
+	spr.frame = 7
+	var g := GearAttach.attach_to(spr, "res://assets/units/pool_005", ["res://assets/gear/weapons/pilot_pistol"])
+	check(g != null, "aim: pistol attaches to #5")
+	if g:
+		var piece: Sprite2D = g.pieces[0]["node"]
+		var rest := piece.position
+		g._set_kick(1.0)
+		var d := piece.position - rest
+		check(is_equal_approx(d.x, -GearAttach.KICK_BACK) and is_equal_approx(d.y, -GearAttach.KICK_UP) and piece.rotation_degrees < 0.0, "aim: kick moves the gun up and back, muzzle up")
+		g._set_kick(0.0)
+		check(piece.position == rest, "aim: gun settles back")
+	spr.free()
 
 
 func test_gear_attach() -> void:
