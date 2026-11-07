@@ -2066,6 +2066,15 @@
 			"group": "9babe46a-2b2b-4356-9c47-e73a62e6ae41",
 			"generations": 3,
 			"verdict": "pass; matches standing size; small stride"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "walk SW",
+			"method": "skeleton-v3",
+			"group": "9babe46a-2b2b-4356-9c47-e73a62e6ae41",
+			"generations": 3,
+			"verdict": "pass; last frame poncho hem slightly soft"
 		}
 	]
 }
