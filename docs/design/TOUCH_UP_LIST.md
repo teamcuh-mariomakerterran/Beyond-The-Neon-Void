@@ -13,13 +13,13 @@ Add to it as we go; tick a line when it's done.
 - [ ] **jump SW**, take `two_footed_jump-e3d87586`: frames **2, 3** (crouch), the poncho goes smooth and loses its camo; frames **5, 6** stand up to 4 px taller than the standing pose.
 - [ ] **jump SE, frame 1**: the poncho already sticks out on his back-left side, so it pops when the jump starts from the standing pose (Brian).
 - [ ] **jump SE lift**: the feet only leave the ground about 5 px at the top (frame 5); a bigger hop would read better on height changes.
-- [ ] **attack SE**, take `cross_punch_attack` (skeleton-v3, group 7f2f0229): frame **6** smears the poncho (trimmed in game).
-- [ ] **attack SW**, same take: frame **6** smears the poncho (trimmed in game). The punch reads weakly: the fist stays inside the poncho on frames 1-5.
+- [ ] **attack SE**, take `cross_punch_attack` (skeleton-v3, group 7f2f0229): frame **6** smears the poncho (plays in full in game).
+- [ ] **attack SW**, same take: frame **6** smears the poncho (plays in full in game). The punch reads weakly: the fist stays inside the poncho on frames 1-5.
 - [ ] **walk SW**, take `walking-9babe46a`: frame **6**, the poncho hem goes soft.
 - [ ] **walk SE / SW gait** (Brian): the stride is small, closer to a march.
 
 ## Back facings (NE, NW; skeleton-v3), all 25
-- [ ] **attack NE / NW, frame 6** (full reach) smears on nearly everyone. Trimmed in game (`keep_frames`), so the attack stops before full reach; touching up frame 6 brings the reach back.
+- [ ] **attack NE / NW, frame 6** (full reach) smears on nearly everyone. Plays in full in game (Brian), so this frame needs the touch-up.
 - [ ] **death NE / NW, frames 6-7** smear. Trimmed in game, so some deaths end mid-fall instead of flat.
 - [x] **death NE / NW, frame 3**: a grey whoosh mark beside the body on #3, #5, #6, #19, #21, #27, #43, #55, #60, #64, #75. Erased in game (`clean_frames`); the export still has it.
 - [ ] **hurt and death, middle frames**: heads swell into blobs on #4, #5, #6, #24, #25, #79, #97, #132 (worst on #4 and #132, the camo cloaks).
