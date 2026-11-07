@@ -83,5 +83,16 @@
 		},
 		"lift": 10
 	},
-	"_about_jump": "Jump on height changes: SE holds its top frame for 3 beats; frames 4-8 ride the arc (Brian, 2026-11-07)."
+	"_about_jump": "Jump on height changes: SE holds its top frame for 3 beats; frames 4-8 ride the arc (Brian, 2026-11-07).",
+	"outline": {
+		"color": "#040201",
+		"anims": [
+			"attack",
+			"hit",
+			"death",
+			"jump",
+			"walk"
+		]
+	},
+	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07)."
 }

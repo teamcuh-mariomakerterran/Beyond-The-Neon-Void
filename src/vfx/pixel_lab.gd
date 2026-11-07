@@ -22,6 +22,10 @@ extends RefCounted
 ## so a take whose last frames smear ends on its last clean frame.
 ## clean_frames {"death_NE": [2]} keeps only the largest connected shape on
 ## those frames (erases stray marks PixelLab draws in the air beside a body).
+## outline {"color": "#040201", "anims": ["attack", "hit_NE"]}: edge pixels
+## lighter than a dark outline are repainted in the standing pose's outline
+## colour, on every frame of those animations (a bare action covers all its
+## facings). Restores the outline skeleton-v3 frames lose when they go soft.
 ## frame_order {"jump_SE": [0, 1, 2, 3, 4, 4, 4, 5, 6]} replays frames in that
 ## order (repeat one to hold it, e.g. the top of a jump).
 ## jump {"air": [3, 7] or {"SE": [3, 7]}, "lift": 10}: on a height change the
@@ -385,6 +389,20 @@ static func unit_set(dir: String) -> Dictionary:
 				img = img.duplicate()
 				img.decompress()
 			sf.set_frame(cn, i, ImageTexture.create_from_image(largest_shape(img)))
+	var ol: Dictionary = conf.get("outline", {})
+	if not ol.is_empty():
+		var ocol := Color.html(str(ol.get("color", "#000000")))
+		var wanted: Array = ol.get("anims", [])
+		for an: StringName in sf.get_animation_names():
+			var a_s := str(an)
+			if not (wanted.has(a_s) or wanted.has(a_s.get_slice("_", 0))):
+				continue
+			for i3 in sf.get_frame_count(an):
+				var t3 := sf.get_frame_texture(an, i3)
+				var img3 := t3.get_image() if t3 else null
+				if img3 == null:
+					continue
+				sf.set_frame(an, i3, ImageTexture.create_from_image(restore_outline(img3, ocol)))
 	var order: Dictionary = conf.get("frame_order", {})
 	for on: String in order:
 		if not sf.has_animation(on):
@@ -401,6 +419,39 @@ static func unit_set(dir: String) -> Dictionary:
 	out["ok"] = not sf.get_animation_names().is_empty()
 	_cache[dir] = out
 	return out
+
+
+## Copy of `img` whose edge pixels (opaque, next to transparency or the cell's
+## border) with luminance 40/255 or more are set to `col`, fully opaque.
+static func restore_outline(img: Image, col: Color) -> Image:
+	var src := img.duplicate() as Image
+	if src.is_compressed():
+		src.decompress()
+	src.convert(Image.FORMAT_RGBA8)
+	var w := src.get_width()
+	var h := src.get_height()
+	var d := src.get_data()
+	var outd := d.duplicate()
+	var cr := col.r8
+	var cg := col.g8
+	var cb := col.b8
+	for y in h:
+		for x in w:
+			var o := (y * w + x) * 4
+			if d[o + 3] < 128:
+				continue
+			var edge := x == 0 or y == 0 or x == w - 1 or y == h - 1
+			if not edge:
+				edge = d[o - 1] < 128 or d[o + 7] < 128 or d[o - w * 4 + 3] < 128 or d[o + w * 4 + 3] < 128
+			if not edge:
+				continue
+			if 0.3 * d[o] + 0.59 * d[o + 1] + 0.11 * d[o + 2] < 40.0:
+				continue
+			outd[o] = cr
+			outd[o + 1] = cg
+			outd[o + 2] = cb
+			outd[o + 3] = 255
+	return Image.create_from_data(w, h, false, Image.FORMAT_RGBA8, outd)
 
 
 ## Copy of `img` with only its largest 8-connected opaque shape kept.

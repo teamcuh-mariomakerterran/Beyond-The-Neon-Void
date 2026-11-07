@@ -14,5 +14,16 @@
 			2
 		]
 	},
-	"_about_clean_frames": "Frame 3 of these back deaths had a stray whoosh mark beside the body (Brian, 2026-11-07)."
+	"_about_clean_frames": "Frame 3 of these back deaths had a stray whoosh mark beside the body (Brian, 2026-11-07).",
+	"outline": {
+		"color": "#020302",
+		"anims": [
+			"attack",
+			"hit",
+			"death",
+			"jump",
+			"walk"
+		]
+	},
+	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07)."
 }

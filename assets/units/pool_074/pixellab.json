@@ -16,5 +16,16 @@
 		"death_NE": 5,
 		"death_NW": 5
 	},
-	"_about_keep_frames": "Back-facing deaths end on their last clean frame (cast audit 2026-11-07). Attacks play in full (Brian, 2026-11-07)."
+	"_about_keep_frames": "Back-facing deaths end on their last clean frame (cast audit 2026-11-07). Attacks play in full (Brian, 2026-11-07).",
+	"outline": {
+		"color": "#040201",
+		"anims": [
+			"attack",
+			"hit",
+			"death",
+			"jump",
+			"walk"
+		]
+	},
+	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07)."
 }

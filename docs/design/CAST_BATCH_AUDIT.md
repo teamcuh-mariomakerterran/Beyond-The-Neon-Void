@@ -94,3 +94,8 @@ Walks, back jumps and anything the audit called usable are left out. Characters 
 | **Total** | | **85** | **~255** (2-4 a facing: 170-340) |
 
 Only attack has been tested in this mode on a front facing. Hurt and death may get the same head swelling the back facings showed, so the first approved group should include them.
+
+## Outline restore (free, 2026-11-07)
+Soft frames lose their dark outline. `outline` in each `pixellab.json` repaints light edge pixels in the standing pose's outline colour on attack, hurt, death, jump and walk. It sharpens the silhouette; it doesn't bring back lost camo or shapes.
+
+![](../screenshots/cast_fixes/outline_restore_zoom.png)

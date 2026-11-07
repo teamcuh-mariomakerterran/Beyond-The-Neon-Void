@@ -1750,6 +1750,11 @@ func test_pixellab_merge() -> void:
 	specky.fill_rect(Rect2i(14, 1, 2, 2), Color.GRAY)
 	var cleaned := PixelLab.largest_shape(specky)
 	check(cleaned.get_pixel(14, 1).a == 0.0 and cleaned.get_pixel(8, 8) == Color.RED, "clean_frames: stray mark erased, body kept")
+	var soft := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+	soft.fill_rect(Rect2i(4, 4, 8, 8), Color.GRAY)
+	soft.set_pixel(4, 8, Color8(5, 5, 5))
+	var lined := PixelLab.restore_outline(soft, Color8(4, 2, 1))
+	check(lined.get_pixel(4, 4) == Color8(4, 2, 1) and lined.get_pixel(8, 8) == Color.GRAY and lined.get_pixel(4, 8) == Color8(5, 5, 5), "outline: light edge repainted, inside and dark edge kept")
 	check(px.call("attack_NE") == Color.YELLOW and px.call("attack_SE") == Color.GREEN, "attack_NE pinned to the other take by pixellab.json; SE keeps the first")
 	_rm_tree("user://t_plm")
 
