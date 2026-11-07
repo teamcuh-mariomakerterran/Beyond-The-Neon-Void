@@ -46,3 +46,47 @@ Every frame of the 25 characters checked against their own standing poses. Sheet
 ## Free fixes before any new spending
 - Drop the smeared final frames of back attack and death (hold the last clean frame) with a per-animation frame range in `pixellab.json`.
 - Use the older kept takes where they're better for a facing.
+
+## Fixes done (free, 2026-11-07)
+- Back-facing attack and death end on their last clean frame (`keep_frames` in each `pixellab.json`). Tradeoff: back attacks stop before full reach, and some back deaths end mid-fall rather than flat.
+- #5 back hurt and jump use the older template takes (steadier head size). For #4 and the kit copies of #3 / #5 the older takes were worse (mannequin, cloak lost), so they stay unused.
+
+![](../screenshots/cast_fixes/pool_003_trim.png)
+
+## Quality test: #21 attack SE (13 generations, ceiling 40)
+| Method | Cost | Poncho | Skin | Cap / goggles | Striped sleeve | Size vs standing (58 px) | Verdict |
+|---|---|---|---|---|---|---|---|
+| A: template (the batch) | (spent) | lost | lighter | kept | kept | 48-52 px, shrunken | fail |
+| B: skeleton-v3 on the front facing | 3 | **kept, camo pattern too** | right | kept | fainter | 53-57 px, right for a crouch | **pass**, last frame smears (trim it) |
+| C: transfer-outfit onto A | 10 | thin dark drape, no camo | right | kept | kept | 48-52 px (inherits A) | fail |
+
+B is in PixelLab next to the other takes, not pinned in the game yet. C's frames are kept in `assets/kit/pool_021/`.
+
+![](../screenshots/cast_fixes/pool_021_attack_SE_test.png)
+
+## Redo plan (method B, measured 3 a facing; front facings only)
+Walks, back jumps and anything the audit called usable are left out. Characters #6, #19, #55, #75, #78, #79 and #97 need nothing on the front (their remaining faults are back-facing head blobs, which B itself causes).
+
+| # | Redo (SE + SW unless noted) | Facings | Est. |
+|---|---|---|---|
+| 21 | walk, hurt, death, jump; attack SW (SE done) | 9 | 27 |
+| 4 | walk, attack, hurt, death, jump | 10 | 30 |
+| 132 | walk, attack, hurt, death, jump | 10 | 30 |
+| 60 | walk, attack, hurt, death, jump | 10 | 30 |
+| 64 | attack, hurt, death, jump | 8 | 24 |
+| 9 | attack, hurt, death | 6 | 18 |
+| 24 | attack, hurt, death | 6 | 18 |
+| 3 | attack, hurt | 4 | 12 |
+| 43 | attack, hurt | 4 | 12 |
+| 62 | attack, hurt | 4 | 12 |
+| 127 | attack, hurt | 4 | 12 |
+| 5 | attack | 2 | 6 |
+| 54 | attack | 2 | 6 |
+| 27 | hurt | 2 | 6 |
+| 25 | hurt SE (mirrored) | 1 | 3 |
+| 29 | hurt SW | 1 | 3 |
+| 71 | jump SE | 1 | 3 |
+| 74 | attack SE | 1 | 3 |
+| **Total** | | **85** | **~255** (2-4 a facing: 170-340) |
+
+Only attack has been tested in this mode on a front facing. Hurt and death may get the same head swelling the back facings showed, so the first approved group should include them.
