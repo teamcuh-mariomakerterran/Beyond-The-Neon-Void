@@ -9,6 +9,7 @@ Add to it as we go; tick a line when it's done.
 - [ ] **hurt SW**, take `taking_a_punch` (group a48f7b90): frames **1, 6**, the poncho's camo goes soft and blurry. The figure stands up to 5 px taller than the standing pose (cap and head).
 - [ ] **death SE**, take `falling_backward-e1e57cf7` (group e1e57cf7): frames **6, 7** (lying down), the poncho turns into a blurry mass. Don't trim these: they're the frames where he lands flat.
 - [ ] **death SW**, take `falling_backward-e1e57cf7`: frames **3, 4**, the figure is up to 5 px taller than the standing pose and the poncho's underside goes dark like a cape.
+- [ ] **jump SE**, take `two_footed_jump-e3d87586` (group e3d87586): frames **6, 7**, the poncho flares out sideways like a cape and its edge goes soft.
 - [ ] **attack SE**, take `cross_punch_attack` (skeleton-v3, group 7f2f0229): frame **6** smears the poncho (trimmed in game).
 - [ ] **attack SW**, same take: frame **6** smears the poncho (trimmed in game). The punch reads weakly: the fist stays inside the poncho on frames 1-5.
 - [ ] **walk SW**, take `walking-9babe46a`: frame **6**, the poncho hem goes soft.

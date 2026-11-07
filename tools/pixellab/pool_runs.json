@@ -2109,8 +2109,18 @@
 			"what": "death SW",
 			"method": "skeleton-v3",
 			"group": "e1e57cf7-b6a9-4ea2-84ab-a5921078c317",
-			"generations": "balance fell 18 during the job (9954 -> 9936) and 15 between steps (9969 -> 9954) with no calls of mine; expected 3",
-			"verdict": "pass: poncho, face and goggles kept, ends flat, no whoosh mark; frames 3-4 up to 5 px taller"
+			"generations": 3,
+			"verdict": "pass: poncho, face and goggles kept, ends flat, no whoosh mark; frames 3-4 up to 5 px taller",
+			"note": "balance also fell ~30 from Brian generating in PixelLab at the same time (confirmed)"
+		},
+		{
+			"at": "2026-11-07",
+			"n": 21,
+			"what": "jump SE",
+			"method": "skeleton-v3",
+			"group": "e3d87586-d2d8-420a-ab56-f164d53c7744",
+			"generations": 3,
+			"verdict": "pass: poncho, sleeve, face kept; poncho flares out like a cape on frames 3, 6, 7 and goes soft on 6-7"
 		}
 	]
 }
