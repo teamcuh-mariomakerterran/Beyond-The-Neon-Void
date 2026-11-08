@@ -237,7 +237,13 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 				var ax := float(axis)
 				if bool(pic[1]):
 					ax = 180.0 - ax
-				ang = wrapf(rad_to_deg(fa.angle()) - ax, -180.0, 180.0)
+				var target := rad_to_deg(fa.angle())
+				# The aim poses give the gun's own angle (gun_r): level on the aim
+				# even where the forearm sits off it.
+				var gr: Variant = ((((p_rig.get("points", {}) as Dictionary).get("gun_r", {}) as Dictionary).get("anims", {}) as Dictionary).get(anim))
+				if gr is Array and not (gr as Array).is_empty():
+					target = float(((gr as Array)[clampi(frame, 0, (gr as Array).size() - 1)] as Array)[0])
+				ang = wrapf(target - ax, -180.0, 180.0)
 	# Two-hand pieces: turn so the support grip (grips2) lands on hand_l, once
 	# the support hand is about as far from the trigger hand as the grips are.
 	var g2: Variant = (art.get("grips2", {}) as Dictionary).get(str(pic[2]))

@@ -306,6 +306,24 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 	still = pts["hand_r"]["facing"].get(facing)
 	if still and clip in ("pistol", "pistol15"):
 		pts["hand_r"]["facing"][facing] = still[:3] + [tilt(frames[0])]
+	# gun_r: the held gun's screen angle per frame. Raising, it follows the
+	# forearm; held, it points along the aim (the forearm can sit off the aim,
+	# e.g. NW where the hand is low at the collar); a kick adds the forearm's lift.
+	if clip in ("pistol", "pistol15", "kick"):
+		aim_deg = math.degrees(math.atan2(AIM[facing][1], AIM[facing][0]))
+		hold_fa = forearm_deg(poses(base, w, facing, "pistol")[-1])
+		def wrap(d):
+			return (d + 180.0) % 360.0 - 180.0
+		seq = (RAISE + [1.0] * (len(frames) - len(RAISE))) if clip != "kick" else [1.0] * len(frames)
+		gun = []
+		for f, t in zip(frames, seq):
+			fa = forearm_deg(f)
+			if clip == "kick":
+				gun.append([round(aim_deg + wrap(fa - hold_fa), 1), 0, 0])
+			else:
+				e = ease(t)
+				gun.append([round(fa + wrap(aim_deg - fa) * e, 1), 0, 0])
+		pts.setdefault("gun_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = gun
 	if clip in ("rifle", "rifle_raise", "rifle_rest"):
 		pts.setdefault("shoulder_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["RIGHT SHOULDER"][0]), round(f["RIGHT SHOULDER"][1]), z] for f in frames]
 		pts.setdefault("hand_l", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["LEFT ARM"][0]), round(f["LEFT ARM"][1]), z] for f in frames]
