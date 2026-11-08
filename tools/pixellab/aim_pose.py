@@ -31,6 +31,10 @@ POOL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pool.json")
 # Aim direction on screen per facing (2:1 isometric), x right, y down.
 AIM = {"SE": (1.0, 0.4), "SW": (-1.0, 0.4), "NE": (1.0, -0.4), "NW": (-1.0, -0.4)}
 RAISE = [0.0, 0.2, 0.5, 0.8, 1.0]
+# Facings whose held gun points along the aim line rather than the drawn
+# forearm (NW: the hand is low at the collar, so the forearm angles down;
+# Brian's mark, 2026-11-08). The rest follow the arm as drawn.
+GUN_ALONG_AIM = {"NW"}
 # Aimed hand moved by hand (canvas px): NW sits at the collar, out past the head (Brian's marks, 2026-11-08).
 AIM_NUDGE = {"NW": (-2.0, 3.0)}
 # (aim blend, kick 0-1) per frame after the raise.
@@ -309,7 +313,9 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 	# gun_r: the held gun's screen angle per frame. Raising, it follows the
 	# forearm; held, it points along the aim (the forearm can sit off the aim,
 	# e.g. NW where the hand is low at the collar); a kick adds the forearm's lift.
-	if clip in ("pistol", "pistol15", "kick"):
+	gun_anims = pts.setdefault("gun_r", {"facing": {}, "anims": {}}).setdefault("anims", {})
+	gun_anims.pop(anim, None)
+	if clip in ("pistol", "pistol15", "kick") and facing in GUN_ALONG_AIM:
 		aim_deg = math.degrees(math.atan2(AIM[facing][1], AIM[facing][0]))
 		hold_fa = forearm_deg(poses(base, w, facing, "pistol")[-1])
 		def wrap(d):
@@ -323,7 +329,7 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 			else:
 				e = ease(t)
 				gun.append([round(fa + wrap(aim_deg - fa) * e, 1), 0, 0])
-		pts.setdefault("gun_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = gun
+		gun_anims[anim] = gun
 	if clip in ("rifle", "rifle_raise", "rifle_rest"):
 		pts.setdefault("shoulder_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["RIGHT SHOULDER"][0]), round(f["RIGHT SHOULDER"][1]), z] for f in frames]
 		pts.setdefault("hand_l", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["LEFT ARM"][0]), round(f["LEFT ARM"][1]), z] for f in frames]
