@@ -31,6 +31,8 @@ POOL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pool.json")
 # Aim direction on screen per facing (2:1 isometric), x right, y down.
 AIM = {"SE": (1.0, 0.4), "SW": (-1.0, 0.4), "NE": (1.0, -0.4), "NW": (-1.0, -0.4)}
 RAISE = [0.0, 0.2, 0.5, 0.8, 1.0]
+# Aimed hand moved by hand (canvas px): NW sits at the collar, out past the head (Brian's marks, 2026-11-08).
+AIM_NUDGE = {"NW": (-2.0, 3.0)}
 # (aim blend, kick 0-1) per frame after the raise.
 REST = [(1, 0), (1, 0), (1, 0), (1, 1), (1, 0.45), (1, 0), (1, 1), (1, 0.45), (1, 0.1), (1, 0)]
 
@@ -68,7 +70,8 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 	ax, ay = ax / ln, ay / ln
 	# Facings where the aimed arm crosses the body (SE, NW) read short, so reach a bit further.
 	reach = (upper + fore) * (1.15 if facing in ("SE", "NW") else 0.95)
-	wr_aim = (sh[0] + ax * reach, sh[1] + ay * reach - 1.5)
+	nx, ny = AIM_NUDGE.get(facing, (0.0, 0.0))
+	wr_aim = (sh[0] + ax * reach + nx, sh[1] + ay * reach - 1.5 + ny)
 	el_aim = (sh[0] + ax * reach * 0.5, sh[1] + ay * reach * 0.5)
 	# Kick: hand up 3 px and back 2 px toward the shoulder; elbow bends a little.
 	wr_kick = (wr_aim[0] - ax * 2.0, wr_aim[1] - ay * 2.0 - 3.0)
@@ -233,11 +236,11 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 	still = pts["hand_r"]["facing"].get(facing)
 	if still and clip != "rifle":
 		pts["hand_r"]["facing"][facing] = still[:3] + [tilt(frames[0])]
+	if clip == "rifle":
+		pts.setdefault("hand_l", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["LEFT ARM"][0]), round(f["LEFT ARM"][1]), z] for f in frames]
 	with open(rp, "w", encoding="utf-8") as fh:
 		json.dump(r, fh, indent="\t")
 		fh.write("\n")
-	if clip == "rifle":
-		pts.setdefault("hand_l", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["LEFT ARM"][0]), round(f["LEFT ARM"][1]), z] for f in frames]
 	print("rig", rp, anim, [a[3] for a in pts["hand_r"]["anims"][anim]])
 
 

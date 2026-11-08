@@ -1,21 +1,22 @@
 {
 	"point": "hand_r",
 	"grip": [
-		12,
-		10
+		13,
+		8
 	],
 	"grips": {
 		"SE": [
-			12,
-			10
+			13,
+			8
 		],
 		"NE": [
-			14,
-			12
+			13,
+			10
 		]
 	},
 	"z": {},
 	"rotate": true,
 	"order": 0,
-	"cover": 2
+	"cover": 2,
+	"cover_l": 2
 }

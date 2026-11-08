@@ -1280,6 +1280,12 @@ func test_aim_kick() -> void:
 		check(is_equal_approx(d.x, -GearAttach.KICK_BACK) and is_equal_approx(d.y, -GearAttach.KICK_UP) and piece.rotation_degrees < 0.0, "aim: kick moves the gun up and back, muzzle up")
 		g._set_kick(0.0)
 		check(piece.position == rest, "aim: gun settles back")
+	var rig := GearAttach.load_rig("res://assets/units/pool_005")
+	var rifle := GearAttach.load_art("res://assets/gear/weapons/pilot_rifle")
+	var pl := GearAttach.place(rig, rifle, "aim_rifle_SE", 7, false, Vector2.ZERO, Vector2(96, 96))
+	check(not pl.is_empty() and (pl["cover_l"] as Rect2).has_area(), "aim: two-hand rifle redraws the front fist over the barrel")
+	var pp := GearAttach.place(rig, GearAttach.load_art("res://assets/gear/weapons/pilot_pistol"), "aim_SE", 7, false, Vector2.ZERO, Vector2(96, 96))
+	check(not (pp["cover_l"] as Rect2).has_area(), "aim: one-hand pistol has no front-fist cover")
 	spr.free()
 
 

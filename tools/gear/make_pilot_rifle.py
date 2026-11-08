@@ -1,6 +1,8 @@
 """Placeholder rifle for the two-hand aim test (not final art): SE and NE
 pictures turned to the aimed rifle line, other facings borrow the mirror.
-Grip pixel = the pistol grip (right hand); the left hand sits on the barrel.
+Grip pixel = where the fist closes on the pistol grip, just under the receiver,
+so the barrel rests on the front hand and the stock tucks under the arm
+(Brian's marks, 2026-11-08; the higher shoulder hold is pilot_launcher).
 
     python3 -I tools/gear/make_pilot_rifle.py
 """
@@ -41,10 +43,10 @@ def main() -> None:
 	for name, deg in (("SE", -LINE_DEG), ("NE", LINE_DEG)):
 		s.rotate(deg, resample=Image.NEAREST, expand=True).save(os.path.join(OUT, name + ".png"))
 		probe = Image.new("L", s.size, 0)
-		probe.putpixel((12, 6), 255)
+		probe.putpixel((12, 4), 255)
 		bb = probe.rotate(deg, resample=Image.NEAREST, expand=True).getbbox() or (0, 0, 1, 1)
 		grips[name] = [bb[0], bb[1]]
-	json.dump({"point": "hand_r", "grip": grips["SE"], "grips": grips, "z": {}, "rotate": True, "order": 0, "cover": 2},
+	json.dump({"point": "hand_r", "grip": grips["SE"], "grips": grips, "z": {}, "rotate": True, "order": 0, "cover": 2, "cover_l": 2},
 		open(os.path.join(OUT, "attach.json"), "w"), indent="\t")
 	print("wrote", OUT)
 

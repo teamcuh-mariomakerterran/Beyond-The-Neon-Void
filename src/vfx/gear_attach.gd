@@ -29,7 +29,8 @@ extends Node2D
 ##   overrides the rig's side per facing; order breaks ties between pieces on
 ##   the same side. cover > 0 redraws the body's own pixels within that many
 ##   pixels of the point on top of a piece in front, so the fist closes over
-##   the handle instead of the weapon floating over the hand.
+##   the handle instead of the weapon floating over the hand. cover_l does the
+##   same round hand_l (two-hand pieces: the front fist wraps the barrel).
 ## A wear_path folder in PixelMatrix layout (<anim>/<FACING>_<Limb>.png) is a
 ## worn layer instead and goes through PixelMatrix.composite (see Unit).
 
@@ -167,7 +168,7 @@ static func load_art(dir: String) -> Dictionary:
 		grips[k] = _v2(meta["grips"][k])
 	var out := {"dir": dir, "point": str(meta.get("point", "hand_r")), "grip": _v2(meta.get("grip", [0, 0])),
 		"grips": grips, "z": meta.get("z", {}), "rotate": bool(meta.get("rotate", false)),
-		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "pics": pics, "any": any}
+		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "cover_l": int(meta.get("cover_l", 0)), "pics": pics, "any": any}
 	_arts[dir] = out
 	return out
 
@@ -221,7 +222,16 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 	if zo.has(drawn):
 		z = float(zo[drawn])
 	var ang := angle_at(p_rig, point, anim, frame) if bool(art.get("rotate", false)) else 0.0
-	return {"pos": offset + Vector2(x, v.y), "grip": grip, "flip": flip != bool(pic[1]),
+	# Two-hand pieces: the other fist (hand_l) is redrawn over the piece too, so
+	# its fingers wrap the barrel. Only where the rig has hand_l for this anim.
+	var cover_l := Rect2()
+	var rl := int(art.get("cover_l", 0))
+	if rl > 0 and z >= 0.0 and ((p_rig.get("points", {}) as Dictionary).get("hand_l", {}).get("anims", {}) as Dictionary).has(anim):
+		var pl_v: Variant = point_at(p_rig, "hand_l", anim, frame, drawn, cell.x)
+		if pl_v != null:
+			var vl: Vector3 = pl_v
+			cover_l = cover_rect(Vector2(vl.x, vl.y), rl, cell)
+	return {"cover_l": cover_l, "pos": offset + Vector2(x, v.y), "grip": grip, "flip": flip != bool(pic[1]),
 		"front": z >= 0.0, "angle": -ang if flip else ang, "path": str(pic[0]),
 		"point": Vector2(v.x, v.y), "cover": cover_rect(Vector2(v.x, v.y), int(art.get("cover", 0)), cell,
 			point_at(p_rig, point.replace("hand", "elbow"), anim, frame, drawn, cell.x) if point.begins_with("hand") else null) if z >= 0.0 else Rect2()}
@@ -273,7 +283,13 @@ static func attach_to(spr: AnimatedSprite2D, body_dir: String, art_dirs: Array) 
 		c.use_parent_material = true
 		c.visible = false
 		spr.add_child(c)
-		g.pieces.append({"art": a, "node": s, "cover": c})
+		var c2 := Sprite2D.new()
+		c2.name = s.name + "_HandL"
+		c2.centered = false
+		c2.use_parent_material = true
+		c2.visible = false
+		spr.add_child(c2)
+		g.pieces.append({"art": a, "node": s, "cover": c, "cover_l": c2})
 	g.sync()
 	return g
 
@@ -284,7 +300,7 @@ func _process(_dt: float) -> void:
 
 func _exit_tree() -> void:
 	for pc: Dictionary in pieces:
-		for k: String in ["node", "cover"]:
+		for k: String in ["node", "cover", "cover_l"]:
 			var n: Node = pc.get(k)
 			if is_instance_valid(n):
 				n.queue_free()
@@ -308,6 +324,9 @@ func sync() -> void:
 		var s: Sprite2D = pc["node"]
 		var cv: Sprite2D = pc["cover"]
 		cv.visible = false
+		var cv2: Sprite2D = pc.get("cover_l")
+		if cv2:
+			cv2.visible = false
 		var pl := place(rig, pc["art"], anim, body.frame, body.flip_h, body.offset, cell)
 		if pl.is_empty():
 			s.visible = false
@@ -332,6 +351,9 @@ func sync() -> void:
 		if cr.has_area() and tex:
 			_show_cover(cv, tex, cr, cell, body.flip_h, body.offset)
 			cv.position += kv
+		var cr2: Rect2 = pl.get("cover_l", Rect2())
+		if cv2 and cr2.has_area() and tex:
+			_show_cover(cv2, tex, cr2, cell, body.flip_h, body.offset)
 
 
 ## One shot's recoil: snaps up and back, settles over `time` seconds.
