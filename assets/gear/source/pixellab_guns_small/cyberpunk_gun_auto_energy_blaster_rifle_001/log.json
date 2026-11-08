@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_gun_auto_energy_blaster_rifle_001",
+	"size": 32,
+	"object_id": "4ac1ba8d-6ba5-4c4b-9f47-d3d923dc1114",
+	"files": [
+		"cyberpunk_gun_small_1_pixel.png",
+		"cyberpunk_gun_small_1_pixel.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:14"
+}

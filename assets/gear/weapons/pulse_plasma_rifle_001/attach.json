@@ -1,54 +1,54 @@
 {
 	"point": "hand_r",
 	"grip": [
-		8,
+		7,
 		11
 	],
 	"grips": {
 		"SE": [
-			8,
+			7,
 			11
 		],
 		"NE": [
-			10,
-			21
+			9,
+			18
 		],
 		"SW": [
-			21,
-			11
+			19,
+			10
 		],
 		"NW": [
-			19,
-			22
+			17,
+			19
 		]
 	},
 	"z": {},
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object pulse_plasma_rifle_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"source": "PixelLab object pulse_plasma_rifle_001 (hand-size redraw), diagonal pictures x1.00, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
 	"axis": {
-		"SE": 33.7,
-		"NE": -41.7,
-		"SW": 146.4,
-		"NW": -138.3
+		"SE": 37.8,
+		"NE": -41.3,
+		"SW": 142.1,
+		"NW": -138.8
 	},
 	"grips2": {
 		"SE": [
-			20,
+			18,
 			19
 		],
 		"NE": [
-			22,
-			10
+			20,
+			9
 		],
 		"SW": [
-			9,
+			8,
 			19
 		],
 		"NW": [
-			6,
-			11
+			5,
+			9
 		]
 	},
 	"cover_l": 2,

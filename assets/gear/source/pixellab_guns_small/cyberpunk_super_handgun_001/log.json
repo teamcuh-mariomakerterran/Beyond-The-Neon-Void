@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_super_handgun_001",
+	"size": 24,
+	"object_id": "b61e9fdb-3970-4613-8197-2550ea0bbbef",
+	"files": [
+		"cyberpunk_super_handgun_small.png",
+		"cyberpunk_super_handgun_small.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:00"
+}

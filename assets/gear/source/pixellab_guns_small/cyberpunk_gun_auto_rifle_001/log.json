@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_gun_auto_rifle_001",
+	"size": 32,
+	"object_id": "4ffb8cb6-e5ca-4572-bd08-f17448736dd3",
+	"files": [
+		"cyberpunk_gun_small_1_pixel.png",
+		"cyberpunk_gun_small_1_pixel.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:12"
+}

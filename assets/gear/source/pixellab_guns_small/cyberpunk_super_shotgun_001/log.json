@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_super_shotgun_001",
+	"size": 32,
+	"object_id": "16d778ad-2175-47c4-9b3a-cee858a1b1f2",
+	"files": [
+		"cyberpunk_super_shotgun_small.png",
+		"cyberpunk_super_shotgun_small.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:22"
+}

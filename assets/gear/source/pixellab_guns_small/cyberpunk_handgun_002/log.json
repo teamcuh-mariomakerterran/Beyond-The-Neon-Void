@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_handgun_002",
+	"size": 24,
+	"object_id": "fb5eebec-51f0-4014-a8b9-0072dc4373bf",
+	"files": [
+		"cyberpunk_gun_small_1_pixel.png",
+		"cyberpunk_gun_small_1_pixel.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 15:58"
+}

@@ -34,11 +34,15 @@ FACE = {"south-east": "SE", "north-east": "NE", "south-west": "SW", "north-west"
 	"south": "S", "north": "N", "east": "E", "west": "W"}
 
 
-def cells(slug: str) -> dict:
-	d = os.path.join(SRC, slug)
-	m = json.load(open(os.path.join(d, slug + ".json")))["spritesheet"]
+SMALL = os.path.join("assets", "gear", "source", "pixellab_guns_small")
+
+
+def cells(slug: str, src: str = SRC) -> dict:
+	d = os.path.join(src, slug)
+	sheet = [f for f in os.listdir(d) if f.endswith(".json") and f not in ("object.json", "log.json")][0]
+	m = json.load(open(os.path.join(d, sheet)))["spritesheet"]
 	cw, ch = m["cell_size"]["width"], m["cell_size"]["height"]
-	sh = Image.open(os.path.join(d, slug + ".png")).convert("RGBA")
+	sh = Image.open(os.path.join(d, m["path"] if os.path.exists(os.path.join(d, m["path"])) else sheet[:-5] + ".png")).convert("RGBA")
 	return {FACE[n]: sh.crop((i * cw, 0, (i + 1) * cw, ch)) for i, n in enumerate(m["rows"][0]["directions"])}
 
 
@@ -99,12 +103,16 @@ def axis_deg(im: Image.Image, grip: list) -> float:
 	return round(math.degrees(math.atan2(dy, dx)), 1)
 
 
-def diag(slug: str, s: float, swap: dict = None) -> None:
+def diag(slug: str, s: float, swap: dict = None, small: bool = False, mark_swap: dict = None) -> None:
 	"""swap {"SE": "SW", ...}: use another facing's picture (and its marks) where
-	PixelLab drew a rotation the wrong way round."""
+	PixelLab drew a rotation the wrong way round. small: use the hand-size
+	redraw (pixellab_guns_small, tools/pixellab/make_gun.py); Brian's marks
+	carry over by their place in each picture's outline box."""
 	swap = swap or {}
+	mark_swap = mark_swap if mark_swap is not None else swap
+	big = cells(slug)
 	marks = json.load(open(os.path.join(SRC, "grips_brian.json")))[slug]
-	c = cells(slug)
+	c = cells(slug, SMALL if small else SRC)
 	d = os.path.join(OUT, slug)
 	os.makedirs(d, exist_ok=True)
 	grips, grips2, axis = {}, {}, {}
@@ -114,16 +122,21 @@ def diag(slug: str, s: float, swap: dict = None) -> None:
 		bb = im.getbbox()
 		p = scaled(im, s)
 		p.save(os.path.join(d, f + ".png"))
-		m = marks.get(src_f, {})
+		mk_f = mark_swap.get(f, f)
+		m = marks.get(mk_f, {})
+		ob = big[mk_f].getbbox()
 		def at(pt):
-			return [int(round((pt[0] - bb[0]) * s)), int(round((pt[1] - bb[1]) * s))]
+			# Place in the original picture's box -> same place in this picture's box.
+			u = (pt[0] - ob[0]) / max(1, ob[2] - ob[0])
+			v = (pt[1] - ob[1]) / max(1, ob[3] - ob[1])
+			return [int(round(u * (bb[2] - bb[0]) * s)), int(round(v * (bb[3] - bb[1]) * s))]
 		if "trigger" in m:
 			grips[f] = at(m["trigger"])
 			axis[f] = axis_deg(p, grips[f])
 		if "support" in m:
 			grips2[f] = at(m["support"])
 	meta = {"point": "hand_r", "grip": grips.get("SE", [0, 0]), "grips": grips, "z": {}, "rotate": True, "order": 0, "cover": 2,
-		"source": "PixelLab object %s, diagonal pictures x%.2f, grips from Brian's marks, tools/gear/import_pixellab_gun.py" % (slug, s)}
+		"source": "PixelLab object %s%s, diagonal pictures x%.2f, grips from Brian's marks, tools/gear/import_pixellab_gun.py" % (slug, " (hand-size redraw)" if small else "", s)}
 	if swap:
 		meta["swapped"] = swap
 	# axis: each picture's barrel angle on screen; the game turns it onto the forearm.
@@ -138,7 +151,10 @@ def main() -> None:
 	a = sys.argv[1:]
 	if "--all" in a:
 		for slug, o in json.load(open(os.path.join(SRC, "import.json"))).items():
-			diag(slug, float(o["scale"]), o.get("swap", {}))
+			sm = os.path.isdir(os.path.join(SMALL, slug))
+			# A redraw's pictures face the right way; Brian's marks stay on the
+			# original picture that faces the same way.
+			diag(slug, 1.0 if sm else float(o["scale"]), o.get("swap_small", {}) if sm else o.get("swap", {}), sm, o.get("swap", {}) if sm else None)
 		return
 	if "--diag" in a:
 		sw = {}

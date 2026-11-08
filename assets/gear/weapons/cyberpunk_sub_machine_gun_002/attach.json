@@ -1,36 +1,36 @@
 {
 	"point": "hand_r",
 	"grip": [
-		6,
-		9
+		7,
+		10
 	],
 	"grips": {
 		"SE": [
-			6,
-			9
+			7,
+			10
 		],
 		"NE": [
-			8,
-			14
+			9,
+			16
 		],
 		"SW": [
-			14,
-			9
+			16,
+			11
 		],
 		"NW": [
-			12,
-			15
+			14,
+			17
 		]
 	},
 	"z": {},
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_sub_machine_gun_002, diagonal pictures x0.70, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"source": "PixelLab object cyberpunk_sub_machine_gun_002 (hand-size redraw), diagonal pictures x1.00, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
 	"axis": {
-		"SE": 39.7,
-		"NE": -42.6,
-		"SW": 140.3,
-		"NW": -137.3
+		"SE": 40.2,
+		"NE": -38.9,
+		"SW": 141.9,
+		"NW": -141.1
 	}
 }

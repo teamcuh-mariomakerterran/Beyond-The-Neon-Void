@@ -2,12 +2,12 @@
 	"point": "hand_r",
 	"grip": [
 		4,
-		10
+		11
 	],
 	"grips": {
 		"SE": [
 			4,
-			10
+			11
 		],
 		"NE": [
 			7,
@@ -15,10 +15,10 @@
 		],
 		"SW": [
 			23,
-			8
+			9
 		],
 		"NW": [
-			18,
+			17,
 			19
 		]
 	},
@@ -26,25 +26,25 @@
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyber_flame_thrower_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"source": "PixelLab object cyber_flame_thrower_001 (hand-size redraw), diagonal pictures x1.00, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
 	"axis": {
-		"SE": 36.6,
-		"NE": -46.9,
-		"SW": 142.6,
-		"NW": -133.1
+		"SE": 41.7,
+		"NE": -45.7,
+		"SW": 138.3,
+		"NW": -134.3
 	},
 	"grips2": {
 		"SE": [
-			17,
-			18
+			18,
+			19
 		],
 		"NE": [
 			20,
-			9
+			8
 		],
 		"SW": [
 			9,
-			18
+			19
 		],
 		"NW": [
 			3,

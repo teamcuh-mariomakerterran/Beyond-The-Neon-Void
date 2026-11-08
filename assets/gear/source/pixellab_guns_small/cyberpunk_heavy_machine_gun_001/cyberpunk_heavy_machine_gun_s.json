@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "072f876b-4fb7-430a-aa84-3f9100352a59",
+    "name": "base",
+    "prompt": "cyberpunk heavy machine gun, small, 1 pixel wide black outline",
+    "size": {
+      "width": 34,
+      "height": 34
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_heavy_machine_gun_s.png",
+    "cell_size": {
+      "width": 34,
+      "height": 34
+    },
+    "sheet_size": {
+      "width": 272,
+      "height": 34
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T16:26:24.150991+00:00"
+}

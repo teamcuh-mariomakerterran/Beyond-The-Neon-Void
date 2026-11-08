@@ -1,0 +1,12 @@
+{
+	"slug": "cyberpunk_super_laser_rifle_up_001",
+	"size": 32,
+	"object_id": "cc4c97f2-9cfd-41fb-80a0-274e407664f1",
+	"files": [
+		"cyberpunk_super_laser_rifle_up.png",
+		"cyberpunk_super_laser_rifle_up.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:24",
+	"note": "spritesheet download retried after a 500"
+}

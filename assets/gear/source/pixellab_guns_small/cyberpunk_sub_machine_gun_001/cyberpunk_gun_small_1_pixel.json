@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "2afb3b26-eea5-4c76-b348-1fadf4903811",
+    "name": "base",
+    "prompt": "cyberpunk gun, small, 1 pixel wide black outline",
+    "size": {
+      "width": 28,
+      "height": 28
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_gun_small_1_pixel.png",
+    "cell_size": {
+      "width": 28,
+      "height": 28
+    },
+    "sheet_size": {
+      "width": 224,
+      "height": 28
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T16:03:55.249141+00:00"
+}

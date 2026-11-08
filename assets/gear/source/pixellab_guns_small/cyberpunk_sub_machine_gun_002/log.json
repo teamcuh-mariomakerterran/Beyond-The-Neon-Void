@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_sub_machine_gun_002",
+	"size": 28,
+	"object_id": "2d9115cb-0fc8-4e1a-b11a-abb247ecf111",
+	"files": [
+		"cyberpunk_sub_machine_gun_1_p.png",
+		"cyberpunk_sub_machine_gun_1_p.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:05"
+}

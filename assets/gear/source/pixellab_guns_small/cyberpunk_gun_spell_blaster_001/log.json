@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_gun_spell_blaster_001",
+	"size": 28,
+	"object_id": "1eb868c9-260c-430a-85d3-e4a1124a24f6",
+	"files": [
+		"cyberpunk_gun_small_1_pixel.png",
+		"cyberpunk_gun_small_1_pixel.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:07"
+}

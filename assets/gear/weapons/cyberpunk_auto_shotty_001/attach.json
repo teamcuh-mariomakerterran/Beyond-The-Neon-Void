@@ -26,16 +26,16 @@
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_auto_shotty_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"source": "PixelLab object cyberpunk_auto_shotty_001 (hand-size redraw), diagonal pictures x1.00, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
 	"axis": {
-		"SE": 38.1,
-		"NE": -39.2,
-		"SW": 141.9,
-		"NW": -140.8
+		"SE": 41.0,
+		"NE": -38.1,
+		"SW": 139.0,
+		"NW": -141.9
 	},
 	"grips2": {
 		"SE": [
-			20,
+			19,
 			20
 		],
 		"NE": [
@@ -43,8 +43,8 @@
 			9
 		],
 		"SW": [
-			6,
-			17
+			5,
+			18
 		],
 		"NW": [
 			5,

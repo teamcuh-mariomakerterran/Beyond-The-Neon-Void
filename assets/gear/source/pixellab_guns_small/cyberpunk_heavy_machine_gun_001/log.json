@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_heavy_machine_gun_001",
+	"size": 32,
+	"object_id": "072f876b-4fb7-430a-aa84-3f9100352a59",
+	"files": [
+		"cyberpunk_heavy_machine_gun_s.png",
+		"cyberpunk_heavy_machine_gun_s.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:26"
+}

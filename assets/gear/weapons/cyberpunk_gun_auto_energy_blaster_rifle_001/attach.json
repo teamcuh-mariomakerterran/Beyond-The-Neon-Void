@@ -1,54 +1,54 @@
 {
 	"point": "hand_r",
 	"grip": [
-		9,
+		8,
 		12
 	],
 	"grips": {
 		"SE": [
-			9,
+			8,
 			12
 		],
 		"NE": [
-			9,
+			8,
 			18
 		],
 		"SW": [
-			19,
-			10
+			17,
+			11
 		],
 		"NW": [
-			18,
-			18
+			16,
+			19
 		]
 	},
 	"z": {},
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_gun_auto_energy_blaster_rifle_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"source": "PixelLab object cyberpunk_gun_auto_energy_blaster_rifle_001 (hand-size redraw), diagonal pictures x1.00, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
 	"axis": {
-		"SE": 35.8,
-		"NE": -39.4,
-		"SW": 145.2,
-		"NW": -140.6
+		"SE": 38.7,
+		"NE": -45.2,
+		"SW": 141.3,
+		"NW": -134.8
 	},
 	"grips2": {
 		"SE": [
-			20,
-			20
+			18,
+			21
 		],
 		"NE": [
-			20,
+			18,
 			11
 		],
 		"SW": [
-			8,
-			18
+			7,
+			19
 		],
 		"NW": [
-			6,
-			11
+			5,
+			12
 		]
 	},
 	"cover_l": 2,

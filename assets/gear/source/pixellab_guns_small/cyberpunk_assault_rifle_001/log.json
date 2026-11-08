@@ -1,0 +1,11 @@
+{
+	"slug": "cyberpunk_assault_rifle_001",
+	"size": 32,
+	"object_id": "3860e8da-747a-4ce2-9669-2a9c1e45edf6",
+	"files": [
+		"cyberpunk_gun_small_1_pixel.png",
+		"cyberpunk_gun_small_1_pixel.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:09"
+}

@@ -1,0 +1,11 @@
+{
+	"slug": "pulse_plasma_rifle_001",
+	"size": 32,
+	"object_id": "98a9d00f-2c1d-4375-ba4e-2d08fbb8be24",
+	"files": [
+		"cyberpunk_super_assault_rifle.png",
+		"cyberpunk_super_assault_rifle.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:16"
+}

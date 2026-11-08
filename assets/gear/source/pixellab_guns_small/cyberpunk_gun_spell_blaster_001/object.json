@@ -1,0 +1,41 @@
+{
+	"id": "1eb868c9-260c-430a-85d3-e4a1124a24f6",
+	"name": "cyberpunk gun, small, 1 pixel ",
+	"state_name": "base",
+	"prompt": "cyberpunk gun, small, 1 pixel wide black outline",
+	"size": {
+		"width": 28,
+		"height": 28
+	},
+	"directions": 8,
+	"created_at": "2026-11-08T16:06:07.479604+00:00",
+	"view": "low top-down",
+	"rotation_urls": {
+		"south": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/south.png",
+		"west": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/west.png",
+		"east": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/east.png",
+		"north": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/north.png",
+		"south-east": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/south-east.png",
+		"south-west": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/south-west.png",
+		"north-east": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/north-east.png",
+		"north-west": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/north-west.png"
+	},
+	"storage_urls": {
+		"east": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/east.png",
+		"west": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/west.png",
+		"north": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/north.png",
+		"south": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/south.png",
+		"north-east": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/north-east.png",
+		"north-west": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/north-west.png",
+		"south-east": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/south-east.png",
+		"south-west": "https://backblaze.pixellab.ai/file/pixellab-characters/objects/22dbb6a6-7311-4ee7-9aab-f928ccb17e70/1eb868c9-260c-430a-85d3-e4a1124a24f6/rotations/south-west.png"
+	},
+	"frame_urls": null,
+	"style_settings": {},
+	"tags": [],
+	"status": "completed",
+	"group_id": "9a8b7714-aa3c-4047-9f89-5abd2dd85dab",
+	"progress_percent": null,
+	"eta_seconds": null,
+	"animations": []
+}

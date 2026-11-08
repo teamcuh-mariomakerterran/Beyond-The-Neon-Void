@@ -1,40 +1,36 @@
 {
 	"point": "hand_r",
 	"grip": [
-		3,
-		8
+		4,
+		9
 	],
 	"grips": {
 		"SE": [
-			3,
-			8
+			4,
+			9
 		],
 		"NE": [
-			4,
-			13
+			6,
+			14
 		],
 		"SW": [
-			13,
-			8
+			17,
+			10
 		],
 		"NW": [
-			9,
-			13
+			12,
+			14
 		]
 	},
 	"z": {},
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_handgun_002, diagonal pictures x0.60, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
-	"swapped": {
-		"SE": "SW",
-		"SW": "SE"
-	},
+	"source": "PixelLab object cyberpunk_handgun_002 (hand-size redraw), diagonal pictures x1.00, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
 	"axis": {
-		"SE": 27.7,
-		"NE": -52.9,
-		"SW": 153.2,
-		"NW": -127.1
+		"SE": 30.3,
+		"NE": -44.4,
+		"SW": 149.7,
+		"NW": -135.6
 	}
 }

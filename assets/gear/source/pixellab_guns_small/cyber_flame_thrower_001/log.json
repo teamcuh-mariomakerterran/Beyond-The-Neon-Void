@@ -1,0 +1,11 @@
+{
+	"slug": "cyber_flame_thrower_001",
+	"size": 32,
+	"object_id": "c94eac58-620c-4fb2-8fad-d960dfa37700",
+	"files": [
+		"cyberpunk_gun_small_1_pixel.png",
+		"cyberpunk_gun_small_1_pixel.json"
+	],
+	"balance_drop": 10.0,
+	"at": "2026-11-08 16:19"
+}
