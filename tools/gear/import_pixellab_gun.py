@@ -5,6 +5,13 @@ scaled to fit a unit's hand, plus attach.json.
     python3 -I tools/gear/import_pixellab_gun.py <slug> <scale> [--grip SE:x,y ...] [--sheet out.png]
     python3 -I tools/gear/import_pixellab_gun.py <slug> <scale> --side x,y [--deg 20] [--two-hand]
 
+    python3 -I tools/gear/import_pixellab_gun.py <slug> <scale> --diag [--swap SE,SW]   # Brian's grip marks
+
+--diag uses the gun's own four diagonal pictures, scaled, with the trigger and
+support hand points Brian marked (assets/gear/source/pixellab_guns/grips_brian.json).
+A gun with a support point is two-handed: the game turns it so that point
+lands on the support hand, tucks the stock under the arm, and redraws the
+front fist over it.
 --side uses only the side view (E), scaled, with the grip pixel x,y in it, and
 turns it to the aim line for SE / NE (W facings borrow the mirror), the same
 one-picture projection as the placeholders. --two-hand also redraws the
@@ -71,8 +78,47 @@ def side(slug: str, s: float, grip: list, deg: float, two_hand: bool) -> None:
 	print("wrote", d, grips)
 
 
+def diag(slug: str, s: float, swap: dict = None) -> None:
+	"""swap {"SE": "SW", ...}: use another facing's picture (and its marks) where
+	PixelLab drew a rotation the wrong way round."""
+	swap = swap or {}
+	marks = json.load(open(os.path.join(SRC, "grips_brian.json")))[slug]
+	c = cells(slug)
+	d = os.path.join(OUT, slug)
+	os.makedirs(d, exist_ok=True)
+	grips, grips2 = {}, {}
+	for f in ("SE", "NE", "SW", "NW"):
+		src_f = swap.get(f, f)
+		im = c[src_f]
+		bb = im.getbbox()
+		p = scaled(im, s)
+		p.save(os.path.join(d, f + ".png"))
+		m = marks.get(src_f, {})
+		def at(pt):
+			return [int(round((pt[0] - bb[0]) * s)), int(round((pt[1] - bb[1]) * s))]
+		if "trigger" in m:
+			grips[f] = at(m["trigger"])
+		if "support" in m:
+			grips2[f] = at(m["support"])
+	meta = {"point": "hand_r", "grip": grips.get("SE", [0, 0]), "grips": grips, "z": {}, "rotate": True, "order": 0, "cover": 2,
+		"source": "PixelLab object %s, diagonal pictures x%.2f, grips from Brian's marks, tools/gear/import_pixellab_gun.py" % (slug, s)}
+	if swap:
+		meta["swapped"] = swap
+	if grips2:
+		meta.update({"grips2": grips2, "cover_l": 2, "tuck": True})
+	json.dump(meta, open(os.path.join(d, "attach.json"), "w"), indent="\t")
+	print("wrote", d, grips, grips2)
+
+
 def main() -> None:
 	a = sys.argv[1:]
+	if "--diag" in a:
+		sw = {}
+		if "--swap" in a:
+			x, y = a[a.index("--swap") + 1].split(",")
+			sw = {x: y, y: x}
+		diag(a[0], float(a[1]), sw)
+		return
 	if "--side" in a:
 		g = [int(v) for v in a[a.index("--side") + 1].split(",")]
 		deg = float(a[a.index("--deg") + 1]) if "--deg" in a else 20.0

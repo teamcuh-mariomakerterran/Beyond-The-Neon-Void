@@ -1,0 +1,30 @@
+{
+	"point": "hand_r",
+	"grip": [
+		4,
+		10
+	],
+	"grips": {
+		"SE": [
+			4,
+			10
+		],
+		"NE": [
+			8,
+			19
+		],
+		"SW": [
+			17,
+			9
+		],
+		"NW": [
+			12,
+			18
+		]
+	},
+	"z": {},
+	"rotate": true,
+	"order": 0,
+	"cover": 2,
+	"source": "PixelLab object cyberpunk_gun_spell_blaster_001, diagonal pictures x0.65, grips from Brian's marks, tools/gear/import_pixellab_gun.py"
+}

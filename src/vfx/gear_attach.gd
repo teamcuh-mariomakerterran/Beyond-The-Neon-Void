@@ -49,11 +49,12 @@ var rig: Dictionary = {}
 var pieces: Array = []
 var _state := ""
 ## Recoil, set by fire_kick(): 0 at rest, 1 at the top of the kick. Pieces
-## (and the fist drawn over them) move up and back and tip the muzzle up.
+## tip the muzzle up round the grip and lift a pixel; the fist drawn over the
+## grip stays put (moving it left the body's own fist behind: a ghost hand).
 var kick := 0.0
-const KICK_BACK := 2.0
-const KICK_UP := 3.0
-const KICK_TILT := 10.0
+const KICK_BACK := 0.0
+const KICK_UP := 1.0
+const KICK_TILT := 14.0
 
 
 ## Rig for a body folder ({} if it has none). Cached.
@@ -166,9 +167,12 @@ static func load_art(dir: String) -> Dictionary:
 	var grips := {}
 	for k: String in (meta.get("grips", {}) as Dictionary):
 		grips[k] = _v2(meta["grips"][k])
+	var grips2 := {}
+	for k2: String in (meta.get("grips2", {}) as Dictionary):
+		grips2[k2] = _v2(meta["grips2"][k2])
 	var out := {"dir": dir, "point": str(meta.get("point", "hand_r")), "grip": _v2(meta.get("grip", [0, 0])),
 		"grips": grips, "z": meta.get("z", {}), "rotate": bool(meta.get("rotate", false)),
-		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "cover_l": int(meta.get("cover_l", 0)), "pics": pics, "any": any}
+		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "cover_l": int(meta.get("cover_l", 0)), "grips2": grips2, "tuck": bool(meta.get("tuck", false)), "pics": pics, "any": any}
 	_arts[dir] = out
 	return out
 
@@ -222,6 +226,20 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 	if zo.has(drawn):
 		z = float(zo[drawn])
 	var ang := angle_at(p_rig, point, anim, frame) if bool(art.get("rotate", false)) else 0.0
+	# Two-hand pieces: turn so the support grip (grips2) lands on hand_l, once
+	# the support hand is about as far from the trigger hand as the grips are.
+	var g2: Variant = (art.get("grips2", {}) as Dictionary).get(str(pic[2]))
+	var pts_all: Dictionary = p_rig.get("points", {})
+	var hl_anim: bool = ((pts_all.get("hand_l", {}) as Dictionary).get("anims", {}) as Dictionary).has(anim)
+	if g2 != null and hl_anim:
+		var hl: Variant = point_at(p_rig, "hand_l", anim, frame, drawn, cell.x)
+		if hl != null:
+			var hv := Vector2((hl as Vector3).x - v.x, (hl as Vector3).y - v.y)
+			var gv: Vector2 = (g2 as Vector2) - (art.get("grips", {}) as Dictionary).get(str(pic[2]), art.get("grip", Vector2.ZERO))
+			if bool(pic[1]):
+				gv.x = -gv.x
+			if gv.length() > 0.5 and hv.length() > gv.length() * 0.5 and hv.length() < gv.length() * 1.8:
+				ang = rad_to_deg(hv.angle() - gv.angle())
 	# Two-hand pieces: the other fist (hand_l) is redrawn over the piece too, so
 	# its fingers wrap the barrel. Only where the rig has hand_l for this anim.
 	var cover_l := Rect2()
@@ -231,10 +249,17 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 		if pl_v != null:
 			var vl: Vector3 = pl_v
 			cover_l = cover_rect(Vector2(vl.x, vl.y), rl, cell)
+	var cov := cover_rect(Vector2(v.x, v.y), int(art.get("cover", 0)), cell,
+			point_at(p_rig, point.replace("hand", "elbow"), anim, frame, drawn, cell.x) if point.begins_with("hand") else null) if z >= 0.0 else Rect2()
+	# Tuck: a long gun's stock goes under the arm, so the arm up to the shoulder
+	# is redrawn over it too (shoulder_r from the aim poses).
+	if bool(art.get("tuck", false)) and cov.has_area() and ((pts_all.get("shoulder_r", {}) as Dictionary).get("anims", {}) as Dictionary).has(anim):
+		var sh: Variant = point_at(p_rig, "shoulder_r", anim, frame, drawn, cell.x)
+		if sh != null:
+			cov = cov.merge(cover_rect(Vector2((sh as Vector3).x, (sh as Vector3).y), int(art.get("cover", 0)), cell))
 	return {"cover_l": cover_l, "pos": offset + Vector2(x, v.y), "grip": grip, "flip": flip != bool(pic[1]),
 		"front": z >= 0.0, "angle": -ang if flip else ang, "path": str(pic[0]),
-		"point": Vector2(v.x, v.y), "cover": cover_rect(Vector2(v.x, v.y), int(art.get("cover", 0)), cell,
-			point_at(p_rig, point.replace("hand", "elbow"), anim, frame, drawn, cell.x) if point.begins_with("hand") else null) if z >= 0.0 else Rect2()}
+		"point": Vector2(v.x, v.y), "cover": cov}
 
 
 ## The patch of the body (cell pixels, unflipped) redrawn over a held piece:
@@ -350,7 +375,6 @@ func sync() -> void:
 		var cr: Rect2 = pl["cover"]
 		if cr.has_area() and tex:
 			_show_cover(cv, tex, cr, cell, body.flip_h, body.offset)
-			cv.position += kv
 		var cr2: Rect2 = pl.get("cover_l", Rect2())
 		if cv2 and cr2.has_area() and tex:
 			_show_cover(cv2, tex, cr2, cell, body.flip_h, body.offset)

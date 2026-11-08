@@ -1,0 +1,50 @@
+{
+	"point": "hand_r",
+	"grip": [
+		1,
+		1
+	],
+	"grips": {
+		"SE": [
+			1,
+			1
+		],
+		"NE": [
+			2,
+			16
+		],
+		"SW": [
+			26,
+			2
+		],
+		"NW": [
+			23,
+			17
+		]
+	},
+	"z": {},
+	"rotate": true,
+	"order": 0,
+	"cover": 2,
+	"source": "PixelLab object cyberpunk_heavy_machine_gun_001, diagonal pictures x0.85, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"grips2": {
+		"SE": [
+			13,
+			6
+		],
+		"NE": [
+			11,
+			6
+		],
+		"SW": [
+			14,
+			7
+		],
+		"NW": [
+			12,
+			7
+		]
+	},
+	"cover_l": 2,
+	"tuck": true
+}

@@ -1,15 +1,23 @@
 {
 	"point": "hand_r",
 	"grip": [
-		16,
-		13
+		8,
+		9
 	],
 	"grips": {
 		"SE": [
-			16,
-			13
+			8,
+			9
 		],
 		"NE": [
+			9,
+			16
+		],
+		"SW": [
+			21,
+			8
+		],
+		"NW": [
 			17,
 			15
 		]
@@ -18,6 +26,25 @@
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_assault_rifle_001, side view x1.00 turned 18 deg, tools/gear/import_pixellab_gun.py",
-	"cover_l": 2
+	"source": "PixelLab object cyberpunk_assault_rifle_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"grips2": {
+		"SE": [
+			17,
+			16
+		],
+		"NE": [
+			18,
+			8
+		],
+		"SW": [
+			11,
+			17
+		],
+		"NW": [
+			7,
+			8
+		]
+	},
+	"cover_l": 2,
+	"tuck": true
 }

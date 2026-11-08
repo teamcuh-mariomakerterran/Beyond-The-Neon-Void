@@ -1,0 +1,50 @@
+{
+	"point": "hand_r",
+	"grip": [
+		8,
+		11
+	],
+	"grips": {
+		"SE": [
+			8,
+			11
+		],
+		"NE": [
+			10,
+			21
+		],
+		"SW": [
+			21,
+			11
+		],
+		"NW": [
+			19,
+			22
+		]
+	},
+	"z": {},
+	"rotate": true,
+	"order": 0,
+	"cover": 2,
+	"source": "PixelLab object pulse_plasma_rifle_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"grips2": {
+		"SE": [
+			20,
+			19
+		],
+		"NE": [
+			22,
+			10
+		],
+		"SW": [
+			9,
+			19
+		],
+		"NW": [
+			6,
+			11
+		]
+	},
+	"cover_l": 2,
+	"tuck": true
+}

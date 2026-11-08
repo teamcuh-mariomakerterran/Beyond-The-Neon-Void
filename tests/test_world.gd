@@ -1286,6 +1286,17 @@ func test_aim_kick() -> void:
 	check(not pl.is_empty() and (pl["cover_l"] as Rect2).has_area(), "aim: two-hand rifle redraws the front fist over the barrel")
 	var pp := GearAttach.place(rig, GearAttach.load_art("res://assets/gear/weapons/pilot_pistol"), "aim_SE", 7, false, Vector2.ZERO, Vector2(96, 96))
 	check(not (pp["cover_l"] as Rect2).has_area(), "aim: one-hand pistol has no front-fist cover")
+	# Two-hand guns turn so the support grip lands on the support hand.
+	var ar := GearAttach.load_art("res://assets/gear/weapons/cyberpunk_assault_rifle_001")
+	var pa := GearAttach.place(rig, ar, "aim_rifle_SE", 7, false, Vector2.ZERO, Vector2(96, 96))
+	var hl: Variant = GearAttach.point_at(rig, "hand_l", "aim_rifle_SE", 7, "SE", 96.0)
+	var g1: Vector2 = (ar["grips"] as Dictionary)["SE"]
+	var g2: Vector2 = (ar["grips2"] as Dictionary)["SE"]
+	var lands: Vector2 = (pa["pos"] as Vector2) + (g2 - g1).rotated(deg_to_rad(float(pa["angle"])))
+	var hv := Vector2((hl as Vector3).x, (hl as Vector3).y) - (pa["pos"] as Vector2)
+	check(absf(wrapf(rad_to_deg((lands - (pa["pos"] as Vector2)).angle() - hv.angle()), -180.0, 180.0)) < 2.0, "aim: rifle's support grip points at the support hand")
+	var shp: Variant = GearAttach.point_at(rig, "shoulder_r", "aim_rifle_SE", 7, "SE", 96.0)
+	check(shp != null and (pa["cover"] as Rect2).grow(0.5).has_point(Vector2((shp as Vector3).x, (shp as Vector3).y)), "aim: rifle stock tucked under the arm (cover reaches the shoulder)")
 	spr.free()
 
 

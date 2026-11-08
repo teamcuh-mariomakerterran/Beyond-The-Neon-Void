@@ -88,3 +88,8 @@ Raise and hold come from our own skeleton poses (`tools/pixellab/aim_pose.py`, `
 #5 pistol aim on SW, NE, NW (raise + hold, 8 frames, 3 each). On NW the arm crosses in front of him, away from the camera, so only the gun shows past his shoulder. Rifle test SE (3): hands stay low, reads as a low-ready hold with the placeholder `pilot_rifle`; a higher shouldered pose needs a redo. Credits 9829.95 → 9817.95 (12).
 
 ![](../screenshots/cast_fixes/pool_005_aim_4facings.gif)
+
+### Brian's guns in hand (2026-11-08)
+All 15 of Brian's PixelLab gun objects are art sets (`assets/gear/weapons/<name>`) from their own diagonal pictures, scaled to the hand (handguns x0.6 to long guns x0.85), with the trigger and support points he marked (`assets/gear/source/pixellab_guns/grips_brian.json`, read off his marked screenshots). Two-hand guns (`grips2`) turn so the support grip lands on `hand_l`, tuck the stock under the arm (`tuck`: the cover reaches `shoulder_r`) and redraw the front fist over the barrel. handgun_002's SE and SW pictures were swapped in PixelLab (`--swap SE,SW`). The kick now only tips the gun round the grip: moving the fist cover left the body's own fist behind (a ghost hand).
+
+![](../screenshots/cast_fixes/pool_005_all_guns_SE.png)

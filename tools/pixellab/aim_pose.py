@@ -237,6 +237,7 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 	if still and clip != "rifle":
 		pts["hand_r"]["facing"][facing] = still[:3] + [tilt(frames[0])]
 	if clip == "rifle":
+		pts.setdefault("shoulder_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["RIGHT SHOULDER"][0]), round(f["RIGHT SHOULDER"][1]), z] for f in frames]
 		pts.setdefault("hand_l", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["LEFT ARM"][0]), round(f["LEFT ARM"][1]), z] for f in frames]
 	with open(rp, "w", encoding="utf-8") as fh:
 		json.dump(r, fh, indent="\t")
