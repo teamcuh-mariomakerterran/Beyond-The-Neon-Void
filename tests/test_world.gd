@@ -1295,6 +1295,14 @@ func test_aim_kick() -> void:
 	var lands: Vector2 = (pa["pos"] as Vector2) + (g2 - g1).rotated(deg_to_rad(float(pa["angle"])))
 	var hv := Vector2((hl as Vector3).x, (hl as Vector3).y) - (pa["pos"] as Vector2)
 	check(absf(wrapf(rad_to_deg((lands - (pa["pos"] as Vector2)).angle() - hv.angle()), -180.0, 180.0)) < 2.0, "aim: rifle's support grip points at the support hand")
+	check(sf.has_animation("rest_rifle_SE") and sf.get_animation_loop("rest_rifle_SE"), "aim: long-gun rest pose loads and loops")
+	var spr2 := AnimatedSprite2D.new()
+	spr2.sprite_frames = sf
+	spr2.animation = "rest_rifle_SE"
+	var g_r := GearAttach.attach_to(spr2, "res://assets/units/pool_005", ["res://assets/gear/weapons/cyberpunk_assault_rifle_001"])
+	var g_p := GearAttach.attach_to(spr2, "res://assets/units/pool_005", ["res://assets/gear/weapons/cyberpunk_handgun_003"])
+	check(g_r != null and g_r.two_handed() and g_p != null and not g_p.two_handed(), "aim: rifles idle in the rest pose, handguns don't")
+	spr2.free()
 	var shp: Variant = GearAttach.point_at(rig, "shoulder_r", "aim_rifle_SE", 7, "SE", 96.0)
 	check(shp != null and (pa["cover"] as Rect2).grow(0.5).has_point(Vector2((shp as Vector3).x, (shp as Vector3).y)), "aim: rifle stock tucked under the arm (cover reaches the shoulder)")
 	spr.free()

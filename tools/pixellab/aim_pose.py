@@ -52,14 +52,45 @@ def ease(t):
 # Clips: "pistol15" is the first test (raise, hold, two kicks; the kicks grew a
 # gun). "pistol" and "rifle" are raise + hold only (8 frames, 3 generations);
 # the kick is done in the engine (GearAttach.fire_kick).
-CLIPS = {"pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle"}
-ACTION = {"pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward"}
+CLIPS = {"pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
+ACTION = {"pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
+	"rifle_rest": "standing with both hands at the waist", "rifle_raise": "raise both arms forward", "kick": "right wrist jerks up and back"}
+# Clips that start from another take's frame instead of the standing pose:
+# clip -> (kit folder of the start take, its frame, the clip whose pose that frame is).
+CHAIN = {"rifle_raise": ("aim_rifle_rest_%s", 0, "rifle_rest"), "kick": ("aim_pistol_%s", 7, "pistol")}
+KICK = [1.0, 0.45, 0.1, 0.0]  # per frame, after the held aim
 
 
 def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 	"""base: label -> (x, y) in source pixels. Returns frames of label -> (x, y) in canvas pixels."""
 	if clip == "rifle":
 		return rifle_poses(base, size, facing)
+	if clip == "rifle_rest":
+		return rest_poses(base, size, facing)
+	if clip == "rifle_raise":
+		rest = rest_poses(base, size, facing)[0]
+		aim = rifle_poses(base, size, facing)[-1]
+		out = []
+		for t in RAISE + [1.0] * 3:
+			e = ease(t)
+			out.append({k: lerp(rest[k], aim[k], e) for k in rest})
+		return out
+	if clip == "kick":
+		hold = poses(base, size, facing, "pistol")[-1]
+		pad = (CANVAS - size) / 2.0
+		sh = (base["RIGHT SHOULDER"][0] + pad, base["RIGHT SHOULDER"][1] + pad)
+		ax, ay = AIM[facing]
+		ln = math.hypot(ax, ay)
+		ax, ay = ax / ln, ay / ln
+		out = []
+		for k in KICK:
+			f = dict(hold)
+			# Wrist snaps up 3 px and back 2 px, the elbow folds a little, the shoulder gives.
+			f["RIGHT ARM"] = (hold["RIGHT ARM"][0] - ax * 2.0 * k, hold["RIGHT ARM"][1] - ay * 2.0 * k - 3.0 * k)
+			f["RIGHT ELBOW"] = (hold["RIGHT ELBOW"][0] - ax * 1.0 * k, hold["RIGHT ELBOW"][1] + 0.5 * k)
+			f["RIGHT SHOULDER"] = (sh[0] - ax * 0.6 * k, sh[1] - ay * 0.6 * k)
+			out.append(f)
+		return out
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
 	sh, el, wr = b["RIGHT SHOULDER"], b["RIGHT ELBOW"], b["RIGHT ARM"]
@@ -121,6 +152,44 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	return out
 
 
+def rest_poses(base: dict, size: int, facing: str) -> list:
+	"""Long gun at rest (Brian's reference): carried level at the waist in both
+	hands, barrel forward; three frames of breathing."""
+	pad = (CANVAS - size) / 2.0
+	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+	shr, shl = b["RIGHT SHOULDER"], b["LEFT SHOULDER"]
+	hr, hl = b["RIGHT HIP"], b["LEFT HIP"]
+	arm = math.dist(shr, b["RIGHT ELBOW"]) + math.dist(b["RIGHT ELBOW"], b["RIGHT ARM"])
+	ax, ay = AIM[facing]
+	ln = math.hypot(ax, ay)
+	ax, ay = ax / ln, ay / ln
+	waist = ((hr[0] + hl[0]) / 2, min(hr[1], hl[1]) - 2.0)
+	# Grip hand at the hip on the gun side, support hand forward along the aim, level.
+	wr = (hr[0] + ax * 2.0, waist[1])
+	wl = (wr[0] + ax * arm * 0.85, wr[1] + ay * arm * 0.25)
+	er = ((shr[0] + wr[0]) / 2 - ax * 2.0, (shr[1] + wr[1]) / 2 + 1.0)
+	el = ((shl[0] + wl[0]) / 2, (shl[1] + wl[1]) / 2 + 2.0)
+	out = []
+	for breath in (0.0, 0.5, 0.0):
+		f = dict(b)
+		f["RIGHT ARM"], f["LEFT ARM"], f["RIGHT ELBOW"], f["LEFT ELBOW"] = wr, wl, er, el
+		for k in ("NECK", "NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR", "LEFT SHOULDER", "RIGHT SHOULDER"):
+			f[k] = (b[k][0], b[k][1] + breath)
+		out.append(f)
+	return out
+
+
+def start(n: int, facing: str, clip: str, base: dict, w: int, png: bytes):
+	"""The first frame PixelLab redraws from, and the pose it is in (canvas px)."""
+	if clip in CHAIN:
+		folder, fi, src_clip = CHAIN[clip]
+		path = os.path.join("assets", "kit", "pool_%03d" % n, folder % facing, "frame_%03d.png" % fi)
+		first = poses(base, w, facing, src_clip)[fi]
+		return open(path, "rb").read(), first
+	pad = (CANVAS - w) / 2.0
+	return padded(png, w), {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+
+
 def load(n: int, facing: str):
 	c = char(n)
 	d = pilot.call("GET", "/characters/%s" % c["character_id"])
@@ -152,7 +221,8 @@ def preview(n: int, facing: str, out: str, clip: str = "pistol15") -> None:
 	c, d, base, w, png = load(n, facing)
 	frames = poses(base, w, facing, clip)
 	k = 4
-	spr = Image.open(io.BytesIO(padded(png, w))).convert("RGBA").resize((CANVAS * k, CANVAS * k), Image.NEAREST)
+	first_png, _ = start(n, facing, clip, base, w, png)
+	spr = Image.open(io.BytesIO(first_png)).convert("RGBA").resize((CANVAS * k, CANVAS * k), Image.NEAREST)
 	sheet = Image.new("RGBA", (CANVAS * k * 5, CANVAS * k * 3), (28, 30, 40, 255))
 	bones = [("RIGHT SHOULDER", "RIGHT ELBOW"), ("RIGHT ELBOW", "RIGHT ARM"), ("LEFT SHOULDER", "LEFT ELBOW"), ("LEFT ELBOW", "LEFT ARM"),
 		("RIGHT SHOULDER", "LEFT SHOULDER"), ("NECK", "NOSE"), ("RIGHT HIP", "RIGHT KNEE"), ("RIGHT KNEE", "RIGHT LEG"), ("LEFT HIP", "LEFT KNEE"), ("LEFT KNEE", "LEFT LEG")]
@@ -173,11 +243,11 @@ def preview(n: int, facing: str, out: str, clip: str = "pistol15") -> None:
 def go(n: int, facing: str, out_dir: str, clip: str = "pistol15") -> None:
 	c, d, base, w, png = load(n, facing)
 	frames = poses(base, w, facing, clip)
-	pad = (CANVAS - w) / 2.0
-	first = to_kp({k: (v[0] + pad, v[1] + pad) for k, v in base.items()})
+	first_png, first_pose = start(n, facing, clip, base, w, png)
+	first = to_kp(first_pose)
 	body = {"description": "%s, empty hands, holding nothing" % d.get("prompt", "character").strip(),
 		"action": ACTION[clip], "direction": DIRS[facing], "view": d.get("view", "high top-down"),
-		"first_frame": pilot.b64(padded(png, w)), "first_frame_keypoints": first,
+		"first_frame": pilot.b64(first_png), "first_frame_keypoints": first,
 		"keypoints": [to_kp(f) for f in frames], "template_id": "mannequin", "no_background": True}
 	r = pilot.call("POST", "/animate-with-skeleton-v3", body)
 	job = r.get("background_job_id") or sys.exit("no job: %s" % str(r)[:400])
@@ -207,7 +277,7 @@ def forearm_deg(f: dict) -> float:
 def gun_deg(f: dict, clip: str) -> float:
 	"""Screen angle of the held gun: the forearm, or for a rifle the line from
 	the grip hand to the barrel hand."""
-	if clip == "rifle":
+	if clip in ("rifle", "rifle_raise", "rifle_rest"):
 		a, b = f["RIGHT ARM"], f["LEFT ARM"]
 		return math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
 	return forearm_deg(f)
@@ -234,9 +304,9 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 	pts.setdefault("elbow_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["RIGHT ELBOW"][0]), round(f["RIGHT ELBOW"][1]), z] for f in frames]
 	# Still pose (60 px cell): same lowered angle as frame 0.
 	still = pts["hand_r"]["facing"].get(facing)
-	if still and clip != "rifle":
+	if still and clip in ("pistol", "pistol15"):
 		pts["hand_r"]["facing"][facing] = still[:3] + [tilt(frames[0])]
-	if clip == "rifle":
+	if clip in ("rifle", "rifle_raise", "rifle_rest"):
 		pts.setdefault("shoulder_r", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["RIGHT SHOULDER"][0]), round(f["RIGHT SHOULDER"][1]), z] for f in frames]
 		pts.setdefault("hand_l", {"facing": {}, "anims": {}}).setdefault("anims", {})[anim] = [[round(f["LEFT ARM"][0]), round(f["LEFT ARM"][1]), z] for f in frames]
 	with open(rp, "w", encoding="utf-8") as fh:

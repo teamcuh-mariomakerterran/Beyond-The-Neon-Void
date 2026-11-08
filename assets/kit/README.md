@@ -12,3 +12,5 @@ New takes now stay in PixelLab next to each other (separate animation groups), s
 - `pool_005/aim_pistol_SW`, `_NE`, `_NW`: #5 pistol raise + hold (8 frames, 3 generations each, 2026-11-08), copied into the game whole.
 - `pool_005/aim_rifle_SE`: #5 two-hand rifle raise test (8 frames, 3). Weak: both hands stay low (the pose put the gun line too low). In the game for now as a low-ready hold.
 - `pool_005/aim_pistol_NW_b`: #5 NW pistol redo with the hand at Brian's mark (collar, past the head). The fist now shows; this take replaces the first NW in the game, the first stays here.
+- `pool_005/aim_rifle_rest_SE`: #5 long-gun rest pose (gun level at the waist in both hands, Brian's reference), 3 frames, 2 generations, 2026-11-08. In the game as `rest_rifle`.
+- `pool_005/aim_rifle_raise_SE`: #5 rifle raise starting from that rest pose, 8 frames, 3. Replaces the first rifle raise in the game (that one stays here as `aim_rifle_SE`).

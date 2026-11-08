@@ -45,6 +45,7 @@ func run(tree: SceneTree) -> void:
 	for i in 4:
 		await tree.process_frame
 	u.gear = GearAttach.attach_to(u.sprite, folder, [weapon])
+	u.play_animation("idle")
 	var st := {"busy": true}
 	var go := func() -> void:
 		for i in 10:

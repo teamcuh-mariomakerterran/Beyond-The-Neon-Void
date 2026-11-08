@@ -380,6 +380,15 @@ func sync() -> void:
 			_show_cover(cv2, tex, cr2, cell, body.flip_h, body.offset)
 
 
+## True when a held piece is two-handed (its art has support grips), so the
+## unit idles in its long-gun rest pose.
+func two_handed() -> bool:
+	for pc: Dictionary in pieces:
+		if not ((pc["art"] as Dictionary).get("grips2", {}) as Dictionary).is_empty():
+			return true
+	return false
+
+
 ## One shot's recoil: snaps up and back, settles over `time` seconds.
 func fire_kick(time: float = 0.18) -> void:
 	if not is_inside_tree():

@@ -28,7 +28,8 @@ extends RefCounted
 ## facings). Restores the outline skeleton-v3 frames lose when they go soft.
 ## frames_from {"aim": {"SE": {"dir": "res://.../aim_pistol/SE", "frames": [0, 7]}}}
 ## adds an animation (one-shot, at "fps") from loose frame PNGs (frame_000.png...)
-## in that folder; "frames" is the first and last index kept.
+## in that folder; "frames" is the first and last index kept; "loop": true
+## for a held pose (e.g. "rest_rifle", the idle with a long gun).
 ## frame_order {"jump_SE": [0, 1, 2, 3, 4, 4, 4, 5, 6]} replays frames in that
 ## order (repeat one to hold it, e.g. the top of a jump).
 ## jump {"air": [3, 7] or {"SE": [3, 7]}, "lift": 10}: on a height change the
@@ -384,7 +385,10 @@ static func unit_set(dir: String) -> Dictionary:
 			if not paths.is_empty():
 				xf[xfc] = paths
 		if not xf.is_empty():
-			_add(out, xa, {"facings": xf, "rot": still_src}, float(fps_by.get(xa, fps)), false)
+			var xloop := false
+			for xfc2: String in (extra_src[xa] as Dictionary):
+				xloop = xloop or bool((extra_src[xa][xfc2] as Dictionary).get("loop", false))
+			_add(out, xa, {"facings": xf, "rot": still_src}, float(fps_by.get(xa, fps)), xloop)
 	var keep: Dictionary = conf.get("keep_frames", {})
 	for kn: String in keep:
 		if sf.has_animation(kn):

@@ -219,6 +219,8 @@ func refresh_look() -> void:
 	if gear and is_instance_valid(gear):
 		gear.free()
 	gear = GearAttach.attach_to(sprite, root, worn_paths())
+	if _action == "idle" or _action == "rest_rifle":
+		play_animation("idle")
 
 
 # --- State -----------------------------------------------------------------
@@ -633,6 +635,9 @@ func has_anim(action: String) -> bool:
 
 
 func play_animation(anim_name: String) -> void:
+	# Holding a long gun: idle is the two-hand rest pose where the unit has one.
+	if anim_name == "idle" and gear and is_instance_valid(gear) and gear.two_handed() and has_anim("rest_rifle"):
+		anim_name = "rest_rifle"
 	if sprite and not _lattice.is_empty():
 		if LatticeClip.play_on(sprite, _lattice, anim_name, LatticeClip.facing_of(facing)):
 			_action = anim_name
