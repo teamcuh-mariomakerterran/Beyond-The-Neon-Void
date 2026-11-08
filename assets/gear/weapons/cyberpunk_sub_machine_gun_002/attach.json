@@ -26,5 +26,11 @@
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_sub_machine_gun_002, diagonal pictures x0.70, grips from Brian's marks, tools/gear/import_pixellab_gun.py"
+	"source": "PixelLab object cyberpunk_sub_machine_gun_002, diagonal pictures x0.70, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"axis": {
+		"SE": 39.7,
+		"NE": -42.6,
+		"SW": 140.3,
+		"NW": -137.3
+	}
 }

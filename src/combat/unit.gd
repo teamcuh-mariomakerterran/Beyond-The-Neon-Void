@@ -652,6 +652,8 @@ func _on_clip_finished() -> void:
 	var nxt := str((_lattice.get("next", {}) as Dictionary).get(sprite.animation, ""))
 	if nxt != "" and sprite.sprite_frames.has_animation(nxt):
 		sprite.play(nxt)
+	elif _action == "kick":
+		_hold_aim("aim")
 	elif _action != "death" and not _action.begins_with("aim"):
 		play_animation("idle")
 
@@ -706,12 +708,24 @@ func aim_raise(anim: String = "aim") -> bool:
 	return true
 
 
-## One shot's recoil on the held weapon (and the fist over it).
+## One shot's recoil. Where the unit has kick frames for this facing the arm
+## itself snaps back (then returns to the held aim); the held gun also tips up.
 func fire_kick() -> void:
+	var fc := LatticeClip.facing_of(facing)
+	var own_kick: bool = sprite != null and sprite.sprite_frames != null and sprite.sprite_frames.has_animation("kick_" + fc) and _action == "aim"
+	if own_kick:
+		play_animation("kick")
 	if gear and is_instance_valid(gear):
-		await gear.fire_kick()
+		await gear.fire_kick(0.25 if own_kick else 0.18, 0.35 if own_kick else 1.0)
 	elif is_inside_tree():
 		await get_tree().create_timer(0.18).timeout
+
+
+## Back to the last frame of the aim (held there: it's a one-shot).
+func _hold_aim(anim: String) -> void:
+	play_animation(anim)
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(sprite.animation):
+		sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 1
 
 
 ## Little squash when landing after a hop / jump.

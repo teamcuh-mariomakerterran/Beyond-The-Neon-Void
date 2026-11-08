@@ -27,6 +27,12 @@
 	"order": 0,
 	"cover": 2,
 	"source": "PixelLab object cyberpunk_gun_auto_rifle_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"axis": {
+		"SE": 35.4,
+		"NE": -43.0,
+		"SW": 144.7,
+		"NW": -137.1
+	},
 	"grips2": {
 		"SE": [
 			18,

@@ -26,5 +26,11 @@
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_gun_spell_blaster_001, diagonal pictures x0.65, grips from Brian's marks, tools/gear/import_pixellab_gun.py"
+	"source": "PixelLab object cyberpunk_gun_spell_blaster_001, diagonal pictures x0.65, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"axis": {
+		"SE": 43.1,
+		"NE": -43.8,
+		"SW": 139.0,
+		"NW": -136.5
+	}
 }

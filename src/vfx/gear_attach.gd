@@ -172,7 +172,7 @@ static func load_art(dir: String) -> Dictionary:
 		grips2[k2] = _v2(meta["grips2"][k2])
 	var out := {"dir": dir, "point": str(meta.get("point", "hand_r")), "grip": _v2(meta.get("grip", [0, 0])),
 		"grips": grips, "z": meta.get("z", {}), "rotate": bool(meta.get("rotate", false)),
-		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "cover_l": int(meta.get("cover_l", 0)), "grips2": grips2, "tuck": bool(meta.get("tuck", false)), "pics": pics, "any": any}
+		"order": int(meta.get("order", 0)), "cover": int(meta.get("cover", 0)), "cover_l": int(meta.get("cover_l", 0)), "grips2": grips2, "tuck": bool(meta.get("tuck", false)), "axis": meta.get("axis", {}), "pics": pics, "any": any}
 	_arts[dir] = out
 	return out
 
@@ -226,6 +226,18 @@ static func place(p_rig: Dictionary, art: Dictionary, anim: String, frame: int, 
 	if zo.has(drawn):
 		z = float(zo[drawn])
 	var ang := angle_at(p_rig, point, anim, frame) if bool(art.get("rotate", false)) else 0.0
+	# Art with a measured barrel angle (axis, per picture) is turned onto the
+	# forearm itself: elbow -> hand on this frame.
+	var axis: Variant = (art.get("axis", {}) as Dictionary).get(str(pic[2]))
+	if axis != null and bool(art.get("rotate", false)) and point.begins_with("hand"):
+		var el: Variant = point_at(p_rig, point.replace("hand", "elbow"), anim, frame, drawn, cell.x)
+		if el != null:
+			var fa := Vector2(v.x - (el as Vector3).x, v.y - (el as Vector3).y)
+			if fa.length() > 0.5:
+				var ax := float(axis)
+				if bool(pic[1]):
+					ax = 180.0 - ax
+				ang = wrapf(rad_to_deg(fa.angle()) - ax, -180.0, 180.0)
 	# Two-hand pieces: turn so the support grip (grips2) lands on hand_l, once
 	# the support hand is about as far from the trigger hand as the grips are.
 	var g2: Variant = (art.get("grips2", {}) as Dictionary).get(str(pic[2]))
@@ -390,12 +402,13 @@ func two_handed() -> bool:
 
 
 ## One shot's recoil: snaps up and back, settles over `time` seconds.
-func fire_kick(time: float = 0.18) -> void:
+## `strength` < 1 when the arm's own kick frames already lift the gun.
+func fire_kick(time: float = 0.18, strength: float = 1.0) -> void:
 	if not is_inside_tree():
 		return
 	var t := create_tween()
-	t.tween_method(_set_kick, 0.0, 1.0, time * 0.25)
-	t.tween_method(_set_kick, 1.0, 0.0, time * 0.75).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	t.tween_method(_set_kick, 0.0, strength, time * 0.25)
+	t.tween_method(_set_kick, strength, 0.0, time * 0.75).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	await t.finished
 
 

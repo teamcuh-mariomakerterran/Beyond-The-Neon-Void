@@ -6,6 +6,7 @@ scaled to fit a unit's hand, plus attach.json.
     python3 -I tools/gear/import_pixellab_gun.py <slug> <scale> --side x,y [--deg 20] [--two-hand]
 
     python3 -I tools/gear/import_pixellab_gun.py <slug> <scale> --diag [--swap SE,SW]   # Brian's grip marks
+    python3 -I tools/gear/import_pixellab_gun.py --all   # every gun in pixellab_guns/import.json
 
 --diag uses the gun's own four diagonal pictures, scaled, with the trigger and
 support hand points Brian marked (assets/gear/source/pixellab_guns/grips_brian.json).
@@ -78,6 +79,26 @@ def side(slug: str, s: float, grip: list, deg: float, two_hand: bool) -> None:
 	print("wrote", d, grips)
 
 
+def axis_deg(im: Image.Image, grip: list) -> float:
+	"""Screen angle of the gun's long axis, pointing from the grip toward the
+	muzzle (y down, degrees). Principal axis of the opaque pixels."""
+	import math
+	pts = [(x, y) for y in range(im.height) for x in range(im.width) if im.getpixel((x, y))[3] > 0]
+	n = len(pts)
+	cx = sum(p[0] for p in pts) / n
+	cy = sum(p[1] for p in pts) / n
+	sxx = sum((p[0] - cx) ** 2 for p in pts)
+	syy = sum((p[1] - cy) ** 2 for p in pts)
+	sxy = sum((p[0] - cx) * (p[1] - cy) for p in pts)
+	a = 0.5 * math.atan2(2 * sxy, sxx - syy)
+	dx, dy = math.cos(a), math.sin(a)
+	# The muzzle is the end away from the grip.
+	far = max(pts, key=lambda p: (p[0] - grip[0]) ** 2 + (p[1] - grip[1]) ** 2)
+	if (far[0] - grip[0]) * dx + (far[1] - grip[1]) * dy < 0:
+		dx, dy = -dx, -dy
+	return round(math.degrees(math.atan2(dy, dx)), 1)
+
+
 def diag(slug: str, s: float, swap: dict = None) -> None:
 	"""swap {"SE": "SW", ...}: use another facing's picture (and its marks) where
 	PixelLab drew a rotation the wrong way round."""
@@ -86,7 +107,7 @@ def diag(slug: str, s: float, swap: dict = None) -> None:
 	c = cells(slug)
 	d = os.path.join(OUT, slug)
 	os.makedirs(d, exist_ok=True)
-	grips, grips2 = {}, {}
+	grips, grips2, axis = {}, {}, {}
 	for f in ("SE", "NE", "SW", "NW"):
 		src_f = swap.get(f, f)
 		im = c[src_f]
@@ -98,12 +119,15 @@ def diag(slug: str, s: float, swap: dict = None) -> None:
 			return [int(round((pt[0] - bb[0]) * s)), int(round((pt[1] - bb[1]) * s))]
 		if "trigger" in m:
 			grips[f] = at(m["trigger"])
+			axis[f] = axis_deg(p, grips[f])
 		if "support" in m:
 			grips2[f] = at(m["support"])
 	meta = {"point": "hand_r", "grip": grips.get("SE", [0, 0]), "grips": grips, "z": {}, "rotate": True, "order": 0, "cover": 2,
 		"source": "PixelLab object %s, diagonal pictures x%.2f, grips from Brian's marks, tools/gear/import_pixellab_gun.py" % (slug, s)}
 	if swap:
 		meta["swapped"] = swap
+	# axis: each picture's barrel angle on screen; the game turns it onto the forearm.
+	meta["axis"] = axis
 	if grips2:
 		meta.update({"grips2": grips2, "cover_l": 2, "tuck": True})
 	json.dump(meta, open(os.path.join(d, "attach.json"), "w"), indent="\t")
@@ -112,6 +136,10 @@ def diag(slug: str, s: float, swap: dict = None) -> None:
 
 def main() -> None:
 	a = sys.argv[1:]
+	if "--all" in a:
+		for slug, o in json.load(open(os.path.join(SRC, "import.json"))).items():
+			diag(slug, float(o["scale"]), o.get("swap", {}))
+		return
 	if "--diag" in a:
 		sw = {}
 		if "--swap" in a:

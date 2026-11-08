@@ -26,5 +26,11 @@
 	"rotate": true,
 	"order": 0,
 	"cover": 2,
-	"source": "PixelLab object cyberpunk_handgun_003, diagonal pictures x0.60, grips from Brian's marks, tools/gear/import_pixellab_gun.py"
+	"source": "PixelLab object cyberpunk_handgun_003, diagonal pictures x0.60, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"axis": {
+		"SE": 35.1,
+		"NE": -44.7,
+		"SW": 144.9,
+		"NW": -132.3
+	}
 }

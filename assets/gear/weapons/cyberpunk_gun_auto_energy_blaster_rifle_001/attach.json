@@ -27,6 +27,12 @@
 	"order": 0,
 	"cover": 2,
 	"source": "PixelLab object cyberpunk_gun_auto_energy_blaster_rifle_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"axis": {
+		"SE": 35.8,
+		"NE": -39.4,
+		"SW": 145.2,
+		"NW": -140.6
+	},
 	"grips2": {
 		"SE": [
 			20,

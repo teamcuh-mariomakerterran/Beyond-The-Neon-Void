@@ -1,0 +1,51 @@
+{
+	"cyberpunk_handgun_003": {
+		"scale": 0.6
+	},
+	"cyberpunk_assault_rifle_001": {
+		"scale": 0.8
+	},
+	"cyberpunk_super_handgun_001": {
+		"scale": 0.6
+	},
+	"cyberpunk_handgun_002": {
+		"scale": 0.6,
+		"swap": {
+			"SE": "SW",
+			"SW": "SE"
+		}
+	},
+	"cyberpunk_sub_machine_gun_001": {
+		"scale": 0.65
+	},
+	"cyberpunk_sub_machine_gun_002": {
+		"scale": 0.7
+	},
+	"cyberpunk_gun_spell_blaster_001": {
+		"scale": 0.65
+	},
+	"cyberpunk_super_laser_rifle_up_001": {
+		"scale": 0.75
+	},
+	"cyberpunk_super_shotgun_001": {
+		"scale": 0.8
+	},
+	"cyberpunk_auto_shotty_001": {
+		"scale": 0.8
+	},
+	"cyberpunk_gun_auto_rifle_001": {
+		"scale": 0.8
+	},
+	"cyberpunk_gun_auto_energy_blaster_rifle_001": {
+		"scale": 0.8
+	},
+	"pulse_plasma_rifle_001": {
+		"scale": 0.8
+	},
+	"cyber_flame_thrower_001": {
+		"scale": 0.8
+	},
+	"cyberpunk_heavy_machine_gun_001": {
+		"scale": 0.85
+	}
+}

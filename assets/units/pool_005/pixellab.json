@@ -87,10 +87,20 @@
 				],
 				"loop": true
 			}
+		},
+		"kick": {
+			"SE": {
+				"dir": "res://assets/units/pool_005/kick/SE",
+				"frames": [
+					0,
+					3
+				]
+			}
 		}
 	},
 	"_about_frames_from": "Pistol raise and hold from our own skeleton poses (tools/pixellab/aim_pose.py); the shot's kick is done in the engine (Brian, 2026-11-07).",
 	"fps_by_action": {
-		"rest_rifle": 3
+		"rest_rifle": 3,
+		"kick": 16
 	}
 }

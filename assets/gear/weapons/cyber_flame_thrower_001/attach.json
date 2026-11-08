@@ -27,6 +27,12 @@
 	"order": 0,
 	"cover": 2,
 	"source": "PixelLab object cyber_flame_thrower_001, diagonal pictures x0.80, grips from Brian's marks, tools/gear/import_pixellab_gun.py",
+	"axis": {
+		"SE": 36.6,
+		"NE": -46.9,
+		"SW": 142.6,
+		"NW": -133.1
+	},
 	"grips2": {
 		"SE": [
 			17,
