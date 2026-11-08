@@ -1,0 +1,8 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(PIXELLAB_API_KEY=proxy-injected python3 tools/pixellab/aim_pose.py go:*)",
+			"Bash(PIXELLAB_API_KEY=proxy-injected timeout 1500 python3 tools/pixellab/aim_pose.py go:*)"
+		]
+	}
+}
