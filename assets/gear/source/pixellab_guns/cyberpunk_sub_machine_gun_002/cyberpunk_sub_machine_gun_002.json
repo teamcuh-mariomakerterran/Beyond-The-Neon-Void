@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "3ca9d645-faff-4056-96de-e2cb42628ec6",
+    "name": "base",
+    "prompt": "cyberpunk sub machine gun, 1 pixel wide black outline, top down perspective birds eye view",
+    "size": {
+      "width": 40,
+      "height": 40
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_sub_machine_gun_002.png",
+    "cell_size": {
+      "width": 40,
+      "height": 40
+    },
+    "sheet_size": {
+      "width": 320,
+      "height": 40
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T10:08:16.669008+00:00"
+}

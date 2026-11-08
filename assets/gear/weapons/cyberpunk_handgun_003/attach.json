@@ -1,0 +1,22 @@
+{
+	"point": "hand_r",
+	"grip": [
+		3,
+		7
+	],
+	"grips": {
+		"SE": [
+			3,
+			7
+		],
+		"NE": [
+			4,
+			11
+		]
+	},
+	"z": {},
+	"rotate": true,
+	"order": 0,
+	"cover": 2,
+	"source": "PixelLab object cyberpunk_handgun_003, side view x0.60 turned 20 deg, tools/gear/import_pixellab_gun.py"
+}

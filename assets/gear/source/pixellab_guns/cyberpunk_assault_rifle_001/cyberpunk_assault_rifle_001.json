@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "08b2d31e-826c-49cb-8296-68f1d3c0f5b4",
+    "name": "base",
+    "prompt": "cyberpunk gun",
+    "size": {
+      "width": 48,
+      "height": 48
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_assault_rifle_001.png",
+    "cell_size": {
+      "width": 48,
+      "height": 48
+    },
+    "sheet_size": {
+      "width": 384,
+      "height": 48
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T10:08:11.124809+00:00"
+}

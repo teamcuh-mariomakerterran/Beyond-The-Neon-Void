@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "f9763bfc-9578-40c0-bba1-7c46f7e64a3b",
+    "name": "base",
+    "prompt": "cyberpunk super laser rifle upgraded",
+    "size": {
+      "width": 48,
+      "height": 48
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_super_laser_rifle_up_001.png",
+    "cell_size": {
+      "width": 48,
+      "height": 48
+    },
+    "sheet_size": {
+      "width": 384,
+      "height": 48
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T10:08:04.417994+00:00"
+}

@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "b7a76e10-9b81-4e9e-8ab5-17062dded70e",
+    "name": "base",
+    "prompt": "cyberpunk handgun upgraded, 1 pixel wide black outline, top down perspective birds eye view",
+    "size": {
+      "width": 36,
+      "height": 36
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_handgun_003.png",
+    "cell_size": {
+      "width": 36,
+      "height": 36
+    },
+    "sheet_size": {
+      "width": 288,
+      "height": 36
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T10:08:17.786094+00:00"
+}

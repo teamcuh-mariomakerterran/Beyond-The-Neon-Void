@@ -1,0 +1,182 @@
+{
+	"cyberpunk_super_handgun_001": {
+		"name": "cyberpunk super handgun_001",
+		"id": "c8d06e8c-d6be-4ac1-9552-7605e7aa9fb2",
+		"size": {
+			"width": 42,
+			"height": 42
+		},
+		"files": [
+			"cyberpunk_super_handgun_001.png",
+			"cyberpunk_super_handgun_001.json"
+		]
+	},
+	"cyberpunk_super_laser_rifle_up_001": {
+		"name": "cyberpunk super laser rifle up_001",
+		"id": "f9763bfc-9578-40c0-bba1-7c46f7e64a3b",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyberpunk_super_laser_rifle_up_001.png",
+			"cyberpunk_super_laser_rifle_up_001.json"
+		]
+	},
+	"cyberpunk_auto_shotty_001": {
+		"name": "cyberpunk auto shotty_001",
+		"id": "f89e456e-309e-4fec-9c79-add29f79c949",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyberpunk_auto_shotty_001.png",
+			"cyberpunk_auto_shotty_001.json"
+		]
+	},
+	"cyberpunk_super_shotgun_001": {
+		"name": "cyberpunk super shotgun_001",
+		"id": "f1d3fed2-ad7e-4c8f-af99-b4177c0bcd00",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyberpunk_super_shotgun_001.png",
+			"cyberpunk_super_shotgun_001.json"
+		]
+	},
+	"cyberpunk_gun_auto_rifle_001": {
+		"name": "cyberpunk gun_auto rifle_001",
+		"id": "e8c33be2-b6d7-461a-9bf7-d0f5c8cc699a",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyberpunk_gun_auto_rifle_001.png",
+			"cyberpunk_gun_auto_rifle_001.json"
+		]
+	},
+	"cyberpunk_gun_auto_energy_blaster_rifle_001": {
+		"name": "cyberpunk gun_auto_energy_blaster_rifle_001",
+		"id": "e6559606-f5bf-4555-8f1e-72517db71cbc",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyberpunk_gun_auto_energy_blaster_rifle_001.png",
+			"cyberpunk_gun_auto_energy_blaster_rifle_001.json"
+		]
+	},
+	"pulse_plasma_rifle_001": {
+		"name": "pulse plasma rifle_001",
+		"id": "df7ecf8c-6253-484e-bc0a-2107aa84479b",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"pulse_plasma_rifle_001.png",
+			"pulse_plasma_rifle_001.json"
+		]
+	},
+	"cyber_flame_thrower_001": {
+		"name": "cyber flame thrower_001",
+		"id": "897b4f71-1fbc-4c3e-b4a2-09d9feaebb79",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyber_flame_thrower_001.png",
+			"cyber_flame_thrower_001.json"
+		]
+	},
+	"cyberpunk_assault_rifle_001": {
+		"name": "cyberpunk assault rifle_001",
+		"id": "08b2d31e-826c-49cb-8296-68f1d3c0f5b4",
+		"size": {
+			"width": 48,
+			"height": 48
+		},
+		"files": [
+			"cyberpunk_assault_rifle_001.png",
+			"cyberpunk_assault_rifle_001.json"
+		]
+	},
+	"cyberpunk_sub_machine_gun_001": {
+		"name": "cyberpunk sub machine gun_001",
+		"id": "4fed7737-7499-46b4-a811-fffc11f0b9a2",
+		"size": {
+			"width": 44,
+			"height": 44
+		},
+		"files": [
+			"cyberpunk_sub_machine_gun_001.png",
+			"cyberpunk_sub_machine_gun_001.json"
+		]
+	},
+	"cyberpunk_heavy_machine_gun_001": {
+		"name": "cyberpunk heavy machine gun_001",
+		"id": "2d9fc438-4c02-4c68-a770-3f017a0a462e",
+		"size": {
+			"width": 42,
+			"height": 42
+		},
+		"files": [
+			"cyberpunk_heavy_machine_gun_001.png",
+			"cyberpunk_heavy_machine_gun_001.json"
+		]
+	},
+	"cyberpunk_handgun_002": {
+		"name": "cyberpunk handgun_002",
+		"id": "036403fe-eb0c-4a31-b0bb-d093fd2d9cc4",
+		"size": {
+			"width": 44,
+			"height": 44
+		},
+		"files": [
+			"cyberpunk_handgun_002.png",
+			"cyberpunk_handgun_002.json"
+		]
+	},
+	"cyberpunk_gun_spell_blaster_001": {
+		"name": "cyberpunk gun spell blaster_001",
+		"id": "a36f8aec-a618-430a-84cd-68083161621b",
+		"size": {
+			"width": 44,
+			"height": 44
+		},
+		"files": [
+			"cyberpunk_gun_spell_blaster_001.png",
+			"cyberpunk_gun_spell_blaster_001.json"
+		]
+	},
+	"cyberpunk_sub_machine_gun_002": {
+		"name": "cyberpunk sub machine gun_002",
+		"id": "3ca9d645-faff-4056-96de-e2cb42628ec6",
+		"size": {
+			"width": 40,
+			"height": 40
+		},
+		"files": [
+			"cyberpunk_sub_machine_gun_002.png",
+			"cyberpunk_sub_machine_gun_002.json"
+		]
+	},
+	"cyberpunk_handgun_003": {
+		"name": "cyberpunk handgun_003",
+		"id": "b7a76e10-9b81-4e9e-8ab5-17062dded70e",
+		"size": {
+			"width": 36,
+			"height": 36
+		},
+		"files": [
+			"cyberpunk_handgun_003.png",
+			"cyberpunk_handgun_003.json"
+		]
+	}
+}

@@ -1,0 +1,45 @@
+{
+  "object": {
+    "id": "4fed7737-7499-46b4-a811-fffc11f0b9a2",
+    "name": "base",
+    "prompt": "cyberpunk gun",
+    "size": {
+      "width": 44,
+      "height": 44
+    },
+    "directions": 8,
+    "view": "low top-down"
+  },
+  "spritesheet": {
+    "path": "cyberpunk_sub_machine_gun_001.png",
+    "cell_size": {
+      "width": 44,
+      "height": 44
+    },
+    "sheet_size": {
+      "width": 352,
+      "height": 44
+    },
+    "columns": 8,
+    "pivot": "cell-center",
+    "rows": [
+      {
+        "row": 0,
+        "type": "rotations",
+        "frame_count": 8,
+        "directions": [
+          "south",
+          "south-east",
+          "east",
+          "north-east",
+          "north",
+          "north-west",
+          "west",
+          "south-west"
+        ]
+      }
+    ]
+  },
+  "export_version": "1.0",
+  "export_date": "2026-11-08T10:08:12.399219+00:00"
+}
