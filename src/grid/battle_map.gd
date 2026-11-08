@@ -761,10 +761,10 @@ func play_ability_fx(unit: Node, ability: Ability, cell: Vector2i) -> void:
 	var ranged: bool = IsometricGrid.distance(unit.cell, cell) > 1 and not self_cast
 	var plan := VFX.plan_for_ability(ability, ranged)
 	var cells := ability.get_affected_cells(grid, unit.cell, cell)
-	var aiming: bool = unit.anim_for(ability) == "aim"
+	var aiming: bool = unit.anim_for(ability).begins_with("aim")
 	if aiming:
 		# Raise the gun and hold; the kick lands with the shot's sound.
-		await unit.aim_raise()
+		await unit.aim_raise(unit.anim_for(ability))
 		if not is_instance_valid(unit):
 			return
 		unit.fire_kick()

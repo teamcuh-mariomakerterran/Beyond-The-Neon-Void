@@ -1,0 +1,21 @@
+{
+	"point": "hand_r",
+	"grip": [
+		12,
+		10
+	],
+	"grips": {
+		"SE": [
+			12,
+			10
+		],
+		"NE": [
+			14,
+			12
+		]
+	},
+	"z": {},
+	"rotate": true,
+	"order": 0,
+	"cover": 2
+}

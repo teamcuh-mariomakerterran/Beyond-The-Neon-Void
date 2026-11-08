@@ -46,6 +46,36 @@
 					0,
 					7
 				]
+			},
+			"SW": {
+				"dir": "res://assets/units/pool_005/aim_pistol/SW",
+				"frames": [
+					0,
+					7
+				]
+			},
+			"NE": {
+				"dir": "res://assets/units/pool_005/aim_pistol/NE",
+				"frames": [
+					0,
+					7
+				]
+			},
+			"NW": {
+				"dir": "res://assets/units/pool_005/aim_pistol/NW",
+				"frames": [
+					0,
+					7
+				]
+			}
+		},
+		"aim_rifle": {
+			"SE": {
+				"dir": "res://assets/units/pool_005/aim_rifle/SE",
+				"frames": [
+					0,
+					7
+				]
 			}
 		}
 	},

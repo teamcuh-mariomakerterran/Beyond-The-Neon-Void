@@ -647,7 +647,7 @@ func _on_clip_finished() -> void:
 	var nxt := str((_lattice.get("next", {}) as Dictionary).get(sprite.animation, ""))
 	if nxt != "" and sprite.sprite_frames.has_animation(nxt):
 		sprite.play(nxt)
-	elif _action != "death" and _action != "aim":
+	elif _action != "death" and not _action.begins_with("aim"):
 		play_animation("idle")
 
 
@@ -674,8 +674,8 @@ func hit_flash(color: Color = Color(2.0, 0.4, 0.6), heavy: bool = false) -> void
 ## Gun shot presentation: raise into "aim" (held on its last frame), kick the
 ## held weapon once per shot, then back to idle. Without an aim animation the
 ## unit plays its attack. Awaitable; no rules here.
-func aim_and_fire(shots: int = 1, gap: float = 0.12) -> void:
-	if not await aim_raise():
+func aim_and_fire(shots: int = 1, gap: float = 0.12, anim: String = "aim") -> void:
+	if not await aim_raise(anim):
 		return
 	for i in maxi(shots, 1):
 		await fire_kick()
@@ -685,11 +685,15 @@ func aim_and_fire(shots: int = 1, gap: float = 0.12) -> void:
 
 ## Plays "aim" and waits for the raise to finish (it holds the last frame).
 ## False when the unit has no aim animation (it plays its attack instead).
-func aim_raise() -> bool:
-	if not has_anim("aim"):
+## `anim` is "aim" (one hand) or "aim_rifle" (two hands); a rifle aim falls
+## back to the one-hand aim when the unit has no rifle frames.
+func aim_raise(anim: String = "aim") -> bool:
+	if not has_anim(anim):
+		anim = "aim"
+	if not has_anim(anim):
 		play_animation("attack")
 		return false
-	play_animation("aim")
+	play_animation(anim)
 	if is_inside_tree() and sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(sprite.animation):
 		var n := sprite.sprite_frames.get_frame_count(sprite.animation)
 		var fps := maxf(sprite.sprite_frames.get_animation_speed(sprite.animation), 1.0)

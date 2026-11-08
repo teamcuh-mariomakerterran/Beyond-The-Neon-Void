@@ -83,3 +83,8 @@ Brian's 25 picks animated by `tools/pixellab/pool_anims.py` (pick B: template fr
 Raise and hold come from our own skeleton poses (`tools/pixellab/aim_pose.py`, `/animate-with-skeleton-v3`, about 4 a facing for 15 frames), so the hand stays empty and its point is known on every frame. The shot's kick is done in the engine: `GearAttach.fire_kick()` moves the held gun and the fist over it up 3 px and back 2 px and tips the muzzle 10°, then settles. `Unit.aim_raise()` plays `aim` and holds its last frame; an ability with `anim: "aim"` raises, kicks on the shot, then returns to idle. `frames_from` in `pixellab.json` loads the kept frames. Test: #5 SE with the placeholder `pilot_pistol` (`tools/gear/make_pilot_pistol.py`). The test's fire frames grew a gun and stay in the kit as scrap.
 
 ![](../screenshots/cast_fixes/pool_005_aim_kick.gif)
+
+### All four facings + rifle test (2026-11-08)
+#5 pistol aim on SW, NE, NW (raise + hold, 8 frames, 3 each). On NW the arm crosses in front of him, away from the camera, so only the gun shows past his shoulder. Rifle test SE (3): hands stay low, reads as a low-ready hold with the placeholder `pilot_rifle`; a higher shouldered pose needs a redo. Credits 9829.95 → 9817.95 (12).
+
+![](../screenshots/cast_fixes/pool_005_aim_4facings.gif)

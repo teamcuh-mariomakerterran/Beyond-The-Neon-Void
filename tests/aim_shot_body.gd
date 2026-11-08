@@ -8,6 +8,8 @@ func run(tree: SceneTree) -> void:
 	var folder: String = args[0]
 	var weapon: String = args[1]
 	var out: String = args[2]
+	var face: Vector2i = {"SE": Vector2i(1, 0), "SW": Vector2i(0, 1), "NW": Vector2i(-1, 0), "NE": Vector2i(0, -1)}.get(args[3] if args.size() > 3 else "SE", Vector2i(1, 0))
+	var anim: String = args[4] if args.size() > 4 else "aim"
 	DirAccess.make_dir_recursive_absolute(out)
 	var root := Node2D.new()
 	tree.root.add_child(root)
@@ -36,7 +38,8 @@ func run(tree: SceneTree) -> void:
 	u.setup(cd, Unit.Team.PLAYER, 1)
 	root.add_child(u)
 	u.place_at(Vector2i(0, 0))
-	u.facing = Vector2i(1, 0)
+	u.facing = face
+	u.play_animation("idle")
 	if u.hud:
 		u.hud.visible = false
 	for i in 4:
@@ -46,7 +49,7 @@ func run(tree: SceneTree) -> void:
 	var go := func() -> void:
 		for i in 10:
 			await tree.process_frame
-		await u.aim_and_fire(2, 0.25)
+		await u.aim_and_fire(2, 0.25, anim)
 		for i in 12:
 			await tree.process_frame
 		u.play_animation("idle")

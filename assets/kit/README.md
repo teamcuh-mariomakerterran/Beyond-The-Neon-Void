@@ -9,3 +9,5 @@ New takes now stay in PixelLab next to each other (separate animation groups), s
 
 ## Scrap frames (reuse freely)
 - `pool_005/aim_pistol_SE/`: #5 pistol raise / hold / fire from our own skeleton poses (`tools/pixellab/aim_pose.py`, 4 generations, 2026-11-07). Frames 0-7 (raise, hold) are copied into `assets/units/pool_005/aim_pistol/SE/` for the game. Frames 8-14 are scrap: PixelLab drew a gun and a muzzle flash in the hand, and frame 14 snaps back to standing. `aim.json` has the hand point of every frame.
+- `pool_005/aim_pistol_SW`, `_NE`, `_NW`: #5 pistol raise + hold (8 frames, 3 generations each, 2026-11-08), copied into the game whole.
+- `pool_005/aim_rifle_SE`: #5 two-hand rifle raise test (8 frames, 3). Weak: both hands stay low (the pose put the gun line too low). In the game for now as a low-ready hold.
