@@ -18,6 +18,9 @@ Add to it as we go; tick a line when it's done.
 - [ ] **walk SW**, take `walking-9babe46a`: frame **6**, the poncho hem goes soft.
 - [ ] **walk SE / SW gait** (Brian): the stride is small, closer to a march.
 
+## #4 (camo cloak, glowing eyes)
+- [ ] **attack SE**, skeleton-v3 take (group 5f872684): frame **6** smears the cloak into a blob; the camo pattern is faint on every frame.
+
 ## Back facings (NE, NW; skeleton-v3), all 25
 - [ ] **attack NE / NW, frame 6** (full reach) smears on nearly everyone. Plays in full in game (Brian), so this frame needs the touch-up.
 - [ ] **death NE / NW, frames 6-7** smear. Trimmed in game, so some deaths end mid-fall instead of flat.

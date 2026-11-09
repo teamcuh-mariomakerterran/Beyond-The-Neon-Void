@@ -7,9 +7,10 @@
 		"death_NE": "Idle/falling_backward",
 		"death_NW": "Idle/falling_backward",
 		"jump_NE": "Idle/two_footed_jump-abd16d8e",
-		"jump_NW": "Idle/two_footed_jump-abd16d8e"
+		"jump_NW": "Idle/two_footed_jump-abd16d8e",
+		"attack_SE": "Idle/cross_punch_attack-5f872684"
 	},
-	"_about": "Back facings pinned to the skeleton-v3 takes (tools/pixellab/pool_anims.py); older takes stay in the export as a kit.",
+	"_about": "Pins: back facings to their skeleton-v3 takes, then pins_by_group (hand picks by PixelLab group id). Older takes stay in the export as a kit.",
 	"keep_frames": {
 		"death_NE": 5,
 		"death_NW": 5
@@ -25,5 +26,8 @@
 			"walk"
 		]
 	},
-	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07)."
+	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07).",
+	"pins_by_group": {
+		"attack_SE": "5f872684-bc4b-4dda-b464-bdfc308b97f8"
+	}
 }

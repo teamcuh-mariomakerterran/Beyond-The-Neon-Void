@@ -136,6 +136,16 @@
               "Idle/animations/cross_punch_attack/south-east/frame_005.png"
             ]
           },
+          "cross_punch_attack-5f872684": {
+            "south-east": [
+              "Idle/animations/cross_punch_attack-5f872684/south-east/frame_000.png",
+              "Idle/animations/cross_punch_attack-5f872684/south-east/frame_001.png",
+              "Idle/animations/cross_punch_attack-5f872684/south-east/frame_002.png",
+              "Idle/animations/cross_punch_attack-5f872684/south-east/frame_003.png",
+              "Idle/animations/cross_punch_attack-5f872684/south-east/frame_004.png",
+              "Idle/animations/cross_punch_attack-5f872684/south-east/frame_005.png"
+            ]
+          },
           "falling_backward": {
             "north-west": [
               "Idle/animations/falling_backward/north-west/frame_000.png",
@@ -271,5 +281,5 @@
     }
   ],
   "export_version": "3.1",
-  "export_date": "2026-11-06T16:06:34.670252"
+  "export_date": "2026-11-09T11:14:02.948318"
 }
