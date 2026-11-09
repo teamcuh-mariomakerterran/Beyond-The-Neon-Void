@@ -1,0 +1,86 @@
+"""Cut a character's gear out against a base body (same character, stripped
+state): dressed minus base, per rotation, without the body's own skin.
+
+    python3 -I tools/pixellab/cut_parts.py <dressed.zip>:<state> <base.zip>:<state> <out_dir> [--sheet out.png]
+
+Writes <out_dir>/<facing>.png (the whole outfit layer per rotation). Free.
+pilot.diff_layer keeps every pixel that differs from the base, which also
+keeps the dressed character's own skin wherever its face, neck or hands sit
+a pixel off the base's; those would show as seams on a recoloured body. So
+pixels whose colour is within reach of the base's skin colours are dropped.
+"""
+import io
+import os
+import sys
+import zipfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pilot  # noqa: E402
+
+DIRS = {"south": "S", "south-east": "SE", "east": "E", "north-east": "NE", "north": "N", "north-west": "NW", "west": "W", "south-west": "SW"}
+
+
+def load(spec: str) -> dict:
+	from PIL import Image
+	path, state = spec.rsplit(":", 1)
+	z = zipfile.ZipFile(path)
+	return {f: Image.open(io.BytesIO(z.read("%s/rotations/%s.png" % (state, d)))).convert("RGBA") for d, f in DIRS.items()
+		if "%s/rotations/%s.png" % (state, d) in z.namelist()}
+
+
+def skinlike(p) -> bool:
+	r, g, b = p[0], p[1], p[2]
+	return r >= 110 and r > g > b and g >= 0.55 * r and b >= 0.35 * r
+
+
+def skin_palette(base: dict) -> list:
+	cols = set()
+	for im in base.values():
+		for p in (im.get_flattened_data() if hasattr(im, "get_flattened_data") else im.getdata()):
+			if p[3] >= 128 and skinlike(p):
+				cols.add(p[:3])
+	return list(cols)
+
+
+def strip_skin(layer, palette: list, reach: int = 45):
+	px = layer.load()
+	w, h = layer.size
+	for y in range(h):
+		for x in range(w):
+			p = px[x, y]
+			if p[3] < 128 or not skinlike(p):
+				continue
+			if any(abs(p[0] - c[0]) + abs(p[1] - c[1]) + abs(p[2] - c[2]) < reach * 2 for c in palette):
+				px[x, y] = (0, 0, 0, 0)
+	return layer
+
+
+def main() -> None:
+	from PIL import Image, ImageDraw
+	a = sys.argv[1:]
+	dressed, base, out = load(a[0]), load(a[1]), a[2]
+	os.makedirs(out, exist_ok=True)
+	pal = skin_palette(base)
+	layers = {}
+	for f in dressed:
+		lay = strip_skin(pilot.diff_layer(base[f], dressed[f]), pal)
+		lay.save(os.path.join(out, f + ".png"))
+		layers[f] = lay
+	print("skin colours", len(pal), "layers", sorted(layers))
+	if "--sheet" in a:
+		k, C = 5, 60 * 5
+		order = ["SE", "SW", "NE", "NW"]
+		o = Image.new("RGBA", (4 * C, len(order) * C + 20), (28, 30, 40, 255))
+		d = ImageDraw.Draw(o)
+		for i, t in enumerate(["dressed", "base", "cut layer", "base + layer"]):
+			d.text((i * C + 4, 4), t, fill=(230, 230, 240))
+		for r, f in enumerate(order):
+			re = base[f].copy()
+			re.alpha_composite(layers[f])
+			for c, im in enumerate([dressed[f], base[f], layers[f], re]):
+				o.alpha_composite(im.resize((C, C), Image.NEAREST), (c * C, 20 + r * C))
+		o.save(a[a.index("--sheet") + 1])
+
+
+if __name__ == "__main__":
+	main()
