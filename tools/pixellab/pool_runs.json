@@ -2139,6 +2139,15 @@
 			"group": "5f872684-bc4b-4dda-b464-bdfc308b97f8",
 			"generations": 3.0,
 			"verdict": "pass: cloak and glowing eyes kept (template lost the cloak); camo pattern fades to plain grey-green; frame 6 smears"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "attack SW",
+			"method": "skeleton-v3",
+			"group": "5f872684-bc4b-4dda-b464-bdfc308b97f8",
+			"generations": 3.0,
+			"verdict": "pass: cloak with its camo pattern, glowing eyes kept; one eye hidden by the hood on frames 2-4; frame 6 cloak softer"
 		}
 	]
 }
