@@ -52,6 +52,40 @@ def place(part, a, b, a2, b2, size):
 	return out
 
 
+def skinlike(p) -> bool:
+	r, g, b = p[0], p[1], p[2]
+	return p[3] >= 128 and r >= 110 and r > g > b and g >= 0.55 * r and b >= 0.35 * r
+
+
+def head_anchor(img, neck_y: float):
+	"""Top-centre of the base's own head (its skin pixels above the neck):
+	head parts lock to this, so hair never drifts off the bald head."""
+	px = img.load()
+	w, h = img.size
+	pts = [(x, y) for y in range(min(h, int(neck_y) + 2)) for x in range(w) if skinlike(px[x, y])]
+	if not pts:
+		return None
+	xs = [p[0] for p in pts]
+	return ((min(xs) + max(xs)) / 2.0, float(min(p[1] for p in pts)))
+
+
+def outline(img, col=(4, 2, 1)):
+	"""Edge pixels lighter than an outline get the outline colour (the game's
+	restore_outline), so every finished frame has a whole black outline."""
+	out = img.copy()
+	px, src = out.load(), img.load()
+	w, h = img.size
+	for y in range(h):
+		for x in range(w):
+			p = src[x, y]
+			if p[3] < 128:
+				continue
+			edge = any(not (0 <= x + dx < w and 0 <= y + dy < h) or src[x + dx, y + dy][3] < 128 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+			if edge and 0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] >= 40:
+				px[x, y] = col + (255,)
+	return out
+
+
 def bodysuit(p) -> bool:
 	return p[3] >= 128 and abs(p[0] - p[1]) < 14 and abs(p[1] - p[2]) < 14 and p[0] > 90
 
@@ -107,10 +141,20 @@ def main() -> None:
 	names = sorted(n for n in z.namelist() if n.startswith(folder.rstrip("/") + "/") and n.endswith(".png"))
 	os.makedirs(out, exist_ok=True)
 	order = ORDER_RIGHT_NEAR if facing in ("SE", "NE", "E", "S") else ORDER_LEFT_NEAR
+	# The standing base's own head, in the frames' padded canvas.
+	stand_base = None
+	for n0 in z.namelist():
+		if n0.endswith("rotations/%s.png" % {"SE": "south-east", "SW": "south-west", "NE": "north-east", "NW": "north-west"}.get(facing, "")) and n0.split("/")[0] == folder.split("/")[0]:
+			stand_base = Image.open(io.BytesIO(z.read(n0))).convert("RGBA")
 	frames = []
+	stand_head = None
 	for i, n in enumerate(names):
 		base = Image.open(io.BytesIO(z.read(n))).convert("RGBA")
 		W, H = base.size
+		if stand_head is None and stand_base is not None:
+			sp = ((W - stand_base.width) / 2.0, (H - stand_base.height) / 2.0)
+			sh = head_anchor(stand_base, stand["NECK"][1])
+			stand_head = (sh[0] + sp[0], sh[1] + sp[1]) if sh else None
 		j = frame_joints(skel["frames"][i])
 		img = base.copy()
 		for part in order:
@@ -128,9 +172,20 @@ def main() -> None:
 			sb = (stand[bone[1]][0] + pad[0], stand[bone[1]][1] + pad[1])
 			big = Image.new("RGBA", (W, H))
 			big.alpha_composite(im, (int(pad[0]), int(pad[1])))
+			if part == "head" and stand_head is not None:
+				fa = head_anchor(base, j["NECK"][1])
+				if fa is not None:
+					shifted = Image.new("RGBA", (W, H))
+					shifted.alpha_composite(big, (int(round(fa[0] - stand_head[0])), int(round(fa[1] - stand_head[1]))) if fa[0] >= stand_head[0] and fa[1] >= stand_head[1] else (0, 0))
+					if not (fa[0] >= stand_head[0] and fa[1] >= stand_head[1]):
+						shifted = Image.new("RGBA", (W, H))
+						shifted.paste(big, (int(round(fa[0] - stand_head[0])), int(round(fa[1] - stand_head[1]))), big)
+					img.alpha_composite(shifted)
+					continue
 			img.alpha_composite(place(big, sa, sb, j[bone[0]], j[bone[1]], (W, H)))
 		if "--lining" in a:
 			img = lining(img, base, j, bones, facing, parts_dir)
+		img = outline(img)
 		img.save(os.path.join(out, "frame_%03d.png" % i))
 		frames.append((base, img))
 	print("dressed", len(frames), "frames")
