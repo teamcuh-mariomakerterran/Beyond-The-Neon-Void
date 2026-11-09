@@ -84,6 +84,48 @@ def held_mask(layer, base):
 	return held
 
 
+def cane_like(layer, j) -> set:
+	"""Light neutral-grey shafts below the neck (cane, blade, staff), with
+	the dark outline and coloured tips touching them: long thin pieces that
+	can pass in front of the body, where held_mask can't see them."""
+	px = layer.load()
+	w, h = layer.size
+	def light(p):
+		return p[3] >= 128 and abs(p[0] - p[1]) < 20 and abs(p[1] - p[2]) < 24 and p[0] >= 140
+	cand = set((x, y) for y in range(int(j["NECK"][1]) + 4, h) for x in range(w) if light(px[x, y]))
+	held, seen = set(), set()
+	for s0 in cand:
+		if s0 in seen:
+			continue
+		blob, todo = [], [s0]
+		seen.add(s0)
+		while todo:
+			x, y = todo.pop()
+			blob.append((x, y))
+			for dx in (-1, 0, 1):
+				for dy in (-1, 0, 1):
+					q = (x + dx, y + dy)
+					if q in cand and q not in seen:
+						seen.add(q)
+						todo.append(q)
+		xs = [p[0] for p in blob]
+		ys = [p[1] for p in blob]
+		span = max(max(xs) - min(xs), max(ys) - min(ys))
+		if span >= 6 and len(blob) <= span * 2:
+			held.update(blob)
+	# Grow by one pixel into the dark outline and coloured tips around the shaft.
+	ring = set()
+	for x, y in held:
+		for dx in (-1, 0, 1):
+			for dy in (-1, 0, 1):
+				q = (x + dx, y + dy)
+				if 0 <= q[0] < w and 0 <= q[1] < h and q not in held and px[q[0], q[1]][3] >= 128:
+					p = px[q[0], q[1]]
+					if 0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] < 40 or (p[0] > 150 and p[1] < 80):
+						ring.add(q)
+	return held | ring
+
+
 def main() -> None:
 	from PIL import Image, ImageDraw
 	a = sys.argv[1:]
@@ -102,7 +144,7 @@ def main() -> None:
 		w, h = layer.size
 		j = joints(detail, d, w, h)
 		bones_out[f] = {k: [round(v[0], 2), round(v[1], 2)] for k, v in j.items()}
-		held = held_mask(layer, base)
+		held = held_mask(layer, base) | cane_like(layer, j)
 		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held"]}
 		seg = Image.new("RGBA", (w, h))
 		px = layer.load()

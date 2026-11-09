@@ -69,6 +69,22 @@ def head_anchor(img, neck_y: float):
 	return ((min(xs) + max(xs)) / 2.0, float(min(p[1] for p in pts)))
 
 
+def despeck(img):
+	"""Drop lone pixels hanging off the figure (one or no neighbours of the
+	eight): stray bits of a turned part, like the one beside the ear."""
+	out = img.copy()
+	px, src = out.load(), img.load()
+	w, h = img.size
+	for y in range(h):
+		for x in range(w):
+			if src[x, y][3] < 128:
+				continue
+			n = sum(1 for dx in (-1, 0, 1) for dy in (-1, 0, 1) if (dx or dy) and 0 <= x + dx < w and 0 <= y + dy < h and src[x + dx, y + dy][3] >= 128)
+			if n <= 1:
+				px[x, y] = (0, 0, 0, 0)
+	return out
+
+
 def outline(img, col=(4, 2, 1)):
 	"""Edge pixels lighter than an outline get the outline colour (the game's
 	restore_outline), so every finished frame has a whole black outline."""
@@ -157,6 +173,24 @@ def main() -> None:
 			stand_head = (sh[0] + sp[0], sh[1] + sp[1]) if sh else None
 		j = frame_joints(skel["frames"][i])
 		img = base.copy()
+		# Swap the walking head for the standing head the hair was cut against,
+		# moved to the same spot, so hair and head match exactly. Only above the
+		# neck line, before any clothes go on.
+		fa0 = head_anchor(base, j["NECK"][1])
+		if fa0 is not None and stand_head is not None and stand_base is not None:
+			dx, dy = int(round(fa0[0] - stand_head[0])), int(round(fa0[1] - stand_head[1]))
+			sp = (int((W - stand_base.width) / 2), int((H - stand_base.height) / 2))
+			cut = max(1, int(stand["NECK"][1]) - 1)
+			head_img = Image.new("RGBA", (W, H))
+			head_img.paste(stand_base.crop((0, 0, stand_base.width, cut)), (sp[0] + dx, sp[1] + dy))
+			hb = head_img.getbbox()
+			if hb:
+				line = sp[1] + dy + cut
+				clear = img.load()
+				for yy in range(max(0, hb[1] - 1), min(H, line)):
+					for xx in range(max(0, hb[0] - 1), min(W, hb[2] + 1)):
+						clear[xx, yy] = (0, 0, 0, 0)
+				img.alpha_composite(head_img)
 		for part in order:
 			pp = os.path.join(parts_dir, "%s_%s.png" % (facing, part))
 			if not os.path.exists(pp):
@@ -185,7 +219,7 @@ def main() -> None:
 			img.alpha_composite(place(big, sa, sb, j[bone[0]], j[bone[1]], (W, H)))
 		if "--lining" in a:
 			img = lining(img, base, j, bones, facing, parts_dir)
-		img = outline(img)
+		img = outline(despeck(img))
 		img.save(os.path.join(out, "frame_%03d.png" % i))
 		frames.append((base, img))
 	print("dressed", len(frames), "frames")
