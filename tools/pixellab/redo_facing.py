@@ -2,6 +2,8 @@
 that keeps outfits; cast audit 2026-11-07), then re-export and pin it.
 
     python3 -I tools/pixellab/redo_facing.py <n> <action> <SE|SW|NE|NW> [--group <id>] --go
+    python3 -I tools/pixellab/redo_facing.py 0 <action> <facing> --id <character_id> --zip <out.zip> --go
+      (any character by id, e.g. the modular base bodies: animate, then save its export)
 
 action: walk, attack, hurt, death, jump. --group adds the facing to an
 existing take (the other facing of the same redo) so they stay together.
@@ -26,8 +28,11 @@ def main() -> None:
 	a = sys.argv[1:]
 	n, action, facing = int(a[0]), a[1], a[2]
 	group = a[a.index("--group") + 1] if "--group" in a else None
-	pool = {c["n"]: c for c in json.load(open(os.path.join(pool_anims.HERE, "pool.json"), encoding="utf-8"))["characters"]}
-	c = pool[n]
+	if "--id" in a:
+		c = {"n": 0, "character_id": a[a.index("--id") + 1]}
+	else:
+		pool = {c["n"]: c for c in json.load(open(os.path.join(pool_anims.HERE, "pool.json"), encoding="utf-8"))["characters"]}
+		c = pool[n]
 	template = pool_anims.SET[action]
 	print("#%d %s %s: skeleton-v3, template %s, ~3 generations%s" % (n, action, facing, template, " (into group %s)" % group[:8] if group else ""))
 	if "--go" not in a:
@@ -43,6 +48,13 @@ def main() -> None:
 		pilot.wait(j)
 	time.sleep(3)
 	used = round(before - pilot.generations(), 2)
+	if "--id" in a:
+		data = pilot.call("GET", "/characters/%s/zip" % c["character_id"], raw=True)
+		out = a[a.index("--zip") + 1]
+		open(out, "wb").write(data)
+		json.dump(pilot.call("GET", "/characters/%s" % c["character_id"]), open(out[:-4] + "_detail.json", "w"), indent="\t")
+		print("group", gid, "saved", out, "balance drop", used)
+		return
 	# Pin the new take for this facing, then export (free) so the game has it.
 	conf_p = os.path.join("assets", "units", "pool_%03d" % n, "pixellab.json")
 	conf = json.load(open(conf_p, encoding="utf-8")) if os.path.exists(conf_p) else {}
