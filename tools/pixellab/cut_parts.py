@@ -42,15 +42,35 @@ def skin_palette(base: dict) -> list:
 	return list(cols)
 
 
-def strip_skin(layer, palette: list, reach: int = 45):
+def blendlike(p) -> bool:
+	"""Light, warm, greyish halfway shades an artist uses between skin and
+	hair or outline (e.g. 148,129,131)."""
+	r, g, b = p[0], p[1], p[2]
+	return r >= 110 and r >= g and r >= b and max(r, g, b) - min(r, g, b) <= 45
+
+
+def strip_skin(layer, palette: list, reach: int = 45, dressed=None):
 	px = layer.load()
 	w, h = layer.size
+	removed = set()
 	for y in range(h):
 		for x in range(w):
 			p = px[x, y]
 			if p[3] < 128 or not skinlike(p):
 				continue
 			if any(abs(p[0] - c[0]) + abs(p[1] - c[1]) + abs(p[2] - c[2]) < reach * 2 for c in palette):
+				px[x, y] = (0, 0, 0, 0)
+				removed.add((x, y))
+	# Blend shades touching removed skin (or the face hole) go too.
+	for y in range(h):
+		for x in range(w):
+			p = px[x, y]
+			if p[3] < 128 or not blendlike(p):
+				continue
+			def hole(q):
+				# A gap inside the dressed figure: skin the cut left to the base.
+				return 0 <= q[0] < w and 0 <= q[1] < h and px[q[0], q[1]][3] < 128 and (dressed is None or dressed.getpixel(q)[3] >= 128)
+			if any((x + dx, y + dy) in removed or hole((x + dx, y + dy)) for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
 				px[x, y] = (0, 0, 0, 0)
 	return layer
 
@@ -63,8 +83,12 @@ def main() -> None:
 	pal = skin_palette(base)
 	layers = {}
 	for f in dressed:
-		lay = strip_skin(pilot.diff_layer(base[f], dressed[f]), pal)
+		lay = strip_skin(pilot.diff_layer(base[f], dressed[f]), pal, dressed=dressed[f])
 		lay.save(os.path.join(out, f + ".png"))
+		# The dressed silhouette: head parts clip the base head to it, so no
+		# base ear or scalp shows where the dressed character had hair.
+		mask = dressed[f].getchannel("A").point(lambda v: 255 if v >= 128 else 0)
+		mask.save(os.path.join(out, f + "_mask.png"))
 		layers[f] = lay
 	print("skin colours", len(pal), "layers", sorted(layers))
 	if "--sheet" in a:

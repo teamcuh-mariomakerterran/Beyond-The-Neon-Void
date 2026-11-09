@@ -181,8 +181,14 @@ def main() -> None:
 			dx, dy = int(round(fa0[0] - stand_head[0])), int(round(fa0[1] - stand_head[1]))
 			sp = (int((W - stand_base.width) / 2), int((H - stand_base.height) / 2))
 			cut = max(1, int(stand["NECK"][1]) - 1)
+			head_src = stand_base.crop((0, 0, stand_base.width, cut))
+			mp = os.path.join(os.path.dirname(parts_dir.rstrip("/")), "%s_mask.png" % facing)
+			if os.path.exists(mp):
+				# Only where the dressed character had something: no base ear past the hair.
+				m = Image.open(mp).convert("L").crop((0, 0, stand_base.width, cut))
+				head_src.putalpha(Image.composite(head_src.getchannel("A"), Image.new("L", head_src.size, 0), m))
 			head_img = Image.new("RGBA", (W, H))
-			head_img.paste(stand_base.crop((0, 0, stand_base.width, cut)), (sp[0] + dx, sp[1] + dy))
+			head_img.paste(head_src, (sp[0] + dx, sp[1] + dy))
 			hb = head_img.getbbox()
 			if hb:
 				line = sp[1] + dy + cut
