@@ -99,3 +99,8 @@ Only attack has been tested in this mode on a front facing. Hurt and death may g
 Soft frames lose their dark outline. `outline` in each `pixellab.json` repaints light edge pixels in the standing pose's outline colour on attack, hurt, death, jump and walk. It sharpens the silhouette; it doesn't bring back lost camo or shapes.
 
 ![](../screenshots/cast_fixes/outline_restore_zoom.png)
+
+## Redo: #4 done (2026-11-09)
+All 10 front facings (walk, attack, hurt, death, jump; SE and SW) in skeleton-v3 with `tools/pixellab/redo_facing.py`, 3 generations each, 30 in all. The cloak and glowing eyes hold on every take; the camo fades on some hurt and death frames (touch-up list). Verdicts per take in `tools/pixellab/pool_runs.json` redo_log. Boots that lose their bottom outline in crouches get a one-pixel sole (`outline.sole`).
+
+![](../screenshots/cast_fixes/pool_004_front_v3_all.gif)

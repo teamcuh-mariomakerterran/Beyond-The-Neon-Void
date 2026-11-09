@@ -2148,6 +2148,78 @@
 			"group": "5f872684-bc4b-4dda-b464-bdfc308b97f8",
 			"generations": 3.0,
 			"verdict": "pass: cloak with its camo pattern, glowing eyes kept; one eye hidden by the hood on frames 2-4; frame 6 cloak softer"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "walk SE",
+			"method": "skeleton-v3",
+			"group": "6791f2da-d791-4e1c-9d6f-6415f769344c",
+			"generations": 3.0,
+			"verdict": "pass: cloak with camo, glowing eyes, armor kept; clean cycle"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "walk SW",
+			"method": "skeleton-v3",
+			"group": "6791f2da-d791-4e1c-9d6f-6415f769344c",
+			"generations": 3.0,
+			"verdict": "pass: cloak with camo, eyes, armor kept; clean cycle"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "hurt SE",
+			"method": "skeleton-v3",
+			"group": "4fb68022-a719-4350-8b65-48e0c9e5c47c",
+			"generations": 3.0,
+			"verdict": "pass: cloak and eyes kept; camo fades on frames 1-5; hood a pixel bigger on frames 3-4"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "hurt SW",
+			"method": "skeleton-v3",
+			"group": "4fb68022-a719-4350-8b65-48e0c9e5c47c",
+			"generations": 3.0,
+			"verdict": "pass: cloak with camo, head size kept; eye hidden by the hood on frame 5"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "death SE",
+			"method": "skeleton-v3",
+			"group": "d9e9ff99-329d-43de-a818-f1be235cb5c8",
+			"generations": 3.0,
+			"verdict": "pass: falls back and lands flat, cloak and eyes kept, no whoosh; camo faint; cloak soft on frames 6-7"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "death SW",
+			"method": "skeleton-v3",
+			"group": "d9e9ff99-329d-43de-a818-f1be235cb5c8",
+			"generations": 3.0,
+			"verdict": "fair: falls back and lands (foreshortened), eyes and head kept; cloak loses its camo and goes dark like a cape on frames 3-7"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "jump SE",
+			"method": "skeleton-v3",
+			"group": "db77c405-dba2-48fe-95b3-3190d33d1653",
+			"generations": 3.0,
+			"verdict": "pass: cloak with camo, eyes kept; clean crouch, leap and landing"
+		},
+		{
+			"at": "2026-11-09",
+			"n": 4,
+			"what": "jump SW",
+			"method": "skeleton-v3",
+			"group": "db77c405-dba2-48fe-95b3-3190d33d1653",
+			"generations": 3.0,
+			"verdict": "pass: cloak with camo, eyes kept; clean jump"
 		}
 	]
 }

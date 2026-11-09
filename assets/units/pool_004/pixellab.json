@@ -9,7 +9,15 @@
 		"jump_NE": "Idle/two_footed_jump-abd16d8e",
 		"jump_NW": "Idle/two_footed_jump-abd16d8e",
 		"attack_SE": "Idle/cross_punch_attack-5f872684",
-		"attack_SW": "Idle/cross_punch_attack-5f872684"
+		"attack_SW": "Idle/cross_punch_attack-5f872684",
+		"walk_SE": "Idle/walking-6791f2da",
+		"walk_SW": "Idle/walking-6791f2da",
+		"hit_SE": "Idle/taking_a_punch-4fb68022",
+		"hit_SW": "Idle/taking_a_punch-4fb68022",
+		"death_SE": "Idle/falling_backward-d9e9ff99",
+		"death_SW": "Idle/falling_backward-d9e9ff99",
+		"jump_SE": "Idle/two_footed_jump-db77c405",
+		"jump_SW": "Idle/two_footed_jump-db77c405"
 	},
 	"_about": "Pins: back facings to their skeleton-v3 takes, then pins_by_group (hand picks by PixelLab group id). Older takes stay in the export as a kit.",
 	"keep_frames": {
@@ -25,11 +33,20 @@
 			"death",
 			"jump",
 			"walk"
-		]
+		],
+		"sole": true
 	},
 	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07).",
 	"pins_by_group": {
 		"attack_SE": "5f872684-bc4b-4dda-b464-bdfc308b97f8",
-		"attack_SW": "5f872684-bc4b-4dda-b464-bdfc308b97f8"
+		"attack_SW": "5f872684-bc4b-4dda-b464-bdfc308b97f8",
+		"walk_SE": "6791f2da-d791-4e1c-9d6f-6415f769344c",
+		"walk_SW": "6791f2da-d791-4e1c-9d6f-6415f769344c",
+		"hit_SE": "4fb68022-a719-4350-8b65-48e0c9e5c47c",
+		"hit_SW": "4fb68022-a719-4350-8b65-48e0c9e5c47c",
+		"death_SE": "d9e9ff99-329d-43de-a818-f1be235cb5c8",
+		"death_SW": "d9e9ff99-329d-43de-a818-f1be235cb5c8",
+		"jump_SE": "db77c405-dba2-48fe-95b3-3190d33d1653",
+		"jump_SW": "db77c405-dba2-48fe-95b3-3190d33d1653"
 	}
 }

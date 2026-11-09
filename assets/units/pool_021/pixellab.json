@@ -92,7 +92,8 @@
 			"death",
 			"jump",
 			"walk"
-		]
+		],
+		"sole": true
 	},
 	"_about_outline": "Edge pixels repainted in the standing pose's outline colour (Brian, 2026-11-07)."
 }

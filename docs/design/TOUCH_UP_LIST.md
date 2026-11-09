@@ -19,7 +19,10 @@ Add to it as we go; tick a line when it's done.
 - [ ] **walk SE / SW gait** (Brian): the stride is small, closer to a march.
 
 ## #4 (camo cloak, glowing eyes)
-- [ ] **attack SE**, skeleton-v3 take (group 5f872684): frame **6** smears the cloak into a blob; the camo pattern is faint on every frame.
+- [x] **attack SE**, skeleton-v3 take (group 5f872684): frame **6** smears the cloak; reads as motion blur at game speed (Brian: fine as is).
+- [ ] **hurt SE** (group 4fb68022): the camo fades on frames **1-5**; the hood is about a pixel bigger on frames **3-4**.
+- [ ] **death SE** (group d9e9ff99): camo faint throughout; the cloak goes soft on frames **6-7**.
+- [ ] **death SW** (group d9e9ff99): from frame **3** on the cloak loses its camo and goes dark like a cape.
 
 ## Back facings (NE, NW; skeleton-v3), all 25
 - [ ] **attack NE / NW, frame 6** (full reach) smears on nearly everyone. Plays in full in game (Brian), so this frame needs the touch-up.

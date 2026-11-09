@@ -1804,6 +1804,10 @@ func test_pixellab_merge() -> void:
 	soft.set_pixel(4, 8, Color8(5, 5, 5))
 	var lined := PixelLab.restore_outline(soft, Color8(4, 2, 1))
 	check(lined.get_pixel(4, 4) == Color8(4, 2, 1) and lined.get_pixel(8, 8) == Color.GRAY and lined.get_pixel(4, 8) == Color8(5, 5, 5), "outline: light edge repainted, inside and dark edge kept")
+	var boot := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+	boot.fill_rect(Rect2i(2, 2, 3, 4), Color.GRAY)
+	var soled := PixelLab.add_sole(boot, Color8(4, 2, 1))
+	check(soled.get_pixel(3, 6) == Color8(4, 2, 1) and soled.get_pixel(3, 5) == Color.GRAY and soled.get_pixel(3, 7).a == 0.0, "sole: one dark pixel added under a light boot bottom")
 	check(px.call("attack_NE") == Color.YELLOW and px.call("attack_SE") == Color.GREEN, "attack_NE pinned to the other take by pixellab.json; SE keeps the first")
 	_rm_tree("user://t_plm")
 

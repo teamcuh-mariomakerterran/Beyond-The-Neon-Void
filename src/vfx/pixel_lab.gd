@@ -26,6 +26,7 @@ extends RefCounted
 ## lighter than a dark outline are repainted in the standing pose's outline
 ## colour, on every frame of those animations (a bare action covers all its
 ## facings). Restores the outline skeleton-v3 frames lose when they go soft.
+## "sole": true also puts a one-pixel outline under boots that lost theirs.
 ## frames_from {"aim": {"SE": {"dir": "res://.../aim_pistol/SE", "frames": [0, 7]}}}
 ## adds an animation (one-shot, at "fps") from loose frame PNGs (frame_000.png...)
 ## in that folder; "frames" is the first and last index kept; "loop": true
@@ -424,7 +425,11 @@ static func unit_set(dir: String) -> Dictionary:
 				var img3 := t3.get_image() if t3 else null
 				if img3 == null:
 					continue
-				sf.set_frame(an, i3, ImageTexture.create_from_image(restore_outline(img3, ocol)))
+				# Sole first, so a boot's own bottom row stays and gains an outline
+				# under it instead of being painted over.
+				var fixed := add_sole(img3, ocol) if bool(ol.get("sole", false)) else img3
+				fixed = restore_outline(fixed, ocol)
+				sf.set_frame(an, i3, ImageTexture.create_from_image(fixed))
 	var order: Dictionary = conf.get("frame_order", {})
 	for on: String in order:
 		if not sf.has_animation(on):
@@ -474,6 +479,38 @@ static func restore_outline(img: Image, col: Color) -> Image:
 			outd[o + 2] = cb
 			outd[o + 3] = 255
 	return Image.create_from_data(w, h, false, Image.FORMAT_RGBA8, outd)
+
+
+## Copy of `img` with a one-pixel sole of `col` under the feet: in each column
+## whose lowest opaque pixel sits in the bottom `zone` rows of the figure and
+## isn't already dark, the pixel below it is filled (skeleton-v3 crouches
+## draw boots shorter and drop their bottom outline row).
+static func add_sole(img: Image, col: Color, zone: int = 4) -> Image:
+	var src := img.duplicate() as Image
+	if src.is_compressed():
+		src.decompress()
+	src.convert(Image.FORMAT_RGBA8)
+	var w := src.get_width()
+	var h := src.get_height()
+	var low := PackedInt32Array()
+	low.resize(w)
+	var bottom := -1
+	for x in w:
+		low[x] = -1
+		for y in range(h - 1, -1, -1):
+			if src.get_pixel(x, y).a >= 0.5:
+				low[x] = y
+				break
+		bottom = maxi(bottom, low[x])
+	for x2 in w:
+		var y2 := low[x2]
+		if y2 < 0 or y2 < bottom - zone + 1 or y2 + 1 >= h:
+			continue
+		var c := src.get_pixel(x2, y2)
+		if 0.3 * c.r8 + 0.59 * c.g8 + 0.11 * c.b8 < 40.0:
+			continue
+		src.set_pixel(x2, y2 + 1, Color(col.r, col.g, col.b, 1.0))
+	return src
 
 
 ## Copy of `img` with only its largest 8-connected opaque shape kept.
