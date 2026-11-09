@@ -111,7 +111,9 @@ def main() -> None:
 				p = px[x, y]
 				if p[3] < 128:
 					continue
-				if (x, y) in held:
+				bone_d = min(seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) for n in BONES if n != "head")
+				if (x, y) in held or (base.getpixel((x, y))[3] < 128 and bone_d > 6 and y > j["NECK"][1] + 4):
+					# Off the body and away from every limb: a held item (cane, weapon).
 					name = "held"
 				else:
 					name = min(BONES, key=lambda n: seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) + (1.5 if n == "head" and y > j["NECK"][1] else 0))
