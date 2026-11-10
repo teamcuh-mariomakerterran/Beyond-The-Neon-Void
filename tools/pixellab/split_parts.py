@@ -29,7 +29,7 @@ BONES = {
 }
 COLOURS = {"head": (255, 220, 60), "torso": (90, 200, 255), "upper_arm_r": (255, 90, 90), "forearm_r": (255, 160, 160),
 	"upper_arm_l": (90, 255, 120), "forearm_l": (170, 255, 190), "thigh_r": (200, 90, 255), "shin_r": (230, 170, 255),
-	"thigh_l": (255, 150, 40), "shin_l": (255, 200, 130), "held": (255, 255, 255), "foot_r": (120, 120, 255), "foot_l": (60, 200, 200)}
+	"thigh_l": (255, 150, 40), "shin_l": (255, 200, 130), "held": (255, 255, 255), "foot_r": (120, 120, 255), "foot_l": (60, 200, 200), "skirt": (255, 120, 200)}
 
 
 def seg_dist(p, a, b):
@@ -126,6 +126,21 @@ def cane_like(layer, j) -> set:
 	return held | ring
 
 
+def skirt_px(base, x: int, y: int) -> bool:
+	"""Outside the base body below the hips: 2+ px clear of it, or in the gap
+	between the legs (body on both sides in the same row)."""
+	bp = base.load()
+	w, h = base.size
+	if bp[x, y][3] >= 128:
+		return False
+	near = any(0 <= x + dx < w and 0 <= y + dy < h and bp[x + dx, y + dy][3] >= 128 for dx in (-1, 0, 1) for dy in (-1, 0, 1))
+	if not near:
+		return True
+	left = any(0 <= x - d < w and bp[x - d, y][3] >= 128 for d in range(1, 6))
+	right = any(0 <= x + d < w and bp[x + d, y][3] >= 128 for d in range(1, 6))
+	return left and right
+
+
 def main() -> None:
 	from PIL import Image, ImageDraw
 	a = sys.argv[1:]
@@ -146,7 +161,7 @@ def main() -> None:
 		bones_out[f] = {k: [round(v[0], 2), round(v[1], 2)] for k, v in j.items()}
 		held = held_mask(layer, base) | cane_like(layer, j)
 		far = "_l" if f in ("SE", "NE", "E", "S") else "_r"
-		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held", "foot_r", "foot_l"]}
+		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held", "foot_r", "foot_l", "skirt"]}
 		seg = Image.new("RGBA", (w, h))
 		px = layer.load()
 		for y in range(h):
@@ -173,8 +188,53 @@ def main() -> None:
 					ank = j["RIGHT LEG" if name == "shin_r" else "LEFT LEG"]
 					if y >= ank[1] - 1:
 						name = "foot_" + name[-1]
+				if name.startswith(("thigh_", "shin_")) and y > j["HIP_MID"][1] + 1 and skirt_px(base, x, y):
+					# A coat's tails: hanging clear of the legs, or across the gap
+					# between them. They swing with the hips, not with one leg.
+					name = "skirt"
 				parts[name].putpixel((x, y), p)
 				seg.putpixel((x, y), COLOURS[name] + (255,))
+		# A long coat: below the hips the outfit spreads 3+ px past the base's
+		# legs on 6+ rows. Then everything from the hips down to the coat's
+		# hem is one piece (the skirt), so the coat doesn't tear between legs.
+		lpx, bpx0 = layer.load(), base.load()
+		hip_y = int(j["HIP_MID"][1]) + 1
+		wide = []
+		for y in range(hip_y, h):
+			bx = [x for x in range(w) if bpx0[x, y][3] >= 128]
+			lx = [x for x in range(w) if lpx[x, y][3] >= 128]
+			if bx and lx and (min(bx) - min(lx) >= 3 or max(lx) - max(bx) >= 3):
+				wide.append(y)
+		# Armour on the legs spreads 2-3 px on a row or two; a coat 3-5 px on
+		# nine or more (a backpack at the hip in a side view, five).
+		if len(wide) >= 6:
+			hem = max(wide)
+			for name in ("thigh_r", "thigh_l", "shin_r", "shin_l"):
+				q = parts[name].load()
+				for y in range(hip_y, hem + 1):
+					for x in range(w):
+						if q[x, y][3] >= 128:
+							parts["skirt"].putpixel((x, y), q[x, y])
+							q[x, y] = (0, 0, 0, 0)
+							seg.putpixel((x, y), COLOURS["skirt"] + (255,))
+			print(f, "long coat: hips to row", hem)
+		# The coat stays in one piece: thigh/shin pixels outside the base body
+		# that join the skirt go with the skirt.
+		sk, bpx = parts["skirt"].load(), base.load()
+		grew = True
+		while grew:
+			grew = False
+			for name in ("thigh_r", "thigh_l", "shin_r", "shin_l"):
+				q = parts[name].load()
+				for y in range(h):
+					for x in range(w):
+						if q[x, y][3] < 128 or bpx[x, y][3] >= 128:
+							continue
+						if any(0 <= x + dx < w and 0 <= y + dy < h and sk[x + dx, y + dy][3] >= 128 for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+							sk[x, y] = q[x, y]
+							q[x, y] = (0, 0, 0, 0)
+							seg.putpixel((x, y), COLOURS["skirt"] + (255,))
+							grew = True
 		for name, im in parts.items():
 			stale = os.path.join(out, "%s_%s.png" % (f, name))
 			if os.path.exists(stale):

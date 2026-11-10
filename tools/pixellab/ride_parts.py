@@ -18,8 +18,8 @@ import zipfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Far side first, then torso, then the near side and the head (SE/NE: right side is near).
-ORDER_RIGHT_NEAR = ["foot_l", "shin_l", "thigh_l", "upper_arm_l", "forearm_l", "foot_r", "shin_r", "thigh_r", "torso", "upper_arm_r", "forearm_r", "head", "held"]
-ORDER_LEFT_NEAR = ["foot_r", "shin_r", "thigh_r", "upper_arm_r", "forearm_r", "foot_l", "shin_l", "thigh_l", "torso", "upper_arm_l", "forearm_l", "head", "held"]
+ORDER_RIGHT_NEAR = ["foot_l", "shin_l", "thigh_l", "upper_arm_l", "forearm_l", "foot_r", "shin_r", "thigh_r", "skirt", "torso", "upper_arm_r", "forearm_r", "head", "held"]
+ORDER_LEFT_NEAR = ["foot_r", "shin_r", "thigh_r", "upper_arm_r", "forearm_r", "foot_l", "shin_l", "thigh_l", "skirt", "torso", "upper_arm_l", "forearm_l", "head", "held"]
 
 
 def frame_joints(f: dict) -> dict:
@@ -85,6 +85,38 @@ def despeck(img):
 	return out
 
 
+def drop_islands(img, small: int = 8):
+	"""Small loose bits not joined to the figure (8-neighbour) go: a stray
+	piece of coat tail or armour that rode off its limb."""
+	px = img.load()
+	w, h = img.size
+	seen = set()
+	blobs = []
+	for y in range(h):
+		for x in range(w):
+			if px[x, y][3] < 128 or (x, y) in seen:
+				continue
+			blob, todo = [], [(x, y)]
+			seen.add((x, y))
+			while todo:
+				q = todo.pop()
+				blob.append(q)
+				for dx in (-1, 0, 1):
+					for dy in (-1, 0, 1):
+						r = (q[0] + dx, q[1] + dy)
+						if 0 <= r[0] < w and 0 <= r[1] < h and r not in seen and px[r[0], r[1]][3] >= 128:
+							seen.add(r)
+							todo.append(r)
+			blobs.append(blob)
+	if len(blobs) > 1:
+		big = max(len(b) for b in blobs)
+		for b in blobs:
+			if len(b) < big and len(b) <= small:
+				for x, y in b:
+					px[x, y] = (0, 0, 0, 0)
+	return img
+
+
 def outline(img, col=(4, 2, 1)):
 	"""Edge pixels lighter than an outline get the outline colour (the game's
 	restore_outline), so every finished frame has a whole black outline."""
@@ -121,7 +153,7 @@ def gloved(parts_dir, facing, stand, side: str, stand_base) -> bool:
 	return sum(1 for x, y in skin if px[x, y][3] >= 128) >= 0.5 * len(skin)
 
 
-def restore_hands(img, base, j, skip=()):
+def restore_hands(img, base, j, skip=(), gloves=None):
 	"""The base frame's own hands go back on top, with their outline: bare
 	skin round each wrist joint, as PixelLab drew it, so no turned sleeve
 	bends a hand or the outline pass shaves its edge."""
@@ -130,7 +162,8 @@ def restore_hands(img, base, j, skip=()):
 	px, bp = out.load(), base.load()
 	W, H = base.size
 	for lab in ("RIGHT ARM", "LEFT ARM"):
-		if lab not in j or lab in skip:
+		glove = (gloves or {}).get(lab)
+		if lab not in j or (lab in skip and not glove):
 			continue
 		cx, cy = j[lab]
 		seeds = [(x, y) for y in range(max(0, int(cy) - 3), min(H, int(cy) + 4)) for x in range(max(0, int(cx) - 3), min(W, int(cx) + 4))
@@ -153,9 +186,39 @@ def restore_hands(img, base, j, skip=()):
 						b = bp[q[0], q[1]]
 						if b[3] >= 128 and 0.3 * b[0] + 0.59 * b[1] + 0.11 * b[2] < 60:
 							ring.add(q)
+		if glove:
+			# A gloved hand: wherever the base's bare hand still shows past the
+			# glove piece, it takes the glove's colours (its shading kept).
+			sk = [lum(bp[x, y]) for x, y in hand]
+			mid = sorted(sk)[len(sk) // 2] if sk else 0
+			for x, y in hand:
+				if px[x, y][:3] == bp[x, y][:3]:
+					want = lum(glove.mode) + (lum(bp[x, y]) - mid) * 0.5
+					c = min(glove, key=lambda q: abs(lum(q) - want))
+					px[x, y] = (c[0], c[1], c[2], 255)
+			continue
 		for x, y in hand | ring:
 			px[x, y] = bp[x, y]
 	return out
+
+
+def glove_ramp(parts_dir, facing, stand, side: str):
+	"""The glove's colours: the forearm part's pixels round the standing wrist."""
+	from PIL import Image
+	pp = os.path.join(parts_dir, "%s_forearm_%s.png" % (facing, side))
+	if not os.path.exists(pp):
+		return None
+	im = Image.open(pp).convert("RGBA")
+	px = im.load()
+	wx, wy = stand["RIGHT ARM" if side == "r" else "LEFT ARM"]
+	g = Image.new("RGBA", im.size)
+	q = g.load()
+	for y in range(im.height):
+		for x in range(im.width):
+			if math.hypot(x - wx, y - wy) <= 3.0:
+				q[x, y] = px[x, y]
+	r = ramp(g)
+	return r if r and r.mode else None
 
 
 def bodysuit(p) -> bool:
@@ -430,6 +493,15 @@ def main() -> None:
 					moved = clip_to(moved, own, {"thigh" + sd, "shin" + sd}, margin=0)
 				img.alpha_composite(moved)
 				continue
+			if part == "skirt":
+				# Coat tails hang from the hips: they move with the hips' middle.
+				big = Image.new("RGBA", (W, H))
+				big.alpha_composite(im, (int(pad[0]), int(pad[1])))
+				hs = ((stand["RIGHT HIP"][0] + stand["LEFT HIP"][0]) / 2 + pad[0], (stand["RIGHT HIP"][1] + stand["LEFT HIP"][1]) / 2 + pad[1])
+				moved = Image.new("RGBA", (W, H))
+				moved.paste(big, (int(round(j["HIP_MID"][0] - hs[0])), int(round(j["HIP_MID"][1] - hs[1]))), big)
+				img.alpha_composite(moved)
+				continue
 			if part == "held":
 				bone = bones["bones"]["forearm_r"]
 			else:
@@ -457,9 +529,10 @@ def main() -> None:
 			img.alpha_composite(placed)
 		if "--lining" in a:
 			img = lining(img, base, j, bones, facing, parts_dir)
-		img = outline(despeck(img))
+		img = outline(drop_islands(despeck(img)))
 		if "--base-hands" in a:
-			img = restore_hands(img, base, j, [lab for lab, sd in (("RIGHT ARM", "r"), ("LEFT ARM", "l")) if gloved(parts_dir, facing, stand, sd, stand_base)])
+			gl = {lab: glove_ramp(parts_dir, facing, stand, sd) for lab, sd in (("RIGHT ARM", "r"), ("LEFT ARM", "l")) if gloved(parts_dir, facing, stand, sd, stand_base)}
+			img = restore_hands(img, base, j, list(gl), gl)
 		img.save(os.path.join(out, "frame_%03d.png" % i))
 		frames.append((base, img))
 	print("dressed", len(frames), "frames")
