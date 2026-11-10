@@ -30,23 +30,64 @@ def frame_joints(f: dict) -> dict:
 	return j
 
 
+_HI = {}
+
+
+def scale2x(px: list, w: int, h: int) -> tuple:
+	"""One Scale2x (EPX) pass on a row-major list of pixels: doubles the size
+	keeping hard pixel-art edges (diagonals stay lines, not staircases)."""
+	out = [None] * (4 * w * h)
+	W2 = 2 * w
+	for y in range(h):
+		for x in range(w):
+			P = px[y * w + x]
+			A = px[(y - 1) * w + x] if y > 0 else P
+			D = px[(y + 1) * w + x] if y < h - 1 else P
+			C = px[y * w + x - 1] if x > 0 else P
+			B = px[y * w + x + 1] if x < w - 1 else P
+			e0 = A if (C == A and C != D and A != B) else P
+			e1 = B if (A == B and A != C and B != D) else P
+			e2 = C if (D == C and D != B and C != A) else P
+			e3 = D if (B == D and B != A and D != C) else P
+			o = 2 * y * W2 + 2 * x
+			out[o], out[o + 1], out[o + W2], out[o + W2 + 1] = e0, e1, e2, e3
+	return out, 2 * w, 2 * h
+
+
+def hi_res(part) -> tuple:
+	"""The part scaled up 8x with Scale2x three times (cached)."""
+	key = id(part)
+	if key not in _HI:
+		w, h = part.size
+		px = [tuple(p) for p in (part.get_flattened_data() if hasattr(part, "get_flattened_data") else part.getdata())]
+		for _ in range(3):
+			px, w, h = scale2x(px, w, h)
+		_HI[key] = (px, w, h, part)  # keep the part alive so its id stays unique
+	return _HI[key][:3]
+
+
 def place(part, a, b, a2, b2, size):
-	"""Part image (standing canvas) moved so bone a->b lands on a2->b2."""
+	"""Part image (standing canvas) moved so bone a->b lands on a2->b2.
+	Turned the RotSprite way: sampled from an 8x Scale2x copy at each output
+	pixel's centre, so lines stay whole instead of scattering into specks.
+	Turns under 2.5 degrees are taken as none (no one-pixel shimmer)."""
 	from PIL import Image
 	ang = math.atan2(b2[1] - a2[1], b2[0] - a2[0]) - math.atan2(b[1] - a[1], b[0] - a[0])
+	ang = (ang + math.pi) % (2 * math.pi) - math.pi
+	if abs(ang) < math.radians(2.5):
+		ang = 0.0
 	ca, sa = math.cos(-ang), math.sin(-ang)
 	out = Image.new("RGBA", size)
-	src = part.load()
 	dst = out.load()
-	w, h = part.size
+	hp, hw, hh = hi_res(part)
 	for y in range(size[1]):
 		for x in range(size[0]):
 			dx, dy = x - a2[0], y - a2[1]
 			sx = a[0] + dx * ca - dy * sa
 			sy = a[1] + dx * sa + dy * ca
-			ix, iy = int(round(sx)), int(round(sy))
-			if 0 <= ix < w and 0 <= iy < h:
-				p = src[ix, iy]
+			ix, iy = int(math.floor(sx * 8 + 4)), int(math.floor(sy * 8 + 4))
+			if 0 <= ix < hw and 0 <= iy < hh:
+				p = hp[iy * hw + ix]
 				if p[3] >= 128:
 					dst[x, y] = p
 	return out

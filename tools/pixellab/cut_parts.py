@@ -108,7 +108,8 @@ def keep_eyes(layer, dressed, base, eyes: list):
 	Inside a small box round each eye every dressed pixel is kept; where the
 	dressed face is skin but the base has eye there, the base's skin is laid
 	over it so the base eye doesn't peek out. Eye whites only stay where
-	the base has a white too."""
+	the base has a white too. An eye under gear (visor, mask) takes the
+	outfit's art whole instead."""
 	px, dp, bp = layer.load(), dressed.load(), base.load()
 	w, h = layer.size
 	for ex, ey in eyes:
@@ -118,6 +119,15 @@ def keep_eyes(layer, dressed, base, eyes: list):
 		if not skins:
 			continue
 		skin = max(set(skins), key=skins.count)
+		drawn = [dp[x, y] for x, y in box if dp[x, y][3] >= 128]
+		if drawn and sum(1 for d in drawn if skinlike(d)) < 0.5 * len(drawn):
+			# Gear over the eye (visor, mask, lens): the outfit's art there
+			# comes over whole, even its skin-toned pixels (a pink lens).
+			for x, y in box:
+				d, b = dp[x, y], bp[x, y]
+				if d[3] >= 128 and (b[3] < 128 or sum(abs(d[i] - b[i]) for i in range(3)) > 30):
+					px[x, y] = d
+			continue
 		for x, y in box:
 			d = dp[x, y]
 			if d[3] < 128:
