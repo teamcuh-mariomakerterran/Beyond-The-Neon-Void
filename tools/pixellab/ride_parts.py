@@ -206,6 +206,46 @@ def foot_bottom(img, x: float, y0: float, half: int = 2):
 	return best
 
 
+def owners(base, j, bones, far: str):
+	"""Which limb the base frame shows at each opaque pixel: the nearest bone
+	in this frame, with ties going to the torso over the far arm (it hangs
+	behind the body), and everything above the neck to the head."""
+	from split_parts import seg_dist
+	bp = base.load()
+	W, H = base.size
+	own = {}
+	names = [n for n in bones["bones"] if n != "head"]
+	for y in range(H):
+		for x in range(W):
+			if bp[x, y][3] < 128:
+				continue
+			if y < j["NECK"][1] - 2:
+				own[(x, y)] = "head"
+				continue
+			own[(x, y)] = min(names, key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]])
+				+ (2.0 if n in ("upper_arm" + far, "forearm" + far) else 0))
+	return own
+
+
+def clip_to(placed, own, keep: set, margin: int = 1):
+	"""Only the part's pixels where the base frame shows that limb, plus a
+	thin rim outside the body next to it (cuffs, armour edges): the base
+	drawing decides what is hidden behind the torso."""
+	px = placed.load()
+	W, H = placed.size
+	for y in range(H):
+		for x in range(W):
+			if px[x, y][3] < 128:
+				continue
+			o = own.get((x, y))
+			if o in keep:
+				continue
+			if o is None and any(own.get((x + dx, y + dy)) in keep for dx in range(-margin, margin + 1) for dy in range(-margin, margin + 1)):
+				continue
+			px[x, y] = (0, 0, 0, 0)
+	return placed
+
+
 def main() -> None:
 	from PIL import Image
 	a = sys.argv[1:]
@@ -232,6 +272,7 @@ def main() -> None:
 			sh = head_anchor(stand_base, stand["NECK"][1])
 			stand_head = (sh[0] + sp[0], sh[1] + sp[1]) if sh else None
 		j = frame_joints(skel["frames"][i])
+		own = None
 		img = base.copy()
 		# Swap the walking head for the standing head the hair was cut against,
 		# moved to the same spot, so hair and head match exactly. Only above the
@@ -312,7 +353,12 @@ def main() -> None:
 						shifted.paste(big, (int(round(fa[0] - stand_head[0])), int(round(fa[1] - stand_head[1]))), big)
 					img.alpha_composite(shifted)
 					continue
-			img.alpha_composite(place(big, sa, sb, j[bone[0]], j[bone[1]], (W, H)))
+			placed = place(big, sa, sb, j[bone[0]], j[bone[1]], (W, H))
+			if "--clip-far-arm" in a and part in ("upper_arm" + far, "forearm" + far):
+				if own is None:
+					own = owners(base, j, bones, far)
+				placed = clip_to(placed, own, {"upper_arm" + far, "forearm" + far})
+			img.alpha_composite(placed)
 		if "--lining" in a:
 			img = lining(img, base, j, bones, facing, parts_dir)
 		img = outline(despeck(img))
