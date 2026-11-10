@@ -155,8 +155,10 @@ def main() -> None:
 				if p[3] < 128:
 					continue
 				bone_d = min(seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) for n in BONES if n != "head")
-				if (x, y) in held or (base.getpixel((x, y))[3] < 128 and bone_d > 6 and y > j["NECK"][1] + 4):
-					# Off the body and away from every limb: a held item (cane, weapon).
+				knee_y = min(j["RIGHT KNEE"][1], j["LEFT KNEE"][1])
+				if y <= knee_y and ((x, y) in held or (base.getpixel((x, y))[3] < 128 and bone_d > 6 and y > j["NECK"][1] + 4)):
+					# Off the body and away from every limb, above the knees (below
+					# them it's a wider boot): a held item (cane, weapon).
 					name = "held"
 				elif y < j["NECK"][1] - 2:
 					# Above the neck is all head: the hair's back edge sits nearer
@@ -174,6 +176,9 @@ def main() -> None:
 				parts[name].putpixel((x, y), p)
 				seg.putpixel((x, y), COLOURS[name] + (255,))
 		for name, im in parts.items():
+			stale = os.path.join(out, "%s_%s.png" % (f, name))
+			if os.path.exists(stale):
+				os.remove(stale)  # a part this split no longer has must not ride on
 			if im.getbbox():
 				im.save(os.path.join(out, "%s_%s.png" % (f, name)))
 		sheet_rows.append((f, layer, seg, parts))

@@ -102,7 +102,26 @@ def outline(img, col=(4, 2, 1)):
 	return out
 
 
-def restore_hands(img, base, j):
+def gloved(parts_dir, facing, stand, side: str, stand_base) -> bool:
+	"""The outfit covers this hand (a glove or gauntlet): its forearm part
+	covers most of the standing base's bare hand, so the base hand stays
+	hidden. A sleeve that stops at the wrist doesn't count."""
+	from PIL import Image
+	from cut_parts import skinlike
+	pp = os.path.join(parts_dir, "%s_forearm_%s.png" % (facing, side))
+	if not os.path.exists(pp) or stand_base is None:
+		return False
+	px, bp = Image.open(pp).convert("RGBA").load(), stand_base.load()
+	wx, wy = stand["RIGHT ARM" if side == "r" else "LEFT ARM"]
+	W, H = stand_base.size
+	skin = [(x, y) for y in range(int(wy) - 4, int(wy) + 5) for x in range(int(wx) - 4, int(wx) + 5)
+		if 0 <= x < W and 0 <= y < H and math.hypot(x - wx, y - wy) <= 3.5 and bp[x, y][3] >= 128 and skinlike(bp[x, y])]
+	if not skin:
+		return False
+	return sum(1 for x, y in skin if px[x, y][3] >= 128) >= 0.5 * len(skin)
+
+
+def restore_hands(img, base, j, skip=()):
 	"""The base frame's own hands go back on top, with their outline: bare
 	skin round each wrist joint, as PixelLab drew it, so no turned sleeve
 	bends a hand or the outline pass shaves its edge."""
@@ -111,7 +130,7 @@ def restore_hands(img, base, j):
 	px, bp = out.load(), base.load()
 	W, H = base.size
 	for lab in ("RIGHT ARM", "LEFT ARM"):
-		if lab not in j:
+		if lab not in j or lab in skip:
 			continue
 		cx, cy = j[lab]
 		seeds = [(x, y) for y in range(max(0, int(cy) - 3), min(H, int(cy) + 4)) for x in range(max(0, int(cx) - 3), min(W, int(cx) + 4))
@@ -164,7 +183,7 @@ def lining(img, base, j, bones, facing, parts_dir):
 	from PIL import Image
 	from split_parts import seg_dist
 	ramps = {}
-	for part, bone in bones["bones"].items():
+	for part in list(bones["bones"]) + ["foot_r", "foot_l"]:
 		pp = os.path.join(parts_dir, "%s_%s.png" % (facing, part))
 		if part != "head" and os.path.exists(pp):
 			r = ramp(Image.open(pp).convert("RGBA"))
@@ -182,6 +201,12 @@ def lining(img, base, j, bones, facing, parts_dir):
 			if not cand:
 				continue
 			part = min(cand, key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]]))
+			if part in ("shin_r", "shin_l"):
+				ank = j["RIGHT LEG" if part == "shin_r" else "LEFT LEG"]
+				if y >= ank[1] - 1 and "foot" + part[-2:] in ramps:
+					# The drawn foot below the ankle is shoe, whatever shape the
+					# frame gave it (raised heel, pointed toe).
+					part = "foot" + part[-2:]
 			lum = (0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] - 90) / 165.0
 			r = ramps[part]
 			k = int(lum * len(r))
@@ -363,7 +388,7 @@ def main() -> None:
 			img = lining(img, base, j, bones, facing, parts_dir)
 		img = outline(despeck(img))
 		if "--base-hands" in a:
-			img = restore_hands(img, base, j)
+			img = restore_hands(img, base, j, [lab for lab, sd in (("RIGHT ARM", "r"), ("LEFT ARM", "l")) if gloved(parts_dir, facing, stand, sd, stand_base)])
 		img.save(os.path.join(out, "frame_%03d.png" % i))
 		frames.append((base, img))
 	print("dressed", len(frames), "frames")
