@@ -450,8 +450,19 @@ def main() -> None:
 					for xx in range(max(0, hb[0] - 3), min(W, hb[2] + 3)):
 						clear[xx, yy] = (0, 0, 0, 0)
 				img.alpha_composite(head_img)
-		for part in order:
-			pp = os.path.join(parts_dir, "%s_%s.png" % (facing, part))
+		# The back slot (backpack, jetpack, wings): one solid piece on the
+		# torso, behind everything when the figure faces the camera, over the
+		# body (under the head) when it faces away.
+		back = None
+		if "--back" in a:
+			bp_ = os.path.join(a[a.index("--back") + 1], facing + ".png")
+			if os.path.exists(bp_):
+				back = bp_
+		seq = list(order)
+		if back:
+			seq = (["back"] + seq) if facing in ("SE", "SW", "S", "E", "W") else [p for p in seq if p != "head"] + ["back", "head"]
+		for part in seq:
+			pp = back if part == "back" else os.path.join(parts_dir, "%s_%s.png" % (facing, part))
 			if not os.path.exists(pp):
 				continue
 			im = Image.open(pp).convert("RGBA")
@@ -502,7 +513,9 @@ def main() -> None:
 				moved.paste(big, (int(round(j["HIP_MID"][0] - hs[0])), int(round(j["HIP_MID"][1] - hs[1]))), big)
 				img.alpha_composite(moved)
 				continue
-			if part == "held":
+			if part == "back":
+				bone = bones["bones"]["torso"]
+			elif part == "held":
 				bone = bones["bones"]["forearm_r"]
 			else:
 				bone = bones["bones"][part]
