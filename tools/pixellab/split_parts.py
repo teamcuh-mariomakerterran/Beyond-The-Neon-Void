@@ -2,14 +2,15 @@
 base body's skeleton, per facing: head (hair, masks, eye pieces), torso,
 upper and lower arms, thighs, shins (with the shoes) and held items.
 
-    python3 -I tools/pixellab/split_parts.py <layer_dir> <base_detail.json> <base.zip>:<state> [--sheet out.png]
+    python3 -I tools/pixellab/split_parts.py <layer_dir> <base_detail.json> <base.zip>:<state> [--held] [--sheet out.png]
 
 Writes <layer_dir>/parts/<FACING>_<part>.png and <layer_dir>/parts/bones.json
 (the standing skeleton the parts were cut on, canvas pixels), so a part can
 later ride its bone in any animation frame. Free.
 
 Each layer pixel goes to the nearest bone; pixels outside the base body that
-form a long thin shape away from the body (a cane, a weapon) are a held item.
+form a long thin shape away from the body (a cane, a weapon) are a held item,
+only with --held (weapons are game gear, so outfits normally hold nothing).
 """
 import io
 import json
@@ -126,6 +127,44 @@ def cane_like(layer, j) -> set:
 	return held | ring
 
 
+def in_hand(held: set, j: dict, reach: float = 3.5) -> set:
+	"""Only the long thin pieces a hand actually holds (one that comes within
+	`reach` px of a wrist and stays below the neck, as a held thing hangs in
+	the standing pose): an antenna or a cable down the back is gear."""
+	out, seen = set(), set()
+	hands = [j[k] for k in ("RIGHT ARM", "LEFT ARM") if k in j]
+	for s0 in held:
+		if s0 in seen:
+			continue
+		blob, todo = [], [s0]
+		seen.add(s0)
+		while todo:
+			x, y = todo.pop()
+			blob.append((x, y))
+			for dx in (-1, 0, 1):
+				for dy in (-1, 0, 1):
+					q = (x + dx, y + dy)
+					if q in held and q not in seen:
+						seen.add(q)
+						todo.append(q)
+		top = min(y for x, y in blob)
+		if top >= j["NECK"][1] and any(math.hypot(x - hx, y - hy) <= reach for x, y in blob for hx, hy in hands):
+			out.update(blob)
+	return out
+
+
+def body_gap(base, x: int, y: int, most: int = 3) -> int:
+	"""How far (in px, square rings, up to `most`) the pixel is from the base body."""
+	bp = base.load()
+	w, h = base.size
+	for d in range(0, most):
+		for dy in range(-d, d + 1):
+			for dx in range(-d, d + 1):
+				if max(abs(dx), abs(dy)) == d and 0 <= x + dx < w and 0 <= y + dy < h and bp[x + dx, y + dy][3] >= 128:
+					return d
+	return most
+
+
 def skirt_px(base, x: int, y: int) -> bool:
 	"""Outside the base body below the hips: 2+ px clear of it, or in the gap
 	between the legs (body on both sides in the same row)."""
@@ -159,7 +198,9 @@ def main() -> None:
 		w, h = layer.size
 		j = joints(detail, d, w, h)
 		bones_out[f] = {k: [round(v[0], 2), round(v[1], 2)] for k, v in j.items()}
-		held = held_mask(layer, base) | cane_like(layer, j)
+		# Weapons are gear in the game (GearAttach), not outfit: only look for a
+		# held item (a cane baked into the art) when asked with --held.
+		held = in_hand(held_mask(layer, base) | cane_like(layer, j), j) if "--held" in a else set()
 		far = "_l" if f in ("SE", "NE", "E", "S") else "_r"
 		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held", "foot_r", "foot_l", "skirt"]}
 		seg = Image.new("RGBA", (w, h))
@@ -171,10 +212,14 @@ def main() -> None:
 					continue
 				bone_d = min(seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) for n in BONES if n != "head")
 				knee_y = min(j["RIGHT KNEE"][1], j["LEFT KNEE"][1])
-				if y <= knee_y and ((x, y) in held or (base.getpixel((x, y))[3] < 128 and bone_d > 6 and y > j["NECK"][1] + 4)):
+				if y <= knee_y and ((x, y) in held or ("--held" in a and base.getpixel((x, y))[3] < 128 and bone_d > 6 and y > j["NECK"][1] + 4)):
 					# Off the body and away from every limb, above the knees (below
 					# them it's a wider boot): a held item (cane, weapon).
 					name = "held"
+				elif y <= j["HIP_MID"][1] and body_gap(base, x, y) >= 2:
+					# Sticking 2+ px out from the body above the hips: antenna,
+					# cable, backpack edge. It rides the body, not a swinging arm.
+					name = "head" if y < j["NECK"][1] - 2 else "torso"
 				elif y < j["NECK"][1] - 2:
 					# Above the neck is all head: the hair's back edge sits nearer
 					# the shoulder bone than the head's, but must not ride the arm.
@@ -194,6 +239,24 @@ def main() -> None:
 					name = "skirt"
 				parts[name].putpixel((x, y), p)
 				seg.putpixel((x, y), COLOURS[name] + (255,))
+		# Gear off the body (antenna, cable) stays in one piece: arm pixels
+		# outside the base body that join torso gear outside it go with it.
+		tq, bq = parts["torso"].load(), base.load()
+		grew = True
+		while grew:
+			grew = False
+			for name in ("upper_arm_r", "upper_arm_l", "forearm_r", "forearm_l"):
+				q = parts[name].load()
+				for y in range(h):
+					for x in range(w):
+						if q[x, y][3] < 128 or bq[x, y][3] >= 128:
+							continue
+						if any(0 <= x + dx < w and 0 <= y + dy < h and tq[x + dx, y + dy][3] >= 128 and bq[x + dx, y + dy][3] < 128
+							for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+							tq[x, y] = q[x, y]
+							q[x, y] = (0, 0, 0, 0)
+							seg.putpixel((x, y), COLOURS["torso"] + (255,))
+							grew = True
 		# A long coat: below the hips the outfit spreads 3+ px past the base's
 		# legs on 6+ rows. Then everything from the hips down to the coat's
 		# hem is one piece (the skirt), so the coat doesn't tear between legs.
