@@ -56,8 +56,10 @@ def ease(t):
 # Clips: "pistol15" is the first test (raise, hold, two kicks; the kicks grew a
 # gun). "pistol" and "rifle" are raise + hold only (8 frames, 3 generations);
 # the kick is done in the engine (GearAttach.fire_kick).
-CLIPS = {"pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
-ACTION = {"pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
+# A character outside the pool (e.g. the modular base bodies): --id <character id> --zip <export.zip>:<state> [--desc "..."]
+SOURCE = {}
+CLIPS = {"walk": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
+ACTION = {"walk": "walking forward", "pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
 	"rifle_rest": "standing with both hands at the waist", "rifle_raise": "raise both arms forward", "kick": "right wrist jerks up and back"}
 # Clips that start from another take's frame instead of the standing pose:
 # clip -> (kit folder of the start take, its frame, the clip whose pose that frame is).
@@ -71,6 +73,8 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 		return rifle_poses(base, size, facing)
 	if clip == "rifle_rest":
 		return rest_poses(base, size, facing)
+	if clip == "walk":
+		return walk_poses(base, size, facing)
 	if clip == "rifle_raise":
 		rest = rest_poses(base, size, facing)[0]
 		aim = rifle_poses(base, size, facing)[-1]
@@ -156,6 +160,42 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	return out
 
 
+def walk_poses(base: dict, size: int, facing: str, n: int = 8) -> list:
+	"""An 8-frame walk built on the standing skeleton: feet step along the
+	facing's ground direction and never drop below the standing feet, the
+	lifted foot rises 2 px, knees bend forward, arms swing against the legs,
+	the body bobs 1 px. The head rides the neck unchanged, so the facing
+	can't drift."""
+	pad = (CANVAS - size) / 2.0
+	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+	ax, ay = AIM[facing]
+	ln = math.hypot(ax, ay)
+	ax, ay = ax / ln, ay / ln
+	stride, lift, swing = 4.5, 2.5, 2.6
+	out = []
+	for i in range(n):
+		ph = 2 * math.pi * i / n
+		f = dict(b)
+		bob = -0.8 * abs(math.sin(ph))
+		for k in ("NECK", "NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR", "LEFT SHOULDER", "RIGHT SHOULDER", "LEFT HIP", "RIGHT HIP"):
+			f[k] = (b[k][0], b[k][1] + bob)
+		for side, sgn in (("RIGHT", 1.0), ("LEFT", -1.0)):
+			c = math.cos(ph) * sgn
+			up = max(0.0, math.sin(ph) * sgn) * lift
+			ank = b[side + " LEG"]
+			f[side + " LEG"] = (ank[0] + ax * stride * c, ank[1] + ay * stride * c - up)
+			hip, a2 = f[side + " HIP"], f[side + " LEG"]
+			mid = ((hip[0] + a2[0]) / 2, (hip[1] + a2[1]) / 2)
+			bend = 0.8 + up * 0.6
+			f[side + " KNEE"] = (mid[0] + ax * bend, mid[1] + ay * bend - up * 0.3)
+			# Arms swing against the leg on the same side.
+			wr, el = b[side + " ARM"], b[side + " ELBOW"]
+			f[side + " ARM"] = (wr[0] - ax * swing * c, wr[1] - ay * swing * c + bob)
+			f[side + " ELBOW"] = (el[0] - ax * swing * 0.5 * c, el[1] - ay * swing * 0.5 * c + bob)
+		out.append(f)
+	return out
+
+
 def rest_poses(base: dict, size: int, facing: str) -> list:
 	"""Long gun at rest (Brian's reference): carried level at the waist in both
 	hands, barrel forward; three frames of breathing."""
@@ -195,6 +235,14 @@ def start(n: int, facing: str, clip: str, base: dict, w: int, png: bytes):
 
 
 def load(n: int, facing: str):
+	if SOURCE:
+		d = pilot.call("GET", "/characters/%s" % SOURCE["id"])
+		kp = d["skeletons"]["2d_references"][DIRS[facing]]["keypoints"]
+		w, h = int(d["size"]["width"]), int(d["size"]["height"])
+		base = {k: (v["x"] * (w - 1), v["y"] * (h - 1)) for k, v in kp.items()}
+		zp, state = SOURCE["zip"].rsplit(":", 1)
+		png = zipfile.ZipFile(zp).read("%s/rotations/%s.png" % (state, DIRS[facing]))
+		return {"n": 0, "character_id": SOURCE["id"]}, d, base, w, png
 	c = char(n)
 	d = pilot.call("GET", "/characters/%s" % c["character_id"])
 	kp = d["skeletons"]["2d_references"][DIRS[facing]]["keypoints"]
@@ -249,7 +297,8 @@ def go(n: int, facing: str, out_dir: str, clip: str = "pistol15") -> None:
 	frames = poses(base, w, facing, clip)
 	first_png, first_pose = start(n, facing, clip, base, w, png)
 	first = to_kp(first_pose)
-	body = {"description": "%s, empty hands, holding nothing" % d.get("prompt", "character").strip(),
+	desc = SOURCE.get("desc") or "%s, empty hands, holding nothing" % d.get("prompt", "character").strip()
+	body = {"description": desc,
 		"action": ACTION[clip], "direction": DIRS[facing], "view": d.get("view", "high top-down"),
 		"first_frame": pilot.b64(first_png), "first_frame_keypoints": first,
 		"keypoints": [to_kp(f) for f in frames], "template_id": "mannequin", "no_background": True}
@@ -265,7 +314,8 @@ def go(n: int, facing: str, out_dir: str, clip: str = "pistol15") -> None:
 			f.write(base64.b64decode(data))
 	hands = [[round(f["RIGHT ARM"][0], 1), round(f["RIGHT ARM"][1], 1)] for f in frames]
 	hands_l = [[round(f["LEFT ARM"][0], 1), round(f["LEFT ARM"][1], 1)] for f in frames]
-	json.dump({"character": n, "facing": facing, "clip": clip, "canvas": CANVAS, "hand_r": hands, "hand_l": hands_l,
+	json.dump({"character": n or SOURCE.get("id"), "facing": facing, "clip": clip, "canvas": CANVAS, "hand_r": hands, "hand_l": hands_l,
+		"joints": [{k: [round(v[0], 2), round(v[1], 2)] for k, v in f.items()} for f in frames],
 		"raise": [0, 4], "hold": [5, 7], "fire": [8, 14] if clip == "pistol15" else None, "job": job}, open(os.path.join(out_dir, "aim.json"), "w"), indent="\t")
 	print("saved", len(imgs), "frames to", out_dir)
 
@@ -345,6 +395,11 @@ if __name__ == "__main__":
 		i = sys.argv.index("--clip")
 		clip = sys.argv[i + 1]
 		del sys.argv[i:i + 2]
+	for opt in ("--id", "--zip", "--desc"):
+		if opt in sys.argv:
+			i = sys.argv.index(opt)
+			SOURCE[opt[2:]] = sys.argv[i + 1]
+			del sys.argv[i:i + 2]
 	cmd, n, facing = sys.argv[1], int(sys.argv[2]), sys.argv[3]
 	if cmd == "preview":
 		preview(n, facing, sys.argv[4], clip)
