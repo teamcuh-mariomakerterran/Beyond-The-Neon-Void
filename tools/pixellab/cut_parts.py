@@ -1,7 +1,7 @@
 """Cut a character's gear out against a base body (same character, stripped
 state): dressed minus base, per rotation, without the body's own skin.
 
-    python3 -I tools/pixellab/cut_parts.py <dressed.zip>:<state> <base.zip>:<state> <out_dir> [--sheet out.png]
+    python3 -I tools/pixellab/cut_parts.py <dressed.zip>:<state> <base.zip>:<state> <out_dir> [--detail <base_detail.json>] [--sheet out.png]
 
 Writes <out_dir>/<facing>.png (the whole outfit layer per rotation). Free.
 pilot.diff_layer keeps every pixel that differs from the base, which also
@@ -10,6 +10,7 @@ a pixel off the base's; those would show as seams on a recoloured body. So
 pixels whose colour is within reach of the base's skin colours are dropped.
 """
 import io
+import json
 import os
 import sys
 import zipfile
@@ -18,6 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pilot  # noqa: E402
 
 DIRS = {"south": "S", "south-east": "SE", "east": "E", "north-east": "NE", "north": "N", "north-west": "NW", "west": "W", "south-west": "SW"}
+FACING_NAME = {v: k for k, v in DIRS.items()}
 
 
 def load(spec: str) -> dict:
@@ -99,16 +101,55 @@ def keep_outline(layer, dressed):
 	return layer
 
 
+def keep_eyes(layer, dressed, base, eyes: list):
+	"""The dressed character's eyes come over whole: outline, whites, glint
+	and iris. A plain diff drops the pixels that match the base's own eye
+	and leaves the base's eye showing around the new iris (a red blob).
+	Inside a small box round each eye every dressed pixel is kept; where the
+	dressed face is skin but the base has eye there, the base's skin is laid
+	over it so the base eye doesn't peek out. Eye whites only stay where
+	the base has a white too."""
+	px, dp, bp = layer.load(), dressed.load(), base.load()
+	w, h = layer.size
+	for ex, ey in eyes:
+		x0, x1, y0, y1 = int(round(ex)) - 3, int(round(ex)) + 3, int(round(ey)) - 2, int(round(ey)) + 2
+		box = [(x, y) for y in range(max(0, y0), min(h, y1 + 1)) for x in range(max(0, x0), min(w, x1 + 1))]
+		skins = [bp[x, y] for x, y in box if bp[x, y][3] >= 128 and skinlike(bp[x, y])]
+		if not skins:
+			continue
+		skin = max(set(skins), key=skins.count)
+		for x, y in box:
+			d = dp[x, y]
+			if d[3] < 128:
+				continue
+			b = bp[x, y]
+			white = d[0] >= 220 and d[1] >= 220 and d[2] >= 220
+			if white and not (b[3] >= 128 and min(b[:3]) >= 200):
+				# Eye whites follow the base (one white pixel per eye, not two).
+				px[x, y] = b if b[3] >= 128 and skinlike(b) else skin
+			elif not skinlike(d):
+				px[x, y] = d
+			elif not skinlike(bp[x, y]):
+				px[x, y] = skin
+	return layer
+
+
 def main() -> None:
 	from PIL import Image, ImageDraw
 	a = sys.argv[1:]
 	dressed, base, out = load(a[0]), load(a[1]), a[2]
 	os.makedirs(out, exist_ok=True)
 	pal = skin_palette(base)
+	detail = json.load(open(a[a.index("--detail") + 1])) if "--detail" in a else None
 	layers = {}
 	for f in dressed:
 		lay = strip_skin(pilot.diff_layer(base[f], dressed[f]), pal, dressed=dressed[f])
 		lay = keep_outline(lay, dressed[f])
+		if detail:
+			kp = detail["skeletons"]["2d_references"][FACING_NAME[f]]["keypoints"]
+			w, h = lay.size
+			eyes = [(kp[k]["x"] * (w - 1), kp[k]["y"] * (h - 1)) for k in ("LEFT EYE", "RIGHT EYE") if k in kp]
+			lay = keep_eyes(lay, dressed[f], base[f], eyes)
 		lay.save(os.path.join(out, f + ".png"))
 		# The dressed silhouette: head parts clip the base head to it, so no
 		# base ear or scalp shows where the dressed character had hair.

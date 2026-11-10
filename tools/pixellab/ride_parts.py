@@ -147,6 +147,20 @@ def lining(img, base, j, bones, facing, parts_dir):
 	return out
 
 
+def foot_bottom(img, x: float, y0: float, half: int = 2):
+	"""Lowest drawn pixel of a foot: the bottom of the opaque pixels in a
+	narrow column window round the ankle, below the ankle. None if empty."""
+	px = img.load()
+	W, H = img.size
+	best = None
+	for xx in range(max(0, int(round(x)) - half), min(W, int(round(x)) + half + 1)):
+		for yy in range(H - 1, max(0, int(y0)) - 1, -1):
+			if px[xx, yy][3] >= 128:
+				best = yy if best is None else max(best, yy)
+				break
+	return best
+
+
 def main() -> None:
 	from PIL import Image
 	a = sys.argv[1:]
@@ -205,6 +219,10 @@ def main() -> None:
 				continue
 			im = Image.open(pp).convert("RGBA")
 			pad = ((W - im.width) / 2.0, (H - im.height) / 2.0)
+			if "--paint-legs" in a and part.startswith(("thigh_", "shin_")):
+				# Trousers: the base's own drawn legs take the trouser colours in
+				# the lining pass, so they follow the frame exactly.
+				continue
 			if part.startswith("foot_"):
 				# Feet slide with the ankle and don't turn: shoes stay flat.
 				ank = "RIGHT LEG" if part.endswith("r") else "LEFT LEG"
@@ -212,6 +230,15 @@ def main() -> None:
 				big.alpha_composite(im, (int(pad[0]), int(pad[1])))
 				dx = int(round(j[ank][0] - (stand[ank][0] + pad[0])))
 				dy = int(round(j[ank][1] - (stand[ank][1] + pad[1])))
+				# The drawn frame's feet can sit a few pixels off the skeleton's
+				# ankles: put the sole on the base's drawn sole instead.
+				if stand_base is not None:
+					sb0 = Image.new("RGBA", (W, H))
+					sb0.alpha_composite(stand_base, (int(pad[0]), int(pad[1])))
+					yb_s = foot_bottom(sb0, stand[ank][0] + pad[0], stand[ank][1] + pad[1])
+					yb_f = foot_bottom(base, j[ank][0], j[ank][1])
+					if yb_s is not None and yb_f is not None and abs((yb_f - yb_s) - dy) <= 5:
+						dy = yb_f - yb_s
 				moved = Image.new("RGBA", (W, H))
 				moved.paste(big, (dx, dy), big)
 				img.alpha_composite(moved)
