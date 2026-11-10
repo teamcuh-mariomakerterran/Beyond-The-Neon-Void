@@ -234,7 +234,8 @@ def foot_bottom(img, x: float, y0: float, half: int = 2):
 def owners(base, j, bones, far: str):
 	"""Which limb the base frame shows at each opaque pixel: the nearest bone
 	in this frame, with ties going to the torso over the far arm (it hangs
-	behind the body), and everything above the neck to the head."""
+	behind the body) and to the near leg over the far leg, and everything
+	above the neck to the head."""
 	from split_parts import seg_dist
 	bp = base.load()
 	W, H = base.size
@@ -248,7 +249,7 @@ def owners(base, j, bones, far: str):
 				own[(x, y)] = "head"
 				continue
 			own[(x, y)] = min(names, key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]])
-				+ (2.0 if n in ("upper_arm" + far, "forearm" + far) else 0))
+				+ (2.0 if n in ("upper_arm" + far, "forearm" + far, "thigh" + far, "shin" + far) else 0))
 	return own
 
 
@@ -357,6 +358,11 @@ def main() -> None:
 						dy = yb_f - yb_s
 				moved = Image.new("RGBA", (W, H))
 				moved.paste(big, (dx, dy), big)
+				if "--clip-far-arm" in a and part == "foot" + far:
+					# The far shoe goes behind the near leg, as the base drew it.
+					if own is None:
+						own = owners(base, j, bones, far)
+					moved = clip_to(moved, own, {"thigh" + far, "shin" + far})
 				img.alpha_composite(moved)
 				continue
 			if part == "held":
