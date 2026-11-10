@@ -174,7 +174,18 @@ def ramp(im) -> list:
 	if len(plain) >= 2:
 		cols = plain
 	top = sorted(cols, key=lambda c: -cols[c])[:4]
-	return sorted(top, key=lambda c: 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2])
+	out = Ramp(sorted(top, key=lambda c: 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]))
+	out.mode = top[0] if top else None
+	return out
+
+
+class Ramp(list):
+	"""A part's colours dark to light, plus its most common colour (`mode`)."""
+	mode = None
+
+
+def lum(c) -> float:
+	return 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]
 
 
 def lining(img, base, j, bones, facing, parts_dir):
@@ -186,33 +197,84 @@ def lining(img, base, j, bones, facing, parts_dir):
 	for part in list(bones["bones"]) + ["foot_r", "foot_l"]:
 		pp = os.path.join(parts_dir, "%s_%s.png" % (facing, part))
 		if part != "head" and os.path.exists(pp):
-			r = ramp(Image.open(pp).convert("RGBA"))
+			im = Image.open(pp).convert("RGBA")
+			tp = os.path.join(parts_dir, "%s_torso.png" % facing)
+			if part.startswith("thigh_") and os.path.exists(tp):
+				# Trouser colours only from below the jacket's hem: the jacket's
+				# skirt over the upper thigh isn't trousers.
+				t = Image.open(tp).convert("RGBA").load()
+				lo = im.copy()
+				q = lo.load()
+				for cx in range(lo.width):
+					ys = [cy for cy in range(lo.height) if t[cx, cy][3] >= 128]
+					for cy in range(0, (max(ys) + 1) if ys else 0):
+						q[cx, cy] = (0, 0, 0, 0)
+				if lo.getbbox():
+					im = lo
+			r = ramp(im)
 			if r:
 				ramps[part] = r
 	out = img.copy()
 	px, bp = out.load(), base.load()
 	W, H = out.size
+	# The jacket's hem: the standing torso part's lowest pixel per column,
+	# moved with the hips. Below it is trousers, never jacket, so the jacket
+	# doesn't run down to the knees on a walking frame.
+	hem = {}
+	tp = os.path.join(parts_dir, "%s_torso.png" % facing)
+	if os.path.exists(tp):
+		t = Image.open(tp).convert("RGBA")
+		tx = t.load()
+		st = bones["facings"][facing]
+		pad = ((W - t.width) / 2.0, (H - t.height) / 2.0)
+		hx = (st["RIGHT HIP"][0] + st["LEFT HIP"][0]) / 2 + pad[0]
+		hy = (st["RIGHT HIP"][1] + st["LEFT HIP"][1]) / 2 + pad[1]
+		dx, dy = j["HIP_MID"][0] - hx, j["HIP_MID"][1] - hy
+		for cx in range(t.width):
+			ys = [cy for cy in range(t.height) if tx[cx, cy][3] >= 128]
+			if ys:
+				hem[int(round(cx + pad[0] + dx))] = max(ys) + pad[1] + dy
+	hem_max = max(hem.values()) if hem else H
+	shades = {}
+	for y in range(H):
+		for x in range(W):
+			if bodysuit(bp[x, y]):
+				shades[bp[x, y][:3]] = shades.get(bp[x, y][:3], 0) + 1
+	base_mode_lum = lum(max(shades, key=shades.get)) if shades else 170.0
 	for y in range(H):
 		for x in range(W):
 			p = px[x, y]
 			if not bodysuit(p) or p != bp[x, y]:
 				continue
 			cand = [n for n in bones["bones"] if n in ramps]
+			below = y > hem.get(x, hem_max) and y > j["HIP_MID"][1] - 2
+			if below:
+				cand = [n for n in cand if n != "torso"] or cand
 			if not cand:
 				continue
-			part = min(cand, key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]]))
+			dist = {n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]]) for n in cand}
+			part = min(cand, key=lambda n: dist[n])
+			legs = [n for n in cand if n.startswith(("thigh_", "shin_"))]
+			if below and legs and not part.startswith(("thigh_", "shin_")):
+				# Below the hem a hanging arm's bone is often the nearest, but the
+				# pixel is trousers unless it's clearly on the arm.
+				leg = min(legs, key=lambda n: dist[n])
+				if dist[leg] - dist[part] < 2.0:
+					part = leg
 			if part in ("shin_r", "shin_l"):
 				ank = j["RIGHT LEG" if part == "shin_r" else "LEFT LEG"]
 				if y >= ank[1] - 1 and "foot" + part[-2:] in ramps:
 					# The drawn foot below the ankle is shoe, whatever shape the
 					# frame gave it (raised heel, pointed toe).
 					part = "foot" + part[-2:]
-			lum = (0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] - 90) / 165.0
+			# The base's main bodysuit shade becomes the cloth's main colour;
+			# lighter and darker base shades step to the cloth's nearest
+			# lighter or darker colours (at half the contrast).
 			r = ramps[part]
-			k = int(lum * len(r))
+			want = lum(r.mode) + (lum(p) - base_mode_lum) * 0.5
 			if part.endswith("_l" if facing in ("SE", "NE", "E", "S") else "_r") and part.startswith(("upper_arm", "forearm")):
-				k -= 1  # the far arm is in the body's shadow
-			c = r[max(0, min(len(r) - 1, k))]
+				want -= 12  # the far arm is in the body's shadow
+			c = min(r, key=lambda q: abs(lum(q) - want))
 			px[x, y] = (c[0], c[1], c[2], 255)
 	return out
 
@@ -358,11 +420,14 @@ def main() -> None:
 						dy = yb_f - yb_s
 				moved = Image.new("RGBA", (W, H))
 				moved.paste(big, (dx, dy), big)
-				if "--clip-far-arm" in a and part == "foot" + far:
-					# The far shoe goes behind the near leg, as the base drew it.
+				if "--clip-far-arm" in a:
+					# Each shoe takes the shape of the foot the base drew in this
+					# frame (and the far one goes behind the near leg): its colours
+					# and sole stay, the drawing's outline shows round it.
 					if own is None:
 						own = owners(base, j, bones, far)
-					moved = clip_to(moved, own, {"thigh" + far, "shin" + far})
+					sd = part[-2:]
+					moved = clip_to(moved, own, {"thigh" + sd, "shin" + sd}, margin=0)
 				img.alpha_composite(moved)
 				continue
 			if part == "held":
