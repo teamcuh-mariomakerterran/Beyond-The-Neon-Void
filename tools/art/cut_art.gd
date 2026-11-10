@@ -1,8 +1,10 @@
 extends SceneTree
 ## Cuts generated art into game sprites (see docs/design/ART_CUTTER.md).
 ##
-##   godot --headless -s tools/art/cut_art.gd -- <in> <out> [--screens]
+##   godot --headless -s tools/art/cut_art.gd -- <in> <out> [--screens] [--halo] [--halo=3]
 ##
+## --halo erases a white / light outline round each item (2 px deep, or
+## --halo=N), starting from the empty space only, so white inside the art stays.
 ## <in> is an image or a folder. Every image is keyed (magenta / flat
 ## background → transparent, painted shadows → soft shadow, pink fringe
 ## cleaned) and split into one PNG per item. Sub-folders keep their names
@@ -14,6 +16,8 @@ extends SceneTree
 
 const EXT := ["png", "webp", "jpg", "jpeg"]
 
+var _halo := 0
+
 
 func _init() -> void:
 	var args := OS.get_cmdline_user_args()
@@ -23,6 +27,11 @@ func _init() -> void:
 		print("usage: godot --headless -s tools/art/cut_art.gd -- <in> <out> [--screens]")
 		quit(1)
 		return
+	for f: String in flags:
+		if f == "--halo":
+			_halo = 2
+		elif f.begins_with("--halo="):
+			_halo = maxi(int(f.get_slice("=", 1)), 1)
 	var n := _run(_abs(paths[0]), _abs(paths[1]), "--screens" in flags)
 	print("cut %d sprites" % n)
 	quit(0)
@@ -56,6 +65,6 @@ func _one(file: String, out: String, screens: bool) -> int:
 	if FileAccess.file_exists(nf):
 		names = FileAccess.get_file_as_string(nf).strip_edges().split("\n")
 	var t := Time.get_ticks_msec()
-	var made := ArtCutter.cut_file(file, out, prefix, names, screens)
+	var made := ArtCutter.cut_file(file, out, prefix, names, screens, 2, _halo)
 	print("%s → %d (%d ms)" % [file.get_file(), made.size(), Time.get_ticks_msec() - t])
 	return made.size()

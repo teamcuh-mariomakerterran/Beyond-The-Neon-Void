@@ -54,6 +54,7 @@ func run(p_tree: SceneTree) -> int:
 	test_ui_theme()
 	await test_unit_gallery()
 	test_pixellab_padding()
+	test_art_halo()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2676,3 +2677,24 @@ func test_pixellab_padding() -> void:
 		check((anchors["walk_NE"] as Vector2).is_equal_approx((anchors["idle_NE"] as Vector2) + pad), "a 96 px walk stands on the same feet as its 60 px pose")
 	var names := Array((us["frames"] as SpriteFrames).get_animation_names()).map(func(n: StringName) -> String: return str(n))
 	check(not names.any(func(n: String) -> bool: return PixelLab.base_anim(n.left(n.rfind("_"))) != n.left(n.rfind("_"))), "no animation is listed twice under a take id")
+
+
+## The white outline eraser only reaches in from the empty space.
+func test_art_halo() -> void:
+	var img := Image.create(20, 20, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	img.fill_rect(Rect2i(4, 4, 12, 12), Color(0.96, 0.96, 0.96))  # 1 px white outline
+	img.fill_rect(Rect2i(5, 5, 10, 10), Color(0.2, 0.15, 0.1))     # the art
+	img.set_pixel(10, 10, Color.WHITE)                              # a white highlight inside it
+	var n := ArtCutter.remove_halo(img, 2)
+	check(n == 44 and img.get_pixel(4, 4).a == 0.0 and img.get_pixel(10, 4).a == 0.0, "the outline round the art is erased")
+	check(img.get_pixel(10, 10) == Color.WHITE and img.get_pixel(5, 5).a == 1.0, "white inside the art and the art itself stay")
+	# A light rim on the art's own edge takes the colour just inside it; nothing is erased.
+	var tile := Image.create(20, 20, false, Image.FORMAT_RGBA8)
+	tile.fill(Color(0, 0, 0, 0))
+	tile.fill_rect(Rect2i(4, 4, 12, 12), Color(0.75, 0.75, 0.78))  # light rim
+	tile.fill_rect(Rect2i(5, 5, 10, 10), Color(0.3, 0.3, 0.32))    # the tile
+	tile.set_pixel(10, 10, Color.WHITE)
+	var fixed := ArtCutter.fix_rim(tile)
+	check(fixed > 0 and absf(tile.get_pixel(10, 4).r - 0.3) < 0.01 and tile.get_pixel(10, 4).a == 1.0, "a light rim is recoloured, not erased (tiles keep their size)")
+	check(tile.get_pixel(10, 10) == Color.WHITE, "highlights inside a tile stay")

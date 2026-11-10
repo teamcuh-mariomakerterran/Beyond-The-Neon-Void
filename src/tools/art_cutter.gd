@@ -8,6 +8,9 @@ extends RefCounted
 ##   * pieces()   finds each separate item on a sheet (rects, reading order)
 ##   * screen_corners()  finds the dark glass on a blank display, as the four
 ##                corners Signage wants (u, v across the sprite's visible box)
+##   * remove_halo()  erases a white / light outline left round a sprite, but
+##                only pixels reached from the outside (a magic wand that
+##                starts in the empty space), so white inside the art stays
 ##   * cut_file() all of it for one file, writing PNGs (+ .screen.json)
 ## Run over a folder with tools/art/cut_art.gd (see docs/design/ART_CUTTER.md).
 
@@ -312,6 +315,105 @@ static func _glass(c: Color, ref: Color) -> bool:
 	return c.a > 0.9 and _dist(c, ref) < GLASS_TOL
 
 
+## A pixel that looks like halo: light and nearly grey (white, pale grey).
+static func _halo_like(c: Color, min_light: float, max_sat: float) -> bool:
+	return minf(c.r, minf(c.g, c.b)) >= min_light and c.s <= max_sat
+
+
+## Erases a light outline round the art: walks in from every transparent
+## pixel through halo-coloured pixels, at most `depth` pixels deep, and makes
+## them transparent. White inside the art is never reached. Returns how many
+## pixels it cleared.
+static func remove_halo(img: Image, depth: int = 2, min_light: float = 0.78, max_sat: float = 0.22) -> int:
+	if img.is_compressed():
+		img.decompress()
+	img.convert(Image.FORMAT_RGBA8)
+	var w := img.get_width()
+	var h := img.get_height()
+	var dist := PackedInt32Array()
+	dist.resize(w * h)
+	dist.fill(-1)
+	var queue := PackedInt32Array()
+	for y in h:
+		for x in w:
+			if img.get_pixel(x, y).a < 0.1:
+				dist[y * w + x] = 0
+				queue.append(y * w + x)
+	var head := 0
+	var cleared := 0
+	while head < queue.size():
+		var i := queue[head]
+		head += 1
+		var d := dist[i]
+		if d >= depth:
+			continue
+		var x0 := i % w
+		var y0 := i / w
+		for o: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var x := x0 + o.x
+			var y := y0 + o.y
+			if x < 0 or y < 0 or x >= w or y >= h:
+				continue
+			var j := y * w + x
+			if dist[j] != -1:
+				continue
+			var c := img.get_pixel(x, y)
+			if not _halo_like(c, min_light, max_sat):
+				dist[j] = 999  # art: stop here
+				continue
+			dist[j] = d + 1
+			img.set_pixel(x, y, Color(c, 0.0))
+			cleared += 1
+			queue.append(j)
+	return cleared
+
+
+## Fixes a light rim along the outer edge (the line that shows where walls and
+## tiles meet): an edge pixel (touching empty space) that is lighter than the
+## pixel just inside it, by more than `min_step` brightness, takes that inner
+## pixel's colour. Nothing is erased, so tiles keep their size and seams don't
+## open; dark outlines and anything inside the art stay. Returns pixels fixed.
+static func fix_rim(img: Image, min_step: float = 0.06) -> int:
+	if img.is_compressed():
+		img.decompress()
+	img.convert(Image.FORMAT_RGBA8)
+	var w := img.get_width()
+	var h := img.get_height()
+	var src := img.duplicate() as Image
+	var dirs: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+	var fixed := 0
+	for y in h:
+		for x in w:
+			var c := src.get_pixel(x, y)
+			if c.a < 0.5:
+				continue
+			var edge := false
+			for o in dirs:
+				var p := Vector2i(x, y) + o
+				if p.x < 0 or p.y < 0 or p.x >= w or p.y >= h or src.get_pixelv(p).a < 0.5:
+					edge = true
+					break
+			if not edge:
+				continue
+			# The way in: opposite an empty side, two pixels deep if that's solid too.
+			var best := Color(0, 0, 0, 0)
+			for o2 in dirs:
+				var outside := Vector2i(x, y) + o2
+				if outside.x >= 0 and outside.y >= 0 and outside.x < w and outside.y < h and src.get_pixelv(outside).a >= 0.5:
+					continue
+				for k: int in [2, 1]:
+					var ins: Vector2i = Vector2i(x, y) - o2 * k
+					if ins.x >= 0 and ins.y >= 0 and ins.x < w and ins.y < h and src.get_pixelv(ins).a >= 0.5:
+						best = src.get_pixelv(ins)
+						break
+				if best.a > 0.0:
+					break
+			if best.a > 0.0 and c.get_luminance() - best.get_luminance() > min_step:
+				img.set_pixel(x, y, Color(best, c.a))
+				fixed += 1
+	return fixed
+
+
 static func _dist(a: Color, b: Color) -> float:
 	return Vector3(a.r - b.r, a.g - b.g, a.b - b.b).length()
 
@@ -320,12 +422,15 @@ static func _dist(a: Color, b: Color) -> float:
 ## <prefix>_01.png …; a single item gives <prefix>.png. `names` (reading
 ## order) replaces the numbers. `screens` also writes <name>.screen.json.
 ## Returns the written paths.
-static func cut_file(path: String, out_dir: String, prefix: String, names: PackedStringArray = [], screens: bool = false, pad: int = 2) -> Array[String]:
+static func cut_file(path: String, out_dir: String, prefix: String, names: PackedStringArray = [], screens: bool = false, pad: int = 2, halo: int = 0) -> Array[String]:
 	var src := Image.load_from_file(path)
 	var out: Array[String] = []
 	if src == null:
 		return out
 	var img := key(src)
+	if halo > 0:
+		remove_halo(img, halo)
+		fix_rim(img)
 	var found := find_pieces(img)
 	var map: PackedInt32Array = found["map"]
 	var rects: Array[Rect2i] = []
