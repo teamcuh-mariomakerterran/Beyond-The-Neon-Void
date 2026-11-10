@@ -153,6 +153,34 @@ def in_hand(held: set, j: dict, reach: float = 3.5) -> set:
 	return out
 
 
+def back_gear(layer, base, j) -> set:
+	"""Outfit pixels 2+ px off the body above the hips, in pieces that reach
+	above the shoulders: an antenna or cable on the back. A strip beside an
+	arm at arm height is that arm's armour, not gear."""
+	lp = layer.load()
+	w, h = layer.size
+	top = min(j["RIGHT SHOULDER"][1], j["LEFT SHOULDER"][1])
+	out = set((x, y) for y in range(h) for x in range(w) if y <= j["HIP_MID"][1] and lp[x, y][3] >= 128 and body_gap(base, x, y) >= 2)
+	keep, seen = set(), set()
+	for s0 in out:
+		if s0 in seen:
+			continue
+		blob, todo = [], [s0]
+		seen.add(s0)
+		while todo:
+			x, y = todo.pop()
+			blob.append((x, y))
+			for dx in (-1, 0, 1):
+				for dy in (-1, 0, 1):
+					q = (x + dx, y + dy)
+					if q in out and q not in seen:
+						seen.add(q)
+						todo.append(q)
+		if min(y for x, y in blob) < top:
+			keep.update(blob)
+	return keep
+
+
 def body_gap(base, x: int, y: int, most: int = 3) -> int:
 	"""How far (in px, square rings, up to `most`) the pixel is from the base body."""
 	bp = base.load()
@@ -202,6 +230,7 @@ def main() -> None:
 		# held item (a cane baked into the art) when asked with --held.
 		held = in_hand(held_mask(layer, base) | cane_like(layer, j), j) if "--held" in a else set()
 		far = "_l" if f in ("SE", "NE", "E", "S") else "_r"
+		gear = back_gear(layer, base, j)
 		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held", "foot_r", "foot_l", "skirt"]}
 		seg = Image.new("RGBA", (w, h))
 		px = layer.load()
@@ -216,9 +245,9 @@ def main() -> None:
 					# Off the body and away from every limb, above the knees (below
 					# them it's a wider boot): a held item (cane, weapon).
 					name = "held"
-				elif y <= j["HIP_MID"][1] and body_gap(base, x, y) >= 2:
-					# Sticking 2+ px out from the body above the hips: antenna,
-					# cable, backpack edge. It rides the body, not a swinging arm.
+				elif (x, y) in gear:
+					# Off-body gear that reaches up past the shoulders (antenna,
+					# cable, pack top) rides the body, not a swinging arm.
 					name = "head" if y < j["NECK"][1] - 2 else "torso"
 				elif y < j["NECK"][1] - 2:
 					# Above the neck is all head: the hair's back edge sits nearer
