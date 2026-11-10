@@ -127,6 +127,10 @@ def keep_eyes(layer, dressed, base, eyes: list):
 			if white and not (b[3] >= 128 and min(b[:3]) >= 200):
 				# Eye whites follow the base (one white pixel per eye, not two).
 				px[x, y] = b if b[3] >= 128 and skinlike(b) else skin
+			elif y >= int(round(ey)) and b[3] >= 128 and sum(abs(b[i] - skin[i]) for i in range(3)) < 50:
+				# Below the eye's middle the shape follows the base: where the
+				# base face is plain skin, no extra iris or lid pixels.
+				px[x, y] = b
 			elif not skinlike(d):
 				px[x, y] = d
 			elif not skinlike(bp[x, y]):

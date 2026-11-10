@@ -102,6 +102,43 @@ def outline(img, col=(4, 2, 1)):
 	return out
 
 
+def restore_hands(img, base, j):
+	"""The base frame's own hands go back on top, with their outline: bare
+	skin round each wrist joint, as PixelLab drew it, so no turned sleeve
+	bends a hand or the outline pass shaves its edge."""
+	from cut_parts import skinlike
+	out = img.copy()
+	px, bp = out.load(), base.load()
+	W, H = base.size
+	for lab in ("RIGHT ARM", "LEFT ARM"):
+		if lab not in j:
+			continue
+		cx, cy = j[lab]
+		seeds = [(x, y) for y in range(max(0, int(cy) - 3), min(H, int(cy) + 4)) for x in range(max(0, int(cx) - 3), min(W, int(cx) + 4))
+			if bp[x, y][3] >= 128 and skinlike(bp[x, y]) and math.hypot(x - cx, y - cy) <= 3.5]
+		hand, todo = set(seeds), list(seeds)
+		while todo:
+			x, y = todo.pop()
+			for q in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+				if q not in hand and 0 <= q[0] < W and 0 <= q[1] < H and math.hypot(q[0] - cx, q[1] - cy) <= 5.5:
+					b = bp[q[0], q[1]]
+					if b[3] >= 128 and (skinlike(b) or 0.3 * b[0] + 0.59 * b[1] + 0.11 * b[2] >= 110 and b[0] > b[2] + 15):
+						hand.add(q)
+						todo.append(q)
+		ring = set()
+		for x, y in hand:
+			for dx in (-1, 0, 1):
+				for dy in (-1, 0, 1):
+					q = (x + dx, y + dy)
+					if q not in hand and 0 <= q[0] < W and 0 <= q[1] < H:
+						b = bp[q[0], q[1]]
+						if b[3] >= 128 and 0.3 * b[0] + 0.59 * b[1] + 0.11 * b[2] < 60:
+							ring.add(q)
+		for x, y in hand | ring:
+			px[x, y] = bp[x, y]
+	return out
+
+
 def bodysuit(p) -> bool:
 	return p[3] >= 128 and abs(p[0] - p[1]) < 14 and abs(p[1] - p[2]) < 14 and p[0] > 90
 
@@ -112,6 +149,11 @@ def ramp(im) -> list:
 	for p in (im.get_flattened_data() if hasattr(im, "get_flattened_data") else im.getdata()):
 		if p[3] >= 128 and 0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] >= 30:
 			cols[p[:3]] = cols.get(p[:3], 0) + 1
+	# The cloth's own colours, not its accents (a red trim would paint whole
+	# patches red): leave out strong colours when plainer ones exist.
+	plain = {c: n for c, n in cols.items() if max(c) - min(c) <= 60}
+	if len(plain) >= 2:
+		cols = plain
 	top = sorted(cols, key=lambda c: -cols[c])[:4]
 	return sorted(top, key=lambda c: 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2])
 
@@ -142,7 +184,10 @@ def lining(img, base, j, bones, facing, parts_dir):
 			part = min(cand, key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]]))
 			lum = (0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] - 90) / 165.0
 			r = ramps[part]
-			c = r[max(0, min(len(r) - 1, int(lum * len(r))))]
+			k = int(lum * len(r))
+			if part.endswith("_l" if facing in ("SE", "NE", "E", "S") else "_r") and part.startswith(("upper_arm", "forearm")):
+				k -= 1  # the far arm is in the body's shadow
+			c = r[max(0, min(len(r) - 1, k))]
 			px[x, y] = (c[0], c[1], c[2], 255)
 	return out
 
@@ -219,6 +264,11 @@ def main() -> None:
 				continue
 			im = Image.open(pp).convert("RGBA")
 			pad = ((W - im.width) / 2.0, (H - im.height) / 2.0)
+			far = "_l" if facing in ("SE", "NE", "E", "S") else "_r"
+			if "--paint-far-arm" in a and part in ("upper_arm" + far, "forearm" + far):
+				# The far arm passes behind the body: the base's drawn arm, in the
+				# sleeve's colours, shows only what PixelLab left visible.
+				continue
 			if "--paint-legs" in a and part.startswith(("thigh_", "shin_")):
 				# Trousers: the base's own drawn legs take the trouser colours in
 				# the lining pass, so they follow the frame exactly.
@@ -266,6 +316,8 @@ def main() -> None:
 		if "--lining" in a:
 			img = lining(img, base, j, bones, facing, parts_dir)
 		img = outline(despeck(img))
+		if "--base-hands" in a:
+			img = restore_hands(img, base, j)
 		img.save(os.path.join(out, "frame_%03d.png" % i))
 		frames.append((base, img))
 	print("dressed", len(frames), "frames")

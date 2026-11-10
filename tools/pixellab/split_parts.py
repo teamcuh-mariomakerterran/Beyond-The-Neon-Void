@@ -145,6 +145,7 @@ def main() -> None:
 		j = joints(detail, d, w, h)
 		bones_out[f] = {k: [round(v[0], 2), round(v[1], 2)] for k, v in j.items()}
 		held = held_mask(layer, base) | cane_like(layer, j)
+		far = "_l" if f in ("SE", "NE", "E", "S") else "_r"
 		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held", "foot_r", "foot_l"]}
 		seg = Image.new("RGBA", (w, h))
 		px = layer.load()
@@ -157,8 +158,15 @@ def main() -> None:
 				if (x, y) in held or (base.getpixel((x, y))[3] < 128 and bone_d > 6 and y > j["NECK"][1] + 4):
 					# Off the body and away from every limb: a held item (cane, weapon).
 					name = "held"
+				elif y < j["NECK"][1] - 2:
+					# Above the neck is all head: the hair's back edge sits nearer
+					# the shoulder bone than the head's, but must not ride the arm.
+					name = "head"
 				else:
-					name = min(BONES, key=lambda n: seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) + (1.5 if n == "head" and y > j["NECK"][1] else 0))
+					# The far arm hangs behind the torso: near-ties go to the torso,
+					# so the chest's far side doesn't ride the far arm.
+					name = min(BONES, key=lambda n: seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) + (1.5 if n == "head" and y > j["NECK"][1] else 0)
+						+ (2.0 if n in ("upper_arm" + far, "forearm" + far) else 0))
 				if name in ("shin_r", "shin_l"):
 					ank = j["RIGHT LEG" if name == "shin_r" else "LEFT LEG"]
 					if y >= ank[1] - 1:
