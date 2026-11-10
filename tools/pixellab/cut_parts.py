@@ -75,6 +75,30 @@ def strip_skin(layer, palette: list, reach: int = 45, dressed=None):
 	return layer
 
 
+def keep_outline(layer, dressed):
+	"""Dark outline pixels of the dressed character that border its gear stay
+	with the gear even where the base has outline in the same spot (else the
+	hair's back edge goes missing and the base scalp shows there)."""
+	px, dp = layer.load(), dressed.load()
+	w, h = layer.size
+	add = []
+	for y in range(h):
+		for x in range(w):
+			p = dp[x, y]
+			if px[x, y][3] >= 128 or p[3] < 128 or 0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] >= 40:
+				continue
+			# Only the figure's outer outline (next to empty space), not inner
+			# lines like the eyes and mouth.
+			if not any(not (0 <= x + dx < w and 0 <= y + dy < h) or dp[x + dx, y + dy][3] < 128 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+				continue
+			if any(0 <= x + dx < w and 0 <= y + dy < h and px[x + dx, y + dy][3] >= 128 and 0.3 * px[x + dx, y + dy][0] + 0.59 * px[x + dx, y + dy][1] + 0.11 * px[x + dx, y + dy][2] >= 25
+				for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+				add.append((x, y))
+	for x, y in add:
+		px[x, y] = dp[x, y]
+	return layer
+
+
 def main() -> None:
 	from PIL import Image, ImageDraw
 	a = sys.argv[1:]
@@ -84,6 +108,7 @@ def main() -> None:
 	layers = {}
 	for f in dressed:
 		lay = strip_skin(pilot.diff_layer(base[f], dressed[f]), pal, dressed=dressed[f])
+		lay = keep_outline(lay, dressed[f])
 		lay.save(os.path.join(out, f + ".png"))
 		# The dressed silhouette: head parts clip the base head to it, so no
 		# base ear or scalp shows where the dressed character had hair.

@@ -29,7 +29,7 @@ BONES = {
 }
 COLOURS = {"head": (255, 220, 60), "torso": (90, 200, 255), "upper_arm_r": (255, 90, 90), "forearm_r": (255, 160, 160),
 	"upper_arm_l": (90, 255, 120), "forearm_l": (170, 255, 190), "thigh_r": (200, 90, 255), "shin_r": (230, 170, 255),
-	"thigh_l": (255, 150, 40), "shin_l": (255, 200, 130), "held": (255, 255, 255)}
+	"thigh_l": (255, 150, 40), "shin_l": (255, 200, 130), "held": (255, 255, 255), "foot_r": (120, 120, 255), "foot_l": (60, 200, 200)}
 
 
 def seg_dist(p, a, b):
@@ -145,7 +145,7 @@ def main() -> None:
 		j = joints(detail, d, w, h)
 		bones_out[f] = {k: [round(v[0], 2), round(v[1], 2)] for k, v in j.items()}
 		held = held_mask(layer, base) | cane_like(layer, j)
-		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held"]}
+		parts = {name: Image.new("RGBA", (w, h)) for name in list(BONES) + ["held", "foot_r", "foot_l"]}
 		seg = Image.new("RGBA", (w, h))
 		px = layer.load()
 		for y in range(h):
@@ -159,6 +159,10 @@ def main() -> None:
 					name = "held"
 				else:
 					name = min(BONES, key=lambda n: seg_dist((x, y), j[BONES[n][0]], j[BONES[n][1]]) + (1.5 if n == "head" and y > j["NECK"][1] else 0))
+				if name in ("shin_r", "shin_l"):
+					ank = j["RIGHT LEG" if name == "shin_r" else "LEFT LEG"]
+					if y >= ank[1] - 1:
+						name = "foot_" + name[-1]
 				parts[name].putpixel((x, y), p)
 				seg.putpixel((x, y), COLOURS[name] + (255,))
 		for name, im in parts.items():

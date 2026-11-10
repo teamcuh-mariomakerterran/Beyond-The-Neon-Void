@@ -58,8 +58,8 @@ def ease(t):
 # the kick is done in the engine (GearAttach.fire_kick).
 # A character outside the pool (e.g. the modular base bodies): --id <character id> --zip <export.zip>:<state> [--desc "..."]
 SOURCE = {}
-CLIPS = {"walk": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
-ACTION = {"walk": "walking forward", "pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
+CLIPS = {"walk": "walk", "walk2": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
+ACTION = {"walk": "walking forward", "walk2": "walking forward, natural stride, arms swinging", "pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
 	"rifle_rest": "standing with both hands at the waist", "rifle_raise": "raise both arms forward", "kick": "right wrist jerks up and back"}
 # Clips that start from another take's frame instead of the standing pose:
 # clip -> (kit folder of the start take, its frame, the clip whose pose that frame is).
@@ -75,6 +75,8 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 		return rest_poses(base, size, facing)
 	if clip == "walk":
 		return walk_poses(base, size, facing)
+	if clip == "walk2":
+		return gait_poses(base, size, facing)
 	if clip == "rifle_raise":
 		rest = rest_poses(base, size, facing)[0]
 		aim = rifle_poses(base, size, facing)[-1]
@@ -192,6 +194,84 @@ def walk_poses(base: dict, size: int, facing: str, n: int = 8) -> list:
 			wr, el = b[side + " ARM"], b[side + " ELBOW"]
 			f[side + " ARM"] = (wr[0] - ax * swing * c, wr[1] - ay * swing * c + bob)
 			f[side + " ELBOW"] = (el[0] - ax * swing * 0.5 * c, el[1] - ay * swing * 0.5 * c + bob)
+		out.append(f)
+	return out
+
+
+def _knee(hip, ank, l1, l2, fwd):
+	"""Two-bone leg: thigh and shin keep their standing lengths, the knee
+	bends toward `fwd`. An ankle out of reach is pulled in to the hip."""
+	dx, dy = ank[0] - hip[0], ank[1] - hip[1]
+	d = math.hypot(dx, dy)
+	if d >= (l1 + l2) * 0.995:
+		k = (l1 + l2) * 0.995 / d
+		ank = (hip[0] + dx * k, hip[1] + dy * k)
+		dx, dy, d = dx * k, dy * k, (l1 + l2) * 0.995
+	a = (l1 * l1 - l2 * l2 + d * d) / (2 * d)
+	h = math.sqrt(max(0.0, l1 * l1 - a * a))
+	mx, my = hip[0] + dx * a / d, hip[1] + dy * a / d
+	px, py = -dy / d, dx / d
+	c1, c2 = (mx + px * h, my + py * h), (mx - px * h, my - py * h)
+	pick = c1 if (c1[0] - mx) * fwd[0] + (c1[1] - my) * fwd[1] >= (c2[0] - mx) * fwd[0] + (c2[1] - my) * fwd[1] else c2
+	return pick, ank
+
+
+def gait_poses(base: dict, size: int, facing: str, n: int = 8) -> list:
+	"""A walk with real gait phases (contact, down, passing, up per step):
+	the stance foot stays planted and slides back at an even pace, the swing
+	foot lifts highest as it passes the other leg, knees bend on a two-bone
+	leg (no stretching), arms swing wide and opposite, shoulders and hips
+	counter-turn and the body dips after each contact."""
+	pad = (CANVAS - size) / 2.0
+	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+	ax, ay = AIM[facing]
+	ln = math.hypot(ax, ay)
+	ax, ay = ax / ln, ay / ln
+	stride, lift, swing = 4.0, 2.6, 4.0
+	# Knees bend forward on the ground, which reads as forward and up on screen.
+	fwd = (ax, ay - 0.6)
+	L = {s: (math.dist(b[s + " HIP"], b[s + " KNEE"]), math.dist(b[s + " KNEE"], b[s + " LEG"])) for s in ("RIGHT", "LEFT")}
+	# Per half-step: contact, down, passing, up (y down is positive).
+	bob = [0.0, 1.0, -0.6, -0.3]
+	out = []
+	for i in range(n):
+		f = dict(b)
+		bb = bob[i % 4]
+		# Which leg leads: right leg in front on frame 0, left on frame 4.
+		turn = math.cos(2 * math.pi * i / n)
+		for k in ("NECK", "NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR"):
+			f[k] = (b[k][0] + ax * 0.4, b[k][1] + bb)
+		for side, sgn in (("RIGHT", 1.0), ("LEFT", -1.0)):
+			# Hips turn with the leading leg, shoulders against it.
+			f[side + " HIP"] = (b[side + " HIP"][0] + ax * 0.5 * turn * sgn, b[side + " HIP"][1] + ay * 0.5 * turn * sgn + bb)
+			f[side + " SHOULDER"] = (b[side + " SHOULDER"][0] - ax * 0.6 * turn * sgn + ax * 0.3, b[side + " SHOULDER"][1] - ay * 0.6 * turn * sgn + bb)
+		for side, ph0 in (("RIGHT", 0.0), ("LEFT", 0.5)):
+			p = (i / n + ph0) % 1.0
+			if p < 0.5:
+				# Stance: planted, slides back evenly from front to back.
+				t, up = p / 0.5, 0.0
+				u = 1.0 - 2.0 * t
+			else:
+				# Swing: eased forward, highest at the pass.
+				t = (p - 0.5) / 0.5
+				u = -math.cos(math.pi * t)
+				up = math.sin(math.pi * t) * lift
+			ank0 = b[side + " LEG"]
+			ank = (ank0[0] + ax * stride * u, ank0[1] + ay * stride * u - up)
+			hip = f[side + " HIP"]
+			l1, l2 = L[side]
+			if up > 0:
+				# Lift the knee as well: pull the ankle a little toward the hip.
+				ank = (ank[0] + (hip[0] - ank[0]) * 0.045 * up, ank[1] + (hip[1] - ank[1]) * 0.045 * up)
+			knee, ank = _knee(hip, ank, l1, l2, fwd)
+			f[side + " KNEE"], f[side + " LEG"] = knee, ank
+			# The arm on this side swings against this leg.
+			c = math.cos(2 * math.pi * p)
+			sh = f[side + " SHOULDER"]
+			wr0, el0, s0 = b[side + " ARM"], b[side + " ELBOW"], b[side + " SHOULDER"]
+			fw = max(0.0, -c)
+			f[side + " ELBOW"] = (el0[0] + (sh[0] - s0[0]) - ax * swing * 0.45 * c, el0[1] + (sh[1] - s0[1]) - ay * swing * 0.45 * c)
+			f[side + " ARM"] = (wr0[0] + (sh[0] - s0[0]) - ax * swing * c, wr0[1] + (sh[1] - s0[1]) - ay * swing * c - 1.2 * fw)
 		out.append(f)
 	return out
 

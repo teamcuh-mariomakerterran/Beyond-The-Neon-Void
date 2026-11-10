@@ -18,8 +18,8 @@ import zipfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Far side first, then torso, then the near side and the head (SE/NE: right side is near).
-ORDER_RIGHT_NEAR = ["shin_l", "thigh_l", "upper_arm_l", "forearm_l", "shin_r", "thigh_r", "torso", "upper_arm_r", "forearm_r", "head", "held"]
-ORDER_LEFT_NEAR = ["shin_r", "thigh_r", "upper_arm_r", "forearm_r", "shin_l", "thigh_l", "torso", "upper_arm_l", "forearm_l", "head", "held"]
+ORDER_RIGHT_NEAR = ["foot_l", "shin_l", "thigh_l", "upper_arm_l", "forearm_l", "foot_r", "shin_r", "thigh_r", "torso", "upper_arm_r", "forearm_r", "head", "held"]
+ORDER_LEFT_NEAR = ["foot_r", "shin_r", "thigh_r", "upper_arm_r", "forearm_r", "foot_l", "shin_l", "thigh_l", "torso", "upper_arm_l", "forearm_l", "head", "held"]
 
 
 def frame_joints(f: dict) -> dict:
@@ -136,9 +136,10 @@ def lining(img, base, j, bones, facing, parts_dir):
 			p = px[x, y]
 			if not bodysuit(p) or p != bp[x, y]:
 				continue
-			part = min(bones["bones"], key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]]))
-			if part not in ramps:
+			cand = [n for n in bones["bones"] if n in ramps]
+			if not cand:
 				continue
+			part = min(cand, key=lambda n: seg_dist((x, y), j[bones["bones"][n][0]], j[bones["bones"][n][1]]))
 			lum = (0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2] - 90) / 165.0
 			r = ramps[part]
 			c = r[max(0, min(len(r) - 1, int(lum * len(r))))]
@@ -193,8 +194,9 @@ def main() -> None:
 			if hb:
 				line = sp[1] + dy + cut
 				clear = img.load()
-				for yy in range(max(0, hb[1] - 1), min(H, line)):
-					for xx in range(max(0, hb[0] - 1), min(W, hb[2] + 1)):
+				# Clear a few pixels wider than the head: the walking head bobs past it.
+				for yy in range(max(0, hb[1] - 3), min(H, line)):
+					for xx in range(max(0, hb[0] - 3), min(W, hb[2] + 3)):
 						clear[xx, yy] = (0, 0, 0, 0)
 				img.alpha_composite(head_img)
 		for part in order:
@@ -203,6 +205,17 @@ def main() -> None:
 				continue
 			im = Image.open(pp).convert("RGBA")
 			pad = ((W - im.width) / 2.0, (H - im.height) / 2.0)
+			if part.startswith("foot_"):
+				# Feet slide with the ankle and don't turn: shoes stay flat.
+				ank = "RIGHT LEG" if part.endswith("r") else "LEFT LEG"
+				big = Image.new("RGBA", (W, H))
+				big.alpha_composite(im, (int(pad[0]), int(pad[1])))
+				dx = int(round(j[ank][0] - (stand[ank][0] + pad[0])))
+				dy = int(round(j[ank][1] - (stand[ank][1] + pad[1])))
+				moved = Image.new("RGBA", (W, H))
+				moved.paste(big, (dx, dy), big)
+				img.alpha_composite(moved)
+				continue
 			if part == "held":
 				bone = bones["bones"]["forearm_r"]
 			else:
