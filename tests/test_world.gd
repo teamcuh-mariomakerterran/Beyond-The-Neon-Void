@@ -2714,16 +2714,44 @@ func test_title_screen() -> void:
 	await tree.process_frame
 	var m := t.menu
 	check(m != null and m._chrome.size() == NvMainMenu.LOOP and m.compose_image().get_size() == Vector2i(640, 360), "the 640x360 menu loads all 32 background frames")
-	check(m.has_save == SaveManager.has_save_file(), "Continue follows the save file")
+	check(m.has_save == (SaveManager.latest_slot() >= 0), "Continue follows the saves")
 	var moved := []
 	m.selection_changed.connect(func(i: int) -> void: moved.append(i))
 	m.set_sel(1)
 	m.move_sel(1)
 	check(moved == [2] and m.get_sel() == 2, "moving the cursor reports the new item (for the cursor sound)")
 	check(m.new_game_pressed.get_connections().size() > 0 and m.load_pressed.get_connections().size() > 0 and m.options_pressed.get_connections().size() > 0, "every item is hooked up")
-	t._show_load()
-	check(t._overlay != null, "Load opens the slot picker")
-	t.close_overlay()
-	check(t._overlay == null, "Esc / Back closes it")
+	t.show_load()
+	await tree.process_frame
+	check(t.screen != null and t.screen.rows.size() == SaveManager.SLOTS.size() + 1, "Load lists every slot and BACK")
+	check(TitleScreen._slot_line({}) == "EMPTY" and TitleScreen._slot_line({"leader": "Rook", "chapter": 2, "saved_at": "2026-11-10T14:22:01"}) == "ROOK  CH 2  11-10 14:22", "slot lines read leader, chapter, date")
+	t.close_screen()
+	await tree.process_frame
+	check(t.screen == null, "Esc / Back closes it")
+	# Options: toggles flip and save, volume steps by level.
+	var keep_barks := SettingsFlags.barks
+	var keep_music := SettingsFlags.music_db
+	t.show_options()
+	await tree.process_frame
+	var o := t.screen
+	check(o.rows.size() == 9 and str(o.rows[0]["label"]) == "FULLSCREEN", "Options lists every setting and BACK")
+	o.sel = 6  # BATTLE BARKS
+	o._call("accept")
+	check(SettingsFlags.barks != keep_barks, "a toggle flips its setting")
+	o._call("accept")
+	o.sel = 1  # MUSIC
+	var lv := SettingsFlags.db_level(SettingsFlags.music_db)
+	o._call("left")
+	check(SettingsFlags.db_level(SettingsFlags.music_db) == maxi(lv - 1, 0), "left lowers the music a step")
+	SettingsFlags.music_db = keep_music
+	SettingsFlags.barks = keep_barks
+	SettingsFlags.save()
+	t.close_screen()
+	await tree.process_frame
+	t.show_credits()
+	await tree.process_frame
+	check(t.screen != null and not t.screen.lines.is_empty() and t.screen.lines[0].begins_with("# "), "Credits read data/credits.json")
+	t.close_screen()
+	check(SettingsFlags.db_level(SettingsFlags.level_db(7)) == 7 and SettingsFlags.level_db(0) <= -40.0, "volume levels round-trip")
 	t.queue_free()
 	await tree.process_frame

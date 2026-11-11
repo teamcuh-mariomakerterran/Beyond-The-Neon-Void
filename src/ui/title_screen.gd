@@ -9,9 +9,12 @@ const MENU_SCENE := "res://scenes/ui/nv_main_menu/nv_main_menu.tscn"
 const DEV_MENU := "res://scenes/dev_menu.tscn"
 const FORGE_SCENE := "res://scenes/editor/neon_forge.tscn"
 const SCALE := 3
+const CREDITS := "res://data/credits.json"
 
 var menu: NvMainMenu
-var _overlay: Control
+## The open Options / Load / Credits screen, if any.
+var screen: PixelScreen
+var _vp: SubViewport
 
 
 func _ready() -> void:
@@ -31,21 +34,21 @@ func _ready() -> void:
 	center.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
 	add_child(center)
 	center.add_child(frame)
-	var vp := SubViewport.new()
-	vp.disable_3d = true
-	vp.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-	vp.handle_input_locally = true
-	frame.add_child(vp)
+	_vp = SubViewport.new()
+	_vp.disable_3d = true
+	_vp.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	_vp.handle_input_locally = true
+	frame.add_child(_vp)
 	menu = (load(MENU_SCENE) as PackedScene).instantiate() as NvMainMenu
-	menu.has_save = SaveManager.has_save_file()
+	menu.has_save = SaveManager.latest_slot() >= 0
 	menu.quit_on_quit = true
-	vp.add_child(menu)
+	_vp.add_child(menu)
 	menu.selection_changed.connect(func(_i: int) -> void: AudioManager.play_ui("menu_move"))
 	menu.continue_pressed.connect(_continue)
 	menu.new_game_pressed.connect(_new_game)
-	menu.load_pressed.connect(_show_load)
-	menu.options_pressed.connect(func() -> void: _show_note("OPTIONS", "The options menu is coming soon. Settings live in the hub under SAVE / QUIT for now."))
-	menu.credits_pressed.connect(func() -> void: _show_note("CREDITS", "Credits are coming soon."))
+	menu.load_pressed.connect(show_load)
+	menu.options_pressed.connect(show_options)
+	menu.credits_pressed.connect(show_credits)
 	menu.quit_pressed.connect(func() -> void: AudioManager.play_ui("confirm"))
 	AudioManager.play_music("title")
 	AudioManager.play_ambience("")
@@ -53,8 +56,15 @@ func _ready() -> void:
 
 func _continue() -> void:
 	AudioManager.play_ui("confirm")
-	if SaveManager.load_game():
+	_load(SaveManager.latest_slot())
+
+
+func _load(slot: int) -> void:
+	if slot >= 0 and SaveManager.load_game(slot):
+		AudioManager.play_ui("save_loaded")
 		CampaignManager.resume()
+	else:
+		AudioManager.play_ui("no_save")
 
 
 func _new_game() -> void:
@@ -65,87 +75,99 @@ func _new_game() -> void:
 	CampaignManager.return_to_hub()
 
 
-## Load: the three save slots (the full load screen comes with the options work).
-func _show_load() -> void:
+## Opens a sub-screen over the menu (the menu keeps animating behind it).
+func _open(title: String) -> PixelScreen:
+	close_screen()
 	AudioManager.play_ui("confirm")
-	var v := _open_overlay("LOAD GAME")
-	var any := false
-	for slot in [SaveManager.QUICK_SLOT, 1, 2, 3]:
-		var has := SaveManager.has_save_file(slot)
-		any = any or has
-		var b := Button.new()
-		b.text = "QUICK SAVE" if slot == SaveManager.QUICK_SLOT else "SLOT %d" % slot
-		b.disabled = not has
-		b.pressed.connect(func() -> void:
-			if SaveManager.load_game(slot):
-				CampaignManager.resume())
-		v.add_child(b)
-	if not any:
-		AudioManager.play_ui("no_save")
-		v.add_child(NeonTheme.label("No saved game yet.", 15, NeonTheme.TEXT_DIM))
-	_back_last(v)
-
-
-## Puts the BACK button last again after a screen adds its own rows.
-func _back_last(v: VBoxContainer) -> void:
-	for c in v.get_children():
-		if c is Button and (c as Button).text.begins_with("BACK"):
-			v.move_child(c, v.get_child_count() - 1)
-
-
-func _show_note(title: String, text: String) -> void:
-	AudioManager.play_ui("confirm")
-	var v := _open_overlay(title)
-	var l := NeonTheme.label(text, 15, NeonTheme.TEXT)
-	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	l.custom_minimum_size.x = 420
-	v.add_child(l)
-	_back_last(v)
-
-
-func _open_overlay(title: String) -> VBoxContainer:
-	close_overlay()
-	# A dimmer over the whole screen (keeps clicks off the menu), panel centred.
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.55)
-	dim.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	dim.theme = NeonTheme.get_theme()
-	add_child(dim)
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
-	dim.add_child(center)
-	var panel := PanelContainer.new()
-	center.add_child(panel)
-	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", 10)
-	panel.add_child(v)
-	v.add_child(NeonTheme.label(title, 24, NeonTheme.CYAN))
-	var back := Button.new()
-	back.text = "BACK  (Esc)"
-	back.pressed.connect(close_overlay)
-	v.add_child(back)
-	_overlay = dim
-	menu.set_process_unhandled_input(false)
-	return v
-
-
-func close_overlay() -> void:
-	if _overlay and is_instance_valid(_overlay):
-		_overlay.queue_free()
-		_overlay = null
-	if menu:
+	screen = PixelScreen.new()
+	screen.title = title
+	screen.closed.connect(func() -> void:
+		screen = null
 		menu.set_process_unhandled_input(true)
+		menu.grab_focus())
+	menu.set_process_unhandled_input(false)
+	return screen
+
+
+func close_screen() -> void:
+	if screen and is_instance_valid(screen):
+		screen.close()
+
+
+func show_options() -> void:
+	var s := _open("OPTIONS")
+	var onoff := func(key: String) -> Callable: return func() -> String: return "ON" if bool(SettingsFlags.value_of(key)) else "OFF"
+	var flip := func(key: String) -> Callable: return func() -> void:
+		SettingsFlags.set_value(key, not bool(SettingsFlags.value_of(key)))
+		SettingsFlags.save()
+	s.add_row("FULLSCREEN", flip.call("fullscreen"), onoff.call("fullscreen"))
+	_volume_row(s, "MUSIC", "music_db", func() -> void: AudioManager.apply_music_volume())
+	_volume_row(s, "SOUND FX", "sfx_db", func() -> void: AudioManager.play_ui("menu_move"))
+	s.add_row("BATTLE SPEED", flip.call("fast_battles"), func() -> String: return "FAST" if SettingsFlags.fast_battles else "NORMAL")
+	s.add_row("FREE MOVEMENT", flip.call("free_move"), onoff.call("free_move"))
+	s.add_row("REDUCE MOTION", flip.call("reduce_motion"), onoff.call("reduce_motion"))
+	s.add_row("BATTLE BARKS", flip.call("barks"), onoff.call("barks"))
+	s.add_row("AUTO ADDITIONS", flip.call("auto_additions"), onoff.call("auto_additions"))
+	s.add_row("BACK", s.close)
+	_vp.add_child(s)
+
+
+## A 0–10 volume row: left / right step it, the bar shows the level.
+func _volume_row(s: PixelScreen, label: String, key: String, after: Callable) -> void:
+	var level := func() -> int:
+		if key == "sfx_db" and not SettingsFlags.sfx:
+			return 0
+		return SettingsFlags.db_level(float(SettingsFlags.value_of(key)))
+	var step := func(d: int) -> void:
+		var lv := clampi(int(level.call()) + d, 0, SettingsFlags.VOLUME_STEPS)
+		if key == "sfx_db":
+			SettingsFlags.sfx = lv > 0
+		SettingsFlags.set_value(key, SettingsFlags.level_db(maxi(lv, 1)) if key == "sfx_db" else SettingsFlags.level_db(lv))
+		SettingsFlags.save()
+		after.call()
+	var r := s.add_row(label, Callable(), Callable(), func() -> void: step.call(-1), func() -> void: step.call(1))
+	r["level"] = level
+	r["steps"] = SettingsFlags.VOLUME_STEPS
+
+
+func show_load() -> void:
+	var s := _open("LOAD GAME")
+	for slot: int in SaveManager.SLOTS:
+		var sum := SaveManager.slot_summary(slot)
+		var r := s.add_row("QUICK SAVE" if slot == SaveManager.QUICK_SLOT else "SLOT %d" % slot, func() -> void: _load(slot))
+		r["enabled"] = func() -> bool: return not sum.is_empty()
+		r["detail"] = func() -> String: return _slot_line(sum)
+	s.add_row("BACK", s.close)
+	if SaveManager.latest_slot() < 0:
+		AudioManager.play_ui("no_save")
+	_vp.add_child(s)
+
+
+## "ROOK DANNICK  CH 1  11-10 14:22" (or EMPTY).
+static func _slot_line(sum: Dictionary) -> String:
+	if sum.is_empty():
+		return "EMPTY"
+	var at := str(sum.get("saved_at", ""))
+	var when := "%s %s" % [at.substr(5, 5), at.substr(11, 5)] if at.length() >= 16 else at
+	var who := str(sum.get("leader", "")).to_upper()
+	return "%s  CH %d  %s" % [who, int(sum.get("chapter", 1)), when]
+
+
+func show_credits() -> void:
+	var s := _open("CREDITS")
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(CREDITS)) if FileAccess.file_exists(CREDITS) else null
+	for l: Variant in (data.get("lines", []) if data is Dictionary else []):
+		s.lines.append(str(l))
+	if s.lines.is_empty():
+		s.lines.append("# BEYOND: THE NEON VOID")
+	_vp.add_child(s)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event.pressed or event.echo:
 		return
 	var k := (event as InputEventKey).keycode
-	if k == KEY_ESCAPE and _overlay:
-		close_overlay()
-		get_viewport().set_input_as_handled()
-	elif k == KEY_F2:
+	if k == KEY_F2:
 		SceneManager.change_scene(DEV_MENU)
 	elif event.is_action_pressed("toggle_editor"):
 		SceneManager.change_scene(FORGE_SCENE)

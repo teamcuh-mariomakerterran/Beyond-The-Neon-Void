@@ -29,6 +29,44 @@ func has_save_file(slot: int = QUICK_SLOT) -> bool:
 	return FileAccess.file_exists(slot_path(slot))
 
 
+## Slots the title's Load screen lists (quick save first).
+const SLOTS := [QUICK_SLOT, 1, 2, 3]
+
+
+## The slot saved most recently, or -1 when there are no saves (Continue).
+func latest_slot() -> int:
+	var best := -1
+	var best_t := 0
+	for slot: int in SLOTS:
+		if has_save_file(slot):
+			var t := FileAccess.get_modified_time(slot_path(slot))
+			if best < 0 or t > best_t:
+				best = slot
+				best_t = t
+	return best
+
+
+## A slot's summary for menus: {leader, party, coins, chapter, saved_at, where} ({} if empty).
+func slot_summary(slot: int) -> Dictionary:
+	var d := read_slot(slot)
+	if d.is_empty():
+		return {}
+	var g: Dictionary = d.get("game", {})
+	var party: Array = g.get("active_party", [])
+	var roster: Dictionary = g.get("roster", {})
+	var leader := ""
+	if not party.is_empty() and roster.has(str(party[0])):
+		leader = str((roster[str(party[0])] as Dictionary).get("display_name", party[0]))
+	var camp: Dictionary = d.get("campaign", {})
+	var ex: Variant = camp.get("explore")
+	var where := ""
+	if ex is Dictionary and str((ex as Dictionary).get("map", "")) != "":
+		var m := ContentDB.get_map(str(ex["map"]))
+		where = str(m.get("name", ex["map"])) if not m.is_empty() else str(ex["map"])
+	return {"leader": leader, "party": party.size(), "coins": int(g.get("soul_coins", 0)),
+		"chapter": int(g.get("story_chapter", 1)), "saved_at": str(d.get("saved_at", "")), "where": where}
+
+
 func save_game(slot: int = QUICK_SLOT) -> bool:
 	DirAccess.make_dir_recursive_absolute(SAVE_DIR)
 	var data := {

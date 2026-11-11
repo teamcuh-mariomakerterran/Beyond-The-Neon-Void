@@ -83,7 +83,14 @@ func play_music(music_id: String, fade: float = 1.2) -> void:
 		nxt.stream = stream
 		nxt.volume_db = -40.0
 		nxt.play()
-		create_tween().tween_property(nxt, "volume_db", 0.0, fade)
+		create_tween().tween_property(nxt, "volume_db", SettingsFlags.music_db, fade)
+
+
+## Applies the music volume setting to the track that's playing now.
+func apply_music_volume() -> void:
+	for p: AudioStreamPlayer in [_music_a, _music_b]:
+		if p.playing:
+			p.volume_db = SettingsFlags.music_db
 
 
 ## Plays a sound effect. `sfx_id` is a file name under assets/sfx without the

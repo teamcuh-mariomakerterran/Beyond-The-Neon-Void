@@ -1,0 +1,24 @@
+{
+	"_note": "Title screen credits (Options > Credits scroll). One line each; \"# \" makes a heading; \"\" is a blank line. The PRESS START font has A-Z a-z 0-9 and . , : ; ! ? \" ' - ( ) [ ] # $ % (no slash or ampersand).",
+	"lines": [
+		"# BEYOND: THE NEON VOID",
+		"",
+		"A tale of the Black Doctrine",
+		"",
+		"# CREATED BY",
+		"Brian",
+		"",
+		"# PRESS START FONT",
+		"Brian",
+		"",
+		"# MADE WITH",
+		"Godot Engine (MIT licence)",
+		"godotengine.org",
+		"",
+		"# FONTS",
+		"Space Grotesk, JetBrains Mono",
+		"(SIL Open Font License)",
+		"",
+		"# THANK YOU FOR PLAYING"
+	]
+}
