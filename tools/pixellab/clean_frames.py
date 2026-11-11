@@ -42,13 +42,24 @@ def main() -> None:
 		px = im.load()
 		bb = im.getbbox()
 		removed = []
-		for y in range(im.height):
-			if any(abs((bb[3] - y) - r) <= 2 for r in grey_rows):
-				continue
-			for x in range(im.width):
-				if ghost(px[x, y]):
-					px[x, y] = (0, 0, 0, 0)
-					removed.append((x, y))
+		# Peel from the outside in: a ghost hangs off the figure's edge, so a
+		# grey pixel only goes when it touches empty space (or a ghost pixel
+		# already peeled). Grey inside the figure (an armour highlight) stays.
+		W, H = im.size
+		changed = True
+		while changed:
+			changed = False
+			for y in range(H):
+				if any(abs((bb[3] - y) - r) <= 2 for r in grey_rows):
+					continue
+				for x in range(W):
+					if not ghost(px[x, y]):
+						continue
+					if any(not (0 <= x + dx < W and 0 <= y + dy < H) or px[x + dx, y + dy][3] < 128
+						for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+						px[x, y] = (0, 0, 0, 0)
+						removed.append((x, y))
+						changed = True
 		gone = len(removed)
 		if removed:
 			# Close the outline only where the ghost was: PixelLab's own
