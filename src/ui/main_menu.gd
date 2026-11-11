@@ -30,7 +30,7 @@ func _ready() -> void:
 	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	center.add_child(tag)
 	center.add_child(Control.new())
-	_button(center, "NEW SHIFT", _new_game)
+	_button(center, "NEW SHIFT", _new_game).set_meta("ui_sound", "start_game")
 	var cont := _button(center, "CONTINUE", _continue)
 	cont.disabled = not SaveManager.has_save_file()
 	_button(center, "QUICK BATTLE — THE BREW PLAN", func() -> void: _quick_battle("m01_the_brew_plan"))

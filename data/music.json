@@ -1,6 +1,6 @@
 {
 	"_note": "Music for game moments (AudioManager). A name is a file in assets/music (no extension); a list picks one at random each time. These are first-pass picks by filename; change them freely.",
-	"title": "main_menu_theme_song",
+	"title": "beyond_the_neon_void_main_menu_song",
 	"menu": "menu_theme",
 	"neon_gutter": "hub_poker_theme",
 	"hub_streets": "hub_map_1",

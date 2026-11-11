@@ -90,7 +90,7 @@ func play_music(music_id: String, fade: float = 1.2) -> void:
 ## extension ("gun_smg_2"), or a family ("gun_smg", "hit", "scream") — then a
 ## random variant (gun_smg_1, gun_smg_2…) plays, never the same one twice in a
 ## row. Missing ids are skipped quietly. `volume_db` / `pitch` tweak one play.
-func play_sfx(sfx_id: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
+func play_sfx(sfx_id: String, volume_db: float = 0.0, pitch: float = 1.0, vary: bool = true) -> void:
 	if sfx_id == "" or not SettingsFlags.sfx:
 		return
 	var stream := _find(SFX_DIR, sfx_id)
@@ -105,7 +105,7 @@ func play_sfx(sfx_id: String, volume_db: float = 0.0, pitch: float = 1.0) -> voi
 	_sfx_i = (_sfx_i + 1) % _sfx.size()
 	p.stream = stream
 	p.volume_db = volume_db + SettingsFlags.sfx_db
-	p.pitch_scale = pitch * randf_range(0.96, 1.04)
+	p.pitch_scale = pitch * (randf_range(0.96, 1.04) if vary else 1.0)
 	p.play()
 
 
@@ -193,12 +193,42 @@ func play_ambience(amb_id: String, volume_db: float = -10.0, fade: float = 1.5) 
 
 # --- UI clicks -----------------------------------------------------------------
 
-## Every button in the game ticks when pressed (and hovering a menu button
-## blips quietly), so the UI sounds alive without wiring each screen.
+## A UI moment's sound from data/ui_theme.json "sounds" (confirm, menu_move,
+## start_game, cancel, error, no_save…). Returns false when the slot is empty.
+## Custom menus call this directly (AudioManager.play_ui("menu_move")).
+func play_ui(moment: String) -> bool:
+	var fam := NeonTheme.ui_sound(moment)
+	if fam == "":
+		return false
+	play_sfx(fam, NeonTheme.ui_sound_db(moment), 1.0, false)
+	return true
+
+
+## Every button in the game sounds when pressed (the theme's confirm sound, or
+## the button's own "ui_sound" meta, e.g. start_game) and when the cursor
+## moves onto it (mouse or keyboard / pad focus), so the UI sounds alive
+## without wiring each screen. Neon Forge keeps the old quiet click.
 func _on_node_added(n: Node) -> void:
 	if n is BaseButton and not n.has_meta("silent"):
 		var b := n as BaseButton
-		b.pressed.connect(func() -> void: play_sfx("ui_beep", -10.0, 1.1))
+		var born := Time.get_ticks_msec()
+		b.pressed.connect(func() -> void:
+			if _in_editor() or not play_ui(str(b.get_meta("ui_sound", "confirm"))):
+				play_sfx("ui_beep", -10.0, 1.1))
 		b.mouse_entered.connect(func() -> void:
 			if not b.disabled:
-				play_sfx("ui_tone_1", -26.0, 1.6))
+				_ui_move())
+		# Keyboard / pad moves; not the focus a screen grabs when it opens.
+		b.focus_entered.connect(func() -> void:
+			if not b.disabled and Time.get_ticks_msec() - born > 250 and not b.is_hovered():
+				_ui_move())
+
+
+func _ui_move() -> void:
+	if _in_editor() or not play_ui("menu_move"):
+		play_sfx("ui_tone_1", -26.0, 1.6)
+
+
+func _in_editor() -> bool:
+	var cs := get_tree().current_scene
+	return cs != null and cs.scene_file_path.contains("/editor/")

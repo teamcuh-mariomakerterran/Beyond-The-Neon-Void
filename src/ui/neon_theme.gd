@@ -418,3 +418,8 @@ static func apply_cursors() -> void:
 ## The sfx family for a UI moment ("hover", "confirm", "no_save"…), or "".
 static func ui_sound(moment: String) -> String:
 	return str(section("sounds").get(moment, ""))
+
+
+## Volume (dB) for a UI sound slot ("<moment>_db" in the theme file, default 0).
+static func ui_sound_db(moment: String) -> float:
+	return float(section("sounds").get(moment + "_db", 0.0))

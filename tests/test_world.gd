@@ -2634,7 +2634,13 @@ func test_ui_theme() -> void:
 	check(sb is StyleBoxTexture and (sb as StyleBoxTexture).texture_margin_left == 8.0, "a texture turns a style into a 9-slice frame")
 	NeonTheme.reload()
 	check(NeonTheme.get_theme().get_stylebox("hover", "Button") is StyleBoxFlat and NeonTheme._data == keep, "reload puts the file's look back")
-	check(NeonTheme.ui_sound("confirm") == "" and NeonTheme.section("sounds").has("no_save"), "UI sound slots exist, silent until filled")
+	check(NeonTheme.section("sounds").has("no_save") and NeonTheme.ui_sound("no_save") == "", "UI sound slots exist; empty ones stay silent")
+	# Brian's menu sounds (2026-11-11): cursor move, confirm / accept, start game.
+	for slot: String in ["menu_move", "confirm", "start_game"]:
+		var fam := NeonTheme.ui_sound(slot)
+		check(fam != "" and FileAccess.file_exists("res://assets/sfx/%s_1.wav" % fam), "%s plays %s" % [slot, fam])
+	check(AudioManager.play_ui("confirm") and not AudioManager.play_ui("no_save"), "play_ui plays filled slots only")
+	check(FileAccess.file_exists("res://assets/music/%s.wav" % AudioManager.music_alias("title")), "the title plays Brian's main menu song")
 	var px := NeonTheme.bitmap_font("res://assets/fonts/press_start/press_start_atlas.json")
 	check(px != null and px.fixed_size == 11 and px.has_char("A".unicode_at(0)) and px.has_char("%".unicode_at(0)) and px.has_char("’".unicode_at(0)) and not px.has_char("~".unicode_at(0)), "Brian's PRESS START atlas loads as a crisp pixel font")
 
