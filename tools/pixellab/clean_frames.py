@@ -26,11 +26,16 @@ def main() -> None:
 	a = sys.argv[1:]
 	frames_dir, spec, facing, out = a[:4]
 	zp, state = spec.rsplit(":", 1)
+	# A ghost is a light near-neutral grey (the base's bodysuit, ~140 and up):
+	# armour mid-tones (blue-greys around 100-125) are never one. And only in
+	# rows where the outfit's own standing art has no such grey (below).
+	def ghost(q) -> bool:
+		return bodysuit(q) and 0.3 * q[0] + 0.59 * q[1] + 0.11 * q[2] >= 130
 	st = Image.open(io.BytesIO(zipfile.ZipFile(zp).read("%s/rotations/%s.png" % (state, DIRS[facing])))).convert("RGBA")
 	sp = st.load()
 	# Rows (relative to the figure's bottom) where the standing art has grey.
 	sb = st.getbbox()
-	grey_rows = {sb[3] - y for y in range(st.height) for x in range(st.width) if bodysuit(sp[x, y])}
+	grey_rows = {sb[3] - y for y in range(st.height) for x in range(st.width) if ghost(sp[x, y])}
 	os.makedirs(out, exist_ok=True)
 	for p in sorted(glob.glob(os.path.join(frames_dir, "frame_*.png"))):
 		im = Image.open(p).convert("RGBA")
@@ -41,7 +46,7 @@ def main() -> None:
 			if any(abs((bb[3] - y) - r) <= 2 for r in grey_rows):
 				continue
 			for x in range(im.width):
-				if bodysuit(px[x, y]):
+				if ghost(px[x, y]):
 					px[x, y] = (0, 0, 0, 0)
 					removed.append((x, y))
 		gone = len(removed)
