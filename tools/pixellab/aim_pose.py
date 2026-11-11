@@ -383,13 +383,19 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 			f = dict(b)
 			if crouch:
 				legs_bend(f, crouch)
-			top = (sh[0] + ax * 1.0, sh[1] - (upper + fore) * 0.95)
+			# Up and a little out from the shoulder (away from the neck), so
+			# the raised arm clears the head instead of hiding behind it.
+			nk = b["NECK"]
+			ox, oy = sh[0] - nk[0], 0.0
+			ol = abs(ox) or 1.0
+			out_x = ox / ol
+			top = (sh[0] + out_x * 3.5 + ax * 1.0, sh[1] - (upper + fore) * 1.0)
 			mid_chest = (sh[0] + ax * 3.0, sh[1] + 3.0)
 			drop = crouch  # the arm comes down with the body in the dip
 			hand = lerp(lerp(wr, mid_chest, chest), top, up)
 			hand = (hand[0], hand[1] + drop)
 			f["RIGHT ARM"] = hand
-			e_ = lerp(lerp(el, (sh[0] + ax * 2.5, sh[1] + 4.0), chest), (sh[0] + ax * 1.5, sh[1] - upper * 0.9), up)
+			e_ = lerp(lerp(el, (sh[0] + ax * 2.5, sh[1] + 4.0), chest), (sh[0] + out_x * 2.5 + ax * 1.5, sh[1] - upper * 0.8), up)
 			f["RIGHT ELBOW"] = (e_[0], e_[1] + drop)
 			shift(f, HEAD, 0, -0.8 * up)
 			out.append(f)
