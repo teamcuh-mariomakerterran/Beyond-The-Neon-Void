@@ -318,26 +318,33 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 		return out
 	if clip == "death":
 		feet = ((b["LEFT LEG"][0] + b["RIGHT LEG"][0]) / 2, (b["LEFT LEG"][1] + b["RIGHT LEG"][1]) / 2)
-		# The arms come up as the body tips (not a stiff board): 0 standing,
-		# 1 = hands up by the head, settling a little once on the ground.
-		for th, buckle, arms in ((0.0, 0.0, 0.0), (8, 1.0, 0.25), (20, 2.5, 0.55), (40, 3.0, 0.85), (62, 2.0, 1.0), (80, 0.5, 0.9), (85, 0.0, 0.75), (85, 0.0, 0.7)):
-			f = {}
-			r = math.radians(th)
-			src = dict(b)
+
+		def tip(x, y, deg):
+			# Tip backward about the feet: height turns into distance behind.
+			r = math.radians(deg)
+			h = feet[1] - y
+			return (x - ax * h * math.sin(r) * 0.95, feet[1] - ay * h * math.sin(r) * 0.95 - h * math.cos(r))
+
+		# (body tip, knee buckle, arm lag, arm lift): the arms are left a beat
+		# behind as the body goes back (they tip less than the body, floating a
+		# little forward and up), then catch up and land along the sides.
+		steps = ((0.0, 0.0, 0, 0.0), (8, 1.0, 4, 0.1), (20, 2.5, 10, 0.2), (40, 3.0, 18, 0.3),
+			(62, 2.0, 22, 0.3), (80, 0.5, 12, 0.15), (85, 0.0, 3, 0.05), (85, 0.0, 0, 0.0))
+		for th, buckle, lag, lift in steps:
+			f = {k_: tip(x, y, th) for k_, (x, y) in b.items()}
 			for s_ in ("LEFT", "RIGHT"):
 				shp, elp, wrp = b[s_ + " SHOULDER"], b[s_ + " ELBOW"], b[s_ + " ARM"]
-				out_ = -1.0 if s_ == "LEFT" else 1.0
-				hand_up = (shp[0] + out_ * 2.0 - ax * 1.0, shp[1] - math.dist(shp, elp) * 1.3)
-				elb_up = (shp[0] + out_ * 2.5, shp[1] - math.dist(shp, elp) * 0.5)
-				src[s_ + " ARM"] = lerp(wrp, hand_up, arms)
-				src[s_ + " ELBOW"] = lerp(elp, elb_up, arms)
-			for k, (x, y) in src.items():
-				h = feet[1] - y  # height above the feet
-				along = (x - feet[0]) + (y - feet[1]) * 0  # sideways offset kept
-				# Tip backward about the feet: height turns into distance behind.
-				nx = feet[0] + along - ax * h * math.sin(r) * 0.95
-				ny = feet[1] - ay * h * math.sin(r) * 0.95 - h * math.cos(r)
-				f[k] = (nx, ny)
+				arm_len = math.dist(shp, elp) + math.dist(elp, wrp)
+				# Arms float a little forward and up from hanging (not overhead).
+				e2 = (elp[0] + ax * arm_len * 0.2 * lift, elp[1] - arm_len * 0.25 * lift)
+				w2 = (wrp[0] + ax * arm_len * 0.45 * lift, wrp[1] - arm_len * 0.55 * lift)
+				# Tipped by a smaller angle than the body (they lag), hung from
+				# where the body's shoulder actually is.
+				s_lag = tip(shp[0], shp[1], th - lag)
+				s_body = f[s_ + " SHOULDER"]
+				for key, pnt in ((" ELBOW", e2), (" ARM", w2)):
+					q = tip(pnt[0], pnt[1], th - lag)
+					f[s_ + key] = (q[0] - s_lag[0] + s_body[0], q[1] - s_lag[1] + s_body[1])
 			if buckle:
 				legs_bend(f, buckle)
 			out.append(f)
