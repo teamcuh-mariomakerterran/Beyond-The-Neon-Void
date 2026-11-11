@@ -318,10 +318,20 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 		return out
 	if clip == "death":
 		feet = ((b["LEFT LEG"][0] + b["RIGHT LEG"][0]) / 2, (b["LEFT LEG"][1] + b["RIGHT LEG"][1]) / 2)
-		for th, buckle in ((0.0, 0.0), (8, 1.0), (20, 2.5), (40, 3.0), (62, 2.0), (80, 0.5), (85, 0.0), (85, 0.0)):
+		# The arms come up as the body tips (not a stiff board): 0 standing,
+		# 1 = hands up by the head, settling a little once on the ground.
+		for th, buckle, arms in ((0.0, 0.0, 0.0), (8, 1.0, 0.25), (20, 2.5, 0.55), (40, 3.0, 0.85), (62, 2.0, 1.0), (80, 0.5, 0.9), (85, 0.0, 0.75), (85, 0.0, 0.7)):
 			f = {}
 			r = math.radians(th)
-			for k, (x, y) in b.items():
+			src = dict(b)
+			for s_ in ("LEFT", "RIGHT"):
+				shp, elp, wrp = b[s_ + " SHOULDER"], b[s_ + " ELBOW"], b[s_ + " ARM"]
+				out_ = -1.0 if s_ == "LEFT" else 1.0
+				hand_up = (shp[0] + out_ * 2.0 - ax * 1.0, shp[1] - math.dist(shp, elp) * 1.3)
+				elb_up = (shp[0] + out_ * 2.5, shp[1] - math.dist(shp, elp) * 0.5)
+				src[s_ + " ARM"] = lerp(wrp, hand_up, arms)
+				src[s_ + " ELBOW"] = lerp(elp, elb_up, arms)
+			for k, (x, y) in src.items():
 				h = feet[1] - y  # height above the feet
 				along = (x - feet[0]) + (y - feet[1]) * 0  # sideways offset kept
 				# Tip backward about the feet: height turns into distance behind.
@@ -359,14 +369,21 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 	if clip == "use_item":
 		# Right hand comes up to the chest, then straight up over the head
 		# (the toss), holds, and comes back down; the head tips up to watch.
-		keys = [(0.0, 0.0), (0.4, 0.0), (0.8, 0.3), (1.0, 1.0), (1.0, 1.0), (0.8, 0.6), (0.4, 0.2), (0.0, 0.0)]
-		for chest, up in keys:
+		# (crouch px, hand to chest, hand up): dip at the knees with the hand
+		# at the chest, then rise and toss as the body comes up.
+		keys = [(0.0, 0.0, 0.0), (1.5, 0.5, 0.0), (2.5, 0.9, 0.1), (0.5, 1.0, 0.75), (0.0, 1.0, 1.0), (0.0, 0.8, 0.6), (0.0, 0.4, 0.2), (0.0, 0.0, 0.0)]
+		for crouch, chest, up in keys:
 			f = dict(b)
+			if crouch:
+				legs_bend(f, crouch)
 			top = (sh[0] + ax * 1.0, sh[1] - (upper + fore) * 0.95)
 			mid_chest = (sh[0] + ax * 3.0, sh[1] + 3.0)
+			drop = crouch  # the arm comes down with the body in the dip
 			hand = lerp(lerp(wr, mid_chest, chest), top, up)
+			hand = (hand[0], hand[1] + drop)
 			f["RIGHT ARM"] = hand
-			f["RIGHT ELBOW"] = lerp(lerp(el, (sh[0] + ax * 2.5, sh[1] + 4.0), chest), (sh[0] + ax * 1.5, sh[1] - upper * 0.9), up)
+			e_ = lerp(lerp(el, (sh[0] + ax * 2.5, sh[1] + 4.0), chest), (sh[0] + ax * 1.5, sh[1] - upper * 0.9), up)
+			f["RIGHT ELBOW"] = (e_[0], e_[1] + drop)
 			shift(f, HEAD, 0, -0.8 * up)
 			out.append(f)
 		return out
