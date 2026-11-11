@@ -14,3 +14,9 @@ Walk from our own poses (2026-11-10): the template walk was audited and rejected
 - `--paint-legs`: trousers are the base's drawn legs in the trouser colours (plain cloth). Detailed leg armour would use the same clipping as the far arm instead.
 - `--base-hands`: hands come from the base frame with their outline.
 - `--paint-far-arm`: older option, the far arm as plain recoloured base (no detail).
+
+## Slot plan (Brian, 2026-11-11)
+- **Chest + arms, legs:** PixelLab animates each outfit on the base's exact poses (`aim_pose.py go ... --clip walk2 --id <state>`); `mix_slots.py` mixes chest and legs between outfits at the waist. ~3 credits per facing per action.
+- **Heads:** main characters share the base head for now; hair and helmets cover it. `swap_head.py` (heads from Brian's high top-down 60x60 characters) is for NPCs.
+- **Back slot:** `cut_attachment.py` (outfit with minus without the piece) + `ride_parts.py --back`. Free.
+- **Cut-and-turn riding** (`cut_parts` / `split_parts` / `ride_parts`): crowds and quick previews only; too noisy for detailed armour.
