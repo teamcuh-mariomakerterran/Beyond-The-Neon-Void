@@ -1,5 +1,6 @@
 extends Control
-## Title screen.
+## Dev menu (F2 on the title screen): the old title with the quick battles,
+## test units, gallery and Neon Forge buttons. The real title is TitleScreen.
 
 const FORGE_SCENE := "res://scenes/editor/neon_forge.tscn"
 

@@ -55,6 +55,7 @@ func run(p_tree: SceneTree) -> int:
 	await test_unit_gallery()
 	test_pixellab_padding()
 	test_art_halo()
+	await test_title_screen()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2704,3 +2705,25 @@ func test_art_halo() -> void:
 	var fixed := ArtCutter.fix_rim(tile)
 	check(fixed > 0 and absf(tile.get_pixel(10, 4).r - 0.3) < 0.01 and tile.get_pixel(10, 4).a == 1.0, "a light rim is recoloured, not erased (tiles keep their size)")
 	check(tile.get_pixel(10, 10) == Color.WHITE, "highlights inside a tile stay")
+
+
+## Grok's pixel title menu, hooked into the game (2026-11-11).
+func test_title_screen() -> void:
+	var t: TitleScreen = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	tree.root.add_child(t)
+	await tree.process_frame
+	var m := t.menu
+	check(m != null and m._chrome.size() == NvMainMenu.LOOP and m.compose_image().get_size() == Vector2i(640, 360), "the 640x360 menu loads all 32 background frames")
+	check(m.has_save == SaveManager.has_save_file(), "Continue follows the save file")
+	var moved := []
+	m.selection_changed.connect(func(i: int) -> void: moved.append(i))
+	m.set_sel(1)
+	m.move_sel(1)
+	check(moved == [2] and m.get_sel() == 2, "moving the cursor reports the new item (for the cursor sound)")
+	check(m.new_game_pressed.get_connections().size() > 0 and m.load_pressed.get_connections().size() > 0 and m.options_pressed.get_connections().size() > 0, "every item is hooked up")
+	t._show_load()
+	check(t._overlay != null, "Load opens the slot picker")
+	t.close_overlay()
+	check(t._overlay == null, "Esc / Back closes it")
+	t.queue_free()
+	await tree.process_frame
