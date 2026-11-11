@@ -20,3 +20,7 @@ Walk from our own poses (2026-11-10): the template walk was audited and rejected
 - **Heads:** main characters share the base head for now; hair and helmets cover it. `swap_head.py` (heads from Brian's high top-down 60x60 characters) is for NPCs.
 - **Back slot:** `cut_attachment.py` (outfit with minus without the piece) + `ride_parts.py --back`. Free.
 - **Cut-and-turn riding** (`cut_parts` / `split_parts` / `ride_parts`): crowds and quick previews only; too noisy for detailed armour.
+
+## Playable set, round 1 (Brian, 2026-11-11)
+Hair states in outfit_states.zip: same_character_same_6 = medic with buns (walk done, 4 facings), _2 = #17 undercut, _3 = #40 messy hair under harness, _4 = #20 slicked, jumpjet_dragoon = #12 with a long ponytail, long_coat = #18 slicked back. Skipped: _5 (medic, orange hair).
+Idle: the in-game bob for now. Attack: guns first (pistol / rifle raise-and-fire on our own poses, recoil kick in engine), a melee strike as a second attack later. Every action uses our own poses so slots mix.
