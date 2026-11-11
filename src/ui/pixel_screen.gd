@@ -36,6 +36,8 @@ var rows: Array[Dictionary] = []
 ## Credits mode: lines scroll up instead of rows ("# " = a heading).
 var lines: Array[String] = []
 var sel := 0
+## The panel: full height for credits, otherwise just tall enough for the rows.
+var panel := PANEL
 var _scroll := 0.0
 var _font: Font
 var _t := 0.0
@@ -50,6 +52,9 @@ func _init() -> void:
 
 func _ready() -> void:
 	_font = NeonTheme.font(FONT)
+	if lines.is_empty() and not rows.is_empty():
+		var h := clampi(56 + rows.size() * STEP + 16, 120, PANEL.size.y)
+		panel = Rect2i(PANEL.position.x, (360 - h) / 2, PANEL.size.x, h)
 	if not _enabled(sel):
 		_move(1, false)
 	grab_focus()
@@ -154,7 +159,7 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func row_y(i: int) -> int:
-	return PANEL.position.y + 56 + i * STEP
+	return panel.position.y + 56 + i * STEP
 
 
 func row_at(p: Vector2) -> int:
@@ -167,9 +172,9 @@ func row_at(p: Vector2) -> int:
 # --- drawing --------------------------------------------------------------------
 
 func _draw() -> void:
-	draw_rect(Rect2(PANEL), FILL)
-	draw_rect(Rect2(PANEL), BORDER, false, 1.0)
-	_text_on(Vector2(PANEL.position.x + (PANEL.size.x - _width(title, SIZE)) * 0.5, PANEL.position.y + 22), title)
+	draw_rect(Rect2(panel), FILL)
+	draw_rect(Rect2(panel), BORDER, false, 1.0)
+	_text_on(Vector2(panel.position.x + (panel.size.x - _width(title, SIZE)) * 0.5, panel.position.y + 22), title)
 	if not lines.is_empty():
 		_draw_credits()
 	else:
@@ -204,8 +209,8 @@ func _draw_row(i: int) -> void:
 
 
 func _draw_credits() -> void:
-	var top := PANEL.position.y + 44
-	var bottom := PANEL.end.y - 22
+	var top := panel.position.y + 44
+	var bottom := panel.end.y - 22
 	var y := float(bottom) - _scroll
 	var total := 0
 	for l in lines:
@@ -213,7 +218,7 @@ func _draw_credits() -> void:
 		var txt := l.substr(2) if head else l
 		if y > top and y < bottom:
 			var size := SIZE if head else SMALL * 2
-			var x := PANEL.position.x + (PANEL.size.x - _width(txt, size)) * 0.5
+			var x := panel.position.x + (panel.size.x - _width(txt, size)) * 0.5
 			if head:
 				_text_on(Vector2(x, y + 9), txt)
 			else:

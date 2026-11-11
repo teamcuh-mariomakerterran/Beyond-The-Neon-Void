@@ -653,3 +653,15 @@ func _tab_system() -> void:
 		SettingsFlags.save()
 		Sfx.event("loot"))
 	vol.add_child(sl)
+
+
+## Esc: the pause menu (same menus as the title screen), with saving.
+func _unhandled_key_input(event: InputEvent) -> void:
+	var k := event as InputEventKey
+	if k and k.pressed and not k.echo and k.keycode == KEY_ESCAPE:
+		open_pause()
+		get_viewport().set_input_as_handled()
+
+
+func open_pause() -> void:
+	PixelMenuLayer.open_pause(self, true)

@@ -56,6 +56,7 @@ func run(p_tree: SceneTree) -> int:
 	test_pixellab_padding()
 	test_art_halo()
 	await test_title_screen()
+	await test_pause_menu()
 	await test_photo_mode()
 	await test_painter()
 	await test_explore()
@@ -2724,7 +2725,7 @@ func test_title_screen() -> void:
 	t.show_load()
 	await tree.process_frame
 	check(t.screen != null and t.screen.rows.size() == SaveManager.SLOTS.size() + 1, "Load lists every slot and BACK")
-	check(TitleScreen._slot_line({}) == "EMPTY" and TitleScreen._slot_line({"leader": "Rook", "chapter": 2, "saved_at": "2026-11-10T14:22:01"}) == "ROOK  CH 2  11-10 14:22", "slot lines read leader, chapter, date")
+	check(GameMenus.slot_line({}) == "EMPTY" and GameMenus.slot_line({"leader": "Rook", "chapter": 2, "saved_at": "2026-11-10T14:22:01"}) == "ROOK  CH 2  11-10 14:22", "slot lines read leader, chapter, date")
 	t.close_screen()
 	await tree.process_frame
 	check(t.screen == null, "Esc / Back closes it")
@@ -2754,4 +2755,32 @@ func test_title_screen() -> void:
 	t.close_screen()
 	check(SettingsFlags.db_level(SettingsFlags.level_db(7)) == 7 and SettingsFlags.level_db(0) <= -40.0, "volume levels round-trip")
 	t.queue_free()
+	await tree.process_frame
+
+
+## The pause menu: the title's menus over any scene, pausing the game.
+func test_pause_menu() -> void:
+	var host := Node2D.new()
+	tree.root.add_child(host)
+	var was := tree.paused
+	var left := []
+	var layer := PixelMenuLayer.open_pause(host, true, [["LEAVE AREA", func() -> void: left.append(true)]])
+	await tree.process_frame
+	check(layer != null and tree.paused and PixelMenuLayer.open_pause(host, true) == null, "Esc opens one pause menu and pauses the game")
+	var p: PixelScreen = layer.stack[0]
+	var labels := p.rows.map(func(r: Dictionary) -> String: return str(r["label"]))
+	check(labels == ["RESUME", "OPTIONS", "SAVE GAME", "LOAD GAME", "LEAVE AREA", "QUIT TO TITLE"], "pause rows: resume, options, save, load, extras, quit")
+	p.sel = 1
+	p._call("accept")
+	await tree.process_frame
+	check(layer.stack.size() == 2 and str(layer.stack[1].title) == "OPTIONS" and not p.visible, "Options opens on top; the pause menu waits under it")
+	layer.stack[1].close()
+	await tree.process_frame
+	check(layer.stack.size() == 1 and p.visible, "Back returns to the pause menu")
+	p.sel = 4
+	p._call("accept")
+	await tree.process_frame
+	check(left == [true], "an extra row (LEAVE AREA) closes the menu and runs")
+	check(not PixelMenuLayer.is_open(host) and tree.paused == was, "closing resumes the game")
+	host.queue_free()
 	await tree.process_frame

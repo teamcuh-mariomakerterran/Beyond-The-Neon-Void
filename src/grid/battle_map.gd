@@ -427,6 +427,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if mode == Mode.TARGET or mode == Mode.MOVE:
 			_set_mode(Mode.NONE)
 			hud.show_inspect("")
+		elif event.is_action_pressed("cancel"):
+			# Nothing to back out of: the pause menu (no saving mid-fight).
+			PixelMenuLayer.open_pause(self, false)
 	elif event.is_action_pressed("end_turn") and CombatManager.is_player_turn():
 		_end_turn()
 	elif event.is_action_pressed("move_mode"):

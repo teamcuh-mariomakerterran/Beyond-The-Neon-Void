@@ -819,7 +819,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if k.keycode in [KEY_E, KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]:
 			_interact()
 		elif k.keycode == KEY_ESCAPE:
-			_leave()
+			# The pause menu (same menus as the title); leaving is one of its rows.
+			PixelMenuLayer.open_pause(self, true, [["LEAVE AREA", _leave]])
 		elif k.keycode == KEY_M:
 			toggle_free()
 		elif k.keycode == KEY_R:
