@@ -58,8 +58,10 @@ def ease(t):
 # the kick is done in the engine (GearAttach.fire_kick).
 # A character outside the pool (e.g. the modular base bodies): --id <character id> --zip <export.zip>:<state> [--desc "..."]
 SOURCE = {}
-CLIPS = {"walk": "walk", "walk2": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
-ACTION = {"walk": "walking forward", "walk2": "walking forward, natural stride, arms swinging", "pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
+CLIPS = {"hit": "hit", "death": "death", "jump": "jump", "use_item": "use_item", "throw": "throw", "walk": "walk", "walk2": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
+ACTION = {"hit": "flinching back from a hit", "death": "falling backward to the ground, dead", "jump": "two-footed jump straight up and landing",
+	"use_item": "tossing a small item straight up into the air with the right hand", "throw": "throwing a small item forward overhand with the right hand",
+	"walk": "walking forward", "walk2": "walking forward, natural stride, arms swinging", "pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
 	"rifle_rest": "standing with both hands at the waist", "rifle_raise": "raise both arms forward", "kick": "right wrist jerks up and back"}
 # Clips that start from another take's frame instead of the standing pose:
 # clip -> (kit folder of the start take, its frame, the clip whose pose that frame is).
@@ -77,6 +79,8 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 		return walk_poses(base, size, facing)
 	if clip == "walk2":
 		return gait_poses(base, size, facing)
+	if clip in ("hit", "death", "jump", "use_item", "throw"):
+		return action_poses(base, size, facing, clip)
 	if clip == "rifle_raise":
 		rest = rest_poses(base, size, facing)[0]
 		aim = rifle_poses(base, size, facing)[-1]
@@ -274,6 +278,119 @@ def gait_poses(base: dict, size: int, facing: str, n: int = 8) -> list:
 			f[side + " ARM"] = (wr0[0] + (sh[0] - s0[0]) - ax * swing * c, wr0[1] + (sh[1] - s0[1]) - ay * swing * c - 1.2 * fw)
 		out.append(f)
 	return out
+
+
+def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
+	"""Hit, death, jump, use item and throw, built on the standing skeleton so
+	every outfit animated from them moves the same (slots stay mixable).
+	`fwd` is the facing's ground direction on screen, up is -y."""
+	pad = (CANVAS - size) / 2.0
+	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+	ax, ay = AIM[facing]
+	ln = math.hypot(ax, ay)
+	ax, ay = ax / ln, ay / ln
+	UPPER = ("NECK", "NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR", "LEFT SHOULDER", "RIGHT SHOULDER", "LEFT ELBOW", "RIGHT ELBOW", "LEFT ARM", "RIGHT ARM")
+	HEAD = ("NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR")
+
+	def shift(f, keys, dx, dy):
+		for k in keys:
+			f[k] = (f[k][0] + dx, f[k][1] + dy)
+
+	def legs_bend(f, down, fwd_knee=1.0):
+		# Hips drop, knees go forward: a crouch.
+		shift(f, UPPER + ("LEFT HIP", "RIGHT HIP"), 0, down)
+		for s_ in ("LEFT", "RIGHT"):
+			k = f[s_ + " KNEE"]
+			f[s_ + " KNEE"] = (k[0] + ax * fwd_knee * down, k[1] + ay * fwd_knee * down + down * 0.5)
+
+	out = []
+	if clip == "hit":
+		for t in (0.0, 1.0, 0.85, 0.55, 0.25, 0.0):
+			f = dict(b)
+			# Knocked back: upper body leans back, head snaps back more, arms fly out.
+			shift(f, UPPER, -ax * 2.5 * t, -ay * 2.5 * t)
+			shift(f, HEAD, -ax * 1.0 * t, -ay * 1.0 * t - 0.8 * t)
+			for s_, sg in (("LEFT", -1), ("RIGHT", 1)):
+				w = f[s_ + " ARM"]
+				f[s_ + " ARM"] = (w[0] - ax * 2.0 * t, w[1] - ay * 2.0 * t - 1.5 * t)
+			legs_bend(f, 1.0 * t)
+			out.append(f)
+		return out
+	if clip == "death":
+		feet = ((b["LEFT LEG"][0] + b["RIGHT LEG"][0]) / 2, (b["LEFT LEG"][1] + b["RIGHT LEG"][1]) / 2)
+		for th, buckle in ((0.0, 0.0), (8, 1.0), (20, 2.5), (40, 3.0), (62, 2.0), (80, 0.5), (85, 0.0), (85, 0.0)):
+			f = {}
+			r = math.radians(th)
+			for k, (x, y) in b.items():
+				h = feet[1] - y  # height above the feet
+				along = (x - feet[0]) + (y - feet[1]) * 0  # sideways offset kept
+				# Tip backward about the feet: height turns into distance behind.
+				nx = feet[0] + along - ax * h * math.sin(r) * 0.95
+				ny = feet[1] - ay * h * math.sin(r) * 0.95 - h * math.cos(r)
+				f[k] = (nx, ny)
+			if buckle:
+				legs_bend(f, buckle)
+			out.append(f)
+		return out
+	if clip == "jump":
+		for down, lift, tuck in ((0, 0, 0), (3, 0, 0), (1, 3, 0), (0, 7, 2), (0, 9, 3), (0, 6, 1.5), (3, 0, 0), (1, 0, 0)):
+			f = dict(b)
+			legs_bend(f, down)
+			for k in f:
+				f[k] = (f[k][0], f[k][1] - lift)
+			if tuck:
+				# Feet come up under the body in the air.
+				for s_ in ("LEFT", "RIGHT"):
+					a_ = f[s_ + " LEG"]
+					f[s_ + " LEG"] = (a_[0] - ax * tuck * 0.5, a_[1] - tuck)
+					k_ = f[s_ + " KNEE"]
+					f[s_ + " KNEE"] = (k_[0] + ax * tuck * 0.6, k_[1] + ay * tuck * 0.6 - tuck * 0.4)
+			# Arms swing up on the way up, down on landing.
+			arm_up = lift * 0.5
+			for s_ in ("LEFT", "RIGHT"):
+				w, e = f[s_ + " ARM"], f[s_ + " ELBOW"]
+				f[s_ + " ARM"] = (w[0] + ax * arm_up * 0.3, w[1] - arm_up)
+				f[s_ + " ELBOW"] = (e[0], e[1] - arm_up * 0.5)
+			out.append(f)
+		return out
+	sh, el, wr = b["RIGHT SHOULDER"], b["RIGHT ELBOW"], b["RIGHT ARM"]
+	upper = math.dist(sh, el)
+	fore = math.dist(el, wr)
+	if clip == "use_item":
+		# Right hand comes up to the chest, then straight up over the head
+		# (the toss), holds, and comes back down; the head tips up to watch.
+		keys = [(0.0, 0.0), (0.4, 0.0), (0.8, 0.3), (1.0, 1.0), (1.0, 1.0), (0.8, 0.6), (0.4, 0.2), (0.0, 0.0)]
+		for chest, up in keys:
+			f = dict(b)
+			top = (sh[0] + ax * 1.0, sh[1] - (upper + fore) * 0.95)
+			mid_chest = (sh[0] + ax * 3.0, sh[1] + 3.0)
+			hand = lerp(lerp(wr, mid_chest, chest), top, up)
+			f["RIGHT ARM"] = hand
+			f["RIGHT ELBOW"] = lerp(lerp(el, (sh[0] + ax * 2.5, sh[1] + 4.0), chest), (sh[0] + ax * 1.5, sh[1] - upper * 0.9), up)
+			shift(f, HEAD, 0, -0.8 * up)
+			out.append(f)
+		return out
+	if clip == "throw":
+		# Overhand: wind up behind the head, step in with the left foot,
+		# release forward and up, follow through across, recover.
+		back_hi = (sh[0] - ax * 4.0, sh[1] - upper * 0.9)
+		release = (sh[0] + ax * (upper + fore) * 0.9, sh[1] - 3.0)
+		follow = (sh[0] + ax * 3.0, sh[1] + upper)
+		seq = [(wr, el, 0.0), (lerp(wr, back_hi, 0.6), None, 0.2), (back_hi, None, 0.5), (back_hi, None, 1.0),
+			(release, None, 1.0), (follow, None, 0.8), (lerp(follow, wr, 0.5), None, 0.4), (wr, el, 0.0)]
+		for hand, elbow, step in seq:
+			f = dict(b)
+			f["RIGHT ARM"] = hand
+			f["RIGHT ELBOW"] = elbow if elbow else ((sh[0] + hand[0]) / 2 - ax * 1.0, (sh[1] + hand[1]) / 2 + 1.5)
+			# Step in: the left foot moves forward, body leans into it.
+			la, lk = b["LEFT LEG"], b["LEFT KNEE"]
+			f["LEFT LEG"] = (la[0] + ax * 3.0 * step, la[1] + ay * 3.0 * step)
+			f["LEFT KNEE"] = (lk[0] + ax * 2.2 * step, lk[1] + ay * 2.2 * step)
+			lean = 1.2 * step if hand is release or hand is follow else -0.6 * step
+			shift(f, ("NECK", "LEFT SHOULDER", "RIGHT SHOULDER", "LEFT ELBOW", "LEFT ARM") + HEAD, ax * lean, ay * lean)
+			out.append(f)
+		return out
+	raise ValueError(clip)
 
 
 def rest_poses(base: dict, size: int, facing: str) -> list:
