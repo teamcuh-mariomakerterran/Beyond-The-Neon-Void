@@ -107,7 +107,11 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 		return out
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
-	sh, el, wr = b["RIGHT SHOULDER"], b["RIGHT ELBOW"], b["RIGHT ARM"]
+	# The camera-side hand does the toss or throw, so the arm is never hidden
+	# behind the body: right facing SE/NE, left facing SW/NW.
+	H_ = "RIGHT" if facing in ("SE", "NE", "E", "S") else "LEFT"
+	O_ = "LEFT" if H_ == "RIGHT" else "RIGHT"
+	sh, el, wr = b[H_ + " SHOULDER"], b[H_ + " ELBOW"], b[H_ + " ARM"]
 	upper = math.dist(sh, el)
 	fore = math.dist(el, wr)
 	ax, ay = AIM[facing]
@@ -370,7 +374,11 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 				f[s_ + " ELBOW"] = (e[0], e[1] - arm_up * 0.5)
 			out.append(f)
 		return out
-	sh, el, wr = b["RIGHT SHOULDER"], b["RIGHT ELBOW"], b["RIGHT ARM"]
+	# The camera-side hand does the toss or throw, so the arm is never hidden
+	# behind the body: right facing SE/NE, left facing SW/NW.
+	H_ = "RIGHT" if facing in ("SE", "NE", "E", "S") else "LEFT"
+	O_ = "LEFT" if H_ == "RIGHT" else "RIGHT"
+	sh, el, wr = b[H_ + " SHOULDER"], b[H_ + " ELBOW"], b[H_ + " ARM"]
 	upper = math.dist(sh, el)
 	fore = math.dist(el, wr)
 	if clip == "use_item":
@@ -394,9 +402,9 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 			drop = crouch  # the arm comes down with the body in the dip
 			hand = lerp(lerp(wr, mid_chest, chest), top, up)
 			hand = (hand[0], hand[1] + drop)
-			f["RIGHT ARM"] = hand
+			f[H_ + " ARM"] = hand
 			e_ = lerp(lerp(el, (sh[0] + ax * 2.5, sh[1] + 4.0), chest), (sh[0] + out_x * 2.5 + ax * 1.5, sh[1] - upper * 0.8), up)
-			f["RIGHT ELBOW"] = (e_[0], e_[1] + drop)
+			f[H_ + " ELBOW"] = (e_[0], e_[1] + drop)
 			shift(f, HEAD, 0, -0.8 * up)
 			out.append(f)
 		return out
@@ -410,14 +418,14 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 			(release, None, 1.0), (follow, None, 0.8), (lerp(follow, wr, 0.5), None, 0.4), (wr, el, 0.0)]
 		for hand, elbow, step in seq:
 			f = dict(b)
-			f["RIGHT ARM"] = hand
-			f["RIGHT ELBOW"] = elbow if elbow else ((sh[0] + hand[0]) / 2 - ax * 1.0, (sh[1] + hand[1]) / 2 + 1.5)
+			f[H_ + " ARM"] = hand
+			f[H_ + " ELBOW"] = elbow if elbow else ((sh[0] + hand[0]) / 2 - ax * 1.0, (sh[1] + hand[1]) / 2 + 1.5)
 			# Step in: the left foot moves forward, body leans into it.
-			la, lk = b["LEFT LEG"], b["LEFT KNEE"]
-			f["LEFT LEG"] = (la[0] + ax * 3.0 * step, la[1] + ay * 3.0 * step)
-			f["LEFT KNEE"] = (lk[0] + ax * 2.2 * step, lk[1] + ay * 2.2 * step)
+			la, lk = b[O_ + " LEG"], b[O_ + " KNEE"]
+			f[O_ + " LEG"] = (la[0] + ax * 3.0 * step, la[1] + ay * 3.0 * step)
+			f[O_ + " KNEE"] = (lk[0] + ax * 2.2 * step, lk[1] + ay * 2.2 * step)
 			lean = 1.2 * step if hand is release or hand is follow else -0.6 * step
-			shift(f, ("NECK", "LEFT SHOULDER", "RIGHT SHOULDER", "LEFT ELBOW", "LEFT ARM") + HEAD, ax * lean, ay * lean)
+			shift(f, ("NECK", "LEFT SHOULDER", "RIGHT SHOULDER", O_ + " ELBOW", O_ + " ARM") + HEAD, ax * lean, ay * lean)
 			out.append(f)
 		return out
 	raise ValueError(clip)
