@@ -70,6 +70,32 @@ def main() -> None:
 			for x, y in near:
 				if 0 <= x < im.width and 0 <= y < im.height:
 					px[x, y] = dp[x, y]
+		# Small loose pieces off the figure (an item PixelLab drew flying away,
+		# a stray speck): the game draws items itself.
+		seen, blobs = set(), []
+		for y in range(H):
+			for x in range(W):
+				if px[x, y][3] < 128 or (x, y) in seen:
+					continue
+				blob, todo = [], [(x, y)]
+				seen.add((x, y))
+				while todo:
+					q = todo.pop()
+					blob.append(q)
+					for dx in (-1, 0, 1):
+						for dy in (-1, 0, 1):
+							r_ = (q[0] + dx, q[1] + dy)
+							if 0 <= r_[0] < W and 0 <= r_[1] < H and r_ not in seen and px[r_[0], r_[1]][3] >= 128:
+								seen.add(r_)
+								todo.append(r_)
+				blobs.append(blob)
+		if len(blobs) > 1:
+			big = max(len(b_) for b_ in blobs)
+			for b_ in blobs:
+				if len(b_) < big and len(b_) <= 24:
+					for x, y in b_:
+						px[x, y] = (0, 0, 0, 0)
+					gone += len(b_)
 		im.save(os.path.join(out, os.path.basename(p)))
 		if gone:
 			print(os.path.basename(p), "ghost grey removed:", gone)

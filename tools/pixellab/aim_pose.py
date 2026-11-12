@@ -60,7 +60,7 @@ def ease(t):
 SOURCE = {}
 CLIPS = {"hit": "hit", "death": "death", "jump": "jump", "use_item": "use_item", "throw": "throw", "walk": "walk", "walk2": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
 ACTION = {"hit": "flinching back from a hit", "death": "falling backward to the ground, dead", "jump": "two-footed jump straight up and landing",
-	"use_item": "tossing a small item straight up into the air with the right hand", "throw": "throwing a small item forward overhand with the right hand",
+	"use_item": "dipping at the knees, then raising one empty hand up over the head", "throw": "overhand throwing motion with an empty hand, stepping forward",
 	"walk": "walking forward", "walk2": "walking forward, natural stride, arms swinging", "pistol15": "aim and fire", "pistol": "raise right arm forward", "rifle": "raise both arms forward",
 	"rifle_rest": "standing with both hands at the waist", "rifle_raise": "raise both arms forward", "kick": "right wrist jerks up and back"}
 # Clips that start from another take's frame instead of the standing pose:
