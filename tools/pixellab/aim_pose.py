@@ -121,6 +121,8 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 	# Facings where the aimed arm crosses the body (SE, NW) read short, so reach a bit further.
 	reach = (upper + fore) * (1.15 if facing in ("SE", "NW") else 0.95)
 	nx, ny = AIM_NUDGE.get(facing, (0.0, 0.0))
+	if SOURCE.get("nudge"):  # --nudge dx,dy: per-unit hand offset (e.g. clear a wide hairdo facing NW)
+		nx, ny = (float(v) for v in SOURCE["nudge"].split(","))
 	wr_aim = (sh[0] + ax * reach + nx, sh[1] + ay * reach - 1.5 + ny)
 	el_aim = (sh[0] + ax * reach * 0.5, sh[1] + ay * reach * 0.5)
 	# Kick: hand up 3 px and back 2 px toward the shoulder; elbow bends a little.
@@ -640,7 +642,7 @@ if __name__ == "__main__":
 		i = sys.argv.index("--clip")
 		clip = sys.argv[i + 1]
 		del sys.argv[i:i + 2]
-	for opt in ("--id", "--zip", "--desc", "--chain"):
+	for opt in ("--id", "--zip", "--desc", "--chain", "--nudge"):
 		if opt in sys.argv:
 			i = sys.argv.index(opt)
 			SOURCE[opt[2:]] = sys.argv[i + 1]
