@@ -108,13 +108,13 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 		return out
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
-	# The camera-side hand does the toss or throw, so the arm is never hidden
-	# behind the body: right facing SE/NE, left facing SW/NW.
-	H_ = "RIGHT" if facing in ("SE", "NE", "E", "S") else "LEFT"
-	O_ = "LEFT" if H_ == "RIGHT" else "RIGHT"
-	sh, el, wr = b[H_ + " SHOULDER"], b[H_ + " ELBOW"], b[H_ + " ARM"]
-	upper = math.dist(sh, el)
-	fore = math.dist(el, wr)
+	# The pistol is always in the right hand (the game attaches it there).
+	sh, el, wr = b["RIGHT SHOULDER"], b["RIGHT ELBOW"], b["RIGHT ARM"]
+	# A hidden far arm can be labelled on top of the near one (both elbows and
+	# hands on one spot), which makes its upper arm read twice as long: take
+	# the shorter side's bones.
+	upper = min(math.dist(sh, el), math.dist(b["LEFT SHOULDER"], b["LEFT ELBOW"]))
+	fore = min(math.dist(el, wr), math.dist(b["LEFT ELBOW"], b["LEFT ARM"]))
 	ax, ay = AIM[facing]
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
