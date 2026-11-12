@@ -327,7 +327,12 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 			# Tip backward about the feet: height turns into distance behind.
 			r = math.radians(deg)
 			h = feet[1] - y
-			return (x - ax * h * math.sin(r) * 0.95, feet[1] - ay * h * math.sin(r) * 0.95 - h * math.cos(r))
+			# The lying body is a little shorter than standing height (seen
+			# at an angle) and slides a few px toward the feet, so the head
+			# lands well inside the canvas (PixelLab draws heads bigger than
+			# the skeleton; at 0.95 and no slide they ran off the edge).
+			k = math.sin(r)
+			return (x - ax * h * k * 0.72 + ax * 5.0 * k, feet[1] - ay * h * k * 0.72 + ay * 5.0 * k - h * math.cos(r))
 
 		# (body tip, knee buckle, arm lag, arm lift): the arms are left a beat
 		# behind as the body goes back (they tip less than the body, floating a
