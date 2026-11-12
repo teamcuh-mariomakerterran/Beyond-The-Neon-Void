@@ -57,6 +57,7 @@ def ease(t):
 # gun). "pistol" and "rifle" are raise + hold only (8 frames, 3 generations);
 # the kick is done in the engine (GearAttach.fire_kick).
 # A character outside the pool (e.g. the modular base bodies): --id <character id> --zip <export.zip>:<state> [--desc "..."]
+# [--chain <frames dir>] (rifle_raise / kick: the unit's own rifle_rest / pistol take to start from).
 SOURCE = {}
 CLIPS = {"hit": "hit", "death": "death", "jump": "jump", "use_item": "use_item", "throw": "throw", "walk": "walk", "walk2": "walk", "pistol15": "aim", "pistol": "aim", "rifle": "aim_rifle", "rifle_rest": "rest_rifle", "rifle_raise": "aim_rifle", "kick": "kick"}
 ACTION = {"hit": "flinching back from a hit", "death": "falling backward to the ground, dead", "jump": "two-footed jump straight up and landing",
@@ -467,7 +468,11 @@ def start(n: int, facing: str, clip: str, base: dict, w: int, png: bytes):
 	"""The first frame PixelLab redraws from, and the pose it is in (canvas px)."""
 	if clip in CHAIN:
 		folder, fi, src_clip = CHAIN[clip]
-		path = os.path.join("assets", "kit", "pool_%03d" % n, folder % facing, "frame_%03d.png" % fi)
+		# A unit outside the pool chains from its own take: --chain <dir> (its folder).
+		if SOURCE.get("chain"):
+			path = os.path.join(SOURCE["chain"], "frame_%03d.png" % fi)
+		else:
+			path = os.path.join("assets", "kit", "pool_%03d" % n, folder % facing, "frame_%03d.png" % fi)
 		first = poses(base, w, facing, src_clip)[fi]
 		return open(path, "rb").read(), first
 	pad = (CANVAS - w) / 2.0
@@ -635,7 +640,7 @@ if __name__ == "__main__":
 		i = sys.argv.index("--clip")
 		clip = sys.argv[i + 1]
 		del sys.argv[i:i + 2]
-	for opt in ("--id", "--zip", "--desc"):
+	for opt in ("--id", "--zip", "--desc", "--chain"):
 		if opt in sys.argv:
 			i = sys.argv.index(opt)
 			SOURCE[opt[2:]] = sys.argv[i + 1]
