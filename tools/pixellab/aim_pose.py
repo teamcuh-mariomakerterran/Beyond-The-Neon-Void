@@ -630,10 +630,13 @@ def load(n: int, facing: str):
 		d = pilot.call("GET", "/characters/%s" % SOURCE["id"])
 		kp = d["skeletons"]["2d_references"][DIRS[facing]]["keypoints"]
 		w, h = int(d["size"]["width"]), int(d["size"]["height"])
-		base = {k: (v["x"] * (w - 1), v["y"] * (h - 1)) for k, v in kp.items()}
+		# The poses pad both axes by (CANVAS - w) / 2; a sprite wider than tall
+		# (68x60, the winged dragoon) is centred by its own height too, so its
+		# feet sit on the same canvas line as the 60x60 units: shift y by (w - h) / 2.
+		base = {k: (v["x"] * (w - 1), v["y"] * (h - 1) + (w - h) / 2.0) for k, v in kp.items()}
 		zp, state = SOURCE["zip"].rsplit(":", 1)
 		png = zipfile.ZipFile(zp).read("%s/rotations/%s.png" % (state, DIRS[facing]))
-		return {"n": 0, "character_id": SOURCE["id"]}, d, base, w, png
+		return {"n": 0, "character_id": SOURCE["id"]}, d, base, w, padded(png, w, h, raw=True)
 	c = char(n)
 	d = pilot.call("GET", "/characters/%s" % c["character_id"])
 	kp = d["skeletons"]["2d_references"][DIRS[facing]]["keypoints"]
@@ -644,9 +647,20 @@ def load(n: int, facing: str):
 	return c, d, base, w, png
 
 
-def padded(png: bytes, size: int) -> bytes:
+def padded(png: bytes, size: int, h: int = 0, raw: bool = False) -> bytes:
+	"""The sprite centred on the CANVAS square. raw=True: only pad a sprite
+	wider than tall to a size x size square first (centred by its height), so
+	the usual square padding below lines it up with the 60x60 units."""
 	from PIL import Image
 	im = Image.open(io.BytesIO(png)).convert("RGBA")
+	if raw:
+		if not h or h == size:
+			return png
+		sq = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+		sq.paste(im, (0, (size - h) // 2))
+		buf = io.BytesIO()
+		sq.save(buf, "PNG")
+		return buf.getvalue()
 	c = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
 	p = (CANVAS - size) // 2
 	c.paste(im, (p, p))
