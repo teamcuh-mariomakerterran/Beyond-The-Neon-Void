@@ -224,6 +224,28 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	G_, S_ = gun_sides(b, facing)
 	end = dict(b)
 	end.update({k: v for k, v in pose3d.rifle(b, facing, "rifle_raise", AIM[facing], up, fo, G_).items() if not k.startswith("_")})
+	if facing.startswith("N"):
+		# Seen from behind the gun and both hands are in front of the body,
+		# so they're hidden: hands tucked in at shoulder height near the
+		# middle, elbows out to each side (photo #6). Sending hands out at the
+		# sides made PixelLab bend the arms backwards (Brian, 2026-11-13).
+		ax, ay = AIM[facing]
+		shs, shg, nk = b[S_ + " SHOULDER"], b[G_ + " SHOULDER"], b["NECK"]
+		y = (shs[1] + shg[1]) / 2 + 1.5
+		wg = (shg[0] + (nk[0] - shg[0]) * 0.45, y)
+		ws = (nk[0] + (shs[0] - nk[0]) * 0.55, y - 0.5)
+		# The arms point into the screen, so they're drawn shortened, never
+		# longer than the real bones: elbow a little out and down from its
+		# shoulder (the trigger one further out, the support one tucked under),
+		# forearm in to the hand.
+		for sd, hand, ox, oy in ((G_, wg, 0.6, 0.6), (S_, ws, 0.3, 0.75)):
+			sh = end[sd + " SHOULDER"]
+			o_ = 1.0 if sh[0] >= nk[0] else -1.0
+			e = (sh[0] + o_ * ox * up, sh[1] + oy * up)
+			d = math.dist(e, hand)
+			if d > fo:
+				hand = (e[0] + (hand[0] - e[0]) * fo / d, e[1] + (hand[1] - e[1]) * fo / d)
+			end[sd + " ARM"], end[sd + " ELBOW"] = hand, e
 	out = []
 	for t in RAISE + [1.0] * 3:
 		e = ease(t)
