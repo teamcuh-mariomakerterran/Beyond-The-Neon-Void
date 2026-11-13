@@ -144,23 +144,66 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 	return out
 
 
-def rifle_poses(base: dict, size: int, facing: str) -> list:
-	"""Two hands on a long gun: stock at the right shoulder, right hand on the
-	grip just in front of it, left hand out on the barrel, both on the aim line."""
-	pad = (CANVAS - size) / 2.0
-	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
-	shr, elr, wrr = b["RIGHT SHOULDER"], b["RIGHT ELBOW"], b["RIGHT ARM"]
-	shl, ell, wrl = b["LEFT SHOULDER"], b["LEFT ELBOW"], b["LEFT ARM"]
-	arm = math.dist(shr, elr) + math.dist(elr, wrr)
+def _bones(b: dict) -> tuple:
+	"""(upper, fore) arm length: the shorter side's, because a hidden far arm
+	is sometimes labelled on top of the near one and reads too long."""
+	up = min(math.dist(b[s + " SHOULDER"], b[s + " ELBOW"]) for s in ("RIGHT", "LEFT"))
+	fo = min(math.dist(b[s + " ELBOW"], b[s + " ARM"]) for s in ("RIGHT", "LEFT"))
+	return up, fo
+
+
+def _ik(sh, hand, up: float, fo: float, aim: tuple, reach: float = 0.92):
+	"""Hand pulled in to reach * arm length, and the elbow for it with the real
+	bone lengths, bent down and away from the aim (never a locked, punching arm)."""
+	d = math.dist(sh, hand)
+	lim = (up + fo) * reach
+	if d > lim:
+		hand = (sh[0] + (hand[0] - sh[0]) * lim / d, sh[1] + (hand[1] - sh[1]) * lim / d)
+		d = lim
+	d = max(d, abs(up - fo) + 0.01)
+	ux, uy = (hand[0] - sh[0]) / d, (hand[1] - sh[1]) / d
+	ca = max(-1.0, min(1.0, (up * up + d * d - fo * fo) / (2 * up * d)))
+	sa = math.sqrt(1 - ca * ca)
+	cands = [(sh[0] + up * (ux * ca - uy * sa * sg), sh[1] + up * (uy * ca + ux * sa * sg)) for sg in (1, -1)]
+	elbow = max(cands, key=lambda e: e[1] - (e[0] * aim[0] + e[1] * aim[1]) * 0.5)
+	return hand, elbow
+
+
+def _two_hands(b: dict, facing: str, grip: tuple, spacing: float):
+	"""Grip (right) hand at grip; support (left) hand ahead of it along the aim,
+	as far as `spacing` arm lengths but only as far as the left arm reaches. On
+	these chibi bodies the facings where the gun shoulder is the forward one
+	(SW, NE) keep the hands close in front of the chest; the drawn gun reaches."""
+	up, fo = _bones(b)
+	L = up + fo
 	ax, ay = AIM[facing]
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
-	# The gun line starts at the right shoulder, a little low.
-	o = (shr[0], shr[1] + 1.0)
-	wrr_aim = (o[0] + ax * arm * 0.5, o[1] + ay * arm * 0.5 + 0.5)
-	wrl_aim = (o[0] + ax * arm * 1.5, o[1] + ay * arm * 1.5 - 0.5)
-	elr_aim = ((shr[0] + wrr_aim[0]) / 2 - ax * 1.5, max(shr[1], wrr_aim[1]) + 3.0)
-	ell_aim = ((shl[0] + wrl_aim[0]) / 2, (shl[1] + wrl_aim[1]) / 2 + 2.5)
+	shr, shl = b["RIGHT SHOULDER"], b["LEFT SHOULDER"]
+	wr, er = _ik(shr, grip, up, fo, (ax, ay))
+	s = spacing * L
+	while s > 0.15 * L and math.dist(shl, (wr[0] + ax * s, wr[1] + ay * s + 0.6)) > 0.92 * L:
+		s -= 0.25
+	wl, el = _ik(shl, (wr[0] + ax * s, wr[1] + ay * s + 0.6), up, fo, (ax, ay))
+	return wr, er, wl, el
+
+
+def rifle_poses(base: dict, size: int, facing: str) -> list:
+	"""Two hands on a long gun: stock at the right shoulder, right hand on the
+	grip just ahead of and below it, left hand under the barrel a little further
+	on. Every arm keeps its real length (Brian, 2026-11-13: the old pose pulled
+	the support arm out of its socket)."""
+	pad = (CANVAS - size) / 2.0
+	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+	up, fo = _bones(b)
+	L = up + fo
+	ax, ay = AIM[facing]
+	ln = math.hypot(ax, ay)
+	ax, ay = ax / ln, ay / ln
+	shr = b["RIGHT SHOULDER"]
+	grip = (shr[0] + ax * 0.35 * L, shr[1] + ay * 0.35 * L + 0.2 * L)
+	wrr_aim, elr_aim, wrl_aim, ell_aim = _two_hands(b, facing, grip, 0.55)
+	elr, wrr, ell, wrl = b["RIGHT ELBOW"], b["RIGHT ARM"], b["LEFT ELBOW"], b["LEFT ARM"]
 	out = []
 	for t in RAISE + [1.0] * 3:
 		f = dict(b)
@@ -440,22 +483,22 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 
 
 def rest_poses(base: dict, size: int, facing: str) -> list:
-	"""Long gun at rest (Brian's reference): carried level at the waist in both
-	hands, barrel forward; three frames of breathing."""
+	"""Long gun at rest (Brian's reference): carried level, low, in both hands,
+	barrel forward; three frames of breathing. Hands at the belly, not the hip:
+	a chibi arm hanging straight only just reaches the hip, so the far hand
+	could not get there without stretching."""
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
-	shr, shl = b["RIGHT SHOULDER"], b["LEFT SHOULDER"]
-	hr, hl = b["RIGHT HIP"], b["LEFT HIP"]
-	arm = math.dist(shr, b["RIGHT ELBOW"]) + math.dist(b["RIGHT ELBOW"], b["RIGHT ARM"])
+	up, fo = _bones(b)
+	L = up + fo
 	ax, ay = AIM[facing]
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
-	waist = ((hr[0] + hl[0]) / 2, min(hr[1], hl[1]) - 2.0)
-	# Grip hand at the hip on the gun side, support hand forward along the aim, level.
-	wr = (hr[0] + ax * 2.0, waist[1])
-	wl = (wr[0] + ax * arm * 0.85, wr[1] + ay * arm * 0.25)
-	er = ((shr[0] + wr[0]) / 2 - ax * 2.0, (shr[1] + wr[1]) / 2 + 1.0)
-	el = ((shl[0] + wl[0]) / 2, (shl[1] + wl[1]) / 2 + 2.0)
+	shr = b["RIGHT SHOULDER"]
+	grip = (shr[0] + ax * 0.15 * L, shr[1] + 0.7 * L)
+	wr, er, wl, el = _two_hands(b, facing, grip, 0.5)
+	wl = (wl[0], min(wl[1], wr[1] + 1.0))  # level, the barrel not drooping
+	wl, el = _ik(b["LEFT SHOULDER"], wl, up, fo, (ax, ay))
 	out = []
 	for breath in (0.0, 0.5, 0.0):
 		f = dict(b)
