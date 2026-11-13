@@ -1,0 +1,2 @@
+frame_003: a see-through ghost hand right of the body removed by hand (2026-11-13). Untouched take: ../neon_coat_rifle_raise_SE/
+frame_003: an outline-less ghost hand right of the body (x58-67, y43-47) removed by hand (2026-11-13). Untouched take: ../neon_coat_rifle_raise_SE/
