@@ -201,9 +201,16 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
 	shr = b["RIGHT SHOULDER"]
-	grip = (shr[0] + ax * 0.35 * L, shr[1] + ay * 0.35 * L + 0.2 * L)
+	# Shouldered (Brian, 2026-11-13): the stock sits in the shoulder pocket, so
+	# the gun line runs out from the shoulder at cheek height; the grip hand is
+	# on that line just ahead of the shoulder, a pixel under the gun.
+	grip = (shr[0] + ax * 0.3 * L, shr[1] + ay * 0.3 * L + 1.0)
 	wrr_aim, elr_aim, wrl_aim, ell_aim = _two_hands(b, facing, grip, 0.9)
 	elr, wrr, ell, wrl = b["RIGHT ELBOW"], b["RIGHT ARM"], b["LEFT ELBOW"], b["LEFT ARM"]
+	# Cheek on the stock: the head dips and leans a little toward the gun
+	# shoulder and along the aim, to look down the sights.
+	neck = b["NECK"]
+	lean = ((shr[0] - neck[0]) * 0.25 + ax * 0.8, 1.5)
 	out = []
 	for t in RAISE + [1.0] * 3:
 		f = dict(b)
@@ -212,6 +219,9 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 		f["RIGHT ARM"] = lerp(wrr, wrr_aim, e)
 		f["LEFT ELBOW"] = lerp(ell, ell_aim, min(1.0, e * 1.15))
 		f["LEFT ARM"] = lerp(wrl, wrl_aim, e)
+		for k in ("NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR"):
+			if k in f:
+				f[k] = (f[k][0] + lean[0] * e, f[k][1] + lean[1] * e)
 		out.append(f)
 	return out
 
