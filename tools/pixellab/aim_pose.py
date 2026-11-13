@@ -224,21 +224,6 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	G_, S_ = gun_sides(b, facing)
 	end = dict(b)
 	end.update({k: v for k, v in pose3d.rifle(b, facing, "rifle_raise", AIM[facing], up, fo, G_).items() if not k.startswith("_")})
-	if facing.startswith("N"):
-		# From behind, PixelLab can't draw an arm pointing into the screen: it
-		# redraws a foreshortened arm as a sideways limb (audit of the medic NW
-		# 3D take, 2026-11-13). So the back view uses what reads from behind
-		# (photo #6, Brian's sketch): the near support arm in an L, elbow out
-		# and down, forearm up to the barrel at shoulder height out past the
-		# shoulder; the far trigger elbow out to its side at shoulder height.
-		L = up + fo
-		ax, ay = AIM[facing]
-		shs, shg = b[S_ + " SHOULDER"], b[G_ + " SHOULDER"]
-		out_s = 1.0 if shs[0] >= b["NECK"][0] else -1.0
-		ws, es = _ik(shs, (shs[0] + out_s * 0.38 * L, shs[1] - 0.3 * L), up, fo, (ax, ay), out=out_s)
-		eg = (shg[0] - out_s * 0.48 * up * 2, shg[1] + 0.1 * up)
-		wg = (eg[0] + out_s * fo * 0.95, eg[1] - 0.2 * fo)
-		end.update({S_ + " ARM": ws, S_ + " ELBOW": es, G_ + " ELBOW": eg, G_ + " ARM": wg})
 	out = []
 	for t in RAISE + [1.0] * 3:
 		e = ease(t)
