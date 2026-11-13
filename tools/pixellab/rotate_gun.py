@@ -5,7 +5,7 @@ drawn) with PixelLab, two ways, to compare (Brian, 2026-11-13):
   b: /rotate                  - SW drawing in, NW out (one call); NE is its mirror
 
     python3 -I tools/pixellab/rotate_gun.py <a|b> neon_pistol_01          # plan + input picture (free)
-    python3 -I tools/pixellab/rotate_gun.py <a|b> neon_pistol_01 --go     # spends
+    python3 -I tools/pixellab/rotate_gun.py <a|b> neon_pistol_01 --go     # spends (SEED=<n> for another take; the same input gives the same picture)
 
 Input: assets/gear/weapons/<name>/SW.png centred on a 32x32 canvas (native size,
 so the result is drawn at the size it's shown in a hand). Output:
@@ -70,7 +70,8 @@ def main() -> None:
 		r = pilot.call("POST", "/rotate", {
 			"image_size": {"width": SIZE, "height": SIZE}, "from_image": pilot.b64(src),
 			"from_view": "low top-down", "to_view": "low top-down",
-			"from_direction": "south-west", "to_direction": "north-west"})
+			"from_direction": "south-west", "to_direction": "north-west",
+			**({"seed": int(os.environ["SEED"])} if os.environ.get("SEED") else {})})
 		save_b64(r["image"]["base64"], os.path.join(out, "NW.png"))
 		log["usage"] = r.get("usage")
 	time.sleep(3)

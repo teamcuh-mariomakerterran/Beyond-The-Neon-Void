@@ -11,7 +11,7 @@
 		],
 		"NW": [
 			18,
-			12
+			14
 		],
 		"SE": [
 			5,
@@ -19,7 +19,7 @@
 		],
 		"NE": [
 			5,
-			12
+			14
 		]
 	},
 	"z": {},
@@ -28,9 +28,9 @@
 	"cover": 2,
 	"axis": {
 		"SW": 157.0,
-		"NW": 157.0,
+		"NW": -166.1,
 		"SE": 23.0,
-		"NE": 23.0
+		"NE": 346.1
 	},
-	"source": "Brian's pistol sheet pistols_sheet_49.png #24, drawn SW (SE/NE mirrored), axis fit + grip at the handle top, tools/gear/import_pistol_sheet.py"
+	"source": "Brian's pistol sheet pistols_sheet_49.png #24, drawn SW (SE/NE mirrored), axis fit + grip at the handle top, tools/gear/import_pistol_sheet.py | NW drawn by PixelLab rotate from the SW drawing, NE its mirror (tools/gear/import_pistol_rotations.py)"
 }

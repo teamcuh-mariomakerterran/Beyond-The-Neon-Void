@@ -1,0 +1,13 @@
+{
+	"name": "neon_pistol_42",
+	"mode": "b",
+	"size": 32,
+	"balance_before": 6043.45,
+	"usage": {
+		"type": "generations",
+		"generations": 1.0
+	},
+	"balance_after": 6042.45,
+	"balance_drop": 1.0,
+	"at": "2026-11-13 16:13"
+}

@@ -2,12 +2,12 @@
 	"name": "neon_pistol_08",
 	"mode": "b",
 	"size": 32,
-	"balance_before": 6083.45,
+	"balance_before": 6025.45,
 	"usage": {
 		"type": "generations",
 		"generations": 1.0
 	},
-	"balance_after": 6082.45,
+	"balance_after": 6024.45,
 	"balance_drop": 1.0,
-	"at": "2026-11-13 16:05"
+	"at": "2026-11-13 16:16"
 }
