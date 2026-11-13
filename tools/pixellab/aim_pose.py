@@ -519,10 +519,17 @@ def rest_poses(base: dict, size: int, facing: str) -> list:
 	# the gun (at least 0.6 arm, about two thirds of a rifle's grip spacing):
 	# from a low grip the support arm can't reach forward, the hands bunch up
 	# and the gun hangs down.
-	for h in (0.7, 0.6, 0.5, 0.4, 0.3):
-		grip = (shg[0] + ax * 0.1 * L, shg[1] + h * L)
-		hands = _two_hands(b, facing, grip, 0.85, droop=25.0)
-		if hands["spacing"] >= 0.6 * L:
+	# Lowest carry first (Brian, 2026-11-13: SE/SW rest sat too high); a
+	# shallower barrel before a higher grip. 0.5 arm apart (about 6.5 px) is
+	# still past half the gun's grip spacing, so the game holds it by both grips.
+	hands = None
+	for h in (0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4):
+		for droop in (25.0, 15.0, 5.0, -10.0, -20.0):
+			grip = (shg[0] + ax * 0.1 * L, shg[1] + h * L)
+			hands = _two_hands(b, facing, grip, 0.85, droop=droop)
+			if hands["spacing"] >= 0.5 * L:
+				break
+		if hands["spacing"] >= 0.5 * L:
 			break
 	out = []
 	for breath in (0.0, 0.5, 0.0):
