@@ -181,7 +181,7 @@ def gun_sides(b: dict, facing: str) -> tuple:
 	return ("RIGHT", "LEFT") if r <= l else ("LEFT", "RIGHT")
 
 
-def _two_hands(b: dict, facing: str, grip: tuple, spacing: float):
+def _two_hands(b: dict, facing: str, grip: tuple, spacing: float, droop: float = 0.0):
 	"""Grip hand at `grip`; support hand ahead of it along the aim by `spacing`
 	arm lengths (about the gun's two grips apart), only as far as the support
 	arm reaches. Returns {side: (hand, elbow)}."""
@@ -192,11 +192,15 @@ def _two_hands(b: dict, facing: str, grip: tuple, spacing: float):
 	ax, ay = ax / ln, ay / ln
 	G_, S_ = gun_sides(b, facing)
 	wg, eg = _ik(b[G_ + " SHOULDER"], grip, up, fo, (ax, ay))
+	# droop: the barrel angled down by that many degrees (a low carry).
+	if droop:
+		r = math.radians(droop) * (1 if ax >= 0 else -1)
+		ax, ay = ax * math.cos(r) - ay * math.sin(r), ax * math.sin(r) + ay * math.cos(r)
 	s = spacing * L
 	while s > 0.15 * L and math.dist(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6)) > 0.92 * L:
 		s -= 0.25
 	ws, es = _ik(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6), up, fo, (ax, ay))
-	return {G_: (wg, eg), S_: (ws, es)}
+	return {G_: (wg, eg), S_: (ws, es), "spacing": math.dist(wg, ws)}
 
 
 def rifle_poses(base: dict, size: int, facing: str) -> list:
@@ -511,11 +515,15 @@ def rest_poses(base: dict, size: int, facing: str) -> list:
 	ax, ay = ax / ln, ay / ln
 	G_, S_ = gun_sides(b, facing)
 	shg = b[G_ + " SHOULDER"]
-	grip = (shg[0] + ax * 0.1 * L, shg[1] + 0.7 * L)
-	hands = _two_hands(b, facing, grip, 0.85)
-	ws, _ = hands[S_]
-	ws = (ws[0], min(ws[1], hands[G_][0][1] - 0.5))  # barrel level or a touch up
-	hands[S_] = _ik(b[S_ + " SHOULDER"], ws, up, fo, (ax, ay))
+	# As low as the belly, but high enough that the support hand gets out along
+	# the gun (at least 0.6 arm, about two thirds of a rifle's grip spacing):
+	# from a low grip the support arm can't reach forward, the hands bunch up
+	# and the gun hangs down.
+	for h in (0.7, 0.6, 0.5, 0.4, 0.3):
+		grip = (shg[0] + ax * 0.1 * L, shg[1] + h * L)
+		hands = _two_hands(b, facing, grip, 0.85, droop=25.0)
+		if hands["spacing"] >= 0.6 * L:
+			break
 	out = []
 	for breath in (0.0, 0.5, 0.0):
 		f = dict(b)
