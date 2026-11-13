@@ -1,0 +1,1 @@
+Steadied (Brian, 2026-11-13): frames 0-1 are the rest frame, 5-7 copy frame 4. Untouched take: ../samurai_rifle_raise_NW/
