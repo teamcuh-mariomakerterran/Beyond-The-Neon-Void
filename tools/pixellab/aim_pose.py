@@ -152,9 +152,12 @@ def _bones(b: dict) -> tuple:
 	return up, fo
 
 
-def _ik(sh, hand, up: float, fo: float, aim: tuple, reach: float = 0.92):
+def _ik(sh, hand, up: float, fo: float, aim: tuple, reach: float = 0.92, out: float = 0.0):
 	"""Hand pulled in to reach * arm length, and the elbow for it with the real
-	bone lengths, bent down and away from the aim (never a locked, punching arm)."""
+	bone lengths, bent down and away from the aim (never a locked, punching arm).
+	out (+1 / -1, screen x): prefer the elbow flared out to that side and down,
+	as seen from behind (back facings, Brian 2026-11-13: an inward elbow made
+	the near arm read as shoved straight up)."""
 	d = math.dist(sh, hand)
 	lim = (up + fo) * reach
 	if d > lim:
@@ -165,7 +168,10 @@ def _ik(sh, hand, up: float, fo: float, aim: tuple, reach: float = 0.92):
 	ca = max(-1.0, min(1.0, (up * up + d * d - fo * fo) / (2 * up * d)))
 	sa = math.sqrt(1 - ca * ca)
 	cands = [(sh[0] + up * (ux * ca - uy * sa * sg), sh[1] + up * (uy * ca + ux * sa * sg)) for sg in (1, -1)]
-	elbow = max(cands, key=lambda e: e[1] - (e[0] * aim[0] + e[1] * aim[1]) * 0.5)
+	if out:
+		elbow = max(cands, key=lambda e: e[1] + (e[0] - sh[0]) * out * 1.5)
+	else:
+		elbow = max(cands, key=lambda e: e[1] - (e[0] * aim[0] + e[1] * aim[1]) * 0.5)
 	return hand, elbow
 
 
@@ -191,7 +197,11 @@ def _two_hands(b: dict, facing: str, grip: tuple, spacing: float, droop: float =
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
 	G_, S_ = gun_sides(b, facing)
-	wg, eg = _ik(b[G_ + " SHOULDER"], grip, up, fo, (ax, ay))
+	# Back facings: elbows flare out to their own side (seen from behind).
+	back = facing.startswith("N")
+	def side_out(sd: str) -> float:
+		return (1.0 if b[sd + " SHOULDER"][0] >= b["NECK"][0] else -1.0) if back else 0.0
+	wg, eg = _ik(b[G_ + " SHOULDER"], grip, up, fo, (ax, ay), out=side_out(G_))
 	# droop: the barrel angled down by that many degrees (a low carry).
 	if droop:
 		r = math.radians(droop) * (1 if ax >= 0 else -1)
@@ -199,7 +209,7 @@ def _two_hands(b: dict, facing: str, grip: tuple, spacing: float, droop: float =
 	s = spacing * L
 	while s > 0.15 * L and math.dist(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6)) > 0.92 * L:
 		s -= 0.25
-	ws, es = _ik(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6), up, fo, (ax, ay))
+	ws, es = _ik(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6), up, fo, (ax, ay), out=side_out(S_))
 	return {G_: (wg, eg), S_: (ws, es), "spacing": math.dist(wg, ws)}
 
 
