@@ -1,0 +1,15 @@
+{
+	"kind": "mine",
+	"point": "hand_r",
+	"grip": [
+		12,
+		12
+	],
+	"rotate": false,
+	"cover": 2,
+	"source": "Brian's throwables sheet throwables_sheet_49.png, row 3 col 6, tools/gear/import_throwables_sheet.py",
+	"ground_anchor": [
+		2,
+		20
+	]
+}

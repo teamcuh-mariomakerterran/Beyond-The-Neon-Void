@@ -1,0 +1,11 @@
+{
+	"kind": "grenade",
+	"point": "hand_r",
+	"grip": [
+		8,
+		12
+	],
+	"rotate": false,
+	"cover": 2,
+	"source": "Brian's throwables sheet throwables_sheet_49.png, row 1 col 6, tools/gear/import_throwables_sheet.py"
+}
