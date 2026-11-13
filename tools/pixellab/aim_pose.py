@@ -261,7 +261,7 @@ def back_gun_support(b: dict, facing: str, t: float, up: float, fo: float, grip:
 	L = up + fo
 	sx = -1.0 if AIM[facing][0] < 0 else 1.0
 	aim_el = math.degrees(math.atan2(-AIM[facing][1], abs(AIM[facing][0])))
-	keys = [(0.0, -15.0), (0.2, 3.0), (0.5, 15.0), (0.8, aim_el), (1.0, aim_el)]
+	keys = [(0.0, -15.0), (0.2, -10.0), (0.5, 15.0), (0.8, aim_el), (1.0, aim_el)]
 	el = keys[-1][1]
 	for (t0, a0), (t1, a1) in zip(keys, keys[1:]):
 		if t <= t1:
@@ -273,6 +273,14 @@ def back_gun_support(b: dict, facing: str, t: float, up: float, fo: float, grip:
 	while d > 0.45 * L and math.dist(sh, (grip[0] + dx * d, grip[1] + dy * d)) > 0.93 * L:
 		d -= 0.25
 	hand = (grip[0] + dx * d, grip[1] + dy * d)
+	if t < 0.35:
+		# Low carry from behind: the arm reaches forward into the screen, so
+		# it reads as hanging nearly straight, the elbow on the line from the
+		# shoulder to the hand and a touch in toward the body. An IK elbow out
+		# to the side read as the arm bent backwards (Brian, 2026-11-13).
+		k = up / (up + fo)
+		elbow = (sh[0] + (hand[0] - sh[0]) * k - sx * 0.6, sh[1] + (hand[1] - sh[1]) * k)
+		return elbow, hand
 	return _ik(sh, hand, up, fo, AIM[facing], out=sx)[::-1]
 
 
