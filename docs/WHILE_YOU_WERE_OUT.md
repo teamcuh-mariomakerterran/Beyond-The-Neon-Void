@@ -1,28 +1,37 @@
-# While you were at work (Nov 13)
+# While you were at work (Nov 13, day and evening)
 
 All pushed to `claude/optimistic-fermat-pie49w`. Nothing was wired into abilities, items or characters yet; this is art plus tools.
 
 ## Credits
-The balance went from **6,091.45 to 5,601.45, a 490 drop** (that includes anything you generated in PixelLab meanwhile).
-- Pistol back views: 54 (2 for the A/B test, 49 for the batch, 3 redos).
-- The four outfits: about 436, including 6 redo facings (about 18). Every take is kept; nothing was deleted.
+- **Day:** the balance went from 6,091.45 to 5,601.45, a drop of 490.
+  - Pistol back views: 54 (2 for the A/B test, 49 for the batch, 3 redos).
+  - The first four outfits: about 436, including 6 redo facings.
+- **Evening:** the balance went from 5,551.45 to 5,114.45, a drop of 437, for the second four outfits, including 7 redo facings.
+  - Partway through, the balance went *up* by about 50 (a top-up or refund on your side), so the real use was probably 440-490.
+- Both figures include anything you did in PixelLab meanwhile. Every take is kept; nothing was deleted.
 
 ## Pistols: real NW/NE views for all 49 (method B)
 PixelLab drew each pistol's NW (back) view from your SW drawing; NE is its mirror. Barrel axis and grip were refitted per view in `attach.json`. The game folders now use them.
 - Contact sheet: `assets/gear/source/pistol_rotations/all_49_SW_vs_NW.png`.
 - In-hand sample: `assets/gear/source/pistol_rotations/in_hand_sample.png`.
 
-## The four new outfits: all 9 clips x 4 facings
-Street samurai (`samurai`), scrap tinkerer (`tinkerer`), jumpjet dragoon with helmet (`dragoon_helm`) and new char 01 (`neon_coat`).
-- Clips: walk, hit, death, jump, use_item, throw, pistol, rifle rest and rifle raise. They are all on the same base poses as the first six, so slots mix.
+## Eight new outfits: all 9 clips x 4 facings
+- **Day:** street samurai (`samurai`), scrap tinkerer (`tinkerer`), jumpjet dragoon with helmet (`dragoon_helm`), new char 01 (`neon_coat`).
+- **Evening:** jumpjet dragoon full, the winged one (`dragoon_wings`, 68x60), 6142 (`armor_6142`), 0101 (`hood_0101`), 009 (`armor_009`).
+- Clips: walk, hit, death, jump, use_item, throw, pistol, rifle rest and rifle raise. They are all on the same base poses as the first six units, so slots mix.
 - Back-facing rifles are steadied like the others. Every clip passed an automatic check (frames, edges, colours) and my look at a sheet against the standing art.
 - Folders: `assets/units/base_male_hi/source/<unit>_<clip>_<facing>[_clean]`.
 - GIFs: `docs/screenshots/outfits_r2/`.
+- The winged dragoon is 68 px wide, so `aim_pose.py` now centres sprites by their height as well. Its feet sit on the same line as the 60x60 units, and nothing changed for those.
 
 ![samurai](screenshots/outfits_r2/samurai_all_clips.gif)
 ![tinkerer](screenshots/outfits_r2/tinkerer_all_clips.gif)
 ![dragoon_helm](screenshots/outfits_r2/dragoon_helm_all_clips.gif)
 ![neon_coat](screenshots/outfits_r2/neon_coat_all_clips.gif)
+![dragoon_wings](screenshots/outfits_r2/dragoon_wings_all_clips.gif)
+![armor_6142](screenshots/outfits_r2/armor_6142_all_clips.gif)
+![hood_0101](screenshots/outfits_r2/hood_0101_all_clips.gif)
+![armor_009](screenshots/outfits_r2/armor_009_all_clips.gif)
 
 ## Grenades and land mines cut from your sheet
 14 grenades and 14 mines are in `assets/gear/throwables/<grenade|mine>_NN/`.
@@ -30,11 +39,18 @@ Street samurai (`samurai`), scrap tinkerer (`tinkerer`), jumpjet dragoon with he
 - Mines also get `ground.png` plus a `ground_anchor` (the tile point) for placing them. Your mines have no drop shadow, so the game should draw one.
 - Row 3 col 6 (a rocket), row 4 col 6 (a holo shield) and row 4 col 7 (a terminal) came in as "mines" because they sit in those rows. Rename or drop them as you like.
 
-## What I couldn't fix (for when you're home)
+## Swords and combos: ideas
+`docs/design/SWORDS_AND_COMBOS_IDEAS.md` (a brainstorm; nothing spent).
+- **Swords:** the same recipe as the guns. The body swings empty-handed on our own poses, the sword art goes on the hand, and an engine trail draws the arc and hides PixelLab's arm smear.
+- **Combos:** short strike clips that all start and end in one guard pose, so they chain onto the Additions timing the game already has. The engine adds lunge, hit-stop and finishers.
+- **First test:** about 6 credits, the samurai in one facing with a guard pose and one slash.
+- Three questions for you are at the end of the file.
+
+## What I couldn't fix (both batches)
 - **Use_item and throw, all units:** on the frames where the arm is up by the head, it turns into a darker, less detailed smear.
-  - The six approved units have it too, so it's how PixelLab draws that pose. The samurai shows it most.
-  - Its use_item got 2 redos per facing, including one with "plated sleeves" in the prompt. That didn't really help; the best take of each is in use, and all are kept.
-  - Ideas: paint the sleeve from the walk frames, or pose the hand lower.
+  - The six approved units have it too, so it's how PixelLab draws that pose. The samurai and the winged dragoon (dark armour) show it most.
+  - The samurai's use_item got 2 redos per facing, including one with "plated sleeves" in the prompt. That didn't really help; the best take of each is in use, and all are kept.
+  - Ideas: paint the sleeve from the walk frames, pose the hand lower, or let a sword or throw trail cover it.
 - **Pistols #3 and #8:** the back view comes out boxy, like a brick, after 2 redos. 3 takes of each are kept; the game uses the latest. #19's holo screen was fixed by a new seed.
 - Minor, kept as is:
   - Samurai hit NE: the helmet horn shrinks on frames 2-3.
@@ -44,14 +60,28 @@ Street samurai (`samurai`), scrap tinkerer (`tinkerer`), jumpjet dragoon with he
   - Dragoon_helm death NE/NW: lying down, it turns into a rounder blob and the jetpack disappears.
   - Neon_coat jump NW: the helmet darkens on the last frame.
   - Dragoon_helm rifle raise SE: the visor dims on frame 7.
-- To check: tinkerer death SE/NE hides the backpack once he's on his back.
-- Fixed in place: the neon_coat SE rifle raise frame 3 had a ghost hand floating beside it, now removed (note in its folder). The tinkerer jump NW had a smeared frame; the redo fixed it.
+  - Dragoon_wings walk NW: the legs smudge on frame 7.
+  - Dragoon_wings death NE/NW: the wings flatten under the body once it's down.
+  - Dragoon_wings throw: in SE/SW the throwing arm is hard to see against the dark armour. The NW release frame has a slightly ragged wing.
+  - Hood_0101 death NW (after a redo): the eyes show inside the hood once he's lying (a little greener than standing), with a small fleck.
+- **To check:** tinkerer death SE/NE hides the backpack once he's on his back.
+- **Fixed** (old takes kept as `_take1`):
+  - Tinkerer jump NW: a smeared frame.
+  - Dragoon_wings hit NW: the wing broke into pixels.
+  - Dragoon_wings throw NE/NW: a grey smear across the body.
+  - Armor_009 jump SE/NW: a ghostly mid-air frame.
+  - Armor_009 rifle raise SE: PixelLab drew a stray gun bar in the hand.
+  - Hood_0101 death NW: a pink skin patch on the hood.
+- **Fixed by hand** (notes in the folders):
+  - Neon_coat SE rifle raise frame 3: a ghost hand, removed.
+  - Dragoon_wings SE rifle rest: the wing tore on frames 2-3; they now hold frame 1.
 
 ## Next (your call)
-1. **Helmets as head pieces:** cut the four helmets out of these outfits so they ride any body, then recolours (free).
-2. **The 49 pistols as items:** add them to `data/items.json`, or will you set their stats in the Forge?
-3. **Wiring the grenades and mines in:** thrown flight sprites, and mines placed on tiles. That changes the look, so I'll show before/after first.
-4. **Buildings over 8192 px:** waiting for your new buildings.
+1. **Helmets as head pieces:** cut the helmets out of these outfits (samurai, tinkerer, dragoon_helm, neon_coat, dragoon_wings, 6142, 0101's hood, 009) so they ride any body, then recolours (free).
+2. **Swords and combos:** answer the 3 questions in the ideas file, then the 6-credit test.
+3. **The 49 pistols as items:** add them to `data/items.json`, or will you set their stats in the Forge?
+4. **Wiring the grenades and mines in:** thrown flight sprites, and mines placed on tiles. That changes the look, so I'll show before/after first.
+5. **Buildings over 8192 px:** waiting for your new buildings.
 
 # While you were at work (Nov 6)
 
