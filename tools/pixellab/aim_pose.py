@@ -86,9 +86,17 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 		rest = rest_poses(base, size, facing)[0]
 		aim = rifle_poses(base, size, facing)[-1]
 		out = []
+		pad = (CANVAS - size) / 2.0
+		b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+		up, fo = _bones(b)
+		_, S_ = gun_sides(b, facing)
 		for t in RAISE + [1.0] * 3:
 			e = ease(t)
-			out.append({k: lerp(rest[k], aim[k], e) for k in rest})
+			f = {k: lerp(rest[k], aim[k], e) for k in rest}
+			if facing.startswith("N"):
+				# The near arm keeps its own path from behind (Brian's marks).
+				f[S_ + " ELBOW"], f[S_ + " ARM"] = back_support_arm(b, facing, t, up, fo)
+			out.append(f)
 		return out
 	if clip == "kick":
 		hold = poses(base, size, facing, "pistol")[-1]
@@ -213,6 +221,34 @@ def _two_hands(b: dict, facing: str, grip: tuple, spacing: float, droop: float =
 	return {G_: (wg, eg), S_: (ws, es), "spacing": math.dist(wg, ws)}
 
 
+def back_support_arm(b: dict, facing: str, t: float, up: float, fo: float) -> tuple:
+	"""(elbow, hand) of the support arm seen from behind (NE/NW), raising the
+	rifle (Brian's marks, 2026-11-13): it hangs at the outer side holding the
+	gun low (t 0-0.2), the elbow stays down while the forearm swings up into a
+	V (0.5), the upper arm lifts out to the side (0.8), then the L at the
+	barrel (1.0). t is the raise's own blend."""
+	_, S_ = gun_sides(b, facing)
+	sh = b[S_ + " SHOULDER"]
+	o = -1.0 if AIM[facing][0] < 0 else 1.0
+	keys = [
+		(0.0, (0.2, 0.95), (0.1, 0.95)),     # hanging at the side
+		(0.2, (0.2, 0.95), (0.1, 0.95)),
+		(0.5, (0.45, 0.85), (0.6, -0.8)),    # V: elbow down, forearm up and out
+		(0.8, (0.85, 0.4), (0.1, -0.98)),
+		(1.0, (0.95, 0.15), (-0.05, -0.98)), # the L
+	]
+	for (t0, e0, h0), (t1, e1, h1) in zip(keys, keys[1:]):
+		if t <= t1:
+			k = 0.0 if t1 == t0 else (t - t0) / (t1 - t0)
+			e_ = (e0[0] + (e1[0] - e0[0]) * k, e0[1] + (e1[1] - e0[1]) * k)
+			h_ = (h0[0] + (h1[0] - h0[0]) * k, h0[1] + (h1[1] - h0[1]) * k)
+			break
+	else:
+		e_, h_ = keys[-1][1], keys[-1][2]
+	elbow = (sh[0] + o * e_[0] * up, sh[1] + e_[1] * up)
+	return elbow, (elbow[0] + o * h_[0] * fo, elbow[1] + h_[1] * fo)
+
+
 def rifle_poses(base: dict, size: int, facing: str) -> list:
 	"""Two hands on a long gun, shouldered: the end pose is built in 3D from
 	reference photos and projected into the facing (pose3d.py, Brian
@@ -245,6 +281,8 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 		for k in b:
 			lead = min(1.0, e * 1.15) if k.endswith("ELBOW") else e
 			f[k] = lerp(b[k], end[k], lead)
+		if facing.startswith("N"):
+			f[S_ + " ELBOW"], f[S_ + " ARM"] = back_support_arm(b, facing, t, up, fo)
 		out.append(f)
 	return out
 
@@ -526,6 +564,8 @@ def rest_poses(base: dict, size: int, facing: str) -> list:
 	G_, S_ = gun_sides(b, facing)
 	pose = dict(b)
 	pose.update({k: v for k, v in pose3d.rifle(b, facing, "rifle_rest", AIM[facing], up, fo, G_).items() if not k.startswith("_")})
+	if facing.startswith("N"):
+		pose[S_ + " ELBOW"], pose[S_ + " ARM"] = back_support_arm(b, facing, 0.0, up, fo)
 	out = []
 	for breath in (0.0, 0.5, 0.0):
 		f = dict(pose)
