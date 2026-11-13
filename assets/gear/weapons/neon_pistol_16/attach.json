@@ -1,0 +1,36 @@
+{
+	"point": "hand_r",
+	"grip": [
+		22,
+		14
+	],
+	"grips": {
+		"SW": [
+			22,
+			14
+		],
+		"NW": [
+			22,
+			14
+		],
+		"SE": [
+			6,
+			14
+		],
+		"NE": [
+			6,
+			14
+		]
+	},
+	"z": {},
+	"rotate": true,
+	"order": 0,
+	"cover": 2,
+	"axis": {
+		"SW": 158.1,
+		"NW": 158.1,
+		"SE": 21.9,
+		"NE": 21.9
+	},
+	"source": "Brian's pistol sheet pistols_sheet_49.png #16, drawn SW (SE/NE mirrored), axis fit + grip at the handle top, tools/gear/import_pistol_sheet.py"
+}
