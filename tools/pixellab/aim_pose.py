@@ -214,45 +214,23 @@ def _two_hands(b: dict, facing: str, grip: tuple, spacing: float, droop: float =
 
 
 def rifle_poses(base: dict, size: int, facing: str) -> list:
-	"""Two hands on a long gun, shouldered (Brian, 2026-11-13): the stock in the
-	grip-side shoulder pocket, the gun out from it at cheek height, the grip
-	hand on that line just ahead of the shoulder, the support hand out under
-	the barrel; the head dips to the sights. Every arm keeps its real length."""
+	"""Two hands on a long gun, shouldered: the end pose is built in 3D from
+	reference photos and projected into the facing (pose3d.py, Brian
+	2026-11-13); the frames ease into it from standing, elbows leading."""
+	import pose3d
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
 	up, fo = _bones(b)
-	L = up + fo
-	ax, ay = AIM[facing]
-	ln = math.hypot(ax, ay)
-	ax, ay = ax / ln, ay / ln
 	G_, S_ = gun_sides(b, facing)
-	shg = b[G_ + " SHOULDER"]
-	grip = (shg[0] + ax * 0.3 * L, shg[1] + ay * 0.3 * L + 1.0)
-	aim_pose = _two_hands(b, facing, grip, 0.85)
-	if facing.startswith("N"):
-		# Seen from behind (Brian's sketch, 2026-11-13): the near (support) arm
-		# makes an L. The upper arm runs out and down to an elbow at the chest,
-		# the forearm straight back up to the barrel at shoulder height, out
-		# past the shoulder; the grip hand sits at its own shoulder pocket,
-		# mostly hidden behind the head. The gun runs between them.
-		out_s = 1.0 if b[S_ + " SHOULDER"][0] >= b["NECK"][0] else -1.0
-		out_g = -out_s
-		shs = b[S_ + " SHOULDER"]
-		aim_pose[S_] = _ik(shs, (shs[0] + out_s * 0.35 * L, shs[1] - 0.15 * L), up, fo, (ax, ay), out=out_s)
-		aim_pose[G_] = _ik(shg, (shg[0] - out_g * 0.25 * L, shg[1] + 0.05 * L), up, fo, (ax, ay), out=out_g)
-	neck = b["NECK"]
-	lean = ((shg[0] - neck[0]) * 0.25 + ax * 0.8, 1.5)
+	end = dict(b)
+	end.update({k: v for k, v in pose3d.rifle(b, facing, "rifle_raise", AIM[facing], up, fo, G_).items() if not k.startswith("_")})
 	out = []
 	for t in RAISE + [1.0] * 3:
-		f = dict(b)
 		e = ease(t)
-		for side in ("RIGHT", "LEFT"):
-			hand, elbow = aim_pose[side]
-			f[side + " ELBOW"] = lerp(b[side + " ELBOW"], elbow, min(1.0, e * 1.15))
-			f[side + " ARM"] = lerp(b[side + " ARM"], hand, e)
-		for k in ("NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR"):
-			if k in f:
-				f[k] = (f[k][0] + lean[0] * e, f[k][1] + lean[1] * e)
+		f = {}
+		for k in b:
+			lead = min(1.0, e * 1.15) if k.endswith("ELBOW") else e
+			f[k] = lerp(b[k], end[k], lead)
 		out.append(f)
 	return out
 
@@ -524,41 +502,21 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 
 
 def rest_poses(base: dict, size: int, facing: str) -> list:
-	"""Long gun at rest (Brian's reference): carried low across the body in both
-	hands, barrel forward; three frames of breathing. The grip hand is at the
-	belly on the grip side, the support hand out ahead under the barrel."""
+	"""Long gun at rest (Brian's reference): carried low and level across the
+	belly in both hands, barrel forward; three frames of breathing. Built in
+	3D and projected (pose3d.py)."""
+	import pose3d
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
 	up, fo = _bones(b)
-	L = up + fo
-	ax, ay = AIM[facing]
-	ln = math.hypot(ax, ay)
-	ax, ay = ax / ln, ay / ln
 	G_, S_ = gun_sides(b, facing)
-	shg = b[G_ + " SHOULDER"]
-	# As low as the belly, but high enough that the support hand gets out along
-	# the gun (at least 0.6 arm, about two thirds of a rifle's grip spacing):
-	# from a low grip the support arm can't reach forward, the hands bunch up
-	# and the gun hangs down.
-	# Lowest carry first (Brian, 2026-11-13: SE/SW rest sat too high); a
-	# shallower barrel before a higher grip. 0.5 arm apart (about 6.5 px) is
-	# still past half the gun's grip spacing, so the game holds it by both grips.
-	hands = None
-	for h in (0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4):
-		for droop in (25.0, 15.0, 5.0, -10.0, -20.0):
-			grip = (shg[0] + ax * 0.1 * L, shg[1] + h * L)
-			hands = _two_hands(b, facing, grip, 0.85, droop=droop)
-			if hands["spacing"] >= 0.5 * L:
-				break
-		if hands["spacing"] >= 0.5 * L:
-			break
+	pose = dict(b)
+	pose.update({k: v for k, v in pose3d.rifle(b, facing, "rifle_rest", AIM[facing], up, fo, G_).items() if not k.startswith("_")})
 	out = []
 	for breath in (0.0, 0.5, 0.0):
-		f = dict(b)
-		for side in ("RIGHT", "LEFT"):
-			f[side + " ARM"], f[side + " ELBOW"] = hands[side]
+		f = dict(pose)
 		for k in ("NECK", "NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR", "LEFT SHOULDER", "RIGHT SHOULDER"):
-			f[k] = (b[k][0], b[k][1] + breath)
+			f[k] = (pose[k][0], pose[k][1] + breath)
 		out.append(f)
 	return out
 
