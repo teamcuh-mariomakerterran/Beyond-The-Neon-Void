@@ -202,7 +202,7 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	ax, ay = ax / ln, ay / ln
 	shr = b["RIGHT SHOULDER"]
 	grip = (shr[0] + ax * 0.35 * L, shr[1] + ay * 0.35 * L + 0.2 * L)
-	wrr_aim, elr_aim, wrl_aim, ell_aim = _two_hands(b, facing, grip, 0.55)
+	wrr_aim, elr_aim, wrl_aim, ell_aim = _two_hands(b, facing, grip, 0.9)
 	elr, wrr, ell, wrl = b["RIGHT ELBOW"], b["RIGHT ARM"], b["LEFT ELBOW"], b["LEFT ARM"]
 	out = []
 	for t in RAISE + [1.0] * 3:
@@ -496,7 +496,7 @@ def rest_poses(base: dict, size: int, facing: str) -> list:
 	ax, ay = ax / ln, ay / ln
 	shr = b["RIGHT SHOULDER"]
 	grip = (shr[0] + ax * 0.15 * L, shr[1] + 0.7 * L)
-	wr, er, wl, el = _two_hands(b, facing, grip, 0.5)
+	wr, er, wl, el = _two_hands(b, facing, grip, 0.8)
 	wl = (wl[0], min(wl[1], wr[1] + 1.0))  # level, the barrel not drooping
 	wl, el = _ik(b["LEFT SHOULDER"], wl, up, fo, (ax, ay))
 	out = []
