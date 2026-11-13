@@ -94,8 +94,9 @@ def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 			e = ease(t)
 			f = {k: lerp(rest[k], aim[k], e) for k in rest}
 			if facing.startswith("N"):
-				# The near arm keeps its own path from behind (Brian's marks).
-				f[S_ + " ELBOW"], f[S_ + " ARM"] = back_support_arm(b, facing, t, up, fo)
+				# From behind the near hand rides the barrel as it rises (Brian's marks).
+				G_ = "LEFT" if S_ == "RIGHT" else "RIGHT"
+				f[S_ + " ELBOW"], f[S_ + " ARM"] = back_gun_support(b, facing, t, up, fo, f[G_ + " ARM"])
 			out.append(f)
 		return out
 	if clip == "kick":
@@ -247,6 +248,32 @@ def back_support_arm(b: dict, facing: str, t: float, up: float, fo: float) -> tu
 		e_, h_ = keys[-1][1], keys[-1][2]
 	elbow = (sh[0] + o * e_[0] * up, sh[1] + e_[1] * up)
 	return elbow, (elbow[0] + o * h_[0] * fo, elbow[1] + h_[1] * fo)
+
+
+def back_gun_support(b: dict, facing: str, t: float, up: float, fo: float, grip: tuple) -> tuple:
+	"""(elbow, hand) of the support arm seen from behind (NE/NW) for the raise
+	at blend t, with the hand ON the barrel (Brian's marks, 2026-11-13): the
+	gun points forward out past the near arm, its barrel rising from aimed
+	down (t 0) through level to the aim (t 0.8+), the arm hanging at the side,
+	then the V, then the L. grip: the trigger hand this frame."""
+	_, S_ = gun_sides(b, facing)
+	sh = b[S_ + " SHOULDER"]
+	L = up + fo
+	sx = -1.0 if AIM[facing][0] < 0 else 1.0
+	aim_el = math.degrees(math.atan2(-AIM[facing][1], abs(AIM[facing][0])))
+	keys = [(0.0, -15.0), (0.2, 3.0), (0.5, 15.0), (0.8, aim_el), (1.0, aim_el)]
+	el = keys[-1][1]
+	for (t0, a0), (t1, a1) in zip(keys, keys[1:]):
+		if t <= t1:
+			el = a0 + (a1 - a0) * ((t - t0) / (t1 - t0) if t1 > t0 else 0.0)
+			break
+	r = math.radians(el)
+	dx, dy = sx * math.cos(r), -math.sin(r)
+	d = 0.95 * L
+	while d > 0.45 * L and math.dist(sh, (grip[0] + dx * d, grip[1] + dy * d)) > 0.93 * L:
+		d -= 0.25
+	hand = (grip[0] + dx * d, grip[1] + dy * d)
+	return _ik(sh, hand, up, fo, AIM[facing], out=sx)[::-1]
 
 
 def rifle_poses(base: dict, size: int, facing: str) -> list:
@@ -565,7 +592,7 @@ def rest_poses(base: dict, size: int, facing: str) -> list:
 	pose = dict(b)
 	pose.update({k: v for k, v in pose3d.rifle(b, facing, "rifle_rest", AIM[facing], up, fo, G_).items() if not k.startswith("_")})
 	if facing.startswith("N"):
-		pose[S_ + " ELBOW"], pose[S_ + " ARM"] = back_support_arm(b, facing, 0.0, up, fo)
+		pose[S_ + " ELBOW"], pose[S_ + " ARM"] = back_gun_support(b, facing, 0.0, up, fo, pose[G_ + " ARM"])
 	out = []
 	for breath in (0.0, 0.5, 0.0):
 		f = dict(pose)
