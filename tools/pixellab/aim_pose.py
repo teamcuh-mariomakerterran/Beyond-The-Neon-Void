@@ -229,6 +229,17 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	shg = b[G_ + " SHOULDER"]
 	grip = (shg[0] + ax * 0.3 * L, shg[1] + ay * 0.3 * L + 1.0)
 	aim_pose = _two_hands(b, facing, grip, 0.85)
+	if facing.startswith("N"):
+		# Seen from behind (Brian's sketch, 2026-11-13): the near (support) arm
+		# makes an L. The upper arm runs out and down to an elbow at the chest,
+		# the forearm straight back up to the barrel at shoulder height, out
+		# past the shoulder; the grip hand sits at its own shoulder pocket,
+		# mostly hidden behind the head. The gun runs between them.
+		out_s = 1.0 if b[S_ + " SHOULDER"][0] >= b["NECK"][0] else -1.0
+		out_g = -out_s
+		shs = b[S_ + " SHOULDER"]
+		aim_pose[S_] = _ik(shs, (shs[0] + out_s * 0.35 * L, shs[1] - 0.15 * L), up, fo, (ax, ay), out=out_s)
+		aim_pose[G_] = _ik(shg, (shg[0] - out_g * 0.25 * L, shg[1] + 0.05 * L), up, fo, (ax, ay), out=out_g)
 	neck = b["NECK"]
 	lean = ((shg[0] - neck[0]) * 0.25 + ax * 0.8, 1.5)
 	out = []
