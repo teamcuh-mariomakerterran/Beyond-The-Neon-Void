@@ -235,7 +235,7 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 		ax, ay = AIM[facing]
 		shs, shg = b[S_ + " SHOULDER"], b[G_ + " SHOULDER"]
 		out_s = 1.0 if shs[0] >= b["NECK"][0] else -1.0
-		ws, es = _ik(shs, (shs[0] + out_s * 0.2 * L, shs[1] - 0.3 * L), up, fo, (ax, ay), out=out_s)
+		ws, es = _ik(shs, (shs[0] + out_s * 0.38 * L, shs[1] - 0.3 * L), up, fo, (ax, ay), out=out_s)
 		eg = (shg[0] - out_s * 0.48 * up * 2, shg[1] + 0.1 * up)
 		wg = (eg[0] + out_s * fo * 0.95, eg[1] - 0.2 * fo)
 		end.update({S_ + " ARM": ws, S_ + " ELBOW": es, G_ + " ELBOW": eg, G_ + " ARM": wg})
