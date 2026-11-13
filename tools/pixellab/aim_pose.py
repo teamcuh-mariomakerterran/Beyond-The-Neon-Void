@@ -34,7 +34,7 @@ RAISE = [0.0, 0.2, 0.5, 0.8, 1.0]
 # Facings whose held gun points along the aim line rather than the drawn
 # forearm (NW: the hand is low at the collar, so the forearm angles down;
 # Brian's mark, 2026-11-08). The rest follow the arm as drawn.
-GUN_ALONG_AIM = {"NW"}
+GUN_ALONG_AIM = {"NW", "SW", "SE", "NE"}  # every facing (Brian, 2026-11-13: a held pistol level with the forearm read as aiming west)
 # Aimed hand moved by hand (canvas px): NW sits at the collar, out past the head (Brian's marks, 2026-11-08).
 AIM_NUDGE = {"NW": (-2.0, 3.0)}
 # (aim blend, kick 0-1) per frame after the raise.
