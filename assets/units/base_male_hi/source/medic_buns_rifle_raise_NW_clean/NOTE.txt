@@ -1,0 +1,1 @@
+Touch-up (Brian, 2026-11-13): frames 0-1 are the rest pose (rifle_rest_NW_clean frame 0) so the raise starts where the rest is; frames 5-7 are copies of frame 4 (the held aim jittered). The untouched take is in ../medic_buns_rifle_raise_NW/.

@@ -1,0 +1,1 @@
+Touch-up (Brian, 2026-11-13): frames 1-2 are copies of frame 0 (PixelLab jitter in the arm read as flicker); a 2 px tab at the left hip (x39-40, y67-69) removed. The untouched take is in ../medic_buns_rifle_rest_NW/.
