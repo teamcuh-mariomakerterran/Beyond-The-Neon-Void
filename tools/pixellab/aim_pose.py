@@ -169,30 +169,41 @@ def _ik(sh, hand, up: float, fo: float, aim: tuple, reach: float = 0.92):
 	return hand, elbow
 
 
+def gun_sides(b: dict, facing: str) -> tuple:
+	"""(grip side, support side) for a long gun: the trigger hand and stock go
+	to the shoulder further back along the aim, the support hand to the one in
+	front. SE/NW that is right-handed; SW/NE it mirrors (left hand on the grip),
+	as a mirrored sprite would, so neither arm reaches across the chest
+	(Brian's sketch, 2026-11-13)."""
+	ax, ay = AIM[facing]
+	r = b["RIGHT SHOULDER"][0] * ax + b["RIGHT SHOULDER"][1] * ay
+	l = b["LEFT SHOULDER"][0] * ax + b["LEFT SHOULDER"][1] * ay
+	return ("RIGHT", "LEFT") if r <= l else ("LEFT", "RIGHT")
+
+
 def _two_hands(b: dict, facing: str, grip: tuple, spacing: float):
-	"""Grip (right) hand at grip; support (left) hand ahead of it along the aim,
-	as far as `spacing` arm lengths but only as far as the left arm reaches. On
-	these chibi bodies the facings where the gun shoulder is the forward one
-	(SW, NE) keep the hands close in front of the chest; the drawn gun reaches."""
+	"""Grip hand at `grip`; support hand ahead of it along the aim by `spacing`
+	arm lengths (about the gun's two grips apart), only as far as the support
+	arm reaches. Returns {side: (hand, elbow)}."""
 	up, fo = _bones(b)
 	L = up + fo
 	ax, ay = AIM[facing]
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
-	shr, shl = b["RIGHT SHOULDER"], b["LEFT SHOULDER"]
-	wr, er = _ik(shr, grip, up, fo, (ax, ay))
+	G_, S_ = gun_sides(b, facing)
+	wg, eg = _ik(b[G_ + " SHOULDER"], grip, up, fo, (ax, ay))
 	s = spacing * L
-	while s > 0.15 * L and math.dist(shl, (wr[0] + ax * s, wr[1] + ay * s + 0.6)) > 0.92 * L:
+	while s > 0.15 * L and math.dist(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6)) > 0.92 * L:
 		s -= 0.25
-	wl, el = _ik(shl, (wr[0] + ax * s, wr[1] + ay * s + 0.6), up, fo, (ax, ay))
-	return wr, er, wl, el
+	ws, es = _ik(b[S_ + " SHOULDER"], (wg[0] + ax * s, wg[1] + ay * s + 0.6), up, fo, (ax, ay))
+	return {G_: (wg, eg), S_: (ws, es)}
 
 
 def rifle_poses(base: dict, size: int, facing: str) -> list:
-	"""Two hands on a long gun: stock at the right shoulder, right hand on the
-	grip just ahead of and below it, left hand under the barrel a little further
-	on. Every arm keeps its real length (Brian, 2026-11-13: the old pose pulled
-	the support arm out of its socket)."""
+	"""Two hands on a long gun, shouldered (Brian, 2026-11-13): the stock in the
+	grip-side shoulder pocket, the gun out from it at cheek height, the grip
+	hand on that line just ahead of the shoulder, the support hand out under
+	the barrel; the head dips to the sights. Every arm keeps its real length."""
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
 	up, fo = _bones(b)
@@ -200,25 +211,20 @@ def rifle_poses(base: dict, size: int, facing: str) -> list:
 	ax, ay = AIM[facing]
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
-	shr = b["RIGHT SHOULDER"]
-	# Shouldered (Brian, 2026-11-13): the stock sits in the shoulder pocket, so
-	# the gun line runs out from the shoulder at cheek height; the grip hand is
-	# on that line just ahead of the shoulder, a pixel under the gun.
-	grip = (shr[0] + ax * 0.3 * L, shr[1] + ay * 0.3 * L + 1.0)
-	wrr_aim, elr_aim, wrl_aim, ell_aim = _two_hands(b, facing, grip, 0.9)
-	elr, wrr, ell, wrl = b["RIGHT ELBOW"], b["RIGHT ARM"], b["LEFT ELBOW"], b["LEFT ARM"]
-	# Cheek on the stock: the head dips and leans a little toward the gun
-	# shoulder and along the aim, to look down the sights.
+	G_, S_ = gun_sides(b, facing)
+	shg = b[G_ + " SHOULDER"]
+	grip = (shg[0] + ax * 0.3 * L, shg[1] + ay * 0.3 * L + 1.0)
+	aim_pose = _two_hands(b, facing, grip, 0.85)
 	neck = b["NECK"]
-	lean = ((shr[0] - neck[0]) * 0.25 + ax * 0.8, 1.5)
+	lean = ((shg[0] - neck[0]) * 0.25 + ax * 0.8, 1.5)
 	out = []
 	for t in RAISE + [1.0] * 3:
 		f = dict(b)
 		e = ease(t)
-		f["RIGHT ELBOW"] = lerp(elr, elr_aim, min(1.0, e * 1.15))
-		f["RIGHT ARM"] = lerp(wrr, wrr_aim, e)
-		f["LEFT ELBOW"] = lerp(ell, ell_aim, min(1.0, e * 1.15))
-		f["LEFT ARM"] = lerp(wrl, wrl_aim, e)
+		for side in ("RIGHT", "LEFT"):
+			hand, elbow = aim_pose[side]
+			f[side + " ELBOW"] = lerp(b[side + " ELBOW"], elbow, min(1.0, e * 1.15))
+			f[side + " ARM"] = lerp(b[side + " ARM"], hand, e)
 		for k in ("NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR"):
 			if k in f:
 				f[k] = (f[k][0] + lean[0] * e, f[k][1] + lean[1] * e)
@@ -493,10 +499,9 @@ def action_poses(base: dict, size: int, facing: str, clip: str) -> list:
 
 
 def rest_poses(base: dict, size: int, facing: str) -> list:
-	"""Long gun at rest (Brian's reference): carried level, low, in both hands,
-	barrel forward; three frames of breathing. Hands at the belly, not the hip:
-	a chibi arm hanging straight only just reaches the hip, so the far hand
-	could not get there without stretching."""
+	"""Long gun at rest (Brian's reference): carried low across the body in both
+	hands, barrel forward; three frames of breathing. The grip hand is at the
+	belly on the grip side, the support hand out ahead under the barrel."""
 	pad = (CANVAS - size) / 2.0
 	b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
 	up, fo = _bones(b)
@@ -504,15 +509,18 @@ def rest_poses(base: dict, size: int, facing: str) -> list:
 	ax, ay = AIM[facing]
 	ln = math.hypot(ax, ay)
 	ax, ay = ax / ln, ay / ln
-	shr = b["RIGHT SHOULDER"]
-	grip = (shr[0] + ax * 0.15 * L, shr[1] + 0.7 * L)
-	wr, er, wl, el = _two_hands(b, facing, grip, 0.8)
-	wl = (wl[0], min(wl[1], wr[1] + 1.0))  # level, the barrel not drooping
-	wl, el = _ik(b["LEFT SHOULDER"], wl, up, fo, (ax, ay))
+	G_, S_ = gun_sides(b, facing)
+	shg = b[G_ + " SHOULDER"]
+	grip = (shg[0] + ax * 0.1 * L, shg[1] + 0.7 * L)
+	hands = _two_hands(b, facing, grip, 0.85)
+	ws, _ = hands[S_]
+	ws = (ws[0], min(ws[1], hands[G_][0][1] - 0.5))  # barrel level or a touch up
+	hands[S_] = _ik(b[S_ + " SHOULDER"], ws, up, fo, (ax, ay))
 	out = []
 	for breath in (0.0, 0.5, 0.0):
 		f = dict(b)
-		f["RIGHT ARM"], f["LEFT ARM"], f["RIGHT ELBOW"], f["LEFT ELBOW"] = wr, wl, er, el
+		for side in ("RIGHT", "LEFT"):
+			f[side + " ARM"], f[side + " ELBOW"] = hands[side]
 		for k in ("NECK", "NOSE", "LEFT EYE", "RIGHT EYE", "LEFT EAR", "RIGHT EAR", "LEFT SHOULDER", "RIGHT SHOULDER"):
 			f[k] = (b[k][0], b[k][1] + breath)
 		out.append(f)
@@ -632,7 +640,8 @@ def gun_deg(f: dict, clip: str) -> float:
 	"""Screen angle of the held gun: the forearm, or for a rifle the line from
 	the grip hand to the barrel hand."""
 	if clip in ("rifle", "rifle_raise", "rifle_rest"):
-		a, b = f["RIGHT ARM"], f["LEFT ARM"]
+		g_, s_ = f.get("_sides", ("RIGHT", "LEFT"))
+		a, b = f[g_ + " ARM"], f[s_ + " ARM"]
 		return math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
 	return forearm_deg(f)
 
@@ -643,6 +652,14 @@ def rig(n: int, facing: str, count: int = 8, clip: str = "pistol") -> None:
 	forearm (gun art is drawn aimed); positive turns clockwise, toward down."""
 	c, d, base, w, png = load(n, facing)
 	frames = poses(base, w, facing, clip)[:count]
+	if clip in ("rifle", "rifle_raise", "rifle_rest"):
+		# The game's hand_r is the gun's grip: on SW/NE that is the left hand.
+		pad = (CANVAS - w) / 2.0
+		g_, s_ = gun_sides({k: (v[0] + pad, v[1] + pad) for k, v in base.items()}, facing)
+		frames = [dict(f, **{"_sides": (g_, s_), "RIGHT ARM": f[g_ + " ARM"], "RIGHT ELBOW": f[g_ + " ELBOW"],
+			"RIGHT SHOULDER": f[g_ + " SHOULDER"], "LEFT ARM": f[s_ + " ARM"]}) for f in frames]
+		for f in frames:
+			f["_sides"] = ("RIGHT", "LEFT")
 	aim = gun_deg(frames[-1], clip)
 	anim = CLIPS[clip] + "_" + facing
 	sign = 1.0 if facing.endswith("E") else -1.0
