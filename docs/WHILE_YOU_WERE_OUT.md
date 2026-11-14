@@ -7,7 +7,7 @@ All pushed to `claude/optimistic-fermat-pie49w`. Nothing was wired into abilitie
   - Pistol back views: 54 (2 for the A/B test, 49 for the batch, 3 redos).
   - The first four outfits: about 436, including 6 redo facings.
 - **Evening:** the balance went from 5,551.45 to 5,114.45, a drop of 437, for the second four outfits, including 7 redo facings.
-  - Partway through, the balance went *up* by about 50 (a top-up or refund on your side), so the real use was probably 440-490.
+  - The balance never went up. I first reported a rise of about 50, but I had misread the log: one step read the balance, waited about 12 minutes in PixelLab's queue while the other three units kept spending, then logged that old reading as its "before".
 - Both figures include anything you did in PixelLab meanwhile. Every take is kept; nothing was deleted.
 
 ## Pistols: real NW/NE views for all 49 (method B)
