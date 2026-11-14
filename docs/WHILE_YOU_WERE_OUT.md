@@ -46,6 +46,18 @@ PixelLab drew each pistol's NW (back) view from your SW drawing; NE is its mirro
 - **First test:** about 6 credits, the samurai in one facing with a guard pose and one slash.
 - Three questions for you are at the end of the file.
 
+
+## The missing far arm on the rifle (found Nov 14)
+**My mistake.** The 3D-pose change I made for the back views also changed the front rifle poses (SE/SW), and I didn't check it against your approved units.
+- On the 8 new outfits, the far arm was told to fold into the middle of the stomach, so PixelLab drew no far arm.
+- The first six units were never redone in SE/SW and are fine. NE/NW are fine on every unit.
+
+**Fixed in the tools:**
+- SE/SW use the exact code that made your approved pose again (`tools/pixellab/rifle_front_v1.py`). It matches the saved poses to 0.005 px.
+- New `tools/pixellab/check_poses.py` rebuilds every approved unit's poses and fails if any moved. The batch script won't start when it fails. It would have caught this, flagging exactly the SE/SW rifle clips.
+
+**Still to redo:** SE/SW rifle rest and raise for the 8 new outfits, about 80 credits, waiting on your go.
+
 ## What I couldn't fix (both batches)
 - **Use_item and throw, all units:** on the frames where the arm is up by the head, it turns into a darker, less detailed smear.
   - The six approved units have it too, so it's how PixelLab draws that pose. The samurai and the winged dragoon (dark armour) show it most.
