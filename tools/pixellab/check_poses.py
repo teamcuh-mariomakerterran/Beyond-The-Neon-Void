@@ -25,6 +25,12 @@ APPROVED = {
 }
 # Approved takes made before a deliberate fix, so they differ from the current poses on purpose.
 KNOWN = {("medic_buns", "pistol", "SE"): "first pistol test (11-12 15:10), before the arm-length fix; approved as drawn"}
+# Front rifle rest/raise: the support arm was moved out past the body's edge on purpose
+# (Brian 2026-11-14, the far arm hid behind the torso); these takes are due to be redone.
+for _u in ("medic_buns", "slicked20", "heavy40"):
+	for _c in ("rifle_rest", "rifle_raise"):
+		for _f in ("SE", "SW"):
+			KNOWN[(_u, _c, _f)] = "front rifle far-arm fix (Brian 2026-11-14), to be redone"
 CLIPS = ["walk2", "hit", "death", "jump", "use_item", "throw", "pistol", "rifle_rest", "rifle_raise"]
 TOL = 0.05
 

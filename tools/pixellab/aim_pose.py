@@ -70,13 +70,44 @@ CHAIN = {"rifle_raise": ("aim_rifle_rest_%s", 0, "rifle_rest"), "kick": ("aim_pi
 KICK = [1.0, 0.45, 0.1, 0.0]  # per frame, after the held aim
 
 
+def _front_support_rest(rest: dict, facing: str, S_: str) -> tuple:
+	"""(hand, elbow) of the support arm in the front-facing low carry: from its
+	shoulder, out past the far side of the body, the hand forward under the
+	barrel. Same bone lengths as the approved pose."""
+	sh, el, ha = rest[S_ + " SHOULDER"], rest[S_ + " ELBOW"], rest[S_ + " ARM"]
+	up, fo = math.dist(sh, el), math.dist(el, ha)
+	o = 1.0 if AIM[facing][0] > 0 else -1.0  # screen side the barrel points to
+	return _ik(sh, (ha[0] + o * 5.0, ha[1] - 1.0), up, fo, AIM[facing], out=o)
+
+
 def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 	"""base: label -> (x, y) in source pixels. Returns frames of label -> (x, y) in canvas pixels."""
 	if clip in ("rifle", "rifle_rest", "rifle_raise") and facing.startswith("S"):
 		# Front facings keep the rifle pose Brian approved on the first six units
-		# (the 3D poses pulled the far hand into the stomach; Brian 2026-11-14).
+		# (the 3D poses pulled the far hand into the stomach; Brian 2026-11-14),
+		# except the support arm at rest and on the way up: it hung down inside
+		# the body's outline, so PixelLab drew it behind the torso and the gun's
+		# front floated. It now hangs just outside the far side, elbow out, the
+		# hand forward on the barrel (Brian 2026-11-14), easing into the approved aim.
 		import rifle_front_v1
-		return rifle_front_v1.poses(base, size, facing, clip)
+		frames = rifle_front_v1.poses(base, size, facing, clip)
+		if clip == "rifle":
+			return frames
+		rest = rifle_front_v1.poses(base, size, facing, "rifle_rest")[0]
+		pad = (CANVAS - size) / 2.0
+		b = {k: (v[0] + pad, v[1] + pad) for k, v in base.items()}
+		_, S_ = gun_sides(b, facing)
+		arm = _front_support_rest(rest, facing, S_)
+		if clip == "rifle_rest":
+			for f in frames:
+				f[S_ + " ELBOW"], f[S_ + " ARM"] = arm[1], arm[0]
+			return frames
+		aim = rifle_front_v1.poses(base, size, facing, "rifle")[-1]
+		for f, t in zip(frames, RAISE + [1.0] * 3):
+			e = ease(t)
+			f[S_ + " ELBOW"] = lerp(arm[1], aim[S_ + " ELBOW"], min(1.0, e * 1.15))
+			f[S_ + " ARM"] = lerp(arm[0], aim[S_ + " ARM"], e)
+		return frames
 	if clip == "rifle":
 		return rifle_poses(base, size, facing)
 	if clip == "rifle_rest":
