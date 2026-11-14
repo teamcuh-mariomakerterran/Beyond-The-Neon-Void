@@ -56,7 +56,15 @@ PixelLab drew each pistol's NW (back) view from your SW drawing; NE is its mirro
 - SE/SW use the exact code that made your approved pose again (`tools/pixellab/rifle_front_v1.py`). It matches the saved poses to 0.005 px.
 - New `tools/pixellab/check_poses.py` rebuilds every approved unit's poses and fails if any moved. The batch script won't start when it fails. It would have caught this, flagging exactly the SE/SW rifle clips.
 
-**Still to redo:** SE/SW rifle rest and raise for the 8 new outfits, about 80 credits, waiting on your go.
+**Second problem, found the same day:** even on the approved pose, the far arm at rest hung down inside the body's outline, so PixelLab hid it behind the torso and the gun's front floated.
+
+**Done (Nov 14):** rest and raise were redone in SE/SW for all 14 units, with the far arm outside the body and the hand forward on the barrel. The aim is unchanged.
+- **Credits:** the balance went from 4,949.4 to 4,808.4, a drop of 141 (your cap was 160). That includes anything you ran in PixelLab meanwhile.
+- **Checking:** every unit was checked side by side, before vs new.
+- **Redos:** dragoon_helm SE raise (PixelLab drew a raised fist instead of holding the gun) and hood_0101 SE raise (the job failed on PixelLab's side).
+- **Minor, kept:** hood_0101 SW raise has a thin dark rod drawn in the hand, on the line where the game's rifle goes.
+- All earlier takes are kept (`_takeN`). The pose check is strict again and passes.
+- My gun previews now draw the game's "tuck" (arm over the stock), so they match the game.
 
 ## What I couldn't fix (both batches)
 - **Use_item and throw, all units:** on the frames where the arm is up by the head, it turns into a darker, less detailed smear.
