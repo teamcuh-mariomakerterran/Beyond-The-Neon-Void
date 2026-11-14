@@ -72,6 +72,11 @@ KICK = [1.0, 0.45, 0.1, 0.0]  # per frame, after the held aim
 
 def poses(base: dict, size: int, facing: str, clip: str = "pistol15") -> list:
 	"""base: label -> (x, y) in source pixels. Returns frames of label -> (x, y) in canvas pixels."""
+	if clip in ("rifle", "rifle_rest", "rifle_raise") and facing.startswith("S"):
+		# Front facings keep the rifle pose Brian approved on the first six units
+		# (the 3D poses pulled the far hand into the stomach; Brian 2026-11-14).
+		import rifle_front_v1
+		return rifle_front_v1.poses(base, size, facing, clip)
 	if clip == "rifle":
 		return rifle_poses(base, size, facing)
 	if clip == "rifle_rest":
